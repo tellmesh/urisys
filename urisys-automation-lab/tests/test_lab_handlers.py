@@ -5,6 +5,8 @@ import urllib.request
 from pathlib import Path
 
 LAB = Path(__file__).resolve().parents[1]
+URISYS_PY = LAB.parent / "packages" / "python"
+sys.path.insert(0, str(URISYS_PY))
 sys.path.insert(0, str(LAB / "packages" / "python"))
 sys.path.insert(0, str(LAB.parent / "urirdp-docker" / "packages" / "python"))
 

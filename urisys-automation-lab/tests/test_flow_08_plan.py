@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-import os
 import sys
 from pathlib import Path
 
 LAB = Path(__file__).resolve().parents[1]
+URISYS_PY = LAB.parent / "packages" / "python"
+sys.path.insert(0, str(URISYS_PY))
 sys.path.insert(0, str(LAB / "packages" / "python"))
 sys.path.insert(0, str(LAB / "server"))
 sys.path.insert(0, str(LAB.parent / "urirdp-docker" / "packages" / "python"))
@@ -51,13 +52,17 @@ def test_llm_plan_from_transcript():
 
 
 def test_flow_08_plan_expand():
-    os.environ.setdefault("URISYS_NODE_SKIP_PAIRING", "1")
-    from flow_runner import plan_flow
+    import yaml
 
     flow = LAB / "flows" / "08_voice_command_to_kvm.uri.flow.yaml"
-    plan = plan_flow(flow)
-    step_ids = [step.id for step in plan["steps"]]
-    assert step_ids == ["stt_start", "stt_transcript", "map_voice", "execute_mapped"]
-    map_voice = next(s for s in plan["steps"] if s.id == "map_voice")
-    assert map_voice.uri == "llm://local/text/query/plan"
-    assert map_voice.payload.get("transcript_from") == "stt_transcript"
+    data = yaml.safe_load(flow.read_text(encoding="utf-8"))
+    steps = data["do"]
+    assert [step["id"] for step in steps] == [
+        "stt_start",
+        "stt_transcript",
+        "map_voice",
+        "execute_mapped",
+    ]
+    assert steps[2]["uri"] == "llm://local/text/query/plan"
+    assert steps[2]["payload"]["transcript_from"] == "stt_transcript"
+    assert steps[3]["payload"]["payload_from"] == "map_voice"

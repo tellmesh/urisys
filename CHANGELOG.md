@@ -139,6 +139,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.13] - 2026-06-16
+
+### Docs
+- Update README.md
+- Update urisys-automation-lab/markpacts/urillm-decide.contract.markpact.md
+
+### Other
+- Update urisys-automation-lab/tests/test_flow_08_plan.py
+- Update urisys-automation-lab/tests/test_lab_handlers.py
+- Update urisys-node/data/events.jsonl
+- Update uv.lock
+
 ## [0.1.12] - 2026-06-16
 
 ### Docs

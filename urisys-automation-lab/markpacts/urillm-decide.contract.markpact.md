@@ -18,6 +18,9 @@ queries:
   - id: llm.vision.analyze
     pattern: llm://{target}/vision/query/analyze
     side_effects: false
+  - id: llm.text.plan
+    pattern: llm://{target}/text/query/plan
+    side_effects: false
 ```
 
 ## Routes
