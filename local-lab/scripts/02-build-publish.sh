@@ -2,6 +2,9 @@
 set -euo pipefail
 cd /workspace
 
+# shellcheck source=../scripts/paths.sh
+source "$(dirname "$0")/../../scripts/paths.sh"
+
 CONTRACT_ID="${CONTRACT_ID:-uristepper-pack}"
 VERSION="${VERSION:-0.1.0}"
 CONTRACT_FILE="${CONTRACT_FILE:-uristepper-docker/markpacts/uristepper.pack.markpact.md}"
@@ -89,7 +92,7 @@ Path("local-lab/generated/artifact-index.json").write_text(
 print(json.dumps(payload, indent=2))
 PY
 
-RELEASE_DIR="releases/${CONTRACT_ID}/${VERSION}"
+RELEASE_DIR="$(releases_dir)/${CONTRACT_ID}/${VERSION}"
 mkdir -p "$RELEASE_DIR"
 cp local-lab/generated/artifact-index.json "${RELEASE_DIR}/artifact-index.json"
 cp "$CONTRACT_FILE" "${RELEASE_DIR}/contract.markpact.md"

@@ -45,6 +45,8 @@ urisys --packs docker,systemd flow flows/device-maintenance.uri.flow.yaml --appr
 
 ### 2. automation-lab `POST /uri/flow`
 
+Implementacja: `urisys-automation-lab/server/flow_runner.py` (uri2flow expand + uri3 graph runner + `LabCallAdapter`).
+
 ```bash
 curl -X POST http://127.0.0.1:8099/uri/flow \
   -H 'Content-Type: application/json' \
@@ -53,10 +55,9 @@ curl -X POST http://127.0.0.1:8099/uri/flow \
 
 Implementacja: `urisys-automation-lab/server/flow_runner.py`
 
-- Parsuje YAML → graf (`depends_on`, domyślnie poprzedni krok)
-- Topo-sort, **sekwencyjne** sync HTTP do urirdp
-- Walidacja kroku: `ok`, `exit_code`, brak `dry_run` w real mode
-- Odpowiedź: `{ ok, graph, steps[{ id, uri, response }] }`
+- `uri2flow.expand_flow()` — compact YAML → workflow graph
+- `uri3.graph.run_workflow_node()` — topo-order, warunki `if:`, zależności
+- `LabCallAdapter` — sync HTTP przez lab gateway / forward do urirdp
 
 ### 3. uri2flow + uri3 (pełny executor)
 

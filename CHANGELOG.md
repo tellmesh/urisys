@@ -115,6 +115,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.9] - 2026-06-16
+
+### Docs
+- Update README.md
+- Update docs/FLOWS.md
+- Update docs/MIGRATION-STEP2.md
+- Update project/PACKAGES.md
+
+### Other
+- Update .gitignore
+- Update local-lab/scripts/02-build-publish.sh
+- Update scripts/paths.sh
+- Update uribrowser-docker/Dockerfile
+- Update uribrowser-docker/packages/python/uribrowseredge/runtime.py
+- Update urikvm-docker/Dockerfile
+- Update urikvm-docker/packages/python/urikvmedge/env.py
+- Update urikvm-docker/packages/python/urikvmedge/runtime.py
+- Update urisys-automation-lab/Dockerfile
+- Update urisys-automation-lab/server/flow_runner.py
+- ... and 1 more files
+
 ## [0.1.8] - 2026-06-16
 
 ### Docs

@@ -167,6 +167,10 @@ activemq-data/
 .envrc
 .venv
 urienv-docker/vendor/uricore/
+# Release metadata — generated locally; CI commits to releases/ on version tags only
+releases/*
+!releases/.gitkeep
+local-lab/generated/
 env/
 venv/
 ENV/

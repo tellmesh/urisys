@@ -10,8 +10,8 @@
 | E1 | `packages/python/urisysedge` | `runtime.py`, `env.py` | ✅ **canonical** |
 | E2 | `urirdpedge` | `urirdp-docker/.../urirdpedge/` | ✅ shim → E1 |
 | E3 | `labedge` | `urisys-automation-lab/.../labedge/` | ✅ shim → E1 |
-| E4 | `urikvmedge` | `urikvm-docker/.../urikvmedge/` | 🔶 fork (~228L) |
-| E5 | `uribrowseredge` | `uribrowser-docker/.../` | 🔶 fork (~222L) |
+| E4 | `urikvmedge` | `urikvm-docker/.../urikvmedge/` | ✅ shim → E1 |
+| E5 | `uribrowseredge` | `uribrowser-docker/.../` | ✅ shim → E1 |
 | E6 | `urisysnode/runtime` | `urisys-node/.../` | 🔶 node variant |
 | E7 | `uristepper/urisysedge` | `uristepper-docker/.../` | 🔶 StepperRuntime |
 

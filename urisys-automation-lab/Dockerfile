@@ -16,6 +16,7 @@ RUN apt-get update \
 
 WORKDIR /opt/lab
 
+COPY packages/python/urisysedge /opt/lab/packages/python/urisysedge
 COPY urisys-automation-lab/packages/python ./packages/python
 COPY urisys-automation-lab/server ./server
 COPY urisys-automation-lab/web ./web
@@ -23,7 +24,8 @@ COPY urisys-automation-lab/flows ./flows
 COPY urisys-automation-lab/docker/entrypoint.sh /usr/local/bin/lab-entrypoint
 
 RUN chmod +x /usr/local/bin/lab-entrypoint \
-    && mkdir -p /opt/lab/data
+    && mkdir -p /opt/lab/data \
+    && pip install --no-cache-dir "uri2flow>=0.1.2"
 
 EXPOSE 8099
 

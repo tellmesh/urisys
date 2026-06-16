@@ -41,3 +41,14 @@ uricore_pythonpath() {
   root="$(uricore_root)" || return 1
   echo "$root/core/python"
 }
+
+# Local release artifacts (CI may override RELEASES_DIR=releases for git commit).
+releases_dir() {
+  local root
+  root="$(_urisys_root)"
+  if [ -n "${RELEASES_DIR:-}" ]; then
+    echo "$RELEASES_DIR"
+    return 0
+  fi
+  echo "$root/local-lab/generated/releases"
+}
