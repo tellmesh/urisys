@@ -16,7 +16,7 @@
 - [x] Repo tellmesh/* + publikacja `urisysedge` 0.1.1, `urikvm` 0.1.1
 - [x] `docs/NODE-SETUP.md` — slave bez `.sh` (pip / shell:// / URI)
 - [x] Flow: `bootstrap-kvm-pypi.uri.flow.yaml`, `remote-probe.uri.flow.yaml`
-- [ ] `goal -a` → PyPI: `urihim`, `uriocr`, `urillm` (wtedy lenovo: samo `pip install`)
+- [ ] `goal -a` → PyPI: `urihim`, `uriocr`, `urillm` (GitHub Releases ✅ jako alternatywa)
 - [ ] Po pełnej publikacji: `pip install "urisys-node[real,kvm]"` bez checkout monorepo
 
 ### Markpact (ścieżka B — równolegle)

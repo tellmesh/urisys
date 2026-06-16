@@ -190,6 +190,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.21] - 2026-06-16
+
+### Docs
+- Update README.md
+- Update TODO.md
+- Update docs/DISTRIBUTION.md
+- Update docs/NODE-SETUP.md
+
+### Other
+- Update scripts/lenovo-node-session.sh
+- Update urisys-node/config/nodes.registry.json
+- Update urisys-node/config/route-map.lenovo.yaml
+- Update urisys-node/packages/python/urisysnode/handlers.py
+- Update urisys-node/packages/python/urisysnode/pack_resolver.py
+- Update urisys-node/packages/python/urisysnode/serve.py
+- Update urisys-node/tests/test_pack_github.py
+- Update uv.lock
+
 ## [0.1.20] - 2026-06-16
 
 ### Docs

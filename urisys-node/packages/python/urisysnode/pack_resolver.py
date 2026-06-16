@@ -1,4 +1,4 @@
-"""Lazy PyPI install for optional urisys-node capability packs."""
+"""Lazy install for optional urisys-node capability packs (PyPI or GitHub Releases)."""
 
 from __future__ import annotations
 
@@ -27,6 +27,24 @@ PACK_PYPI: dict[str, str] = {
     "llm": "urillm[vision]>=0.1.0",
 }
 
+# GitHub Releases wheel (PyPI alternative) — tellmesh/<repo>/releases/download/vX/Y.whl
+PACK_GITHUB_VERSION: dict[str, str] = {
+    "urisysedge": "0.1.1",
+    "kvm": "0.1.1",
+    "him": "0.1.2",
+    "ocr": "0.1.0",
+    "llm": "0.1.0",
+}
+PACK_GITHUB_REPO: dict[str, str] = {
+    "urisysedge": "urisysedge",
+    "kvm": "urikvm",
+    "him": "urihim",
+    "ocr": "uriocr",
+    "llm": "urillm",
+}
+# Prefer GitHub in auto mode until PyPI publish succeeds
+GITHUB_PREFERRED_PACKS = frozenset({"him", "ocr", "llm"})
+
 # URI scheme -> pack alias (screen/uriscreen is bundled with urisys wheel)
 SCHEME_TO_PACK: dict[str, str] = {
     "kvm": "kvm",
@@ -47,6 +65,39 @@ REAL_PIP: dict[str, list[str]] = {
 
 def auto_install_enabled() -> bool:
     return os.environ.get("URISYS_NODE_AUTO_INSTALL", "1") == "1"
+
+
+def pack_install_source() -> str:
+    """pypi | github | auto (github for him/ocr/llm, else pypi)."""
+    return os.environ.get("URISYS_PACK_SOURCE", "auto").strip().lower()
+
+
+def github_owner() -> str:
+    return os.environ.get("URISYS_PACK_GITHUB_OWNER", "tellmesh").strip()
+
+
+def github_wheel_url(pack: str) -> str | None:
+    repo = PACK_GITHUB_REPO.get(pack)
+    version = os.environ.get(f"URISYS_PACK_GITHUB_{pack.upper()}_VERSION") or PACK_GITHUB_VERSION.get(pack)
+    if not repo or not version:
+        return None
+    ver = version.lstrip("v")
+    tag = f"v{ver}"
+    wheel = f"{repo}-{ver}-py3-none-any.whl"
+    return f"https://github.com/{github_owner()}/{repo}/releases/download/{tag}/{wheel}"
+
+
+def resolve_pack_spec(pack: str) -> str | None:
+    pypi = PACK_PYPI.get(pack)
+    github = github_wheel_url(pack)
+    source = pack_install_source()
+    if source == "github":
+        return github or pypi
+    if source == "pypi":
+        return pypi
+    if pack in GITHUB_PREFERRED_PACKS and github:
+        return github
+    return pypi
 
 
 def pack_module(pack: str) -> str:
@@ -87,20 +138,30 @@ def ensure_pip_specs(specs: list[str], *, install: bool = True) -> dict[str, Any
     return result
 
 
-def ensure_pack_pypi(pack: str, *, install: bool = True) -> dict[str, Any]:
-    """Install pack + urisysedge dependency from PyPI when import would fail."""
+def pack_install_specs(pack: str, override_specs: list[str] | None = None) -> list[str]:
+    if override_specs:
+        return [str(s).strip() for s in override_specs if str(s).strip()]
     specs: list[str] = []
     if pack != "urisysedge":
-        specs.append(PACK_PYPI.get("urisysedge", "urisysedge>=0.1.0"))
-    spec = PACK_PYPI.get(pack)
+        edge = resolve_pack_spec("urisysedge")
+        if edge:
+            specs.append(edge)
+    spec = resolve_pack_spec(pack)
     if spec:
         specs.append(spec)
-    elif pack not in ("node", "screen"):
-        return {"ok": False, "error": f"no PyPI mapping for pack {pack!r}"}
-    else:
-        return {"ok": True, "pack": pack, "skipped": True, "reason": "bundled in urisys"}
-    out = ensure_pip_specs(specs, install=install)
+    return specs
+
+
+def ensure_pack_pypi(pack: str, *, install: bool = True, specs: list[str] | None = None) -> dict[str, Any]:
+    """Install pack + urisysedge from PyPI or GitHub Releases when import would fail."""
+    resolved = pack_install_specs(pack, specs)
+    if not resolved:
+        if pack in ("node", "screen"):
+            return {"ok": True, "pack": pack, "skipped": True, "reason": "bundled in urisys"}
+        return {"ok": False, "error": f"no install mapping for pack {pack!r}"}
+    out = ensure_pip_specs(resolved, install=install)
     out["pack"] = pack
+    out["source"] = pack_install_source()
     return out
 
 

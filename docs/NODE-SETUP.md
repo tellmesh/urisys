@@ -40,12 +40,16 @@ pip install -U urisysedge urikvm
 
 Pierwsze `screen://…/capture` z `allow_real: true` doinstaluje `mss` i `Pillow`.
 
-## Co nadal wymaga PyPI
+## Co nadal wymaga PyPI / GitHub
 
-| Pack | PyPI |
-|------|------|
-| urisysedge, urikvm | ✅ |
-| urihim, uriocr, urillm | 🔲 (auto-install zwróci błąd pip do publikacji) |
+| Pack | PyPI | GitHub Releases |
+|------|------|-----------------|
+| urisysedge, urikvm | ✅ | opcjonalnie |
+| urihim | 🔲 | ✅ [v0.1.2](https://github.com/tellmesh/urihim/releases/tag/v0.1.2) |
+| uriocr | 🔲 | ✅ [v0.1.0](https://github.com/tellmesh/uriocr/releases/tag/v0.1.0) |
+| urillm | 🔲 | ✅ [v0.1.0](https://github.com/tellmesh/urillm/releases/tag/v0.1.0) |
+
+Lazy install (`URISYS_PACK_SOURCE=auto`, domyślnie) pobiera **him/ocr/llm z GitHub Releases**.
 
 ## Stary sposób (dev monorepo)
 

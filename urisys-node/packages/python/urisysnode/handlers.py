@@ -62,4 +62,11 @@ def command_install_pack(payload: dict[str, Any], context: dict[str, Any]) -> di
         return {"ok": False, "error": "no runtime in context"}
     from urisysnode.serve import load_pack_into_runtime
 
-    return load_pack_into_runtime(runtime, pack, install=bool(payload.get("install", True)))
+    specs = payload.get("specs")
+    override = [str(s) for s in specs] if isinstance(specs, list) else None
+    return load_pack_into_runtime(
+        runtime,
+        pack,
+        install=bool(payload.get("install", True)),
+        specs=override,
+    )

@@ -41,18 +41,38 @@ Powiązane: [`PACKAGES.md`](PACKAGES.md) (layout monorepo), [`MARKPACT.md`](MARK
 |--------|------|---------------|-------------------|
 | `urisysedge` | ✅ [0.1.1](https://pypi.org/project/urisysedge/) | `tellmesh/urisysedge` | `packages/python/urisysedge/` |
 | `urikvm` | ✅ [0.1.1](https://pypi.org/project/urikvm/) | `tellmesh/urikvm` | `urikvm-docker/packages/python/urikvm/` |
-| `urihim` | 🔲 | `tellmesh/urihim` | vendored |
-| `uriocr` | 🔲 | `tellmesh/uriocr` | vendored |
-| `urillm` | 🔲 | `tellmesh/urillm` | vendored |
+| `urihim` | 🔲 PyPI / ✅ [GitHub v0.1.2](https://github.com/tellmesh/urihim/releases/tag/v0.1.2) | `tellmesh/urihim` | vendored |
+| `uriocr` | 🔲 PyPI / ✅ [GitHub v0.1.0](https://github.com/tellmesh/uriocr/releases/tag/v0.1.0) | `tellmesh/uriocr` | vendored |
+| `urillm` | 🔲 PyPI / ✅ [GitHub v0.1.0](https://github.com/tellmesh/urillm/releases/tag/v0.1.0) | `tellmesh/urillm` | vendored |
 
-**Monorepo jako fallback:** dopóki `urihim` / `uriocr` / `urillm` nie są na PyPI, kopię kanoniczną trzymamy w `urisys/` (vendored). `goal -a` w monorepo **nie wymaga** symlinków do sibling repo — symlinki do `../urisysedge` psuły walidację commita (`Is a directory`).
+**Monorepo jako fallback:** dopóki `urihim` / `uriocr` / `urillm` nie są na PyPI, kopię kanoniczną trzymamy w `urisys/` (vendored). Lazy install na node domyślnie pobiera wheel z **GitHub Releases** (`URISYS_PACK_SOURCE=auto`).
 
-Publikacja brakujących packów PyPI:
+Publikacja PyPI (gdy rate limit minie):
 
 ```bash
 cd ~/github/tellmesh/urihim && goal -a -y
 cd ~/github/tellmesh/uriocr && goal -a -y
 cd ~/github/tellmesh/urillm && goal -a -y
+```
+
+**GitHub Releases (alternatywa PyPI — działa teraz):**
+
+```bash
+bash scripts/publish-kvm-packs-github.sh
+# pojedynczy pack: PACKS_OVERRIDE=urihim bash scripts/publish-kvm-packs-github.sh
+```
+
+Ręczna instalacja z release:
+
+```bash
+pip install https://github.com/tellmesh/urihim/releases/download/v0.1.2/urihim-0.1.2-py3-none-any.whl
+```
+
+Na node z lazy install — domyślnie `auto` (him/ocr/llm z GitHub, reszta z PyPI). Wymuszenie:
+
+```text
+URISYS_PACK_SOURCE=github   # wszystkie packi z GitHub Releases
+URISYS_PACK_SOURCE=pypi     # tylko PyPI
 ```
 
 Zbiorczo (z katalogu tellmesh):

@@ -89,7 +89,13 @@ def build_runtime(config_path: str | None = None) -> Runtime:
     return rt
 
 
-def load_pack_into_runtime(runtime: Runtime, pack: str, *, install: bool = False) -> dict[str, Any]:
+def load_pack_into_runtime(
+    runtime: Runtime,
+    pack: str,
+    *,
+    install: bool = False,
+    specs: list[str] | None = None,
+) -> dict[str, Any]:
     """Hot-load a capability pack. With install=True or auto-install, pip install first."""
     pack = (pack or "").strip()
     if not pack:
@@ -103,7 +109,7 @@ def load_pack_into_runtime(runtime: Runtime, pack: str, *, install: bool = False
     before = {r.pattern for r in runtime.routes}
     pip_result = None
     if install or (auto_install_enabled() and not pack_importable(pack)):
-        pip_result = ensure_pack_pypi(pack, install=True)
+        pip_result = ensure_pack_pypi(pack, install=True, specs=specs)
         if not pip_result.get("ok"):
             return {"ok": False, "pack": pack, "loaded": False, "pip": pip_result}
     try:
@@ -240,7 +246,14 @@ def make_handler(runtime: Runtime):
                 length = int(self.headers.get("Content-Length") or "0")
                 req = json.loads(self.rfile.read(length).decode("utf-8") or "{}")
                 install = bool(req.get("install", True))
-                result = load_pack_into_runtime(runtime, str(req.get("pack") or ""), install=install)
+                specs = req.get("specs")
+                override = [str(s) for s in specs] if isinstance(specs, list) else None
+                result = load_pack_into_runtime(
+                    runtime,
+                    str(req.get("pack") or ""),
+                    install=install,
+                    specs=override,
+                )
                 return self._json(200 if result.get("ok") else 400, result)
             if self.path != "/uri/call":
                 return self._json(404, {"ok": False, "error": "not found"})
