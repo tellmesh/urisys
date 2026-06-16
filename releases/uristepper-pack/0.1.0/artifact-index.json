@@ -16,7 +16,7 @@
         "mock-stepper",
         "uri-process"
       ],
-      "ref": "ghcr.io/tellmesh/stepper-axis-control:0.1.0-linux-amd64-mock",
+      "ref": "ghcr.io/tellmesh/stepper-axis-control@sha256:8d8b3630fe74693b6f38b08b3b93c5acb20bbff88f79647fbe01a405c73ce437",
       "tag": "ghcr.io/tellmesh/stepper-axis-control:0.1.0-linux-amd64-mock"
     }
   ]
