@@ -46,42 +46,32 @@ def _mock_png(label: str) -> bytes:
 
 
 def capture(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
-    backend = _backend(context, payload)
+    from uriscreen.backends import capture_with_fallback, resolve_backend
+
     monitor = _monitor_index(payload, context, context.get("params", {}).get("monitor"))
     out_dir = _output_dir(payload, context)
     ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     path = out_dir / f"screen_{monitor}_{ts}.png"
 
-    if context.get("dry_run") or backend == "mock":
+    if context.get("dry_run"):
         path.write_bytes(_mock_png("mock"))
-        entry = {"path": str(path), "monitor": monitor, "mime": "image/png", "backend": "mock", "dry_run": bool(context.get("dry_run"))}
+        entry = {"path": str(path), "monitor": monitor, "mime": "image/png", "backend": "mock", "dry_run": True}
         _store_latest(context, entry)
         return entry
 
-    if backend == "mss":
-        if not (context.get("allow_real") or os.environ.get("URISYS_ALLOW_REAL") == "1"):
-            raise PermissionError("screen capture requires allow_real=true or URISYS_ALLOW_REAL=1")
-        try:
-            import mss  # type: ignore
-            from PIL import Image  # type: ignore
-        except Exception as exc:
-            raise RuntimeError("mss backend requires: pip install mss pillow") from exc
-        with mss.mss() as sct:
-            shot = sct.grab(sct.monitors[monitor])
-            img = Image.frombytes("RGB", (shot.width, shot.height), shot.rgb)
-            img.save(path, format="PNG")
-        entry = {
-            "path": str(path),
-            "monitor": monitor,
-            "mime": "image/png",
-            "backend": "mss",
-            "width": shot.width,
-            "height": shot.height,
-        }
+    backend = resolve_backend(context, payload)
+    if backend == "mock":
+        path.write_bytes(_mock_png("mock"))
+        entry = {"path": str(path), "monitor": monitor, "mime": "image/png", "backend": "mock"}
         _store_latest(context, entry)
         return entry
 
-    raise ValueError(f"unsupported screen backend: {backend}")
+    if not (context.get("allow_real") or os.environ.get("URISYS_ALLOW_REAL") == "1"):
+        raise PermissionError("screen capture requires allow_real=true or URISYS_ALLOW_REAL=1")
+
+    entry = capture_with_fallback(path, monitor, context, payload)
+    _store_latest(context, entry)
+    return entry
 
 
 def frame(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
@@ -92,6 +82,8 @@ def frame(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
 
 
 def capture_loop(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
+    from uriscreen.backends import resolve_backend
+
     count = int(payload.get("count", 3))
     interval = float(payload.get("interval", 1.0))
     shots = []
@@ -99,4 +91,4 @@ def capture_loop(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, 
         shots.append(capture({**payload, "index": i}, context))
         if interval > 0 and i < count - 1:
             time.sleep(interval)
-    return {"count": len(shots), "shots": shots, "backend": _backend(context, payload)}
+    return {"count": len(shots), "shots": shots, "backend": resolve_backend(context, payload)}

@@ -190,6 +190,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.23] - 2026-06-17
+
+### Docs
+- Update README.md
+
+### Other
+- Update urisys-node/packages/python/uriscreen/backends.py
+- Update urisys-node/packages/python/uriscreen/handlers.py
+- Update urisys-node/packages/python/uriscreen/portal_capture.py
+- Update urisys-node/packages/python/urisysnode/display_bootstrap.py
+- Update urisys-node/packages/python/urisysnode/serve.py
+- Update urisys-node/tests/test_uriscreen_auto.py
+- Update uv.lock
+
 ## [0.1.22] - 2026-06-16
 
 ### Docs

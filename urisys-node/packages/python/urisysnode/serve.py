@@ -273,11 +273,21 @@ def make_handler(runtime: Runtime):
 
 def serve(runtime: Runtime, host: str, port: int) -> None:
     identity = load_identity()
+    bootstrap = None
+    try:
+        from urisysnode.display_bootstrap import bootstrap_wayland_capture
+
+        bootstrap = bootstrap_wayland_capture()
+        runtime.config["display_bootstrap"] = bootstrap
+    except Exception as exc:
+        warnings.warn(f"display bootstrap skipped: {exc}", stacklevel=2)
     server = ThreadingHTTPServer((host, port), make_handler(runtime))
     print(f"urisys-node listening on http://{host}:{port}")
     print(f"node_id={identity['node_id']} fingerprint={identity.get('fingerprint')}")
     print("endpoints: GET /health  GET /uri/routes  GET /events  POST /uri/call  POST /uri/pack")
     print(f"auto_install={'on' if auto_install_enabled() else 'off'} (URISYS_NODE_AUTO_INSTALL)")
+    if bootstrap:
+        print(f"display_bootstrap={bootstrap.get('ok')} session={bootstrap.get('session', bootstrap.get('reason', '-'))}")
     for route in runtime.routes:
         print(" -", route.pattern)
     server.serve_forever()
