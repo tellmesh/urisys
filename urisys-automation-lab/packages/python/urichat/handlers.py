@@ -62,7 +62,10 @@ def uri_execute(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, A
         "approved": approved,
         "dry_run": dry_run,
         "allow_real": bool(context.get("allow_real")),
+        "display": context.get("display"),
+        "xauthority": context.get("xauthority"),
     }
+    forward_context = {k: v for k, v in forward_context.items() if v is not None}
 
     if dry_run or context.get("dry_run"):
         return {

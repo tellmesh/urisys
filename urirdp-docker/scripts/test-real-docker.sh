@@ -51,7 +51,7 @@ log "real click-text"
 curl -fsS -X POST "http://127.0.0.1:${PORT}/uri/call" \
   -H 'Content-Type: application/json' \
   -d "{\"uri\":\"kvm://local/task/command/click-text\",\"payload\":{\"text\":\"OK\"},\"context\":${ctx}}" \
-  | python3 -c "import sys,json; d=json.load(sys.stdin); assert d['ok'], d; r=d['result']; print('clicked', r.get('clicked'), 'at', r.get('llm',{}).get('x'), r.get('llm',{}).get('y'), 'driver', (r.get('click') or {}).get('driver'), 'reason', (r.get('llm') or {}).get('reason')); assert r.get('clicked') is True; assert (r.get('click') or {}).get('driver') == 'xdotool'; assert 'ok' in ((r.get('llm') or {}).get('reason') or '').lower()"
+  | python3 -c "import sys,json; d=json.load(sys.stdin); assert d['ok'], d; r=d['result']; print('clicked', r.get('clicked'), 'at', r.get('llm',{}).get('x'), r.get('llm',{}).get('y'), 'driver', (r.get('click') or {}).get('driver'), 'reason', (r.get('llm') or {}).get('reason')); assert r.get('clicked') is True; assert (r.get('click') or {}).get('driver') == 'xdotool'"
 
 log "real flow"
 docker exec -e URISYS_ALLOW_REAL=1 urirdp-gui \

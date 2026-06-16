@@ -27,12 +27,15 @@ def build_runtime(args) -> Runtime:
     if "kvm" in packs:
         import urirdp_kvm
         urirdp_kvm.register(rt)
+    if "shell" in packs:
+        import urirdp_shell
+        urirdp_shell.register(rt)
     return rt
 
 
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="urisys-rdp")
-    p.add_argument("--packs", default="rdp,kvm,him,ocr,llm")
+    p.add_argument("--packs", default="rdp,kvm,him,ocr,llm,shell")
     p.add_argument("--config", default=os.environ.get("URISYS_CONFIG", "config/rdp-kvm-profile.json"))
     p.add_argument("--events", default="data/events.jsonl")
     sub = p.add_subparsers(dest="cmd", required=True)

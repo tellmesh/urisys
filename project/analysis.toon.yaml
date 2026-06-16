@@ -1,8 +1,8 @@
-# code2llm | 220f 11646L | python:105,yaml:34,shell:32,json:13,toml:9,yml:8,javascript:2,txt:2,proto:2,conf:1,go:1,php:1,typescript:1 | 2026-06-16
+# code2llm | 220f 13389L | python:105,yaml:34,shell:32,json:13,toml:9,yml:8,javascript:2,txt:2,proto:2,go:1,php:1,typescript:1,conf:1 | 2026-06-16
 # generated in 0.04s
-# CC̅=3.4 | critical:11/490 | dups:11 | cycles:0
+# CC̅=3.7 | critical:19/542 | dups:11 | cycles:0
 
-HEALTH[12]:
+HEALTH[20]:
   🔴 DUP   11 classes duplicated
   🟡 CC    main CC=18 (limit:15)
   🟡 CC    compile CC=21 (limit:15)
@@ -12,15 +12,23 @@ HEALTH[12]:
   🟡 CC    analyze CC=18 (limit:15)
   🟡 CC    _heuristic_analyze CC=16 (limit:15)
   🟡 CC    _vision_analyze CC=22 (limit:15)
-  🟡 CC    load_manifest CC=21 (limit:15)
   🟡 CC    build_lab_runtime CC=16 (limit:15)
   🟡 CC    do_POST CC=18 (limit:15)
+  🟡 CC    load_manifest CC=21 (limit:15)
+  🟡 CC    session_urirdp_real_docker CC=30 (limit:15)
+  🟡 CC    session_automation_lab CC=16 (limit:15)
+  🟡 CC    session_lab_10_flows CC=28 (limit:15)
+  🟡 CC    _summarize_events CC=18 (limit:15)
+  🟡 CC    _infer_steps CC=20 (limit:15)
+  🟡 CC    write_session_report CC=28 (limit:15)
+  🟡 CC    analyze_run CC=34 (limit:15)
+  🟡 CC    uri_execute CC=15 (limit:15)
 
 REFACTOR[2]:
   1. rm duplicates  (-11 dup classes)
-  2. split 11 high-CC methods  (CC>15)
+  2. split 19 high-CC methods  (CC>15)
 
-PIPELINES[295]:
+PIPELINES[309]:
   [1] Src [registry]: registry
       PURITY: 100% pure
   [2] Src [runtime]: runtime
@@ -123,6 +131,11 @@ PIPELINES[295]:
       PURITY: 100% pure
 
 LAYERS:
+  scripts/                        CC̄=7.4    ←in:0  →out:0
+  │ !! run_test_sessions         1002L  0C   33m  CC=30     ←0
+  │ !! session_report             509L  3C   13m  CC=34     ←0
+  │ test-goal.sh                11L  0C    0m  CC=0.0    ←0
+  │
   src/                            CC̄=4.2    ←in:0  →out:0
   │ !! markpact_manager           408L  4C   20m  CC=28     ←0
   │ source_manager             224L  2C   11m  CC=11     ←0
@@ -142,6 +155,44 @@ LAYERS:
   │ __init__                     3L  0C    0m  CC=0.0    ←0
   │ __init__                     0L  0C    0m  CC=0.0    ←0
   │
+  urirdp-docker/                  CC̄=3.9    ←in:0  →out:0  ×DUP
+  │ runtime                    244L  3C   14m  CC=14     ←4  ×DUP
+  │ !! handlers                   196L  0C   12m  CC=18     ←0
+  │ handlers                   133L  0C    5m  CC=10     ←0
+  │ env                        123L  0C    6m  CC=11     ←7
+  │ bootstrap-rdp-session.sh   111L  0C    7m  CC=0.0    ←0
+  │ cli                         92L  0C    2m  CC=8      ←0
+  │ handlers                    89L  0C    5m  CC=7      ←0
+  │ handlers                    79L  0C    5m  CC=9      ←0
+  │ handlers                    72L  0C    7m  CC=11     ←0
+  │ display                     63L  0C    6m  CC=7      ←6
+  │ test-real-docker.sh         63L  0C    1m  CC=0.0    ←0
+  │ handlers                    53L  0C    2m  CC=14     ←0
+  │ pyproject.toml              50L  0C    0m  CC=0.0    ←0
+  │ docker-compose.rdp-e2e.yml    39L  0C    0m  CC=0.0    ←0
+  │ rdp-kvm-profile.real.json    38L  0C    0m  CC=0.0    ←0
+  │ supervisord.conf            35L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                  33L  0C    0m  CC=0.0    ←0
+  │ rdp-kvm-profile.json        26L  0C    0m  CC=0.0    ←0
+  │ entrypoint.sh               23L  0C    0m  CC=0.0    ←0
+  │ docker-compose.yml          21L  0C    0m  CC=0.0    ←0
+  │ Makefile                    20L  0C    0m  CC=0.0    ←0
+  │ test-docker.sh              17L  0C    0m  CC=0.0    ←0
+  │ rdp-kvm-smoke.uri.flow.yaml    17L  0C    0m  CC=0.0    ←0
+  │ real-rdp-click-text.uri.flow.yaml    14L  0C    0m  CC=0.0    ←0
+  │ routes                      12L  0C    1m  CC=1      ←0
+  │ test-rdp-real.sh            12L  0C    0m  CC=0.0    ←0
+  │ call-http.sh                10L  0C    0m  CC=0.0    ←0
+  │ routes                       9L  0C    1m  CC=1      ←0
+  │ test-local.sh                8L  0C    0m  CC=0.0    ←0
+  │ routes                       7L  0C    1m  CC=1      ←0
+  │ startwm.sh                   6L  0C    0m  CC=0.0    ←0
+  │ routes                       5L  0C    1m  CC=1      ←0
+  │ __init__                     4L  0C    1m  CC=1      ←0
+  │ routes                       3L  0C    1m  CC=1      ←0
+  │ __init__                     3L  0C    1m  CC=1      ←0
+  │ routes                       2L  0C    1m  CC=1      ←0
+  │
   urikvm-docker/                  CC̄=3.9    ←in:0  →out:0  ×DUP
   │ runtime                    228L  3C   14m  CC=10     ←0  ×DUP
   │ !! handlers                   201L  0C   13m  CC=22     ←0
@@ -151,11 +202,11 @@ LAYERS:
   │ real_pipeline               95L  0C    4m  CC=14     ←0
   │ handlers                    81L  0C    9m  CC=7      ←0
   │ cli                         56L  0C    2m  CC=7      ←0
+  │ pyproject.toml              51L  0C    0m  CC=0.0    ←0
   │ test-real.sh                47L  0C    1m  CC=0.0    ←0
   │ kvm-profile.json            26L  0C    0m  CC=0.0    ←0
   │ kvm-profile.real.json       24L  0C    0m  CC=0.0    ←0
   │ kvm-click-ok.uri.flow.yaml    20L  0C    0m  CC=0.0    ←0
-  │ pyproject.toml              18L  0C    0m  CC=0.0    ←0
   │ docker-compose.yml          10L  0C    0m  CC=0.0    ←0
   │ test-local.sh                8L  0C    0m  CC=0.0    ←0
   │ routes                       6L  0C    1m  CC=1      ←0
@@ -165,47 +216,12 @@ LAYERS:
   │ routes                       3L  0C    1m  CC=1      ←0
   │ routes                       2L  0C    1m  CC=1      ←0
   │
-  urirdp-docker/                  CC̄=3.8    ←in:0  →out:0  ×DUP
-  │ runtime                    244L  3C   14m  CC=14     ←4  ×DUP
-  │ !! handlers                   196L  0C   12m  CC=18     ←0
-  │ handlers                   133L  0C    5m  CC=10     ←0
-  │ env                        123L  0C    6m  CC=11     ←7
-  │ bootstrap-rdp-session.sh   111L  0C    7m  CC=0.0    ←0
-  │ cli                         89L  0C    2m  CC=8      ←0
-  │ handlers                    89L  0C    5m  CC=7      ←0
-  │ handlers                    79L  0C    5m  CC=9      ←0
-  │ display                     63L  0C    6m  CC=7      ←5
-  │ test-real-docker.sh         63L  0C    1m  CC=0.0    ←0
-  │ handlers                    55L  0C    5m  CC=11     ←0
-  │ docker-compose.rdp-e2e.yml    39L  0C    0m  CC=0.0    ←0
-  │ rdp-kvm-profile.real.json    38L  0C    0m  CC=0.0    ←0
-  │ supervisord.conf            35L  0C    0m  CC=0.0    ←0
-  │ Dockerfile                  33L  0C    0m  CC=0.0    ←0
-  │ rdp-kvm-profile.json        26L  0C    0m  CC=0.0    ←0
-  │ docker-compose.yml          21L  0C    0m  CC=0.0    ←0
-  │ Makefile                    20L  0C    0m  CC=0.0    ←0
-  │ entrypoint.sh               19L  0C    0m  CC=0.0    ←0
-  │ pyproject.toml              17L  0C    0m  CC=0.0    ←0
-  │ test-docker.sh              17L  0C    0m  CC=0.0    ←0
-  │ rdp-kvm-smoke.uri.flow.yaml    17L  0C    0m  CC=0.0    ←0
-  │ real-rdp-click-text.uri.flow.yaml    14L  0C    0m  CC=0.0    ←0
-  │ routes                      12L  0C    1m  CC=1      ←0
-  │ test-rdp-real.sh            12L  0C    0m  CC=0.0    ←0
-  │ call-http.sh                10L  0C    0m  CC=0.0    ←0
-  │ test-local.sh                8L  0C    0m  CC=0.0    ←0
-  │ startwm.sh                   6L  0C    0m  CC=0.0    ←0
-  │ routes                       5L  0C    1m  CC=1      ←0
-  │ routes                       5L  0C    1m  CC=1      ←0
-  │ routes                       3L  0C    1m  CC=1      ←0
-  │ __init__                     3L  0C    1m  CC=1      ←0
-  │ routes                       2L  0C    1m  CC=1      ←0
-  │
   uribrowser-docker/              CC̄=3.3    ←in:0  →out:0  ×DUP
   │ runtime                    222L  3C   14m  CC=10     ←0  ×DUP
   │ handlers                    87L  0C    6m  CC=11     ←0
+  │ pyproject.toml              50L  0C    0m  CC=0.0    ←0
   │ cli                         49L  0C    2m  CC=7      ←0
   │ test-real.sh                28L  0C    0m  CC=0.0    ←0
-  │ pyproject.toml              17L  0C    0m  CC=0.0    ←0
   │ browser-demo.uri.flow.yaml    14L  0C    0m  CC=0.0    ←0
   │ docker-compose.yml          10L  0C    0m  CC=0.0    ←0
   │ browser-profile.json        10L  0C    0m  CC=0.0    ←0
@@ -215,6 +231,38 @@ LAYERS:
   │ routes                       5L  0C    1m  CC=1      ←0
   │ __init__                     1L  0C    0m  CC=0.0    ←0
   │ __init__                     1L  0C    0m  CC=0.0    ←0
+  │
+  urisys-automation-lab/          CC̄=3.2    ←in:0  →out:0  ×DUP
+  │ !! automation_lab_server      213L  1C    9m  CC=18     ←0
+  │ runtime                    153L  3C   10m  CC=8      ←0  ×DUP
+  │ app.js                     131L  0C   17m  CC=2      ←0
+  │ !! handlers                    81L  0C    4m  CC=15     ←0
+  │ docker-compose.lab.yml      65L  0C    0m  CC=0.0    ←0
+  │ handlers                    57L  0C    4m  CC=5      ←0
+  │ 10_full_maintenance_rdp.uri.flow.yaml    37L  0C    0m  CC=0.0    ←0
+  │ handlers                    35L  0C    3m  CC=4      ←0
+  │ Dockerfile                  33L  0C    0m  CC=0.0    ←0
+  │ local-rdp.routes.yaml       29L  0C    0m  CC=0.0    ←0
+  │ validate-flows.sh           28L  0C    0m  CC=0.0    ←0
+  │ routes                      23L  0C    1m  CC=1      ←0
+  │ docker-up.sh                21L  0C    0m  CC=0.0    ←0
+  │ docker-smoke.sh             20L  0C    0m  CC=0.0    ←0
+  │ 09_webrtc_video_chat_rdp.uri.flow.yaml    19L  0C    0m  CC=0.0    ←0
+  │ entrypoint.sh               18L  0C    0m  CC=0.0    ←0
+  │ 05_fill_form_gui.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
+  │ 08_voice_command_to_kvm.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
+  │ 06_terminal_htop_tui.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
+  │ 07_edit_config_nano_tui.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
+  │ routes                      17L  0C    1m  CC=1      ←0
+  │ routes                      17L  0C    1m  CC=1      ←0
+  │ 02_update_system_tui.uri.flow.yaml    15L  0C    0m  CC=0.0    ←0
+  │ run-lab.sh                  13L  0C    0m  CC=0.0    ←0
+  │ 04_browser_download_file.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
+  │ 01_install_browser.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
+  │ 03_open_browser_gui.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
+  │ docker-logs.sh               6L  0C    0m  CC=0.0    ←0
+  │ docker-down.sh               6L  0C    0m  CC=0.0    ←0
+  │ static_server                6L  0C    0m  CC=0.0    ←0
   │
   urienv-docker/                  CC̄=3.2    ←in:0  →out:0
   │ !! registry                   202L  1C    9m  CC=21     ←0
@@ -264,42 +312,6 @@ LAYERS:
   │ smtp_password.txt            1L  0C    0m  CC=0.0    ←0
   │ markpact_token.txt           1L  0C    0m  CC=0.0    ←0
   │
-  urisys-automation-lab/          CC̄=3.2    ←in:0  →out:0  ×DUP
-  │ !! automation_lab_server      213L  1C    9m  CC=18     ←0
-  │ runtime                    153L  3C   10m  CC=8      ←0  ×DUP
-  │ app.js                     131L  0C   17m  CC=2      ←0
-  │ handlers                    78L  0C    4m  CC=13     ←0
-  │ docker-compose.lab.yml      65L  0C    0m  CC=0.0    ←0
-  │ handlers                    57L  0C    4m  CC=5      ←0
-  │ 10_full_maintenance_rdp.uri.flow.yaml    37L  0C    0m  CC=0.0    ←0
-  │ handlers                    35L  0C    3m  CC=4      ←0
-  │ Dockerfile                  33L  0C    0m  CC=0.0    ←0
-  │ local-rdp.routes.yaml       29L  0C    0m  CC=0.0    ←0
-  │ validate-flows.sh           28L  0C    0m  CC=0.0    ←0
-  │ routes                      23L  0C    1m  CC=1      ←0
-  │ docker-up.sh                21L  0C    0m  CC=0.0    ←0
-  │ docker-smoke.sh             20L  0C    0m  CC=0.0    ←0
-  │ 09_webrtc_video_chat_rdp.uri.flow.yaml    19L  0C    0m  CC=0.0    ←0
-  │ entrypoint.sh               18L  0C    0m  CC=0.0    ←0
-  │ 05_fill_form_gui.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
-  │ 08_voice_command_to_kvm.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
-  │ 07_edit_config_nano_tui.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
-  │ 06_terminal_htop_tui.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
-  │ routes                      17L  0C    1m  CC=1      ←0
-  │ routes                      17L  0C    1m  CC=1      ←0
-  │ 02_update_system_tui.uri.flow.yaml    15L  0C    0m  CC=0.0    ←0
-  │ run-lab.sh                  13L  0C    0m  CC=0.0    ←0
-  │ 04_browser_download_file.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
-  │ 01_install_browser.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
-  │ 03_open_browser_gui.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
-  │ docker-logs.sh               6L  0C    0m  CC=0.0    ←0
-  │ docker-down.sh               6L  0C    0m  CC=0.0    ←0
-  │ static_server                6L  0C    0m  CC=0.0    ←0
-  │ __init__                     0L  0C    0m  CC=0.0    ←0
-  │ __init__                     0L  0C    0m  CC=0.0    ←0
-  │ __init__                     0L  0C    0m  CC=0.0    ←0
-  │ __init__                     0L  0C    0m  CC=0.0    ←0
-  │
   urisys-node/                    CC̄=3.0    ←in:0  →out:0  ×DUP
   │ runtime                    165L  3C   11m  CC=8      ←0  ×DUP
   │ identity                   110L  0C   12m  CC=4      ←3
@@ -307,12 +319,12 @@ LAYERS:
   │ serve                      107L  0C    4m  CC=11     ←0
   │ handlers                   102L  0C    9m  CC=7      ←0
   │ client                      92L  0C    3m  CC=6      ←1
+  │ pyproject.toml              57L  0C    0m  CC=0.0    ←0
   │ router                      47L  0C    5m  CC=6      ←2
   │ handlers                    41L  0C    4m  CC=2      ←0
   │ node-profile.json           32L  0C    0m  CC=0.0    ←0
   │ routes                      23L  0C    1m  CC=1      ←0
   │ env                         22L  0C    1m  CC=8      ←0
-  │ pyproject.toml              20L  0C    0m  CC=0.0    ←0
   │ routes                      19L  0C    1m  CC=1      ←0
   │ route-map.master.yaml       19L  0C    0m  CC=0.0    ←0
   │ install-linux.sh            16L  0C    0m  CC=0.0    ←0
@@ -320,8 +332,6 @@ LAYERS:
   │ slave-kvm-demo.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
   │ screen-capture-mss.uri.flow.yaml    12L  0C    0m  CC=0.0    ←0
   │ nodes.registry.json         10L  0C    0m  CC=0.0    ←0
-  │ __init__                     0L  0C    0m  CC=0.0    ←0
-  │ __init__                     0L  0C    0m  CC=0.0    ←0
   │
   uristepper-docker/              CC̄=2.2    ←in:0  →out:0  ×DUP
   │ runtime                    193L  5C   12m  CC=6      ←11  ×DUP
@@ -342,6 +352,7 @@ LAYERS:
   │ test-docker.sh               7L  0C    0m  CC=0.0    ←0
   │ __main__                     2L  0C    0m  CC=0.0    ←0
   │ __init__                     1L  0C    0m  CC=0.0    ←0
+  │ __init__                     1L  0C    0m  CC=0.0    ←0
   │
   examples/                       CC̄=1.0    ←in:0  →out:0
   │ app.js                      21L  0C    5m  CC=1      ←0
@@ -360,9 +371,6 @@ LAYERS:
   schemas/                        CC̄=0.0    ←in:0  →out:0
   │ uripack-markpact.schema.json    47L  0C    0m  CC=0.0    ←0
   │
-  scripts/                        CC̄=0.0    ←in:0  →out:0
-  │ test-goal.sh                11L  0C    0m  CC=0.0    ←0
-  │
   testql-scenarios/               CC̄=0.0    ←in:0  →out:0
   │ generated-api-smoke.testql.toon.yaml    39L  0C    0m  CC=0.0    ←0
   │ generated-from-pytests.testql.toon.yaml    24L  0C    0m  CC=0.0    ←0
@@ -373,12 +381,6 @@ LAYERS:
   │
   ── zero ──
      src/urisys/controllers/__init__.py        0L
-     urisys-automation-lab/packages/python/labedge/__init__.py  0L
-     urisys-automation-lab/packages/python/urichat/__init__.py  0L
-     urisys-automation-lab/packages/python/uristt/__init__.py  0L
-     urisys-automation-lab/packages/python/uriwebrtc/__init__.py  0L
-     urisys-node/packages/python/uriscreen/__init__.py  0L
-     urisys-node/packages/python/urisysnode/__init__.py  0L
 
 COUPLING:
                                       urirdp-docker.packages    uristepper-docker.packages        urikvm-docker.packages        urienv-docker.packages          urisys-node.packages    uribrowser-docker.packages                    src.urisys          urienv-docker.vendor         urikvm-docker.scripts  urisys-automation-lab.server

@@ -1,221 +1,262 @@
 flowchart LR
 %% generated in 0.01s
+    subgraph scripts__run_test_sessions
+        scripts__run_test_sessions___wait_health["_wait_health"]
+        scripts__run_test_sessions__session_automation_lab["session_automation_lab"]
+        scripts__run_test_sessions___docker_logs["_docker_logs"]
+        scripts__run_test_sessions__session_pytest_urisys_node["session_pytest_urisys_node"]
+        scripts__run_test_sessions___capture_rdp_screenshot["_capture_rdp_screenshot"]
+        scripts__run_test_sessions___run_cmd["_run_cmd"]
+        scripts__run_test_sessions___prepare_urirdp_data["_prepare_urirdp_data"]
+        scripts__run_test_sessions___read_meta["_read_meta"]
+        scripts__run_test_sessions___finalize_session["_finalize_session"]
+        scripts__run_test_sessions__session_pytest_urisys["session_pytest_urisys"]
+        scripts__run_test_sessions___sleep_ports["_sleep_ports"]
+        scripts__run_test_sessions___prepare_ok_target["_prepare_ok_target"]
+        scripts__run_test_sessions___compose_cmd["_compose_cmd"]
+        scripts__run_test_sessions___host_id["_host_id"]
+        scripts__run_test_sessions__session_urirdp_rdp_e2e["session_urirdp_rdp_e2e"]
+        scripts__run_test_sessions___save_json["_save_json"]
+        scripts__run_test_sessions__main["main"]
+        scripts__run_test_sessions___now_iso["_now_iso"]
+        scripts__run_test_sessions__session_lab_10_flows["session_lab_10_flows"]
+        scripts__run_test_sessions___http_json["_http_json"]
+        scripts__run_test_sessions__session_urirdp_real_docker["session_urirdp_real_docker"]
+        scripts__run_test_sessions__session_urirdp_mock_docker["session_urirdp_mock_docker"]
+        scripts__run_test_sessions___copy_container_file["_copy_container_file"]
+        scripts__run_test_sessions__session_pytest_urirdp["session_pytest_urirdp"]
+        scripts__run_test_sessions___write_meta["_write_meta"]
+    end
+    subgraph scripts__session_report
+        scripts__session_report___infer_steps["_infer_steps"]
+        scripts__session_report___tail["_tail"]
+        scripts__session_report__generate_report["generate_report"]
+        scripts__session_report__write_run_analysis["write_run_analysis"]
+        scripts__session_report__main["main"]
+        scripts__session_report__analyze_run["analyze_run"]
+        scripts__session_report__write_session_report["write_session_report"]
+        scripts__session_report___read_json["_read_json"]
+    end
     subgraph src__urisys
-        src__urisys__cli___add_runtime_flags["_add_runtime_flags"]
-        src__urisys__cli__main["main"]
-        src__urisys__managers__markpact_manager__MarkpactManager___scheme["_scheme"]
-        src__urisys__managers__event_manager__EventManager__list_events["list_events"]
+        src__urisys__managers__markpact_manager___safe_identifier["_safe_identifier"]
+        src__urisys__cli__resolve_markpact_source["resolve_markpact_source"]
+        src__urisys__managers__markpact_manager__MarkpactManager__read_blocks["read_blocks"]
         src__urisys__http_server___send["_send"]
         src__urisys__cli__build_parser["build_parser"]
-        src__urisys__flow__iter_steps["iter_steps"]
-        src__urisys__controllers__flow_controller__FlowController__run["run"]
-        src__urisys__http_server__create_server["create_server"]
-        src__urisys__managers__markpact_manager___safe_identifier["_safe_identifier"]
-        src__urisys__managers__markpact_manager___scheme_from_uri["_scheme_from_uri"]
-        src__urisys__controllers__server_controller__ServerController____init__["__init__"]
-        src__urisys__managers__markpact_manager__MarkpactManager__compile["compile"]
         src__urisys__managers__markpact_manager___parse_meta["_parse_meta"]
+        src__urisys__cli__main["main"]
+        src__urisys__managers__markpact_manager__MarkpactManager__compile["compile"]
         src__urisys__managers__markpact_manager__MarkpactManager___compile_manifest["_compile_manifest"]
-        src__urisys__cli__resolve_markpact_source["resolve_markpact_source"]
+        src__urisys__managers__event_manager__EventManager__list_events["list_events"]
+        src__urisys__cli___add_runtime_flags["_add_runtime_flags"]
         src__urisys__cli__print_json["print_json"]
+        src__urisys__controllers__flow_controller__FlowController__run["run"]
+        src__urisys__managers__markpact_manager___scheme_from_uri["_scheme_from_uri"]
         src__urisys__flow__load_flow["load_flow"]
+        src__urisys__flow__iter_steps["iter_steps"]
         src__urisys__http_server___read_json["_read_json"]
-        src__urisys__managers__markpact_manager__MarkpactManager__read_blocks["read_blocks"]
         src__urisys__managers__pack_manager__PackManager__manifest_paths["manifest_paths"]
+        src__urisys__http_server__create_server["create_server"]
+        src__urisys__controllers__server_controller__ServerController____init__["__init__"]
+        src__urisys__managers__markpact_manager__MarkpactManager___scheme["_scheme"]
     end
     subgraph uribrowser_docker__packages
         uribrowser_docker__packages__python__uribrowseredge__runtime__make_handler["make_handler"]
-        uribrowser_docker__packages__python__uribrowserdocker__handlers__status["status"]
-        uribrowser_docker__packages__python__uribrowseredge__cli__build_runtime["build_runtime"]
-        uribrowser_docker__packages__python__uribrowseredge__runtime__serve["serve"]
-        uribrowser_docker__packages__python__uribrowserdocker__handlers__get_dom["get_dom"]
-        uribrowser_docker__packages__python__uribrowserdocker__handlers___session_state["_session_state"]
         uribrowser_docker__packages__python__uribrowseredge__runtime__load_yaml_flow["load_yaml_flow"]
+        uribrowser_docker__packages__python__uribrowserdocker__handlers__status["status"]
         uribrowser_docker__packages__python__uribrowserdocker__handlers__screenshot["screenshot"]
+        uribrowser_docker__packages__python__uribrowserdocker__handlers__get_dom["get_dom"]
         uribrowser_docker__packages__python__uribrowseredge__runtime__run_flow["run_flow"]
-        uribrowser_docker__packages__python__uribrowserdocker__handlers__open_page["open_page"]
+        uribrowser_docker__packages__python__uribrowseredge__runtime__serve["serve"]
         uribrowser_docker__packages__python__uribrowserdocker__handlers___profile["_profile"]
+        uribrowser_docker__packages__python__uribrowserdocker__handlers___session_state["_session_state"]
+        uribrowser_docker__packages__python__uribrowserdocker__handlers__open_page["open_page"]
+        uribrowser_docker__packages__python__uribrowseredge__cli__build_runtime["build_runtime"]
     end
     subgraph urienv_docker__packages
-        urienv_docker__packages__python__urienv__src__urienv__handlers___name["_name"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers___mask["_mask"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers__list_vars["list_vars"]
-        urienv_docker__packages__python__urisysedge__src__urisysedge__pack_loader__manifest_path_for_pack["manifest_path_for_pack"]
-        urienv_docker__packages__python__urisysedge__src__urisysedge__runtime__build_runtime["build_runtime"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers__var_exists["var_exists"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers__secret_value["secret_value"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers___is_public["_is_public"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers___is_secret["_is_secret"]
-        urienv_docker__packages__python__urisysedge__src__urisysedge__pack_loader__manifest_paths["manifest_paths"]
-        urienv_docker__packages__python__urisysedge__src__urisysedge__runtime__result_to_dict["result_to_dict"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers__startup_config["startup_config"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers__health["health"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers__var_set["var_set"]
-        urienv_docker__packages__python__urisysedge__src__urisysedge__runtime__load_env_config["load_env_config"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers___get_value["_get_value"]
-        urienv_docker__packages__python__urisysedge__src__urisysedge__runtime__load_device_config["load_device_config"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers___cfg["_cfg"]
-        urienv_docker__packages__python__urisysedge__src__urisysedge__flow__run_flow["run_flow"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers__secret_masked["secret_masked"]
         urienv_docker__packages__python__urisysedge__src__urisysedge__server__serve["serve"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers__var_value["var_value"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers___is_mutable["_is_mutable"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers__startup_config["startup_config"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers___is_secret["_is_secret"]
         urienv_docker__packages__python__urienv__src__urienv__handlers__var_unset["var_unset"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers___require_visible["_require_visible"]
-        urienv_docker__packages__python__urienv__src__urienv__handlers___split_csv["_split_csv"]
         urienv_docker__packages__python__urienv__src__urienv__handlers___read_docker_secret["_read_docker_secret"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers__health["health"]
+        urienv_docker__packages__python__urisysedge__src__urisysedge__pack_loader__manifest_path_for_pack["manifest_path_for_pack"]
+        urienv_docker__packages__python__urisysedge__src__urisysedge__flow__run_flow["run_flow"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers__secret_value["secret_value"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers___split_csv["_split_csv"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers___name["_name"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers___is_mutable["_is_mutable"]
+        urienv_docker__packages__python__urisysedge__src__urisysedge__runtime__build_runtime["build_runtime"]
+        urienv_docker__packages__python__urisysedge__src__urisysedge__runtime__result_to_dict["result_to_dict"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers__var_value["var_value"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers___get_value["_get_value"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers___is_public["_is_public"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers___cfg["_cfg"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers__secret_masked["secret_masked"]
+        urienv_docker__packages__python__urisysedge__src__urisysedge__pack_loader__manifest_paths["manifest_paths"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers__var_set["var_set"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers___require_visible["_require_visible"]
+        urienv_docker__packages__python__urisysedge__src__urisysedge__runtime__load_env_config["load_env_config"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers__list_vars["list_vars"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers___mask["_mask"]
+        urienv_docker__packages__python__urienv__src__urienv__handlers__var_exists["var_exists"]
+        urienv_docker__packages__python__urisysedge__src__urisysedge__runtime__load_device_config["load_device_config"]
     end
     subgraph urienv_docker__vendor
-        urienv_docker__vendor__uricore__core__python__uri_control__cli__cmd_list["cmd_list"]
-        urienv_docker__vendor__uricore__core__python__uri_control__parser__canonicalize_uri["canonicalize_uri"]
-        urienv_docker__vendor__uricore__core__python__uri_control__event_store__dump_events["dump_events"]
-        urienv_docker__vendor__uricore__core__python__uri_control__cli___load_payload["_load_payload"]
-        urienv_docker__vendor__uricore__core__python__uri_control__registry___compile_pattern["_compile_pattern"]
-        urienv_docker__vendor__uricore__core__python__uri_control__registry___load_python_handler["_load_python_handler"]
+        urienv_docker__vendor__uricore__core__python__uri_control__cli__main["main"]
         urienv_docker__vendor__uricore__core__python__uri_control__dispatcher__UriControlRuntime__call["call"]
         urienv_docker__vendor__uricore__core__python__uri_control__cli__cmd_explain["cmd_explain"]
-        urienv_docker__vendor__uricore__core__python__uri_control__parser__parse_uri["parse_uri"]
         urienv_docker__vendor__uricore__core__python__uri_control__dispatcher___new_id["_new_id"]
-        urienv_docker__vendor__uricore__core__python__uri_control__cli__build_parser["build_parser"]
-        urienv_docker__vendor__uricore__core__python__uri_control__registry__CapabilityRegistry__match["match"]
-        urienv_docker__vendor__uricore__core__python__uri_control__cli__main["main"]
-        urienv_docker__vendor__uricore__core__python__uri_control__cli__cmd_call["cmd_call"]
-        urienv_docker__vendor__uricore__core__python__uri_control__registry___pattern_body["_pattern_body"]
+        urienv_docker__vendor__uricore__core__python__uri_control__parser__canonicalize_uri["canonicalize_uri"]
+        urienv_docker__vendor__uricore__core__python__uri_control__parser__parse_uri["parse_uri"]
+        urienv_docker__vendor__uricore__core__python__uri_control__cli__cmd_list["cmd_list"]
         urienv_docker__vendor__uricore__core__python__uri_control__cli___registry_from_args["_registry_from_args"]
+        urienv_docker__vendor__uricore__core__python__uri_control__cli__build_parser["build_parser"]
+        urienv_docker__vendor__uricore__core__python__uri_control__cli__cmd_call["cmd_call"]
+        urienv_docker__vendor__uricore__core__python__uri_control__event_store__dump_events["dump_events"]
+        urienv_docker__vendor__uricore__core__python__uri_control__registry___compile_pattern["_compile_pattern"]
+        urienv_docker__vendor__uricore__core__python__uri_control__registry__CapabilityRegistry__match["match"]
+        urienv_docker__vendor__uricore__core__python__uri_control__registry___load_python_handler["_load_python_handler"]
+        urienv_docker__vendor__uricore__core__python__uri_control__registry___pattern_body["_pattern_body"]
+        urienv_docker__vendor__uricore__core__python__uri_control__cli___load_payload["_load_payload"]
     end
     subgraph urikvm_docker__packages
-        urikvm_docker__packages__python__urikvm__handlers__monitor_list["monitor_list"]
-        urikvm_docker__packages__python__urihim__handlers___driver["_driver"]
-        urikvm_docker__packages__python__urikvmedge__cli__build_runtime["build_runtime"]
-        urikvm_docker__packages__python__urillm__handlers___driver["_driver"]
-        urikvm_docker__packages__python__uriocr__handlers___merge_word_boxes["_merge_word_boxes"]
-        urikvm_docker__packages__python__uriocr__handlers___tesseract_boxes["_tesseract_boxes"]
-        urikvm_docker__packages__python__urihim__handlers___state["_state"]
-        urikvm_docker__packages__python__urillm__handlers___vision_analyze["_vision_analyze"]
-        urikvm_docker__packages__python__urikvm__handlers__screenshot["screenshot"]
-        urikvm_docker__packages__python__uriocr__handlers___ocr_cfg["_ocr_cfg"]
-        urikvm_docker__packages__python__uriocr__handlers___extract_text["_extract_text"]
-        urikvm_docker__packages__python__urihim__handlers__mouse_status["mouse_status"]
-        urikvm_docker__packages__python__urikvmedge__runtime__make_handler["make_handler"]
-        urikvm_docker__packages__python__urihim__handlers__mouse_move["mouse_move"]
-        urikvm_docker__packages__python__urillm__handlers___goal_text["_goal_text"]
-        urikvm_docker__packages__python__urikvmedge__runtime__load_yaml_flow["load_yaml_flow"]
-        urikvm_docker__packages__python__urillm__handlers___litellm_chat["_litellm_chat"]
-        urikvm_docker__packages__python__uriocr__handlers__latest_text["latest_text"]
-        urikvm_docker__packages__python__uriocr__handlers___latest_screenshot["_latest_screenshot"]
-        urikvm_docker__packages__python__urihim__handlers___real_allowed["_real_allowed"]
-        urikvm_docker__packages__python__uriocr__handlers__image_text["image_text"]
-        urikvm_docker__packages__python__urillm__handlers___parse_json_response["_parse_json_response"]
-        urikvm_docker__packages__python__urillm__handlers___llm_cfg["_llm_cfg"]
-        urikvm_docker__packages__python__urikvmedge__runtime__serve["serve"]
-        urikvm_docker__packages__python__urikvm__handlers___store_screenshot["_store_screenshot"]
-        urikvm_docker__packages__python__urillm__handlers___box_center["_box_center"]
-        urikvm_docker__packages__python__urikvm__handlers___profile["_profile"]
-        urikvm_docker__packages__python__urihim__handlers___pyautogui["_pyautogui"]
-        urikvm_docker__packages__python__urillm__handlers__vision_analyze["vision_analyze"]
-        urikvm_docker__packages__python__urikvmedge__runtime__run_flow["run_flow"]
-        urikvm_docker__packages__python__urihim__handlers__keyboard_hotkey["keyboard_hotkey"]
-        urikvm_docker__packages__python__urikvmedge__runtime__Runtime__call["call"]
-        urikvm_docker__packages__python__uriocr__handlers___driver["_driver"]
-        urikvm_docker__packages__python__urikvmedge__env___env_policy_candidates["_env_policy_candidates"]
-        urikvm_docker__packages__python__urihim__handlers__keyboard_type["keyboard_type"]
-        urikvm_docker__packages__python__urikvmedge__env__load_env_policy["load_env_policy"]
-        urikvm_docker__packages__python__urihim__handlers__mouse_click["mouse_click"]
-        urikvm_docker__packages__python__urillm__handlers___heuristic_analyze["_heuristic_analyze"]
-        urikvm_docker__packages__python__urikvmedge__env__resolve_env_var["resolve_env_var"]
-        urikvm_docker__packages__python__uriocr__handlers___mock_boxes["_mock_boxes"]
-        urikvm_docker__packages__python__urillm__handlers___target_from_goal["_target_from_goal"]
-        urikvm_docker__packages__python__urillm__handlers___openai_chat["_openai_chat"]
-        urikvm_docker__packages__python__urillm__handlers___vision_messages["_vision_messages"]
-        urikvm_docker__packages__python__uriocr__handlers___png_bytes["_png_bytes"]
         urikvm_docker__packages__python__urikvmedge__env___env_config["_env_config"]
+        urikvm_docker__packages__python__urihim__handlers__mouse_click["mouse_click"]
+        urikvm_docker__packages__python__uriocr__handlers___driver["_driver"]
+        urikvm_docker__packages__python__uriocr__handlers___merge_word_boxes["_merge_word_boxes"]
+        urikvm_docker__packages__python__urillm__handlers___vision_analyze["_vision_analyze"]
+        urikvm_docker__packages__python__urillm__handlers___box_center["_box_center"]
+        urikvm_docker__packages__python__uriocr__handlers___latest_screenshot["_latest_screenshot"]
+        urikvm_docker__packages__python__urihim__handlers__keyboard_hotkey["keyboard_hotkey"]
+        urikvm_docker__packages__python__urillm__handlers___litellm_chat["_litellm_chat"]
+        urikvm_docker__packages__python__urillm__handlers___target_from_goal["_target_from_goal"]
+        urikvm_docker__packages__python__urihim__handlers__mouse_status["mouse_status"]
+        urikvm_docker__packages__python__urihim__handlers___state["_state"]
+        urikvm_docker__packages__python__urillm__handlers___vision_messages["_vision_messages"]
+        urikvm_docker__packages__python__urikvmedge__env__resolve_env_var["resolve_env_var"]
+        urikvm_docker__packages__python__urillm__handlers___driver["_driver"]
+        urikvm_docker__packages__python__urillm__handlers___parse_json_response["_parse_json_response"]
+        urikvm_docker__packages__python__urikvmedge__runtime__Runtime__call["call"]
+        urikvm_docker__packages__python__urikvmedge__runtime__make_handler["make_handler"]
+        urikvm_docker__packages__python__urikvmedge__env__load_env_policy["load_env_policy"]
+        urikvm_docker__packages__python__urikvmedge__runtime__load_yaml_flow["load_yaml_flow"]
+        urikvm_docker__packages__python__urillm__handlers___goal_text["_goal_text"]
+        urikvm_docker__packages__python__uriocr__handlers___png_bytes["_png_bytes"]
+        urikvm_docker__packages__python__urillm__handlers___llm_cfg["_llm_cfg"]
+        urikvm_docker__packages__python__urihim__handlers__keyboard_type["keyboard_type"]
+        urikvm_docker__packages__python__urillm__handlers__vision_analyze["vision_analyze"]
+        urikvm_docker__packages__python__urillm__handlers___heuristic_analyze["_heuristic_analyze"]
+        urikvm_docker__packages__python__uriocr__handlers__image_text["image_text"]
+        urikvm_docker__packages__python__urillm__handlers___openai_chat["_openai_chat"]
+        urikvm_docker__packages__python__urikvmedge__runtime__run_flow["run_flow"]
+        urikvm_docker__packages__python__urikvmedge__cli__build_runtime["build_runtime"]
+        urikvm_docker__packages__python__urikvm__handlers___profile["_profile"]
+        urikvm_docker__packages__python__urikvmedge__env___env_policy_candidates["_env_policy_candidates"]
+        urikvm_docker__packages__python__urikvm__handlers__screenshot["screenshot"]
+        urikvm_docker__packages__python__urihim__handlers___real_allowed["_real_allowed"]
+        urikvm_docker__packages__python__urikvm__handlers__monitor_list["monitor_list"]
+        urikvm_docker__packages__python__urihim__handlers__mouse_move["mouse_move"]
+        urikvm_docker__packages__python__urikvmedge__runtime__serve["serve"]
+        urikvm_docker__packages__python__urihim__handlers___driver["_driver"]
+        urikvm_docker__packages__python__uriocr__handlers__latest_text["latest_text"]
+        urikvm_docker__packages__python__urihim__handlers___pyautogui["_pyautogui"]
+        urikvm_docker__packages__python__uriocr__handlers___ocr_cfg["_ocr_cfg"]
+        urikvm_docker__packages__python__uriocr__handlers___mock_boxes["_mock_boxes"]
+        urikvm_docker__packages__python__urikvm__handlers___store_screenshot["_store_screenshot"]
+        urikvm_docker__packages__python__uriocr__handlers___tesseract_boxes["_tesseract_boxes"]
+        urikvm_docker__packages__python__uriocr__handlers___extract_text["_extract_text"]
     end
     subgraph urikvm_docker__scripts
-        urikvm_docker__scripts__real_pipeline__build_runtime["build_runtime"]
         urikvm_docker__scripts__real_pipeline__main["main"]
+        urikvm_docker__scripts__real_pipeline__build_runtime["build_runtime"]
     end
     subgraph urirdp_docker__packages
-        urirdp_docker__packages__python__urirdp_llm__handlers___heuristic["_heuristic"]
-        urirdp_docker__packages__python__urirdp_llm__handlers___screenshot_b64["_screenshot_b64"]
-        urirdp_docker__packages__python__urirdp__handlers__display["display"]
-        urirdp_docker__packages__python__urirdpedge__cli__build_runtime["build_runtime"]
-        urirdp_docker__packages__python__urirdp__handlers__display_status["display_status"]
-        urirdp_docker__packages__python__urirdpedge__env__load_env_policy["load_env_policy"]
-        urirdp_docker__packages__python__urirdp_kvm__display__ensure_screenshot_dir["ensure_screenshot_dir"]
-        urirdp_docker__packages__python__urirdp_him__handlers__mouse_move["mouse_move"]
-        urirdp_docker__packages__python__urirdp_llm__handlers___target["_target"]
-        urirdp_docker__packages__python__urirdp_kvm__display__run_cmd["run_cmd"]
-        urirdp_docker__packages__python__urirdpedge__env__resolve_env_var["resolve_env_var"]
-        urirdp_docker__packages__python__urirdp_llm__handlers___litellm_chat["_litellm_chat"]
-        urirdp_docker__packages__python__urirdp_him__handlers__keyboard_type["keyboard_type"]
-        urirdp_docker__packages__python__urirdp_ocr__handlers___tesseract_ocr["_tesseract_ocr"]
-        urirdp_docker__packages__python__urirdp_ocr__handlers__image_text["image_text"]
-        urirdp_docker__packages__python__urirdpedge__env__is_secret_env["is_secret_env"]
-        urirdp_docker__packages__python__urirdp_llm__handlers___parse_json_response["_parse_json_response"]
-        urirdp_docker__packages__python__urirdpedge__env___env_config["_env_config"]
-        urirdp_docker__packages__python__urirdp_kvm__handlers__screenshot["screenshot"]
-        urirdp_docker__packages__python__urirdpedge__runtime__Runtime__call["call"]
-        urirdp_docker__packages__python__urirdp_llm__handlers___config["_config"]
-        urirdp_docker__packages__python__urirdpedge__runtime__serve["serve"]
-        urirdp_docker__packages__python__urirdp__handlers__status["status"]
-        urirdp_docker__packages__python__urirdp_kvm__display__detect_display["detect_display"]
-        urirdp_docker__packages__python__urirdp_ocr__handlers___mock_ocr["_mock_ocr"]
-        urirdp_docker__packages__python__urirdp__handlers___service_status["_service_status"]
+        urirdp_docker__packages__python__urirdp_him__handlers__keyboard_hotkey["keyboard_hotkey"]
         urirdp_docker__packages__python__urirdp_him__handlers___mock["_mock"]
-        urirdp_docker__packages__python__urirdpedge__env___env_policy_candidates["_env_policy_candidates"]
-        urirdp_docker__packages__python__urirdp_ocr__handlers___parse_tesseract_tsv["_parse_tesseract_tsv"]
-        urirdp_docker__packages__python__urirdpedge__runtime__run_flow["run_flow"]
-        urirdp_docker__packages__python__urirdpedge__env__load_urisys_env["load_urisys_env"]
-        urirdp_docker__packages__python__urirdp_ocr__handlers__latest_text["latest_text"]
-        urirdp_docker__packages__python__urirdp_kvm__display__base_env["base_env"]
-        urirdp_docker__packages__python__urirdp_kvm__display__allow_real["allow_real"]
-        urirdp_docker__packages__python__urirdpedge__runtime__make_handler["make_handler"]
         urirdp_docker__packages__python__urirdpedge__runtime__load_yaml_flow["load_yaml_flow"]
-        urirdp_docker__packages__python__urirdp_llm__handlers___env["_env"]
-        urirdp_docker__packages__python__urirdp_llm__handlers___vision_messages["_vision_messages"]
-        urirdp_docker__packages__python__urirdp_llm__handlers___llm_cfg["_llm_cfg"]
-        urirdp_docker__packages__python__urirdp_him__handlers__mouse_click["mouse_click"]
-        urirdp_docker__packages__python__urirdp_kvm__display__config_value["config_value"]
-        urirdp_docker__packages__python__urirdp_llm__handlers___openai_compatible_chat["_openai_compatible_chat"]
-        urirdp_docker__packages__python__urirdp_llm__handlers__analyze["analyze"]
         urirdp_docker__packages__python__urirdp__handlers__prepare_target["prepare_target"]
-        urirdp_docker__packages__python__urirdp_him__handlers__keyboard_key["keyboard_key"]
+        urirdp_docker__packages__python__urirdpedge__env__load_urisys_env["load_urisys_env"]
+        urirdp_docker__packages__python__urirdp_him__handlers__mouse_click["mouse_click"]
+        urirdp_docker__packages__python__urirdp_llm__handlers___env["_env"]
+        urirdp_docker__packages__python__urirdp_kvm__display__run_cmd["run_cmd"]
+        urirdp_docker__packages__python__urirdpedge__env___env_policy_candidates["_env_policy_candidates"]
+        urirdp_docker__packages__python__urirdpedge__runtime__make_handler["make_handler"]
+        urirdp_docker__packages__python__urirdp_kvm__display__ensure_screenshot_dir["ensure_screenshot_dir"]
+        urirdp_docker__packages__python__urirdpedge__runtime__serve["serve"]
+        urirdp_docker__packages__python__urirdp_kvm__display__allow_real["allow_real"]
+        urirdp_docker__packages__python__urirdp__handlers__display["display"]
+        urirdp_docker__packages__python__urirdp_llm__handlers___vision_messages["_vision_messages"]
+        urirdp_docker__packages__python__urirdp_ocr__handlers__latest_text["latest_text"]
+        urirdp_docker__packages__python__urirdpedge__cli__build_runtime["build_runtime"]
+        urirdp_docker__packages__python__urirdp_llm__handlers___screenshot_b64["_screenshot_b64"]
+        urirdp_docker__packages__python__urirdpedge__env___env_config["_env_config"]
+        urirdp_docker__packages__python__urirdp_him__handlers__mouse_move["mouse_move"]
         urirdp_docker__packages__python__urirdp_kvm__handlers__display_info["display_info"]
+        urirdp_docker__packages__python__urirdp__handlers__display_status["display_status"]
+        urirdp_docker__packages__python__urirdp_kvm__display__base_env["base_env"]
+        urirdp_docker__packages__python__urirdp_llm__handlers___openai_compatible_chat["_openai_compatible_chat"]
+        urirdp_docker__packages__python__urirdp_llm__handlers___config["_config"]
+        urirdp_docker__packages__python__urirdp_llm__handlers___heuristic["_heuristic"]
+        urirdp_docker__packages__python__urirdp_ocr__handlers___tesseract_ocr["_tesseract_ocr"]
+        urirdp_docker__packages__python__urirdp_ocr__handlers___mock_ocr["_mock_ocr"]
+        urirdp_docker__packages__python__urirdpedge__runtime__run_flow["run_flow"]
+        urirdp_docker__packages__python__urirdp_ocr__handlers__image_text["image_text"]
+        urirdp_docker__packages__python__urirdp_llm__handlers___llm_cfg["_llm_cfg"]
+        urirdp_docker__packages__python__urirdp_llm__handlers___parse_json_response["_parse_json_response"]
+        urirdp_docker__packages__python__urirdp_shell__handlers___mock["_mock"]
+        urirdp_docker__packages__python__urirdp_shell__handlers__shell_run["shell_run"]
+        urirdp_docker__packages__python__urirdp_llm__handlers___target["_target"]
+        urirdp_docker__packages__python__urirdp_llm__handlers__analyze["analyze"]
+        urirdp_docker__packages__python__urirdpedge__env__is_secret_env["is_secret_env"]
+        urirdp_docker__packages__python__urirdpedge__runtime__Runtime__call["call"]
+        urirdp_docker__packages__python__urirdp__handlers___service_status["_service_status"]
+        urirdp_docker__packages__python__urirdp__handlers__status["status"]
+        urirdp_docker__packages__python__urirdp_kvm__handlers__screenshot["screenshot"]
+        urirdp_docker__packages__python__urirdp_kvm__display__detect_display["detect_display"]
+        urirdp_docker__packages__python__urirdp_ocr__handlers___parse_tesseract_tsv["_parse_tesseract_tsv"]
+        urirdp_docker__packages__python__urirdp_him__handlers__keyboard_type["keyboard_type"]
+        urirdp_docker__packages__python__urirdp_him__handlers__keyboard_type_text["keyboard_type_text"]
+        urirdp_docker__packages__python__urirdp_him__handlers__keyboard_key["keyboard_key"]
+        urirdp_docker__packages__python__urirdp_llm__handlers___litellm_chat["_litellm_chat"]
+        urirdp_docker__packages__python__urirdpedge__env__resolve_env_var["resolve_env_var"]
+        urirdp_docker__packages__python__urirdpedge__env__load_env_policy["load_env_policy"]
+        urirdp_docker__packages__python__urirdp_kvm__display__config_value["config_value"]
     end
     subgraph uristepper_docker__packages
-        uristepper_docker__packages__python__urisysedge__cli__cmd_call["cmd_call"]
-        uristepper_docker__packages__python__urisysedge__runtime__build_runtime["build_runtime"]
-        uristepper_docker__packages__python__uristepper__handlers__enable["enable"]
+        uristepper_docker__packages__python__uristepper__handlers__move_absolute["move_absolute"]
+        uristepper_docker__packages__python__uristepper__handlers__status["status"]
+        uristepper_docker__packages__python__uristepper__handlers__home["home"]
+        uristepper_docker__packages__python__uristepper__handlers__stop["stop"]
         uristepper_docker__packages__python__uristepper__drivers__make_driver["make_driver"]
-        uristepper_docker__packages__python__uristepper__handlers___driver["_driver"]
+        uristepper_docker__packages__python__urisysedge__cli__cmd_events["cmd_events"]
         uristepper_docker__packages__python__urisysedge__cli___json_arg["_json_arg"]
+        uristepper_docker__packages__python__uristepper__handlers__move_relative["move_relative"]
         uristepper_docker__packages__python__uristepper__handlers___dry_or_driver["_dry_or_driver"]
         uristepper_docker__packages__python__uristepper__handlers__disable["disable"]
-        uristepper_docker__packages__python__urisysedge__cli__cmd_routes["cmd_routes"]
-        uristepper_docker__packages__python__urisysedge__server__make_handler["make_handler"]
-        uristepper_docker__packages__python__uristepper__handlers__status["status"]
-        uristepper_docker__packages__python__uristepper__handlers__move_absolute["move_absolute"]
-        uristepper_docker__packages__python__uristepper__handlers__home["home"]
+        uristepper_docker__packages__python__uristepper__handlers__enable["enable"]
         uristepper_docker__packages__python__urisysedge__cli__cmd_explain["cmd_explain"]
+        uristepper_docker__packages__python__urisysedge__cli__cmd_routes["cmd_routes"]
         uristepper_docker__packages__python__uristepper__handlers___device_axis["_device_axis"]
+        uristepper_docker__packages__python__urisysedge__cli__cmd_call["cmd_call"]
+        uristepper_docker__packages__python__urisysedge__runtime__load_json["load_json"]
         uristepper_docker__packages__python__urisysedge__cli__cmd_flow["cmd_flow"]
-        uristepper_docker__packages__python__uristepper__handlers__stop["stop"]
+        uristepper_docker__packages__python__uristepper__handlers___enforce_safety["_enforce_safety"]
+        uristepper_docker__packages__python__urisysedge__runtime__build_runtime["build_runtime"]
         uristepper_docker__packages__python__urisysedge__cli__cmd_serve["cmd_serve"]
         uristepper_docker__packages__python__urisysedge__server__serve["serve"]
-        uristepper_docker__packages__python__urisysedge__runtime__load_json["load_json"]
-        uristepper_docker__packages__python__urisysedge__cli__cmd_events["cmd_events"]
-        uristepper_docker__packages__python__uristepper__handlers___enforce_safety["_enforce_safety"]
-        uristepper_docker__packages__python__uristepper__handlers__move_relative["move_relative"]
+        uristepper_docker__packages__python__urisysedge__server__make_handler["make_handler"]
+        uristepper_docker__packages__python__uristepper__handlers___driver["_driver"]
     end
     subgraph urisys_automation_lab__packages
-        urisys_automation_lab__packages__python__uriwebrtc__handlers___room_id["_room_id"]
-        urisys_automation_lab__packages__python__uristt__handlers__session_transcript["session_transcript"]
-        urisys_automation_lab__packages__python__uriwebrtc__handlers__session_start["session_start"]
-        urisys_automation_lab__packages__python__urichat__handlers___forward_uri["_forward_uri"]
-        urisys_automation_lab__packages__python__uristt__handlers___session_id["_session_id"]
         urisys_automation_lab__packages__python__urichat__handlers__uri_execute["uri_execute"]
+        urisys_automation_lab__packages__python__urichat__handlers___forward_uri["_forward_uri"]
+        urisys_automation_lab__packages__python__uriwebrtc__handlers__session_start["session_start"]
+        urisys_automation_lab__packages__python__uristt__handlers__session_transcript["session_transcript"]
+        urisys_automation_lab__packages__python__uriwebrtc__handlers___room_id["_room_id"]
         urisys_automation_lab__packages__python__uriwebrtc__handlers__data_send["data_send"]
         urisys_automation_lab__packages__python__uristt__handlers__session_start["session_start"]
+        urisys_automation_lab__packages__python__uristt__handlers___session_id["_session_id"]
     end
     subgraph urisys_automation_lab__server
         urisys_automation_lab__server__automation_lab_server__build_lab_runtime["build_lab_runtime"]
@@ -223,48 +264,48 @@ flowchart LR
     end
     subgraph urisys_automation_lab__web
         urisys_automation_lab__web__app__rec["rec"]
-        urisys_automation_lab__web__app__SR["SR"]
         urisys_automation_lab__web__app__log["log"]
-        urisys_automation_lab__web__app__text["text"]
         urisys_automation_lab__web__app__uriCall["uriCall"]
+        urisys_automation_lab__web__app__text["text"]
         urisys_automation_lab__web__app__data["data"]
+        urisys_automation_lab__web__app__SR["SR"]
     end
     subgraph urisys_node__packages
-        urisys_node__packages__python__urisysnode__identity__require_paired["require_paired"]
-        urisys_node__packages__python__urisysnode__identity__enroll["enroll"]
-        urisys_node__packages__python__urisysnode__identity___identity_path["_identity_path"]
-        urisys_node__packages__python__urisysnode__handlers__command_indicator_on["command_indicator_on"]
-        urisys_node__packages__python__urisysnode__serve___extend_pack_paths["_extend_pack_paths"]
-        urisys_node__packages__python__urisysnode__identity__load_pairing["load_pairing"]
-        urisys_node__packages__python__urisysnode__serve__serve["serve"]
-        urisys_node__packages__python__urisysnode__router__load_route_map["load_route_map"]
+        urisys_node__packages__python__urisysnode__handlers__query_health["query_health"]
         urisys_node__packages__python__urisysnode__identity__set_remote_control["set_remote_control"]
-        urisys_node__packages__python__urisysnode__handlers__command_indicator_off["command_indicator_off"]
+        urisys_node__packages__python__uriscreen__handlers__capture_loop["capture_loop"]
         urisys_node__packages__python__urisysnode__identity__load_identity["load_identity"]
-        urisys_node__packages__python__urisysnode__identity___data_dir["_data_dir"]
+        urisys_node__packages__python__urisysnode__serve__make_handler["make_handler"]
+        urisys_node__packages__python__uriscreen__handlers___screen_cfg["_screen_cfg"]
+        urisys_node__packages__python__urisysnode__identity__save_pairing["save_pairing"]
+        urisys_node__packages__python__urisysnode__router___match_pattern["_match_pattern"]
+        urisys_node__packages__python__urisysnode__identity___hostname["_hostname"]
         urisys_node__packages__python__urisysnode__client__remote_call["remote_call"]
         urisys_node__packages__python__urisysnode__identity___pairing_path["_pairing_path"]
-        urisys_node__packages__python__urisysnode__handlers__query_identity["query_identity"]
+        urisys_node__packages__python__uriscreen__handlers__frame["frame"]
         urisys_node__packages__python__urisysnode__client__call_via_route_map["call_via_route_map"]
         urisys_node__packages__python__urisysnode__serve__build_runtime["build_runtime"]
-        urisys_node__packages__python__uriscreen__handlers___backend["_backend"]
-        urisys_node__packages__python__uriscreen__handlers___output_dir["_output_dir"]
-        urisys_node__packages__python__urisysnode__identity___hostname["_hostname"]
-        urisys_node__packages__python__uriscreen__handlers__frame["frame"]
-        urisys_node__packages__python__uriscreen__handlers___store_latest["_store_latest"]
-        urisys_node__packages__python__urisysnode__identity__save_pairing["save_pairing"]
-        urisys_node__packages__python__urisysnode__serve__make_handler["make_handler"]
-        urisys_node__packages__python__uriscreen__handlers__capture_loop["capture_loop"]
-        urisys_node__packages__python__uriscreen__handlers___monitor_index["_monitor_index"]
-        urisys_node__packages__python__urisysnode__router__rewrite_uri_for_slave["rewrite_uri_for_slave"]
-        urisys_node__packages__python__urisysnode__handlers__query_health["query_health"]
-        urisys_node__packages__python__urisysnode__router___match_pattern["_match_pattern"]
-        urisys_node__packages__python__uriscreen__handlers___screen_cfg["_screen_cfg"]
+        urisys_node__packages__python__urisysnode__handlers__command_indicator_off["command_indicator_off"]
+        urisys_node__packages__python__urisysnode__identity__load_pairing["load_pairing"]
         urisys_node__packages__python__urisysnode__router__resolve_remote_route["resolve_remote_route"]
+        urisys_node__packages__python__urisysnode__serve__serve["serve"]
+        urisys_node__packages__python__uriscreen__handlers___store_latest["_store_latest"]
         urisys_node__packages__python__urisysnode__identity__health_payload["health_payload"]
-        urisys_node__packages__python__uriscreen__handlers__capture["capture"]
-        urisys_node__packages__python__urisysnode__identity__save_identity["save_identity"]
+        urisys_node__packages__python__urisysnode__router__load_route_map["load_route_map"]
+        urisys_node__packages__python__uriscreen__handlers___backend["_backend"]
+        urisys_node__packages__python__urisysnode__handlers__query_identity["query_identity"]
+        urisys_node__packages__python__uriscreen__handlers___output_dir["_output_dir"]
+        urisys_node__packages__python__urisysnode__router__rewrite_uri_for_slave["rewrite_uri_for_slave"]
         urisys_node__packages__python__urisysnode__router__node_endpoint["node_endpoint"]
+        urisys_node__packages__python__urisysnode__handlers__command_indicator_on["command_indicator_on"]
+        urisys_node__packages__python__urisysnode__identity__save_identity["save_identity"]
+        urisys_node__packages__python__urisysnode__identity__require_paired["require_paired"]
+        urisys_node__packages__python__urisysnode__identity___data_dir["_data_dir"]
+        urisys_node__packages__python__uriscreen__handlers__capture["capture"]
+        urisys_node__packages__python__urisysnode__identity__enroll["enroll"]
+        urisys_node__packages__python__urisysnode__identity___identity_path["_identity_path"]
+        urisys_node__packages__python__urisysnode__serve___extend_pack_paths["_extend_pack_paths"]
+        urisys_node__packages__python__uriscreen__handlers___monitor_index["_monitor_index"]
     end
     src__urisys__cli__build_parser --> src__urisys__cli___add_runtime_flags
     src__urisys__cli__main --> src__urisys__cli__build_parser
@@ -311,7 +352,6 @@ flowchart LR
     urirdp_docker__packages__python__urirdpedge__runtime__Runtime__call --> urirdp_docker__packages__python__urirdpedge__env__load_env_policy
     urirdp_docker__packages__python__urirdpedge__runtime__run_flow --> urirdp_docker__packages__python__urirdpedge__runtime__load_yaml_flow
     urirdp_docker__packages__python__urirdpedge__runtime__serve --> urirdp_docker__packages__python__urirdpedge__runtime__make_handler
-    urirdp_docker__packages__python__urirdpedge__cli__build_runtime --> uristepper_docker__packages__python__urisysedge__runtime__load_json
     urirdp_docker__packages__python__urirdpedge__env__load_env_policy --> urirdp_docker__packages__python__urirdpedge__env___env_policy_candidates
     urirdp_docker__packages__python__urirdpedge__env__resolve_env_var --> urirdp_docker__packages__python__urirdpedge__env___env_config
     urirdp_docker__packages__python__urirdpedge__env__resolve_env_var --> urirdp_docker__packages__python__urirdpedge__env__load_env_policy
@@ -323,21 +363,6 @@ flowchart LR
     urirdp_docker__packages__python__urirdp_ocr__handlers__image_text --> urirdp_docker__packages__python__urirdp_ocr__handlers___tesseract_ocr
     urirdp_docker__packages__python__urirdp_ocr__handlers__image_text --> urirdp_docker__packages__python__urirdp_ocr__handlers___mock_ocr
     urirdp_docker__packages__python__urirdp_ocr__handlers__image_text --> urirdp_docker__packages__python__urirdp_kvm__display__allow_real
-    urirdp_docker__packages__python__urirdp_him__handlers___mock --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
-    urirdp_docker__packages__python__urirdp_him__handlers__mouse_move --> urirdp_docker__packages__python__urirdp_kvm__display__run_cmd
-    urirdp_docker__packages__python__urirdp_him__handlers__mouse_move --> urirdp_docker__packages__python__urirdp_him__handlers___mock
-    urirdp_docker__packages__python__urirdp_him__handlers__mouse_move --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
-    urirdp_docker__packages__python__urirdp_him__handlers__mouse_move --> urirdp_docker__packages__python__urirdp_kvm__display__allow_real
-    urirdp_docker__packages__python__urirdp_him__handlers__mouse_click --> urirdp_docker__packages__python__urirdp_kvm__display__run_cmd
-    urirdp_docker__packages__python__urirdp_him__handlers__mouse_click --> urirdp_docker__packages__python__urirdp_him__handlers___mock
-    urirdp_docker__packages__python__urirdp_him__handlers__mouse_click --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
-    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_type --> urirdp_docker__packages__python__urirdp_kvm__display__run_cmd
-    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_type --> urirdp_docker__packages__python__urirdp_him__handlers___mock
-    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_type --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
-    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_key --> urirdp_docker__packages__python__urirdp_kvm__display__run_cmd
-    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_key --> urirdp_docker__packages__python__urirdp_him__handlers___mock
-    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_key --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
-    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_key --> urirdp_docker__packages__python__urirdp_kvm__display__allow_real
     urirdp_docker__packages__python__urirdp__handlers__status --> urirdp_docker__packages__python__urirdp__handlers___service_status
     urirdp_docker__packages__python__urirdp__handlers__status --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
     urirdp_docker__packages__python__urirdp__handlers__display --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
@@ -430,6 +455,17 @@ flowchart LR
     urikvm_docker__packages__python__urillm__handlers__vision_analyze --> urikvm_docker__packages__python__urillm__handlers___vision_analyze
     urikvm_docker__scripts__real_pipeline__build_runtime --> uristepper_docker__packages__python__urisysedge__runtime__load_json
     urikvm_docker__scripts__real_pipeline__main --> urikvm_docker__scripts__real_pipeline__build_runtime
+    urisys_automation_lab__packages__python__uriwebrtc__handlers__session_start --> urisys_automation_lab__packages__python__uriwebrtc__handlers___room_id
+    urisys_automation_lab__packages__python__uriwebrtc__handlers__data_send --> urisys_automation_lab__packages__python__uriwebrtc__handlers___room_id
+    urisys_automation_lab__packages__python__uristt__handlers__session_start --> urisys_automation_lab__packages__python__uristt__handlers___session_id
+    urisys_automation_lab__packages__python__uristt__handlers__session_transcript --> urisys_automation_lab__packages__python__uristt__handlers___session_id
+    urisys_automation_lab__web__app__uriCall --> urisys_automation_lab__web__app__log
+    urisys_automation_lab__web__app__data --> urisys_automation_lab__web__app__log
+    urisys_automation_lab__web__app__SR --> urisys_automation_lab__web__app__log
+    urisys_automation_lab__web__app__rec --> urisys_automation_lab__web__app__log
+    urisys_automation_lab__web__app__text --> urisys_automation_lab__web__app__uriCall
+    urisys_automation_lab__server__automation_lab_server__build_lab_runtime --> uristepper_docker__packages__python__urisysedge__runtime__load_json
+    urisys_automation_lab__server__automation_lab_server__serve --> urisys_automation_lab__server__automation_lab_server__build_lab_runtime
     urienv_docker__packages__python__urienv__src__urienv__handlers___cfg --> urienv_docker__packages__python__urienv__src__urienv__handlers___split_csv
     urienv_docker__packages__python__urienv__src__urienv__handlers___get_value --> urienv_docker__packages__python__urienv__src__urienv__handlers___read_docker_secret
     urienv_docker__packages__python__urienv__src__urienv__handlers___require_visible --> urienv_docker__packages__python__urienv__src__urienv__handlers___is_secret
@@ -479,13 +515,26 @@ flowchart LR
     urienv_docker__vendor__uricore__core__python__uri_control__registry__CapabilityRegistry__match --> urienv_docker__vendor__uricore__core__python__uri_control__registry___load_python_handler
     urienv_docker__vendor__uricore__core__python__uri_control__parser__canonicalize_uri --> urienv_docker__vendor__uricore__core__python__uri_control__parser__parse_uri
     urienv_docker__vendor__uricore__core__python__uri_control__dispatcher__UriControlRuntime__call --> urienv_docker__vendor__uricore__core__python__uri_control__dispatcher___new_id
-    urisys_automation_lab__web__app__uriCall --> urisys_automation_lab__web__app__log
-    urisys_automation_lab__web__app__data --> urisys_automation_lab__web__app__log
-    urisys_automation_lab__web__app__SR --> urisys_automation_lab__web__app__log
-    urisys_automation_lab__web__app__rec --> urisys_automation_lab__web__app__log
-    urisys_automation_lab__web__app__text --> urisys_automation_lab__web__app__uriCall
-    urisys_automation_lab__packages__python__uriwebrtc__handlers__session_start --> urisys_automation_lab__packages__python__uriwebrtc__handlers___room_id
-    urisys_automation_lab__packages__python__uriwebrtc__handlers__data_send --> urisys_automation_lab__packages__python__uriwebrtc__handlers___room_id
+    urisys_node__packages__python__uriscreen__handlers___backend --> urisys_node__packages__python__uriscreen__handlers___screen_cfg
+    urisys_node__packages__python__uriscreen__handlers___output_dir --> urisys_node__packages__python__uriscreen__handlers___screen_cfg
+    urisys_node__packages__python__uriscreen__handlers___monitor_index --> urisys_node__packages__python__uriscreen__handlers___screen_cfg
+    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___backend
+    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___monitor_index
+    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___output_dir
+    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___store_latest
+    urisys_node__packages__python__uriscreen__handlers__frame --> urisys_node__packages__python__uriscreen__handlers__capture
+    urisys_node__packages__python__uriscreen__handlers__capture_loop --> urisys_node__packages__python__uriscreen__handlers___backend
+    urisys_node__packages__python__uriscreen__handlers__capture_loop --> urisys_node__packages__python__uriscreen__handlers__capture
+    urisys_node__packages__python__urisysnode__serve__build_runtime --> urisys_node__packages__python__urisysnode__serve___extend_pack_paths
+    urisys_node__packages__python__urisysnode__serve__build_runtime --> urirdp_docker__packages__python__urirdpedge__env__load_urisys_env
+    urisys_node__packages__python__urisysnode__serve__build_runtime --> uristepper_docker__packages__python__urisysedge__runtime__load_json
+    urisys_node__packages__python__urisysnode__serve__serve --> urisys_node__packages__python__urisysnode__identity__load_identity
+    urisys_node__packages__python__urisysnode__serve__serve --> urisys_node__packages__python__urisysnode__serve__make_handler
+    urisys_node__packages__python__urisysnode__client__call_via_route_map --> urisys_node__packages__python__urisysnode__router__load_route_map
+    urisys_node__packages__python__urisysnode__client__call_via_route_map --> urisys_node__packages__python__urisysnode__router__resolve_remote_route
+    urisys_node__packages__python__urisysnode__client__call_via_route_map --> urisys_node__packages__python__urisysnode__router__node_endpoint
+    urisys_node__packages__python__urisysnode__client__call_via_route_map --> urisys_node__packages__python__urisysnode__router__rewrite_uri_for_slave
+    urisys_node__packages__python__urisysnode__client__call_via_route_map --> urisys_node__packages__python__urisysnode__client__remote_call
     urisys_node__packages__python__urisysnode__handlers__query_health --> urisys_node__packages__python__urisysnode__identity__health_payload
     urisys_node__packages__python__urisysnode__handlers__query_identity --> urisys_node__packages__python__urisysnode__identity__load_identity
     urisys_node__packages__python__urisysnode__handlers__query_identity --> urisys_node__packages__python__urisysnode__identity__load_pairing
@@ -494,11 +543,6 @@ flowchart LR
     urisys_node__packages__python__urisysnode__handlers__command_indicator_off --> urisys_node__packages__python__urisysnode__identity__require_paired
     urisys_node__packages__python__urisysnode__handlers__command_indicator_off --> urisys_node__packages__python__urisysnode__identity__set_remote_control
     urisys_node__packages__python__urisysnode__router__resolve_remote_route --> urisys_node__packages__python__urisysnode__router___match_pattern
-    urisys_node__packages__python__urisysnode__client__call_via_route_map --> urisys_node__packages__python__urisysnode__router__load_route_map
-    urisys_node__packages__python__urisysnode__client__call_via_route_map --> urisys_node__packages__python__urisysnode__router__resolve_remote_route
-    urisys_node__packages__python__urisysnode__client__call_via_route_map --> urisys_node__packages__python__urisysnode__router__node_endpoint
-    urisys_node__packages__python__urisysnode__client__call_via_route_map --> urisys_node__packages__python__urisysnode__router__rewrite_uri_for_slave
-    urisys_node__packages__python__urisysnode__client__call_via_route_map --> urisys_node__packages__python__urisysnode__client__remote_call
     urisys_node__packages__python__urisysnode__identity___identity_path --> urisys_node__packages__python__urisysnode__identity___data_dir
     urisys_node__packages__python__urisysnode__identity___pairing_path --> urisys_node__packages__python__urisysnode__identity___data_dir
     urisys_node__packages__python__urisysnode__identity__load_identity --> urisys_node__packages__python__urisysnode__identity___identity_path
@@ -514,23 +558,96 @@ flowchart LR
     urisys_node__packages__python__urisysnode__identity__require_paired --> urisys_node__packages__python__urisysnode__identity__load_pairing
     urisys_node__packages__python__urisysnode__identity__health_payload --> urisys_node__packages__python__urisysnode__identity__load_identity
     urisys_node__packages__python__urisysnode__identity__health_payload --> urisys_node__packages__python__urisysnode__identity__load_pairing
-    urisys_node__packages__python__uriscreen__handlers___backend --> urisys_node__packages__python__uriscreen__handlers___screen_cfg
-    urisys_node__packages__python__uriscreen__handlers___output_dir --> urisys_node__packages__python__uriscreen__handlers___screen_cfg
-    urisys_node__packages__python__uriscreen__handlers___monitor_index --> urisys_node__packages__python__uriscreen__handlers___screen_cfg
-    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___backend
-    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___monitor_index
-    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___output_dir
-    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___store_latest
-    urisys_node__packages__python__uriscreen__handlers__frame --> urisys_node__packages__python__uriscreen__handlers__capture
-    urisys_node__packages__python__uriscreen__handlers__capture_loop --> urisys_node__packages__python__uriscreen__handlers___backend
-    urisys_node__packages__python__uriscreen__handlers__capture_loop --> urisys_node__packages__python__uriscreen__handlers__capture
-    urisys_automation_lab__packages__python__uristt__handlers__session_start --> urisys_automation_lab__packages__python__uristt__handlers___session_id
-    urisys_automation_lab__packages__python__uristt__handlers__session_transcript --> urisys_automation_lab__packages__python__uristt__handlers___session_id
+    scripts__run_test_sessions___wait_health --> scripts__run_test_sessions___http_json
+    scripts__run_test_sessions___write_meta --> scripts__run_test_sessions___read_meta
+    scripts__run_test_sessions___write_meta --> scripts__run_test_sessions___save_json
+    scripts__run_test_sessions___finalize_session --> scripts__run_test_sessions___now_iso
+    scripts__run_test_sessions___finalize_session --> scripts__run_test_sessions___write_meta
+    scripts__run_test_sessions___docker_logs --> scripts__run_test_sessions___run_cmd
+    scripts__run_test_sessions__session_pytest_urirdp --> scripts__run_test_sessions___now_iso
+    scripts__run_test_sessions__session_pytest_urirdp --> scripts__run_test_sessions___write_meta
+    scripts__run_test_sessions__session_pytest_urirdp --> scripts__run_test_sessions___run_cmd
+    scripts__run_test_sessions__session_pytest_urirdp --> scripts__run_test_sessions___finalize_session
+    scripts__run_test_sessions__session_pytest_urirdp --> scripts__run_test_sessions___host_id
+    scripts__run_test_sessions__session_pytest_urisys --> scripts__run_test_sessions___now_iso
+    scripts__run_test_sessions__session_pytest_urisys --> scripts__run_test_sessions___write_meta
+    scripts__run_test_sessions__session_pytest_urisys --> scripts__run_test_sessions___run_cmd
+    scripts__run_test_sessions__session_pytest_urisys --> scripts__run_test_sessions___finalize_session
+    scripts__run_test_sessions__session_pytest_urisys --> scripts__run_test_sessions___host_id
+    scripts__run_test_sessions__session_pytest_urisys_node --> scripts__run_test_sessions___now_iso
+    scripts__run_test_sessions__session_pytest_urisys_node --> scripts__run_test_sessions___write_meta
+    scripts__run_test_sessions__session_pytest_urisys_node --> scripts__run_test_sessions___run_cmd
+    scripts__run_test_sessions__session_pytest_urisys_node --> scripts__run_test_sessions___finalize_session
+    scripts__run_test_sessions__session_pytest_urisys_node --> scripts__run_test_sessions___host_id
+    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__run_test_sessions___now_iso
+    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__run_test_sessions___write_meta
+    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__run_test_sessions___prepare_urirdp_data
+    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__run_test_sessions___sleep_ports
+    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__run_test_sessions___run_cmd
+    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__run_test_sessions___finalize_session
+    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__run_test_sessions___compose_cmd
+    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__run_test_sessions___now_iso
+    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__run_test_sessions___write_meta
+    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__run_test_sessions___prepare_urirdp_data
+    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__run_test_sessions___sleep_ports
+    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__run_test_sessions___run_cmd
+    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__run_test_sessions___finalize_session
+    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__run_test_sessions___compose_cmd
+    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__run_test_sessions___now_iso
+    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__run_test_sessions___write_meta
+    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__run_test_sessions___prepare_urirdp_data
+    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__run_test_sessions___sleep_ports
+    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__run_test_sessions___run_cmd
+    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__run_test_sessions___docker_logs
+    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__run_test_sessions___copy_container_file
+    scripts__run_test_sessions__session_automation_lab --> scripts__run_test_sessions___now_iso
+    scripts__run_test_sessions__session_automation_lab --> scripts__run_test_sessions___write_meta
+    scripts__run_test_sessions__session_automation_lab --> scripts__run_test_sessions___finalize_session
+    scripts__run_test_sessions__session_automation_lab --> scripts__run_test_sessions___sleep_ports
+    scripts__run_test_sessions__session_automation_lab --> scripts__run_test_sessions___run_cmd
+    scripts__run_test_sessions__session_automation_lab --> scripts__run_test_sessions___wait_health
+    scripts__run_test_sessions__session_automation_lab --> scripts__run_test_sessions___save_json
+    scripts__run_test_sessions___prepare_ok_target --> scripts__run_test_sessions___http_json
+    scripts__run_test_sessions___capture_rdp_screenshot --> scripts__run_test_sessions___http_json
+    scripts__run_test_sessions___capture_rdp_screenshot --> scripts__run_test_sessions___copy_container_file
+    scripts__run_test_sessions__session_lab_10_flows --> scripts__run_test_sessions___now_iso
+    scripts__run_test_sessions__session_lab_10_flows --> scripts__run_test_sessions___write_meta
+    scripts__run_test_sessions__session_lab_10_flows --> scripts__run_test_sessions___sleep_ports
+    scripts__run_test_sessions__session_lab_10_flows --> scripts__run_test_sessions___run_cmd
+    scripts__run_test_sessions__session_lab_10_flows --> scripts__run_test_sessions___finalize_session
+    scripts__run_test_sessions__session_lab_10_flows --> scripts__run_test_sessions___wait_health
+    scripts__run_test_sessions__main --> scripts__run_test_sessions___save_json
+    scripts__run_test_sessions__main --> scripts__run_test_sessions___now_iso
+    scripts__session_report__generate_report --> scripts__session_report___infer_steps
+    scripts__session_report__generate_report --> scripts__session_report___read_json
+    scripts__session_report__generate_report --> scripts__session_report___tail
+    scripts__session_report__write_session_report --> scripts__session_report__generate_report
+    scripts__session_report__analyze_run --> scripts__session_report___read_json
+    scripts__session_report__write_run_analysis --> scripts__session_report__analyze_run
+    scripts__session_report__main --> scripts__session_report__analyze_run
+    scripts__session_report__main --> scripts__session_report__write_run_analysis
+    urirdp_docker__packages__python__urirdpedge__cli__build_runtime --> uristepper_docker__packages__python__urisysedge__runtime__load_json
+    urirdp_docker__packages__python__urirdp_shell__handlers___mock --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
+    urirdp_docker__packages__python__urirdp_shell__handlers__shell_run --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
+    urirdp_docker__packages__python__urirdp_shell__handlers__shell_run --> urirdp_docker__packages__python__urirdp_shell__handlers___mock
+    urirdp_docker__packages__python__urirdp_him__handlers___mock --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
+    urirdp_docker__packages__python__urirdp_him__handlers__mouse_move --> urirdp_docker__packages__python__urirdp_kvm__display__run_cmd
+    urirdp_docker__packages__python__urirdp_him__handlers__mouse_move --> urirdp_docker__packages__python__urirdp_him__handlers___mock
+    urirdp_docker__packages__python__urirdp_him__handlers__mouse_move --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
+    urirdp_docker__packages__python__urirdp_him__handlers__mouse_move --> urirdp_docker__packages__python__urirdp_kvm__display__allow_real
+    urirdp_docker__packages__python__urirdp_him__handlers__mouse_click --> urirdp_docker__packages__python__urirdp_kvm__display__run_cmd
+    urirdp_docker__packages__python__urirdp_him__handlers__mouse_click --> urirdp_docker__packages__python__urirdp_him__handlers___mock
+    urirdp_docker__packages__python__urirdp_him__handlers__mouse_click --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
+    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_type --> urirdp_docker__packages__python__urirdp_kvm__display__run_cmd
+    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_type --> urirdp_docker__packages__python__urirdp_him__handlers___mock
+    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_type --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
+    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_key --> urirdp_docker__packages__python__urirdp_kvm__display__run_cmd
+    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_key --> urirdp_docker__packages__python__urirdp_him__handlers___mock
+    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_key --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
+    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_key --> urirdp_docker__packages__python__urirdp_kvm__display__allow_real
+    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_type_text --> urirdp_docker__packages__python__urirdp_him__handlers__keyboard_type
+    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_hotkey --> urirdp_docker__packages__python__urirdp_kvm__display__run_cmd
+    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_hotkey --> urirdp_docker__packages__python__urirdp_him__handlers___mock
+    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_hotkey --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
+    urirdp_docker__packages__python__urirdp_him__handlers__keyboard_hotkey --> urirdp_docker__packages__python__urirdp_kvm__display__allow_real
     urisys_automation_lab__packages__python__urichat__handlers__uri_execute --> urisys_automation_lab__packages__python__urichat__handlers___forward_uri
-    urisys_node__packages__python__urisysnode__serve__build_runtime --> urisys_node__packages__python__urisysnode__serve___extend_pack_paths
-    urisys_node__packages__python__urisysnode__serve__build_runtime --> urirdp_docker__packages__python__urirdpedge__env__load_urisys_env
-    urisys_node__packages__python__urisysnode__serve__build_runtime --> uristepper_docker__packages__python__urisysedge__runtime__load_json
-    urisys_node__packages__python__urisysnode__serve__serve --> urisys_node__packages__python__urisysnode__identity__load_identity
-    urisys_node__packages__python__urisysnode__serve__serve --> urisys_node__packages__python__urisysnode__serve__make_handler
-    urisys_automation_lab__server__automation_lab_server__build_lab_runtime --> uristepper_docker__packages__python__urisysedge__runtime__load_json
-    urisys_automation_lab__server__automation_lab_server__serve --> urisys_automation_lab__server__automation_lab_server__build_lab_runtime

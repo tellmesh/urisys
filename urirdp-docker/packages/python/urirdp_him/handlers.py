@@ -53,3 +53,20 @@ def keyboard_key(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, 
     if res.returncode != 0:
         raise RuntimeError(res.stderr.strip() or 'xdotool key failed')
     return {'driver': 'xdotool', 'pressed': key, 'display': detect_display(context)}
+
+
+def keyboard_type_text(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
+    return keyboard_type(payload, context)
+
+
+def keyboard_hotkey(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
+    keys = payload.get('keys') or []
+    if not keys:
+        raise ValueError('payload.keys required for hotkey')
+    combo = '+'.join(str(k) for k in keys)
+    if context.get('dry_run') or not allow_real(context):
+        return _mock('hotkey', {'keys': keys}, context)
+    res = run_cmd(['xdotool', 'key', combo], context)
+    if res.returncode != 0:
+        raise RuntimeError(res.stderr.strip() or 'xdotool hotkey failed')
+    return {'driver': 'xdotool', 'hotkey': combo, 'display': detect_display(context)}
