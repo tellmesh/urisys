@@ -2,6 +2,14 @@
 
 **Jawnie zainstalowany slave runtime** — nie zastępuje RDP/SSH, tylko dodaje warstwę URI z parowaniem, policy i audytem.
 
+## Instalacja
+
+```bash
+pip install urisys-node
+```
+
+Opcjonalnie: `pip install "urisys-node[real]"` (capture/OCR), `"urisys-node[discovery]"` (mDNS).
+
 ## Model
 
 ```txt

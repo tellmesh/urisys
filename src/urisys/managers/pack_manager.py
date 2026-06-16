@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from contextlib import ExitStack
 from importlib import import_module
 from importlib.resources import as_file, files
@@ -17,12 +18,25 @@ class PackManager:
     """Loads separate uri* packages, plain manifest.yaml files and UriPack Markpacts."""
 
     def __init__(self, packs: Iterable[str] | str | None = None, *, markpacts: Iterable[str] | str | None = None) -> None:
+        self.expanded_all = self._is_all(packs)
         self.pack_specs = self.parse_packs(packs)
         self.markpact_specs = self.parse_markpacts(markpacts)
         self._stack = ExitStack()
         self._manifest_paths: list[Path] = []
         self.markpact_manager = MarkpactManager()
         self.source_manager = SourceManager()
+
+    @staticmethod
+    def _is_all(packs: Iterable[str] | str | None) -> bool:
+        """True when the default ('all') package set is requested, so missing
+        optional uri* packages are skipped with a warning instead of crashing."""
+        if packs is None or packs == "" or packs == "all":
+            return True
+        if isinstance(packs, str):
+            parts = [p.strip() for p in packs.split(",") if p.strip()]
+        else:
+            parts = [str(p).strip() for p in packs if str(p).strip()]
+        return any(p == "all" for p in parts)
 
     @staticmethod
     def parse_packs(packs: Iterable[str] | str | None) -> list[str]:
@@ -70,7 +84,24 @@ class PackManager:
                 paths.append(Path(spec))
                 continue
             package_name = self.resolve_package_name(spec)
-            import_module(package_name)
+            try:
+                import_module(package_name)
+            except ModuleNotFoundError as exc:
+                # The package itself is not installed (vs. a broken dependency
+                # of an installed package, which we must not swallow).
+                if exc.name != package_name:
+                    raise
+                if self.expanded_all:
+                    warnings.warn(
+                        f"Skipping uri pack '{spec}': package '{package_name}' "
+                        f"is not installed (pip install {package_name}).",
+                        stacklevel=2,
+                    )
+                    continue
+                raise ModuleNotFoundError(
+                    f"uri pack '{spec}' requires package '{package_name}', "
+                    f"which is not installed (pip install {package_name})."
+                ) from exc
             manifest = files(package_name).joinpath("manifest.yaml")
             path = self._stack.enter_context(as_file(manifest))
             paths.append(Path(path))

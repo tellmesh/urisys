@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from uri_control import CapabilityRegistry
+from uri_control.errors import UriControlError
 
 from .defaults import DEFAULT_ENVIRONMENT
 from .controllers.flow_controller import FlowController
@@ -169,6 +170,12 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     except SourceError as exc:
         print_json({"ok": False, "error": str(exc), "type": "source_error"})
+        return 2
+    except UriControlError as exc:
+        print_json({"ok": False, "error": str(exc), "type": type(exc).__name__})
+        return 2
+    except ModuleNotFoundError as exc:
+        print_json({"ok": False, "error": str(exc), "type": "module_not_found"})
         return 2
 
 

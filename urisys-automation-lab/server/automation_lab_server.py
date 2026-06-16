@@ -36,11 +36,11 @@ def build_lab_runtime(config_path: str | None = None) -> Runtime:
 
     rt = Runtime(events_path=str(LAB_ROOT / "data" / "events.jsonl"), config=config)
 
-    packs = os.environ.get("URISYS_LAB_PACKS", "rdp,kvm,him,ocr,llm,stt,chat,webrtc").split(",")
+    packs = os.environ.get("URISYS_LAB_PACKS", "rdp,kvm,him,ocr,llm,stt,chat,message,webrtc").split(",")
     packs = [p.strip() for p in packs if p.strip()]
     urirdp_available = URIRDP_PACKAGES.is_dir()
     if not urirdp_available:
-        packs = [p for p in packs if p in {"stt", "chat", "webrtc"}]
+        packs = [p for p in packs if p in {"stt", "chat", "message", "webrtc"}]
     if "rdp" in packs:
         import urirdp
 
@@ -69,6 +69,10 @@ def build_lab_runtime(config_path: str | None = None) -> Runtime:
         import urichat.routes as chat_routes
 
         chat_routes.register(rt)
+    if "message" in packs:
+        import urimessage.routes as message_routes
+
+        message_routes.register(rt)
     if "webrtc" in packs:
         import uriwebrtc.routes as webrtc_routes
 

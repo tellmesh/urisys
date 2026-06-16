@@ -26,7 +26,7 @@ import textwrap
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 
 @dataclass
@@ -337,6 +337,137 @@ class RunAnalysis:
         return self.summary.get("fail", 0) == 0 and self.summary.get("error", 0) == 0
 
 
+# --- Outcome-level lab analysis -------------------------------------------
+# Tunable knobs the runner's pass/fail gate ignores. Kept here as named
+# constants (not magic literals) so checks stay declarative and unit-testable.
+GUI_SCHEMES = ("kvm://", "him://", "browser://", "ocr://", "display://")
+BASELINE_LABEL = "00-baseline"
+MIN_VISION_CONFIDENCE = 0.1
+
+
+@dataclass
+class Finding:
+    """A structured, machine-readable analyzer finding."""
+
+    code: str
+    message: str
+    recommendation: str = ""
+
+
+@dataclass
+class FlowOutcome:
+    """Effect-level summary of one flow response, decoupled from the JSON shape
+    so checks read fields instead of re-walking nested dicts."""
+
+    flow: str
+    is_gui: bool
+    duplicate_of: str | None
+    vision_confidences: list[float] = field(default_factory=list)
+
+    @property
+    def no_visible_effect(self) -> bool:
+        return self.is_gui and self.duplicate_of == BASELINE_LABEL
+
+    @property
+    def vision_decided(self) -> bool:
+        return any(c >= MIN_VISION_CONFIDENCE for c in self.vision_confidences)
+
+
+def _iter_step_results(steps: list[dict[str, Any]]):
+    """Yield result dicts for every step, including nested click pipelines."""
+    for step in steps or []:
+        result = ((step.get("response") or {}).get("result")) or {}
+        yield result
+        # kvm.click_text embeds a sub-pipeline of screenshot/ocr/llm/him stages.
+        for stage in (result.get("pipeline") or {}).values():
+            if isinstance(stage, dict) and isinstance(stage.get("result"), dict):
+                yield stage["result"]
+
+
+def _load_flow_outcomes(session_dir: Path) -> list[FlowOutcome]:
+    """Parse responses/*.json once into FlowOutcome records."""
+    responses_dir = session_dir / "responses"
+    if not responses_dir.is_dir():
+        return []
+    outcomes: list[FlowOutcome] = []
+    for resp_path in sorted(responses_dir.glob("*.json")):
+        data = _read_json(resp_path) or {}
+        steps = data.get("steps") or []
+        confidences = [
+            float(r.get("confidence") or 0.0)
+            for r in _iter_step_results(steps)
+            if "action" in r and "confidence" in r and "model" in r
+        ]
+        outcomes.append(
+            FlowOutcome(
+                flow=str(data.get("flow") or resp_path.stem),
+                is_gui=any(str(s.get("uri") or "").startswith(GUI_SCHEMES) for s in steps),
+                duplicate_of=data.get("duplicate_of"),
+                vision_confidences=confidences,
+            )
+        )
+    return outcomes
+
+
+def check_gui_no_effect(outcomes: list[FlowOutcome]) -> list[Finding]:
+    flows = [o.flow for o in outcomes if o.no_visible_effect]
+    if not flows:
+        return []
+    return [
+        Finding(
+            code="gui-no-visible-effect",
+            message=f"GUI flows produced no visible change (screenshot == baseline): {', '.join(flows)}.",
+            recommendation=(
+                "Wzbogać kryterium pass o weryfikację efektu: dla flow GUI traktuj "
+                "screenshot identyczny z baseline jako ostrzeżenie/fail, albo asercję "
+                "na zmianę OCR/diff pikseli."
+            ),
+        )
+    ]
+
+
+def check_vision_never_decides(outcomes: list[FlowOutcome]) -> list[Finding]:
+    calls = [c for o in outcomes for c in o.vision_confidences]
+    if not calls or any(o.vision_decided for o in outcomes):
+        return []
+    return [
+        Finding(
+            code="vision-never-decides",
+            message=(
+                f"Pipeline LLM-vision nie podjął żadnej decyzji ({len(calls)} wywołań, "
+                f"confidence < {MIN_VISION_CONFIDENCE}) — klik spada na współrzędne fallback."
+            ),
+            recommendation=(
+                "Zweryfikuj klucz/modele LLM (np. OPENROUTER_API_KEY i model vision) — "
+                "obecnie kvm.click_text klika 'na ślepo' mimo ok:true; rozważ fail gdy "
+                "target_text nie został znaleziony w OCR i LLM nie wskazał celu."
+            ),
+        )
+    ]
+
+
+# Registry: add a check function here, no edits to the analysis loop.
+LAB_FLOW_CHECKS: list[Callable[[list[FlowOutcome]], list[Finding]]] = [
+    check_gui_no_effect,
+    check_vision_never_decides,
+]
+
+
+def _analyze_lab_flows(session_dir: Path) -> tuple[list[str], list[str]]:
+    """Run the outcome-level check registry over one session's flow responses."""
+    outcomes = _load_flow_outcomes(session_dir)
+    if not outcomes:
+        return [], []
+    findings: list[str] = []
+    recommendations: list[str] = []
+    for check in LAB_FLOW_CHECKS:
+        for finding in check(outcomes):
+            findings.append(finding.message)
+            if finding.recommendation:
+                recommendations.append(finding.recommendation)
+    return findings, recommendations
+
+
 def analyze_run(run_dir: Path) -> RunAnalysis:
     run_dir = run_dir.resolve()
     manifest = _read_json(run_dir / "manifest.json") or {}
@@ -394,6 +525,12 @@ def analyze_run(run_dir: Path) -> RunAnalysis:
             findings.append(
                 f"  - event failure in `{data.get('session_name')}`: {fail.get('event_type')} — {fail.get('error')[:100]}"
             )
+
+        flow_findings, flow_recs = _analyze_lab_flows(child)
+        findings.extend(flow_findings)
+        for rec in flow_recs:
+            if rec not in recommendations:
+                recommendations.append(rec)
 
     if any("Can't open X display" in f for f in findings):
         recommendations.append(

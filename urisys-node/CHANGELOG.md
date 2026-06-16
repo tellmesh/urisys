@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-06-16
+
+### Docs
+- Update README.md
+- Update urisys-automation-lab/markpacts/log-flow.contract.markpact.md
+- Update urisys-automation-lab/markpacts/urillm-decide.contract.markpact.md
+- Update urisys-automation-lab/markpacts/urimessage.contract.markpact.md
+- Update urisys-node/README.md
+
+### Test
+- Update tests/test_urisys.py
+
+### Other
+- Update scripts/session_report.py
+- Update urirdp-docker/packages/python/urirdp_llm/handlers.py
+- Update urirdp-docker/packages/python/urirdp_llm/routes.py
+- Update urisys-automation-lab/flows/08_voice_command_to_kvm.uri.flow.yaml
+- Update urisys-automation-lab/packages/python/urimessage/__init__.py
+- Update urisys-automation-lab/packages/python/urimessage/handlers.py
+- Update urisys-automation-lab/packages/python/urimessage/routes.py
+- Update urisys-automation-lab/routes/local-rdp.routes.yaml
+- Update urisys-automation-lab/server/automation_lab_server.py
+- Update urisys-automation-lab/server/lab_uri_adapter.py
+- ... and 3 more files
+
 ## [0.1.1] - 2026-06-16
 
 ### Docs

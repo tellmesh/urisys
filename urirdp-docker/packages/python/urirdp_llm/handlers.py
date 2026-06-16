@@ -194,3 +194,121 @@ def analyze(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
         return _heuristic(tokens, target, 'heuristic-fallback')
 
     return _heuristic(tokens, target, 'heuristic-fallback')
+
+
+def _decide_messages(question: str, context_value: Any) -> list[dict[str, str]]:
+    context_text = json.dumps(context_value, ensure_ascii=False, default=str)
+    if len(context_text) > 12000:
+        context_text = context_text[:12000] + '…'
+    prompt = (
+        'You are a runtime judge for automation workflows. '
+        'Return JSON only with keys: ok (bool), decision (retry|abort), reason (string), confidence (0-1). '
+        f'Question: {question}\n'
+        f'Context:\n{context_text}'
+    )
+    return [{'role': 'user', 'content': prompt}]
+
+
+def _mock_decide(question: str, context_value: Any) -> dict[str, Any]:
+    blob = json.dumps(context_value or {}, ensure_ascii=False, default=str).lower()
+    retry = 'error' in blob or '502' in blob
+    return {
+        'ok': retry,
+        'decision': 'retry' if retry else 'abort',
+        'reason': 'mock-decide: critical pattern in context' if retry else 'mock-decide: no critical pattern',
+        'confidence': 0.8 if retry else 0.9,
+        'model': 'mock-decide',
+        'question': question,
+    }
+
+
+def decide(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
+    cfg = _llm_cfg(context)
+    driver = cfg.get('driver', 'mock')
+    question = str(payload.get('question') or '')
+    context_value = payload.get('context')
+
+    if not question:
+        return {'ok': False, 'error': 'payload.question is required'}
+
+    if context.get('dry_run') or not allow_real(context) or driver in ('mock', 'heuristic', 'mock-vision'):
+        return _mock_decide(question, context_value)
+
+    model = _env('model', cfg, context)
+    api_key = (
+        _env('api_key', cfg, context)
+        or resolve_env_var('OPENROUTER_API_KEY', context, secret=True)
+        or resolve_env_var('OPENAI_API_KEY', context, secret=True)
+    )
+    base_url = _env('base_url', cfg, context)
+    temperature = float(_env('temperature', cfg, context) or '0')
+    max_tokens = int(_env('max_tokens', cfg, context) or '512')
+    messages = _decide_messages(question, context_value)
+
+    if not model or not api_key:
+        return _mock_decide(question, context_value)
+
+    try:
+        if driver == 'litellm':
+            if not str(model).startswith('openrouter/') and resolve_env_var('OPENROUTER_API_KEY', context, secret=True):
+                model = f'openrouter/{model.lstrip("openrouter/")}'
+            parsed = _litellm_chat(messages, model, temperature=temperature, max_tokens=max_tokens)
+        elif driver in ('openai', 'openrouter'):
+            if not base_url:
+                base_url = 'https://openrouter.ai/api/v1' if resolve_env_var('OPENROUTER_API_KEY', context, secret=True) else 'https://api.openai.com/v1'
+            parsed = _openai_compatible_chat(messages, model, api_key, base_url, temperature, max_tokens)
+        else:
+            return _mock_decide(question, context_value)
+        decision = str(parsed.get('decision') or ('retry' if parsed.get('ok') else 'abort')).lower()
+        ok = bool(parsed.get('ok')) if 'ok' in parsed else decision == 'retry'
+        return {
+            'ok': ok,
+            'decision': decision,
+            'reason': str(parsed.get('reason') or 'llm-decide'),
+            'confidence': float(parsed.get('confidence', 0.7)),
+            'model': model,
+            'question': question,
+        }
+    except (urllib.error.URLError, TimeoutError, KeyError, json.JSONDecodeError, ValueError, RuntimeError):
+        return _mock_decide(question, context_value)
+
+
+_PHRASE_MAP: list[tuple[str, str, dict[str, Any]]] = [
+    ('kliknij ok', 'kvm://local/task/command/click-text', {'text': 'OK'}),
+    ('otwórz przeglądark', 'browser://chrome/page/open', {'url': 'http://localhost:8101/health'}),
+    ('zrób screenshot', 'kvm://local/monitor/primary/query/screenshot', {}),
+    ('status rdp', 'rdp://local/display/query/status', {}),
+]
+
+
+def _match_transcript(text: str) -> tuple[str, dict[str, Any]]:
+    lowered = (text or '').lower().strip()
+    for phrase, uri, payload in _PHRASE_MAP:
+        if phrase in lowered:
+            return uri, dict(payload)
+    return 'kvm://local/task/command/click-text', {'text': 'OK'}
+
+
+def plan(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
+    transcript = str(payload.get('transcript') or payload.get('text') or '').strip()
+    if not transcript:
+        return {'ok': False, 'error': 'payload.transcript is required'}
+    allowed = payload.get('allowed_schemes')
+    schemes = [str(s).strip() for s in allowed] if isinstance(allowed, list) else None
+    uri, inner_payload = _match_transcript(transcript)
+    scheme = uri.split('://', 1)[0]
+    if schemes and scheme not in schemes:
+        return {
+            'ok': False,
+            'error': f'scheme {scheme!r} not in allowed_schemes',
+            'uri': uri,
+            'payload': inner_payload,
+            'transcript': transcript,
+        }
+    return {
+        'ok': True,
+        'uri': uri,
+        'payload': inner_payload,
+        'transcript': transcript,
+        'model': 'phrase-map',
+    }

@@ -3,9 +3,16 @@
 from __future__ import annotations
 
 from typing import Any, Callable
+from urllib.parse import urlparse
 
 from uri3.graph.execution_models import ExecutionContext
 from uri3.graph.models import GraphNode
+
+try:
+    from uri3.graph.payload_context import merge_payload_from, resolve_step_payload
+except ImportError:  # pragma: no cover
+    resolve_step_payload = None  # type: ignore[assignment,misc]
+    merge_payload_from = None  # type: ignore[assignment,misc]
 
 # Schemes handled locally or forwarded to urirdp via lab gateway.
 LAB_SCHEMES = frozenset(
@@ -20,9 +27,11 @@ LAB_SCHEMES = frozenset(
         "env",
         "stt",
         "chat",
+        "message",
         "webrtc",
         "http",
         "https",
+        "log",
     }
 )
 
@@ -55,32 +64,66 @@ class LabCallAdapter:
         base_ctx = dict(context.adapter_state.get("lab_context") or {})
         uri = str(node.uri)
         payload = dict(node.payload or {})
+        if resolve_step_payload is not None:
+            payload = resolve_step_payload(payload, context)
+        resolved_uri = str(payload.pop("_resolved_uri", "") or uri)
         step_ctx = dict(base_ctx)
 
-        if uri.startswith("chat://") and "execute" in uri:
+        if resolved_uri.startswith("chat://") and "execute" in resolved_uri:
             payload.setdefault("approved", True)
             payload["dry_run"] = False
             step_ctx["dry_run"] = False
             step_ctx["allow_real"] = True
 
+        if resolved_uri.startswith("message://"):
+            payload.setdefault("approved", True)
+
         if context.dry_run:
             return {
                 "ok": True,
                 "dry_run": True,
-                "uri": uri,
+                "uri": resolved_uri,
                 "operation": node.operation,
                 "payload": payload,
             }
 
+        scheme = urlparse(resolved_uri).scheme
+        if scheme == "log":
+            return self._execute_log(node, context, resolved_uri, payload)
+
         try:
-            response = call_uri(uri, payload, step_ctx)
+            response = call_uri(resolved_uri, payload, step_ctx)
         except Exception as exc:
-            response = {"ok": False, "uri": uri, "error": str(exc)}
+            response = {"ok": False, "uri": resolved_uri, "error": str(exc)}
 
         ok = step_ok(response, allow_real=bool(step_ctx.get("allow_real")))
         return {
             "ok": ok,
-            "uri": uri,
+            "uri": resolved_uri,
             "operation": node.operation,
             "response": response,
         }
+
+    def _execute_log(
+        self,
+        node: GraphNode,
+        context: ExecutionContext,
+        uri: str,
+        payload: dict[str, Any],
+    ) -> dict[str, Any]:
+        try:
+            from uri3.graph.adapters.log_adapter import LogAdapter
+        except ImportError as exc:
+            return {"ok": False, "uri": uri, "error": f"log adapter unavailable: {exc}"}
+
+        log_node = GraphNode(
+            id=node.id,
+            uri=uri,
+            operation=node.operation,
+            kind=node.kind,
+            payload=payload,
+            depends_on=list(node.depends_on or []),
+            condition=node.condition,
+        )
+        result = LogAdapter().execute(log_node, context)
+        return {"ok": bool(result.get("ok")), "uri": uri, "operation": node.operation, **result}

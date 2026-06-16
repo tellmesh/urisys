@@ -1,18 +1,34 @@
 flow:
   id: 08-voice-command-to-kvm
-  description: STT recognizes command and executes mapped URI via chat bridge.
+  description: STT transcript → llm plan → kvm execute (standardized pipeline).
 
 defaults:
   approved: true
   dry_run: false
 
 do:
-  - stt://local/session/main/command/start:
+  - id: stt_start
+    uri: stt://local/session/main/command/start
+    payload:
       language: pl-PL
       mode: browser
-  - stt://local/session/main/query/transcript
-  - chat://local/uri/command/execute:
-      uri: kvm://local/task/command/click-text
-      payload:
-        text: OK
-      approved: true
+
+  - id: stt_transcript
+    uri: stt://local/session/main/query/transcript
+    after: stt_start
+
+  - id: map_voice
+    uri: llm://local/text/query/plan
+    after: stt_transcript
+    payload:
+      transcript_from: stt_transcript
+      allowed_schemes:
+        - kvm
+        - browser
+        - rdp
+
+  - id: execute_mapped
+    uri: kvm://local/task/command/click-text
+    after: map_voice
+    if: map_voice.ok == true
+    payload_from: map_voice
