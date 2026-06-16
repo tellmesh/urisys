@@ -16,6 +16,15 @@ PORT="${URISYS_NODE_HOST_PORT:-8790}"
 BASE="http://127.0.0.1:${PORT}"
 CONTAINER="${URISYS_NODE_CONTAINER:-urisys-node-gui}"
 KEEP="${URISYS_NODE_E2E_KEEP:-0}"
+SESSION_DIR="${URISYS_NODE_SESSION_DIR:-}"
+
+save_json() {
+  local name="$1" content="$2"
+  if [ -n "${SESSION_DIR}" ]; then
+    mkdir -p "${SESSION_DIR}/responses"
+    printf '%s' "${content}" > "${SESSION_DIR}/responses/${name}.json"
+  fi
+}
 
 log() { echo "[urisys-node-docker-e2e] $*"; }
 fail() { log "FAIL: $*"; exit 1; }
@@ -81,11 +90,13 @@ docker exec "${CONTAINER}" urisys --help >/dev/null || fail "urisys --help"
 docker exec "${CONTAINER}" bash -lc 'urisys-node serve --help >/dev/null' || fail "urisys-node serve --help"
 
 HEALTH="$(http_json GET "${BASE}/health")"
+save_json "health" "${HEALTH}"
 echo "${HEALTH}" | grep -q '"service": "urisys-node"' || fail "unexpected health: ${HEALTH}"
 NODE_ID="$(python3 -c "import json,sys; print(json.load(sys.stdin)['node_id'])" <<<"${HEALTH}")"
 log "remote health ok node_id=${NODE_ID}"
 
 ROUTES="$(http_json GET "${BASE}/uri/routes")"
+save_json "routes" "${ROUTES}"
 echo "${ROUTES}" | grep -q 'screen://' || fail "screen routes missing"
 echo "${ROUTES}" | grep -q 'node://' || fail "node routes missing"
 
@@ -101,6 +112,7 @@ IDENTITY="$(
     --nodes-registry "${CFG}/nodes.registry.host.json" \
     --approve
 )"
+save_json "identity" "${IDENTITY}"
 echo "${IDENTITY}" | grep -q '"node_id"' || fail "identity call failed: ${IDENTITY}"
 
 log "host remote screen capture (mss on Xvfb)"
@@ -116,6 +128,7 @@ CAPTURE="$(
     --payload '{"monitor":1}' \
     --approve --allow-real
 )"
+save_json "screen-capture" "${CAPTURE}"
 echo "${CAPTURE}" | grep -q '"ok": true' || fail "screen capture failed: ${CAPTURE}"
 CAP_PATH="$(python3 -c "import json,sys; r=json.load(sys.stdin); print((r.get('result') or {}).get('path',''))" <<<"${CAPTURE}")"
 [ -n "${CAP_PATH}" ] || fail "capture path empty"
@@ -125,12 +138,25 @@ log "capture ok path=${CAP_PATH} size=${CAP_SIZE}"
 
 log "host remote indicator on/off"
 IND_ON="$(http_json POST "${BASE}/uri/call" '{"uri":"node://local/command/indicator-on","payload":{"message":"host e2e"},"context":{"approved":true}}')"
+save_json "indicator-on" "${IND_ON}"
 echo "${IND_ON}" | grep -q '"remote_control_active": true' || fail "indicator-on: ${IND_ON}"
 IND_OFF="$(http_json POST "${BASE}/uri/call" '{"uri":"node://local/command/indicator-off","payload":{},"context":{"approved":true}}')"
+save_json "indicator-off" "${IND_OFF}"
 echo "${IND_OFF}" | grep -q '"remote_control_active": false' || fail "indicator-off: ${IND_OFF}"
 
 EVENTS="$(http_json GET "${BASE}/events?limit=5")"
+save_json "events" "${EVENTS}"
 echo "${EVENTS}" | grep -q '"events"' || fail "events endpoint failed"
+if [ -n "${SESSION_DIR}" ]; then
+  SESSION_DIR="${SESSION_DIR}" python3 - <<'PY'
+import json, os
+from pathlib import Path
+session = Path(os.environ["SESSION_DIR"])
+data = json.loads((session / "responses" / "events.json").read_text(encoding="utf-8"))
+lines = [json.dumps(ev, ensure_ascii=False) for ev in data.get("events") or [] if isinstance(ev, dict)]
+(session / "events.jsonl").write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
+PY
+fi
 
 log "PASS host→docker urisys-node control (${BASE}, node=${NODE_ID})"
 exit 0

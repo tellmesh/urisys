@@ -9,6 +9,8 @@ Portable computer-control example with:
 
 Docker runs in mock mode, so it does not control the host mouse or keyboard.
 
+**PyPI:** `urikvm`, `urihim`, `uriocr`, `urillm` mają osobne `pyproject.toml` (gotowe do publikacji). Ten katalog instaluje meta-bundle `urikvm-docker-example` — **nie** zastępuje `pip install urikvm`. Z monorepo: `bash scripts/install-kvm-packs-editable.sh`.
+
 ```bash
 python -m pip install -e .
 urisys-kvm call kvm://local/task/command/click-text \

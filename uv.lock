@@ -864,7 +864,7 @@ wheels = [
 
 [[package]]
 name = "goal"
-version = "2.1.247"
+version = "2.1.248"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
@@ -874,9 +874,9 @@ dependencies = [
     { name = "tomlkit" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/26/e8/36af5becc255f4d2f1832e7d72c0642a4dfbba194ea9eef216a50ffb3470/goal-2.1.247.tar.gz", hash = "sha256:95af032f02364c63361775f5a70640148947974d68d75df51de1b421011b46cf", size = 279595, upload-time = "2026-06-13T22:42:49.021Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/0c/6d/cb04514d9182e284eec9cfde0e731ac59097030735af6c245a049e56f879/goal-2.1.248.tar.gz", hash = "sha256:bf6d88f085d1e56e85e63ba1bdd492ddea9427185985dd5f30e6013d21c75f42", size = 280447, upload-time = "2026-06-16T21:08:30.523Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6c/ed/43be4ef17b88479cc52e1074edc1fd2f875d24a783ab4d2d8b4ffa1ddb3a/goal-2.1.247-py3-none-any.whl", hash = "sha256:83b0e2da09d801074d24cf882b5bcc2d247c6e6759975b50a55f55c30e41c601", size = 273372, upload-time = "2026-06-13T22:42:47.188Z" },
+    { url = "https://files.pythonhosted.org/packages/0f/ca/ef90cbc78fb6dc9e1c7371312eb9cb6299d6a68b7f71227cbd32cdc13e30/goal-2.1.248-py3-none-any.whl", hash = "sha256:f57422d5f9828b2ba9ea2f64c5ed4735eef295b8a08b4a5503592cc5402bd26b", size = 273649, upload-time = "2026-06-16T21:08:28.536Z" },
 ]
 
 [[package]]
@@ -3637,11 +3637,12 @@ requires-dist = [{ name = "uricore", specifier = ">=0.1.0" }]
 
 [[package]]
 name = "urisys"
-version = "0.1.16"
+version = "0.1.17"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
     { name = "uricore" },
+    { name = "urisysedge" },
 ]
 
 [package.optional-dependencies]
@@ -3696,6 +3697,7 @@ requires-dist = [
     { name = "uricore", editable = "../uricore" },
     { name = "uricore", marker = "extra == 'dev'", editable = "../uricore" },
     { name = "uridocker", marker = "extra == 'dev'", editable = "../uri-packs/packages/python/uridocker" },
+    { name = "urisysedge", editable = "../urisysedge" },
     { name = "zeroconf", marker = "extra == 'discovery'", specifier = ">=0.131.0" },
 ]
 provides-extras = ["dev", "lab", "real", "discovery"]
@@ -3708,6 +3710,20 @@ dev = [
     { name = "uridocker", editable = "../uri-packs/packages/python/uridocker" },
 ]
 lab = [{ name = "uri2flow", editable = "../uri2flow" }]
+
+[[package]]
+name = "urisysedge"
+version = "0.1.1"
+source = { editable = "../urisysedge" }
+
+[package.metadata]
+requires-dist = [
+    { name = "costs", marker = "extra == 'dev'", specifier = ">=0.1.20" },
+    { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
+    { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
+]
+provides-extras = ["dev"]
 
 [[package]]
 name = "urllib3"

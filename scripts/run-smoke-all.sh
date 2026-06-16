@@ -17,6 +17,8 @@ cd "$ROOT"
 uv sync --group lab >/dev/null
 uv run pytest urisys-automation-lab/tests/test_flow_08_plan.py \
   urisys-automation-lab/tests/test_flow_09_plan.py \
-  urisys-automation-lab/tests/test_lab_handlers.py -q
+  urisys-automation-lab/tests/test_lab_handlers.py \
+  urisys-automation-lab/tests/test_llm_plan_handlers.py \
+  tests/test_session_report_events.py -q
 
 echo "PASS smoke-all"

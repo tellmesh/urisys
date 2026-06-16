@@ -1,52 +1,52 @@
-# urisys | 545 func | 95f | 14795L | python | 2026-06-16
+# urisys | 559 func | 106f | 15293L | python | 2026-06-16
 # generated in 0.00s
 
 HEALTH:
-  CC̄=4.1  critical=61 (limit:10)  dup=3  cycles=0
+  CC̄=4.1  critical=62 (limit:10)  dup=1  cycles=0
 
 ALERTS[20]:
   !!! high_fan_out     main = 41 (limit:10)
-  !!! cc_exceeded      analyze_run = 39 (limit:15)
-  !!! cc_exceeded      session_lab_10_flows = 36 (limit:15)
-  !!! high_fan_out     session_lab_10_flows = 35 (limit:10)
   !!! high_fan_out     MarkpactManager.compile = 34 (limit:10)
-  !!! high_fan_out     analyze_run = 34 (limit:10)
   !!! high_fan_out     session_urirdp_real_docker = 31 (limit:10)
   !!! cc_exceeded      session_urirdp_real_docker = 30 (limit:15)
-  !!! cc_exceeded      evaluate_expectations = 29 (limit:15)
-  !!! cc_exceeded      MarkpactManager._compile_manifest = 28 (limit:15)
+  !!! high_fan_out     analyze_run = 29 (limit:10)
+  !!! high_fan_out     main = 28 (limit:10)
+  !!! high_fan_out     serve = 25 (limit:10)
+  !!! high_fan_out     make_handler = 23 (limit:10)
+  !!! high_fan_out     make_handler = 23 (limit:10)
+  !!! high_fan_out     SourceManager._fetch_git = 22 (limit:10)
 
-MODULES[236] (top by size):
+MODULES[259] (top by size):
   M[planfile.yaml] 1319L C:0 F:0 CC↑0 D:0 (yaml)
-  M[scripts/run_test_sessions.py] 1218L C:0 F:38 CC↑36 D:0 (python)
-  M[scripts/session_report.py] 801L C:5 F:23 CC↑39 D:0 (python)
+  M[scripts/run_test_sessions.py] 599L C:0 F:10 CC↑30 D:0 (python)
   M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
-  M[src/urisys/managers/markpact_manager.py] 385L C:1 F:18 CC↑28 D:0 (python)
-  M[urirdp-docker/packages/python/urirdp_llm/handlers.py] 326L C:0 F:20 CC↑18 D:0 (python)
+  M[src/urisys/managers/markpact_manager.py] 401L C:1 F:19 CC↑21 D:0 (python)
+  M[urirdp-docker/packages/python/urirdp_llm/handlers.py] 387L C:0 F:22 CC↑20 D:0 (python)
+  M[scripts/test_sessions/lab_flows.py] 317L C:0 F:5 CC↑12 D:0 (python)
   M[packages/python/urisysedge/runtime.py] 270L C:3 F:16 CC↑14 D:10 (python)
-  M[urisys-node/packages/python/urisysedge/runtime.py] 269L C:3 F:16 CC↑14 D:0 (python)
   M[urisys-automation-lab/server/automation_lab_server.py] 247L C:1 F:9 CC↑23 D:0 (python)
   M[urisys-node/packages/python/urisysnode/artifact_resolver.py] 225L C:1 F:15 CC↑15 D:1 (python)
   M[src/urisys/managers/source_manager.py] 224L C:2 F:11 CC↑11 D:0 (python)
-  M[urikvm-docker/packages/python/urillm/handlers.py] 216L C:0 F:15 CC↑16 D:0 (python)
-  M[urienv-docker/packages/python/urienv/src/urienv/handlers.py] 196L C:0 F:19 CC↑7 D:2 (python)
-  M[src/urisys/cli.py] 183L C:0 F:6 CC↑20 D:0 (python)
-  M[urirdp-docker/packages/python/urirdp_browser/handlers.py] 171L C:0 F:7 CC↑15 D:0 (python)
-  LANGS: python:107/shell:48/yaml:35/json:13/yml:10/other:9/toml:8/javascript:2/txt:2/conf:1/gui:1
+  M[urikvm-docker/packages/python/urillm/handlers.py] 216L C:0 F:18 CC↑12 D:0 (python)
+  M[scripts/test_sessions/util.py] 209L C:0 F:17 CC↑9 D:7 (python)
+  M[urisys-node/packages/python/urisysnode/serve.py] 204L C:0 F:7 CC↑13 D:0 (python)
+  M[urienv-docker/packages/python/urienv/src/urienv/handlers.py] 196L C:0 F:19 CC↑7 D:1 (python)
+  M[scripts/report/lab_checks.py] 188L C:0 F:9 CC↑15 D:1 (python)
+  LANGS: python:121/shell:52/yaml:35/toml:13/json:13/yml:10/other:9/javascript:2/txt:2/conf:1/gui:1
 
 HOTSPOTS[10]:
   ★ main fan=41  // Orchestrates 41 calls
-  ★ session_lab_10_flows fan=35  // Run all 10 automation-lab flows; capture one RDP screenshot per flow.
   ★ MarkpactManager.compile fan=34  // Orchestrates 34 calls
-  ★ analyze_run fan=34  // Analysis pipeline, 34 stages
   ★ session_urirdp_real_docker fan=31  // Orchestrates 31 calls
+  ★ analyze_run fan=29  // Analysis pipeline, 29 stages
+  ★ main fan=28  // Orchestrates 28 calls
 
 REFACTOR[15]:
-  [1] H/L Split MarkpactManager._compile_manifest (CC=28)
-  [2] H/L Split session_urirdp_real_docker (CC=30)
-  [3] H/L Split evaluate_expectations (CC=29)
-  [4] H/L Split session_lab_10_flows (CC=36)
-  [5] H/L Split write_session_report (CC=28)
+  [1] H/L Split session_urirdp_real_docker (CC=30)
+  [2] H/H Split god module scripts/run_test_sessions.py (599L, 0 classes)
+  [3] H/H Split god module goal.yaml (512L, 0 classes)
+  [4] H/H Split god module planfile.yaml (1319L, 0 classes)
+  [5] M/L Split main (CC=20)
 
 EVOLUTION:
-  2026-06-16 CC̄=4.1 crit=61 14795L // Automated analysis
+  2026-06-16 CC̄=4.1 crit=62 15293L // Automated analysis

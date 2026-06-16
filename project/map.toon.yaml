@@ -1,10 +1,10 @@
-# urisys | 203f 12723L | python:151,shell:49,javascript:2,less:1 | 2026-06-16
-# stats: 483 func | 39 cls | 203 mod | CC̄=4.4 | critical:48 | cycles:0
-# alerts[5]: CC analyze_run=39; CC session_lab_10_flows=36; CC session_urirdp_real_docker=30; CC evaluate_expectations=29; CC write_session_report=28
-# hotspots[5]: session_lab_10_flows fan=32; main fan=29; main fan=28; session_urirdp_real_docker fan=25; analyze_run fan=24
+# urisys | 227f 13482L | python:170,shell:54,javascript:2,less:1 | 2026-06-16
+# stats: 527 func | 36 cls | 227 mod | CC̄=4.3 | critical:50 | cycles:0
+# alerts[5]: CC session_urirdp_real_docker=30; CC validate_contract=23; CC infer_steps=20; CC main=20; CC plan=20
+# hotspots[5]: main fan=29; main fan=28; session_urirdp_real_docker fan=25; serve fan=24; analyze_run fan=23
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[203]:
+M[227]:
   app.doql.less,47
   examples/frontend/app.js,22
   examples/markpact/browser-call.sh,13
@@ -22,15 +22,36 @@ M[203]:
   packages/python/urisysedge/env.py,130
   packages/python/urisysedge/runtime.py,271
   project.sh,63
+  scripts/install-kvm-packs-editable.sh,15
   scripts/paths.sh,55
+  scripts/publish-pypi-packs.sh,65
+  scripts/report/__init__.py,62
+  scripts/report/cli.py,42
+  scripts/report/events.py,139
+  scripts/report/lab_checks.py,189
+  scripts/report/models.py,87
+  scripts/report/run_analysis.py,130
+  scripts/report/run_markdown.py,43
+  scripts/report/session.py,106
+  scripts/report/session_io.py,20
+  scripts/report/session_markdown.py,121
+  scripts/report/util.py,30
   scripts/run-lab-e2e.sh,15
-  scripts/run-lab-unit-ci.sh,20
+  scripts/run-lab-nightly.sh,17
+  scripts/run-lab-unit-ci.sh,21
   scripts/run-nl-log-smoke.sh,44
-  scripts/run-smoke-all.sh,23
-  scripts/run-urisys-node-docker-e2e.sh,137
-  scripts/run_test_sessions.py,1219
-  scripts/session_report.py,802
+  scripts/run-smoke-all.sh,25
+  scripts/run-urisys-node-docker-e2e.sh,163
+  scripts/run-urisys-node-docker-session.sh,7
+  scripts/run_test_sessions.py,600
+  scripts/session_report.py,50
+  scripts/sync-vendored-urisysedge.sh,16
   scripts/test-goal.sh,12
+  scripts/test_sessions/__init__.py,99
+  scripts/test_sessions/expectations.py,154
+  scripts/test_sessions/lab_flows.py,318
+  scripts/test_sessions/lab_rdp.py,181
+  scripts/test_sessions/util.py,210
   scripts/validate-all-markpacts.sh,54
   src/urisys/__init__.py,4
   src/urisys/cli.py,184
@@ -52,8 +73,10 @@ M[203]:
   src/urisys/managers/route_manager.py,24
   src/urisys/managers/runtime_manager.py,31
   src/urisys/managers/source_manager.py,225
+  tests/test_kvm_pack_pyprojects.py,62
   tests/test_markpact.py,99
   tests/test_run_expectations.py,56
+  tests/test_session_report_events.py,59
   tests/test_source_manager.py,36
   tests/test_urisys.py,46
   tree.sh,2
@@ -120,7 +143,7 @@ M[203]:
   urirdp-docker/packages/python/urirdp_kvm/handlers.py,134
   urirdp-docker/packages/python/urirdp_kvm/routes.py,6
   urirdp-docker/packages/python/urirdp_llm/__init__.py,4
-  urirdp-docker/packages/python/urirdp_llm/handlers.py,327
+  urirdp-docker/packages/python/urirdp_llm/handlers.py,388
   urirdp-docker/packages/python/urirdp_llm/routes.py,5
   urirdp-docker/packages/python/urirdp_ocr/__init__.py,4
   urirdp-docker/packages/python/urirdp_ocr/handlers.py,80
@@ -184,30 +207,31 @@ M[203]:
   urisys-automation-lab/tests/test_flow_09_plan.py,28
   urisys-automation-lab/tests/test_flow_expectations.py,167
   urisys-automation-lab/tests/test_lab_handlers.py,64
+  urisys-automation-lab/tests/test_llm_plan_handlers.py,44
   urisys-automation-lab/web/app.js,132
   urisys-node/docker/entrypoint.sh,64
   urisys-node/packages/python/uriscreen/__init__.py,1
   urisys-node/packages/python/uriscreen/handlers.py,103
   urisys-node/packages/python/uriscreen/routes.py,24
-  urisys-node/packages/python/urisysedge/__init__.py,13
-  urisys-node/packages/python/urisysedge/env.py,130
-  urisys-node/packages/python/urisysedge/runtime.py,270
   urisys-node/packages/python/urisysnode/__init__.py,1
   urisys-node/packages/python/urisysnode/artifact_resolver.py,226
   urisys-node/packages/python/urisysnode/cli.py,171
   urisys-node/packages/python/urisysnode/client.py,93
   urisys-node/packages/python/urisysnode/env.py,6
+  urisys-node/packages/python/urisysnode/forward.py,34
   urisys-node/packages/python/urisysnode/handlers.py,42
   urisys-node/packages/python/urisysnode/identity.py,111
   urisys-node/packages/python/urisysnode/router.py,48
   urisys-node/packages/python/urisysnode/routes.py,20
   urisys-node/packages/python/urisysnode/runtime.py,6
-  urisys-node/packages/python/urisysnode/serve.py,126
+  urisys-node/packages/python/urisysnode/serve.py,205
   urisys-node/scripts/install-linux.sh,17
   urisys-node/tests/test_artifact_resolver.py,70
   urisys-node/tests/test_docker_host_e2e.py,157
+  urisys-node/tests/test_forward_pack.py,75
+  urisys-node/tests/test_pack_hotload.py,65
   urisys-node/tests/test_urisys_node.py,51
-  urisys-node/tests/test_vendored_urisysedge_sync.py,51
+  urisys-node/tests/test_urisysedge_single_source.py,35
 D:
   packages/python/urisysedge/__init__.py:
   packages/python/urisysedge/env.py:
@@ -230,24 +254,73 @@ D:
     run_flow(runtime;path;context)
     make_handler(runtime)
     serve(runtime;host;port)
+  scripts/report/__init__.py:
+  scripts/report/cli.py:
+    e: main
+    main()
+  scripts/report/events.py:
+    e: summarize_event_records,load_event_records,summarize_events,resolve_events_paths,merge_event_summaries
+    summarize_event_records(records)
+    load_event_records(events_path)
+    summarize_events(events_path)
+    resolve_events_paths(session_dir)
+    merge_event_summaries(paths)
+  scripts/report/lab_checks.py:
+    e: iter_step_results,load_flow_outcomes,check_declared_expectations,check_gui_no_effect,check_vision_never_decides,_duplicate_recommendation,check_duplicate_screenshots,check_shell_baseline_duplicate,analyze_lab_flows
+    iter_step_results(steps)
+    load_flow_outcomes(session_dir)
+    check_declared_expectations(outcomes)
+    check_gui_no_effect(outcomes)
+    check_vision_never_decides(outcomes)
+    _duplicate_recommendation(outcome)
+    check_duplicate_screenshots(outcomes)
+    check_shell_baseline_duplicate(outcomes)
+    analyze_lab_flows(session_dir)
+  scripts/report/models.py:
+    e: StepResult,SessionReport,RunAnalysis,Finding,FlowOutcome
+    StepResult:
+    SessionReport: passed(0),failed(0)
+    RunAnalysis: all_passed(0)
+    Finding:
+    FlowOutcome: no_visible_effect(0),vision_decided(0)
+  scripts/report/run_analysis.py:
+    e: _session_row,_findings_for_session,_run_recommendations,analyze_run,write_run_analysis
+    _session_row(data;report_path;run_dir)
+    _findings_for_session(data)
+    _run_recommendations(findings;summary)
+    analyze_run(run_dir)
+    write_run_analysis(run_dir;analysis)
+  scripts/report/run_markdown.py:
+    e: render_run_analysis_markdown
+    render_run_analysis_markdown(analysis)
+  scripts/report/session.py:
+    e: infer_steps,collect_artifacts,session_status,session_duration,generate_report
+    infer_steps(session_dir;meta)
+    collect_artifacts(session_dir)
+    session_status(steps;meta)
+    session_duration(meta)
+    generate_report(session_dir)
+  scripts/report/session_io.py:
+    e: write_session_report
+    write_session_report(session_dir;report)
+  scripts/report/session_markdown.py:
+    e: render_session_markdown,_environment_section,_steps_section,_screenshots_section,_events_section,_log_errors_section,_duplicate_screenshots_section,_log_tail_section
+    render_session_markdown(report)
+    _environment_section(report)
+    _steps_section(report)
+    _screenshots_section(report)
+    _events_section(report)
+    _log_errors_section(report)
+    _duplicate_screenshots_section(report)
+    _log_tail_section(report)
+  scripts/report/util.py:
+    e: now_iso,host_id,read_json,tail
+    now_iso()
+    host_id()
+    read_json(path)
+    tail(text;limit)
   scripts/run_test_sessions.py:
-    e: _now_iso,_run_id,_host_id,_http_json,_wait_health,_compose_cmd,_prepare_urirdp_data,_sleep_ports,_save_json,_run_cmd,_write_meta,_read_meta,_finalize_session,_docker_logs,_copy_container_file,_copy_host_screenshot,session_pytest_urirdp,session_pytest_urisys,session_pytest_urisys_node,session_urirdp_mock_docker,session_urirdp_real_docker,session_urirdp_rdp_e2e,session_automation_lab,_parse_lab_flow,_flow_step_context,_file_md5,_flow_expectations,_ocr_texts,_vision_confidences,evaluate_expectations,_step_pause,_summarize_uri_response,_parse_docker_log_errors,_prepare_ok_target,_capture_rdp_screenshot,_capture_rdp_screenshot_wait,session_lab_10_flows,main
-    _now_iso()
-    _run_id()
-    _host_id()
-    _http_json(method;url;body;timeout)
-    _wait_health(url;attempts;delay)
-    _compose_cmd()
-    _prepare_urirdp_data(pkg)
-    _sleep_ports()
-    _save_json(path;data)
-    _run_cmd(cmd)
-    _write_meta(session_dir)
-    _read_meta(path)
-    _finalize_session(session_dir;started_at;exit_code;steps)
-    _docker_logs(service;compose_file;cwd;out)
-    _copy_container_file(container;src;dest)
-    _copy_host_screenshot(src;session_dir;name)
+    e: session_pytest_urirdp,session_pytest_urisys,session_pytest_urisys_node,session_urirdp_mock_docker,session_urirdp_real_docker,session_urirdp_rdp_e2e,session_automation_lab,_monorepo_root,session_urisys_node_docker_gui,main
     session_pytest_urirdp(session_dir)
     session_pytest_urisys(session_dir)
     session_pytest_urisys_node(session_dir)
@@ -255,51 +328,58 @@ D:
     session_urirdp_real_docker(session_dir)
     session_urirdp_rdp_e2e(session_dir)
     session_automation_lab(session_dir)
-    _parse_lab_flow(path)
-    _flow_step_context(defaults;uri)
-    _file_md5(path)
-    _flow_expectations(flow_path)
-    _ocr_texts(step_results)
-    _vision_confidences(step_results)
-    evaluate_expectations(expect)
-    _step_pause(uri)
-    _summarize_uri_response(res)
-    _parse_docker_log_errors(session_dir)
-    _prepare_ok_target(rdp_port;display;xauth)
-    _capture_rdp_screenshot(session_dir)
-    _capture_rdp_screenshot_wait(session_dir)
-    session_lab_10_flows(session_dir)
+    _monorepo_root()
+    session_urisys_node_docker_gui(session_dir)
     main()
   scripts/session_report.py:
-    e: _now_iso,_host_id,_read_json,_tail,_summarize_events,_resolve_events_paths,_merge_event_summaries,_infer_steps,_collect_artifacts,_session_status,generate_report,write_session_report,_iter_step_results,_load_flow_outcomes,check_declared_expectations,check_gui_no_effect,check_vision_never_decides,check_duplicate_screenshots,check_shell_baseline_duplicate,_analyze_lab_flows,analyze_run,write_run_analysis,main,StepResult,SessionReport,RunAnalysis,Finding,FlowOutcome
-    StepResult:
-    SessionReport: passed(0),failed(0)
-    RunAnalysis: all_passed(0)
-    Finding:  # A structured, machine-readable analyzer finding.
-    FlowOutcome: no_visible_effect(0),vision_decided(0)  # Effect-level summary of one flow response, decoupled from th
-    _now_iso()
-    _host_id()
-    _read_json(path)
-    _tail(text;limit)
-    _summarize_events(events_path)
-    _resolve_events_paths(session_dir)
-    _merge_event_summaries(paths)
-    _infer_steps(session_dir;meta)
-    _collect_artifacts(session_dir)
-    _session_status(steps;meta)
-    generate_report(session_dir)
-    write_session_report(session_dir;report)
-    _iter_step_results(steps)
-    _load_flow_outcomes(session_dir)
-    check_declared_expectations(outcomes)
-    check_gui_no_effect(outcomes)
-    check_vision_never_decides(outcomes)
-    check_duplicate_screenshots(outcomes)
-    check_shell_baseline_duplicate(outcomes)
-    _analyze_lab_flows(session_dir)
-    analyze_run(run_dir)
-    write_run_analysis(run_dir;analysis)
-    main()
+  scripts/test_sessions/__init__.py:
+  scripts/test_sessions/expectations.py:
+    e: flow_expectations,ocr_texts,vision_confidences,_screen_changed,_screen_changed_since_previous,_opened_url_contains,_ocr_contains,_min_vision_confidence,evaluate_expectations
+    flow_expectations(flow_path)
+    ocr_texts(step_results)
+    vision_confidences(step_results)
+    _screen_changed(expect)
+    _screen_changed_since_previous(expect)
+    _opened_url_contains(expect;step_results)
+    _ocr_contains(expect;step_results)
+    _min_vision_confidence(expect;step_results)
+    evaluate_expectations(expect)
+  scripts/test_sessions/lab_flows.py:
+    e: _lab_bootstrap,_capture_flow_screenshot,_flow_step_detail,_run_single_lab_flow,session_lab_10_flows
+    _lab_bootstrap(session_dir)
+    _capture_flow_screenshot(session_dir)
+    _flow_step_detail()
+    _run_single_lab_flow(session_dir)
+    session_lab_10_flows(session_dir)
+  scripts/test_sessions/lab_rdp.py:
+    e: parse_lab_flow,flow_step_context,step_pause,summarize_uri_response,parse_docker_log_errors,prepare_ok_target,capture_rdp_screenshot,capture_rdp_screenshot_wait
+    parse_lab_flow(path)
+    flow_step_context(defaults;uri)
+    step_pause(uri)
+    summarize_uri_response(res)
+    parse_docker_log_errors(session_dir)
+    prepare_ok_target(rdp_port;display;xauth)
+    capture_rdp_screenshot(session_dir)
+    capture_rdp_screenshot_wait(session_dir)
+  scripts/test_sessions/util.py:
+    e: now_iso,run_id,host_id,http_json,wait_health,compose_cmd,save_json,run_cmd,write_meta,read_meta,finalize_session,docker_logs,copy_container_file,copy_host_screenshot,file_md5,sleep_ports,prepare_urirdp_data
+    now_iso()
+    run_id()
+    host_id()
+    http_json(method;url;body;timeout)
+    wait_health(url;attempts;delay)
+    compose_cmd()
+    save_json(path;data)
+    run_cmd(cmd)
+    write_meta(session_dir)
+    read_meta(path)
+    finalize_session(session_dir;started_at;exit_code;steps)
+    docker_logs(service;compose_file;cwd;out)
+    copy_container_file(container;src;dest)
+    copy_host_screenshot(src;session_dir;name)
+    file_md5(path)
+    sleep_ports()
+    prepare_urirdp_data(pkg)
   src/urisys/__init__.py:
   src/urisys/cli.py:
     e: _json_arg,print_json,_add_runtime_flags,resolve_markpact_source,build_parser,main
@@ -369,6 +449,15 @@ D:
     e: SourceError,SourceManager
     SourceError:  # Raised when a Markpact source cannot be resolved.
     SourceManager: __init__(1),is_remote_source(1),resolve(1),fetch(1),_result(2),_cache_dir(1),_fetch_http(1),_fetch_github_uri(1),_fetch_github_raw(4),_fetch_git(1),_fetch_zip(1)  # Resolve Markpact sources from local paths, HTTP(S), GitHub, 
+  tests/test_kvm_pack_pyprojects.py:
+    e: _name,test_urisysedge_pyproject,test_each_pack_has_own_pyproject,test_pack_pyprojects_depend_on_urisysedge,test_urillm_imports_urisysedge_not_urikvmedge,test_publish_pypi_packs_script,test_urisys_node_kvm_optional_deps
+    _name(path)
+    test_urisysedge_pyproject()
+    test_each_pack_has_own_pyproject()
+    test_pack_pyprojects_depend_on_urisysedge()
+    test_urillm_imports_urisysedge_not_urikvmedge()
+    test_publish_pypi_packs_script()
+    test_urisys_node_kvm_optional_deps()
   tests/test_markpact.py:
     e: test_markpact_validate,test_markpact_validate_contract,test_markpact_validate_implementation,test_markpact_validate_bundle,test_markpact_compile_and_call,test_uri_controller_loads_markpact_directly,test_markpact_embedded_tests,test_build_route_shape
     test_markpact_validate()
@@ -384,6 +473,10 @@ D:
     test_screen_changed_uses_baseline_not_previous_flow()
     test_screen_changed_fails_when_equal_baseline()
     test_ocr_contains_from_pipeline()
+  tests/test_session_report_events.py:
+    e: test_summarize_events_api_json,test_summarize_events_jsonl
+    test_summarize_events_api_json(tmp_path)
+    test_summarize_events_jsonl(tmp_path)
   tests/test_source_manager.py:
     e: test_fetch_local_file,test_fetch_github_raw
     test_fetch_local_file(tmp_path)
@@ -510,12 +603,15 @@ D:
   urikvm-docker/packages/python/urikvmedge/runtime.py:
   urikvm-docker/packages/python/urillm/__init__.py:
   urikvm-docker/packages/python/urillm/handlers.py:
-    e: _llm_cfg,_driver,_goal_text,_target_from_goal,_box_center,_heuristic_analyze,_parse_json_response,_openai_chat,_litellm_chat,_vision_messages,_normalize_action,_analyze_openai,_analyze_litellm,_vision_analyze,vision_analyze
+    e: _llm_cfg,_driver,_goal_text,_target_from_goal,_box_center,_click_box,_find_target_box,_find_goal_box,_heuristic_analyze,_parse_json_response,_openai_chat,_litellm_chat,_vision_messages,_normalize_action,_analyze_openai,_analyze_litellm,_vision_analyze,vision_analyze
     _llm_cfg(context)
     _driver(context)
     _goal_text(payload)
     _target_from_goal(goal)
     _box_center(box)
+    _click_box(box;confidence;source)
+    _find_target_box(boxes;target)
+    _find_goal_box(boxes;goal)
     _heuristic_analyze(payload;source)
     _parse_json_response(text)
     _openai_chat(messages;model;api_key;base_url)
@@ -646,7 +742,7 @@ D:
     e: register
     register(runtime)
   urirdp-docker/packages/python/urirdp_llm/handlers.py:
-    e: _config,_llm_cfg,_env,_target,_heuristic,_parse_json_response,_screenshot_b64,_vision_messages,_openai_compatible_chat,_litellm_chat,_normalize,analyze,_decide_messages,_mock_decide,_decide_litellm,_decide_openai,_decision_from_parsed,decide,_match_transcript,plan
+    e: _config,_llm_cfg,_env,_target,_heuristic,_parse_json_response,_screenshot_b64,_vision_messages,_openai_compatible_chat,_litellm_chat,_normalize,analyze,_decide_messages,_mock_decide,_decide_litellm,_decide_openai,_decision_from_parsed,decide,_match_transcript,_plan_messages,_plan_from_parsed,plan
     _config(context)
     _llm_cfg(context)
     _env(name;cfg;context;default)
@@ -666,6 +762,8 @@ D:
     _decision_from_parsed(parsed;model;question)
     decide(payload;context)
     _match_transcript(text)
+    _plan_messages(transcript;allowed)
+    _plan_from_parsed(parsed;model;transcript)
     plan(payload;context)
   urirdp-docker/packages/python/urirdp_llm/routes.py:
     e: register
@@ -869,6 +967,11 @@ D:
     test_stt_session_and_transcript()
     test_chat_uri_execute_dry_run()
     test_webrtc_data_send()
+  urisys-automation-lab/tests/test_llm_plan_handlers.py:
+    e: test_plan_phrase_map_default,test_plan_rejects_disallowed_scheme,test_plan_litellm_fallback_on_error
+    test_plan_phrase_map_default()
+    test_plan_rejects_disallowed_scheme()
+    test_plan_litellm_fallback_on_error()
   urisys-node/packages/python/uriscreen/__init__.py:
   urisys-node/packages/python/uriscreen/handlers.py:
     e: _screen_cfg,_backend,_output_dir,_monitor_index,_store_latest,_mock_png,capture,frame,capture_loop
@@ -884,27 +987,6 @@ D:
   urisys-node/packages/python/uriscreen/routes.py:
     e: register
     register(rt)
-  urisys-node/packages/python/urisysedge/__init__.py:
-  urisys-node/packages/python/urisysedge/env.py:
-    e: _urisys_root,load_urisys_env,_env_policy_candidates,load_env_policy,_env_config,resolve_env_var,is_secret_env
-    _urisys_root()
-    load_urisys_env()
-    _env_policy_candidates()
-    load_env_policy()
-    _env_config(context)
-    resolve_env_var(name;context)
-    is_secret_env(name)
-  urisys-node/packages/python/urisysedge/runtime.py:
-    e: _result_ok,load_json,load_yaml_flow,run_flow,make_handler,serve,Route,JsonlEventStore,Runtime
-    Route: compile(0),match(1)
-    JsonlEventStore: __init__(1),append(1),tail(1)
-    Runtime: __init__(2),register(2),resolve(1),_load_handler(1),call(3)
-    _result_ok(result)
-    load_json(path)
-    load_yaml_flow(path)
-    run_flow(runtime;path;context)
-    make_handler(runtime)
-    serve(runtime;host;port)
   urisys-node/packages/python/urisysnode/__init__.py:
   urisys-node/packages/python/urisysnode/artifact_resolver.py:
     e: is_url,_auth_opener,fetch_json,load_node_profile,load_artifact_index,release_api_url,fetch_release,select_artifact,docker_pull,docker_run_worker,wait_health,resolve_and_run,resolve_from_release,_GitHubHeaderAuth
@@ -931,6 +1013,9 @@ D:
     remote_call(endpoint;uri;payload;context)
     call_via_route_map(uri)
   urisys-node/packages/python/urisysnode/env.py:
+  urisys-node/packages/python/urisysnode/forward.py:
+    e: forward_call
+    forward_call(payload;context)
   urisys-node/packages/python/urisysnode/handlers.py:
     e: query_health,query_identity,command_indicator_on,command_indicator_off
     query_health(payload;context)
@@ -963,10 +1048,12 @@ D:
     register(rt)
   urisys-node/packages/python/urisysnode/runtime.py:
   urisys-node/packages/python/urisysnode/serve.py:
-    e: _extend_pack_paths,_register_pack,build_runtime,make_handler,serve
+    e: _extend_pack_paths,_register_pack,build_runtime,load_pack_into_runtime,register_forward_pack,make_handler,serve
     _extend_pack_paths()
     _register_pack(rt;pack)
     build_runtime(config_path)
+    load_pack_into_runtime(runtime;pack)
+    register_forward_pack(runtime;scheme;endpoint;patterns)
     make_handler(runtime)
     serve(runtime;host;port)
   urisys-node/tests/test_artifact_resolver.py:
@@ -986,13 +1073,27 @@ D:
     test_host_remote_identity(docker_stack)
     test_host_screen_capture(docker_stack)
     test_host_indicator_control()
+  urisys-node/tests/test_forward_pack.py:
+    e: _runtime,test_register_forward_adds_routes_and_target,test_call_forwards_to_worker,test_forward_without_target_fails_cleanly
+    _runtime(tmp_path)
+    test_register_forward_adds_routes_and_target(tmp_path)
+    test_call_forwards_to_worker(tmp_path;monkeypatch)
+    test_forward_without_target_fails_cleanly(tmp_path)
+  urisys-node/tests/test_pack_hotload.py:
+    e: _node_only_runtime,test_hotload_adds_routes,test_hotload_is_idempotent,test_hotload_empty_pack_name_rejected,test_hotload_unknown_pack_reports_failure
+    _node_only_runtime(tmp_path)
+    test_hotload_adds_routes(tmp_path)
+    test_hotload_is_idempotent(tmp_path)
+    test_hotload_empty_pack_name_rejected(tmp_path)
+    test_hotload_unknown_pack_reports_failure(tmp_path)
   urisys-node/tests/test_urisys_node.py:
     e: test_identity_and_enroll,test_screen_capture_mock,test_rewrite_uri_for_slave,test_health_payload
     test_identity_and_enroll()
     test_screen_capture_mock()
     test_rewrite_uri_for_slave()
     test_health_payload()
-  urisys-node/tests/test_vendored_urisysedge_sync.py:
-    e: _normalized_code,test_vendored_urisysedge_matches_canonical
-    _normalized_code(path)
-    test_vendored_urisysedge_matches_canonical(module)
+  urisys-node/tests/test_urisysedge_single_source.py:
+    e: test_canonical_urisysedge_present,test_urisysedge_imports_from_canonical,test_no_vendored_duplicate_module
+    test_canonical_urisysedge_present()
+    test_urisysedge_imports_from_canonical()
+    test_no_vendored_duplicate_module(module)

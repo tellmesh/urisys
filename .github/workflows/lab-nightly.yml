@@ -1,0 +1,71 @@
+name: lab-nightly
+
+on:
+  schedule:
+    # 03:00 UTC daily
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  lab-nightly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout urisys
+        uses: actions/checkout@v4
+        with:
+          path: tellmesh/urisys
+
+      - name: Checkout uricore (monorepo sibling)
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          repository: ${{ github.repository_owner }}/uricore
+          path: tellmesh/uricore
+
+      - name: Checkout uri3 (lab image build)
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          repository: ${{ github.repository_owner }}/uri3
+          path: tellmesh/uri3
+
+      - name: Checkout uri2flow (lab image build)
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          repository: ${{ github.repository_owner }}/uri2flow
+          path: tellmesh/uri2flow
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Preflight monorepo layout
+        working-directory: tellmesh/urisys
+        run: |
+          missing=0
+          for dir in ../uricore ../uri3 ../uri2flow; do
+            if [ ! -d "$dir" ]; then
+              echo "WARN missing sibling: $dir"
+              missing=1
+            fi
+          done
+          if [ "$missing" = "1" ]; then
+            echo "Skipping nightly E2E — sibling repos not available in CI."
+            echo "SKIPPED=true" >> "$GITHUB_ENV"
+          fi
+
+      - name: Lab nightly E2E
+        if: env.SKIPPED != 'true'
+        working-directory: tellmesh/urisys
+        run: bash scripts/run-lab-nightly.sh
+
+      - name: Upload test session artifacts
+        if: always() && env.SKIPPED != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-nightly-sessions
+          path: tellmesh/urisys/output/test-sessions/
+          if-no-files-found: ignore

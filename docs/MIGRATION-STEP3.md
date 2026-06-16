@@ -56,6 +56,12 @@ grep -E 'DUP|dups' project/analysis.toon.yaml
 # oczekiwane: dups:0 lub brak ×DUP na runtime
 ```
 
+### Monorepo (2026-06)
+
+- **Jedna kopia kodu:** `packages/python/urisysedge/` (root `pyproject.toml` + `PYTHONPATH`)
+- **`urisys-node/packages/python/urisysedge/`** — tylko README; przed standalone wheel: `bash scripts/sync-vendored-urisysedge.sh`
+- Test: `urisys-node/tests/test_urisysedge_single_source.py`
+
 ## Krok 4 (planowany)
 
 - `urioperators/` — wspólne handlery OCR/LLM/HIM (urikvm ↔ urirdp)

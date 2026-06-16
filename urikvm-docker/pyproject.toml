@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "urikvm-docker-example"
 version = "0.1.0"
-description = "KVM/HIM/OCR/LLM URI example for urisys"
+description = "Local dev bundle: KVM/HIM/OCR/LLM packs + urikvmedge CLI (NOT published as urikvm on PyPI)"
 requires-python = ">=3.10"
 
 [project.optional-dependencies]

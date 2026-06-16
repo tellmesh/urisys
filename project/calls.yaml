@@ -1,212 +1,51 @@
 project: /home/tom/github/tellmesh/urisys
 generated_from: code2llm call graph analysis
 stats:
-  total_nodes: 304
-  total_edges: 403
-  modules_count: 54
+  total_nodes: 325
+  total_edges: 432
+  modules_count: 66
 nodes:
-  urienv-docker.packages.python.urisysedge.src.urisysedge.runtime.build_runtime:
-    name: build_runtime
-    module: urienv-docker.packages.python.urisysedge.src.urisysedge.runtime
-    line: 15
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 0
-  src.urisys.cli._add_runtime_flags:
-    name: _add_runtime_flags
-    module: src.urisys.cli
-    line: 31
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 2
-  urikvm-docker.packages.python.uriocr.handlers.latest_text:
-    name: latest_text
-    module: urikvm-docker.packages.python.uriocr.handlers
-    line: 107
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  urisys-automation-lab.server.flow_runner._load_defaults:
-    name: _load_defaults
-    module: urisys-automation-lab.server.flow_runner
-    line: 46
-    cyclomatic_complexity: 5
-    calls_out: 7
-    calls_in: 1
-  scripts.session_report._summarize_events:
-    name: _summarize_events
-    module: scripts.session_report
-    line: 90
-    cyclomatic_complexity: 8
-    calls_out: 28
-    calls_in: 1
-  urienv-docker.packages.python.urienv.src.urienv.handlers._get_value:
-    name: _get_value
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 82
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 8
-  scripts.run_test_sessions._http_json:
-    name: _http_json
-    module: scripts.run_test_sessions
-    line: 45
-    cyclomatic_complexity: 9
-    calls_out: 18
-    calls_in: 12
-  packages.python.urisysedge.env.is_secret_env:
-    name: is_secret_env
-    module: packages.python.urisysedge.env
-    line: 128
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  urisys-node.packages.python.uriscreen.handlers._store_latest:
-    name: _store_latest
-    module: urisys-node.packages.python.uriscreen.handlers
-    line: 38
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 2
-  urikvm-docker.packages.python.urihim.handlers._driver:
-    name: _driver
-    module: urikvm-docker.packages.python.urihim.handlers
-    line: 10
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 6
-  urirdp-docker.packages.python.urirdp_browser.handlers._session_state:
-    name: _session_state
-    module: urirdp-docker.packages.python.urirdp_browser.handlers
-    line: 24
-    cyclomatic_complexity: 1
-    calls_out: 5
-    calls_in: 1
-  urisys-node.packages.python.urisysnode.serve.build_runtime:
-    name: build_runtime
-    module: urisys-node.packages.python.urisysnode.serve
-    line: 62
-    cyclomatic_complexity: 6
-    calls_out: 13
-    calls_in: 0
-  urisys-node.packages.python.urisysedge.env._env_policy_candidates:
-    name: _env_policy_candidates
-    module: urisys-node.packages.python.urisysedge.env
-    line: 45
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 1
-  urisys-automation-lab.packages.python.uristt.handlers._session_id:
-    name: _session_id
-    module: urisys-automation-lab.packages.python.uristt.handlers
-    line: 8
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 2
-  uristepper-docker.packages.python.uristepper.handlers.move_relative:
-    name: move_relative
-    module: uristepper-docker.packages.python.uristepper.handlers
+  uribrowser-docker.packages.python.uribrowserdocker.handlers.screenshot:
+    name: screenshot
+    module: uribrowser-docker.packages.python.uribrowserdocker.handlers
     line: 80
     cyclomatic_complexity: 3
-    calls_out: 10
-    calls_in: 0
-  packages.python.urisysedge.runtime.serve:
-    name: serve
-    module: packages.python.urisysedge.runtime
-    line: 264
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 6
-  urienv-docker.packages.python.urienv.src.urienv.handlers.var_unset:
-    name: var_unset
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 188
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp_kvm.handlers.screenshot:
-    name: screenshot
-    module: urirdp-docker.packages.python.urirdp_kvm.handlers
-    line: 27
-    cyclomatic_complexity: 9
-    calls_out: 23
-    calls_in: 0
-  scripts.run_test_sessions.session_automation_lab:
-    name: session_automation_lab
-    module: scripts.run_test_sessions
-    line: 523
-    cyclomatic_complexity: 16
-    calls_out: 43
-    calls_in: 1
-  urikvm-docker.packages.python.urihim.handlers.mouse_click:
-    name: mouse_click
-    module: urikvm-docker.packages.python.urihim.handlers
-    line: 44
-    cyclomatic_complexity: 7
-    calls_out: 16
-    calls_in: 0
-  packages.python.urisysedge.runtime.load_json:
-    name: load_json
-    module: packages.python.urisysedge.runtime
-    line: 168
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 6
-  urisys-node.packages.python.urisysnode.router.resolve_remote_route:
-    name: resolve_remote_route
-    module: urisys-node.packages.python.urisysnode.router
-    line: 21
-    cyclomatic_complexity: 5
-    calls_out: 3
-    calls_in: 1
-  src.urisys.managers.pack_manager.PackManager.manifest_paths:
-    name: manifest_paths
-    module: src.urisys.managers.pack_manager
-    line: 74
-    cyclomatic_complexity: 9
-    calls_out: 20
-    calls_in: 1
-  urienv-docker.packages.python.urienv.src.urienv.handlers.health:
-    name: health
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 98
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 0
-  urienv-docker.packages.python.urienv.src.urienv.handlers._cfg:
-    name: _cfg
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 19
-    cyclomatic_complexity: 7
-    calls_out: 29
-    calls_in: 9
-  src.urisys.controllers.flow_controller.FlowController.run:
-    name: run
-    module: src.urisys.controllers.flow_controller
-    line: 14
-    cyclomatic_complexity: 6
-    calls_out: 19
-    calls_in: 0
-  uristepper-docker.packages.python.uristepper.handlers._dry_or_driver:
-    name: _dry_or_driver
-    module: uristepper-docker.packages.python.uristepper.handlers
-    line: 42
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 7
-  urienv-docker.packages.python.urienv.src.urienv.handlers.secret_value:
-    name: secret_value
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 163
-    cyclomatic_complexity: 4
     calls_out: 8
-    calls_in: 2
-  urikvm-docker.packages.python.uriocr.handlers._latest_screenshot:
-    name: _latest_screenshot
-    module: urikvm-docker.packages.python.uriocr.handlers
-    line: 25
+    calls_in: 0
+  urirdp-docker.packages.python.urirdp_llm.handlers._decide_messages:
+    name: _decide_messages
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 199
     cyclomatic_complexity: 2
     calls_out: 2
+    calls_in: 1
+  uristepper-docker.packages.python.uristepper.handlers.move_absolute:
+    name: move_absolute
+    module: uristepper-docker.packages.python.uristepper.handlers
+    line: 94
+    cyclomatic_complexity: 2
+    calls_out: 8
+    calls_in: 0
+  scripts.run-urisys-node-docker-e2e.http_json:
+    name: http_json
+    module: scripts.run-urisys-node-docker-e2e
+    line: 41
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 11
+  scripts.run_test_sessions.session_urirdp_real_docker:
+    name: session_urirdp_real_docker
+    module: scripts.run_test_sessions
+    line: 168
+    cyclomatic_complexity: 30
+    calls_out: 69
+    calls_in: 0
+  urirdp-docker.packages.python.urirdp_llm.handlers._target:
+    name: _target
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 39
+    cyclomatic_complexity: 3
+    calls_out: 4
     calls_in: 1
   src.urisys.http_server._read_json:
     name: _read_json
@@ -215,118 +54,34 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 5
     calls_in: 1
-  urikvm-docker.packages.python.urihim.handlers._state:
-    name: _state
-    module: urikvm-docker.packages.python.urihim.handlers
-    line: 5
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 5
-  urisys-node.packages.python.urisysedge.runtime.Runtime.call:
-    name: call
-    module: urisys-node.packages.python.urisysedge.runtime
-    line: 121
-    cyclomatic_complexity: 10
-    calls_out: 23
-    calls_in: 0
-  packages.python.urisysedge.env._env_config:
-    name: _env_config
-    module: packages.python.urisysedge.env
-    line: 74
-    cyclomatic_complexity: 7
-    calls_out: 6
-    calls_in: 1
-  uristepper-docker.packages.python.uristepper.handlers.disable:
-    name: disable
-    module: uristepper-docker.packages.python.uristepper.handlers
-    line: 64
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 0
-  urisys-automation-lab.web.app.uriCall:
-    name: uriCall
-    module: urisys-automation-lab.web.app
-    line: 15
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 1
-  urirdp-docker.packages.python.urirdp_kvm.display.run_cmd:
-    name: run_cmd
-    module: urirdp-docker.packages.python.urirdp_kvm.display
-    line: 55
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 20
-  urirdp-docker.packages.python.urirdp_him.handlers.mouse_move:
-    name: mouse_move
-    module: urirdp-docker.packages.python.urirdp_him.handlers
-    line: 11
-    cyclomatic_complexity: 5
-    calls_out: 13
-    calls_in: 0
-  urisys-node.packages.python.uriscreen.handlers.capture_loop:
-    name: capture_loop
-    module: urisys-node.packages.python.uriscreen.handlers
+  scripts.test_sessions.util.save_json:
+    name: save_json
+    module: scripts.test_sessions.util
     line: 94
-    cyclomatic_complexity: 4
-    calls_out: 10
-    calls_in: 0
-  urisys-automation-lab.server.flow_runner._require_uri_stack:
-    name: _require_uri_stack
-    module: urisys-automation-lab.server.flow_runner
-    line: 27
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 2
-  src.urisys.cli.resolve_markpact_source:
-    name: resolve_markpact_source
-    module: src.urisys.cli
-    line: 38
-    cyclomatic_complexity: 2
+    cyclomatic_complexity: 1
     calls_out: 3
     calls_in: 1
-  urirdp-docker.packages.python.urirdp.handlers.prepare_target:
-    name: prepare_target
-    module: urirdp-docker.packages.python.urirdp.handlers
-    line: 101
+  urisys-node.packages.python.urisysnode.serve.load_pack_into_runtime:
+    name: load_pack_into_runtime
+    module: urisys-node.packages.python.urisysnode.serve
+    line: 82
+    cyclomatic_complexity: 9
+    calls_out: 9
+    calls_in: 1
+  src.urisys.controllers.flow_controller.FlowController.run:
+    name: run
+    module: src.urisys.controllers.flow_controller
+    line: 14
     cyclomatic_complexity: 6
+    calls_out: 19
+    calls_in: 0
+  urienv-docker.packages.python.urisysedge.src.urisysedge.flow.run_flow:
+    name: run_flow
+    module: urienv-docker.packages.python.urisysedge.src.urisysedge.flow
+    line: 6
+    cyclomatic_complexity: 12
     calls_out: 15
     calls_in: 0
-  urirdp-docker.packages.python.urirdp_kvm.display.base_env:
-    name: base_env
-    module: urirdp-docker.packages.python.urirdp_kvm.display
-    line: 33
-    cyclomatic_complexity: 6
-    calls_out: 10
-    calls_in: 2
-  src.urisys.controllers.server_controller.ServerController.__init__:
-    name: __init__
-    module: src.urisys.controllers.server_controller
-    line: 7
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  urikvm-docker.scripts.real_pipeline.main:
-    name: main
-    module: urikvm-docker.scripts.real_pipeline
-    line: 59
-    cyclomatic_complexity: 14
-    calls_out: 26
-    calls_in: 0
-  urisys-node.packages.python.urisysnode.serve.make_handler:
-    name: make_handler
-    module: urisys-node.packages.python.urisysnode.serve
-    line: 80
-    cyclomatic_complexity: 1
-    calls_out: 30
-    calls_in: 1
-  urikvm-docker.packages.python.urillm.handlers._box_center:
-    name: _box_center
-    module: urikvm-docker.packages.python.urillm.handlers
-    line: 32
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 3
   urisys-node.packages.python.urisysnode.identity.enroll:
     name: enroll
     module: urisys-node.packages.python.urisysnode.identity
@@ -341,26 +96,82 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 2
     calls_in: 1
-  urikvm-docker.packages.python.urillm.handlers.vision_analyze:
-    name: vision_analyze
+  urikvm-docker.packages.python.urillm.handlers._llm_cfg:
+    name: _llm_cfg
     module: urikvm-docker.packages.python.urillm.handlers
-    line: 215
+    line: 12
     cyclomatic_complexity: 1
-    calls_out: 1
+    calls_out: 2
+    calls_in: 2
+  urikvm-docker.packages.python.uriocr.handlers.image_text:
+    name: image_text
+    module: urikvm-docker.packages.python.uriocr.handlers
+    line: 112
+    cyclomatic_complexity: 1
+    calls_out: 3
     calls_in: 0
-  uristepper-docker.packages.python.uristepper.handlers.status:
-    name: status
-    module: uristepper-docker.packages.python.uristepper.handlers
-    line: 48
-    cyclomatic_complexity: 2
+  scripts.test_sessions.util.run_cmd:
+    name: run_cmd
+    module: scripts.test_sessions.util
+    line: 99
+    cyclomatic_complexity: 6
+    calls_out: 12
+    calls_in: 47
+  urikvm-docker.packages.python.urillm.handlers._vision_messages:
+    name: _vision_messages
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 117
+    cyclomatic_complexity: 12
+    calls_out: 7
+    calls_in: 2
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_routes:
+    name: cmd_routes
+    module: uristepper-docker.packages.python.uristepperedge.cli
+    line: 38
+    cyclomatic_complexity: 1
     calls_out: 4
     calls_in: 0
-  scripts.session_report._analyze_lab_flows:
-    name: _analyze_lab_flows
-    module: scripts.session_report
-    line: 603
+  packages.python.urisysedge.env.load_env_policy:
+    name: load_env_policy
+    module: packages.python.urisysedge.env
+    line: 61
+    cyclomatic_complexity: 6
+    calls_out: 5
+    calls_in: 2
+  urisys-node.packages.python.urisysnode.forward.forward_call:
+    name: forward_call
+    module: urisys-node.packages.python.urisysnode.forward
+    line: 20
+    cyclomatic_complexity: 9
+    calls_out: 8
+    calls_in: 0
+  scripts.test_sessions.expectations.ocr_texts:
+    name: ocr_texts
+    module: scripts.test_sessions.expectations
+    line: 18
+    cyclomatic_complexity: 11
+    calls_out: 10
+    calls_in: 1
+  urirdp-docker.packages.python.urirdp_kvm.handlers.display_info:
+    name: display_info
+    module: urirdp-docker.packages.python.urirdp_kvm.handlers
+    line: 11
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 0
+  urienv-docker.packages.python.urienv.src.urienv.handlers._split_csv:
+    name: _split_csv
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 11
+    cyclomatic_complexity: 7
+    calls_out: 10
+    calls_in: 10
+  scripts.report.session_markdown._environment_section:
+    name: _environment_section
+    module: scripts.report.session_markdown
+    line: 29
     cyclomatic_complexity: 5
-    calls_out: 4
+    calls_out: 7
     calls_in: 1
   urirdp-docker.packages.python.urirdp_him.handlers.keyboard_type_text:
     name: keyboard_type_text
@@ -369,6 +180,13 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 1
     calls_in: 0
+  urisys-node.packages.python.urisysnode.router._match_pattern:
+    name: _match_pattern
+    module: urisys-node.packages.python.urisysnode.router
+    line: 16
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
   urikvm-docker.packages.python.urihim.handlers._real_allowed:
     name: _real_allowed
     module: urikvm-docker.packages.python.urihim.handlers
@@ -376,454 +194,13 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 3
     calls_in: 1
-  urisys-automation-lab.packages.python.uristt.handlers.session_transcript:
-    name: session_transcript
-    module: urisys-automation-lab.packages.python.uristt.handlers
-    line: 25
-    cyclomatic_complexity: 5
-    calls_out: 7
-    calls_in: 0
-  urisys-node.packages.python.urisysnode.identity.save_pairing:
-    name: save_pairing
-    module: urisys-node.packages.python.urisysnode.identity
-    line: 76
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  scripts.run_test_sessions._prepare_urirdp_data:
-    name: _prepare_urirdp_data
-    module: scripts.run_test_sessions
-    line: 105
-    cyclomatic_complexity: 4
-    calls_out: 6
-    calls_in: 3
-  uristepper-docker.packages.python.uristepperedge.cli._json_arg:
-    name: _json_arg
-    module: uristepper-docker.packages.python.uristepperedge.cli
-    line: 12
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 2
-  urisys-automation-lab.server.flow_runner._lab_adapter_session:
-    name: _lab_adapter_session
-    module: urisys-automation-lab.server.flow_runner
-    line: 55
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  src.urisys.controllers.server_controller.ServerController.serve_forever:
-    name: serve_forever
-    module: src.urisys.controllers.server_controller
-    line: 15
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  urienv-docker.packages.python.urienv.src.urienv.handlers._require_visible:
-    name: _require_visible
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 91
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  urikvm-docker.packages.python.uriocr.handlers._ocr_cfg:
-    name: _ocr_cfg
-    module: urikvm-docker.packages.python.uriocr.handlers
-    line: 8
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 3
-  urisys-node.packages.python.urisysnode.identity._identity_path:
-    name: _identity_path
-    module: urisys-node.packages.python.urisysnode.identity
-    line: 19
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 2
-  urisys-node.packages.python.urisysnode.artifact_resolver.is_url:
-    name: is_url
-    module: urisys-node.packages.python.urisysnode.artifact_resolver
-    line: 18
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  urisys-node.packages.python.urisysnode.artifact_resolver.fetch_release:
-    name: fetch_release
-    module: urisys-node.packages.python.urisysnode.artifact_resolver
-    line: 79
-    cyclomatic_complexity: 5
-    calls_out: 11
-    calls_in: 2
-  uristepper-docker.packages.python.uristepperedge.runtime.load_json:
-    name: load_json
-    module: uristepper-docker.packages.python.uristepperedge.runtime
-    line: 149
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  packages.python.urisysedge.env.load_env_policy:
-    name: load_env_policy
-    module: packages.python.urisysedge.env
-    line: 61
-    cyclomatic_complexity: 6
-    calls_out: 5
-    calls_in: 3
-  uribrowser-docker.packages.python.uribrowserdocker.handlers.get_dom:
-    name: get_dom
-    module: uribrowser-docker.packages.python.uribrowserdocker.handlers
-    line: 75
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 0
-  urisys-node.packages.python.urisysnode.identity.health_payload:
-    name: health_payload
-    module: urisys-node.packages.python.urisysnode.identity
-    line: 98
-    cyclomatic_complexity: 1
-    calls_out: 8
-    calls_in: 2
-  src.urisys.cli.main:
-    name: main
-    module: src.urisys.cli
-    line: 95
-    cyclomatic_complexity: 20
-    calls_out: 49
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp_llm.handlers._llm_cfg:
-    name: _llm_cfg
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 20
-    cyclomatic_complexity: 6
-    calls_out: 7
-    calls_in: 2
-  scripts.run_test_sessions.session_pytest_urisys:
-    name: session_pytest_urisys
-    module: scripts.run_test_sessions
-    line: 237
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp_shell.handlers._mock:
-    name: _mock
-    module: urirdp-docker.packages.python.urirdp_shell.handlers
-    line: 10
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  urienv-docker.packages.python.urisysedge.src.urisysedge.runtime.load_env_config:
-    name: load_env_config
-    module: urienv-docker.packages.python.urisysedge.src.urisysedge.runtime
-    line: 11
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 3
-  scripts.session_report._infer_steps:
-    name: _infer_steps
-    module: scripts.session_report
-    line: 193
-    cyclomatic_complexity: 20
-    calls_out: 25
-    calls_in: 1
-  urirdp-docker.packages.python.urirdp_ocr.handlers._mock_ocr:
-    name: _mock_ocr
-    module: urirdp-docker.packages.python.urirdp_ocr.handlers
-    line: 13
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 1
-  urisys-automation-lab.web.app.SR:
-    name: SR
-    module: urisys-automation-lab.web.app
-    line: 61
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 0
-  urisys-node.packages.python.urisysnode.identity.set_remote_control:
-    name: set_remote_control
-    module: urisys-node.packages.python.urisysnode.identity
-    line: 80
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 2
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_call:
-    name: cmd_call
-    module: uristepper-docker.packages.python.uristepperedge.cli
-    line: 20
-    cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 0
-  uristepper-docker.packages.python.uristepper.handlers._device_axis:
-    name: _device_axis
-    module: uristepper-docker.packages.python.uristepper.handlers
-    line: 8
-    cyclomatic_complexity: 2
-    calls_out: 9
-    calls_in: 7
-  urienv-docker.packages.python.urienv.src.urienv.handlers.startup_config:
-    name: startup_config
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 129
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 0
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_events:
-    name: cmd_events
-    module: uristepper-docker.packages.python.uristepperedge.cli
-    line: 44
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 0
-  scripts.run_test_sessions.session_urirdp_mock_docker:
-    name: session_urirdp_mock_docker
-    module: scripts.run_test_sessions
-    line: 256
-    cyclomatic_complexity: 5
-    calls_out: 31
-    calls_in: 0
-  packages.python.urisysedge.env.load_urisys_env:
-    name: load_urisys_env
-    module: packages.python.urisysedge.env
-    line: 23
-    cyclomatic_complexity: 8
-    calls_out: 17
-    calls_in: 3
-  urikvm-docker.packages.python.urikvm.handlers.screenshot:
-    name: screenshot
-    module: urikvm-docker.packages.python.urikvm.handlers
-    line: 29
-    cyclomatic_complexity: 5
-    calls_out: 18
-    calls_in: 0
-  urisys-node.packages.python.urisysnode.handlers.command_indicator_on:
-    name: command_indicator_on
-    module: urisys-node.packages.python.urisysnode.handlers
-    line: 31
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp_llm.handlers._target:
-    name: _target
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 39
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  urisys-automation-lab.web.app.data:
-    name: data
-    module: urisys-automation-lab.web.app
-    line: 21
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  scripts.run_test_sessions.session_pytest_urirdp:
-    name: session_pytest_urirdp
-    module: scripts.run_test_sessions
-    line: 220
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp_llm.handlers._decide_messages:
-    name: _decide_messages
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 199
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  src.urisys.cli.build_parser:
-    name: build_parser
-    module: src.urisys.cli
-    line: 43
-    cyclomatic_complexity: 1
-    calls_out: 36
-    calls_in: 1
-  scripts.run_test_sessions._host_id:
-    name: _host_id
-    module: scripts.run_test_sessions
-    line: 39
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 9
-  urirdp-docker.packages.python.urirdp_ocr.handlers._parse_tesseract_tsv:
-    name: _parse_tesseract_tsv
-    module: urirdp-docker.packages.python.urirdp_ocr.handlers
-    line: 25
-    cyclomatic_complexity: 7
-    calls_out: 19
-    calls_in: 1
-  scripts.session_report.write_run_analysis:
-    name: write_run_analysis
-    module: scripts.session_report
-    line: 718
-    cyclomatic_complexity: 8
-    calls_out: 23
-    calls_in: 1
-  urisys-automation-lab.packages.python.uriwebrtc.handlers.data_send:
-    name: data_send
-    module: urisys-automation-lab.packages.python.uriwebrtc.handlers
-    line: 25
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 0
-  urirdp-docker.packages.python.urirdpedge.cli.build_runtime:
-    name: build_runtime
-    module: urirdp-docker.packages.python.urirdpedge.cli
-    line: 11
-    cyclomatic_complexity: 10
-    calls_out: 16
-    calls_in: 1
-  scripts.session_report._merge_event_summaries:
-    name: _merge_event_summaries
-    module: scripts.session_report
-    line: 161
-    cyclomatic_complexity: 10
-    calls_out: 16
-    calls_in: 1
-  urikvm-docker.packages.python.urillm.handlers._analyze_litellm:
-    name: _analyze_litellm
+  urikvm-docker.packages.python.urillm.handlers._box_center:
+    name: _box_center
     module: urikvm-docker.packages.python.urillm.handlers
-    line: 174
-    cyclomatic_complexity: 6
-    calls_out: 11
-    calls_in: 0
-  uristepper-docker.packages.python.uristepper.handlers.home:
-    name: home
-    module: uristepper-docker.packages.python.uristepper.handlers
-    line: 105
-    cyclomatic_complexity: 2
-    calls_out: 8
-    calls_in: 0
-  urikvm-docker.packages.python.urikvm.handlers.monitor_list:
-    name: monitor_list
-    module: urikvm-docker.packages.python.urikvm.handlers
-    line: 24
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 0
-  urikvm-docker.packages.python.urihim.handlers._pyautogui:
-    name: _pyautogui
-    module: urikvm-docker.packages.python.urihim.handlers
-    line: 18
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 4
-  scripts.run_test_sessions._compose_cmd:
-    name: _compose_cmd
-    module: scripts.run_test_sessions
-    line: 95
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 9
-  urisys-automation-lab.packages.python.urichat.handlers._forward_uri:
-    name: _forward_uri
-    module: urisys-automation-lab.packages.python.urichat.handlers
-    line: 25
-    cyclomatic_complexity: 2
-    calls_out: 9
-    calls_in: 1
-  urirdp-docker.packages.python.urirdp_llm.handlers._parse_json_response:
-    name: _parse_json_response
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 70
-    cyclomatic_complexity: 5
-    calls_out: 5
-    calls_in: 2
-  urirdp-docker.packages.python.urirdp.handlers.dismiss_target:
-    name: dismiss_target
-    module: urirdp-docker.packages.python.urirdp.handlers
-    line: 93
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp_llm.handlers._vision_messages:
-    name: _vision_messages
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 92
-    cyclomatic_complexity: 4
-    calls_out: 2
-    calls_in: 1
-  urienv-docker.packages.python.urisysedge.src.urisysedge.flow.run_flow:
-    name: run_flow
-    module: urienv-docker.packages.python.urisysedge.src.urisysedge.flow
-    line: 6
-    cyclomatic_complexity: 12
-    calls_out: 15
-    calls_in: 0
-  urisys-automation-lab.server.automation_lab_server.LabHandler.log_message:
-    name: log_message
-    module: urisys-automation-lab.server.automation_lab_server
-    line: 108
+    line: 32
     cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  urisys-node.packages.python.uriscreen.handlers._backend:
-    name: _backend
-    module: urisys-node.packages.python.uriscreen.handlers
-    line: 16
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 2
-  urisys-node.packages.python.urisysnode.identity._hostname:
-    name: _hostname
-    module: urisys-node.packages.python.urisysnode.identity
-    line: 27
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 2
-  urisys-node.packages.python.urisysnode.router.rewrite_uri_for_slave:
-    name: rewrite_uri_for_slave
-    module: urisys-node.packages.python.urisysnode.router
-    line: 29
-    cyclomatic_complexity: 6
-    calls_out: 5
-    calls_in: 2
-  urirdp-docker.packages.python.urirdp_llm.handlers._config:
-    name: _config
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 16
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 2
-  scripts.run_test_sessions.session_lab_10_flows:
-    name: session_lab_10_flows
-    module: scripts.run_test_sessions
-    line: 932
-    cyclomatic_complexity: 36
-    calls_out: 65
-    calls_in: 0
-  urisys-node.packages.python.urisysnode.artifact_resolver.load_node_profile:
-    name: load_node_profile
-    module: urisys-node.packages.python.urisysnode.artifact_resolver
-    line: 57
-    cyclomatic_complexity: 3
     calls_out: 4
-    calls_in: 3
-  urisys-node.packages.python.urisysnode.client.call_via_route_map:
-    name: call_via_route_map
-    module: urisys-node.packages.python.urisysnode.client
-    line: 71
-    cyclomatic_complexity: 6
-    calls_out: 14
     calls_in: 1
-  scripts.run_test_sessions._write_meta:
-    name: _write_meta
-    module: scripts.run_test_sessions
-    line: 159
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 12
-  urirdp-docker.packages.python.urirdp_browser.handlers._chromium_binary:
-    name: _chromium_binary
-    module: urirdp-docker.packages.python.urirdp_browser.handlers
-    line: 34
-    cyclomatic_complexity: 4
-    calls_out: 3
-    calls_in: 1
-  urienv-docker.packages.python.urisysedge.src.urisysedge.runtime.result_to_dict:
-    name: result_to_dict
-    module: urienv-docker.packages.python.urisysedge.src.urisysedge.runtime
-    line: 20
-    cyclomatic_complexity: 2
-    calls_out: 0
-    calls_in: 3
   urisys-node.packages.python.urisysnode.serve._extend_pack_paths:
     name: _extend_pack_paths
     module: urisys-node.packages.python.urisysnode.serve
@@ -831,48 +208,55 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 7
     calls_in: 1
-  uristepper-docker.packages.python.uristepperedge.runtime.build_runtime:
-    name: build_runtime
-    module: uristepper-docker.packages.python.uristepperedge.runtime
-    line: 153
-    cyclomatic_complexity: 6
-    calls_out: 14
-    calls_in: 10
-  urienv-docker.packages.python.urienv.src.urienv.handlers.secret_masked:
-    name: secret_masked
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 155
-    cyclomatic_complexity: 2
+  scripts.test_sessions.expectations._ocr_contains:
+    name: _ocr_contains
+    module: scripts.test_sessions.expectations
+    line: 102
+    cyclomatic_complexity: 5
     calls_out: 6
+    calls_in: 1
+  urienv-docker.packages.python.urienv.src.urienv.handlers.health:
+    name: health
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 98
+    cyclomatic_complexity: 1
+    calls_out: 4
     calls_in: 0
-  scripts.session_report.generate_report:
-    name: generate_report
-    module: scripts.session_report
-    line: 256
-    cyclomatic_complexity: 11
-    calls_out: 34
-    calls_in: 2
-  packages.python.urisysedge.runtime.Runtime.call:
-    name: call
-    module: packages.python.urisysedge.runtime
-    line: 121
-    cyclomatic_complexity: 10
-    calls_out: 23
-    calls_in: 0
-  scripts.run_test_sessions._wait_health:
-    name: _wait_health
-    module: scripts.run_test_sessions
-    line: 84
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 6
-  scripts.run_test_sessions._read_meta:
-    name: _read_meta
-    module: scripts.run_test_sessions
-    line: 166
-    cyclomatic_complexity: 2
+  urirdp-docker.packages.python.urirdp_browser.handlers._chromium_binary:
+    name: _chromium_binary
+    module: urirdp-docker.packages.python.urirdp_browser.handlers
+    line: 34
+    cyclomatic_complexity: 4
     calls_out: 3
     calls_in: 1
+  scripts.test_sessions.util.copy_container_file:
+    name: copy_container_file
+    module: scripts.test_sessions.util
+    line: 170
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 10
+  uristepper-docker.packages.python.uristepper.handlers._enforce_safety:
+    name: _enforce_safety
+    module: uristepper-docker.packages.python.uristepper.handlers
+    line: 27
+    cyclomatic_complexity: 10
+    calls_out: 15
+    calls_in: 2
+  urikvm-docker.packages.python.uriocr.handlers.latest_text:
+    name: latest_text
+    module: urikvm-docker.packages.python.uriocr.handlers
+    line: 107
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  urirdp-docker.packages.python.urirdp_llm.handlers.analyze:
+    name: analyze
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 155
+    cyclomatic_complexity: 18
+    calls_out: 31
+    calls_in: 0
   uristepper-docker.packages.python.uristepper.handlers.stop:
     name: stop
     module: uristepper-docker.packages.python.uristepper.handlers
@@ -880,39 +264,81 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 3
     calls_in: 0
-  scripts.session_report.main:
-    name: main
-    module: scripts.session_report
-    line: 767
-    cyclomatic_complexity: 4
-    calls_out: 23
+  urirdp-docker.packages.python.urirdp.handlers.status:
+    name: status
+    module: urirdp-docker.packages.python.urirdp.handlers
+    line: 20
+    cyclomatic_complexity: 1
+    calls_out: 9
     calls_in: 0
-  urisys-node.packages.python.uriscreen.handlers._screen_cfg:
-    name: _screen_cfg
-    module: urisys-node.packages.python.uriscreen.handlers
+  urisys-node.packages.python.urisysnode.client.remote_call:
+    name: remote_call
+    module: urisys-node.packages.python.urisysnode.client
+    line: 54
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 1
+  scripts.test_sessions.lab_rdp.capture_rdp_screenshot:
+    name: capture_rdp_screenshot
+    module: scripts.test_sessions.lab_rdp
+    line: 126
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 3
+  scripts.report.util.read_json:
+    name: read_json
+    module: scripts.report.util
+    line: 19
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 5
+  scripts.report.session_markdown.render_session_markdown:
+    name: render_session_markdown
+    module: scripts.report.session_markdown
+    line: 6
+    cyclomatic_complexity: 1
+    calls_out: 16
+    calls_in: 1
+  urikvm-docker.packages.python.uriocr.handlers._driver:
+    name: _driver
+    module: urikvm-docker.packages.python.uriocr.handlers
     line: 12
     cyclomatic_complexity: 1
     calls_out: 2
+    calls_in: 1
+  packages.python.urisysedge.runtime.load_yaml_flow:
+    name: load_yaml_flow
+    module: packages.python.urisysedge.runtime
+    line: 177
+    cyclomatic_complexity: 14
+    calls_out: 21
+    calls_in: 1
+  urisys-node.packages.python.urisysnode.artifact_resolver.docker_run_worker:
+    name: docker_run_worker
+    module: urisys-node.packages.python.urisysnode.artifact_resolver
+    line: 119
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 2
+  urienv-docker.packages.python.urisysedge.src.urisysedge.runtime.result_to_dict:
+    name: result_to_dict
+    module: urienv-docker.packages.python.urisysedge.src.urisysedge.runtime
+    line: 20
+    cyclomatic_complexity: 2
+    calls_out: 0
     calls_in: 3
-  scripts.run_test_sessions.main:
-    name: main
-    module: scripts.run_test_sessions
-    line: 1169
-    cyclomatic_complexity: 13
-    calls_out: 32
+  uristepper-docker.packages.python.uristepper.handlers.move_relative:
+    name: move_relative
+    module: uristepper-docker.packages.python.uristepper.handlers
+    line: 80
+    cyclomatic_complexity: 3
+    calls_out: 10
     calls_in: 0
-  urirdp-docker.packages.python.urirdp.handlers.display_status:
-    name: display_status
+  urirdp-docker.packages.python.urirdp.handlers.dismiss_target:
+    name: dismiss_target
     module: urirdp-docker.packages.python.urirdp.handlers
-    line: 43
-    cyclomatic_complexity: 7
-    calls_out: 12
-    calls_in: 0
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_routes:
-    name: cmd_routes
-    module: uristepper-docker.packages.python.uristepperedge.cli
-    line: 38
-    cyclomatic_complexity: 1
+    line: 93
+    cyclomatic_complexity: 3
     calls_out: 4
     calls_in: 0
   urirdp-docker.packages.python.urirdp.handlers._dismiss_stale_targets:
@@ -922,390 +348,26 @@ nodes:
     cyclomatic_complexity: 10
     calls_out: 11
     calls_in: 3
-  urikvm-docker.packages.python.urillm.handlers._openai_chat:
-    name: _openai_chat
-    module: urikvm-docker.packages.python.urillm.handlers
-    line: 92
-    cyclomatic_complexity: 2
-    calls_out: 9
-    calls_in: 1
-  urisys-node.packages.python.urisysnode.handlers.query_health:
-    name: query_health
-    module: urisys-node.packages.python.urisysnode.handlers
-    line: 8
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  urisys-node.packages.python.urisysnode.handlers.query_identity:
-    name: query_identity
-    module: urisys-node.packages.python.urisysnode.handlers
-    line: 15
-    cyclomatic_complexity: 2
-    calls_out: 8
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp_llm.handlers._match_transcript:
-    name: _match_transcript
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 296
-    cyclomatic_complexity: 4
-    calls_out: 3
-    calls_in: 1
-  scripts.session_report._resolve_events_paths:
-    name: _resolve_events_paths
-    module: scripts.session_report
-    line: 149
-    cyclomatic_complexity: 5
-    calls_out: 4
-    calls_in: 1
-  urisys-automation-lab.server.flow_runner.plan_flow:
-    name: plan_flow
-    module: urisys-automation-lab.server.flow_runner
-    line: 64
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 1
-  urirdp-docker.packages.python.urirdp_kvm.display.ensure_screenshot_dir:
-    name: ensure_screenshot_dir
-    module: urirdp-docker.packages.python.urirdp_kvm.display
-    line: 59
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  uribrowser-docker.packages.python.uribrowserdocker.handlers._session_state:
-    name: _session_state
-    module: uribrowser-docker.packages.python.uribrowserdocker.handlers
-    line: 13
-    cyclomatic_complexity: 1
-    calls_out: 5
-    calls_in: 4
-  urikvm-docker.packages.python.urillm.handlers._target_from_goal:
-    name: _target_from_goal
-    module: urikvm-docker.packages.python.urillm.handlers
-    line: 24
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 3
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_flow:
-    name: cmd_flow
-    module: uristepper-docker.packages.python.uristepperedge.cli
-    line: 50
-    cyclomatic_complexity: 12
-    calls_out: 22
-    calls_in: 0
-  urienv-docker.packages.python.urienv.src.urienv.handlers._is_mutable:
-    name: _is_mutable
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 60
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 2
-  urisys-node.packages.python.urisysnode.identity._pairing_path:
-    name: _pairing_path
-    module: urisys-node.packages.python.urisysnode.identity
-    line: 23
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 3
-  uristepper-docker.packages.python.uristepperedge.server.serve:
-    name: serve
-    module: uristepper-docker.packages.python.uristepperedge.server
-    line: 70
-    cyclomatic_complexity: 1
-    calls_out: 5
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp_ocr.handlers.latest_text:
-    name: latest_text
-    module: urirdp-docker.packages.python.urirdp_ocr.handlers
-    line: 69
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 0
-  urikvm-docker.packages.python.urihim.handlers.mouse_move:
-    name: mouse_move
-    module: urikvm-docker.packages.python.urihim.handlers
-    line: 33
-    cyclomatic_complexity: 3
-    calls_out: 11
-    calls_in: 0
-  urienv-docker.packages.python.urisysedge.src.urisysedge.pack_loader.manifest_paths:
-    name: manifest_paths
-    module: urienv-docker.packages.python.urisysedge.src.urisysedge.pack_loader
-    line: 13
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 0
-  urikvm-docker.packages.python.urillm.handlers._litellm_chat:
-    name: _litellm_chat
-    module: urikvm-docker.packages.python.urillm.handlers
-    line: 107
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 1
-  urirdp-docker.packages.python.urirdp.handlers.status:
-    name: status
-    module: urirdp-docker.packages.python.urirdp.handlers
-    line: 20
-    cyclomatic_complexity: 1
-    calls_out: 9
-    calls_in: 0
-  urienv-docker.packages.python.urienv.src.urienv.handlers.var_exists:
-    name: var_exists
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 142
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  urisys-node.packages.python.urisysnode.artifact_resolver.fetch_json:
-    name: fetch_json
-    module: urisys-node.packages.python.urisysnode.artifact_resolver
-    line: 51
-    cyclomatic_complexity: 1
-    calls_out: 6
-    calls_in: 2
-  urirdp-docker.packages.python.urirdp_kvm.display.detect_display:
-    name: detect_display
-    module: urirdp-docker.packages.python.urirdp_kvm.display
-    line: 14
-    cyclomatic_complexity: 7
-    calls_out: 10
-    calls_in: 17
-  urienv-docker.packages.python.urienv.src.urienv.handlers._mask:
-    name: _mask
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 64
-    cyclomatic_complexity: 3
-    calls_out: 1
-    calls_in: 3
-  uristepper-docker.packages.python.uristepper.drivers.make_driver:
-    name: make_driver
-    module: uristepper-docker.packages.python.uristepper.drivers
+  scripts.test_sessions.util.docker_logs:
+    name: docker_logs
+    module: scripts.test_sessions.util
     line: 164
     cyclomatic_complexity: 3
     calls_out: 3
-    calls_in: 1
-  urirdp-docker.packages.python.urirdp_kvm.display.config_value:
-    name: config_value
-    module: urirdp-docker.packages.python.urirdp_kvm.display
-    line: 9
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 4
-  scripts.run_test_sessions._save_json:
-    name: _save_json
-    module: scripts.run_test_sessions
-    line: 122
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 18
-  urisys-node.packages.python.urisysnode.artifact_resolver.docker_pull:
-    name: docker_pull
-    module: urisys-node.packages.python.urisysnode.artifact_resolver
-    line: 113
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 2
-  urikvm-docker.packages.python.urikvm.handlers._profile:
-    name: _profile
-    module: urikvm-docker.packages.python.urikvm.handlers
-    line: 6
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 3
-  urisys-node.packages.python.uriscreen.handlers.frame:
-    name: frame
-    module: urisys-node.packages.python.uriscreen.handlers
-    line: 87
-    cyclomatic_complexity: 1
-    calls_out: 5
-    calls_in: 0
-  urikvm-docker.packages.python.urillm.handlers._goal_text:
-    name: _goal_text
-    module: urikvm-docker.packages.python.urillm.handlers
-    line: 20
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 2
-  urisys-node.packages.python.urisysnode.serve.serve:
-    name: serve
-    module: urisys-node.packages.python.urisysnode.serve
-    line: 117
-    cyclomatic_complexity: 2
-    calls_out: 9
-    calls_in: 0
-  packages.python.urisysedge.runtime.load_yaml_flow:
-    name: load_yaml_flow
-    module: packages.python.urisysedge.runtime
-    line: 177
-    cyclomatic_complexity: 14
-    calls_out: 21
-    calls_in: 1
-  urikvm-docker.packages.python.urillm.handlers._heuristic_analyze:
-    name: _heuristic_analyze
-    module: urikvm-docker.packages.python.urillm.handlers
-    line: 36
-    cyclomatic_complexity: 16
-    calls_out: 22
-    calls_in: 5
-  urisys-node.packages.python.urisysedge.runtime.serve:
-    name: serve
-    module: urisys-node.packages.python.urisysedge.runtime
-    line: 263
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 0
-  urisys-automation-lab.packages.python.uristt.handlers.session_start:
-    name: session_start
-    module: urisys-automation-lab.packages.python.uristt.handlers
-    line: 12
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  urikvm-docker.packages.python.urillm.handlers._normalize_action:
-    name: _normalize_action
-    module: urikvm-docker.packages.python.urillm.handlers
-    line: 138
-    cyclomatic_complexity: 4
-    calls_out: 9
-    calls_in: 2
-  scripts.run_test_sessions.session_urirdp_rdp_e2e:
-    name: session_urirdp_rdp_e2e
-    module: scripts.run_test_sessions
-    line: 475
-    cyclomatic_complexity: 5
-    calls_out: 19
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp_llm.handlers._env:
-    name: _env
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 31
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 10
-  urisys-automation-lab.packages.python.uriwebrtc.handlers.session_start:
-    name: session_start
-    module: urisys-automation-lab.packages.python.uriwebrtc.handlers
-    line: 13
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 0
-  urisys-node.packages.python.urisysnode.router._match_pattern:
-    name: _match_pattern
-    module: urisys-node.packages.python.urisysnode.router
-    line: 16
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 1
-  urikvm-docker.packages.python.uriocr.handlers._tesseract_boxes:
-    name: _tesseract_boxes
-    module: urikvm-docker.packages.python.uriocr.handlers
-    line: 37
-    cyclomatic_complexity: 8
-    calls_out: 14
-    calls_in: 1
-  urikvm-docker.packages.python.uriocr.handlers._png_bytes:
-    name: _png_bytes
-    module: urikvm-docker.packages.python.uriocr.handlers
-    line: 29
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 1
-  urisys-automation-lab.server.automation_lab_server.build_lab_runtime:
-    name: build_lab_runtime
-    module: urisys-automation-lab.server.automation_lab_server
-    line: 28
-    cyclomatic_complexity: 17
-    calls_out: 23
-    calls_in: 1
-  urirdp-docker.packages.python.urirdp_llm.handlers._decide_litellm:
-    name: _decide_litellm
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 225
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 1
-  src.urisys.http_server._send:
-    name: _send
-    module: src.urisys.http_server
-    line: 19
-    cyclomatic_complexity: 1
-    calls_out: 12
     calls_in: 9
-  urikvm-docker.packages.python.urillm.handlers._vision_analyze:
-    name: _vision_analyze
-    module: urikvm-docker.packages.python.urillm.handlers
-    line: 195
-    cyclomatic_complexity: 6
-    calls_out: 12
+  scripts.report.lab_checks.load_flow_outcomes:
+    name: load_flow_outcomes
+    module: scripts.report.lab_checks
+    line: 25
+    cyclomatic_complexity: 15
+    calls_out: 22
     calls_in: 1
-  urienv-docker.packages.python.urienv.src.urienv.handlers._is_secret:
-    name: _is_secret
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 56
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 3
-  urienv-docker.packages.python.urienv.src.urienv.handlers.var_set:
-    name: var_set
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 175
-    cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp_llm.handlers._litellm_chat:
-    name: _litellm_chat
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 126
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 2
-  uribrowser-docker.packages.python.uribrowserdocker.handlers._profile:
-    name: _profile
-    module: uribrowser-docker.packages.python.uribrowserdocker.handlers
-    line: 9
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 2
   uristepper-docker.packages.python.uristepperedge.server.make_handler:
     name: make_handler
     module: uristepper-docker.packages.python.uristepperedge.server
     line: 11
     cyclomatic_complexity: 1
     calls_out: 43
-    calls_in: 1
-  src.urisys.flow.load_flow:
-    name: load_flow
-    module: src.urisys.flow
-    line: 9
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 1
-  urirdp-docker.packages.python.urirdp_llm.handlers.decide:
-    name: decide
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 250
-    cyclomatic_complexity: 15
-    calls_out: 24
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp_him.handlers.keyboard_key:
-    name: keyboard_key
-    module: urirdp-docker.packages.python.urirdp_him.handlers
-    line: 48
-    cyclomatic_complexity: 5
-    calls_out: 9
-    calls_in: 0
-  urienv-docker.packages.python.urienv.src.urienv.handlers._read_docker_secret:
-    name: _read_docker_secret
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 72
-    cyclomatic_complexity: 4
-    calls_out: 6
-    calls_in: 1
-  urikvm-docker.scripts.real_pipeline.build_runtime:
-    name: build_runtime
-    module: urikvm-docker.scripts.real_pipeline
-    line: 49
-    cyclomatic_complexity: 1
-    calls_out: 6
     calls_in: 1
   packages.python.urisysedge.env._env_policy_candidates:
     name: _env_policy_candidates
@@ -1314,621 +376,68 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 7
     calls_in: 1
-  scripts.session_report._read_json:
-    name: _read_json
-    module: scripts.session_report
-    line: 77
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 5
-  urikvm-docker.packages.python.urillm.handlers._vision_messages:
-    name: _vision_messages
-    module: urikvm-docker.packages.python.urillm.handlers
-    line: 117
-    cyclomatic_complexity: 12
-    calls_out: 7
+  scripts.report.session.generate_report:
+    name: generate_report
+    module: scripts.report.session
+    line: 83
+    cyclomatic_complexity: 9
+    calls_out: 27
     calls_in: 2
-  urisys-node.packages.python.urisysedge.runtime.run_flow:
-    name: run_flow
-    module: urisys-node.packages.python.urisysedge.runtime
-    line: 216
-    cyclomatic_complexity: 7
-    calls_out: 13
+  urisys-node.packages.python.urisysnode.handlers.query_identity:
+    name: query_identity
+    module: urisys-node.packages.python.urisysnode.handlers
+    line: 15
+    cyclomatic_complexity: 2
+    calls_out: 8
     calls_in: 0
-  urisys-automation-lab.web.app.rec:
-    name: rec
-    module: urisys-automation-lab.web.app
-    line: 66
+  packages.python.urisysedge.runtime.Runtime.call:
+    name: call
+    module: packages.python.urisysedge.runtime
+    line: 121
+    cyclomatic_complexity: 10
+    calls_out: 23
+    calls_in: 0
+  scripts.test_sessions.util.sleep_ports:
+    name: sleep_ports
+    module: scripts.test_sessions.util
+    line: 195
     cyclomatic_complexity: 1
     calls_out: 1
-    calls_in: 0
-  urienv-docker.packages.python.urienv.src.urienv.handlers._name:
-    name: _name
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 44
-    cyclomatic_complexity: 3
-    calls_out: 5
     calls_in: 6
-  urisys-node.packages.python.urisysnode.artifact_resolver.select_artifact:
-    name: select_artifact
-    module: urisys-node.packages.python.urisysnode.artifact_resolver
-    line: 91
-    cyclomatic_complexity: 15
-    calls_out: 14
-    calls_in: 3
-  src.urisys.cli.print_json:
-    name: print_json
-    module: src.urisys.cli
-    line: 27
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 14
-  urienv-docker.packages.python.urisysedge.src.urisysedge.runtime.load_device_config:
-    name: load_device_config
-    module: urienv-docker.packages.python.urisysedge.src.urisysedge.runtime
-    line: 7
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 3
-  urisys-node.packages.python.urisysnode.artifact_resolver.resolve_from_release:
-    name: resolve_from_release
-    module: urisys-node.packages.python.urisysnode.artifact_resolver
-    line: 189
-    cyclomatic_complexity: 6
-    calls_out: 15
-    calls_in: 1
-  urirdp-docker.packages.python.urirdp_ocr.handlers._tesseract_ocr:
-    name: _tesseract_ocr
-    module: urirdp-docker.packages.python.urirdp_ocr.handlers
-    line: 49
-    cyclomatic_complexity: 9
-    calls_out: 23
-    calls_in: 1
-  urisys-node.packages.python.urisysnode.client.remote_call:
-    name: remote_call
-    module: urisys-node.packages.python.urisysnode.client
-    line: 54
-    cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 1
-  urisys-node.packages.python.urisysedge.runtime.load_yaml_flow:
-    name: load_yaml_flow
-    module: urisys-node.packages.python.urisysedge.runtime
-    line: 177
-    cyclomatic_complexity: 14
-    calls_out: 21
-    calls_in: 1
-  uristepper-docker.packages.python.uristepper.handlers.move_absolute:
-    name: move_absolute
-    module: uristepper-docker.packages.python.uristepper.handlers
-    line: 94
-    cyclomatic_complexity: 2
-    calls_out: 8
-    calls_in: 0
-  urikvm-docker.packages.python.urillm.handlers._llm_cfg:
-    name: _llm_cfg
-    module: urikvm-docker.packages.python.urillm.handlers
+  uristepper-docker.packages.python.uristepperedge.cli._json_arg:
+    name: _json_arg
+    module: uristepper-docker.packages.python.uristepperedge.cli
     line: 12
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 2
-  urienv-docker.packages.python.urisysedge.src.urisysedge.server.serve:
-    name: serve
-    module: urienv-docker.packages.python.urisysedge.src.urisysedge.server
-    line: 7
-    cyclomatic_complexity: 1
-    calls_out: 36
-    calls_in: 0
-  urisys-node.packages.python.urisysedge.env.load_env_policy:
-    name: load_env_policy
-    module: urisys-node.packages.python.urisysedge.env
-    line: 61
-    cyclomatic_complexity: 6
-    calls_out: 5
-    calls_in: 1
-  urisys-automation-lab.server.lab_uri_adapter.LabCallAdapter.execute:
-    name: execute
-    module: urisys-automation-lab.server.lab_uri_adapter
-    line: 57
-    cyclomatic_complexity: 12
-    calls_out: 20
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp_llm.handlers._openai_compatible_chat:
-    name: _openai_compatible_chat
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 107
-    cyclomatic_complexity: 1
-    calls_out: 9
-    calls_in: 2
-  urirdp-docker.packages.python.urirdp_browser.handlers.open_page:
-    name: open_page
-    module: urirdp-docker.packages.python.urirdp_browser.handlers
-    line: 87
-    cyclomatic_complexity: 15
-    calls_out: 33
-    calls_in: 0
-  urikvm-docker.packages.python.uriocr.handlers._extract_text:
-    name: _extract_text
-    module: urikvm-docker.packages.python.uriocr.handlers
-    line: 92
-    cyclomatic_complexity: 6
-    calls_out: 10
-    calls_in: 2
-  urisys-node.packages.python.urisysedge.env._urisys_root:
-    name: _urisys_root
-    module: urisys-node.packages.python.urisysedge.env
-    line: 18
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 2
-  scripts.run_test_sessions.session_pytest_urisys_node:
-    name: session_pytest_urisys_node
-    module: scripts.run_test_sessions
-    line: 246
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 0
-  scripts.session_report._load_flow_outcomes:
-    name: _load_flow_outcomes
-    module: scripts.session_report
-    line: 452
-    cyclomatic_complexity: 15
-    calls_out: 22
-    calls_in: 1
-  scripts.run_test_sessions._capture_rdp_screenshot:
-    name: _capture_rdp_screenshot
-    module: scripts.run_test_sessions
-    line: 874
-    cyclomatic_complexity: 5
-    calls_out: 6
-    calls_in: 3
-  urienv-docker.packages.python.urienv.src.urienv.handlers.var_value:
-    name: var_value
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 148
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 2
-  scripts.run_test_sessions.evaluate_expectations:
-    name: evaluate_expectations
-    module: scripts.run_test_sessions
-    line: 718
-    cyclomatic_complexity: 29
-    calls_out: 32
-    calls_in: 1
-  urikvm-docker.packages.python.uriocr.handlers._mock_boxes:
-    name: _mock_boxes
-    module: urikvm-docker.packages.python.uriocr.handlers
-    line: 16
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  urienv-docker.packages.python.urienv.src.urienv.handlers._split_csv:
-    name: _split_csv
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 11
-    cyclomatic_complexity: 7
-    calls_out: 10
-    calls_in: 10
-  urikvm-docker.packages.python.urillm.handlers._parse_json_response:
-    name: _parse_json_response
-    module: urikvm-docker.packages.python.urillm.handlers
-    line: 79
-    cyclomatic_complexity: 5
-    calls_out: 5
-    calls_in: 2
-  uribrowser-docker.packages.python.uribrowserdocker.handlers.status:
-    name: status
-    module: uribrowser-docker.packages.python.uribrowserdocker.handlers
-    line: 20
-    cyclomatic_complexity: 1
-    calls_out: 7
-    calls_in: 0
-  urisys-node.packages.python.urisysnode.router.load_route_map:
-    name: load_route_map
-    module: urisys-node.packages.python.urisysnode.router
-    line: 11
     cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  urisys-node.packages.python.urisysnode.identity.require_paired:
-    name: require_paired
-    module: urisys-node.packages.python.urisysnode.identity
-    line: 89
-    cyclomatic_complexity: 4
     calls_out: 5
     calls_in: 2
-  urikvm-docker.packages.python.uriocr.handlers._driver:
-    name: _driver
-    module: urikvm-docker.packages.python.uriocr.handlers
-    line: 12
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  urisys-node.packages.python.urisysnode.artifact_resolver.wait_health:
-    name: wait_health
-    module: urisys-node.packages.python.urisysnode.artifact_resolver
-    line: 145
-    cyclomatic_complexity: 4
-    calls_out: 6
-    calls_in: 2
-  scripts.run_test_sessions._vision_confidences:
-    name: _vision_confidences
-    module: scripts.run_test_sessions
-    line: 707
-    cyclomatic_complexity: 11
-    calls_out: 11
-    calls_in: 1
-  urisys-automation-lab.packages.python.uriwebrtc.handlers._room_id:
-    name: _room_id
-    module: urisys-automation-lab.packages.python.uriwebrtc.handlers
-    line: 8
-    cyclomatic_complexity: 4
-    calls_out: 3
-    calls_in: 2
-  urisys-node.packages.python.uriscreen.handlers._monitor_index:
-    name: _monitor_index
-    module: urisys-node.packages.python.uriscreen.handlers
-    line: 27
-    cyclomatic_complexity: 6
-    calls_out: 9
-    calls_in: 1
-  urisys-node.packages.python.urisysedge.runtime.make_handler:
-    name: make_handler
-    module: urisys-node.packages.python.urisysedge.runtime
-    line: 234
-    cyclomatic_complexity: 1
-    calls_out: 24
-    calls_in: 1
-  urirdp-docker.packages.python.urirdp_him.handlers.keyboard_type:
-    name: keyboard_type
-    module: urirdp-docker.packages.python.urirdp_him.handlers
-    line: 37
-    cyclomatic_complexity: 5
-    calls_out: 13
-    calls_in: 1
-  src.urisys.http_server.create_server:
-    name: create_server
-    module: src.urisys.http_server
-    line: 31
-    cyclomatic_complexity: 1
-    calls_out: 31
-    calls_in: 1
-  scripts.session_report._tail:
-    name: _tail
-    module: scripts.session_report
-    line: 86
-    cyclomatic_complexity: 2
-    calls_out: 0
-    calls_in: 1
-  urirdp-docker.packages.python.urirdp_llm.handlers.analyze:
-    name: analyze
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 155
-    cyclomatic_complexity: 18
-    calls_out: 31
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp_llm.handlers._decide_openai:
-    name: _decide_openai
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 231
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 1
-  urienv-docker.packages.python.urienv.src.urienv.handlers.list_vars:
-    name: list_vars
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+  scripts.test_sessions.expectations._min_vision_confidence:
+    name: _min_vision_confidence
+    module: scripts.test_sessions.expectations
     line: 110
     cyclomatic_complexity: 4
-    calls_out: 10
-    calls_in: 0
-  urisys-node.packages.python.urisysnode.identity.save_identity:
-    name: save_identity
-    module: urisys-node.packages.python.urisysnode.identity
-    line: 49
-    cyclomatic_complexity: 1
     calls_out: 3
     calls_in: 1
-  urisys-automation-lab.web.app.text:
-    name: text
-    module: urisys-automation-lab.web.app
-    line: 105
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  scripts.session_report.write_session_report:
-    name: write_session_report
-    module: scripts.session_report
-    line: 291
-    cyclomatic_complexity: 28
-    calls_out: 50
-    calls_in: 2
-  uribrowser-docker.packages.python.uribrowserdocker.handlers.screenshot:
-    name: screenshot
-    module: uribrowser-docker.packages.python.uribrowserdocker.handlers
-    line: 80
-    cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 0
-  scripts.session_report._iter_step_results:
-    name: _iter_step_results
-    module: scripts.session_report
-    line: 441
-    cyclomatic_complexity: 9
-    calls_out: 7
-    calls_in: 1
-  urirdp-docker.packages.python.urirdp_kvm.display.allow_real:
-    name: allow_real
-    module: urirdp-docker.packages.python.urirdp_kvm.display
-    line: 51
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 14
-  urirdp-docker.packages.python.urirdp_him.handlers.keyboard_hotkey:
-    name: keyboard_hotkey
-    module: urirdp-docker.packages.python.urirdp_him.handlers
-    line: 62
-    cyclomatic_complexity: 8
-    calls_out: 11
-    calls_in: 0
-  scripts.run_test_sessions._finalize_session:
-    name: _finalize_session
-    module: scripts.run_test_sessions
-    line: 172
-    cyclomatic_complexity: 5
-    calls_out: 13
-    calls_in: 12
-  urisys-automation-lab.server.flow_runner.run_flow_file:
-    name: run_flow_file
-    module: urisys-automation-lab.server.flow_runner
-    line: 105
-    cyclomatic_complexity: 13
-    calls_out: 40
-    calls_in: 1
-  urisys-node.packages.python.urisysnode.handlers.command_indicator_off:
-    name: command_indicator_off
-    module: urisys-node.packages.python.urisysnode.handlers
-    line: 37
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  packages.python.urisysedge.env.resolve_env_var:
-    name: resolve_env_var
-    module: packages.python.urisysedge.env
-    line: 85
-    cyclomatic_complexity: 11
-    calls_out: 9
-    calls_in: 16
-  urisys-automation-lab.web.app.log:
-    name: log
-    module: urisys-automation-lab.web.app
-    line: 10
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 4
-  uristepper-docker.packages.python.uristepper.handlers._enforce_safety:
-    name: _enforce_safety
-    module: uristepper-docker.packages.python.uristepper.handlers
-    line: 27
-    cyclomatic_complexity: 10
-    calls_out: 15
-    calls_in: 2
-  urikvm-docker.packages.python.uriocr.handlers.image_text:
-    name: image_text
-    module: urikvm-docker.packages.python.uriocr.handlers
-    line: 112
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp_llm.handlers.plan:
-    name: plan
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 304
-    cyclomatic_complexity: 8
-    calls_out: 10
-    calls_in: 0
-  scripts.run_test_sessions._run_cmd:
-    name: _run_cmd
-    module: scripts.run_test_sessions
-    line: 127
-    cyclomatic_complexity: 5
-    calls_out: 11
-    calls_in: 26
-  urikvm-docker.packages.python.urihim.handlers.mouse_status:
-    name: mouse_status
-    module: urikvm-docker.packages.python.urihim.handlers
-    line: 28
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp.handlers._service_status:
-    name: _service_status
-    module: urirdp-docker.packages.python.urirdp.handlers
+  urisys-automation-lab.packages.python.uristt.handlers.session_start:
+    name: session_start
+    module: urisys-automation-lab.packages.python.uristt.handlers
     line: 12
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 2
-  scripts.run_test_sessions._capture_rdp_screenshot_wait:
-    name: _capture_rdp_screenshot_wait
-    module: scripts.run_test_sessions
-    line: 899
-    cyclomatic_complexity: 9
-    calls_out: 6
-    calls_in: 1
-  scripts.run_test_sessions._prepare_ok_target:
-    name: _prepare_ok_target
-    module: scripts.run_test_sessions
-    line: 860
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  urirdp-docker.packages.python.urirdp_him.handlers.mouse_click:
-    name: mouse_click
-    module: urirdp-docker.packages.python.urirdp_him.handlers
-    line: 21
-    cyclomatic_complexity: 11
-    calls_out: 18
-    calls_in: 0
-  urikvm-docker.packages.python.urillm.handlers._analyze_openai:
-    name: _analyze_openai
-    module: urikvm-docker.packages.python.urillm.handlers
-    line: 154
-    cyclomatic_complexity: 10
-    calls_out: 13
-    calls_in: 0
-  urienv-docker.packages.python.urienv.src.urienv.handlers._is_public:
-    name: _is_public
-    module: urienv-docker.packages.python.urienv.src.urienv.handlers
-    line: 52
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 1
-  urisys-node.packages.python.urisysnode.serve._register_pack:
-    name: _register_pack
-    module: urisys-node.packages.python.urisysnode.serve
-    line: 36
-    cyclomatic_complexity: 5
-    calls_out: 6
-    calls_in: 1
-  urienv-docker.packages.python.urisysedge.src.urisysedge.pack_loader.manifest_path_for_pack:
-    name: manifest_path_for_pack
-    module: urienv-docker.packages.python.urisysedge.src.urisysedge.pack_loader
-    line: 6
-    cyclomatic_complexity: 4
-    calls_out: 6
-    calls_in: 1
-  urisys-node.packages.python.urisysedge.env.load_urisys_env:
-    name: load_urisys_env
-    module: urisys-node.packages.python.urisysedge.env
-    line: 23
-    cyclomatic_complexity: 8
-    calls_out: 17
-    calls_in: 0
-  scripts.run_test_sessions.session_urirdp_real_docker:
-    name: session_urirdp_real_docker
-    module: scripts.run_test_sessions
-    line: 323
-    cyclomatic_complexity: 30
-    calls_out: 69
-    calls_in: 0
-  urisys-node.packages.python.urisysnode.router.node_endpoint:
-    name: node_endpoint
-    module: urisys-node.packages.python.urisysnode.router
-    line: 42
-    cyclomatic_complexity: 5
-    calls_out: 6
-    calls_in: 1
-  urirdp-docker.packages.python.urirdp.handlers.display:
-    name: display
-    module: urirdp-docker.packages.python.urirdp.handlers
-    line: 32
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 0
-  urisys-node.packages.python.urisysnode.identity.load_pairing:
-    name: load_pairing
-    module: urisys-node.packages.python.urisysnode.identity
-    line: 53
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 5
-  urisys-node.packages.python.urisysnode.identity._data_dir:
-    name: _data_dir
-    module: urisys-node.packages.python.urisysnode.identity
-    line: 13
     cyclomatic_complexity: 1
     calls_out: 3
-    calls_in: 2
-  urikvm-docker.packages.python.urikvmedge.cli.build_runtime:
-    name: build_runtime
-    module: urikvm-docker.packages.python.urikvmedge.cli
-    line: 6
-    cyclomatic_complexity: 6
-    calls_out: 11
-    calls_in: 1
-  packages.python.urisysedge.runtime.make_handler:
-    name: make_handler
-    module: packages.python.urisysedge.runtime
-    line: 235
-    cyclomatic_complexity: 1
-    calls_out: 24
-    calls_in: 1
-  scripts.run_test_sessions._file_md5:
-    name: _file_md5
-    module: scripts.run_test_sessions
-    line: 675
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 3
-  urikvm-docker.packages.python.urihim.handlers.keyboard_hotkey:
-    name: keyboard_hotkey
-    module: urikvm-docker.packages.python.urihim.handlers
-    line: 72
-    cyclomatic_complexity: 6
-    calls_out: 11
     calls_in: 0
-  urirdp-docker.packages.python.urirdp_ocr.handlers.image_text:
-    name: image_text
-    module: urirdp-docker.packages.python.urirdp_ocr.handlers
-    line: 75
-    cyclomatic_complexity: 6
-    calls_out: 8
-    calls_in: 1
-  scripts.run_test_sessions._docker_logs:
-    name: _docker_logs
-    module: scripts.run_test_sessions
-    line: 192
-    cyclomatic_complexity: 4
-    calls_out: 5
-    calls_in: 9
-  uribrowser-docker.packages.python.uribrowseredge.cli.build_runtime:
+  urienv-docker.packages.python.urisysedge.src.urisysedge.runtime.build_runtime:
     name: build_runtime
-    module: uribrowser-docker.packages.python.uribrowseredge.cli
-    line: 6
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 1
-  urisys-node.packages.python.urisysnode.artifact_resolver.resolve_and_run:
-    name: resolve_and_run
-    module: urisys-node.packages.python.urisysnode.artifact_resolver
-    line: 160
-    cyclomatic_complexity: 4
-    calls_out: 12
-    calls_in: 1
-  urirdp-docker.packages.python.urirdp_llm.handlers._heuristic:
-    name: _heuristic
-    module: urirdp-docker.packages.python.urirdp_llm.handlers
-    line: 43
-    cyclomatic_complexity: 5
-    calls_out: 22
-    calls_in: 5
-  scripts.run-nl-log-smoke.print:
-    name: print
-    module: scripts.run-nl-log-smoke
-    line: 42
-    cyclomatic_complexity: 0
-    calls_out: 0
-    calls_in: 60
-  uribrowser-docker.packages.python.uribrowserdocker.handlers.open_page:
-    name: open_page
-    module: uribrowser-docker.packages.python.uribrowserdocker.handlers
-    line: 33
-    cyclomatic_complexity: 11
-    calls_out: 27
+    module: urienv-docker.packages.python.urisysedge.src.urisysedge.runtime
+    line: 15
+    cyclomatic_complexity: 3
+    calls_out: 6
     calls_in: 0
-  urisys-automation-lab.server.lab_uri_adapter.step_ok:
-    name: step_ok
-    module: urisys-automation-lab.server.lab_uri_adapter
-    line: 39
-    cyclomatic_complexity: 9
-    calls_out: 9
-    calls_in: 1
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_explain:
-    name: cmd_explain
-    module: uristepper-docker.packages.python.uristepperedge.cli
-    line: 32
+  urisys-node.packages.python.urisysnode.handlers.query_health:
+    name: query_health
+    module: urisys-node.packages.python.urisysnode.handlers
+    line: 8
     cyclomatic_complexity: 1
-    calls_out: 4
+    calls_out: 1
     calls_in: 0
   urikvm-docker.packages.python.uriocr.handlers._merge_word_boxes:
     name: _merge_word_boxes
@@ -1937,34 +446,433 @@ nodes:
     cyclomatic_complexity: 5
     calls_out: 17
     calls_in: 1
-  scripts.run_test_sessions._now_iso:
-    name: _now_iso
-    module: scripts.run_test_sessions
-    line: 31
+  urirdp-docker.packages.python.urirdp_llm.handlers._vision_messages:
+    name: _vision_messages
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 92
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 1
+  uristepper-docker.packages.python.uristepperedge.runtime.load_json:
+    name: load_json
+    module: uristepper-docker.packages.python.uristepperedge.runtime
+    line: 149
     cyclomatic_complexity: 1
     calls_out: 3
-    calls_in: 11
-  urirdp-docker.packages.python.urirdp_kvm.handlers.display_info:
-    name: display_info
-    module: urirdp-docker.packages.python.urirdp_kvm.handlers
+    calls_in: 1
+  urikvm-docker.packages.python.urihim.handlers.keyboard_type:
+    name: keyboard_type
+    module: urikvm-docker.packages.python.urihim.handlers
+    line: 62
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 0
+  scripts.report.lab_checks.check_duplicate_screenshots:
+    name: check_duplicate_screenshots
+    module: scripts.report.lab_checks
+    line: 128
+    cyclomatic_complexity: 5
+    calls_out: 3
+    calls_in: 0
+  src.urisys.managers.pack_manager.PackManager.manifest_paths:
+    name: manifest_paths
+    module: src.urisys.managers.pack_manager
+    line: 74
+    cyclomatic_complexity: 9
+    calls_out: 20
+    calls_in: 1
+  urisys-node.packages.python.urisysnode.handlers.command_indicator_off:
+    name: command_indicator_off
+    module: urisys-node.packages.python.urisysnode.handlers
+    line: 37
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  urisys-automation-lab.server.lab_uri_adapter.LabCallAdapter.execute:
+    name: execute
+    module: urisys-automation-lab.server.lab_uri_adapter
+    line: 57
+    cyclomatic_complexity: 12
+    calls_out: 20
+    calls_in: 0
+  scripts.report.session.infer_steps:
+    name: infer_steps
+    module: scripts.report.session
+    line: 12
+    cyclomatic_complexity: 20
+    calls_out: 25
+    calls_in: 1
+  packages.python.urisysedge.runtime.serve:
+    name: serve
+    module: packages.python.urisysedge.runtime
+    line: 264
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 6
+  scripts.report.cli.main:
+    name: main
+    module: scripts.report.cli
     line: 11
     cyclomatic_complexity: 4
-    calls_out: 5
+    calls_out: 23
     calls_in: 0
-  src.urisys.flow.iter_steps:
-    name: iter_steps
-    module: src.urisys.flow
-    line: 17
-    cyclomatic_complexity: 7
+  urienv-docker.packages.python.urienv.src.urienv.handlers.var_set:
+    name: var_set
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 175
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 0
+  urirdp-docker.packages.python.urirdp_llm.handlers._parse_json_response:
+    name: _parse_json_response
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 70
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 2
+  urirdp-docker.packages.python.urirdp_browser.handlers._session_state:
+    name: _session_state
+    module: urirdp-docker.packages.python.urirdp_browser.handlers
+    line: 24
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 1
+  urisys-automation-lab.web.app.text:
+    name: text
+    module: urisys-automation-lab.web.app
+    line: 105
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  scripts.test_sessions.lab_flows._capture_flow_screenshot:
+    name: _capture_flow_screenshot
+    module: scripts.test_sessions.lab_flows
+    line: 54
+    cyclomatic_complexity: 12
     calls_out: 8
     calls_in: 1
-  packages.python.urisysedge.runtime.run_flow:
-    name: run_flow
-    module: packages.python.urisysedge.runtime
-    line: 217
+  urirdp-docker.packages.python.urirdp_ocr.handlers.latest_text:
+    name: latest_text
+    module: urirdp-docker.packages.python.urirdp_ocr.handlers
+    line: 69
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  urisys-automation-lab.packages.python.urichat.handlers._forward_uri:
+    name: _forward_uri
+    module: urisys-automation-lab.packages.python.urichat.handlers
+    line: 25
+    cyclomatic_complexity: 2
+    calls_out: 9
+    calls_in: 1
+  urienv-docker.packages.python.urienv.src.urienv.handlers._require_visible:
+    name: _require_visible
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 91
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  urisys-automation-lab.packages.python.uristt.handlers.session_transcript:
+    name: session_transcript
+    module: urisys-automation-lab.packages.python.uristt.handlers
+    line: 25
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 0
+  scripts.run-urisys-node-docker-e2e.remote_call:
+    name: remote_call
+    module: scripts.run-urisys-node-docker-e2e
+    line: 52
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 1
+  scripts.report.lab_checks._duplicate_recommendation:
+    name: _duplicate_recommendation
+    module: scripts.report.lab_checks
+    line: 104
+    cyclomatic_complexity: 6
+    calls_out: 1
+    calls_in: 1
+  urirdp-docker.packages.python.urirdp_kvm.display.ensure_screenshot_dir:
+    name: ensure_screenshot_dir
+    module: urirdp-docker.packages.python.urirdp_kvm.display
+    line: 59
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  urienv-docker.packages.python.urienv.src.urienv.handlers.list_vars:
+    name: list_vars
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 110
+    cyclomatic_complexity: 4
+    calls_out: 10
+    calls_in: 0
+  urikvm-docker.packages.python.urillm.handlers._openai_chat:
+    name: _openai_chat
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 92
+    cyclomatic_complexity: 2
+    calls_out: 9
+    calls_in: 1
+  uristepper-docker.packages.python.uristepperedge.runtime.build_runtime:
+    name: build_runtime
+    module: uristepper-docker.packages.python.uristepperedge.runtime
+    line: 153
+    cyclomatic_complexity: 6
+    calls_out: 14
+    calls_in: 10
+  urirdp-docker.packages.python.urirdpedge.cli.build_runtime:
+    name: build_runtime
+    module: urirdp-docker.packages.python.urirdpedge.cli
+    line: 11
+    cyclomatic_complexity: 10
+    calls_out: 16
+    calls_in: 1
+  urisys-node.packages.python.urisysnode.identity.health_payload:
+    name: health_payload
+    module: urisys-node.packages.python.urisysnode.identity
+    line: 98
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 2
+  urienv-docker.packages.python.urienv.src.urienv.handlers.startup_config:
+    name: startup_config
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 129
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+  urirdp-docker.packages.python.urirdp_kvm.handlers.screenshot:
+    name: screenshot
+    module: urirdp-docker.packages.python.urirdp_kvm.handlers
+    line: 27
+    cyclomatic_complexity: 9
+    calls_out: 23
+    calls_in: 0
+  scripts.test_sessions.expectations.evaluate_expectations:
+    name: evaluate_expectations
+    module: scripts.test_sessions.expectations
+    line: 121
+    cyclomatic_complexity: 3
+    calls_out: 10
+    calls_in: 1
+  urienv-docker.packages.python.urienv.src.urienv.handlers.secret_masked:
+    name: secret_masked
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 155
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 0
+  scripts.test_sessions.expectations.vision_confidences:
+    name: vision_confidences
+    module: scripts.test_sessions.expectations
+    line: 30
+    cyclomatic_complexity: 11
+    calls_out: 11
+    calls_in: 1
+  urikvm-docker.packages.python.uriocr.handlers._latest_screenshot:
+    name: _latest_screenshot
+    module: urikvm-docker.packages.python.uriocr.handlers
+    line: 25
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  urikvm-docker.packages.python.urikvm.handlers.monitor_list:
+    name: monitor_list
+    module: urikvm-docker.packages.python.urikvm.handlers
+    line: 24
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  urisys-node.packages.python.urisysnode.identity._identity_path:
+    name: _identity_path
+    module: urisys-node.packages.python.urisysnode.identity
+    line: 19
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  scripts.test_sessions.expectations.flow_expectations:
+    name: flow_expectations
+    module: scripts.test_sessions.expectations
+    line: 7
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 1
+  packages.python.urisysedge.env._env_config:
+    name: _env_config
+    module: packages.python.urisysedge.env
+    line: 74
+    cyclomatic_complexity: 7
+    calls_out: 6
+    calls_in: 1
+  scripts.report.run_analysis.write_run_analysis:
+    name: write_run_analysis
+    module: scripts.report.run_analysis
+    line: 122
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 1
+  scripts.test_sessions.lab_rdp.capture_rdp_screenshot_wait:
+    name: capture_rdp_screenshot_wait
+    module: scripts.test_sessions.lab_rdp
+    line: 151
+    cyclomatic_complexity: 9
+    calls_out: 6
+    calls_in: 1
+  urisys-node.packages.python.urisysnode.serve.build_runtime:
+    name: build_runtime
+    module: urisys-node.packages.python.urisysnode.serve
+    line: 62
+    cyclomatic_complexity: 7
+    calls_out: 15
+    calls_in: 0
+  urienv-docker.packages.python.urisysedge.src.urisysedge.pack_loader.manifest_paths:
+    name: manifest_paths
+    module: urienv-docker.packages.python.urisysedge.src.urisysedge.pack_loader
+    line: 13
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 0
+  uristepper-docker.packages.python.uristepperedge.server.serve:
+    name: serve
+    module: uristepper-docker.packages.python.uristepperedge.server
+    line: 70
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 0
+  urikvm-docker.packages.python.urihim.handlers.mouse_click:
+    name: mouse_click
+    module: urikvm-docker.packages.python.urihim.handlers
+    line: 44
+    cyclomatic_complexity: 7
+    calls_out: 16
+    calls_in: 0
+  urikvm-docker.packages.python.urihim.handlers._state:
+    name: _state
+    module: urikvm-docker.packages.python.urihim.handlers
+    line: 5
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 5
+  urirdp-docker.packages.python.urirdp_llm.handlers._config:
+    name: _config
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 16
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 2
+  scripts.test_sessions.util.wait_health:
+    name: wait_health
+    module: scripts.test_sessions.util
+    line: 73
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  scripts.run_test_sessions.session_urisys_node_docker_gui:
+    name: session_urisys_node_docker_gui
+    module: scripts.run_test_sessions
+    line: 481
     cyclomatic_complexity: 7
     calls_out: 13
-    calls_in: 4
+    calls_in: 0
+  scripts.test_sessions.util.compose_cmd:
+    name: compose_cmd
+    module: scripts.test_sessions.util
+    line: 84
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 10
+  scripts.report.events.load_event_records:
+    name: load_event_records
+    module: scripts.report.events
+    line: 37
+    cyclomatic_complexity: 14
+    calls_out: 14
+    calls_in: 1
+  urirdp-docker.packages.python.urirdp_ocr.handlers.image_text:
+    name: image_text
+    module: urirdp-docker.packages.python.urirdp_ocr.handlers
+    line: 75
+    cyclomatic_complexity: 6
+    calls_out: 8
+    calls_in: 1
+  urisys-node.packages.python.urisysnode.router.rewrite_uri_for_slave:
+    name: rewrite_uri_for_slave
+    module: urisys-node.packages.python.urisysnode.router
+    line: 29
+    cyclomatic_complexity: 6
+    calls_out: 5
+    calls_in: 2
+  src.urisys.controllers.server_controller.ServerController.__init__:
+    name: __init__
+    module: src.urisys.controllers.server_controller
+    line: 7
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  urikvm-docker.packages.python.uriocr.handlers._ocr_cfg:
+    name: _ocr_cfg
+    module: urikvm-docker.packages.python.uriocr.handlers
+    line: 8
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 3
+  urienv-docker.packages.python.urienv.src.urienv.handlers._read_docker_secret:
+    name: _read_docker_secret
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 72
+    cyclomatic_complexity: 4
+    calls_out: 6
+    calls_in: 1
+  urikvm-docker.packages.python.urihim.handlers.mouse_move:
+    name: mouse_move
+    module: urikvm-docker.packages.python.urihim.handlers
+    line: 33
+    cyclomatic_complexity: 3
+    calls_out: 11
+    calls_in: 0
+  urienv-docker.packages.python.urienv.src.urienv.handlers._is_mutable:
+    name: _is_mutable
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 60
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 2
+  urirdp-docker.packages.python.urirdp_kvm.display.allow_real:
+    name: allow_real
+    module: urirdp-docker.packages.python.urirdp_kvm.display
+    line: 51
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 15
+  urikvm-docker.packages.python.urillm.handlers._analyze_litellm:
+    name: _analyze_litellm
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 174
+    cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 0
+  urikvm-docker.packages.python.urillm.handlers._normalize_action:
+    name: _normalize_action
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 138
+    cyclomatic_complexity: 4
+    calls_out: 9
+    calls_in: 2
+  urirdp-docker.packages.python.urirdp_kvm.display.detect_display:
+    name: detect_display
+    module: urirdp-docker.packages.python.urirdp_kvm.display
+    line: 14
+    cyclomatic_complexity: 7
+    calls_out: 10
+    calls_in: 17
+  urikvm-docker.packages.python.urikvmedge.cli.build_runtime:
+    name: build_runtime
+    module: urikvm-docker.packages.python.urikvmedge.cli
+    line: 6
+    cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 1
   urirdp-docker.packages.python.urirdp_llm.handlers._screenshot_b64:
     name: _screenshot_b64
     module: urirdp-docker.packages.python.urirdp_llm.handlers
@@ -1972,20 +880,405 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 7
     calls_in: 1
-  urisys-node.packages.python.urisysnode.artifact_resolver.docker_run_worker:
-    name: docker_run_worker
-    module: urisys-node.packages.python.urisysnode.artifact_resolver
-    line: 119
+  urisys-node.packages.python.urisysnode.router.load_route_map:
+    name: load_route_map
+    module: urisys-node.packages.python.urisysnode.router
+    line: 11
     cyclomatic_complexity: 3
     calls_out: 4
-    calls_in: 2
-  urikvm-docker.packages.python.urillm.handlers._driver:
-    name: _driver
-    module: urikvm-docker.packages.python.urillm.handlers
-    line: 16
+    calls_in: 1
+  urienv-docker.packages.python.urienv.src.urienv.handlers._get_value:
+    name: _get_value
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 82
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 8
+  scripts.report.session_markdown._screenshots_section:
+    name: _screenshots_section
+    module: scripts.report.session_markdown
+    line: 54
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  urienv-docker.packages.python.urienv.src.urienv.handlers.var_exists:
+    name: var_exists
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 142
     cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  urirdp-docker.packages.python.urirdp_llm.handlers._openai_compatible_chat:
+    name: _openai_compatible_chat
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 107
+    cyclomatic_complexity: 1
+    calls_out: 9
+    calls_in: 2
+  scripts.test_sessions.expectations._screen_changed:
+    name: _screen_changed
+    module: scripts.test_sessions.expectations
+    line: 41
+    cyclomatic_complexity: 5
+    calls_out: 1
+    calls_in: 1
+  urisys-automation-lab.web.app.log:
+    name: log
+    module: urisys-automation-lab.web.app
+    line: 10
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 4
+  uristepper-docker.packages.python.uristepper.handlers.disable:
+    name: disable
+    module: uristepper-docker.packages.python.uristepper.handlers
+    line: 64
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  urikvm-docker.packages.python.urihim.handlers.keyboard_hotkey:
+    name: keyboard_hotkey
+    module: urikvm-docker.packages.python.urihim.handlers
+    line: 72
+    cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 0
+  uristepper-docker.packages.python.uristepper.handlers.status:
+    name: status
+    module: uristepper-docker.packages.python.uristepper.handlers
+    line: 48
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_serve:
+    name: cmd_serve
+    module: uristepper-docker.packages.python.uristepperedge.cli
+    line: 77
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  urisys-node.packages.python.uriscreen.handlers.capture_loop:
+    name: capture_loop
+    module: urisys-node.packages.python.uriscreen.handlers
+    line: 94
+    cyclomatic_complexity: 4
+    calls_out: 10
+    calls_in: 0
+  scripts.report.session_markdown._steps_section:
+    name: _steps_section
+    module: scripts.report.session_markdown
+    line: 41
+    cyclomatic_complexity: 7
+    calls_out: 4
+    calls_in: 1
+  urienv-docker.packages.python.urisysedge.src.urisysedge.runtime.load_device_config:
+    name: load_device_config
+    module: urienv-docker.packages.python.urisysedge.src.urisysedge.runtime
+    line: 7
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 3
+  uribrowser-docker.packages.python.uribrowserdocker.handlers.get_dom:
+    name: get_dom
+    module: uribrowser-docker.packages.python.uribrowserdocker.handlers
+    line: 75
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 0
+  scripts.test_sessions.util.file_md5:
+    name: file_md5
+    module: scripts.test_sessions.util
+    line: 189
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 3
+  urienv-docker.packages.python.urienv.src.urienv.handlers._is_public:
+    name: _is_public
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 52
+    cyclomatic_complexity: 3
     calls_out: 2
     calls_in: 1
+  scripts.test_sessions.expectations._screen_changed_since_previous:
+    name: _screen_changed_since_previous
+    module: scripts.test_sessions.expectations
+    line: 63
+    cyclomatic_complexity: 5
+    calls_out: 1
+    calls_in: 1
+  urisys-automation-lab.server.automation_lab_server.build_lab_runtime:
+    name: build_lab_runtime
+    module: urisys-automation-lab.server.automation_lab_server
+    line: 28
+    cyclomatic_complexity: 17
+    calls_out: 23
+    calls_in: 1
+  packages.python.urisysedge.env.load_urisys_env:
+    name: load_urisys_env
+    module: packages.python.urisysedge.env
+    line: 23
+    cyclomatic_complexity: 8
+    calls_out: 17
+    calls_in: 3
+  urisys-automation-lab.web.app.SR:
+    name: SR
+    module: urisys-automation-lab.web.app
+    line: 61
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 0
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_events:
+    name: cmd_events
+    module: uristepper-docker.packages.python.uristepperedge.cli
+    line: 44
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 0
+  packages.python.urisysedge.env.is_secret_env:
+    name: is_secret_env
+    module: packages.python.urisysedge.env
+    line: 128
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  urienv-docker.packages.python.urisysedge.src.urisysedge.runtime.load_env_config:
+    name: load_env_config
+    module: urienv-docker.packages.python.urisysedge.src.urisysedge.runtime
+    line: 11
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 3
+  src.urisys.cli._add_runtime_flags:
+    name: _add_runtime_flags
+    module: src.urisys.cli
+    line: 31
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 2
+  scripts.test_sessions.lab_flows._flow_step_detail:
+    name: _flow_step_detail
+    module: scripts.test_sessions.lab_flows
+    line: 100
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 1
+  urisys-automation-lab.packages.python.uriwebrtc.handlers.data_send:
+    name: data_send
+    module: urisys-automation-lab.packages.python.uriwebrtc.handlers
+    line: 25
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 0
+  packages.python.urisysedge.runtime.load_json:
+    name: load_json
+    module: packages.python.urisysedge.runtime
+    line: 168
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 6
+  urirdp-docker.packages.python.urirdp_shell.handlers.shell_run:
+    name: shell_run
+    module: urirdp-docker.packages.python.urirdp_shell.handlers
+    line: 20
+    cyclomatic_complexity: 16
+    calls_out: 18
+    calls_in: 0
+  uribrowser-docker.packages.python.uribrowserdocker.handlers.open_page:
+    name: open_page
+    module: uribrowser-docker.packages.python.uribrowserdocker.handlers
+    line: 33
+    cyclomatic_complexity: 11
+    calls_out: 27
+    calls_in: 0
+  urisys-automation-lab.server.automation_lab_server.LabHandler.log_message:
+    name: log_message
+    module: urisys-automation-lab.server.automation_lab_server
+    line: 108
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  urikvm-docker.packages.python.urikvm.handlers.screenshot:
+    name: screenshot
+    module: urikvm-docker.packages.python.urikvm.handlers
+    line: 29
+    cyclomatic_complexity: 5
+    calls_out: 18
+    calls_in: 0
+  urienv-docker.packages.python.urienv.src.urienv.handlers._name:
+    name: _name
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 44
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 6
+  urikvm-docker.packages.python.urihim.handlers._driver:
+    name: _driver
+    module: urikvm-docker.packages.python.urihim.handlers
+    line: 10
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 6
+  uribrowser-docker.packages.python.uribrowserdocker.handlers._session_state:
+    name: _session_state
+    module: uribrowser-docker.packages.python.uribrowserdocker.handlers
+    line: 13
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 4
+  scripts.run_test_sessions.session_automation_lab:
+    name: session_automation_lab
+    module: scripts.run_test_sessions
+    line: 367
+    cyclomatic_complexity: 16
+    calls_out: 43
+    calls_in: 1
+  scripts.report.events.merge_event_summaries:
+    name: merge_event_summaries
+    module: scripts.report.events
+    line: 109
+    cyclomatic_complexity: 10
+    calls_out: 16
+    calls_in: 1
+  urikvm-docker.packages.python.uriocr.handlers._tesseract_boxes:
+    name: _tesseract_boxes
+    module: urikvm-docker.packages.python.uriocr.handlers
+    line: 37
+    cyclomatic_complexity: 8
+    calls_out: 14
+    calls_in: 1
+  urisys-automation-lab.server.flow_runner._require_uri_stack:
+    name: _require_uri_stack
+    module: urisys-automation-lab.server.flow_runner
+    line: 27
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 2
+  urirdp-docker.packages.python.urirdp_him.handlers._mock:
+    name: _mock
+    module: urirdp-docker.packages.python.urirdp_him.handlers
+    line: 7
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 5
+  urienv-docker.packages.python.urienv.src.urienv.handlers.var_value:
+    name: var_value
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 148
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  urirdp-docker.packages.python.urirdp_llm.handlers.decide:
+    name: decide
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 250
+    cyclomatic_complexity: 15
+    calls_out: 24
+    calls_in: 0
+  urisys-automation-lab.server.flow_runner.plan_flow:
+    name: plan_flow
+    module: urisys-automation-lab.server.flow_runner
+    line: 64
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 1
+  packages.python.urisysedge.env.resolve_env_var:
+    name: resolve_env_var
+    module: packages.python.urisysedge.env
+    line: 85
+    cyclomatic_complexity: 11
+    calls_out: 9
+    calls_in: 18
+  urisys-node.packages.python.urisysnode.artifact_resolver.docker_pull:
+    name: docker_pull
+    module: urisys-node.packages.python.urisysnode.artifact_resolver
+    line: 113
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 2
+  urikvm-docker.scripts.real_pipeline.build_runtime:
+    name: build_runtime
+    module: urikvm-docker.scripts.real_pipeline
+    line: 49
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 1
+  scripts.run_test_sessions.session_urirdp_rdp_e2e:
+    name: session_urirdp_rdp_e2e
+    module: scripts.run_test_sessions
+    line: 320
+    cyclomatic_complexity: 5
+    calls_out: 19
+    calls_in: 0
+  urienv-docker.packages.python.urisysedge.src.urisysedge.pack_loader.manifest_path_for_pack:
+    name: manifest_path_for_pack
+    module: urienv-docker.packages.python.urisysedge.src.urisysedge.pack_loader
+    line: 6
+    cyclomatic_complexity: 4
+    calls_out: 6
+    calls_in: 1
+  urirdp-docker.packages.python.urirdp_browser.handlers.open_page:
+    name: open_page
+    module: urirdp-docker.packages.python.urirdp_browser.handlers
+    line: 87
+    cyclomatic_complexity: 15
+    calls_out: 33
+    calls_in: 0
+  urisys-node.packages.python.urisysnode.artifact_resolver.fetch_json:
+    name: fetch_json
+    module: urisys-node.packages.python.urisysnode.artifact_resolver
+    line: 51
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 2
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_flow:
+    name: cmd_flow
+    module: uristepper-docker.packages.python.uristepperedge.cli
+    line: 50
+    cyclomatic_complexity: 12
+    calls_out: 22
+    calls_in: 0
+  urisys-node.packages.python.uriscreen.handlers.frame:
+    name: frame
+    module: urisys-node.packages.python.uriscreen.handlers
+    line: 87
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 0
+  urirdp-docker.packages.python.urirdp.handlers.display_status:
+    name: display_status
+    module: urirdp-docker.packages.python.urirdp.handlers
+    line: 43
+    cyclomatic_complexity: 7
+    calls_out: 12
+    calls_in: 0
+  src.urisys.cli.resolve_markpact_source:
+    name: resolve_markpact_source
+    module: src.urisys.cli
+    line: 38
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  scripts.test_sessions.lab_flows._run_single_lab_flow:
+    name: _run_single_lab_flow
+    module: scripts.test_sessions.lab_flows
+    line: 117
+    cyclomatic_complexity: 10
+    calls_out: 19
+    calls_in: 1
+  urienv-docker.packages.python.urienv.src.urienv.handlers.var_unset:
+    name: var_unset
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 188
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+  scripts.report.session_io.write_session_report:
+    name: write_session_report
+    module: scripts.report.session_io
+    line: 12
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 2
   urisys-node.packages.python.uriscreen.handlers._output_dir:
     name: _output_dir
     module: urisys-node.packages.python.uriscreen.handlers
@@ -1993,19 +1286,61 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 5
     calls_in: 1
-  scripts.session_report.analyze_run:
-    name: analyze_run
-    module: scripts.session_report
-    line: 618
-    cyclomatic_complexity: 39
-    calls_out: 69
+  urisys-node.packages.python.urisysnode.artifact_resolver.load_artifact_index:
+    name: load_artifact_index
+    module: urisys-node.packages.python.urisysnode.artifact_resolver
+    line: 62
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 3
+  uristepper-docker.packages.python.uristepper.handlers.enable:
+    name: enable
+    module: uristepper-docker.packages.python.uristepper.handlers
+    line: 56
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  urikvm-docker.packages.python.urillm.handlers._parse_json_response:
+    name: _parse_json_response
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 79
+    cyclomatic_complexity: 5
+    calls_out: 5
     calls_in: 2
-  urirdp-docker.packages.python.urirdp_shell.handlers.shell_run:
-    name: shell_run
-    module: urirdp-docker.packages.python.urirdp_shell.handlers
-    line: 20
-    cyclomatic_complexity: 16
-    calls_out: 18
+  scripts.run_test_sessions._monorepo_root:
+    name: _monorepo_root
+    module: scripts.run_test_sessions
+    line: 472
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  packages.python.urisysedge.runtime.JsonlEventStore.tail:
+    name: tail
+    module: packages.python.urisysedge.runtime
+    line: 74
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 1
+  urirdp-docker.packages.python.urirdp.handlers._service_status:
+    name: _service_status
+    module: urirdp-docker.packages.python.urirdp.handlers
+    line: 12
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 2
+  urikvm-docker.packages.python.uriocr.handlers._extract_text:
+    name: _extract_text
+    module: urikvm-docker.packages.python.uriocr.handlers
+    line: 92
+    cyclomatic_complexity: 6
+    calls_out: 10
+    calls_in: 2
+  scripts.test_sessions.lab_flows.session_lab_10_flows:
+    name: session_lab_10_flows
+    module: scripts.test_sessions.lab_flows
+    line: 227
+    cyclomatic_complexity: 7
+    calls_out: 33
     calls_in: 0
   uristepper-docker.packages.python.uristepper.handlers._driver:
     name: _driver
@@ -2014,13 +1349,6 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 2
     calls_in: 1
-  urikvm-docker.packages.python.urikvm.handlers._store_screenshot:
-    name: _store_screenshot
-    module: urikvm-docker.packages.python.urikvm.handlers
-    line: 10
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 2
   urisys-node.packages.python.urisysnode.artifact_resolver._auth_opener:
     name: _auth_opener
     module: urisys-node.packages.python.urisysnode.artifact_resolver
@@ -2028,76 +1356,251 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 11
     calls_in: 1
-  urisys-node.packages.python.urisysnode.artifact_resolver.release_api_url:
-    name: release_api_url
-    module: urisys-node.packages.python.urisysnode.artifact_resolver
-    line: 72
+  urikvm-docker.packages.python.urillm.handlers._heuristic_analyze:
+    name: _heuristic_analyze
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 64
+    cyclomatic_complexity: 8
+    calls_out: 17
+    calls_in: 5
+  scripts.test_sessions.util.now_iso:
+    name: now_iso
+    module: scripts.test_sessions.util
+    line: 22
     cyclomatic_complexity: 1
     calls_out: 3
-    calls_in: 2
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_serve:
-    name: cmd_serve
-    module: uristepper-docker.packages.python.uristepperedge.cli
-    line: 77
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  scripts.run_test_sessions._copy_container_file:
-    name: _copy_container_file
+    calls_in: 1
+  urisys-node.packages.python.urisysnode.router.resolve_remote_route:
+    name: resolve_remote_route
+    module: urisys-node.packages.python.urisysnode.router
+    line: 21
+    cyclomatic_complexity: 5
+    calls_out: 3
+    calls_in: 1
+  scripts.run_test_sessions.session_pytest_urisys_node:
+    name: session_pytest_urisys_node
     module: scripts.run_test_sessions
-    line: 201
+    line: 91
     cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 10
-  packages.python.urisysedge.env._urisys_root:
-    name: _urisys_root
-    module: packages.python.urisysedge.env
-    line: 18
+    calls_out: 5
+    calls_in: 0
+  scripts.run_test_sessions.session_pytest_urirdp:
+    name: session_pytest_urirdp
+    module: scripts.run_test_sessions
+    line: 65
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  scripts.report.util.host_id:
+    name: host_id
+    module: scripts.report.util
+    line: 15
     cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 2
-  uristepper-docker.packages.python.uristepper.handlers.enable:
-    name: enable
-    module: uristepper-docker.packages.python.uristepper.handlers
-    line: 56
-    cyclomatic_complexity: 2
     calls_out: 3
-    calls_in: 0
-  urisys-automation-lab.packages.python.urichat.handlers.uri_execute:
-    name: uri_execute
-    module: urisys-automation-lab.packages.python.urichat.handlers
-    line: 45
-    cyclomatic_complexity: 15
-    calls_out: 27
-    calls_in: 0
-  urisys-automation-lab.server.automation_lab_server.serve:
-    name: serve
-    module: urisys-automation-lab.server.automation_lab_server
-    line: 219
+    calls_in: 12
+  scripts.test_sessions.util.write_meta:
+    name: write_meta
+    module: scripts.test_sessions.util
+    line: 131
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 13
+  scripts.test_sessions.util.prepare_urirdp_data:
+    name: prepare_urirdp_data
+    module: scripts.test_sessions.util
+    line: 199
     cyclomatic_complexity: 4
+    calls_out: 6
+    calls_in: 3
+  scripts.run_test_sessions.session_pytest_urisys:
+    name: session_pytest_urisys
+    module: scripts.run_test_sessions
+    line: 82
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  urikvm-docker.packages.python.urillm.handlers._analyze_openai:
+    name: _analyze_openai
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 154
+    cyclomatic_complexity: 10
     calls_out: 13
     calls_in: 0
-  urisys-node.packages.python.urisysnode.artifact_resolver.load_artifact_index:
-    name: load_artifact_index
+  scripts.test_sessions.util.finalize_session:
+    name: finalize_session
+    module: scripts.test_sessions.util
+    line: 147
+    cyclomatic_complexity: 5
+    calls_out: 13
+    calls_in: 14
+  urisys-node.packages.python.urisysnode.artifact_resolver.is_url:
+    name: is_url
     module: urisys-node.packages.python.urisysnode.artifact_resolver
-    line: 62
+    line: 18
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  urisys-automation-lab.packages.python.uriwebrtc.handlers._room_id:
+    name: _room_id
+    module: urisys-automation-lab.packages.python.uriwebrtc.handlers
+    line: 8
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 2
+  urisys-node.packages.python.urisysnode.artifact_resolver.wait_health:
+    name: wait_health
+    module: urisys-node.packages.python.urisysnode.artifact_resolver
+    line: 145
+    cyclomatic_complexity: 4
+    calls_out: 6
+    calls_in: 2
+  urisys-node.packages.python.urisysnode.artifact_resolver.load_node_profile:
+    name: load_node_profile
+    module: urisys-node.packages.python.urisysnode.artifact_resolver
+    line: 57
     cyclomatic_complexity: 3
-    calls_out: 8
+    calls_out: 4
     calls_in: 3
-  urisys-node.packages.python.urisysedge.env._env_config:
-    name: _env_config
-    module: urisys-node.packages.python.urisysedge.env
-    line: 74
-    cyclomatic_complexity: 7
+  urisys-node.packages.python.urisysnode.router.node_endpoint:
+    name: node_endpoint
+    module: urisys-node.packages.python.urisysnode.router
+    line: 42
+    cyclomatic_complexity: 5
     calls_out: 6
     calls_in: 1
-  urisys-node.packages.python.uriscreen.handlers.capture:
-    name: capture
-    module: urisys-node.packages.python.uriscreen.handlers
-    line: 48
-    cyclomatic_complexity: 7
-    calls_out: 25
+  urisys-node.packages.python.urisysnode.artifact_resolver.select_artifact:
+    name: select_artifact
+    module: urisys-node.packages.python.urisysnode.artifact_resolver
+    line: 91
+    cyclomatic_complexity: 15
+    calls_out: 14
+    calls_in: 3
+  urirdp-docker.packages.python.urirdp_him.handlers.keyboard_type:
+    name: keyboard_type
+    module: urirdp-docker.packages.python.urirdp_him.handlers
+    line: 37
+    cyclomatic_complexity: 5
+    calls_out: 13
+    calls_in: 1
+  scripts.test_sessions.lab_flows._lab_bootstrap:
+    name: _lab_bootstrap
+    module: scripts.test_sessions.lab_flows
+    line: 30
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 1
+  scripts.test_sessions.expectations._opened_url_contains:
+    name: _opened_url_contains
+    module: scripts.test_sessions.expectations
+    line: 85
+    cyclomatic_complexity: 11
+    calls_out: 16
+    calls_in: 1
+  urirdp-docker.packages.python.urirdp_llm.handlers.plan:
+    name: plan
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 334
+    cyclomatic_complexity: 20
+    calls_out: 28
+    calls_in: 0
+  urisys-node.packages.python.urisysnode.identity.save_identity:
+    name: save_identity
+    module: urisys-node.packages.python.urisysnode.identity
+    line: 49
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  urisys-automation-lab.packages.python.uristt.handlers._session_id:
+    name: _session_id
+    module: urisys-automation-lab.packages.python.uristt.handlers
+    line: 8
+    cyclomatic_complexity: 2
+    calls_out: 2
     calls_in: 2
+  urisys-automation-lab.server.lab_uri_adapter.step_ok:
+    name: step_ok
+    module: urisys-automation-lab.server.lab_uri_adapter
+    line: 39
+    cyclomatic_complexity: 9
+    calls_out: 9
+    calls_in: 1
+  urirdp-docker.packages.python.urirdp_llm.handlers._llm_cfg:
+    name: _llm_cfg
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 20
+    cyclomatic_complexity: 6
+    calls_out: 7
+    calls_in: 3
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_explain:
+    name: cmd_explain
+    module: uristepper-docker.packages.python.uristepperedge.cli
+    line: 32
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 0
+  urikvm-docker.packages.python.uriocr.handlers._png_bytes:
+    name: _png_bytes
+    module: urikvm-docker.packages.python.uriocr.handlers
+    line: 29
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 1
+  urirdp-docker.packages.python.urirdp_ocr.handlers._tesseract_ocr:
+    name: _tesseract_ocr
+    module: urirdp-docker.packages.python.urirdp_ocr.handlers
+    line: 49
+    cyclomatic_complexity: 9
+    calls_out: 23
+    calls_in: 1
+  urikvm-docker.packages.python.urillm.handlers._find_target_box:
+    name: _find_target_box
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 48
+    cyclomatic_complexity: 6
+    calls_out: 2
+    calls_in: 1
+  urirdp-docker.packages.python.urirdp_llm.handlers._decide_litellm:
+    name: _decide_litellm
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 225
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 2
+  urikvm-docker.packages.python.urillm.handlers._target_from_goal:
+    name: _target_from_goal
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 24
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 3
+  urikvm-docker.packages.python.urikvm.handlers._store_screenshot:
+    name: _store_screenshot
+    module: urikvm-docker.packages.python.urikvm.handlers
+    line: 10
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 2
+  urisys-node.packages.python.urisysnode.serve.make_handler:
+    name: make_handler
+    module: urisys-node.packages.python.urisysnode.serve
+    line: 145
+    cyclomatic_complexity: 1
+    calls_out: 42
+    calls_in: 1
+  urikvm-docker.packages.python.urikvm.handlers._profile:
+    name: _profile
+    module: urikvm-docker.packages.python.urikvm.handlers
+    line: 6
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 3
+  urikvm-docker.packages.python.urillm.handlers._driver:
+    name: _driver
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 16
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
   urisys-node.packages.python.urisysnode.identity.load_identity:
     name: load_identity
     module: urisys-node.packages.python.urisysnode.identity
@@ -2105,34 +1608,678 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 15
     calls_in: 6
-  urirdp-docker.packages.python.urirdp_him.handlers._mock:
-    name: _mock
-    module: urirdp-docker.packages.python.urirdp_him.handlers
-    line: 7
+  urisys-node.packages.python.urisysnode.identity._data_dir:
+    name: _data_dir
+    module: urisys-node.packages.python.urisysnode.identity
+    line: 13
     cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 5
-  urisys-node.packages.python.urisysedge.env.resolve_env_var:
-    name: resolve_env_var
-    module: urisys-node.packages.python.urisysedge.env
-    line: 85
-    cyclomatic_complexity: 11
-    calls_out: 9
+    calls_out: 3
+    calls_in: 2
+  urisys-automation-lab.server.automation_lab_server.serve:
+    name: serve
+    module: urisys-automation-lab.server.automation_lab_server
+    line: 219
+    cyclomatic_complexity: 4
+    calls_out: 13
     calls_in: 0
-  urikvm-docker.packages.python.urihim.handlers.keyboard_type:
-    name: keyboard_type
-    module: urikvm-docker.packages.python.urihim.handlers
-    line: 62
+  urisys-automation-lab.server.flow_runner.run_flow_file:
+    name: run_flow_file
+    module: urisys-automation-lab.server.flow_runner
+    line: 105
+    cyclomatic_complexity: 13
+    calls_out: 40
+    calls_in: 1
+  urisys-node.packages.python.urisysnode.identity.save_pairing:
+    name: save_pairing
+    module: urisys-node.packages.python.urisysnode.identity
+    line: 76
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  urienv-docker.packages.python.urienv.src.urienv.handlers._mask:
+    name: _mask
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 64
     cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 3
+  urirdp-docker.packages.python.urirdp_llm.handlers._match_transcript:
+    name: _match_transcript
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 296
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  scripts.report.session.session_duration:
+    name: session_duration
+    module: scripts.report.session
+    line: 72
+    cyclomatic_complexity: 5
+    calls_out: 14
+    calls_in: 1
+  urikvm-docker.packages.python.urihim.handlers.mouse_status:
+    name: mouse_status
+    module: urikvm-docker.packages.python.urihim.handlers
+    line: 28
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  scripts.run-nl-log-smoke.print:
+    name: print
+    module: scripts.run-nl-log-smoke
+    line: 42
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 57
+  urikvm-docker.scripts.real_pipeline.main:
+    name: main
+    module: urikvm-docker.scripts.real_pipeline
+    line: 59
+    cyclomatic_complexity: 14
+    calls_out: 26
+    calls_in: 0
+  scripts.test_sessions.lab_rdp.prepare_ok_target:
+    name: prepare_ok_target
+    module: scripts.test_sessions.lab_rdp
+    line: 116
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  scripts.report.util.now_iso:
+    name: now_iso
+    module: scripts.report.util
+    line: 11
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 16
+  urisys-node.packages.python.urisysnode.artifact_resolver.release_api_url:
+    name: release_api_url
+    module: urisys-node.packages.python.urisysnode.artifact_resolver
+    line: 72
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 2
+  uristepper-docker.packages.python.uristepper.handlers.home:
+    name: home
+    module: uristepper-docker.packages.python.uristepper.handlers
+    line: 105
+    cyclomatic_complexity: 2
     calls_out: 8
     calls_in: 0
-  scripts.run_test_sessions._sleep_ports:
-    name: _sleep_ports
+  urikvm-docker.packages.python.urillm.handlers._find_goal_box:
+    name: _find_goal_box
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 56
+    cyclomatic_complexity: 6
+    calls_out: 2
+    calls_in: 1
+  urienv-docker.packages.python.urienv.src.urienv.handlers._is_secret:
+    name: _is_secret
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 56
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 3
+  urikvm-docker.packages.python.urillm.handlers._litellm_chat:
+    name: _litellm_chat
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 107
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  src.urisys.http_server._send:
+    name: _send
+    module: src.urisys.http_server
+    line: 19
+    cyclomatic_complexity: 1
+    calls_out: 12
+    calls_in: 9
+  scripts.run_test_sessions.main:
+    name: main
     module: scripts.run_test_sessions
-    line: 118
+    line: 552
+    cyclomatic_complexity: 13
+    calls_out: 32
+    calls_in: 0
+  src.urisys.controllers.server_controller.ServerController.serve_forever:
+    name: serve_forever
+    module: src.urisys.controllers.server_controller
+    line: 15
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  uribrowser-docker.packages.python.uribrowseredge.cli.build_runtime:
+    name: build_runtime
+    module: uribrowser-docker.packages.python.uribrowseredge.cli
+    line: 6
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 1
+  scripts.run-urisys-node-docker-e2e.wait_health:
+    name: wait_health
+    module: scripts.run-urisys-node-docker-e2e
+    line: 72
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 6
+  scripts.run_test_sessions.session_urirdp_mock_docker:
+    name: session_urirdp_mock_docker
+    module: scripts.run_test_sessions
+    line: 101
+    cyclomatic_complexity: 5
+    calls_out: 31
+    calls_in: 0
+  urirdp-docker.packages.python.urirdp_him.handlers.keyboard_key:
+    name: keyboard_key
+    module: urirdp-docker.packages.python.urirdp_him.handlers
+    line: 48
+    cyclomatic_complexity: 5
+    calls_out: 9
+    calls_in: 0
+  packages.python.urisysedge.runtime.run_flow:
+    name: run_flow
+    module: packages.python.urisysedge.runtime
+    line: 217
+    cyclomatic_complexity: 7
+    calls_out: 13
+    calls_in: 4
+  urirdp-docker.packages.python.urirdp_him.handlers.mouse_move:
+    name: mouse_move
+    module: urirdp-docker.packages.python.urirdp_him.handlers
+    line: 11
+    cyclomatic_complexity: 5
+    calls_out: 13
+    calls_in: 0
+  urisys-node.packages.python.uriscreen.handlers._backend:
+    name: _backend
+    module: urisys-node.packages.python.uriscreen.handlers
+    line: 16
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 2
+  urisys-automation-lab.server.flow_runner._lab_adapter_session:
+    name: _lab_adapter_session
+    module: urisys-automation-lab.server.flow_runner
+    line: 55
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  src.urisys.flow.iter_steps:
+    name: iter_steps
+    module: src.urisys.flow
+    line: 17
+    cyclomatic_complexity: 7
+    calls_out: 8
+    calls_in: 1
+  urisys-node.packages.python.urisysnode.artifact_resolver.resolve_and_run:
+    name: resolve_and_run
+    module: urisys-node.packages.python.urisysnode.artifact_resolver
+    line: 160
+    cyclomatic_complexity: 4
+    calls_out: 12
+    calls_in: 1
+  urirdp-docker.packages.python.urirdp_llm.handlers._decide_openai:
+    name: _decide_openai
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 231
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 2
+  urisys-automation-lab.web.app.uriCall:
+    name: uriCall
+    module: urisys-automation-lab.web.app
+    line: 15
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_call:
+    name: cmd_call
+    module: uristepper-docker.packages.python.uristepperedge.cli
+    line: 20
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 0
+  urienv-docker.packages.python.urienv.src.urienv.handlers.secret_value:
+    name: secret_value
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 163
+    cyclomatic_complexity: 4
+    calls_out: 8
+    calls_in: 1
+  urisys-node.packages.python.uriscreen.handlers._monitor_index:
+    name: _monitor_index
+    module: urisys-node.packages.python.uriscreen.handlers
+    line: 27
+    cyclomatic_complexity: 6
+    calls_out: 9
+    calls_in: 1
+  scripts.report.lab_checks.analyze_lab_flows:
+    name: analyze_lab_flows
+    module: scripts.report.lab_checks
+    line: 177
+    cyclomatic_complexity: 5
+    calls_out: 4
+    calls_in: 1
+  urisys-automation-lab.web.app.data:
+    name: data
+    module: urisys-automation-lab.web.app
+    line: 21
     cyclomatic_complexity: 1
     calls_out: 1
-    calls_in: 6
+    calls_in: 0
+  urirdp-docker.packages.python.urirdp_ocr.handlers._mock_ocr:
+    name: _mock_ocr
+    module: urirdp-docker.packages.python.urirdp_ocr.handlers
+    line: 13
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 1
+  urisys-automation-lab.web.app.rec:
+    name: rec
+    module: urisys-automation-lab.web.app
+    line: 66
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  urisys-node.packages.python.uriscreen.handlers._store_latest:
+    name: _store_latest
+    module: urisys-node.packages.python.uriscreen.handlers
+    line: 38
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  urienv-docker.packages.python.urienv.src.urienv.handlers._cfg:
+    name: _cfg
+    module: urienv-docker.packages.python.urienv.src.urienv.handlers
+    line: 19
+    cyclomatic_complexity: 7
+    calls_out: 29
+    calls_in: 9
+  uristepper-docker.packages.python.uristepper.handlers._device_axis:
+    name: _device_axis
+    module: uristepper-docker.packages.python.uristepper.handlers
+    line: 8
+    cyclomatic_complexity: 2
+    calls_out: 9
+    calls_in: 7
+  urisys-node.packages.python.urisysnode.identity.load_pairing:
+    name: load_pairing
+    module: urisys-node.packages.python.urisysnode.identity
+    line: 53
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 5
+  scripts.run-urisys-node-docker-e2e.save_json:
+    name: save_json
+    module: scripts.run-urisys-node-docker-e2e
+    line: 21
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 17
+  urisys-node.packages.python.uriscreen.handlers.capture:
+    name: capture
+    module: urisys-node.packages.python.uriscreen.handlers
+    line: 48
+    cyclomatic_complexity: 7
+    calls_out: 25
+    calls_in: 2
+  uribrowser-docker.packages.python.uribrowserdocker.handlers._profile:
+    name: _profile
+    module: uribrowser-docker.packages.python.uribrowserdocker.handlers
+    line: 9
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 2
+  urisys-node.packages.python.urisysnode.serve._register_pack:
+    name: _register_pack
+    module: urisys-node.packages.python.urisysnode.serve
+    line: 36
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 2
+  urirdp-docker.packages.python.urirdp_kvm.display.config_value:
+    name: config_value
+    module: urirdp-docker.packages.python.urirdp_kvm.display
+    line: 9
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 4
+  urisys-automation-lab.packages.python.uriwebrtc.handlers.session_start:
+    name: session_start
+    module: urisys-automation-lab.packages.python.uriwebrtc.handlers
+    line: 13
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 0
+  uristepper-docker.packages.python.uristepper.handlers._dry_or_driver:
+    name: _dry_or_driver
+    module: uristepper-docker.packages.python.uristepper.handlers
+    line: 42
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 7
+  urirdp-docker.packages.python.urirdp_shell.handlers._mock:
+    name: _mock
+    module: urirdp-docker.packages.python.urirdp_shell.handlers
+    line: 10
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  urikvm-docker.packages.python.uriocr.handlers._mock_boxes:
+    name: _mock_boxes
+    module: urikvm-docker.packages.python.uriocr.handlers
+    line: 16
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  scripts.report.lab_checks.iter_step_results:
+    name: iter_step_results
+    module: scripts.report.lab_checks
+    line: 16
+    cyclomatic_complexity: 9
+    calls_out: 7
+    calls_in: 1
+  urikvm-docker.packages.python.urillm.handlers.vision_analyze:
+    name: vision_analyze
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 215
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  urirdp-docker.packages.python.urirdp_ocr.handlers._parse_tesseract_tsv:
+    name: _parse_tesseract_tsv
+    module: urirdp-docker.packages.python.urirdp_ocr.handlers
+    line: 25
+    cyclomatic_complexity: 7
+    calls_out: 19
+    calls_in: 1
+  urikvm-docker.packages.python.urillm.handlers._vision_analyze:
+    name: _vision_analyze
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 195
+    cyclomatic_complexity: 6
+    calls_out: 12
+    calls_in: 1
+  urirdp-docker.packages.python.urirdp_llm.handlers._env:
+    name: _env
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 31
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 15
+  urisys-node.packages.python.urisysnode.identity.set_remote_control:
+    name: set_remote_control
+    module: urisys-node.packages.python.urisysnode.identity
+    line: 80
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 2
+  scripts.report.run_markdown.render_run_analysis_markdown:
+    name: render_run_analysis_markdown
+    module: scripts.report.run_markdown
+    line: 6
+    cyclomatic_complexity: 7
+    calls_out: 16
+    calls_in: 1
+  uribrowser-docker.packages.python.uribrowserdocker.handlers.status:
+    name: status
+    module: uribrowser-docker.packages.python.uribrowserdocker.handlers
+    line: 20
+    cyclomatic_complexity: 1
+    calls_out: 7
+    calls_in: 0
+  urienv-docker.packages.python.urisysedge.src.urisysedge.server.serve:
+    name: serve
+    module: urienv-docker.packages.python.urisysedge.src.urisysedge.server
+    line: 7
+    cyclomatic_complexity: 1
+    calls_out: 36
+    calls_in: 0
+  scripts.report.run_analysis.analyze_run:
+    name: analyze_run
+    module: scripts.report.run_analysis
+    line: 74
+    cyclomatic_complexity: 13
+    calls_out: 33
+    calls_in: 2
+  src.urisys.http_server.create_server:
+    name: create_server
+    module: src.urisys.http_server
+    line: 31
+    cyclomatic_complexity: 1
+    calls_out: 31
+    calls_in: 1
+  packages.python.urisysedge.env._urisys_root:
+    name: _urisys_root
+    module: packages.python.urisysedge.env
+    line: 18
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 2
+  src.urisys.cli.print_json:
+    name: print_json
+    module: src.urisys.cli
+    line: 27
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 14
+  urirdp-docker.packages.python.urirdp_him.handlers.keyboard_hotkey:
+    name: keyboard_hotkey
+    module: urirdp-docker.packages.python.urirdp_him.handlers
+    line: 62
+    cyclomatic_complexity: 8
+    calls_out: 11
+    calls_in: 0
+  urisys-node.packages.python.urisysnode.identity._pairing_path:
+    name: _pairing_path
+    module: urisys-node.packages.python.urisysnode.identity
+    line: 23
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 3
+  urirdp-docker.packages.python.urirdp.handlers.prepare_target:
+    name: prepare_target
+    module: urirdp-docker.packages.python.urirdp.handlers
+    line: 101
+    cyclomatic_complexity: 6
+    calls_out: 15
+    calls_in: 0
+  urisys-node.packages.python.uriscreen.handlers._screen_cfg:
+    name: _screen_cfg
+    module: urisys-node.packages.python.uriscreen.handlers
+    line: 12
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 3
+  urisys-automation-lab.server.flow_runner._load_defaults:
+    name: _load_defaults
+    module: urisys-automation-lab.server.flow_runner
+    line: 46
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 1
+  src.urisys.cli.main:
+    name: main
+    module: src.urisys.cli
+    line: 95
+    cyclomatic_complexity: 20
+    calls_out: 49
+    calls_in: 0
+  urikvm-docker.packages.python.urihim.handlers._pyautogui:
+    name: _pyautogui
+    module: urikvm-docker.packages.python.urihim.handlers
+    line: 18
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 4
+  urisys-node.packages.python.urisysnode.identity.require_paired:
+    name: require_paired
+    module: urisys-node.packages.python.urisysnode.identity
+    line: 89
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 2
+  scripts.report.events.summarize_events:
+    name: summarize_events
+    module: scripts.report.events
+    line: 63
+    cyclomatic_complexity: 8
+    calls_out: 10
+    calls_in: 1
+  urisys-node.packages.python.urisysnode.identity._hostname:
+    name: _hostname
+    module: urisys-node.packages.python.urisysnode.identity
+    line: 27
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  urirdp-docker.packages.python.urirdp_him.handlers.mouse_click:
+    name: mouse_click
+    module: urirdp-docker.packages.python.urirdp_him.handlers
+    line: 21
+    cyclomatic_complexity: 11
+    calls_out: 18
+    calls_in: 0
+  scripts.report.events.summarize_event_records:
+    name: summarize_event_records
+    module: scripts.report.events
+    line: 11
+    cyclomatic_complexity: 14
+    calls_out: 15
+    calls_in: 2
+  urikvm-docker.packages.python.urillm.handlers._goal_text:
+    name: _goal_text
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 20
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 2
+  urisys-node.packages.python.urisysnode.artifact_resolver.fetch_release:
+    name: fetch_release
+    module: urisys-node.packages.python.urisysnode.artifact_resolver
+    line: 79
+    cyclomatic_complexity: 5
+    calls_out: 11
+    calls_in: 2
+  urisys-node.packages.python.urisysnode.client.call_via_route_map:
+    name: call_via_route_map
+    module: urisys-node.packages.python.urisysnode.client
+    line: 71
+    cyclomatic_complexity: 6
+    calls_out: 14
+    calls_in: 1
+  urisys-node.packages.python.urisysnode.serve.serve:
+    name: serve
+    module: urisys-node.packages.python.urisysnode.serve
+    line: 196
+    cyclomatic_complexity: 2
+    calls_out: 9
+    calls_in: 0
+  urisys-node.packages.python.urisysnode.handlers.command_indicator_on:
+    name: command_indicator_on
+    module: urisys-node.packages.python.urisysnode.handlers
+    line: 31
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 0
+  urirdp-docker.packages.python.urirdp_kvm.display.base_env:
+    name: base_env
+    module: urirdp-docker.packages.python.urirdp_kvm.display
+    line: 33
+    cyclomatic_complexity: 6
+    calls_out: 10
+    calls_in: 2
+  urirdp-docker.packages.python.urirdp_llm.handlers._heuristic:
+    name: _heuristic
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 43
+    cyclomatic_complexity: 5
+    calls_out: 22
+    calls_in: 5
+  packages.python.urisysedge.runtime.make_handler:
+    name: make_handler
+    module: packages.python.urisysedge.runtime
+    line: 235
+    cyclomatic_complexity: 1
+    calls_out: 24
+    calls_in: 1
+  urisys-automation-lab.packages.python.urichat.handlers.uri_execute:
+    name: uri_execute
+    module: urisys-automation-lab.packages.python.urichat.handlers
+    line: 45
+    cyclomatic_complexity: 15
+    calls_out: 27
+    calls_in: 0
+  src.urisys.flow.load_flow:
+    name: load_flow
+    module: src.urisys.flow
+    line: 9
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  uristepper-docker.packages.python.uristepper.drivers.make_driver:
+    name: make_driver
+    module: uristepper-docker.packages.python.uristepper.drivers
+    line: 164
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  scripts.test_sessions.util.http_json:
+    name: http_json
+    module: scripts.test_sessions.util
+    line: 34
+    cyclomatic_complexity: 9
+    calls_out: 18
+    calls_in: 1
+  src.urisys.cli.build_parser:
+    name: build_parser
+    module: src.urisys.cli
+    line: 43
+    cyclomatic_complexity: 1
+    calls_out: 36
+    calls_in: 1
+  scripts.test_sessions.util.read_meta:
+    name: read_meta
+    module: scripts.test_sessions.util
+    line: 138
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  urisys-node.packages.python.urisysnode.artifact_resolver.resolve_from_release:
+    name: resolve_from_release
+    module: urisys-node.packages.python.urisysnode.artifact_resolver
+    line: 189
+    cyclomatic_complexity: 6
+    calls_out: 15
+    calls_in: 1
+  urirdp-docker.packages.python.urirdp_kvm.display.run_cmd:
+    name: run_cmd
+    module: urirdp-docker.packages.python.urirdp_kvm.display
+    line: 55
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  urirdp-docker.packages.python.urirdp_llm.handlers._litellm_chat:
+    name: _litellm_chat
+    module: urirdp-docker.packages.python.urirdp_llm.handlers
+    line: 126
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 2
+  urirdp-docker.packages.python.urirdp.handlers.display:
+    name: display
+    module: urirdp-docker.packages.python.urirdp.handlers
+    line: 32
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  urikvm-docker.packages.python.urillm.handlers._click_box:
+    name: _click_box
+    module: urikvm-docker.packages.python.urillm.handlers
+    line: 36
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 3
 edges:
 - caller: packages.python.urisysedge.runtime.Runtime.call
   callee: packages.python.urisysedge.env.load_env_policy
@@ -2302,239 +2449,335 @@ edges:
 - caller: uristepper-docker.packages.python.uristepper.handlers.home
   callee: uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
   call_type: resolved
-- caller: scripts.run_test_sessions._wait_health
-  callee: scripts.run_test_sessions._http_json
-  call_type: resolved
-- caller: scripts.run_test_sessions._write_meta
-  callee: scripts.run_test_sessions._read_meta
-  call_type: resolved
-- caller: scripts.run_test_sessions._write_meta
-  callee: scripts.run_test_sessions._save_json
-  call_type: resolved
-- caller: scripts.run_test_sessions._finalize_session
-  callee: scripts.run_test_sessions._now_iso
-  call_type: resolved
-- caller: scripts.run_test_sessions._finalize_session
-  callee: scripts.run_test_sessions._write_meta
-  call_type: resolved
-- caller: scripts.run_test_sessions._docker_logs
-  callee: scripts.run_test_sessions._run_cmd
+- caller: scripts.run_test_sessions.session_pytest_urirdp
+  callee: scripts.report.util.now_iso
   call_type: resolved
 - caller: scripts.run_test_sessions.session_pytest_urirdp
-  callee: scripts.run_test_sessions._now_iso
+  callee: scripts.test_sessions.util.write_meta
   call_type: resolved
 - caller: scripts.run_test_sessions.session_pytest_urirdp
-  callee: scripts.run_test_sessions._write_meta
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: scripts.run_test_sessions.session_pytest_urirdp
-  callee: scripts.run_test_sessions._run_cmd
+  callee: scripts.test_sessions.util.finalize_session
   call_type: resolved
 - caller: scripts.run_test_sessions.session_pytest_urirdp
-  callee: scripts.run_test_sessions._finalize_session
-  call_type: resolved
-- caller: scripts.run_test_sessions.session_pytest_urirdp
-  callee: scripts.run_test_sessions._host_id
+  callee: scripts.report.util.host_id
   call_type: resolved
 - caller: scripts.run_test_sessions.session_pytest_urisys
-  callee: scripts.run_test_sessions._now_iso
+  callee: scripts.report.util.now_iso
   call_type: resolved
 - caller: scripts.run_test_sessions.session_pytest_urisys
-  callee: scripts.run_test_sessions._write_meta
+  callee: scripts.test_sessions.util.write_meta
   call_type: resolved
 - caller: scripts.run_test_sessions.session_pytest_urisys
-  callee: scripts.run_test_sessions._run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: scripts.run_test_sessions.session_pytest_urisys
-  callee: scripts.run_test_sessions._finalize_session
+  callee: scripts.test_sessions.util.finalize_session
   call_type: resolved
 - caller: scripts.run_test_sessions.session_pytest_urisys
-  callee: scripts.run_test_sessions._host_id
+  callee: scripts.report.util.host_id
   call_type: resolved
 - caller: scripts.run_test_sessions.session_pytest_urisys_node
-  callee: scripts.run_test_sessions._now_iso
+  callee: scripts.report.util.now_iso
   call_type: resolved
 - caller: scripts.run_test_sessions.session_pytest_urisys_node
-  callee: scripts.run_test_sessions._write_meta
+  callee: scripts.test_sessions.util.write_meta
   call_type: resolved
 - caller: scripts.run_test_sessions.session_pytest_urisys_node
-  callee: scripts.run_test_sessions._run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: scripts.run_test_sessions.session_pytest_urisys_node
-  callee: scripts.run_test_sessions._finalize_session
+  callee: scripts.test_sessions.util.finalize_session
   call_type: resolved
 - caller: scripts.run_test_sessions.session_pytest_urisys_node
-  callee: scripts.run_test_sessions._host_id
+  callee: scripts.report.util.host_id
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_mock_docker
-  callee: scripts.run_test_sessions._now_iso
+  callee: scripts.report.util.now_iso
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_mock_docker
-  callee: scripts.run_test_sessions._write_meta
+  callee: scripts.test_sessions.util.write_meta
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_mock_docker
-  callee: scripts.run_test_sessions._prepare_urirdp_data
+  callee: scripts.test_sessions.util.prepare_urirdp_data
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_mock_docker
-  callee: scripts.run_test_sessions._sleep_ports
+  callee: scripts.test_sessions.util.sleep_ports
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_mock_docker
-  callee: scripts.run_test_sessions._run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_mock_docker
-  callee: scripts.run_test_sessions._finalize_session
+  callee: scripts.test_sessions.util.finalize_session
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_mock_docker
-  callee: scripts.run_test_sessions._compose_cmd
+  callee: scripts.test_sessions.util.compose_cmd
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_real_docker
-  callee: scripts.run_test_sessions._now_iso
+  callee: scripts.report.util.now_iso
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_real_docker
-  callee: scripts.run_test_sessions._write_meta
+  callee: scripts.test_sessions.util.write_meta
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_real_docker
-  callee: scripts.run_test_sessions._prepare_urirdp_data
+  callee: scripts.test_sessions.util.prepare_urirdp_data
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_real_docker
-  callee: scripts.run_test_sessions._sleep_ports
+  callee: scripts.test_sessions.util.sleep_ports
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_real_docker
-  callee: scripts.run_test_sessions._run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_real_docker
-  callee: scripts.run_test_sessions._finalize_session
+  callee: scripts.test_sessions.util.finalize_session
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_real_docker
-  callee: scripts.run_test_sessions._compose_cmd
+  callee: scripts.test_sessions.util.compose_cmd
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_rdp_e2e
-  callee: scripts.run_test_sessions._now_iso
+  callee: scripts.report.util.now_iso
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_rdp_e2e
-  callee: scripts.run_test_sessions._write_meta
+  callee: scripts.test_sessions.util.write_meta
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_rdp_e2e
-  callee: scripts.run_test_sessions._prepare_urirdp_data
+  callee: scripts.test_sessions.util.prepare_urirdp_data
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_rdp_e2e
-  callee: scripts.run_test_sessions._sleep_ports
+  callee: scripts.test_sessions.util.sleep_ports
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_rdp_e2e
-  callee: scripts.run_test_sessions._run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_rdp_e2e
-  callee: scripts.run_test_sessions._docker_logs
+  callee: scripts.test_sessions.util.docker_logs
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urirdp_rdp_e2e
-  callee: scripts.run_test_sessions._copy_container_file
+  callee: scripts.test_sessions.util.copy_container_file
   call_type: resolved
 - caller: scripts.run_test_sessions.session_automation_lab
-  callee: scripts.run_test_sessions._now_iso
+  callee: scripts.report.util.now_iso
   call_type: resolved
 - caller: scripts.run_test_sessions.session_automation_lab
-  callee: scripts.run_test_sessions._write_meta
+  callee: scripts.test_sessions.util.write_meta
   call_type: resolved
 - caller: scripts.run_test_sessions.session_automation_lab
-  callee: scripts.run_test_sessions._finalize_session
+  callee: scripts.test_sessions.util.finalize_session
   call_type: resolved
 - caller: scripts.run_test_sessions.session_automation_lab
-  callee: scripts.run_test_sessions._sleep_ports
+  callee: scripts.test_sessions.util.sleep_ports
   call_type: resolved
 - caller: scripts.run_test_sessions.session_automation_lab
-  callee: scripts.run_test_sessions._run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: scripts.run_test_sessions.session_automation_lab
-  callee: scripts.run_test_sessions._wait_health
+  callee: scripts.run-urisys-node-docker-e2e.wait_health
   call_type: resolved
 - caller: scripts.run_test_sessions.session_automation_lab
-  callee: scripts.run_test_sessions._save_json
+  callee: scripts.run-urisys-node-docker-e2e.save_json
   call_type: resolved
-- caller: scripts.run_test_sessions.evaluate_expectations
-  callee: scripts.run_test_sessions._vision_confidences
+- caller: scripts.run_test_sessions.session_urisys_node_docker_gui
+  callee: scripts.report.util.now_iso
   call_type: resolved
-- caller: scripts.run_test_sessions._prepare_ok_target
-  callee: scripts.run_test_sessions._http_json
+- caller: scripts.run_test_sessions.session_urisys_node_docker_gui
+  callee: scripts.test_sessions.util.write_meta
   call_type: resolved
-- caller: scripts.run_test_sessions._capture_rdp_screenshot
-  callee: scripts.run_test_sessions._http_json
+- caller: scripts.run_test_sessions.session_urisys_node_docker_gui
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
-- caller: scripts.run_test_sessions._capture_rdp_screenshot
-  callee: scripts.run_test_sessions._copy_container_file
+- caller: scripts.run_test_sessions.session_urisys_node_docker_gui
+  callee: scripts.test_sessions.util.finalize_session
   call_type: resolved
-- caller: scripts.run_test_sessions._capture_rdp_screenshot_wait
-  callee: scripts.run_test_sessions._capture_rdp_screenshot
-  call_type: resolved
-- caller: scripts.run_test_sessions._capture_rdp_screenshot_wait
-  callee: scripts.run_test_sessions._file_md5
-  call_type: resolved
-- caller: scripts.run_test_sessions.session_lab_10_flows
-  callee: scripts.run_test_sessions._now_iso
-  call_type: resolved
-- caller: scripts.run_test_sessions.session_lab_10_flows
-  callee: scripts.run_test_sessions._write_meta
-  call_type: resolved
-- caller: scripts.run_test_sessions.session_lab_10_flows
-  callee: scripts.run_test_sessions._sleep_ports
-  call_type: resolved
-- caller: scripts.run_test_sessions.session_lab_10_flows
-  callee: scripts.run_test_sessions._run_cmd
-  call_type: resolved
-- caller: scripts.run_test_sessions.session_lab_10_flows
-  callee: scripts.run_test_sessions._finalize_session
-  call_type: resolved
-- caller: scripts.run_test_sessions.session_lab_10_flows
-  callee: scripts.run_test_sessions._wait_health
+- caller: scripts.run_test_sessions.session_urisys_node_docker_gui
+  callee: scripts.run_test_sessions._monorepo_root
   call_type: resolved
 - caller: scripts.run_test_sessions.main
-  callee: scripts.run_test_sessions._save_json
+  callee: scripts.run-urisys-node-docker-e2e.save_json
   call_type: resolved
 - caller: scripts.run_test_sessions.main
-  callee: scripts.run_test_sessions._now_iso
+  callee: scripts.report.util.now_iso
   call_type: resolved
-- caller: scripts.session_report._merge_event_summaries
-  callee: scripts.session_report._summarize_events
+- caller: scripts.report.cli.main
+  callee: scripts.report.run_analysis.analyze_run
   call_type: resolved
-- caller: scripts.session_report.generate_report
-  callee: scripts.session_report._infer_steps
+- caller: scripts.report.cli.main
+  callee: scripts.report.run_analysis.write_run_analysis
   call_type: resolved
-- caller: scripts.session_report.generate_report
-  callee: scripts.session_report._resolve_events_paths
+- caller: scripts.report.events.summarize_events
+  callee: scripts.report.events.load_event_records
   call_type: resolved
-- caller: scripts.session_report.generate_report
-  callee: scripts.session_report._read_json
+- caller: scripts.report.events.summarize_events
+  callee: scripts.report.events.summarize_event_records
   call_type: resolved
-- caller: scripts.session_report.generate_report
-  callee: scripts.session_report._tail
+- caller: scripts.report.events.merge_event_summaries
+  callee: scripts.report.events.summarize_events
   call_type: resolved
-- caller: scripts.session_report.write_session_report
-  callee: scripts.session_report.generate_report
+- caller: scripts.report.run_analysis.analyze_run
+  callee: scripts.report.util.read_json
   call_type: resolved
-- caller: scripts.session_report._load_flow_outcomes
-  callee: scripts.session_report._read_json
+- caller: scripts.report.run_analysis.write_run_analysis
+  callee: scripts.report.run_analysis.analyze_run
   call_type: resolved
-- caller: scripts.session_report._load_flow_outcomes
-  callee: scripts.session_report._iter_step_results
+- caller: scripts.report.run_analysis.write_run_analysis
+  callee: scripts.report.run_markdown.render_run_analysis_markdown
   call_type: resolved
-- caller: scripts.session_report._analyze_lab_flows
-  callee: scripts.session_report._load_flow_outcomes
+- caller: scripts.report.lab_checks.load_flow_outcomes
+  callee: scripts.report.util.read_json
   call_type: resolved
-- caller: scripts.session_report.analyze_run
-  callee: scripts.session_report._read_json
+- caller: scripts.report.lab_checks.load_flow_outcomes
+  callee: scripts.report.lab_checks.iter_step_results
   call_type: resolved
-- caller: scripts.session_report.write_run_analysis
-  callee: scripts.session_report.analyze_run
+- caller: scripts.report.lab_checks.check_duplicate_screenshots
+  callee: scripts.report.lab_checks._duplicate_recommendation
   call_type: resolved
-- caller: scripts.session_report.main
-  callee: scripts.session_report.analyze_run
+- caller: scripts.report.lab_checks.analyze_lab_flows
+  callee: scripts.report.lab_checks.load_flow_outcomes
   call_type: resolved
-- caller: scripts.session_report.main
-  callee: scripts.session_report.write_run_analysis
+- caller: scripts.report.session.infer_steps
+  callee: scripts.report.util.read_json
+  call_type: resolved
+- caller: scripts.report.session.session_duration
+  callee: scripts.report.util.now_iso
+  call_type: resolved
+- caller: scripts.report.session.generate_report
+  callee: scripts.report.session.infer_steps
+  call_type: resolved
+- caller: scripts.report.session.generate_report
+  callee: scripts.report.util.read_json
+  call_type: resolved
+- caller: scripts.report.session.generate_report
+  callee: packages.python.urisysedge.runtime.JsonlEventStore.tail
+  call_type: resolved
+- caller: scripts.report.session_markdown.render_session_markdown
+  callee: scripts.report.session_markdown._environment_section
+  call_type: resolved
+- caller: scripts.report.session_markdown.render_session_markdown
+  callee: scripts.report.session_markdown._steps_section
+  call_type: resolved
+- caller: scripts.report.session_markdown.render_session_markdown
+  callee: scripts.report.session_markdown._screenshots_section
+  call_type: resolved
+- caller: scripts.report.session_io.write_session_report
+  callee: scripts.report.session.generate_report
+  call_type: resolved
+- caller: scripts.report.session_io.write_session_report
+  callee: scripts.report.session_markdown.render_session_markdown
+  call_type: resolved
+- caller: scripts.test_sessions.expectations._ocr_contains
+  callee: scripts.test_sessions.expectations.ocr_texts
+  call_type: resolved
+- caller: scripts.test_sessions.expectations._min_vision_confidence
+  callee: scripts.test_sessions.expectations.vision_confidences
+  call_type: resolved
+- caller: scripts.test_sessions.expectations.evaluate_expectations
+  callee: scripts.test_sessions.expectations._screen_changed
+  call_type: resolved
+- caller: scripts.test_sessions.expectations.evaluate_expectations
+  callee: scripts.test_sessions.expectations._screen_changed_since_previous
+  call_type: resolved
+- caller: scripts.test_sessions.expectations.evaluate_expectations
+  callee: scripts.test_sessions.expectations._opened_url_contains
+  call_type: resolved
+- caller: scripts.test_sessions.expectations.evaluate_expectations
+  callee: scripts.test_sessions.expectations._ocr_contains
+  call_type: resolved
+- caller: scripts.test_sessions.expectations.evaluate_expectations
+  callee: scripts.test_sessions.expectations._min_vision_confidence
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._lab_bootstrap
+  callee: scripts.test_sessions.util.run_cmd
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._lab_bootstrap
+  callee: scripts.test_sessions.util.write_meta
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._capture_flow_screenshot
+  callee: scripts.test_sessions.lab_rdp.capture_rdp_screenshot_wait
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._capture_flow_screenshot
+  callee: scripts.test_sessions.lab_rdp.capture_rdp_screenshot
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._capture_flow_screenshot
+  callee: scripts.test_sessions.util.file_md5
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
+  callee: scripts.test_sessions.expectations.flow_expectations
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
+  callee: scripts.test_sessions.lab_flows._capture_flow_screenshot
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
+  callee: scripts.test_sessions.expectations.evaluate_expectations
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
+  callee: scripts.run-urisys-node-docker-e2e.save_json
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
+  callee: scripts.run-urisys-node-docker-e2e.http_json
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
+  callee: scripts.test_sessions.lab_flows._flow_step_detail
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
+  callee: scripts.report.util.now_iso
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
+  callee: scripts.test_sessions.util.write_meta
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
+  callee: scripts.test_sessions.util.sleep_ports
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
+  callee: scripts.test_sessions.util.run_cmd
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
+  callee: scripts.test_sessions.util.finalize_session
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
+  callee: scripts.run-urisys-node-docker-e2e.wait_health
+  call_type: resolved
+- caller: scripts.test_sessions.lab_rdp.prepare_ok_target
+  callee: scripts.run-urisys-node-docker-e2e.http_json
+  call_type: resolved
+- caller: scripts.test_sessions.lab_rdp.capture_rdp_screenshot
+  callee: scripts.run-urisys-node-docker-e2e.http_json
+  call_type: resolved
+- caller: scripts.test_sessions.lab_rdp.capture_rdp_screenshot
+  callee: scripts.test_sessions.util.copy_container_file
+  call_type: resolved
+- caller: scripts.test_sessions.lab_rdp.capture_rdp_screenshot_wait
+  callee: scripts.test_sessions.lab_rdp.capture_rdp_screenshot
+  call_type: resolved
+- caller: scripts.test_sessions.lab_rdp.capture_rdp_screenshot_wait
+  callee: scripts.test_sessions.util.file_md5
+  call_type: resolved
+- caller: scripts.test_sessions.util.wait_health
+  callee: scripts.test_sessions.util.http_json
+  call_type: resolved
+- caller: scripts.test_sessions.util.write_meta
+  callee: scripts.test_sessions.util.read_meta
+  call_type: resolved
+- caller: scripts.test_sessions.util.write_meta
+  callee: scripts.test_sessions.util.save_json
+  call_type: resolved
+- caller: scripts.test_sessions.util.finalize_session
+  callee: scripts.test_sessions.util.now_iso
+  call_type: resolved
+- caller: scripts.test_sessions.util.finalize_session
+  callee: scripts.test_sessions.util.write_meta
+  call_type: resolved
+- caller: scripts.test_sessions.util.docker_logs
+  callee: scripts.test_sessions.util.compose_cmd
+  call_type: resolved
+- caller: scripts.test_sessions.util.docker_logs
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdpedge.cli.build_runtime
   callee: packages.python.urisysedge.runtime.load_json
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_ocr.handlers._tesseract_ocr
-  callee: urirdp-docker.packages.python.urirdp_kvm.display.run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_ocr.handlers._tesseract_ocr
   callee: urirdp-docker.packages.python.urirdp_ocr.handlers._parse_tesseract_tsv
@@ -2564,7 +2807,7 @@ edges:
   callee: urirdp-docker.packages.python.urirdp_kvm.display.detect_display
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_him.handlers.mouse_move
-  callee: urirdp-docker.packages.python.urirdp_kvm.display.run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_him.handlers.mouse_move
   callee: urirdp-docker.packages.python.urirdp_him.handlers._mock
@@ -2576,7 +2819,7 @@ edges:
   callee: urirdp-docker.packages.python.urirdp_kvm.display.allow_real
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_him.handlers.mouse_click
-  callee: urirdp-docker.packages.python.urirdp_kvm.display.run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_him.handlers.mouse_click
   callee: urirdp-docker.packages.python.urirdp_him.handlers._mock
@@ -2585,7 +2828,7 @@ edges:
   callee: urirdp-docker.packages.python.urirdp_kvm.display.detect_display
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_him.handlers.keyboard_type
-  callee: urirdp-docker.packages.python.urirdp_kvm.display.run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_him.handlers.keyboard_type
   callee: urirdp-docker.packages.python.urirdp_him.handlers._mock
@@ -2594,7 +2837,7 @@ edges:
   callee: urirdp-docker.packages.python.urirdp_kvm.display.detect_display
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_him.handlers.keyboard_key
-  callee: urirdp-docker.packages.python.urirdp_kvm.display.run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_him.handlers.keyboard_key
   callee: urirdp-docker.packages.python.urirdp_him.handlers._mock
@@ -2609,7 +2852,7 @@ edges:
   callee: urirdp-docker.packages.python.urirdp_him.handlers.keyboard_type
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_him.handlers.keyboard_hotkey
-  callee: urirdp-docker.packages.python.urirdp_kvm.display.run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_him.handlers.keyboard_hotkey
   callee: urirdp-docker.packages.python.urirdp_him.handlers._mock
@@ -2630,7 +2873,7 @@ edges:
   callee: urirdp-docker.packages.python.urirdp_kvm.display.detect_display
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp.handlers.display
-  callee: urirdp-docker.packages.python.urirdp_kvm.display.run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp.handlers.display_status
   callee: urirdp-docker.packages.python.urirdp_kvm.display.detect_display
@@ -2639,10 +2882,10 @@ edges:
   callee: urirdp-docker.packages.python.urirdp_kvm.display.allow_real
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp.handlers.display_status
-  callee: urirdp-docker.packages.python.urirdp_kvm.display.run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp.handlers._dismiss_stale_targets
-  callee: urirdp-docker.packages.python.urirdp_kvm.display.run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp.handlers._dismiss_stale_targets
   callee: urirdp-docker.packages.python.urirdp_kvm.display.allow_real
@@ -2666,7 +2909,7 @@ edges:
   callee: urirdp-docker.packages.python.urirdp_kvm.display.base_env
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp.handlers.prepare_target
-  callee: urirdp-docker.packages.python.urirdp_kvm.display.run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_browser.handlers.open_page
   callee: urirdp-docker.packages.python.urirdp_browser.handlers._profile
@@ -2699,13 +2942,82 @@ edges:
   callee: urirdp-docker.packages.python.urirdp_kvm.display.detect_display
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_kvm.handlers.display_info
-  callee: urirdp-docker.packages.python.urirdp_kvm.display.run_cmd
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_kvm.handlers.screenshot
   callee: urirdp-docker.packages.python.urirdp_kvm.display.ensure_screenshot_dir
   call_type: resolved
 - caller: urirdp-docker.packages.python.urirdp_kvm.handlers.screenshot
-  callee: urirdp-docker.packages.python.urirdp_kvm.display.run_cmd
+  callee: scripts.test_sessions.util.run_cmd
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers._llm_cfg
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._config
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers._env
+  callee: packages.python.urisysedge.env.resolve_env_var
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers._env
+  callee: packages.python.urisysedge.env.is_secret_env
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers._screenshot_b64
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._config
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers._openai_compatible_chat
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._parse_json_response
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers._litellm_chat
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._parse_json_response
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers.analyze
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._llm_cfg
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers.analyze
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._target
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers.analyze
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._env
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers.analyze
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._screenshot_b64
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers.analyze
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._vision_messages
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers.analyze
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._heuristic
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers._decide_litellm
+  callee: packages.python.urisysedge.env.resolve_env_var
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers._decide_litellm
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._litellm_chat
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers._decide_openai
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._openai_compatible_chat
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers._decide_openai
+  callee: packages.python.urisysedge.env.resolve_env_var
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers.decide
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._llm_cfg
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers.decide
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._env
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers.decide
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._decide_messages
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers.plan
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._llm_cfg
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers.plan
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._match_transcript
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers.plan
+  callee: urirdp-docker.packages.python.urirdp_kvm.display.allow_real
+  call_type: resolved
+- caller: urirdp-docker.packages.python.urirdp_llm.handlers.plan
+  callee: urirdp-docker.packages.python.urirdp_llm.handlers._env
   call_type: resolved
 - caller: uribrowser-docker.packages.python.uribrowserdocker.handlers.status
   callee: uribrowser-docker.packages.python.uribrowserdocker.handlers._profile
@@ -2811,66 +3123,6 @@ edges:
   call_type: resolved
 - caller: urikvm-docker.packages.python.urihim.handlers.keyboard_hotkey
   callee: urikvm-docker.packages.python.urihim.handlers._pyautogui
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._driver
-  callee: urikvm-docker.packages.python.urillm.handlers._llm_cfg
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._heuristic_analyze
-  callee: urikvm-docker.packages.python.urillm.handlers._box_center
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._heuristic_analyze
-  callee: urikvm-docker.packages.python.urillm.handlers._goal_text
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._openai_chat
-  callee: urikvm-docker.packages.python.urillm.handlers._parse_json_response
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._litellm_chat
-  callee: urikvm-docker.packages.python.urillm.handlers._parse_json_response
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._vision_messages
-  callee: urikvm-docker.packages.python.urillm.handlers._target_from_goal
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._analyze_openai
-  callee: urikvm-docker.packages.python.urillm.handlers._vision_messages
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._analyze_openai
-  callee: packages.python.urisysedge.env.resolve_env_var
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._analyze_openai
-  callee: urikvm-docker.packages.python.urillm.handlers._heuristic_analyze
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._analyze_litellm
-  callee: urikvm-docker.packages.python.urillm.handlers._vision_messages
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._analyze_litellm
-  callee: packages.python.urisysedge.env.resolve_env_var
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._analyze_litellm
-  callee: urikvm-docker.packages.python.urillm.handlers._litellm_chat
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._analyze_litellm
-  callee: urikvm-docker.packages.python.urillm.handlers._normalize_action
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._analyze_litellm
-  callee: urikvm-docker.packages.python.urillm.handlers._heuristic_analyze
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._vision_analyze
-  callee: urikvm-docker.packages.python.urillm.handlers._driver
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._vision_analyze
-  callee: urikvm-docker.packages.python.urillm.handlers._llm_cfg
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._vision_analyze
-  callee: urikvm-docker.packages.python.urillm.handlers._goal_text
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._vision_analyze
-  callee: urikvm-docker.packages.python.urillm.handlers._heuristic_analyze
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers._vision_analyze
-  callee: urikvm-docker.packages.python.urillm.handlers._target_from_goal
-  call_type: resolved
-- caller: urikvm-docker.packages.python.urillm.handlers.vision_analyze
-  callee: urikvm-docker.packages.python.urillm.handlers._vision_analyze
   call_type: resolved
 - caller: urikvm-docker.scripts.real_pipeline.build_runtime
   callee: packages.python.urisysedge.runtime.load_json
@@ -3091,39 +3343,6 @@ edges:
 - caller: urisys-node.packages.python.uriscreen.handlers.capture_loop
   callee: urisys-node.packages.python.uriscreen.handlers.capture
   call_type: resolved
-- caller: urisys-node.packages.python.urisysedge.runtime.Runtime.call
-  callee: packages.python.urisysedge.env.load_env_policy
-  call_type: resolved
-- caller: urisys-node.packages.python.urisysedge.runtime.run_flow
-  callee: urisys-node.packages.python.urisysedge.runtime.load_yaml_flow
-  call_type: resolved
-- caller: urisys-node.packages.python.urisysedge.runtime.serve
-  callee: scripts.run-nl-log-smoke.print
-  call_type: resolved
-- caller: urisys-node.packages.python.urisysedge.runtime.serve
-  callee: urisys-node.packages.python.urisysedge.runtime.make_handler
-  call_type: resolved
-- caller: urisys-node.packages.python.urisysedge.env.load_urisys_env
-  callee: urisys-node.packages.python.urisysedge.env._urisys_root
-  call_type: resolved
-- caller: urisys-node.packages.python.urisysedge.env._env_policy_candidates
-  callee: urisys-node.packages.python.urisysedge.env._urisys_root
-  call_type: resolved
-- caller: urisys-node.packages.python.urisysedge.env.load_env_policy
-  callee: urisys-node.packages.python.urisysedge.env._env_policy_candidates
-  call_type: resolved
-- caller: urisys-node.packages.python.urisysedge.env.resolve_env_var
-  callee: urisys-node.packages.python.urisysedge.env._env_config
-  call_type: resolved
-- caller: urisys-node.packages.python.urisysedge.env.resolve_env_var
-  callee: urisys-node.packages.python.urisysedge.env.load_env_policy
-  call_type: resolved
-- caller: urisys-node.packages.python.urisysedge.env.resolve_env_var
-  callee: urienv-docker.packages.python.urienv.src.urienv.handlers.secret_value
-  call_type: resolved
-- caller: urisys-node.packages.python.urisysedge.env.resolve_env_var
-  callee: urienv-docker.packages.python.urienv.src.urienv.handlers.var_value
-  call_type: resolved
 - caller: urisys-node.packages.python.urisysnode.serve.build_runtime
   callee: urisys-node.packages.python.urisysnode.serve._extend_pack_paths
   call_type: resolved
@@ -3134,6 +3353,9 @@ edges:
   callee: packages.python.urisysedge.runtime.load_json
   call_type: resolved
 - caller: urisys-node.packages.python.urisysnode.serve.build_runtime
+  callee: urisys-node.packages.python.urisysnode.serve._register_pack
+  call_type: resolved
+- caller: urisys-node.packages.python.urisysnode.serve.load_pack_into_runtime
   callee: urisys-node.packages.python.urisysnode.serve._register_pack
   call_type: resolved
 - caller: urisys-node.packages.python.urisysnode.serve.serve
@@ -3159,6 +3381,9 @@ edges:
   call_type: resolved
 - caller: urisys-node.packages.python.urisysnode.client.call_via_route_map
   callee: urisys-node.packages.python.urisysnode.client.remote_call
+  call_type: resolved
+- caller: urisys-node.packages.python.urisysnode.forward.forward_call
+  callee: scripts.run-urisys-node-docker-e2e.remote_call
   call_type: resolved
 - caller: urisys-node.packages.python.urisysnode.handlers.query_health
   callee: urisys-node.packages.python.urisysnode.identity.health_payload
@@ -3283,65 +3508,74 @@ edges:
 - caller: urisys-node.packages.python.urisysnode.artifact_resolver.resolve_from_release
   callee: urisys-node.packages.python.urisysnode.artifact_resolver.wait_health
   call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers._llm_cfg
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._config
+- caller: urikvm-docker.packages.python.urillm.handlers._driver
+  callee: urikvm-docker.packages.python.urillm.handlers._llm_cfg
   call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers._env
+- caller: urikvm-docker.packages.python.urillm.handlers._click_box
+  callee: urikvm-docker.packages.python.urillm.handlers._box_center
+  call_type: resolved
+- caller: urikvm-docker.packages.python.urillm.handlers._heuristic_analyze
+  callee: urikvm-docker.packages.python.urillm.handlers._find_goal_box
+  call_type: resolved
+- caller: urikvm-docker.packages.python.urillm.handlers._heuristic_analyze
+  callee: urikvm-docker.packages.python.urillm.handlers._find_target_box
+  call_type: resolved
+- caller: urikvm-docker.packages.python.urillm.handlers._heuristic_analyze
+  callee: urikvm-docker.packages.python.urillm.handlers._click_box
+  call_type: resolved
+- caller: urikvm-docker.packages.python.urillm.handlers._heuristic_analyze
+  callee: urikvm-docker.packages.python.urillm.handlers._goal_text
+  call_type: resolved
+- caller: urikvm-docker.packages.python.urillm.handlers._openai_chat
+  callee: urikvm-docker.packages.python.urillm.handlers._parse_json_response
+  call_type: resolved
+- caller: urikvm-docker.packages.python.urillm.handlers._litellm_chat
+  callee: urikvm-docker.packages.python.urillm.handlers._parse_json_response
+  call_type: resolved
+- caller: urikvm-docker.packages.python.urillm.handlers._vision_messages
+  callee: urikvm-docker.packages.python.urillm.handlers._target_from_goal
+  call_type: resolved
+- caller: urikvm-docker.packages.python.urillm.handlers._analyze_openai
+  callee: urikvm-docker.packages.python.urillm.handlers._vision_messages
+  call_type: resolved
+- caller: urikvm-docker.packages.python.urillm.handlers._analyze_openai
   callee: packages.python.urisysedge.env.resolve_env_var
   call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers._env
-  callee: packages.python.urisysedge.env.is_secret_env
+- caller: urikvm-docker.packages.python.urillm.handlers._analyze_openai
+  callee: urikvm-docker.packages.python.urillm.handlers._heuristic_analyze
   call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers._screenshot_b64
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._config
+- caller: urikvm-docker.packages.python.urillm.handlers._analyze_litellm
+  callee: urikvm-docker.packages.python.urillm.handlers._vision_messages
   call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers._openai_compatible_chat
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._parse_json_response
-  call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers._litellm_chat
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._parse_json_response
-  call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers.analyze
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._llm_cfg
-  call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers.analyze
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._target
-  call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers.analyze
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._env
-  call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers.analyze
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._screenshot_b64
-  call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers.analyze
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._vision_messages
-  call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers.analyze
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._heuristic
-  call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers._decide_litellm
+- caller: urikvm-docker.packages.python.urillm.handlers._analyze_litellm
   callee: packages.python.urisysedge.env.resolve_env_var
   call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers._decide_litellm
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._litellm_chat
+- caller: urikvm-docker.packages.python.urillm.handlers._analyze_litellm
+  callee: urikvm-docker.packages.python.urillm.handlers._litellm_chat
   call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers._decide_openai
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._openai_compatible_chat
+- caller: urikvm-docker.packages.python.urillm.handlers._analyze_litellm
+  callee: urikvm-docker.packages.python.urillm.handlers._normalize_action
   call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers._decide_openai
-  callee: packages.python.urisysedge.env.resolve_env_var
+- caller: urikvm-docker.packages.python.urillm.handlers._analyze_litellm
+  callee: urikvm-docker.packages.python.urillm.handlers._heuristic_analyze
   call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers.decide
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._llm_cfg
+- caller: urikvm-docker.packages.python.urillm.handlers._vision_analyze
+  callee: urikvm-docker.packages.python.urillm.handlers._driver
   call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers.decide
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._env
+- caller: urikvm-docker.packages.python.urillm.handlers._vision_analyze
+  callee: urikvm-docker.packages.python.urillm.handlers._llm_cfg
   call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers.decide
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._decide_messages
+- caller: urikvm-docker.packages.python.urillm.handlers._vision_analyze
+  callee: urikvm-docker.packages.python.urillm.handlers._goal_text
   call_type: resolved
-- caller: urirdp-docker.packages.python.urirdp_llm.handlers.plan
-  callee: urirdp-docker.packages.python.urirdp_llm.handlers._match_transcript
+- caller: urikvm-docker.packages.python.urillm.handlers._vision_analyze
+  callee: urikvm-docker.packages.python.urillm.handlers._heuristic_analyze
+  call_type: resolved
+- caller: urikvm-docker.packages.python.urillm.handlers._vision_analyze
+  callee: urikvm-docker.packages.python.urillm.handlers._target_from_goal
+  call_type: resolved
+- caller: urikvm-docker.packages.python.urillm.handlers.vision_analyze
+  callee: urikvm-docker.packages.python.urillm.handlers._vision_analyze
   call_type: resolved
 modules:
   packages.python.urisysedge.env:
@@ -3353,59 +3587,99 @@ modules:
   - packages.python.urisysedge.env.load_urisys_env
   - packages.python.urisysedge.env.resolve_env_var
   packages.python.urisysedge.runtime:
+  - packages.python.urisysedge.runtime.JsonlEventStore.tail
   - packages.python.urisysedge.runtime.Runtime.call
   - packages.python.urisysedge.runtime.load_json
   - packages.python.urisysedge.runtime.load_yaml_flow
   - packages.python.urisysedge.runtime.make_handler
   - packages.python.urisysedge.runtime.run_flow
   - packages.python.urisysedge.runtime.serve
+  scripts.report.cli:
+  - scripts.report.cli.main
+  scripts.report.events:
+  - scripts.report.events.load_event_records
+  - scripts.report.events.merge_event_summaries
+  - scripts.report.events.summarize_event_records
+  - scripts.report.events.summarize_events
+  scripts.report.lab_checks:
+  - scripts.report.lab_checks._duplicate_recommendation
+  - scripts.report.lab_checks.analyze_lab_flows
+  - scripts.report.lab_checks.check_duplicate_screenshots
+  - scripts.report.lab_checks.iter_step_results
+  - scripts.report.lab_checks.load_flow_outcomes
+  scripts.report.run_analysis:
+  - scripts.report.run_analysis.analyze_run
+  - scripts.report.run_analysis.write_run_analysis
+  scripts.report.run_markdown:
+  - scripts.report.run_markdown.render_run_analysis_markdown
+  scripts.report.session:
+  - scripts.report.session.generate_report
+  - scripts.report.session.infer_steps
+  - scripts.report.session.session_duration
+  scripts.report.session_io:
+  - scripts.report.session_io.write_session_report
+  scripts.report.session_markdown:
+  - scripts.report.session_markdown._environment_section
+  - scripts.report.session_markdown._screenshots_section
+  - scripts.report.session_markdown._steps_section
+  - scripts.report.session_markdown.render_session_markdown
+  scripts.report.util:
+  - scripts.report.util.host_id
+  - scripts.report.util.now_iso
+  - scripts.report.util.read_json
   scripts.run-nl-log-smoke:
   - scripts.run-nl-log-smoke.print
+  scripts.run-urisys-node-docker-e2e:
+  - scripts.run-urisys-node-docker-e2e.http_json
+  - scripts.run-urisys-node-docker-e2e.remote_call
+  - scripts.run-urisys-node-docker-e2e.save_json
+  - scripts.run-urisys-node-docker-e2e.wait_health
   scripts.run_test_sessions:
-  - scripts.run_test_sessions._capture_rdp_screenshot
-  - scripts.run_test_sessions._capture_rdp_screenshot_wait
-  - scripts.run_test_sessions._compose_cmd
-  - scripts.run_test_sessions._copy_container_file
-  - scripts.run_test_sessions._docker_logs
-  - scripts.run_test_sessions._file_md5
-  - scripts.run_test_sessions._finalize_session
-  - scripts.run_test_sessions._host_id
-  - scripts.run_test_sessions._http_json
-  - scripts.run_test_sessions._now_iso
-  - scripts.run_test_sessions._prepare_ok_target
-  - scripts.run_test_sessions._prepare_urirdp_data
-  - scripts.run_test_sessions._read_meta
-  - scripts.run_test_sessions._run_cmd
-  - scripts.run_test_sessions._save_json
-  - scripts.run_test_sessions._sleep_ports
-  - scripts.run_test_sessions._vision_confidences
-  - scripts.run_test_sessions._wait_health
-  - scripts.run_test_sessions._write_meta
-  - scripts.run_test_sessions.evaluate_expectations
+  - scripts.run_test_sessions._monorepo_root
   - scripts.run_test_sessions.main
   - scripts.run_test_sessions.session_automation_lab
-  - scripts.run_test_sessions.session_lab_10_flows
   - scripts.run_test_sessions.session_pytest_urirdp
   - scripts.run_test_sessions.session_pytest_urisys
   - scripts.run_test_sessions.session_pytest_urisys_node
   - scripts.run_test_sessions.session_urirdp_mock_docker
   - scripts.run_test_sessions.session_urirdp_rdp_e2e
   - scripts.run_test_sessions.session_urirdp_real_docker
-  scripts.session_report:
-  - scripts.session_report._analyze_lab_flows
-  - scripts.session_report._infer_steps
-  - scripts.session_report._iter_step_results
-  - scripts.session_report._load_flow_outcomes
-  - scripts.session_report._merge_event_summaries
-  - scripts.session_report._read_json
-  - scripts.session_report._resolve_events_paths
-  - scripts.session_report._summarize_events
-  - scripts.session_report._tail
-  - scripts.session_report.analyze_run
-  - scripts.session_report.generate_report
-  - scripts.session_report.main
-  - scripts.session_report.write_run_analysis
-  - scripts.session_report.write_session_report
+  - scripts.run_test_sessions.session_urisys_node_docker_gui
+  scripts.test_sessions.expectations:
+  - scripts.test_sessions.expectations._min_vision_confidence
+  - scripts.test_sessions.expectations._ocr_contains
+  - scripts.test_sessions.expectations._opened_url_contains
+  - scripts.test_sessions.expectations._screen_changed
+  - scripts.test_sessions.expectations._screen_changed_since_previous
+  - scripts.test_sessions.expectations.evaluate_expectations
+  - scripts.test_sessions.expectations.flow_expectations
+  - scripts.test_sessions.expectations.ocr_texts
+  - scripts.test_sessions.expectations.vision_confidences
+  scripts.test_sessions.lab_flows:
+  - scripts.test_sessions.lab_flows._capture_flow_screenshot
+  - scripts.test_sessions.lab_flows._flow_step_detail
+  - scripts.test_sessions.lab_flows._lab_bootstrap
+  - scripts.test_sessions.lab_flows._run_single_lab_flow
+  - scripts.test_sessions.lab_flows.session_lab_10_flows
+  scripts.test_sessions.lab_rdp:
+  - scripts.test_sessions.lab_rdp.capture_rdp_screenshot
+  - scripts.test_sessions.lab_rdp.capture_rdp_screenshot_wait
+  - scripts.test_sessions.lab_rdp.prepare_ok_target
+  scripts.test_sessions.util:
+  - scripts.test_sessions.util.compose_cmd
+  - scripts.test_sessions.util.copy_container_file
+  - scripts.test_sessions.util.docker_logs
+  - scripts.test_sessions.util.file_md5
+  - scripts.test_sessions.util.finalize_session
+  - scripts.test_sessions.util.http_json
+  - scripts.test_sessions.util.now_iso
+  - scripts.test_sessions.util.prepare_urirdp_data
+  - scripts.test_sessions.util.read_meta
+  - scripts.test_sessions.util.run_cmd
+  - scripts.test_sessions.util.save_json
+  - scripts.test_sessions.util.sleep_ports
+  - scripts.test_sessions.util.wait_health
+  - scripts.test_sessions.util.write_meta
   src.urisys.cli:
   - src.urisys.cli._add_runtime_flags
   - src.urisys.cli.build_parser
@@ -3488,7 +3762,10 @@ modules:
   - urikvm-docker.packages.python.urillm.handlers._analyze_litellm
   - urikvm-docker.packages.python.urillm.handlers._analyze_openai
   - urikvm-docker.packages.python.urillm.handlers._box_center
+  - urikvm-docker.packages.python.urillm.handlers._click_box
   - urikvm-docker.packages.python.urillm.handlers._driver
+  - urikvm-docker.packages.python.urillm.handlers._find_goal_box
+  - urikvm-docker.packages.python.urillm.handlers._find_target_box
   - urikvm-docker.packages.python.urillm.handlers._goal_text
   - urikvm-docker.packages.python.urillm.handlers._heuristic_analyze
   - urikvm-docker.packages.python.urillm.handlers._litellm_chat
@@ -3642,19 +3919,6 @@ modules:
   - urisys-node.packages.python.uriscreen.handlers.capture
   - urisys-node.packages.python.uriscreen.handlers.capture_loop
   - urisys-node.packages.python.uriscreen.handlers.frame
-  urisys-node.packages.python.urisysedge.env:
-  - urisys-node.packages.python.urisysedge.env._env_config
-  - urisys-node.packages.python.urisysedge.env._env_policy_candidates
-  - urisys-node.packages.python.urisysedge.env._urisys_root
-  - urisys-node.packages.python.urisysedge.env.load_env_policy
-  - urisys-node.packages.python.urisysedge.env.load_urisys_env
-  - urisys-node.packages.python.urisysedge.env.resolve_env_var
-  urisys-node.packages.python.urisysedge.runtime:
-  - urisys-node.packages.python.urisysedge.runtime.Runtime.call
-  - urisys-node.packages.python.urisysedge.runtime.load_yaml_flow
-  - urisys-node.packages.python.urisysedge.runtime.make_handler
-  - urisys-node.packages.python.urisysedge.runtime.run_flow
-  - urisys-node.packages.python.urisysedge.runtime.serve
   urisys-node.packages.python.urisysnode.artifact_resolver:
   - urisys-node.packages.python.urisysnode.artifact_resolver._auth_opener
   - urisys-node.packages.python.urisysnode.artifact_resolver.docker_pull
@@ -3672,6 +3936,8 @@ modules:
   urisys-node.packages.python.urisysnode.client:
   - urisys-node.packages.python.urisysnode.client.call_via_route_map
   - urisys-node.packages.python.urisysnode.client.remote_call
+  urisys-node.packages.python.urisysnode.forward:
+  - urisys-node.packages.python.urisysnode.forward.forward_call
   urisys-node.packages.python.urisysnode.handlers:
   - urisys-node.packages.python.urisysnode.handlers.command_indicator_off
   - urisys-node.packages.python.urisysnode.handlers.command_indicator_on
@@ -3700,6 +3966,7 @@ modules:
   - urisys-node.packages.python.urisysnode.serve._extend_pack_paths
   - urisys-node.packages.python.urisysnode.serve._register_pack
   - urisys-node.packages.python.urisysnode.serve.build_runtime
+  - urisys-node.packages.python.urisysnode.serve.load_pack_into_runtime
   - urisys-node.packages.python.urisysnode.serve.make_handler
   - urisys-node.packages.python.urisysnode.serve.serve
 entry_points:
@@ -3710,7 +3977,6 @@ entry_points:
 - examples.frontend.app.runtime
 - packages.python.urisysedge.runtime.JsonlEventStore.__init__
 - packages.python.urisysedge.runtime.JsonlEventStore.append
-- packages.python.urisysedge.runtime.JsonlEventStore.tail
 - packages.python.urisysedge.runtime.Route.compile
 - packages.python.urisysedge.runtime.Route.match
 - packages.python.urisysedge.runtime.Runtime.__init__
@@ -3724,30 +3990,31 @@ entry_points:
 - scripts.paths.uricore_pythonpath
 - scripts.paths.uricore_root
 - scripts.paths.urisys_root
+- scripts.report.cli.main
+- scripts.report.lab_checks.check_declared_expectations
+- scripts.report.lab_checks.check_duplicate_screenshots
+- scripts.report.lab_checks.check_gui_no_effect
+- scripts.report.lab_checks.check_shell_baseline_duplicate
+- scripts.report.lab_checks.check_vision_never_decides
+- scripts.report.util.tail
 - scripts.run-urisys-node-docker-e2e.cleanup
-- scripts.run-urisys-node-docker-e2e.http_json
-- scripts.run-urisys-node-docker-e2e.remote_call
-- scripts.run-urisys-node-docker-e2e.wait_health
-- scripts.run_test_sessions._copy_host_screenshot
-- scripts.run_test_sessions._flow_step_context
-- scripts.run_test_sessions._parse_lab_flow
-- scripts.run_test_sessions._prepare_ok_target
-- scripts.run_test_sessions._step_pause
-- scripts.run_test_sessions._summarize_uri_response
 - scripts.run_test_sessions.main
-- scripts.run_test_sessions.session_lab_10_flows
 - scripts.run_test_sessions.session_pytest_urirdp
 - scripts.run_test_sessions.session_pytest_urisys
 - scripts.run_test_sessions.session_pytest_urisys_node
 - scripts.run_test_sessions.session_urirdp_mock_docker
 - scripts.run_test_sessions.session_urirdp_rdp_e2e
 - scripts.run_test_sessions.session_urirdp_real_docker
-- scripts.session_report.check_declared_expectations
-- scripts.session_report.check_duplicate_screenshots
-- scripts.session_report.check_gui_no_effect
-- scripts.session_report.check_shell_baseline_duplicate
-- scripts.session_report.check_vision_never_decides
-- scripts.session_report.main
+- scripts.run_test_sessions.session_urisys_node_docker_gui
+- scripts.test_sessions.lab_flows.session_lab_10_flows
+- scripts.test_sessions.lab_rdp.flow_step_context
+- scripts.test_sessions.lab_rdp.parse_lab_flow
+- scripts.test_sessions.lab_rdp.prepare_ok_target
+- scripts.test_sessions.lab_rdp.step_pause
+- scripts.test_sessions.lab_rdp.summarize_uri_response
+- scripts.test_sessions.util.copy_host_screenshot
+- scripts.test_sessions.util.host_id
+- scripts.test_sessions.util.wait_health
 - src.urisys.cli.main
 - src.urisys.controllers.flow_controller.FlowController.__init__
 - src.urisys.controllers.flow_controller.FlowController.close
@@ -3763,6 +4030,7 @@ entry_points:
 - src.urisys.managers.event_manager.EventManager.__init__
 - src.urisys.managers.event_manager.EventManager.list_events
 - src.urisys.managers.markpact_manager.MarkpactManager.__init__
+- src.urisys.managers.markpact_manager.MarkpactManager._build_route
 - src.urisys.managers.markpact_manager.MarkpactManager._capabilities
 - src.urisys.managers.markpact_manager.MarkpactManager._compile_manifest
 - src.urisys.managers.markpact_manager.MarkpactManager._ensure_importable
@@ -3879,6 +4147,7 @@ entry_points:
 - urirdp-docker.packages.python.urirdp_him.handlers.mouse_click
 - urirdp-docker.packages.python.urirdp_him.handlers.mouse_move
 - urirdp-docker.packages.python.urirdp_him.routes.register
+- urirdp-docker.packages.python.urirdp_kvm.display.run_cmd
 - urirdp-docker.packages.python.urirdp_kvm.handlers.click_text
 - urirdp-docker.packages.python.urirdp_kvm.handlers.display_info
 - urirdp-docker.packages.python.urirdp_kvm.handlers.screenshot
@@ -3987,30 +4256,15 @@ entry_points:
 - urisys-node.packages.python.uriscreen.handlers.capture_loop
 - urisys-node.packages.python.uriscreen.handlers.frame
 - urisys-node.packages.python.uriscreen.routes.register
-- urisys-node.packages.python.urisysedge.env.is_secret_env
-- urisys-node.packages.python.urisysedge.env.load_urisys_env
-- urisys-node.packages.python.urisysedge.env.resolve_env_var
-- urisys-node.packages.python.urisysedge.runtime.JsonlEventStore.__init__
-- urisys-node.packages.python.urisysedge.runtime.JsonlEventStore.append
-- urisys-node.packages.python.urisysedge.runtime.JsonlEventStore.tail
-- urisys-node.packages.python.urisysedge.runtime.Route.compile
-- urisys-node.packages.python.urisysedge.runtime.Route.match
-- urisys-node.packages.python.urisysedge.runtime.Runtime.__init__
-- urisys-node.packages.python.urisysedge.runtime.Runtime._load_handler
-- urisys-node.packages.python.urisysedge.runtime.Runtime.call
-- urisys-node.packages.python.urisysedge.runtime.Runtime.register
-- urisys-node.packages.python.urisysedge.runtime.Runtime.resolve
-- urisys-node.packages.python.urisysedge.runtime._result_ok
-- urisys-node.packages.python.urisysedge.runtime.load_json
-- urisys-node.packages.python.urisysedge.runtime.run_flow
-- urisys-node.packages.python.urisysedge.runtime.serve
 - urisys-node.packages.python.urisysnode.artifact_resolver._GitHubHeaderAuth.__init__
 - urisys-node.packages.python.urisysnode.artifact_resolver._GitHubHeaderAuth.https_request
 - urisys-node.packages.python.urisysnode.cli.main
+- urisys-node.packages.python.urisysnode.forward.forward_call
 - urisys-node.packages.python.urisysnode.handlers.command_indicator_off
 - urisys-node.packages.python.urisysnode.handlers.command_indicator_on
 - urisys-node.packages.python.urisysnode.handlers.query_health
 - urisys-node.packages.python.urisysnode.handlers.query_identity
 - urisys-node.packages.python.urisysnode.routes.register
 - urisys-node.packages.python.urisysnode.serve.build_runtime
+- urisys-node.packages.python.urisysnode.serve.register_forward_pack
 - urisys-node.packages.python.urisysnode.serve.serve

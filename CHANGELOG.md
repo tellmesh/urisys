@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-06-16
 
 ### Fixed
+- Fix relative-imports issues (ticket-ec3c39ab)
+- Fix unused-imports issues (ticket-81995907)
+- Fix relative-imports issues (ticket-18a01fbd)
+
+## [0.1.10] - 2026-06-16
+
+### Fixed
 - Fix smart-return-type issues (ticket-0ffc369f)
 - Fix unused-imports issues (ticket-eaf7d426)
 - Fix unused-imports issues (ticket-eff7ecf8)
@@ -154,6 +161,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix unused-imports issues (ticket-c2e8d82c)
 
 ## [Unreleased]
+
+## [0.1.17] - 2026-06-16
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update docs/MIGRATION-STEP3.md
+- Update docs/PACKAGES.md
+- Update project/README.md
+- Update project/context.md
+- Update urikvm-docker/README.md
+- ... and 4 more files
+
+### Test
+- Update tests/test_kvm_pack_pyprojects.py
+- Update tests/test_session_report_events.py
+
+### Other
+- Update app.doql.less
+- Update packages/python/urisysedge
+- Update packages/python/urisysedge/__init__.py
+- Update packages/python/urisysedge/env.py
+- Update packages/python/urisysedge/runtime.py
+- Update planfile.yaml
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- ... and 72 more files
 
 ## [0.1.16] - 2026-06-16
 

@@ -10,6 +10,20 @@ Test integracyjny: kontener z Xvfb + `urisys-node serve :8790`, host steruje prz
 bash scripts/run-urisys-node-docker-e2e.sh
 ```
 
+Sesja z raportem (integracja z `run_test_sessions.py`):
+
+```bash
+bash scripts/run-urisys-node-docker-session.sh --run-id my-node-session
+```
+
+Nightly (lab-10 + node-docker, wymaga tellmesh + Docker):
+
+```bash
+bash scripts/run-lab-nightly.sh
+# tylko node-docker:
+URISYS_NIGHTLY_SESSIONS=urisys-node-docker-gui bash scripts/run-lab-nightly.sh
+```
+
 Szczegóły: [docker/README.md](docker/README.md)
 
 ## Instalacja
@@ -19,6 +33,44 @@ pip install urisys-node
 ```
 
 Opcjonalnie: `pip install "urisys-node[real]"` (capture/OCR), `"urisys-node[discovery]"` (mDNS).
+
+### Capability packs (kvm/him/ocr/llm)
+
+| Pack | PyPI (po publikacji) | Dziś — monorepo |
+|------|----------------------|-----------------|
+| `urisys`, `urisys-node` | `pip install urisys-node` | ✅ |
+| `uriscreen` | bundled w node | ✅ z `[real]` |
+| `urikvm`, `urihim`, `uriocr`, `urillm` | osobne pakiety (pyproject gotowy) | **tylko ze źródła** |
+
+**Nie używaj** `pip install urikvm` dopóki pakiety nie trafią na PyPI — stary meta-package `urikvm-docker-example` nie jest publikowany.
+
+Zrzut ekranu (lenovo, od ręki):
+
+```bash
+pip install "urisys-node[real]"
+URISYS_NODE_ALLOW_PACK_LOAD=1 URISYS_NODE_PACKS=node,screen urisys-node serve --port 8790
+```
+
+KVM + HIM (mysz/klawiatura) — checkout monorepo:
+
+```bash
+bash scripts/install-kvm-packs-editable.sh
+# albo ręcznie:
+pip install -e packages/python/urisysedge
+pip install -e 'urikvm-docker/packages/python/urikvm[real]' \
+  -e 'urikvm-docker/packages/python/urihim[real]' \
+  -e 'urikvm-docker/packages/python/uriocr[real]' \
+  -e 'urikvm-docker/packages/python/urillm[vision]'
+URISYS_NODE_ALLOW_PACK_LOAD=1 URISYS_NODE_PACKS=node,screen,kvm,him urisys-node serve --port 8790
+```
+
+Hot-load po starcie (gdy `URISYS_NODE_ALLOW_PACK_LOAD=1`):
+
+```bash
+curl -X POST http://127.0.0.1:8790/uri/pack -H 'Content-Type: application/json' -d '{"pack":"kvm"}'
+```
+
+Worker OCI (markpact + GitHub artefakt, bez PyPI): `register_forward_pack()` w `urisysnode/serve.py` — forward HTTP do workera.
 
 ## Model
 

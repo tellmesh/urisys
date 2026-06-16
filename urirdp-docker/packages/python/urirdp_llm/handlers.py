@@ -301,13 +301,74 @@ def _match_transcript(text: str) -> tuple[str, dict[str, Any]]:
     return 'kvm://local/task/command/click-text', {'text': 'OK'}
 
 
+def _plan_messages(transcript: str, allowed: list[str] | None) -> list[dict[str, Any]]:
+    schemes = ', '.join(allowed) if allowed else 'kvm, browser, rdp, screen'
+    examples = '\n'.join(
+        f'- "{phrase}" -> {uri} payload={json.dumps(payload)}'
+        for phrase, uri, payload in _PHRASE_MAP
+    )
+    prompt = (
+        'You map voice/text commands to urisys URI calls for desktop automation. '
+        'Return JSON only with keys: uri (string), payload (object). '
+        f'Allowed URI schemes (first segment before ://): {schemes}.\n'
+        f'Examples:\n{examples}\n'
+        f'Transcript: {transcript}'
+    )
+    return [{'role': 'user', 'content': prompt}]
+
+
+def _plan_from_parsed(parsed: dict[str, Any], model: str, transcript: str) -> dict[str, Any]:
+    uri = str(parsed.get('uri') or '').strip()
+    inner_payload = parsed.get('payload') if isinstance(parsed.get('payload'), dict) else {}
+    if not uri:
+        raise ValueError('missing uri in LLM plan response')
+    return {
+        'ok': True,
+        'uri': uri,
+        'payload': inner_payload,
+        'transcript': transcript,
+        'model': model,
+    }
+
+
 def plan(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
     transcript = str(payload.get('transcript') or payload.get('text') or '').strip()
     if not transcript:
         return {'ok': False, 'error': 'payload.transcript is required'}
     allowed = payload.get('allowed_schemes')
     schemes = [str(s).strip() for s in allowed] if isinstance(allowed, list) else None
+
+    cfg = _llm_cfg(context)
+    driver = cfg.get('driver', 'mock')
+    model_used = 'phrase-map'
     uri, inner_payload = _match_transcript(transcript)
+
+    if not context.get('dry_run') and allow_real(context) and driver not in ('mock', 'heuristic', 'mock-vision'):
+        model = _env('model', cfg, context)
+        api_key = (
+            _env('api_key', cfg, context)
+            or resolve_env_var('OPENROUTER_API_KEY', context, secret=True)
+            or resolve_env_var('OPENAI_API_KEY', context, secret=True)
+        )
+        if model and api_key and driver in ('litellm', 'openai', 'openrouter'):
+            temperature = float(_env('temperature', cfg, context) or '0')
+            max_tokens = int(_env('max_tokens', cfg, context) or '512')
+            messages = _plan_messages(transcript, schemes)
+            try:
+                if driver == 'litellm':
+                    parsed, model = _decide_litellm(messages, model, context, temperature=temperature, max_tokens=max_tokens)
+                else:
+                    parsed, model = _decide_openai(
+                        messages, model, api_key, _env('base_url', cfg, context), context,
+                        temperature=temperature, max_tokens=max_tokens,
+                    )
+                planned = _plan_from_parsed(parsed, model, transcript)
+                uri = planned['uri']
+                inner_payload = planned['payload']
+                model_used = str(model)
+            except (urllib.error.URLError, TimeoutError, KeyError, json.JSONDecodeError, ValueError, RuntimeError):
+                pass
+
     scheme = uri.split('://', 1)[0]
     if schemes and scheme not in schemes:
         return {
@@ -322,5 +383,5 @@ def plan(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
         'uri': uri,
         'payload': inner_payload,
         'transcript': transcript,
-        'model': 'phrase-map',
+        'model': model_used,
     }

@@ -914,19 +914,6 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
-  - id: ticket-2eb137c9
-    name: Fix duplicate-imports issues
-    description: Resolve 2 duplicate-imports issues in scripts/run_test_sessions.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - scripts/run_test_sessions.py
-    rule_id: duplicate-imports
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
   - id: ticket-230cdaab
     name: Fix string-concat issues
     description: Resolve 5 string-concat issues in scripts/run_test_sessions.py
@@ -1057,19 +1044,6 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
-  - id: ticket-d0dbe11c
-    name: Fix string-concat issues
-    description: Resolve 7 string-concat issues in scripts/session_report.py
-    task_type: prefactor
-    priority: high
-    estimate: 2d
-    files:
-    - scripts/session_report.py
-    rule_id: string-concat
-    count: 7
-    model_hints:
-      planning: balanced
-      implementation: balanced
   - id: ticket-db7f3e7b
     name: Fix unused-imports issues
     description: Resolve 6 unused-imports issues in scripts/session_report.py
@@ -1079,19 +1053,6 @@ sprints:
     files:
     - scripts/session_report.py
     rule_id: unused-imports
-    count: 6
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-ddf2b6d6
-    name: Fix magic-numbers issues
-    description: Resolve 6 magic-numbers issues in scripts/session_report.py
-    task_type: prefactor
-    priority: high
-    estimate: 2d
-    files:
-    - scripts/session_report.py
-    rule_id: magic-numbers
     count: 6
     model_hints:
       planning: balanced
@@ -1314,6 +1275,45 @@ sprints:
     - urikvm-docker/packages/python/urillm/handlers.py
     rule_id: duplicate-imports
     count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ec3c39ab
+    name: Fix relative-imports issues
+    description: Resolve 14 relative-imports issues in scripts/report/__init__.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - scripts/report/__init__.py
+    rule_id: relative-imports
+    count: 14
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-81995907
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in scripts/report/__init__.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/report/__init__.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-18a01fbd
+    name: Fix relative-imports issues
+    description: Resolve 6 relative-imports issues in scripts/report/cli.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - scripts/report/cli.py
+    rule_id: relative-imports
+    count: 6
     model_hints:
       planning: balanced
       implementation: balanced

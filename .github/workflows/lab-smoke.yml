@@ -11,7 +11,11 @@ on:
       - "scripts/run-nl-log-smoke.sh"
       - "scripts/run_test_sessions.py"
       - "scripts/session_report.py"
-      - ".github/workflows/lab-smoke.yml"
+      - "urisys-node/**"
+      - "scripts/run-urisys-node-docker-e2e.sh"
+      - "scripts/run-urisys-node-docker-session.sh"
+      - "scripts/run-lab-nightly.sh"
+      - ".github/workflows/lab-nightly.yml"
 
 jobs:
   lab-unit:
@@ -94,3 +98,32 @@ jobs:
           name: lab-10-flows-session
           path: urisys/output/test-sessions/
           if-no-files-found: ignore
+
+  node-docker-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    if: github.event_name == 'workflow_dispatch'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: tellmesh/urisys
+
+      - uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          repository: ${{ github.repository_owner }}/uricore
+          path: tellmesh/uricore
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: urisys-node Docker GUI E2E
+        working-directory: tellmesh/urisys
+        run: |
+          if [ ! -d "../uricore" ]; then
+            echo "Skipped — uricore sibling missing"
+            exit 0
+          fi
+          bash scripts/run-urisys-node-docker-e2e.sh

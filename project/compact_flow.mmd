@@ -1,40 +1,49 @@
 flowchart TD
-%% generated in 0.02s
+%% generated in 0.01s
     packages__python["packages.python<br/>23 funcs"]
+    scripts__report["scripts.report<br/>39 funcs"]
     scripts__run_nl_log_smoke["scripts.run-nl-log-smoke<br/>1 funcs"]
-    scripts__run_test_sessions["scripts.run_test_sessions<br/>38 funcs"]
-    scripts__session_report["scripts.session_report<br/>23 funcs"]
-    src__urisys["src.urisys<br/>83 funcs"]
+    scripts__run_urisys_node_docker_e2e["scripts.run-urisys-node-docker-e2e<br/>5 funcs"]
+    scripts__run_test_sessions["scripts.run_test_sessions<br/>10 funcs"]
+    scripts__test_sessions["scripts.test_sessions<br/>39 funcs"]
+    src__urisys["src.urisys<br/>84 funcs"]
     uribrowser_docker__packages["uribrowser-docker.packages<br/>9 funcs"]
     urienv_docker__packages["urienv-docker.packages<br/>29 funcs"]
-    urikvm_docker__packages["urikvm-docker.packages<br/>46 funcs"]
+    urikvm_docker__packages["urikvm-docker.packages<br/>49 funcs"]
     urikvm_docker__scripts["urikvm-docker.scripts<br/>5 funcs"]
-    urirdp_docker__packages["urirdp-docker.packages<br/>71 funcs"]
+    urirdp_docker__packages["urirdp-docker.packages<br/>73 funcs"]
     uristepper_docker__packages["uristepper-docker.packages<br/>60 funcs"]
     urisys_automation_lab__server["urisys-automation-lab.server<br/>19 funcs"]
-    urisys_node__packages["urisys-node.packages<br/>79 funcs"]
-    urisys_node__packages ==>|18| scripts__run_nl_log_smoke
-    urirdp_docker__packages ==>|14| packages__python
+    urisys_node__packages["urisys-node.packages<br/>59 funcs"]
+    scripts__run_test_sessions ==>|75| scripts__test_sessions
+    scripts__run_test_sessions ==>|27| scripts__run_urisys_node_docker_e2e
+    urirdp_docker__packages ==>|20| scripts__test_sessions
+    scripts__run_test_sessions ==>|19| scripts__report
+    urirdp_docker__packages ==>|16| packages__python
+    urisys_node__packages ==>|15| scripts__run_nl_log_smoke
     urikvm_docker__packages ==>|11| packages__python
     uristepper_docker__packages ==>|7| scripts__run_nl_log_smoke
-    scripts__session_report ==>|6| scripts__run_nl_log_smoke
+    scripts__test_sessions ==>|7| scripts__run_urisys_node_docker_e2e
+    scripts__report ==>|6| scripts__run_nl_log_smoke
     scripts__run_test_sessions ==>|5| scripts__run_nl_log_smoke
     urisys_automation_lab__server ==>|5| scripts__run_nl_log_smoke
     urienv_docker__packages ==>|5| scripts__run_nl_log_smoke
-    urisys_node__packages ==>|5| packages__python
     packages__python -->|3| scripts__run_nl_log_smoke
     src__urisys -->|3| scripts__run_nl_log_smoke
     uribrowser_docker__packages -->|3| packages__python
+    urisys_node__packages -->|3| packages__python
     packages__python -->|2| urienv_docker__packages
+    scripts__test_sessions -->|2| scripts__report
     urirdp_docker__packages -->|2| scripts__run_nl_log_smoke
     uribrowser_docker__packages -->|2| scripts__run_nl_log_smoke
     urikvm_docker__packages -->|2| scripts__run_nl_log_smoke
     urikvm_docker__scripts -->|2| scripts__run_nl_log_smoke
     urienv_docker__packages -->|2| uristepper_docker__packages
     urienv_docker__packages -->|2| packages__python
-    urisys_node__packages -->|2| urienv_docker__packages
     urisys_node__packages -->|2| uristepper_docker__packages
     uristepper_docker__packages -->|1| packages__python
+    scripts__report -->|1| packages__python
     urikvm_docker__scripts -->|1| packages__python
     urisys_automation_lab__server -->|1| packages__python
     urienv_docker__packages -->|1| src__urisys
+    urisys_node__packages -->|1| scripts__run_urisys_node_docker_e2e

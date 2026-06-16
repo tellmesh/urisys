@@ -10,6 +10,7 @@ export PYTHONPATH="${ROOT}/packages/python:${ROOT}/urirdp-docker/packages/python
 pip install -q pytest pyyaml 2>/dev/null || true
 
 python3 -m pytest \
+  tests/test_kvm_pack_pyprojects.py \
   urisys-automation-lab/tests/test_flow_08_plan.py \
   urisys-automation-lab/tests/test_flow_09_plan.py \
   urisys-automation-lab/tests/test_lab_handlers.py \

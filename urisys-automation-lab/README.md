@@ -42,7 +42,7 @@ urirdp-docker :8795       → rdp/kvm/him/ocr/llm execution
 
 ## Flow 08 (voice → KVM)
 
-Standardized pipeline: **STT → llm plan → kvm execute**
+Standardized pipeline: **STT → llm plan → kvm execute** (legacy `chat://` deprecated — [CHAT-DEPRECATED.md](docs/CHAT-DEPRECATED.md))
 
 ```yaml
 do:

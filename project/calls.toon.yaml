@@ -1,49 +1,49 @@
 # code2llm call graph | /home/tom/github/tellmesh/urisys
-# generated in 0.21s
-# nodes: 304 | edges: 403 | modules: 54
+# generated in 0.17s
+# nodes: 325 | edges: 432 | modules: 66
 # CC̄=4.1
 
 HUBS[20]:
-  scripts.session_report.analyze_run
-    CC=39  in:2  out:69  total:71
   scripts.run_test_sessions.session_urirdp_real_docker
     CC=30  in:0  out:69  total:69
-  scripts.run_test_sessions.session_lab_10_flows
-    CC=36  in:0  out:65  total:65
+  scripts.test_sessions.util.run_cmd
+    CC=6  in:47  out:12  total:59
   scripts.run-nl-log-smoke.print
-    CC=0  in:60  out:0  total:60
-  scripts.session_report.write_session_report
-    CC=28  in:2  out:50  total:52
+    CC=0  in:57  out:0  total:57
   src.urisys.cli.main
     CC=20  in:0  out:49  total:49
-  scripts.run_test_sessions.session_automation_lab
-    CC=16  in:1  out:43  total:44
   uristepper-docker.packages.python.uristepperedge.server.make_handler
     CC=1  in:1  out:43  total:44
+  scripts.run_test_sessions.session_automation_lab
+    CC=16  in:1  out:43  total:44
+  urisys-node.packages.python.urisysnode.serve.make_handler
+    CC=1  in:1  out:42  total:43
   urisys-automation-lab.server.flow_runner.run_flow_file
     CC=13  in:1  out:40  total:41
   urienv-docker.packages.python.urienv.src.urienv.handlers._cfg
     CC=7  in:9  out:29  total:38
   src.urisys.cli.build_parser
     CC=1  in:1  out:36  total:37
-  scripts.run_test_sessions._run_cmd
-    CC=5  in:26  out:11  total:37
-  scripts.session_report.generate_report
-    CC=11  in:2  out:34  total:36
   urienv-docker.packages.python.urisysedge.src.urisysedge.server.serve
     CC=1  in:0  out:36  total:36
+  scripts.report.run_analysis.analyze_run
+    CC=13  in:2  out:33  total:35
   urirdp-docker.packages.python.urirdp_browser.handlers.open_page
     CC=15  in:0  out:33  total:33
-  scripts.run_test_sessions.evaluate_expectations
-    CC=29  in:1  out:32  total:33
+  scripts.test_sessions.lab_flows.session_lab_10_flows
+    CC=7  in:0  out:33  total:33
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
   src.urisys.http_server.create_server
     CC=1  in:1  out:31  total:32
-  urisys-node.packages.python.urisysnode.serve.make_handler
-    CC=1  in:1  out:30  total:31
+  urirdp-docker.packages.python.urirdp_llm.handlers.analyze
+    CC=18  in:0  out:31  total:31
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
+  scripts.report.session.generate_report
+    CC=9  in:2  out:27  total:29
+  urirdp-docker.packages.python.urirdp_llm.handlers.plan
+    CC=20  in:0  out:28  total:28
 
 MODULES:
   packages.python.urisysedge.env  [7 funcs]
@@ -54,37 +54,96 @@ MODULES:
     load_env_policy  CC=6  out:5
     load_urisys_env  CC=8  out:17
     resolve_env_var  CC=11  out:9
-  packages.python.urisysedge.runtime  [6 funcs]
+  packages.python.urisysedge.runtime  [7 funcs]
+    tail  CC=4  out:5
     call  CC=10  out:23
     load_json  CC=3  out:5
     load_yaml_flow  CC=14  out:21
     make_handler  CC=1  out:24
     run_flow  CC=7  out:13
     serve  CC=2  out:6
+  scripts.report.cli  [1 funcs]
+    main  CC=4  out:23
+  scripts.report.events  [4 funcs]
+    load_event_records  CC=14  out:14
+    merge_event_summaries  CC=10  out:16
+    summarize_event_records  CC=14  out:15
+    summarize_events  CC=8  out:10
+  scripts.report.lab_checks  [5 funcs]
+    _duplicate_recommendation  CC=6  out:1
+    analyze_lab_flows  CC=5  out:4
+    check_duplicate_screenshots  CC=5  out:3
+    iter_step_results  CC=9  out:7
+    load_flow_outcomes  CC=15  out:22
+  scripts.report.run_analysis  [2 funcs]
+    analyze_run  CC=13  out:33
+    write_run_analysis  CC=2  out:7
+  scripts.report.run_markdown  [1 funcs]
+    render_run_analysis_markdown  CC=7  out:16
+  scripts.report.session  [3 funcs]
+    generate_report  CC=9  out:27
+    infer_steps  CC=20  out:25
+    session_duration  CC=5  out:14
+  scripts.report.session_io  [1 funcs]
+    write_session_report  CC=2  out:7
+  scripts.report.session_markdown  [4 funcs]
+    _environment_section  CC=5  out:7
+    _screenshots_section  CC=3  out:3
+    _steps_section  CC=7  out:4
+    render_session_markdown  CC=1  out:16
+  scripts.report.util  [3 funcs]
+    host_id  CC=1  out:3
+    now_iso  CC=1  out:3
+    read_json  CC=3  out:3
   scripts.run-nl-log-smoke  [1 funcs]
     print  CC=0  out:0
-  scripts.run_test_sessions  [29 funcs]
-    _capture_rdp_screenshot  CC=5  out:6
-    _capture_rdp_screenshot_wait  CC=9  out:6
-    _compose_cmd  CC=4  out:4
-    _copy_container_file  CC=2  out:4
-    _docker_logs  CC=4  out:5
-    _file_md5  CC=2  out:4
-    _finalize_session  CC=5  out:13
-    _host_id  CC=1  out:3
-    _http_json  CC=9  out:18
-    _now_iso  CC=1  out:3
-  scripts.session_report  [14 funcs]
-    _analyze_lab_flows  CC=5  out:4
-    _infer_steps  CC=20  out:25
-    _iter_step_results  CC=9  out:7
-    _load_flow_outcomes  CC=15  out:22
-    _merge_event_summaries  CC=10  out:16
-    _read_json  CC=3  out:3
-    _resolve_events_paths  CC=5  out:4
-    _summarize_events  CC=8  out:28
-    _tail  CC=2  out:0
-    analyze_run  CC=39  out:69
+  scripts.run-urisys-node-docker-e2e  [4 funcs]
+    http_json  CC=0  out:0
+    remote_call  CC=0  out:0
+    save_json  CC=0  out:0
+    wait_health  CC=0  out:0
+  scripts.run_test_sessions  [10 funcs]
+    _monorepo_root  CC=4  out:3
+    main  CC=13  out:32
+    session_automation_lab  CC=16  out:43
+    session_pytest_urirdp  CC=3  out:5
+    session_pytest_urisys  CC=2  out:5
+    session_pytest_urisys_node  CC=2  out:5
+    session_urirdp_mock_docker  CC=5  out:31
+    session_urirdp_rdp_e2e  CC=5  out:19
+    session_urirdp_real_docker  CC=30  out:69
+    session_urisys_node_docker_gui  CC=7  out:13
+  scripts.test_sessions.expectations  [9 funcs]
+    _min_vision_confidence  CC=4  out:3
+    _ocr_contains  CC=5  out:6
+    _opened_url_contains  CC=11  out:16
+    _screen_changed  CC=5  out:1
+    _screen_changed_since_previous  CC=5  out:1
+    evaluate_expectations  CC=3  out:10
+    flow_expectations  CC=5  out:6
+    ocr_texts  CC=11  out:10
+    vision_confidences  CC=11  out:11
+  scripts.test_sessions.lab_flows  [5 funcs]
+    _capture_flow_screenshot  CC=12  out:8
+    _flow_step_detail  CC=4  out:2
+    _lab_bootstrap  CC=5  out:7
+    _run_single_lab_flow  CC=10  out:19
+    session_lab_10_flows  CC=7  out:33
+  scripts.test_sessions.lab_rdp  [3 funcs]
+    capture_rdp_screenshot  CC=5  out:6
+    capture_rdp_screenshot_wait  CC=9  out:6
+    prepare_ok_target  CC=1  out:2
+  scripts.test_sessions.util  [14 funcs]
+    compose_cmd  CC=4  out:4
+    copy_container_file  CC=2  out:4
+    docker_logs  CC=3  out:3
+    file_md5  CC=2  out:4
+    finalize_session  CC=5  out:13
+    http_json  CC=9  out:18
+    now_iso  CC=1  out:3
+    prepare_urirdp_data  CC=4  out:6
+    read_meta  CC=3  out:3
+    run_cmd  CC=6  out:12
   src.urisys.cli  [5 funcs]
     _add_runtime_flags  CC=1  out:4
     build_parser  CC=1  out:36
@@ -154,17 +213,17 @@ MODULES:
     screenshot  CC=5  out:18
   urikvm-docker.packages.python.urikvmedge.cli  [1 funcs]
     build_runtime  CC=6  out:11
-  urikvm-docker.packages.python.urillm.handlers  [15 funcs]
+  urikvm-docker.packages.python.urillm.handlers  [18 funcs]
     _analyze_litellm  CC=6  out:11
     _analyze_openai  CC=10  out:13
     _box_center  CC=1  out:4
+    _click_box  CC=1  out:2
     _driver  CC=1  out:2
+    _find_goal_box  CC=6  out:2
+    _find_target_box  CC=6  out:2
     _goal_text  CC=4  out:4
-    _heuristic_analyze  CC=16  out:22
+    _heuristic_analyze  CC=8  out:17
     _litellm_chat  CC=2  out:3
-    _llm_cfg  CC=1  out:2
-    _normalize_action  CC=4  out:9
-    _openai_chat  CC=2  out:9
   urikvm-docker.packages.python.uriocr.handlers  [10 funcs]
     _driver  CC=1  out:2
     _extract_text  CC=6  out:10
@@ -299,19 +358,6 @@ MODULES:
     capture  CC=7  out:25
     capture_loop  CC=4  out:10
     frame  CC=1  out:5
-  urisys-node.packages.python.urisysedge.env  [6 funcs]
-    _env_config  CC=7  out:6
-    _env_policy_candidates  CC=2  out:7
-    _urisys_root  CC=1  out:2
-    load_env_policy  CC=6  out:5
-    load_urisys_env  CC=8  out:17
-    resolve_env_var  CC=11  out:9
-  urisys-node.packages.python.urisysedge.runtime  [5 funcs]
-    call  CC=10  out:23
-    load_yaml_flow  CC=14  out:21
-    make_handler  CC=1  out:24
-    run_flow  CC=7  out:13
-    serve  CC=2  out:6
   urisys-node.packages.python.urisysnode.artifact_resolver  [13 funcs]
     _auth_opener  CC=4  out:11
     docker_pull  CC=4  out:4
@@ -326,6 +372,8 @@ MODULES:
   urisys-node.packages.python.urisysnode.client  [2 funcs]
     call_via_route_map  CC=6  out:14
     remote_call  CC=3  out:8
+  urisys-node.packages.python.urisysnode.forward  [1 funcs]
+    forward_call  CC=9  out:8
   urisys-node.packages.python.urisysnode.handlers  [4 funcs]
     command_indicator_off  CC=1  out:2
     command_indicator_on  CC=1  out:4
@@ -348,11 +396,12 @@ MODULES:
     node_endpoint  CC=5  out:6
     resolve_remote_route  CC=5  out:3
     rewrite_uri_for_slave  CC=6  out:5
-  urisys-node.packages.python.urisysnode.serve  [5 funcs]
+  urisys-node.packages.python.urisysnode.serve  [6 funcs]
     _extend_pack_paths  CC=4  out:7
     _register_pack  CC=5  out:6
-    build_runtime  CC=6  out:13
-    make_handler  CC=1  out:30
+    build_runtime  CC=7  out:15
+    load_pack_into_runtime  CC=9  out:9
+    make_handler  CC=1  out:42
     serve  CC=2  out:9
 
 EDGES:
