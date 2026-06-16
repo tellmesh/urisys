@@ -151,50 +151,65 @@ def _normalize_action(parsed, source):
     }
 
 
+def _analyze_openai(payload, context, *, goal, target, shot, ocr, cfg):
+    api_key = (
+        resolve_env_var('OPENROUTER_API_KEY', context, secret=True)
+        or resolve_env_var('OPENAI_API_KEY', context, secret=True)
+        or cfg.get('api_key')
+    )
+    if not api_key:
+        return _heuristic_analyze(payload, source='heuristic-fallback')
+    model = cfg.get('model') or resolve_env_var('LLM_MODEL', context) or 'gpt-4o-mini'
+    base_url = cfg.get('base_url') or resolve_env_var('LLM_BASE_URL', context)
+    if not base_url and resolve_env_var('OPENROUTER_API_KEY', context, secret=True):
+        base_url = 'https://openrouter.ai/api/v1'
+    messages = _vision_messages(goal, target, shot, ocr)
+    try:
+        parsed = _openai_chat(messages, model, api_key, base_url=base_url)
+        return _normalize_action(parsed, source=f'openai:{model}')
+    except (urllib.error.URLError, TimeoutError, KeyError, json.JSONDecodeError, ValueError):
+        return _heuristic_analyze(payload, source='heuristic-fallback')
+
+
+def _analyze_litellm(payload, context, *, goal, target, shot, ocr, cfg):
+    model = cfg.get('model') or resolve_env_var('LLM_MODEL', context)
+    if not model:
+        raise ValueError('llm.model is required when llm.driver=litellm')
+    if not str(model).startswith('openrouter/') and resolve_env_var('OPENROUTER_API_KEY', context, secret=True):
+        model = f'openrouter/{model.lstrip("openrouter/")}'
+    messages = _vision_messages(goal, target, shot, ocr)
+    try:
+        parsed = _litellm_chat(messages, model)
+        return _normalize_action(parsed, source=f'litellm:{model}')
+    except Exception:
+        return _heuristic_analyze(payload, source='heuristic-fallback')
+
+
+# driver -> analyzer. mock/heuristic and any unknown driver use the OCR heuristic.
+_VISION_DRIVERS = {
+    'openai': _analyze_openai,
+    'litellm': _analyze_litellm,
+}
+
+
 def _vision_analyze(payload, context):
-    cfg = _llm_cfg(context)
     driver = _driver(context)
+    if driver == 'mock':
+        return _heuristic_analyze(payload, source='mock-llm')
+    analyzer = _VISION_DRIVERS.get(driver)
+    if analyzer is None:
+        return _heuristic_analyze(payload, source='heuristic')
+    cfg = _llm_cfg(context)
     goal = _goal_text(payload)
-    target = payload.get('target_text') or _target_from_goal(goal)
-    shot = context.get('state', {}).get('latest_screenshot') or {}
-    ocr = payload.get('ocr') or {}
-
-    if driver in ('mock', 'heuristic'):
-        return _heuristic_analyze(payload, source='mock-llm' if driver == 'mock' else 'heuristic')
-
-    if driver == 'openai':
-        api_key = (
-            resolve_env_var('OPENROUTER_API_KEY', context, secret=True)
-            or resolve_env_var('OPENAI_API_KEY', context, secret=True)
-            or cfg.get('api_key')
-        )
-        if not api_key:
-            return _heuristic_analyze(payload, source='heuristic-fallback')
-        model = cfg.get('model') or resolve_env_var('LLM_MODEL', context) or 'gpt-4o-mini'
-        base_url = cfg.get('base_url') or resolve_env_var('LLM_BASE_URL', context)
-        if not base_url and resolve_env_var('OPENROUTER_API_KEY', context, secret=True):
-            base_url = 'https://openrouter.ai/api/v1'
-        messages = _vision_messages(goal, target, shot, ocr)
-        try:
-            parsed = _openai_chat(messages, model, api_key, base_url=base_url)
-            return _normalize_action(parsed, source=f'openai:{model}')
-        except (urllib.error.URLError, TimeoutError, KeyError, json.JSONDecodeError, ValueError):
-            return _heuristic_analyze(payload, source='heuristic-fallback')
-
-    if driver == 'litellm':
-        model = cfg.get('model') or resolve_env_var('LLM_MODEL', context)
-        if not model:
-            raise ValueError('llm.model is required when llm.driver=litellm')
-        if not str(model).startswith('openrouter/') and resolve_env_var('OPENROUTER_API_KEY', context, secret=True):
-            model = f'openrouter/{model.lstrip("openrouter/")}'
-        messages = _vision_messages(goal, target, shot, ocr)
-        try:
-            parsed = _litellm_chat(messages, model)
-            return _normalize_action(parsed, source=f'litellm:{model}')
-        except Exception:
-            return _heuristic_analyze(payload, source='heuristic-fallback')
-
-    return _heuristic_analyze(payload, source='heuristic')
+    return analyzer(
+        payload,
+        context,
+        goal=goal,
+        target=payload.get('target_text') or _target_from_goal(goal),
+        shot=context.get('state', {}).get('latest_screenshot') or {},
+        ocr=payload.get('ocr') or {},
+        cfg=cfg,
+    )
 
 
 def vision_analyze(payload, context):

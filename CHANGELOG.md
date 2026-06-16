@@ -8,6 +8,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-06-16
 
 ### Fixed
+- Fix smart-return-type issues (ticket-0ffc369f)
+- Fix unused-imports issues (ticket-eaf7d426)
+- Fix unused-imports issues (ticket-eff7ecf8)
+- Fix smart-return-type issues (ticket-89864dc1)
+- Fix smart-return-type issues (ticket-050b3e53)
+- Fix magic-numbers issues (ticket-4a179497)
+- Fix smart-return-type issues (ticket-b40ea12d)
+- Fix relative-imports issues (ticket-94518524)
+- Fix smart-return-type issues (ticket-7f39f9fb)
+- Fix magic-numbers issues (ticket-52d52603)
+- Fix ai-boilerplate issues (ticket-b4eb1a0e)
+- Fix duplicate-imports issues (ticket-297f57b6)
+
+## [0.1.10] - 2026-06-16
+
+### Fixed
 - Fix relative-imports issues (ticket-e3654290)
 - Fix duplicate-imports issues (ticket-2eb137c9)
 - Fix string-concat issues (ticket-230cdaab)
@@ -138,6 +154,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix unused-imports issues (ticket-c2e8d82c)
 
 ## [Unreleased]
+
+## [0.1.16] - 2026-06-16
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update docs/FLOWS.md
+- Update project/README.md
+- Update project/context.md
+- Update urisys-node/README.md
+- Update urisys-node/docker/README.md
+
+### Test
+- Update tests/test_markpact.py
+
+### Other
+- Update app.doql.less
+- Update planfile.yaml
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/compact_flow.mmd
+- Update project/compact_flow.png
+- Update project/duplication.toon.yaml
+- ... and 36 more files
 
 ## [0.1.15] - 2026-06-16
 

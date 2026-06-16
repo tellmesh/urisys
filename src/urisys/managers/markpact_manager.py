@@ -1,90 +1,30 @@
 from __future__ import annotations
 
-import hashlib
 import json
-import re
-import shlex
 import sys
-from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlsplit
 
 import yaml
 
-
-_FENCE_RE = re.compile(
-    r"^```(?P<lang>[A-Za-z0-9_+.-]+)\s+markpact:(?P<kind>[A-Za-z0-9_-]+)(?P<meta>[^\n]*)\n(?P<content>.*?)^```\s*$",
-    re.MULTILINE | re.DOTALL,
+from .markpact_models import (
+    FENCE_RE as _FENCE_RE,
+    CompiledMarkpact,
+    MarkpactBlock,
+    MarkpactError,
+    parse_meta as _parse_meta,
+    safe_identifier as _safe_identifier,
+    scheme_from_uri as _scheme_from_uri,
+    source_hash as _source_hash,
+)
+from .markpact_validation import (
+    validate_bundle,
+    validate_contract,
+    validate_implementation,
 )
 
-
-@dataclass(frozen=True)
-class MarkpactBlock:
-    lang: str
-    kind: str
-    meta: dict[str, str] = field(default_factory=dict)
-    content: str = ""
-
-
-@dataclass(frozen=True)
-class CompiledMarkpact:
-    source_path: Path
-    source_hash: str
-    cache_dir: Path
-    package_id: str
-    module_name: str
-    manifest_path: Path
-    tests_path: Path | None = None
-    docs_path: Path | None = None
-    metadata_path: Path | None = None
-
-    def to_dict(self) -> dict[str, Any]:
-        return {
-            "source_path": str(self.source_path),
-            "source_hash": self.source_hash,
-            "cache_dir": str(self.cache_dir),
-            "package_id": self.package_id,
-            "module_name": self.module_name,
-            "manifest_path": str(self.manifest_path),
-            "tests_path": str(self.tests_path) if self.tests_path else None,
-            "docs_path": str(self.docs_path) if self.docs_path else None,
-            "metadata_path": str(self.metadata_path) if self.metadata_path else None,
-        }
-
-
-class MarkpactError(ValueError):
-    """Raised when a Markpact cannot be parsed, validated or compiled."""
-
-
-def _safe_identifier(value: str, *, fallback: str = "pack") -> str:
-    value = re.sub(r"[^0-9A-Za-z_]+", "_", value.strip())
-    value = re.sub(r"_+", "_", value).strip("_")
-    if not value:
-        value = fallback
-    if value[0].isdigit():
-        value = "_" + value
-    return value.lower()
-
-
-def _parse_meta(raw: str) -> dict[str, str]:
-    meta: dict[str, str] = {}
-    if not raw.strip():
-        return meta
-    for token in shlex.split(raw.strip()):
-        if "=" in token:
-            key, value = token.split("=", 1)
-            meta[key.strip()] = value.strip().strip('"\'')
-        else:
-            meta[token.strip()] = "true"
-    return meta
-
-
-def _scheme_from_uri(uri: str) -> str:
-    parsed = urlsplit(uri)
-    if not parsed.scheme:
-        raise MarkpactError(f"Capability URI has no scheme: {uri!r}")
-    return parsed.scheme
+# Re-exported for backward compatibility (e.g. urisys.cli imports MarkpactError).
+__all__ = ["MarkpactManager", "MarkpactBlock", "CompiledMarkpact", "MarkpactError"]
 
 
 class MarkpactManager:
@@ -113,18 +53,7 @@ class MarkpactManager:
         return blocks
 
     def source_hash(self, path: str | Path) -> str:
-        data = Path(path).read_bytes()
-        return hashlib.sha256(data).hexdigest()
-
-    def load_pack_block(self, path: str | Path) -> dict[str, Any]:
-        blocks = self.read_blocks(path)
-        pack_blocks = [b for b in blocks if b.kind == "pack" and b.lang in {"yaml", "yml"}]
-        if len(pack_blocks) != 1:
-            raise MarkpactError(f"{path}: expected exactly one ```yaml markpact:pack``` block, found {len(pack_blocks)}.")
-        data = yaml.safe_load(pack_blocks[0].content) or {}
-        if not isinstance(data, dict):
-            raise MarkpactError(f"{path}: markpact:pack block must contain a YAML mapping.")
-        return data
+        return _source_hash(path)
 
     def load_pack_block(self, path: str | Path) -> dict[str, Any]:
         blocks = self.read_blocks(path)
@@ -159,12 +88,13 @@ class MarkpactManager:
 
         if len(pack_blocks) == 1:
             return self._validate_pack(source_path, blocks, yaml.safe_load(pack_blocks[0].content) or {})
+        sh = self.source_hash(source_path)
         if len(contract_blocks) == 1:
-            return self._validate_contract(source_path, yaml.safe_load(contract_blocks[0].content) or {})
+            return validate_contract(source_path, yaml.safe_load(contract_blocks[0].content) or {}, sh)
         if len(bundle_blocks) == 1:
-            return self._validate_bundle(source_path, yaml.safe_load(bundle_blocks[0].content) or {})
+            return validate_bundle(source_path, yaml.safe_load(bundle_blocks[0].content) or {}, sh)
         if len(impl_blocks) == 1:
-            return self._validate_implementation(source_path, yaml.safe_load(impl_blocks[0].content) or {})
+            return validate_implementation(source_path, yaml.safe_load(impl_blocks[0].content) or {}, sh)
 
         raise MarkpactError(
             f"{path}: expected exactly one ```yaml markpact:{{pack|contract|bundle|implementation}}``` block."
@@ -197,130 +127,6 @@ class MarkpactManager:
             "scheme": scheme,
             "capabilities": len(capabilities),
             "handler_blocks": sorted(declared_handler_ids),
-            "source_hash": self.source_hash(source_path),
-            "warnings": warnings,
-        }
-
-    def _validate_contract(self, source_path: Path, data: dict[str, Any]) -> dict[str, Any]:
-        if not isinstance(data, dict):
-            raise MarkpactError(f"{source_path}: markpact:contract block must contain a YAML mapping.")
-        metadata = data.get("metadata") or {}
-        contract_id = str(metadata.get("id") or "").strip()
-        if not contract_id:
-            raise MarkpactError(f"{source_path}: contract metadata.id is required.")
-        kind = str(data.get("kind") or "UriContract")
-        if kind != "UriContract":
-            raise MarkpactError(f"{source_path}: expected kind UriContract, got {kind!r}.")
-        scheme = str(data.get("scheme") or "").strip()
-        if not scheme:
-            raise MarkpactError(f"{source_path}: contract scheme is required.")
-
-        routes: list[dict[str, Any]] = []
-        warnings: list[str] = []
-        for section in ("queries", "commands"):
-            items = data.get(section) or []
-            if not isinstance(items, list):
-                raise MarkpactError(f"{source_path}: contract {section} must be a list.")
-            for item in items:
-                if not isinstance(item, dict):
-                    raise MarkpactError(f"{source_path}: invalid entry in contract {section}.")
-                item_id = str(item.get("id") or "").strip()
-                pattern = str(item.get("pattern") or "").strip()
-                if not item_id or not pattern:
-                    raise MarkpactError(f"{source_path}: contract {section} entries require id and pattern.")
-                item_scheme = _scheme_from_uri(pattern)
-                if item_scheme != scheme:
-                    raise MarkpactError(
-                        f"{source_path}: pattern {pattern!r} scheme {item_scheme!r} != contract scheme {scheme!r}."
-                    )
-                routes.append(item)
-
-        resources = data.get("resources") or []
-        if not routes and not resources:
-            raise MarkpactError(f"{source_path}: contract must define queries, commands, or resources.")
-
-        return {
-            "ok": True,
-            "kind": "contract",
-            "path": str(source_path),
-            "contract_id": contract_id,
-            "scheme": scheme,
-            "capabilities": len(routes),
-            "resources": len(resources) if isinstance(resources, list) else 0,
-            "source_hash": self.source_hash(source_path),
-            "warnings": warnings,
-        }
-
-    def _validate_bundle(self, source_path: Path, data: dict[str, Any]) -> dict[str, Any]:
-        if not isinstance(data, dict):
-            raise MarkpactError(f"{source_path}: markpact:bundle block must contain a YAML mapping.")
-        metadata = data.get("metadata") or {}
-        bundle_id = str(metadata.get("id") or "").strip()
-        if not bundle_id:
-            raise MarkpactError(f"{source_path}: bundle metadata.id is required.")
-        kind = str(data.get("kind") or "UriBundle")
-        if kind != "UriBundle":
-            raise MarkpactError(f"{source_path}: expected kind UriBundle, got {kind!r}.")
-
-        imports = data.get("imports") or {}
-        warnings: list[str] = []
-        missing: list[str] = []
-        if isinstance(imports, dict):
-            for section in ("contracts", "implementations"):
-                for rel in imports.get(section) or []:
-                    ref = source_path.parent / str(rel)
-                    if not ref.is_file():
-                        missing.append(str(rel))
-        if missing:
-            warnings.append(f"Missing import files: {', '.join(missing)}")
-
-        return {
-            "ok": not missing,
-            "kind": "bundle",
-            "path": str(source_path),
-            "bundle_id": bundle_id,
-            "imports": imports,
-            "source_hash": self.source_hash(source_path),
-            "warnings": warnings,
-        }
-
-    def _validate_implementation(self, source_path: Path, data: dict[str, Any]) -> dict[str, Any]:
-        if not isinstance(data, dict):
-            raise MarkpactError(f"{source_path}: markpact:implementation block must contain a YAML mapping.")
-        metadata = data.get("metadata") or {}
-        impl_id = str(metadata.get("id") or "").strip()
-        if not impl_id:
-            raise MarkpactError(f"{source_path}: implementation metadata.id is required.")
-        kind = str(data.get("kind") or "UriImplementation")
-        if kind != "UriImplementation":
-            raise MarkpactError(f"{source_path}: expected kind UriImplementation, got {kind!r}.")
-
-        implements = data.get("implements") or {}
-        contract_ref = ""
-        if isinstance(implements, dict):
-            contract_ref = str(implements.get("contract") or "").strip()
-        if not contract_ref:
-            raise MarkpactError(f"{source_path}: implementation implements.contract is required.")
-
-        capabilities = data.get("capabilities") or []
-        if not isinstance(capabilities, list) or not capabilities:
-            raise MarkpactError(f"{source_path}: implementation must declare capabilities.")
-
-        warnings: list[str] = []
-        for item in capabilities:
-            if not isinstance(item, dict):
-                raise MarkpactError(f"{source_path}: invalid implementation capability entry.")
-            handler = str(item.get("handler") or "").strip()
-            if not handler:
-                warnings.append("Capability without handler reference.")
-
-        return {
-            "ok": True,
-            "kind": "implementation",
-            "path": str(source_path),
-            "implementation_id": impl_id,
-            "implements": contract_ref,
-            "capabilities": len(capabilities),
             "source_hash": self.source_hash(source_path),
             "warnings": warnings,
         }
@@ -465,46 +271,62 @@ class MarkpactManager:
             ctrl.close()
         return {"ok": all(r["ok"] for r in results), "compiled": compiled.to_dict(), "tests": results}
 
+    def _build_route(
+        self,
+        item: dict[str, Any],
+        *,
+        package_id: str,
+        scheme: str,
+        module_name: str,
+        handlers: dict[str, str],
+    ) -> dict[str, Any]:
+        """Compile one capability entry into a manifest route, registering its
+        generated python handler in ``handlers`` when the source is a markpact://
+        or python:// reference."""
+        pattern = str(item.get("pattern") or item.get("uri") or "")
+        if not pattern:
+            raise MarkpactError(f"Capability in {package_id!r} has no uri/pattern: {item!r}")
+        item_scheme = _scheme_from_uri(pattern)
+        if item_scheme != scheme:
+            raise MarkpactError(
+                f"UriPack Markpact currently supports one scheme per file. Expected {scheme!r}, got {item_scheme!r}."
+            )
+        operation = str(item.get("operation") or item.get("id") or "").split(".")[-1].replace("-", "_")
+        if not operation:
+            raise MarkpactError(f"Capability has no operation/id: {item!r}")
+        kind = str(item.get("kind") or ("command" if "/command/" in pattern else "query"))
+        handler_ref = item.get("handler")
+        if isinstance(handler_ref, str) and handler_ref.startswith("markpact://"):
+            handler_id = self._handler_id_from_ref(handler_ref)
+            handlers[operation] = f"python://{module_name}.{_safe_identifier(handler_id)}:handle"
+            handler_ref = handlers[operation]
+        elif isinstance(handler_ref, str) and handler_ref.startswith("python://"):
+            handlers[operation] = handler_ref
+        route = {
+            "pattern": pattern,
+            "kind": kind,
+            "operation": operation,
+            "side_effects": bool(item.get("side_effects", kind == "command")),
+            "approval": item.get("approval", "required" if kind == "command" else "not_required"),
+        }
+        for key in ["command_type", "query_type", "result_type", "success_event_type", "description"]:
+            if key in item:
+                route[key] = item[key]
+        if handler_ref:
+            route["handler"] = handler_ref
+        return route
+
     def _compile_manifest(self, pack: dict[str, Any], *, package_id: str, module_name: str, source_hash: str) -> dict[str, Any]:
         capabilities = self._capabilities(pack)
         scheme = self._scheme(pack, capabilities)
         version = pack.get("version") or (pack.get("metadata") or {}).get("version") or 1
         handlers: dict[str, str] = {}
-        uri_patterns = []
-
-        for item in capabilities:
-            pattern = str(item.get("pattern") or item.get("uri") or "")
-            if not pattern:
-                raise MarkpactError(f"Capability in {package_id!r} has no uri/pattern: {item!r}")
-            item_scheme = _scheme_from_uri(pattern)
-            if item_scheme != scheme:
-                raise MarkpactError(
-                    f"UriPack Markpact currently supports one scheme per file. Expected {scheme!r}, got {item_scheme!r}."
-                )
-            operation = str(item.get("operation") or item.get("id") or "").split(".")[-1].replace("-", "_")
-            if not operation:
-                raise MarkpactError(f"Capability has no operation/id: {item!r}")
-            kind = str(item.get("kind") or ("command" if "/command/" in pattern else "query"))
-            handler_ref = item.get("handler")
-            if isinstance(handler_ref, str) and handler_ref.startswith("markpact://"):
-                handler_id = self._handler_id_from_ref(handler_ref)
-                handlers[operation] = f"python://{module_name}.{_safe_identifier(handler_id)}:handle"
-                handler_ref = handlers[operation]
-            elif isinstance(handler_ref, str) and handler_ref.startswith("python://"):
-                handlers[operation] = handler_ref
-            route = {
-                "pattern": pattern,
-                "kind": kind,
-                "operation": operation,
-                "side_effects": bool(item.get("side_effects", kind == "command")),
-                "approval": item.get("approval", "required" if kind == "command" else "not_required"),
-            }
-            for key in ["command_type", "query_type", "result_type", "success_event_type", "description"]:
-                if key in item:
-                    route[key] = item[key]
-            if handler_ref:
-                route["handler"] = handler_ref
-            uri_patterns.append(route)
+        uri_patterns = [
+            self._build_route(
+                item, package_id=package_id, scheme=scheme, module_name=module_name, handlers=handlers
+            )
+            for item in capabilities
+        ]
 
         metadata = pack.get("metadata") or {}
         manifest = {

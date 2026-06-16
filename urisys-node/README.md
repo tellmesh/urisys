@@ -2,6 +2,16 @@
 
 **Jawnie zainstalowany slave runtime** — nie zastępuje RDP/SSH, tylko dodaje warstwę URI z parowaniem, policy i audytem.
 
+## Docker GUI (host → slave)
+
+Test integracyjny: kontener z Xvfb + `urisys-node serve :8790`, host steruje przez HTTP/route-map.
+
+```bash
+bash scripts/run-urisys-node-docker-e2e.sh
+```
+
+Szczegóły: [docker/README.md](docker/README.md)
+
 ## Instalacja
 
 ```bash

@@ -2,13 +2,15 @@
 
 app {
   name: urisys;
-  version: 0.1.12;
+  version: 0.1.15;
 }
 
 dependencies {
   runtime: "uricore>=0.1.0, PyYAML>=6.0";
   dev: "pytest>=8.0, uricore, uribrowser, uridocker, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60";
   lab: uri2flow>=0.1.2;
+  real: "mss>=9.0, Pillow>=10.0, pyautogui>=0.9.54, pytesseract>=0.3.10, litellm>=1.40";
+  discovery: zeroconf>=0.131.0;
 }
 
 interface[type="cli"] {
@@ -16,6 +18,9 @@ interface[type="cli"] {
 }
 interface[type="cli"] page[name="urisys"] {
   entry: urisys.cli:main;
+}
+interface[type="cli"] page[name="urisys-node"] {
+  entry: urisysnode.cli:main;
 }
 
 tests {

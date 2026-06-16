@@ -108,6 +108,8 @@ Gdy `expect:` jest obecny, jego złamanie ustawia flow na `fail` z czytelnym `de
 | Klucz | Typ | Znaczenie |
 |-------|-----|-----------|
 | `screen_changed` | bool | Screenshot po flow różni się od baseline (`true`) / pozostaje bez zmian (`false`) |
+| `screen_changed_since_previous` | bool | Screenshot różni się od poprzedniego flow (np. nawigacja Chromium) |
+| `opened_url_contains` | str | Krok `browser://…/open` musi zwrócić URL zawierający podciąg |
 | `ocr_contains` | list[str] | Każdy podciąg musi wystąpić w tekście OCR któregoś kroku |
 | `min_vision_confidence` | float | Przynajmniej jedno wywołanie LLM-vision musi osiągnąć ≥ próg (inaczej klik jest „na ślepo") |
 

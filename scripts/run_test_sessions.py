@@ -720,6 +720,7 @@ def evaluate_expectations(
     *,
     screenshot_md5: str | None = None,
     baseline_md5: str | None = None,
+    previous_md5: str | None = None,
     duplicate_of: str | None = None,
     step_results: list[dict[str, Any]] | None = None,
 ) -> list[str]:
@@ -727,9 +728,11 @@ def evaluate_expectations(
     Returns a list of human-readable failures (empty == contract satisfied).
 
     Supported keys:
-      screen_changed: bool          post-flow screenshot differs from 00-baseline
-      ocr_contains: [str, ...]      each substring must appear in some OCR text
-      min_vision_confidence: float  at least one vision call must reach this
+      screen_changed: bool                    post-flow screenshot differs from 00-baseline
+      screen_changed_since_previous: bool     post-flow screenshot differs from prior flow
+      opened_url_contains: str                browser open step must report URL containing substring
+      ocr_contains: [str, ...]                each substring must appear in some OCR text
+      min_vision_confidence: float            at least one vision call must reach this
     """
     failures: list[str] = []
     if not expect:
@@ -748,6 +751,32 @@ def evaluate_expectations(
                 f"screen_changed: expected {want}, got {changed} "
                 f"(baseline={baseline_md5}, md5={screenshot_md5}, duplicate_of={duplicate_of})"
             )
+
+    if "screen_changed_since_previous" in expect:
+        want = bool(expect["screen_changed_since_previous"])
+        if previous_md5 and screenshot_md5:
+            changed = screenshot_md5 != previous_md5
+        else:
+            changed = duplicate_of is None
+        if changed != want:
+            failures.append(
+                f"screen_changed_since_previous: expected {want}, got {changed} "
+                f"(previous={previous_md5}, md5={screenshot_md5}, duplicate_of={duplicate_of})"
+            )
+
+    if "opened_url_contains" in expect:
+        needle = str(expect["opened_url_contains"]).lower()
+        urls: list[str] = []
+        for step in step_results:
+            result = ((step.get("response") or {}).get("result")) or {}
+            for key in ("url",):
+                if isinstance(result.get(key), str):
+                    urls.append(result[key])
+            inner = result.get("result") if isinstance(result.get("result"), dict) else {}
+            if isinstance(inner, dict) and isinstance(inner.get("url"), str):
+                urls.append(inner["url"])
+        if not any(needle in u.lower() for u in urls):
+            failures.append(f"opened_url_contains: '{expect['opened_url_contains']}' not in browser URLs {urls!r}")
 
     wanted = expect.get("ocr_contains") or []
     if wanted:
@@ -1044,6 +1073,7 @@ def session_lab_10_flows(session_dir: Path) -> int:
                 expect,
                 screenshot_md5=png_md5,
                 baseline_md5=screenshot_hashes.get("00-baseline"),
+                previous_md5=prev_md5,
                 duplicate_of=duplicate_of,
                 step_results=step_results,
             )

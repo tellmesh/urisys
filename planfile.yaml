@@ -836,162 +836,6 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
-  - id: ticket-1487c601
-    name: Fix relative-imports issues
-    description: Resolve 4 relative-imports issues in uristepper-docker/packages/python/urisysedge/cli.py
-    task_type: prefactor
-    priority: medium
-    estimate: 2d
-    files:
-    - uristepper-docker/packages/python/urisysedge/cli.py
-    rule_id: relative-imports
-    count: 4
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-a0438550
-    name: Fix smart-return-type issues
-    description: Resolve 7 smart-return-type issues in uristepper-docker/packages/python/urisysedge/cli.py
-    task_type: prefactor
-    priority: high
-    estimate: 2d
-    files:
-    - uristepper-docker/packages/python/urisysedge/cli.py
-    rule_id: smart-return-type
-    count: 7
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-41fe5e45
-    name: Fix unused-imports issues
-    description: Resolve 6 unused-imports issues in uristepper-docker/packages/python/urisysedge/cli.py
-    task_type: prefactor
-    priority: high
-    estimate: 2d
-    files:
-    - uristepper-docker/packages/python/urisysedge/cli.py
-    rule_id: unused-imports
-    count: 6
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-b44b1074
-    name: Fix magic-numbers issues
-    description: Resolve 2 magic-numbers issues in uristepper-docker/packages/python/urisysedge/cli.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - uristepper-docker/packages/python/urisysedge/cli.py
-    rule_id: magic-numbers
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-eda2163a
-    name: Fix ai-boilerplate issues
-    description: Resolve 1 ai-boilerplate issues in uristepper-docker/packages/python/urisysedge/cli.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - uristepper-docker/packages/python/urisysedge/cli.py
-    rule_id: ai-boilerplate
-    count: 1
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-dc3036ef
-    name: Fix relative-imports issues
-    description: Resolve 2 relative-imports issues in uristepper-docker/packages/python/urisysedge/server.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - uristepper-docker/packages/python/urisysedge/server.py
-    rule_id: relative-imports
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-3bbd4861
-    name: Fix smart-return-type issues
-    description: Resolve 6 smart-return-type issues in uristepper-docker/packages/python/urisysedge/server.py
-    task_type: prefactor
-    priority: high
-    estimate: 2d
-    files:
-    - uristepper-docker/packages/python/urisysedge/server.py
-    rule_id: smart-return-type
-    count: 6
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-0fcc2acc
-    name: Fix string-concat issues
-    description: Resolve 1 string-concat issues in uristepper-docker/packages/python/urisysedge/server.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - uristepper-docker/packages/python/urisysedge/server.py
-    rule_id: string-concat
-    count: 1
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-7a036879
-    name: Fix unused-imports issues
-    description: Resolve 2 unused-imports issues in uristepper-docker/packages/python/urisysedge/server.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - uristepper-docker/packages/python/urisysedge/server.py
-    rule_id: unused-imports
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-1538135c
-    name: Fix magic-numbers issues
-    description: Resolve 13 magic-numbers issues in uristepper-docker/packages/python/urisysedge/server.py
-    task_type: prefactor
-    priority: high
-    estimate: 3d
-    files:
-    - uristepper-docker/packages/python/urisysedge/server.py
-    rule_id: magic-numbers
-    count: 13
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-b106be37
-    name: Fix string-concat issues
-    description: Resolve 3 string-concat issues in uristepper-docker/packages/python/urisysedge/runtime.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - uristepper-docker/packages/python/urisysedge/runtime.py
-    rule_id: string-concat
-    count: 3
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-c2e8d82c
-    name: Fix unused-imports issues
-    description: Resolve 10 unused-imports issues in uristepper-docker/packages/python/urisysedge/runtime.py
-    task_type: prefactor
-    priority: high
-    estimate: 2d
-    files:
-    - uristepper-docker/packages/python/urisysedge/runtime.py
-    rule_id: unused-imports
-    count: 10
-    model_hints:
-      planning: balanced
-      implementation: balanced
   - id: ticket-210b19c0
     name: Fix smart-return-type issues
     description: Resolve 1 smart-return-type issues in uribrowser-docker/packages/python/uribrowserdocker/routes.py
@@ -1314,6 +1158,162 @@ sprints:
     - urikvm-docker/packages/python/urihim/handlers.py
     rule_id: smart-return-type
     count: 5
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0ffc369f
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in tests/test_run_expectations.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_run_expectations.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-eaf7d426
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_run_expectations.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_run_expectations.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-eff7ecf8
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urikvm-docker/packages/python/urihim/handlers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urikvm-docker/packages/python/urihim/handlers.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-89864dc1
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in urikvm-docker/packages/python/urihim/routes.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urikvm-docker/packages/python/urihim/routes.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-050b3e53
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in urikvm-docker/packages/python/urikvm/handlers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - urikvm-docker/packages/python/urikvm/handlers.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4a179497
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in urikvm-docker/packages/python/urikvm/handlers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urikvm-docker/packages/python/urikvm/handlers.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b40ea12d
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in urikvm-docker/packages/python/urikvm/routes.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urikvm-docker/packages/python/urikvm/routes.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-94518524
+    name: Fix relative-imports issues
+    description: Resolve 4 relative-imports issues in urikvm-docker/packages/python/urikvmedge/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - urikvm-docker/packages/python/urikvmedge/cli.py
+    rule_id: relative-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-7f39f9fb
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in urikvm-docker/packages/python/urikvmedge/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urikvm-docker/packages/python/urikvmedge/cli.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-52d52603
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in urikvm-docker/packages/python/urikvmedge/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urikvm-docker/packages/python/urikvmedge/cli.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b4eb1a0e
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in urikvm-docker/packages/python/urikvmedge/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urikvm-docker/packages/python/urikvmedge/cli.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-297f57b6
+    name: Fix duplicate-imports issues
+    description: Resolve 2 duplicate-imports issues in urikvm-docker/packages/python/urillm/handlers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urikvm-docker/packages/python/urillm/handlers.py
+    rule_id: duplicate-imports
+    count: 2
     model_hints:
       planning: balanced
       implementation: balanced

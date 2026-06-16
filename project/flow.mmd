@@ -1,26 +1,26 @@
 flowchart TD
-%% generated in 0.01s
+%% generated in 0.02s
 
     %% Entry points (blue)
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph Core
+        packages__python__urisysedge__runtime__Route__compile["compile"]
+        packages__python__urisysedge__runtime__Route__match["match"]
+        packages__python__urisysedge__runtime__JsonlEventStore__append["append"]
+        packages__python__urisysedge__runtime__JsonlEventStore__tail["tail"]
+        packages__python__urisysedge__runtime__Runtime__register["register"]
+        packages__python__urisysedge__runtime__Runtime__resolve["resolve"]
+        packages__python__urisysedge__runtime__Runtime___load_handler["_load_handler"]
+        packages__python__urisysedge__runtime__Runtime__call["call"]
+        packages__python__urisysedge__runtime__serve["serve"]
         src__urisys__cli___json_arg["_json_arg"]
         src__urisys__cli__print_json["print_json"]
         src__urisys__cli___add_runtime_flags["_add_runtime_flags"]
         src__urisys__cli__resolve_markpact_source["resolve_markpact_source"]
         src__urisys__cli__build_parser["build_parser"]
         src__urisys__cli__main["main"]
-        src__urisys__controllers__flow_controller__FlowController__run["run"]
-        src__urisys__controllers__flow_controller__FlowController__close["close"]
-        src__urisys__controllers__server_controller__ServerController__serve_forever["serve_forever"]
-        src__urisys__controllers__uri_controller__UriController__call["call"]
-        src__urisys__controllers__uri_controller__UriController__explain["explain"]
-        src__urisys__controllers__uri_controller__UriController__routes["routes"]
-        src__urisys__controllers__uri_controller__UriController__close["close"]
-        src__urisys__managers__event_manager__EventManager__list_events["list_events"]
-        src__urisys__managers__policy_manager__PolicyManager__build_context["build_context"]
-        ...["+250 more"]
+        ...["+266 more"]
     end
 
-    class src__urisys__cli___json_arg,src__urisys__cli__print_json,src__urisys__cli___add_runtime_flags,src__urisys__cli__resolve_markpact_source,src__urisys__cli__build_parser,src__urisys__cli__main,src__urisys__controllers__flow_controller__FlowController__run,src__urisys__controllers__flow_controller__FlowController__close,src__urisys__controllers__server_controller__ServerController__serve_forever,src__urisys__controllers__uri_controller__UriController__call entry
+    class packages__python__urisysedge__runtime__Route__compile,packages__python__urisysedge__runtime__Route__match,packages__python__urisysedge__runtime__JsonlEventStore__append,packages__python__urisysedge__runtime__JsonlEventStore__tail,packages__python__urisysedge__runtime__Runtime__register,packages__python__urisysedge__runtime__Runtime__resolve,packages__python__urisysedge__runtime__Runtime___load_handler,packages__python__urisysedge__runtime__Runtime__call,packages__python__urisysedge__runtime__serve,src__urisys__cli___json_arg entry

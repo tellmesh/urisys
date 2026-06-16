@@ -1,0 +1,16 @@
+{
+  "profile_id": "urisys-node-docker-gui",
+  "node_id": "docker-slave",
+  "screen": {
+    "default_backend": "mss",
+    "output_dir": "/opt/urisys-node/data/screens",
+    "monitors": {
+      "primary": { "index": 1 }
+    }
+  },
+  "policy": {
+    "require_pairing": false,
+    "require_approval_for": ["him.*", "kvm.task.*"],
+    "visible_indicator": true
+  }
+}

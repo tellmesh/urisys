@@ -89,7 +89,36 @@ def _tail(text: str, limit: int = 4000) -> str:
 
 def _summarize_events(events_path: Path, *, since_iso: str | None = None) -> dict[str, Any]:
     if not events_path.is_file():
-        return {"count": 0, "kinds": {}, "failures": []}
+        return {"count": 0, "kinds": {}, "failures": [], "source": str(events_path)}
+
+    def _scan(*, since_ms: int) -> tuple[int, dict[str, int], list[dict[str, str]]]:
+        kinds: dict[str, int] = {}
+        failures: list[dict[str, str]] = []
+        count = 0
+        for line in events_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                ev = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            ts = int(ev.get("occurred_at_unix_ms") or 0)
+            if since_ms and ts and ts < since_ms:
+                continue
+            count += 1
+            et = str(ev.get("event_type") or ev.get("operation") or "unknown")
+            kinds[et] = kinds.get(et, 0) + 1
+            if ".failed" in et or ev.get("error"):
+                failures.append(
+                    {
+                        "event_type": et,
+                        "operation": str(ev.get("operation") or ""),
+                        "error": str(ev.get("error") or ev.get("result", {}).get("error") or "")[:200],
+                    }
+                )
+        return count, kinds, failures[:20]
+
     since_ms = 0
     if since_iso:
         try:
@@ -98,32 +127,67 @@ def _summarize_events(events_path: Path, *, since_iso: str | None = None) -> dic
             )
         except ValueError:
             since_ms = 0
-    kinds: dict[str, int] = {}
-    failures: list[dict[str, str]] = []
-    count = 0
-    for line in events_path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if not line:
-            continue
-        try:
-            ev = json.loads(line)
-        except json.JSONDecodeError:
-            continue
-        ts = int(ev.get("occurred_at_unix_ms") or 0)
-        if since_ms and ts and ts < since_ms:
-            continue
-        count += 1
-        et = str(ev.get("event_type") or ev.get("operation") or "unknown")
-        kinds[et] = kinds.get(et, 0) + 1
-        if ".failed" in et or ev.get("error"):
-            failures.append(
-                {
-                    "event_type": et,
-                    "operation": str(ev.get("operation") or ""),
-                    "error": str(ev.get("error") or ev.get("result", {}).get("error") or "")[:200],
-                }
-            )
-    return {"count": count, "kinds": kinds, "failures": failures[:20]}
+
+    count, kinds, failures = _scan(since_ms=since_ms)
+    stale_log = False
+    if count == 0 and since_ms and events_path.stat().st_size > 0:
+        count, kinds, failures = _scan(since_ms=0)
+        stale_log = count > 0
+
+    out: dict[str, Any] = {
+        "count": count,
+        "kinds": kinds,
+        "failures": failures,
+        "source": str(events_path.name),
+    }
+    if stale_log:
+        out["stale_log"] = True
+        out["note"] = "event timestamps predate session started_at; showing full file"
+    return out
+
+
+def _resolve_events_paths(session_dir: Path) -> list[Path]:
+    paths: list[Path] = []
+    for name in ("events.jsonl", "events-urirdp.jsonl", "events-lab.jsonl"):
+        path = session_dir / name
+        if path.is_file():
+            paths.append(path)
+    data_events = session_dir / "data" / "events.jsonl"
+    if data_events.is_file() and data_events not in paths:
+        paths.append(data_events)
+    return paths
+
+
+def _merge_event_summaries(paths: list[Path], *, since_iso: str | None) -> dict[str, Any]:
+    if not paths:
+        return {"count": 0, "kinds": {}, "failures": [], "sources": []}
+    merged_kinds: dict[str, int] = {}
+    merged_failures: list[dict[str, str]] = []
+    total = 0
+    sources: list[str] = []
+    stale = False
+    notes: list[str] = []
+    for path in paths:
+        part = _summarize_events(path, since_iso=since_iso)
+        total += int(part.get("count") or 0)
+        sources.append(str(path.name))
+        for kind, n in (part.get("kinds") or {}).items():
+            merged_kinds[kind] = merged_kinds.get(kind, 0) + int(n)
+        merged_failures.extend(part.get("failures") or [])
+        if part.get("stale_log"):
+            stale = True
+            if note := part.get("note"):
+                notes.append(note)
+    out: dict[str, Any] = {
+        "count": total,
+        "kinds": merged_kinds,
+        "failures": merged_failures[:20],
+        "sources": sources,
+    }
+    if stale:
+        out["stale_log"] = True
+        out["note"] = "; ".join(dict.fromkeys(notes))
+    return out
 
 
 def _infer_steps(session_dir: Path, meta: dict[str, Any]) -> list[StepResult]:
@@ -196,9 +260,7 @@ def generate_report(session_dir: Path) -> SessionReport:
     log_tail = _tail(log_path.read_text(encoding="utf-8", errors="replace")) if log_path.is_file() else ""
 
     steps = _infer_steps(session_dir, meta)
-    events_path = session_dir / "events.jsonl"
-    if not events_path.is_file() and (session_dir / "data" / "events.jsonl").is_file():
-        events_path = session_dir / "data" / "events.jsonl"
+    event_paths = _resolve_events_paths(session_dir)
 
     started = str(meta.get("started_at") or _now_iso())
     finished = str(meta.get("finished_at") or _now_iso())
@@ -220,7 +282,7 @@ def generate_report(session_dir: Path) -> SessionReport:
         host=str(meta.get("host") or _host_id()),
         steps=steps,
         artifacts=_collect_artifacts(session_dir),
-        events_summary=_summarize_events(events_path, since_iso=started),
+        events_summary=_merge_event_summaries(event_paths, since_iso=started),
         meta=meta,
         log_tail=log_tail,
     )
@@ -364,6 +426,7 @@ class FlowOutcome:
     duplicate_of: str | None
     vision_confidences: list[float] = field(default_factory=list)
     has_contract: bool = False
+    expect: dict[str, Any] = field(default_factory=dict)
     expect_failures: list[str] = field(default_factory=list)
 
     @property
@@ -400,13 +463,15 @@ def _load_flow_outcomes(session_dir: Path) -> list[FlowOutcome]:
             for r in _iter_step_results(steps)
             if "action" in r and "confidence" in r and "model" in r
         ]
+        expect_data = dict(data.get("expect") or {})
         outcomes.append(
             FlowOutcome(
                 flow=str(data.get("flow") or resp_path.stem),
                 is_gui=any(str(s.get("uri") or "").startswith(GUI_SCHEMES) for s in steps),
                 duplicate_of=data.get("duplicate_of"),
                 vision_confidences=confidences,
-                has_contract=bool(data.get("expect")),
+                has_contract=bool(expect_data),
+                expect=expect_data,
                 expect_failures=list(data.get("expect_failures") or []),
             )
         )
@@ -468,9 +533,68 @@ def check_vision_never_decides(outcomes: list[FlowOutcome]) -> list[Finding]:
     ]
 
 
+def check_duplicate_screenshots(outcomes: list[FlowOutcome]) -> list[Finding]:
+    findings: list[Finding] = []
+    for o in outcomes:
+        if not o.duplicate_of:
+            continue
+        if not o.is_gui and o.duplicate_of == BASELINE_LABEL:
+            continue
+        msg = f"Flow `{o.flow}` — screenshot identyczny z `{o.duplicate_of}` (md5 duplicate)."
+        rec = ""
+        if o.duplicate_of == BASELINE_LABEL and o.is_gui:
+            rec = (
+                "Flow GUI nie zmienił pulpitu względem baseline — rozważ dismiss-target "
+                "przed akcją lub dodaj `expect: screen_changed: true`."
+            )
+        elif o.expect.get("opened_url_contains"):
+            rec = (
+                "Duplikat pikseli jest akceptowalny — flow weryfikuje nawigację przez "
+                "`opened_url_contains`, nie diff screenshotu."
+            )
+        elif o.has_contract:
+            rec = (
+                "Dodaj `screen_changed_since_previous: true` lub `opened_url_contains` "
+                "gdy flow musi udowodnić efekt poza samym screenshotem."
+            )
+        elif o.duplicate_of != BASELINE_LABEL:
+            rec = (
+                "Flow protokołowy (np. WebRTC) może nie zmieniać pulpitu — "
+                "to informacja, nie fail, jeśli brak `expect: screen_changed`."
+            )
+        findings.append(Finding(code="duplicate-screenshot", message=msg, recommendation=rec))
+    return findings
+
+
+def check_shell_baseline_duplicate(outcomes: list[FlowOutcome]) -> list[Finding]:
+    """Shell/TUI flows that never touch the RDP desktop still duplicate baseline — informational."""
+    flows = [
+        o.flow
+        for o in outcomes
+        if not o.is_gui and o.duplicate_of == BASELINE_LABEL and not o.has_contract
+    ]
+    if not flows:
+        return []
+    return [
+        Finding(
+            code="shell-baseline-duplicate",
+            message=(
+                f"Flow shell/TUI bez efektu na pulpicie RDP (screenshot == baseline): "
+                f"{', '.join(flows)}."
+            ),
+            recommendation=(
+                "To oczekiwane dla kroków apt/shell w kontenerze — transport ok. "
+                "Dla obserwowalności rozważ osobny krok kvm:// screenshot lub `expect:`."
+            ),
+        )
+    ]
+
+
 # Registry: add a check function here, no edits to the analysis loop.
 LAB_FLOW_CHECKS: list[Callable[[list[FlowOutcome]], list[Finding]]] = [
     check_declared_expectations,
+    check_duplicate_screenshots,
+    check_shell_baseline_duplicate,
     check_gui_no_effect,
     check_vision_never_decides,
 ]
@@ -564,7 +688,15 @@ def analyze_run(run_dir: Path) -> RunAnalysis:
             "Zatrzymaj stack labu (`docker-down.sh`) przed testami urirdp na portach 3389/8795."
         )
     if summary.get("fail", 0) == 0 and summary.get("pass", 0) > 0:
-        recommendations.append("Wszystkie sesje przeszły — rozważ dodanie tych testów do CI jako nightly job z archiwizacją raportów.")
+        if any("screenshot identyczny" in f or "shell/TUI bez efektu" in f for f in findings):
+            recommendations.append(
+                "Sesja PASS transportowo, ale analiza wykryła duplikaty screenshotów — "
+                "przejrzyj Findings i kontrakty `expect:` przed uznaniem runu za w pełni wiarygodny."
+            )
+        else:
+            recommendations.append(
+                "Wszystkie sesje przeszły — rozważ dodanie tych testów do CI jako nightly job z archiwizacją raportów."
+            )
 
     if durations:
         findings.append(

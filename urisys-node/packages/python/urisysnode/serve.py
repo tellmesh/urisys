@@ -1,14 +1,28 @@
 from __future__ import annotations
 
+import importlib
 import json
 import os
 import sys
+import warnings
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
 from .identity import health_payload, load_identity
 from .runtime import Runtime, load_json
+
+# pack alias -> module exposing register(runtime). `node` is the package's own
+# routes (always present); the rest are optional hardware/AI capability packs.
+PACK_MODULES: dict[str, str] = {
+    "node": "urisysnode.routes",
+    "screen": "uriscreen.routes",
+    "kvm": "urikvm",
+    "him": "urihim",
+    "ocr": "uriocr",
+    "llm": "urillm",
+}
+CORE_PACKS = {"node"}
 
 
 def _extend_pack_paths() -> None:
@@ -17,6 +31,32 @@ def _extend_pack_paths() -> None:
         path = (root / rel).resolve()
         if path.is_dir() and str(path) not in sys.path:
             sys.path.insert(0, str(path))
+
+
+def _register_pack(rt: Runtime, pack: str) -> bool:
+    """Import and register one capability pack. Optional packs that are not
+    installed are skipped with a warning so the node still serves the rest."""
+    module_name = PACK_MODULES.get(pack)
+    if module_name is None:
+        warnings.warn(f"Unknown urisys-node pack '{pack}' — skipping.", stacklevel=2)
+        return False
+    try:
+        module = importlib.import_module(module_name)
+    except ModuleNotFoundError as exc:
+        top = module_name.split(".", 1)[0]
+        # A missing dependency *of* an installed pack must not be swallowed.
+        if exc.name not in (module_name, top):
+            raise
+        if pack in CORE_PACKS:
+            raise
+        warnings.warn(
+            f"Skipping urisys-node pack '{pack}': module '{module_name}' is not "
+            f"installed (pip install {top}).",
+            stacklevel=2,
+        )
+        return False
+    module.register(rt)
+    return True
 
 
 def build_runtime(config_path: str | None = None) -> Runtime:
@@ -31,30 +71,8 @@ def build_runtime(config_path: str | None = None) -> Runtime:
     packs = os.environ.get("URISYS_NODE_PACKS", "node,screen,kvm,him,ocr,llm").split(",")
     packs = [p.strip() for p in packs if p.strip()]
 
-    if "node" in packs:
-        import urisysnode.routes as node_routes
-
-        node_routes.register(rt)
-    if "screen" in packs:
-        import uriscreen.routes as screen_routes
-
-        screen_routes.register(rt)
-    if "kvm" in packs:
-        import urikvm
-
-        urikvm.register(rt)
-    if "him" in packs:
-        import urihim
-
-        urihim.register(rt)
-    if "ocr" in packs:
-        import uriocr
-
-        uriocr.register(rt)
-    if "llm" in packs:
-        import urillm
-
-        urillm.register(rt)
+    for pack in packs:
+        _register_pack(rt, pack)
 
     return rt
 

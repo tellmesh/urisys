@@ -46,6 +46,44 @@ def _chromium_binary(profile: dict[str, Any]) -> str | None:
     return None
 
 
+def _close_chromium(context: dict[str, Any]) -> None:
+    """Stop prior Chromium app windows so a new URL produces a fresh desktop frame."""
+    if context.get("dry_run") or not context.get("allow_real"):
+        return
+    env = os.environ.copy()
+    display = context.get("display") or env.get("DISPLAY")
+    if display:
+        env["DISPLAY"] = str(display)
+    xauth = context.get("xauthority")
+    if xauth:
+        env["XAUTHORITY"] = str(xauth)
+    subprocess.run(
+        ["pkill", "-f", "chromium"],
+        env=env,
+        capture_output=True,
+        timeout=5,
+        check=False,
+    )
+    for wid in subprocess.run(
+        ["xdotool", "search", "--class", "chromium"],
+        env=env,
+        capture_output=True,
+        text=True,
+        timeout=5,
+        check=False,
+    ).stdout.splitlines():
+        wid = wid.strip()
+        if wid:
+            subprocess.run(
+                ["xdotool", "windowclose", wid],
+                env=env,
+                capture_output=True,
+                timeout=3,
+                check=False,
+            )
+    time.sleep(0.8)
+
+
 def open_page(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
     profile = _profile(context)
     driver = payload.get("driver") or profile.get("driver", "mock")
@@ -65,6 +103,8 @@ def open_page(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any
         raise RuntimeError("display-chromium driver requires chromium in PATH")
 
     _dismiss_stale_targets(context)
+    if payload.get("replace", True):
+        _close_chromium(context)
     env = os.environ.copy()
     display = context.get("display") or env.get("DISPLAY")
     if display:

@@ -222,6 +222,31 @@ def _mock_decide(question: str, context_value: Any) -> dict[str, Any]:
     }
 
 
+def _decide_litellm(messages, model, context, *, temperature, max_tokens):
+    if not str(model).startswith('openrouter/') and resolve_env_var('OPENROUTER_API_KEY', context, secret=True):
+        model = f'openrouter/{model.lstrip("openrouter/")}'
+    return _litellm_chat(messages, model, temperature=temperature, max_tokens=max_tokens), model
+
+
+def _decide_openai(messages, model, api_key, base_url, context, *, temperature, max_tokens):
+    if not base_url:
+        base_url = 'https://openrouter.ai/api/v1' if resolve_env_var('OPENROUTER_API_KEY', context, secret=True) else 'https://api.openai.com/v1'
+    return _openai_compatible_chat(messages, model, api_key, base_url, temperature, max_tokens), model
+
+
+def _decision_from_parsed(parsed: dict[str, Any], model: str, question: str) -> dict[str, Any]:
+    decision = str(parsed.get('decision') or ('retry' if parsed.get('ok') else 'abort')).lower()
+    ok = bool(parsed.get('ok')) if 'ok' in parsed else decision == 'retry'
+    return {
+        'ok': ok,
+        'decision': decision,
+        'reason': str(parsed.get('reason') or 'llm-decide'),
+        'confidence': float(parsed.get('confidence', 0.7)),
+        'model': model,
+        'question': question,
+    }
+
+
 def decide(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
     cfg = _llm_cfg(context)
     driver = cfg.get('driver', 'mock')
@@ -250,25 +275,12 @@ def decide(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
 
     try:
         if driver == 'litellm':
-            if not str(model).startswith('openrouter/') and resolve_env_var('OPENROUTER_API_KEY', context, secret=True):
-                model = f'openrouter/{model.lstrip("openrouter/")}'
-            parsed = _litellm_chat(messages, model, temperature=temperature, max_tokens=max_tokens)
+            parsed, model = _decide_litellm(messages, model, context, temperature=temperature, max_tokens=max_tokens)
         elif driver in ('openai', 'openrouter'):
-            if not base_url:
-                base_url = 'https://openrouter.ai/api/v1' if resolve_env_var('OPENROUTER_API_KEY', context, secret=True) else 'https://api.openai.com/v1'
-            parsed = _openai_compatible_chat(messages, model, api_key, base_url, temperature, max_tokens)
+            parsed, model = _decide_openai(messages, model, api_key, base_url, context, temperature=temperature, max_tokens=max_tokens)
         else:
             return _mock_decide(question, context_value)
-        decision = str(parsed.get('decision') or ('retry' if parsed.get('ok') else 'abort')).lower()
-        ok = bool(parsed.get('ok')) if 'ok' in parsed else decision == 'retry'
-        return {
-            'ok': ok,
-            'decision': decision,
-            'reason': str(parsed.get('reason') or 'llm-decide'),
-            'confidence': float(parsed.get('confidence', 0.7)),
-            'model': model,
-            'question': question,
-        }
+        return _decision_from_parsed(parsed, model, question)
     except (urllib.error.URLError, TimeoutError, KeyError, json.JSONDecodeError, ValueError, RuntimeError):
         return _mock_decide(question, context_value)
 

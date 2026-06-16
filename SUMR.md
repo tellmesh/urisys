@@ -15,7 +15,7 @@ SUMD - Structured Unified Markdown Descriptor for AI-aware project refactorizati
 ## Metadata
 
 - **name**: `urisys`
-- **version**: `0.1.12`
+- **version**: `0.1.15`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -35,13 +35,15 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: urisys;
-  version: 0.1.12;
+  version: 0.1.15;
 }
 
 dependencies {
   runtime: "uricore>=0.1.0, PyYAML>=6.0";
   dev: "pytest>=8.0, uricore, uribrowser, uridocker, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60";
   lab: uri2flow>=0.1.2;
+  real: "mss>=9.0, Pillow>=10.0, pyautogui>=0.9.54, pytesseract>=0.3.10, litellm>=1.40";
+  discovery: zeroconf>=0.131.0;
 }
 
 interface[type="cli"] {
@@ -49,6 +51,9 @@ interface[type="cli"] {
 }
 interface[type="cli"] page[name="urisys"] {
   entry: urisys.cli:main;
+}
+interface[type="cli"] page[name="urisys-node"] {
+  entry: urisysnode.cli:main;
 }
 
 tests {
@@ -97,68 +102,68 @@ pfix>=0.1.60
 
 ## Call Graph
 
-*275 nodes · 352 edges · 53 modules · CC̄=3.9*
+*302 nodes · 399 edges · 54 modules · CC̄=4.1*
 
 ### Hubs (by degree)
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
+| `analyze_run` *(in scripts.session_report)* | 39 ⚠ | 2 | 69 | **71** |
 | `session_urirdp_real_docker` *(in scripts.run_test_sessions)* | 30 ⚠ | 0 | 69 | **69** |
-| `analyze_run` *(in scripts.session_report)* | 34 ⚠ | 2 | 64 | **66** |
-| `session_lab_10_flows` *(in scripts.run_test_sessions)* | 26 ⚠ | 0 | 56 | **56** |
+| `session_lab_10_flows` *(in scripts.run_test_sessions)* | 36 ⚠ | 0 | 65 | **65** |
+| `print` *(in scripts.run-nl-log-smoke)* | 0 | 60 | 0 | **60** |
 | `write_session_report` *(in scripts.session_report)* | 28 ⚠ | 2 | 50 | **52** |
-| `compile` *(in src.urisys.managers.markpact_manager.MarkpactManager)* | 21 ⚠ | 0 | 46 | **46** |
-| `make_handler` *(in uristepper-docker.packages.python.urisysedge.server)* | 1 | 1 | 43 | **44** |
-| `main` *(in src.urisys.cli)* | 18 ⚠ | 0 | 44 | **44** |
+| `main` *(in src.urisys.cli)* | 20 ⚠ | 0 | 49 | **49** |
+| `make_handler` *(in uristepper-docker.packages.python.uristepperedge.server)* | 1 | 1 | 43 | **44** |
 | `session_automation_lab` *(in scripts.run_test_sessions)* | 16 ⚠ | 1 | 43 | **44** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
-# generated in 0.13s
-# nodes: 275 | edges: 352 | modules: 53
-# CC̄=3.9
+# generated in 0.15s
+# nodes: 302 | edges: 399 | modules: 54
+# CC̄=4.1
 
 HUBS[20]:
+  scripts.session_report.analyze_run
+    CC=39  in:2  out:69  total:71
   scripts.run_test_sessions.session_urirdp_real_docker
     CC=30  in:0  out:69  total:69
-  scripts.session_report.analyze_run
-    CC=34  in:2  out:64  total:66
   scripts.run_test_sessions.session_lab_10_flows
-    CC=26  in:0  out:56  total:56
+    CC=36  in:0  out:65  total:65
+  scripts.run-nl-log-smoke.print
+    CC=0  in:60  out:0  total:60
   scripts.session_report.write_session_report
     CC=28  in:2  out:50  total:52
-  src.urisys.managers.markpact_manager.MarkpactManager.compile
-    CC=21  in:0  out:46  total:46
-  uristepper-docker.packages.python.urisysedge.server.make_handler
-    CC=1  in:1  out:43  total:44
   src.urisys.cli.main
-    CC=18  in:0  out:44  total:44
+    CC=20  in:0  out:49  total:49
+  uristepper-docker.packages.python.uristepperedge.server.make_handler
+    CC=1  in:1  out:43  total:44
   scripts.run_test_sessions.session_automation_lab
     CC=16  in:1  out:43  total:44
   urisys-automation-lab.server.flow_runner.run_flow_file
-    CC=13  in:1  out:39  total:40
+    CC=13  in:1  out:40  total:41
   urienv-docker.packages.python.urienv.src.urienv.handlers._cfg
     CC=7  in:9  out:29  total:38
-  scripts.run_test_sessions._run_cmd
-    CC=5  in:26  out:11  total:37
-  scripts.session_report.generate_report
-    CC=13  in:2  out:35  total:37
+  urirdp-docker.packages.python.urirdp_llm.handlers.decide
+    CC=23  in:0  out:38  total:38
   src.urisys.cli.build_parser
     CC=1  in:1  out:36  total:37
+  scripts.run_test_sessions._run_cmd
+    CC=5  in:26  out:11  total:37
   urienv-docker.packages.python.urisysedge.src.urisysedge.server.serve
     CC=1  in:0  out:36  total:36
-  src.urisys.managers.markpact_manager.MarkpactManager._compile_manifest
-    CC=28  in:0  out:35  total:35
-  urikvm-docker.packages.python.urillm.handlers._vision_analyze
-    CC=22  in:1  out:34  total:35
+  scripts.session_report.generate_report
+    CC=11  in:2  out:34  total:36
+  scripts.run_test_sessions.evaluate_expectations
+    CC=29  in:1  out:32  total:33
+  urirdp-docker.packages.python.urirdp_browser.handlers.open_page
+    CC=15  in:0  out:33  total:33
   src.urisys.http_server.create_server
     CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
-  urisys-node.packages.python.urisysnode.serve.make_handler
-    CC=1  in:1  out:30  total:31
-  scripts.run_test_sessions.session_urirdp_mock_docker
-    CC=5  in:0  out:31  total:31
+  urirdp-docker.packages.python.urirdp_llm.handlers.analyze
+    CC=18  in:0  out:31  total:31
 
 MODULES:
   packages.python.urisysedge.env  [7 funcs]
@@ -169,42 +174,48 @@ MODULES:
     load_env_policy  CC=6  out:5
     load_urisys_env  CC=8  out:17
     resolve_env_var  CC=11  out:9
-  packages.python.urisysedge.runtime  [5 funcs]
+  packages.python.urisysedge.runtime  [6 funcs]
     call  CC=10  out:23
+    load_json  CC=3  out:5
     load_yaml_flow  CC=14  out:21
     make_handler  CC=1  out:24
     run_flow  CC=7  out:13
     serve  CC=2  out:6
-  scripts.run_test_sessions  [25 funcs]
+  scripts.run-nl-log-smoke  [1 funcs]
+    print  CC=0  out:0
+  scripts.run_test_sessions  [29 funcs]
     _capture_rdp_screenshot  CC=5  out:6
+    _capture_rdp_screenshot_wait  CC=9  out:6
     _compose_cmd  CC=4  out:4
     _copy_container_file  CC=2  out:4
     _docker_logs  CC=4  out:5
+    _file_md5  CC=2  out:4
     _finalize_session  CC=5  out:13
     _host_id  CC=1  out:3
     _http_json  CC=9  out:18
     _now_iso  CC=1  out:3
-    _prepare_ok_target  CC=1  out:2
-    _prepare_urirdp_data  CC=4  out:6
-  scripts.session_report  [8 funcs]
+  scripts.session_report  [14 funcs]
+    _analyze_lab_flows  CC=5  out:4
     _infer_steps  CC=20  out:25
+    _iter_step_results  CC=9  out:7
+    _load_flow_outcomes  CC=15  out:22
+    _merge_event_summaries  CC=10  out:16
     _read_json  CC=3  out:3
+    _resolve_events_paths  CC=5  out:4
+    _summarize_events  CC=8  out:28
     _tail  CC=2  out:0
-    analyze_run  CC=34  out:64
-    generate_report  CC=13  out:35
-    main  CC=4  out:23
-    write_run_analysis  CC=8  out:23
-    write_session_report  CC=28  out:50
+    analyze_run  CC=39  out:69
   src.urisys.cli  [5 funcs]
     _add_runtime_flags  CC=1  out:4
     build_parser  CC=1  out:36
-    main  CC=18  out:44
+    main  CC=20  out:49
     print_json  CC=1  out:2
     resolve_markpact_source  CC=2  out:3
   src.urisys.controllers.flow_controller  [1 funcs]
     run  CC=6  out:19
-  src.urisys.controllers.server_controller  [1 funcs]
+  src.urisys.controllers.server_controller  [2 funcs]
     __init__  CC=1  out:1
+    serve_forever  CC=1  out:3
   src.urisys.flow  [2 funcs]
     iter_steps  CC=7  out:8
     load_flow  CC=3  out:5
@@ -212,16 +223,8 @@ MODULES:
     _read_json  CC=3  out:5
     _send  CC=1  out:12
     create_server  CC=1  out:31
-  src.urisys.managers.markpact_manager  [7 funcs]
-    _compile_manifest  CC=28  out:35
-    _scheme  CC=8  out:10
-    compile  CC=21  out:46
-    read_blocks  CC=3  out:11
-    _parse_meta  CC=4  out:8
-    _safe_identifier  CC=3  out:6
-    _scheme_from_uri  CC=2  out:2
   src.urisys.managers.pack_manager  [1 funcs]
-    manifest_paths  CC=6  out:18
+    manifest_paths  CC=9  out:20
   uribrowser-docker.packages.python.uribrowserdocker.handlers  [6 funcs]
     _profile  CC=1  out:2
     _session_state  CC=1  out:5
@@ -271,17 +274,17 @@ MODULES:
     screenshot  CC=5  out:18
   urikvm-docker.packages.python.urikvmedge.cli  [1 funcs]
     build_runtime  CC=6  out:11
-  urikvm-docker.packages.python.urillm.handlers  [12 funcs]
+  urikvm-docker.packages.python.urillm.handlers  [15 funcs]
+    _analyze_litellm  CC=6  out:11
+    _analyze_openai  CC=10  out:13
     _box_center  CC=1  out:4
     _driver  CC=1  out:2
     _goal_text  CC=4  out:4
     _heuristic_analyze  CC=16  out:22
     _litellm_chat  CC=2  out:3
     _llm_cfg  CC=1  out:2
+    _normalize_action  CC=4  out:9
     _openai_chat  CC=2  out:9
-    _parse_json_response  CC=5  out:5
-    _target_from_goal  CC=3  out:6
-    _vision_analyze  CC=22  out:34
   urikvm-docker.packages.python.uriocr.handlers  [10 funcs]
     _driver  CC=1  out:2
     _extract_text  CC=6  out:10
@@ -296,17 +299,19 @@ MODULES:
   urikvm-docker.scripts.real_pipeline  [2 funcs]
     build_runtime  CC=1  out:6
     main  CC=14  out:26
-  urirdp-docker.packages.python.urirdp.handlers  [5 funcs]
+  urirdp-docker.packages.python.urirdp.handlers  [7 funcs]
+    _dismiss_stale_targets  CC=10  out:11
     _service_status  CC=4  out:4
+    dismiss_target  CC=3  out:4
     display  CC=2  out:4
     display_status  CC=7  out:12
-    prepare_target  CC=4  out:9
+    prepare_target  CC=6  out:15
     status  CC=1  out:9
   urirdp-docker.packages.python.urirdp_browser.handlers  [4 funcs]
     _chromium_binary  CC=4  out:3
     _profile  CC=1  out:2
     _session_state  CC=1  out:5
-    open_page  CC=14  out:30
+    open_page  CC=15  out:33
   urirdp-docker.packages.python.urirdp_him.handlers  [7 funcs]
     _mock  CC=1  out:1
     keyboard_hotkey  CC=8  out:11
@@ -325,17 +330,17 @@ MODULES:
   urirdp-docker.packages.python.urirdp_kvm.handlers  [2 funcs]
     display_info  CC=4  out:5
     screenshot  CC=9  out:23
-  urirdp-docker.packages.python.urirdp_llm.handlers  [11 funcs]
+  urirdp-docker.packages.python.urirdp_llm.handlers  [15 funcs]
     _config  CC=2  out:1
+    _decide_messages  CC=2  out:2
     _env  CC=3  out:6
     _heuristic  CC=5  out:22
     _litellm_chat  CC=2  out:3
     _llm_cfg  CC=6  out:7
+    _match_transcript  CC=4  out:3
     _openai_compatible_chat  CC=1  out:9
     _parse_json_response  CC=5  out:5
     _screenshot_b64  CC=2  out:7
-    _target  CC=3  out:4
-    _vision_messages  CC=4  out:2
   urirdp-docker.packages.python.urirdp_ocr.handlers  [5 funcs]
     _mock_ocr  CC=1  out:0
     _parse_tesseract_tsv  CC=7  out:19
@@ -360,7 +365,7 @@ MODULES:
     move_absolute  CC=2  out:8
     move_relative  CC=3  out:10
     status  CC=2  out:4
-  uristepper-docker.packages.python.urisysedge.cli  [7 funcs]
+  uristepper-docker.packages.python.uristepperedge.cli  [7 funcs]
     _json_arg  CC=3  out:5
     cmd_call  CC=4  out:7
     cmd_events  CC=1  out:4
@@ -368,10 +373,10 @@ MODULES:
     cmd_flow  CC=12  out:22
     cmd_routes  CC=1  out:4
     cmd_serve  CC=1  out:1
-  uristepper-docker.packages.python.urisysedge.runtime  [2 funcs]
+  uristepper-docker.packages.python.uristepperedge.runtime  [2 funcs]
     build_runtime  CC=6  out:14
     load_json  CC=1  out:3
-  uristepper-docker.packages.python.urisysedge.server  [2 funcs]
+  uristepper-docker.packages.python.uristepperedge.server  [2 funcs]
     make_handler  CC=1  out:43
     serve  CC=1  out:5
   urisys-automation-lab.packages.python.urichat.handlers  [2 funcs]
@@ -385,17 +390,18 @@ MODULES:
     _room_id  CC=4  out:3
     data_send  CC=3  out:4
     session_start  CC=2  out:2
-  urisys-automation-lab.server.automation_lab_server  [2 funcs]
-    build_lab_runtime  CC=16  out:22
+  urisys-automation-lab.server.automation_lab_server  [3 funcs]
+    log_message  CC=1  out:2
+    build_lab_runtime  CC=17  out:23
     serve  CC=4  out:13
   urisys-automation-lab.server.flow_runner  [5 funcs]
     _lab_adapter_session  CC=1  out:3
     _load_defaults  CC=5  out:7
     _require_uri_stack  CC=2  out:1
     plan_flow  CC=2  out:7
-    run_flow_file  CC=13  out:39
+    run_flow_file  CC=13  out:40
   urisys-automation-lab.server.lab_uri_adapter  [2 funcs]
-    execute  CC=8  out:13
+    execute  CC=12  out:20
     step_ok  CC=9  out:9
   urisys-automation-lab.web.app  [6 funcs]
     SR  CC=2  out:1
@@ -413,6 +419,19 @@ MODULES:
     capture  CC=7  out:25
     capture_loop  CC=4  out:10
     frame  CC=1  out:5
+  urisys-node.packages.python.urisysedge.env  [6 funcs]
+    _env_config  CC=7  out:6
+    _env_policy_candidates  CC=2  out:7
+    _urisys_root  CC=1  out:2
+    load_env_policy  CC=6  out:5
+    load_urisys_env  CC=8  out:17
+    resolve_env_var  CC=11  out:9
+  urisys-node.packages.python.urisysedge.runtime  [5 funcs]
+    call  CC=10  out:23
+    load_yaml_flow  CC=14  out:21
+    make_handler  CC=1  out:24
+    run_flow  CC=7  out:13
+    serve  CC=2  out:6
   urisys-node.packages.python.urisysnode.artifact_resolver  [13 funcs]
     _auth_opener  CC=4  out:11
     docker_pull  CC=4  out:4
@@ -427,8 +446,6 @@ MODULES:
   urisys-node.packages.python.urisysnode.client  [2 funcs]
     call_via_route_map  CC=6  out:14
     remote_call  CC=3  out:8
-  urisys-node.packages.python.urisysnode.env  [1 funcs]
-    load_urisys_env  CC=8  out:18
   urisys-node.packages.python.urisysnode.handlers  [4 funcs]
     command_indicator_off  CC=1  out:2
     command_indicator_on  CC=1  out:4
@@ -451,13 +468,26 @@ MODULES:
     node_endpoint  CC=5  out:6
     resolve_remote_route  CC=5  out:3
     rewrite_uri_for_slave  CC=6  out:5
-  urisys-node.packages.python.urisysnode.serve  [4 funcs]
+  urisys-node.packages.python.urisysnode.serve  [5 funcs]
     _extend_pack_paths  CC=4  out:7
-    build_runtime  CC=11  out:18
+    _register_pack  CC=5  out:6
+    build_runtime  CC=6  out:13
     make_handler  CC=1  out:30
     serve  CC=2  out:9
 
 EDGES:
+  packages.python.urisysedge.runtime.Runtime.call → packages.python.urisysedge.env.load_env_policy
+  packages.python.urisysedge.runtime.run_flow → packages.python.urisysedge.runtime.load_yaml_flow
+  packages.python.urisysedge.runtime.serve → scripts.run-nl-log-smoke.print
+  packages.python.urisysedge.runtime.serve → packages.python.urisysedge.runtime.make_handler
+  packages.python.urisysedge.env.load_urisys_env → packages.python.urisysedge.env._urisys_root
+  packages.python.urisysedge.env._env_policy_candidates → packages.python.urisysedge.env._urisys_root
+  packages.python.urisysedge.env.load_env_policy → packages.python.urisysedge.env._env_policy_candidates
+  packages.python.urisysedge.env.resolve_env_var → packages.python.urisysedge.env._env_config
+  packages.python.urisysedge.env.resolve_env_var → packages.python.urisysedge.env.load_env_policy
+  packages.python.urisysedge.env.resolve_env_var → urienv-docker.packages.python.urienv.src.urienv.handlers.secret_value
+  packages.python.urisysedge.env.resolve_env_var → urienv-docker.packages.python.urienv.src.urienv.handlers.var_value
+  src.urisys.cli.print_json → scripts.run-nl-log-smoke.print
   src.urisys.cli.build_parser → src.urisys.cli._add_runtime_flags
   src.urisys.cli.main → src.urisys.cli.build_parser
   src.urisys.cli.main → src.urisys.cli.resolve_markpact_source
@@ -467,10 +497,23 @@ EDGES:
   src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.load_flow
   src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.iter_steps
   src.urisys.controllers.server_controller.ServerController.__init__ → src.urisys.http_server.create_server
-  src.urisys.managers.markpact_manager.MarkpactManager.read_blocks → src.urisys.managers.markpact_manager._parse_meta
-  src.urisys.managers.markpact_manager.MarkpactManager.compile → src.urisys.managers.markpact_manager._safe_identifier
-  src.urisys.managers.markpact_manager.MarkpactManager._compile_manifest → src.urisys.managers.markpact_manager._scheme_from_uri
-  src.urisys.managers.markpact_manager.MarkpactManager._scheme → src.urisys.managers.markpact_manager._scheme_from_uri
+  src.urisys.controllers.server_controller.ServerController.serve_forever → scripts.run-nl-log-smoke.print
+  uristepper-docker.packages.python.uristepperedge.runtime.build_runtime → uristepper-docker.packages.python.uristepperedge.runtime.load_json
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_call → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_call → uristepper-docker.packages.python.uristepperedge.cli._json_arg
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_call → scripts.run-nl-log-smoke.print
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_explain → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_explain → scripts.run-nl-log-smoke.print
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_routes → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_routes → scripts.run-nl-log-smoke.print
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_events → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_events → scripts.run-nl-log-smoke.print
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_flow → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_flow → scripts.run-nl-log-smoke.print
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_serve → packages.python.urisysedge.runtime.serve
+  uristepper-docker.packages.python.uristepperedge.server.serve → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
+  uristepper-docker.packages.python.uristepperedge.server.serve → scripts.run-nl-log-smoke.print
+  uristepper-docker.packages.python.uristepperedge.server.serve → uristepper-docker.packages.python.uristepperedge.server.make_handler
   uristepper-docker.packages.python.uristepper.handlers._driver → uristepper-docker.packages.python.uristepper.drivers.make_driver
   uristepper-docker.packages.python.uristepper.handlers._dry_or_driver → uristepper-docker.packages.python.uristepper.handlers._driver
   uristepper-docker.packages.python.uristepper.handlers.status → uristepper-docker.packages.python.uristepper.handlers._device_axis
@@ -483,31 +526,6 @@ EDGES:
   uristepper-docker.packages.python.uristepper.handlers.stop → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
   uristepper-docker.packages.python.uristepper.handlers.move_relative → uristepper-docker.packages.python.uristepper.handlers._device_axis
   uristepper-docker.packages.python.uristepper.handlers.move_relative → uristepper-docker.packages.python.uristepper.handlers._enforce_safety
-  uristepper-docker.packages.python.uristepper.handlers.move_relative → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
-  uristepper-docker.packages.python.uristepper.handlers.move_absolute → uristepper-docker.packages.python.uristepper.handlers._device_axis
-  uristepper-docker.packages.python.uristepper.handlers.move_absolute → uristepper-docker.packages.python.uristepper.handlers._enforce_safety
-  uristepper-docker.packages.python.uristepper.handlers.move_absolute → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
-  uristepper-docker.packages.python.uristepper.handlers.home → uristepper-docker.packages.python.uristepper.handlers._device_axis
-  uristepper-docker.packages.python.uristepper.handlers.home → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
-  uristepper-docker.packages.python.urisysedge.runtime.build_runtime → uristepper-docker.packages.python.urisysedge.runtime.load_json
-  uristepper-docker.packages.python.urisysedge.cli.cmd_call → uristepper-docker.packages.python.urisysedge.runtime.build_runtime
-  uristepper-docker.packages.python.urisysedge.cli.cmd_call → uristepper-docker.packages.python.urisysedge.cli._json_arg
-  uristepper-docker.packages.python.urisysedge.cli.cmd_explain → uristepper-docker.packages.python.urisysedge.runtime.build_runtime
-  uristepper-docker.packages.python.urisysedge.cli.cmd_routes → uristepper-docker.packages.python.urisysedge.runtime.build_runtime
-  uristepper-docker.packages.python.urisysedge.cli.cmd_events → uristepper-docker.packages.python.urisysedge.runtime.build_runtime
-  uristepper-docker.packages.python.urisysedge.cli.cmd_flow → uristepper-docker.packages.python.urisysedge.runtime.build_runtime
-  uristepper-docker.packages.python.urisysedge.cli.cmd_serve → uristepper-docker.packages.python.urisysedge.server.serve
-  uristepper-docker.packages.python.urisysedge.server.serve → uristepper-docker.packages.python.urisysedge.runtime.build_runtime
-  uristepper-docker.packages.python.urisysedge.server.serve → uristepper-docker.packages.python.urisysedge.server.make_handler
-  scripts.run_test_sessions._wait_health → scripts.run_test_sessions._http_json
-  scripts.run_test_sessions._write_meta → scripts.run_test_sessions._read_meta
-  scripts.run_test_sessions._write_meta → scripts.run_test_sessions._save_json
-  scripts.run_test_sessions._finalize_session → scripts.run_test_sessions._now_iso
-  scripts.run_test_sessions._finalize_session → scripts.run_test_sessions._write_meta
-  scripts.run_test_sessions._docker_logs → scripts.run_test_sessions._run_cmd
-  scripts.run_test_sessions.session_pytest_urirdp → scripts.run_test_sessions._now_iso
-  scripts.run_test_sessions.session_pytest_urirdp → scripts.run_test_sessions._write_meta
-  scripts.run_test_sessions.session_pytest_urirdp → scripts.run_test_sessions._run_cmd
 ```
 
 ## Test Contracts
@@ -537,51 +555,51 @@ EDGES:
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
-# generated in 0.13s
-# nodes: 275 | edges: 352 | modules: 53
-# CC̄=3.9
+# generated in 0.15s
+# nodes: 302 | edges: 399 | modules: 54
+# CC̄=4.1
 
 HUBS[20]:
+  scripts.session_report.analyze_run
+    CC=39  in:2  out:69  total:71
   scripts.run_test_sessions.session_urirdp_real_docker
     CC=30  in:0  out:69  total:69
-  scripts.session_report.analyze_run
-    CC=34  in:2  out:64  total:66
   scripts.run_test_sessions.session_lab_10_flows
-    CC=26  in:0  out:56  total:56
+    CC=36  in:0  out:65  total:65
+  scripts.run-nl-log-smoke.print
+    CC=0  in:60  out:0  total:60
   scripts.session_report.write_session_report
     CC=28  in:2  out:50  total:52
-  src.urisys.managers.markpact_manager.MarkpactManager.compile
-    CC=21  in:0  out:46  total:46
-  uristepper-docker.packages.python.urisysedge.server.make_handler
-    CC=1  in:1  out:43  total:44
   src.urisys.cli.main
-    CC=18  in:0  out:44  total:44
+    CC=20  in:0  out:49  total:49
+  uristepper-docker.packages.python.uristepperedge.server.make_handler
+    CC=1  in:1  out:43  total:44
   scripts.run_test_sessions.session_automation_lab
     CC=16  in:1  out:43  total:44
   urisys-automation-lab.server.flow_runner.run_flow_file
-    CC=13  in:1  out:39  total:40
+    CC=13  in:1  out:40  total:41
   urienv-docker.packages.python.urienv.src.urienv.handlers._cfg
     CC=7  in:9  out:29  total:38
-  scripts.run_test_sessions._run_cmd
-    CC=5  in:26  out:11  total:37
-  scripts.session_report.generate_report
-    CC=13  in:2  out:35  total:37
+  urirdp-docker.packages.python.urirdp_llm.handlers.decide
+    CC=23  in:0  out:38  total:38
   src.urisys.cli.build_parser
     CC=1  in:1  out:36  total:37
+  scripts.run_test_sessions._run_cmd
+    CC=5  in:26  out:11  total:37
   urienv-docker.packages.python.urisysedge.src.urisysedge.server.serve
     CC=1  in:0  out:36  total:36
-  src.urisys.managers.markpact_manager.MarkpactManager._compile_manifest
-    CC=28  in:0  out:35  total:35
-  urikvm-docker.packages.python.urillm.handlers._vision_analyze
-    CC=22  in:1  out:34  total:35
+  scripts.session_report.generate_report
+    CC=11  in:2  out:34  total:36
+  scripts.run_test_sessions.evaluate_expectations
+    CC=29  in:1  out:32  total:33
+  urirdp-docker.packages.python.urirdp_browser.handlers.open_page
+    CC=15  in:0  out:33  total:33
   src.urisys.http_server.create_server
     CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
-  urisys-node.packages.python.urisysnode.serve.make_handler
-    CC=1  in:1  out:30  total:31
-  scripts.run_test_sessions.session_urirdp_mock_docker
-    CC=5  in:0  out:31  total:31
+  urirdp-docker.packages.python.urirdp_llm.handlers.analyze
+    CC=18  in:0  out:31  total:31
 
 MODULES:
   packages.python.urisysedge.env  [7 funcs]
@@ -592,42 +610,48 @@ MODULES:
     load_env_policy  CC=6  out:5
     load_urisys_env  CC=8  out:17
     resolve_env_var  CC=11  out:9
-  packages.python.urisysedge.runtime  [5 funcs]
+  packages.python.urisysedge.runtime  [6 funcs]
     call  CC=10  out:23
+    load_json  CC=3  out:5
     load_yaml_flow  CC=14  out:21
     make_handler  CC=1  out:24
     run_flow  CC=7  out:13
     serve  CC=2  out:6
-  scripts.run_test_sessions  [25 funcs]
+  scripts.run-nl-log-smoke  [1 funcs]
+    print  CC=0  out:0
+  scripts.run_test_sessions  [29 funcs]
     _capture_rdp_screenshot  CC=5  out:6
+    _capture_rdp_screenshot_wait  CC=9  out:6
     _compose_cmd  CC=4  out:4
     _copy_container_file  CC=2  out:4
     _docker_logs  CC=4  out:5
+    _file_md5  CC=2  out:4
     _finalize_session  CC=5  out:13
     _host_id  CC=1  out:3
     _http_json  CC=9  out:18
     _now_iso  CC=1  out:3
-    _prepare_ok_target  CC=1  out:2
-    _prepare_urirdp_data  CC=4  out:6
-  scripts.session_report  [8 funcs]
+  scripts.session_report  [14 funcs]
+    _analyze_lab_flows  CC=5  out:4
     _infer_steps  CC=20  out:25
+    _iter_step_results  CC=9  out:7
+    _load_flow_outcomes  CC=15  out:22
+    _merge_event_summaries  CC=10  out:16
     _read_json  CC=3  out:3
+    _resolve_events_paths  CC=5  out:4
+    _summarize_events  CC=8  out:28
     _tail  CC=2  out:0
-    analyze_run  CC=34  out:64
-    generate_report  CC=13  out:35
-    main  CC=4  out:23
-    write_run_analysis  CC=8  out:23
-    write_session_report  CC=28  out:50
+    analyze_run  CC=39  out:69
   src.urisys.cli  [5 funcs]
     _add_runtime_flags  CC=1  out:4
     build_parser  CC=1  out:36
-    main  CC=18  out:44
+    main  CC=20  out:49
     print_json  CC=1  out:2
     resolve_markpact_source  CC=2  out:3
   src.urisys.controllers.flow_controller  [1 funcs]
     run  CC=6  out:19
-  src.urisys.controllers.server_controller  [1 funcs]
+  src.urisys.controllers.server_controller  [2 funcs]
     __init__  CC=1  out:1
+    serve_forever  CC=1  out:3
   src.urisys.flow  [2 funcs]
     iter_steps  CC=7  out:8
     load_flow  CC=3  out:5
@@ -635,16 +659,8 @@ MODULES:
     _read_json  CC=3  out:5
     _send  CC=1  out:12
     create_server  CC=1  out:31
-  src.urisys.managers.markpact_manager  [7 funcs]
-    _compile_manifest  CC=28  out:35
-    _scheme  CC=8  out:10
-    compile  CC=21  out:46
-    read_blocks  CC=3  out:11
-    _parse_meta  CC=4  out:8
-    _safe_identifier  CC=3  out:6
-    _scheme_from_uri  CC=2  out:2
   src.urisys.managers.pack_manager  [1 funcs]
-    manifest_paths  CC=6  out:18
+    manifest_paths  CC=9  out:20
   uribrowser-docker.packages.python.uribrowserdocker.handlers  [6 funcs]
     _profile  CC=1  out:2
     _session_state  CC=1  out:5
@@ -694,17 +710,17 @@ MODULES:
     screenshot  CC=5  out:18
   urikvm-docker.packages.python.urikvmedge.cli  [1 funcs]
     build_runtime  CC=6  out:11
-  urikvm-docker.packages.python.urillm.handlers  [12 funcs]
+  urikvm-docker.packages.python.urillm.handlers  [15 funcs]
+    _analyze_litellm  CC=6  out:11
+    _analyze_openai  CC=10  out:13
     _box_center  CC=1  out:4
     _driver  CC=1  out:2
     _goal_text  CC=4  out:4
     _heuristic_analyze  CC=16  out:22
     _litellm_chat  CC=2  out:3
     _llm_cfg  CC=1  out:2
+    _normalize_action  CC=4  out:9
     _openai_chat  CC=2  out:9
-    _parse_json_response  CC=5  out:5
-    _target_from_goal  CC=3  out:6
-    _vision_analyze  CC=22  out:34
   urikvm-docker.packages.python.uriocr.handlers  [10 funcs]
     _driver  CC=1  out:2
     _extract_text  CC=6  out:10
@@ -719,17 +735,19 @@ MODULES:
   urikvm-docker.scripts.real_pipeline  [2 funcs]
     build_runtime  CC=1  out:6
     main  CC=14  out:26
-  urirdp-docker.packages.python.urirdp.handlers  [5 funcs]
+  urirdp-docker.packages.python.urirdp.handlers  [7 funcs]
+    _dismiss_stale_targets  CC=10  out:11
     _service_status  CC=4  out:4
+    dismiss_target  CC=3  out:4
     display  CC=2  out:4
     display_status  CC=7  out:12
-    prepare_target  CC=4  out:9
+    prepare_target  CC=6  out:15
     status  CC=1  out:9
   urirdp-docker.packages.python.urirdp_browser.handlers  [4 funcs]
     _chromium_binary  CC=4  out:3
     _profile  CC=1  out:2
     _session_state  CC=1  out:5
-    open_page  CC=14  out:30
+    open_page  CC=15  out:33
   urirdp-docker.packages.python.urirdp_him.handlers  [7 funcs]
     _mock  CC=1  out:1
     keyboard_hotkey  CC=8  out:11
@@ -748,17 +766,17 @@ MODULES:
   urirdp-docker.packages.python.urirdp_kvm.handlers  [2 funcs]
     display_info  CC=4  out:5
     screenshot  CC=9  out:23
-  urirdp-docker.packages.python.urirdp_llm.handlers  [11 funcs]
+  urirdp-docker.packages.python.urirdp_llm.handlers  [15 funcs]
     _config  CC=2  out:1
+    _decide_messages  CC=2  out:2
     _env  CC=3  out:6
     _heuristic  CC=5  out:22
     _litellm_chat  CC=2  out:3
     _llm_cfg  CC=6  out:7
+    _match_transcript  CC=4  out:3
     _openai_compatible_chat  CC=1  out:9
     _parse_json_response  CC=5  out:5
     _screenshot_b64  CC=2  out:7
-    _target  CC=3  out:4
-    _vision_messages  CC=4  out:2
   urirdp-docker.packages.python.urirdp_ocr.handlers  [5 funcs]
     _mock_ocr  CC=1  out:0
     _parse_tesseract_tsv  CC=7  out:19
@@ -783,7 +801,7 @@ MODULES:
     move_absolute  CC=2  out:8
     move_relative  CC=3  out:10
     status  CC=2  out:4
-  uristepper-docker.packages.python.urisysedge.cli  [7 funcs]
+  uristepper-docker.packages.python.uristepperedge.cli  [7 funcs]
     _json_arg  CC=3  out:5
     cmd_call  CC=4  out:7
     cmd_events  CC=1  out:4
@@ -791,10 +809,10 @@ MODULES:
     cmd_flow  CC=12  out:22
     cmd_routes  CC=1  out:4
     cmd_serve  CC=1  out:1
-  uristepper-docker.packages.python.urisysedge.runtime  [2 funcs]
+  uristepper-docker.packages.python.uristepperedge.runtime  [2 funcs]
     build_runtime  CC=6  out:14
     load_json  CC=1  out:3
-  uristepper-docker.packages.python.urisysedge.server  [2 funcs]
+  uristepper-docker.packages.python.uristepperedge.server  [2 funcs]
     make_handler  CC=1  out:43
     serve  CC=1  out:5
   urisys-automation-lab.packages.python.urichat.handlers  [2 funcs]
@@ -808,17 +826,18 @@ MODULES:
     _room_id  CC=4  out:3
     data_send  CC=3  out:4
     session_start  CC=2  out:2
-  urisys-automation-lab.server.automation_lab_server  [2 funcs]
-    build_lab_runtime  CC=16  out:22
+  urisys-automation-lab.server.automation_lab_server  [3 funcs]
+    log_message  CC=1  out:2
+    build_lab_runtime  CC=17  out:23
     serve  CC=4  out:13
   urisys-automation-lab.server.flow_runner  [5 funcs]
     _lab_adapter_session  CC=1  out:3
     _load_defaults  CC=5  out:7
     _require_uri_stack  CC=2  out:1
     plan_flow  CC=2  out:7
-    run_flow_file  CC=13  out:39
+    run_flow_file  CC=13  out:40
   urisys-automation-lab.server.lab_uri_adapter  [2 funcs]
-    execute  CC=8  out:13
+    execute  CC=12  out:20
     step_ok  CC=9  out:9
   urisys-automation-lab.web.app  [6 funcs]
     SR  CC=2  out:1
@@ -836,6 +855,19 @@ MODULES:
     capture  CC=7  out:25
     capture_loop  CC=4  out:10
     frame  CC=1  out:5
+  urisys-node.packages.python.urisysedge.env  [6 funcs]
+    _env_config  CC=7  out:6
+    _env_policy_candidates  CC=2  out:7
+    _urisys_root  CC=1  out:2
+    load_env_policy  CC=6  out:5
+    load_urisys_env  CC=8  out:17
+    resolve_env_var  CC=11  out:9
+  urisys-node.packages.python.urisysedge.runtime  [5 funcs]
+    call  CC=10  out:23
+    load_yaml_flow  CC=14  out:21
+    make_handler  CC=1  out:24
+    run_flow  CC=7  out:13
+    serve  CC=2  out:6
   urisys-node.packages.python.urisysnode.artifact_resolver  [13 funcs]
     _auth_opener  CC=4  out:11
     docker_pull  CC=4  out:4
@@ -850,8 +882,6 @@ MODULES:
   urisys-node.packages.python.urisysnode.client  [2 funcs]
     call_via_route_map  CC=6  out:14
     remote_call  CC=3  out:8
-  urisys-node.packages.python.urisysnode.env  [1 funcs]
-    load_urisys_env  CC=8  out:18
   urisys-node.packages.python.urisysnode.handlers  [4 funcs]
     command_indicator_off  CC=1  out:2
     command_indicator_on  CC=1  out:4
@@ -874,13 +904,26 @@ MODULES:
     node_endpoint  CC=5  out:6
     resolve_remote_route  CC=5  out:3
     rewrite_uri_for_slave  CC=6  out:5
-  urisys-node.packages.python.urisysnode.serve  [4 funcs]
+  urisys-node.packages.python.urisysnode.serve  [5 funcs]
     _extend_pack_paths  CC=4  out:7
-    build_runtime  CC=11  out:18
+    _register_pack  CC=5  out:6
+    build_runtime  CC=6  out:13
     make_handler  CC=1  out:30
     serve  CC=2  out:9
 
 EDGES:
+  packages.python.urisysedge.runtime.Runtime.call → packages.python.urisysedge.env.load_env_policy
+  packages.python.urisysedge.runtime.run_flow → packages.python.urisysedge.runtime.load_yaml_flow
+  packages.python.urisysedge.runtime.serve → scripts.run-nl-log-smoke.print
+  packages.python.urisysedge.runtime.serve → packages.python.urisysedge.runtime.make_handler
+  packages.python.urisysedge.env.load_urisys_env → packages.python.urisysedge.env._urisys_root
+  packages.python.urisysedge.env._env_policy_candidates → packages.python.urisysedge.env._urisys_root
+  packages.python.urisysedge.env.load_env_policy → packages.python.urisysedge.env._env_policy_candidates
+  packages.python.urisysedge.env.resolve_env_var → packages.python.urisysedge.env._env_config
+  packages.python.urisysedge.env.resolve_env_var → packages.python.urisysedge.env.load_env_policy
+  packages.python.urisysedge.env.resolve_env_var → urienv-docker.packages.python.urienv.src.urienv.handlers.secret_value
+  packages.python.urisysedge.env.resolve_env_var → urienv-docker.packages.python.urienv.src.urienv.handlers.var_value
+  src.urisys.cli.print_json → scripts.run-nl-log-smoke.print
   src.urisys.cli.build_parser → src.urisys.cli._add_runtime_flags
   src.urisys.cli.main → src.urisys.cli.build_parser
   src.urisys.cli.main → src.urisys.cli.resolve_markpact_source
@@ -890,10 +933,23 @@ EDGES:
   src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.load_flow
   src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.iter_steps
   src.urisys.controllers.server_controller.ServerController.__init__ → src.urisys.http_server.create_server
-  src.urisys.managers.markpact_manager.MarkpactManager.read_blocks → src.urisys.managers.markpact_manager._parse_meta
-  src.urisys.managers.markpact_manager.MarkpactManager.compile → src.urisys.managers.markpact_manager._safe_identifier
-  src.urisys.managers.markpact_manager.MarkpactManager._compile_manifest → src.urisys.managers.markpact_manager._scheme_from_uri
-  src.urisys.managers.markpact_manager.MarkpactManager._scheme → src.urisys.managers.markpact_manager._scheme_from_uri
+  src.urisys.controllers.server_controller.ServerController.serve_forever → scripts.run-nl-log-smoke.print
+  uristepper-docker.packages.python.uristepperedge.runtime.build_runtime → uristepper-docker.packages.python.uristepperedge.runtime.load_json
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_call → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_call → uristepper-docker.packages.python.uristepperedge.cli._json_arg
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_call → scripts.run-nl-log-smoke.print
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_explain → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_explain → scripts.run-nl-log-smoke.print
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_routes → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_routes → scripts.run-nl-log-smoke.print
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_events → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_events → scripts.run-nl-log-smoke.print
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_flow → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_flow → scripts.run-nl-log-smoke.print
+  uristepper-docker.packages.python.uristepperedge.cli.cmd_serve → packages.python.urisysedge.runtime.serve
+  uristepper-docker.packages.python.uristepperedge.server.serve → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
+  uristepper-docker.packages.python.uristepperedge.server.serve → scripts.run-nl-log-smoke.print
+  uristepper-docker.packages.python.uristepperedge.server.serve → uristepper-docker.packages.python.uristepperedge.server.make_handler
   uristepper-docker.packages.python.uristepper.handlers._driver → uristepper-docker.packages.python.uristepper.drivers.make_driver
   uristepper-docker.packages.python.uristepper.handlers._dry_or_driver → uristepper-docker.packages.python.uristepper.handlers._driver
   uristepper-docker.packages.python.uristepper.handlers.status → uristepper-docker.packages.python.uristepper.handlers._device_axis
@@ -906,183 +962,164 @@ EDGES:
   uristepper-docker.packages.python.uristepper.handlers.stop → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
   uristepper-docker.packages.python.uristepper.handlers.move_relative → uristepper-docker.packages.python.uristepper.handlers._device_axis
   uristepper-docker.packages.python.uristepper.handlers.move_relative → uristepper-docker.packages.python.uristepper.handlers._enforce_safety
-  uristepper-docker.packages.python.uristepper.handlers.move_relative → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
-  uristepper-docker.packages.python.uristepper.handlers.move_absolute → uristepper-docker.packages.python.uristepper.handlers._device_axis
-  uristepper-docker.packages.python.uristepper.handlers.move_absolute → uristepper-docker.packages.python.uristepper.handlers._enforce_safety
-  uristepper-docker.packages.python.uristepper.handlers.move_absolute → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
-  uristepper-docker.packages.python.uristepper.handlers.home → uristepper-docker.packages.python.uristepper.handlers._device_axis
-  uristepper-docker.packages.python.uristepper.handlers.home → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
-  uristepper-docker.packages.python.urisysedge.runtime.build_runtime → uristepper-docker.packages.python.urisysedge.runtime.load_json
-  uristepper-docker.packages.python.urisysedge.cli.cmd_call → uristepper-docker.packages.python.urisysedge.runtime.build_runtime
-  uristepper-docker.packages.python.urisysedge.cli.cmd_call → uristepper-docker.packages.python.urisysedge.cli._json_arg
-  uristepper-docker.packages.python.urisysedge.cli.cmd_explain → uristepper-docker.packages.python.urisysedge.runtime.build_runtime
-  uristepper-docker.packages.python.urisysedge.cli.cmd_routes → uristepper-docker.packages.python.urisysedge.runtime.build_runtime
-  uristepper-docker.packages.python.urisysedge.cli.cmd_events → uristepper-docker.packages.python.urisysedge.runtime.build_runtime
-  uristepper-docker.packages.python.urisysedge.cli.cmd_flow → uristepper-docker.packages.python.urisysedge.runtime.build_runtime
-  uristepper-docker.packages.python.urisysedge.cli.cmd_serve → uristepper-docker.packages.python.urisysedge.server.serve
-  uristepper-docker.packages.python.urisysedge.server.serve → uristepper-docker.packages.python.urisysedge.runtime.build_runtime
-  uristepper-docker.packages.python.urisysedge.server.serve → uristepper-docker.packages.python.urisysedge.server.make_handler
-  scripts.run_test_sessions._wait_health → scripts.run_test_sessions._http_json
-  scripts.run_test_sessions._write_meta → scripts.run_test_sessions._read_meta
-  scripts.run_test_sessions._write_meta → scripts.run_test_sessions._save_json
-  scripts.run_test_sessions._finalize_session → scripts.run_test_sessions._now_iso
-  scripts.run_test_sessions._finalize_session → scripts.run_test_sessions._write_meta
-  scripts.run_test_sessions._docker_logs → scripts.run_test_sessions._run_cmd
-  scripts.run_test_sessions.session_pytest_urirdp → scripts.run_test_sessions._now_iso
-  scripts.run_test_sessions.session_pytest_urirdp → scripts.run_test_sessions._write_meta
-  scripts.run_test_sessions.session_pytest_urirdp → scripts.run_test_sessions._run_cmd
 ```
 
 ### Code Analysis (`project/analysis.toon.yaml`)
 
 ```toon markpact:analysis path=project/analysis.toon.yaml
-# code2llm | 222f 13187L | python:103,shell:43,yaml:34,json:11,yml:9,toml:8,javascript:2,txt:2,conf:1 | 2026-06-16
+# code2llm | 236f 14783L | python:107,shell:48,yaml:35,json:13,yml:10,toml:8,javascript:2,txt:2,conf:1,gui:1 | 2026-06-16
 # generated in 0.04s
-# CC̅=3.9 | critical:23/493 | dups:2 | cycles:0
+# CC̅=4.1 | critical:25/542 | dups:2 | cycles:0
 
 HEALTH[20]:
   🔴 DUP   2 classes duplicated
-  🔴 GOD   src/urisys/managers/markpact_manager.py = 579L, 4 classes, 25m, max CC=28
-  🟡 CC    main CC=18 (limit:15)
-  🟡 CC    _validate_contract CC=23 (limit:15)
-  🟡 CC    _validate_implementation CC=18 (limit:15)
-  🟡 CC    compile CC=21 (limit:15)
-  🟡 CC    run_tests CC=20 (limit:15)
-  🟡 CC    _compile_manifest CC=28 (limit:15)
+  🔴 GOD   scripts/session_report.py = 801L, 5 classes, 23m, max CC=39
+  🟡 CC    main CC=20 (limit:15)
   🟡 CC    parse_packs CC=15 (limit:15)
   🟡 CC    session_urirdp_real_docker CC=30 (limit:15)
   🟡 CC    session_automation_lab CC=16 (limit:15)
-  🟡 CC    session_lab_10_flows CC=26 (limit:15)
-  🟡 CC    _summarize_events CC=18 (limit:15)
+  🟡 CC    evaluate_expectations CC=29 (limit:15)
+  🟡 CC    session_lab_10_flows CC=36 (limit:15)
   🟡 CC    _infer_steps CC=20 (limit:15)
   🟡 CC    write_session_report CC=28 (limit:15)
-  🟡 CC    analyze_run CC=34 (limit:15)
+  🟡 CC    _load_flow_outcomes CC=15 (limit:15)
+  🟡 CC    analyze_run CC=39 (limit:15)
   🟡 CC    shell_run CC=16 (limit:15)
+  🟡 CC    open_page CC=15 (limit:15)
   🟡 CC    analyze CC=18 (limit:15)
-  🟡 CC    _heuristic_analyze CC=16 (limit:15)
-  🟡 CC    _vision_analyze CC=22 (limit:15)
+  🟡 CC    decide CC=23 (limit:15)
+  🟡 CC    uri_execute CC=15 (limit:15)
+  🟡 CC    build_lab_runtime CC=17 (limit:15)
+  🟡 CC    do_POST CC=23 (limit:15)
+  🟡 CC    main CC=16 (limit:15)
 
 REFACTOR[3]:
   1. rm duplicates  (-2 dup classes)
-  2. split src/urisys/managers/markpact_manager.py  (god module)
+  2. split scripts/session_report.py  (god module)
   3. split 18 high-CC methods  (CC>15)
 
-PIPELINES[257]:
-  [1] Src [registry]: registry
+PIPELINES[273]:
+  [1] Src [compile]: compile
       PURITY: 100% pure
-  [2] Src [runtime]: runtime
+  [2] Src [match]: match
       PURITY: 100% pure
-  [3] Src [out]: out
+  [3] Src [__init__]: __init__
       PURITY: 100% pure
-  [4] Src [result]: result
+  [4] Src [append]: append
       PURITY: 100% pure
-  [5] Src [client]: client
+  [5] Src [tail]: tail
       PURITY: 100% pure
-  [6] Src [main]: main → build_parser → _add_runtime_flags
+  [6] Src [__init__]: __init__
       PURITY: 100% pure
-  [7] Src [__init__]: __init__
+  [7] Src [register]: register
       PURITY: 100% pure
-  [8] Src [run]: run → load_flow
+  [8] Src [resolve]: resolve
       PURITY: 100% pure
-  [9] Src [close]: close
+  [9] Src [_load_handler]: _load_handler
       PURITY: 100% pure
-  [10] Src [__init__]: __init__ → create_server → _send
+  [10] Src [call]: call → load_env_policy → _env_policy_candidates → _urisys_root
       PURITY: 100% pure
-  [11] Src [serve_forever]: serve_forever
+  [11] Src [registry]: registry
       PURITY: 100% pure
-  [12] Src [__init__]: __init__
+  [12] Src [runtime]: runtime
       PURITY: 100% pure
-  [13] Src [call]: call
+  [13] Src [out]: out
       PURITY: 100% pure
-  [14] Src [explain]: explain
+  [14] Src [result]: result
       PURITY: 100% pure
-  [15] Src [routes]: routes
+  [15] Src [client]: client
       PURITY: 100% pure
-  [16] Src [close]: close
+  [16] Src [main]: main → build_parser → _add_runtime_flags
       PURITY: 100% pure
   [17] Src [__init__]: __init__
       PURITY: 100% pure
-  [18] Src [list_events]: list_events
+  [18] Src [run]: run → load_flow
       PURITY: 100% pure
-  [19] Src [build_context]: build_context
+  [19] Src [close]: close
       PURITY: 100% pure
-  [20] Src [explain]: explain
+  [20] Src [__init__]: __init__ → create_server → _send
       PURITY: 100% pure
-  [21] Src [__init__]: __init__
+  [21] Src [serve_forever]: serve_forever → print
       PURITY: 100% pure
-  [22] Src [create_runtime]: create_runtime
+  [22] Src [__init__]: __init__
       PURITY: 100% pure
-  [23] Src [close]: close
+  [23] Src [call]: call
       PURITY: 100% pure
-  [24] Src [__exit__]: __exit__
+  [24] Src [explain]: explain
       PURITY: 100% pure
-  [25] Src [to_dict]: to_dict
+  [25] Src [routes]: routes
       PURITY: 100% pure
-  [26] Src [__init__]: __init__
+  [26] Src [close]: close
       PURITY: 100% pure
-  [27] Src [read_blocks]: read_blocks → _parse_meta
+  [27] Src [__init__]: __init__
       PURITY: 100% pure
-  [28] Src [source_hash]: source_hash
+  [28] Src [list_events]: list_events
       PURITY: 100% pure
-  [29] Src [load_pack_block]: load_pack_block
+  [29] Src [build_context]: build_context
       PURITY: 100% pure
-  [30] Src [validate]: validate
+  [30] Src [explain]: explain
       PURITY: 100% pure
-  [31] Src [_validate_pack]: _validate_pack
+  [31] Src [__init__]: __init__
       PURITY: 100% pure
-  [32] Src [_validate_contract]: _validate_contract → _scheme_from_uri
+  [32] Src [create_runtime]: create_runtime
       PURITY: 100% pure
-  [33] Src [_validate_bundle]: _validate_bundle
+  [33] Src [close]: close
       PURITY: 100% pure
-  [34] Src [_validate_implementation]: _validate_implementation
+  [34] Src [__exit__]: __exit__
       PURITY: 100% pure
-  [35] Src [compile]: compile → _safe_identifier
+  [35] Src [call_http]: call_http
       PURITY: 100% pure
-  [36] Src [manifest_path_for]: manifest_path_for
+  [36] Src [__init__]: __init__
       PURITY: 100% pure
-  [37] Src [run_tests]: run_tests
+  [37] Src [_is_all]: _is_all
       PURITY: 100% pure
-  [38] Src [_compile_manifest]: _compile_manifest → _scheme_from_uri
+  [38] Src [parse_packs]: parse_packs
       PURITY: 100% pure
-  [39] Src [_package_id]: _package_id
+  [39] Src [parse_markpacts]: parse_markpacts
       PURITY: 100% pure
-  [40] Src [_capabilities]: _capabilities
+  [40] Src [resolve_package_name]: resolve_package_name
       PURITY: 100% pure
-  [41] Src [_scheme]: _scheme → _scheme_from_uri
+  [41] Src [_is_markpact_path]: _is_markpact_path
       PURITY: 100% pure
-  [42] Src [_handler_blocks]: _handler_blocks
+  [42] Src [_is_manifest_path]: _is_manifest_path
       PURITY: 100% pure
-  [43] Src [_load_yaml_blocks]: _load_yaml_blocks
+  [43] Src [create_registry]: create_registry
       PURITY: 100% pure
-  [44] Src [_handler_id_from_ref]: _handler_id_from_ref
+  [44] Src [capabilities]: capabilities
       PURITY: 100% pure
-  [45] Src [_ensure_importable]: _ensure_importable
+  [45] Src [close]: close
       PURITY: 100% pure
-  [46] Src [call_http]: call_http
+  [46] Src [__exit__]: __exit__
       PURITY: 100% pure
   [47] Src [__init__]: __init__
       PURITY: 100% pure
-  [48] Src [parse_packs]: parse_packs
+  [48] Src [is_remote_source]: is_remote_source
       PURITY: 100% pure
-  [49] Src [parse_markpacts]: parse_markpacts
+  [49] Src [resolve]: resolve
       PURITY: 100% pure
-  [50] Src [resolve_package_name]: resolve_package_name
+  [50] Src [fetch]: fetch
       PURITY: 100% pure
 
 LAYERS:
-  scripts/                        CC̄=6.7    ←in:0  →out:0
-  │ !! run_test_sessions         1031L  0C   33m  CC=30     ←0
-  │ !! session_report             509L  3C   13m  CC=34     ←0
+  scripts/                        CC̄=6.8    ←in:49  →out:0
+  │ !! run_test_sessions         1218L  0C   38m  CC=36     ←0
+  │ !! session_report             801L  5C   23m  CC=39     ←0
+  │ run-urisys-node-docker-e2e.sh   136L  0C    4m  CC=0.0    ←0
   │ paths.sh                    54L  0C    6m  CC=0.0    ←0
   │ validate-all-markpacts.sh    53L  0C    0m  CC=0.0    ←0
+  │ run-nl-log-smoke.sh         43L  0C    1m  CC=0.0    ←17
+  │ run-smoke-all.sh            22L  0C    0m  CC=0.0    ←0
+  │ run-lab-unit-ci.sh          19L  0C    0m  CC=0.0    ←0
   │ run-lab-e2e.sh              14L  0C    0m  CC=0.0    ←0
   │ test-goal.sh                11L  0C    0m  CC=0.0    ←0
   │
   src/                            CC̄=4.8    ←in:0  →out:0
-  │ !! markpact_manager           579L  4C   25m  CC=28     ←0
+  │ !! markpact_manager           385L  1C   18m  CC=28     ←0
   │ source_manager             224L  2C   11m  CC=11     ←0
-  │ !! cli                        176L  0C    6m  CC=18     ←0
-  │ !! pack_manager                97L  1C   12m  CC=15     ←1
+  │ !! cli                        183L  0C    6m  CC=20     ←0
+  │ !! markpact_validation        140L  0C    3m  CC=23     ←1
+  │ !! pack_manager               128L  1C   13m  CC=15     ←1
+  │ markpact_models             92L  3C    5m  CC=4      ←1
   │ http_server                 78L  0C    3m  CC=3      ←1
   │ flow_controller             33L  1C    3m  CC=6      ←0
   │ uri_controller              33L  1C    5m  CC=3      ←0
@@ -1098,75 +1135,17 @@ LAYERS:
   │ __init__                     0L  0C    0m  CC=0.0    ←0
   │
   packages/                       CC̄=4.4    ←in:0  →out:0  ×DUP
-  │ runtime                    255L  3C   15m  CC=14     ←0  ×DUP
-  │ env                        129L  0C    7m  CC=11     ←3
+  │ runtime                    270L  3C   16m  CC=14     ←10  ×DUP
+  │ env                        129L  0C    7m  CC=11     ←7
   │ __init__                    12L  0C    0m  CC=0.0    ←0
   │
-  urisys-automation-lab/          CC̄=3.9    ←in:0  →out:0
-  │ !! automation_lab_server      243L  1C    9m  CC=23     ←0
-  │ flow_runner                156L  0C    6m  CC=13     ←1
-  │ app.js                     131L  0C   17m  CC=2      ←0
-  │ lab_uri_adapter             86L  1C    2m  CC=9      ←0
-  │ !! handlers                    81L  0C    4m  CC=15     ←0
-  │ docker-compose.lab.yml      66L  0C    0m  CC=0.0    ←0
-  │ handlers                    57L  0C    4m  CC=5      ←0
-  │ Dockerfile                  41L  0C    0m  CC=0.0    ←0
-  │ 10_full_maintenance_rdp.uri.flow.yaml    37L  0C    0m  CC=0.0    ←0
-  │ handlers                    35L  0C    3m  CC=4      ←0
-  │ local-rdp.routes.yaml       29L  0C    0m  CC=0.0    ←0
-  │ validate-flows.sh           28L  0C    0m  CC=0.0    ←0
-  │ routes                      23L  0C    1m  CC=1      ←0
-  │ 07_edit_config_nano_tui.uri.flow.yaml    22L  0C    0m  CC=0.0    ←0
-  │ docker-up.sh                21L  0C    0m  CC=0.0    ←0
-  │ docker-smoke.sh             20L  0C    0m  CC=0.0    ←0
-  │ 09_webrtc_video_chat_rdp.uri.flow.yaml    19L  0C    0m  CC=0.0    ←0
-  │ entrypoint.sh               18L  0C    0m  CC=0.0    ←0
-  │ 05_fill_form_gui.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
-  │ 08_voice_command_to_kvm.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
-  │ 06_terminal_htop_tui.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
-  │ routes                      17L  0C    1m  CC=1      ←0
-  │ routes                      17L  0C    1m  CC=1      ←0
-  │ 02_update_system_tui.uri.flow.yaml    15L  0C    0m  CC=0.0    ←0
-  │ run-lab.sh                  13L  0C    0m  CC=0.0    ←0
-  │ 04_browser_download_file.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
-  │ 01_install_browser.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
-  │ 03_open_browser_gui.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
-  │ docker-logs.sh               6L  0C    0m  CC=0.0    ←0
-  │ docker-down.sh               6L  0C    0m  CC=0.0    ←0
-  │ static_server                6L  0C    0m  CC=0.0    ←0
-  │ runtime                      5L  0C    0m  CC=0.0    ←0
-  │ __init__                     5L  0C    0m  CC=0.0    ←0
-  │
-  urikvm-docker/                  CC̄=3.8    ←in:0  →out:0
-  │ !! handlers                   201L  0C   13m  CC=22     ←0
-  │ handlers                   115L  0C   10m  CC=8      ←0
-  │ handlers                   103L  0C    6m  CC=8      ←0
-  │ real_pipeline               95L  0C    4m  CC=14     ←0
-  │ handlers                    81L  0C    9m  CC=7      ←0
-  │ cli                         56L  0C    2m  CC=7      ←0
-  │ pyproject.toml              51L  0C    0m  CC=0.0    ←0
-  │ test-real.sh                47L  0C    1m  CC=0.0    ←0
-  │ kvm-profile.json            26L  0C    0m  CC=0.0    ←0
-  │ kvm-profile.real.json       24L  0C    0m  CC=0.0    ←0
-  │ runtime                     23L  0C    0m  CC=0.0    ←0
-  │ kvm-click-ok.uri.flow.yaml    20L  0C    0m  CC=0.0    ←0
-  │ env                         19L  0C    0m  CC=0.0    ←0
-  │ docker-compose.yml          10L  0C    0m  CC=0.0    ←0
-  │ test-local.sh                8L  0C    0m  CC=0.0    ←0
-  │ Dockerfile                   8L  0C    0m  CC=0.0    ←0
-  │ routes                       6L  0C    1m  CC=1      ←0
-  │ routes                       5L  0C    1m  CC=1      ←0
-  │ call-http.sh                 5L  0C    0m  CC=0.0    ←0
-  │ routes                       3L  0C    1m  CC=1      ←0
-  │ routes                       2L  0C    1m  CC=1      ←0
-  │
-  urirdp-docker/                  CC̄=3.7    ←in:0  →out:0
-  │ !! handlers                   196L  0C   12m  CC=18     ←0
+  urirdp-docker/                  CC̄=4.2    ←in:0  →out:0
+  │ !! handlers                   314L  0C   17m  CC=23     ←0
+  │ !! handlers                   171L  0C    7m  CC=15     ←0
+  │ handlers                   144L  0C    7m  CC=10     ←1
   │ handlers                   133L  0C    5m  CC=10     ←0
-  │ handlers                   124L  0C    6m  CC=14     ←0
   │ bootstrap-rdp-session.sh   111L  0C    7m  CC=0.0    ←0
   │ cli                         98L  0C    2m  CC=10     ←0
-  │ handlers                    89L  0C    5m  CC=7      ←0
   │ handlers                    79L  0C    5m  CC=9      ←0
   │ handlers                    72L  0C    7m  CC=11     ←0
   │ display                     63L  0C    6m  CC=7      ←6
@@ -1184,12 +1163,12 @@ LAYERS:
   │ entrypoint.sh               25L  0C    0m  CC=0.0    ←0
   │ docker-compose.yml          24L  0C    0m  CC=0.0    ←0
   │ runtime                     23L  0C    0m  CC=0.0    ←0
+  │ routes                      20L  0C    1m  CC=1      ←0
   │ Makefile                    20L  0C    0m  CC=0.0    ←0
   │ env                         19L  0C    0m  CC=0.0    ←0
   │ test-docker.sh              17L  0C    0m  CC=0.0    ←0
   │ rdp-kvm-smoke.uri.flow.yaml    17L  0C    0m  CC=0.0    ←0
   │ real-rdp-click-text.uri.flow.yaml    14L  0C    0m  CC=0.0    ←0
-  │ routes                      12L  0C    1m  CC=1      ←0
   │ test-rdp-real.sh            12L  0C    0m  CC=0.0    ←0
   │ call-http.sh                10L  0C    0m  CC=0.0    ←0
   │ routes                       9L  0C    1m  CC=1      ←0
@@ -1200,12 +1179,71 @@ LAYERS:
   │ startwm.sh                   6L  0C    0m  CC=0.0    ←0
   │ routes                       5L  0C    1m  CC=1      ←0
   │ __init__                     4L  0C    1m  CC=1      ←0
+  │ routes                       4L  0C    1m  CC=1      ←0
   │ routes                       3L  0C    1m  CC=1      ←0
   │ __init__                     3L  0C    1m  CC=1      ←0
+  │
+  urisys-automation-lab/          CC̄=3.9    ←in:0  →out:0
+  │ !! automation_lab_server      247L  1C    9m  CC=23     ←0
+  │ flow_runner                169L  0C    7m  CC=13     ←1
+  │ app.js                     131L  0C   17m  CC=2      ←0
+  │ lab_uri_adapter            129L  1C    3m  CC=12     ←0
+  │ !! handlers                    81L  0C    4m  CC=15     ←0
+  │ docker-compose.lab.yml      66L  0C    0m  CC=0.0    ←0
+  │ handlers                    57L  0C    4m  CC=5      ←0
+  │ 10_full_maintenance_rdp.uri.flow.yaml    42L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                  41L  0C    0m  CC=0.0    ←0
+  │ 08_voice_command_to_kvm.uri.flow.yaml    40L  0C    0m  CC=0.0    ←0
+  │ handlers                    35L  0C    3m  CC=4      ←0
+  │ local-rdp.routes.yaml       32L  0C    0m  CC=0.0    ←0
+  │ 09_webrtc_video_chat_rdp.uri.flow.yaml    29L  0C    0m  CC=0.0    ←0
+  │ validate-flows.sh           28L  0C    0m  CC=0.0    ←0
+  │ 05_fill_form_gui.uri.flow.yaml    27L  0C    0m  CC=0.0    ←0
+  │ 07_edit_config_nano_tui.uri.flow.yaml    27L  0C    0m  CC=0.0    ←0
+  │ routes                      23L  0C    1m  CC=1      ←0
+  │ 06_terminal_htop_tui.uri.flow.yaml    23L  0C    0m  CC=0.0    ←0
+  │ 04_browser_download_file.uri.flow.yaml    22L  0C    0m  CC=0.0    ←0
+  │ docker-up.sh                21L  0C    0m  CC=0.0    ←0
+  │ docker-smoke.sh             20L  0C    0m  CC=0.0    ←0
+  │ 03_open_browser_gui.uri.flow.yaml    19L  0C    0m  CC=0.0    ←0
+  │ entrypoint.sh               18L  0C    0m  CC=0.0    ←0
+  │ routes                      17L  0C    1m  CC=1      ←0
+  │ handlers                    17L  0C    1m  CC=4      ←0
+  │ routes                      17L  0C    1m  CC=1      ←0
+  │ 02_update_system_tui.uri.flow.yaml    15L  0C    0m  CC=0.0    ←0
+  │ run-lab.sh                  13L  0C    0m  CC=0.0    ←0
+  │ 01_install_browser.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
+  │ routes                       9L  0C    1m  CC=1      ←0
+  │ docker-logs.sh               6L  0C    0m  CC=0.0    ←0
+  │ docker-down.sh               6L  0C    0m  CC=0.0    ←0
+  │ static_server                6L  0C    0m  CC=0.0    ←0
+  │ runtime                      5L  0C    0m  CC=0.0    ←0
+  │ __init__                     5L  0C    0m  CC=0.0    ←0
+  │ __init__                     1L  0C    0m  CC=0.0    ←0
+  │
+  urikvm-docker/                  CC̄=3.7    ←in:0  →out:0
+  │ !! handlers                   216L  0C   15m  CC=16     ←0
+  │ handlers                   115L  0C   10m  CC=8      ←0
+  │ handlers                   103L  0C    6m  CC=8      ←0
+  │ real_pipeline               95L  0C    4m  CC=14     ←0
+  │ handlers                    81L  0C    9m  CC=7      ←0
+  │ cli                         56L  0C    2m  CC=7      ←0
+  │ pyproject.toml              51L  0C    0m  CC=0.0    ←0
+  │ test-real.sh                47L  0C    1m  CC=0.0    ←0
+  │ kvm-profile.json            26L  0C    0m  CC=0.0    ←0
+  │ kvm-profile.real.json       24L  0C    0m  CC=0.0    ←0
+  │ kvm-click-ok.uri.flow.yaml    20L  0C    0m  CC=0.0    ←0
+  │ docker-compose.yml          10L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   8L  0C    0m  CC=0.0    ←0
+  │ test-local.sh                8L  0C    0m  CC=0.0    ←0
+  │ routes                       6L  0C    1m  CC=1      ←0
+  │ routes                       5L  0C    1m  CC=1      ←0
+  │ call-http.sh                 5L  0C    0m  CC=0.0    ←0
+  │ routes                       3L  0C    1m  CC=1      ←0
   │ routes                       2L  0C    1m  CC=1      ←0
   │
   urienv-docker/                  CC̄=3.6    ←in:0  →out:0
-  │ handlers                   196L  0C   19m  CC=7      ←1
+  │ handlers                   196L  0C   19m  CC=7      ←2
   │ manifest.yaml               67L  0C    0m  CC=0.0    ←0
   │ docker-compose.yml          52L  0C    0m  CC=0.0    ←0
   │ env-policy.yaml             36L  0C    0m  CC=0.0    ←0
@@ -1215,7 +1253,7 @@ LAYERS:
   │ runtime                     21L  0C    4m  CC=3      ←3
   │ pyproject.toml              20L  0C    0m  CC=0.0    ←0
   │ pyproject.toml              19L  0C    0m  CC=0.0    ←0
-  │ flow                        16L  0C    1m  CC=12     ←4
+  │ flow                        16L  0C    1m  CC=12     ←0
   │ mutate-process-env.uri.flow.yaml    16L  0C    0m  CC=0.0    ←0
   │ pack_loader                 15L  0C    2m  CC=4      ←0
   │ startup-env-check.uri.flow.yaml    15L  0C    0m  CC=0.0    ←0
@@ -1227,63 +1265,70 @@ LAYERS:
   │ smtp_password.txt            1L  0C    0m  CC=0.0    ←0
   │ markpact_token.txt           1L  0C    0m  CC=0.0    ←0
   │
-  urisys-node/                    CC̄=3.3    ←in:0  →out:0  ×DUP
+  urisys-node/                    CC̄=3.4    ←in:0  →out:0  ×DUP
+  │ runtime                    269L  3C   16m  CC=14     ←0  ×DUP
   │ !! artifact_resolver          225L  1C   15m  CC=15     ←1
   │ !! cli                        170L  0C    1m  CC=16     ←0
-  │ runtime                    165L  3C   11m  CC=8      ←0  ×DUP
+  │ env                        129L  0C    7m  CC=11     ←0
+  │ serve                      125L  0C    5m  CC=6      ←0
   │ identity                   110L  0C   12m  CC=4      ←3
-  │ serve                      107L  0C    4m  CC=11     ←0
   │ handlers                   102L  0C    9m  CC=7      ←0
   │ client                      92L  0C    3m  CC=6      ←1
-  │ pyproject.toml              57L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml              87L  0C    0m  CC=0.0    ←0
+  │ entrypoint.sh               63L  0C    3m  CC=0.0    ←0
+  │ Dockerfile.gui              51L  0C    0m  CC=0.0    ←0
   │ router                      47L  0C    5m  CC=6      ←2
   │ handlers                    41L  0C    4m  CC=2      ←0
+  │ docker-compose.gui.yml      33L  0C    0m  CC=0.0    ←0
   │ node-profile.json           32L  0C    0m  CC=0.0    ←0
   │ routes                      23L  0C    1m  CC=1      ←0
-  │ env                         22L  0C    1m  CC=8      ←3
+  │ route-map.host.yaml         23L  0C    0m  CC=0.0    ←0
   │ routes                      19L  0C    1m  CC=1      ←0
   │ route-map.master.yaml       19L  0C    0m  CC=0.0    ←0
+  │ node-profile.docker.json    16L  0C    0m  CC=0.0    ←0
   │ install-linux.sh            16L  0C    0m  CC=0.0    ←0
   │ route-map.slave.yaml        14L  0C    0m  CC=0.0    ←0
   │ slave-kvm-demo.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
+  │ __init__                    12L  0C    0m  CC=0.0    ←0
   │ screen-capture-mss.uri.flow.yaml    12L  0C    0m  CC=0.0    ←0
   │ nodes.registry.json         10L  0C    0m  CC=0.0    ←0
+  │ nodes.registry.host.json     9L  0C    0m  CC=0.0    ←0
+  │ runtime                      5L  0C    0m  CC=0.0    ←0
+  │ env                          5L  0C    0m  CC=0.0    ←0
   │
   uribrowser-docker/              CC̄=3.1    ←in:0  →out:0
   │ handlers                    87L  0C    6m  CC=11     ←0
   │ pyproject.toml              50L  0C    0m  CC=0.0    ←0
   │ cli                         49L  0C    2m  CC=7      ←0
   │ test-real.sh                28L  0C    0m  CC=0.0    ←0
-  │ runtime                     23L  0C    0m  CC=0.0    ←0
   │ browser-demo.uri.flow.yaml    14L  0C    0m  CC=0.0    ←0
   │ docker-compose.yml          10L  0C    0m  CC=0.0    ←0
   │ browser-profile.json        10L  0C    0m  CC=0.0    ←0
   │ browser-profile.real.json     9L  0C    0m  CC=0.0    ←0
-  │ test-local.sh                8L  0C    0m  CC=0.0    ←0
   │ Dockerfile                   8L  0C    0m  CC=0.0    ←0
+  │ test-local.sh                8L  0C    0m  CC=0.0    ←0
   │ routes                       5L  0C    1m  CC=1      ←0
   │ __init__                     1L  0C    0m  CC=0.0    ←0
   │ __init__                     1L  0C    0m  CC=0.0    ←0
   │
-  uristepper-docker/              CC̄=2.2    ←in:0  →out:0  ×DUP
-  │ runtime                    193L  5C   12m  CC=6      ←11  ×DUP
+  uristepper-docker/              CC̄=2.2    ←in:0  →out:0
+  │ runtime                    169L  4C    9m  CC=6      ←5
   │ drivers                    169L  3C   30m  CC=4      ←1
   │ cli                        124L  0C    8m  CC=12     ←0
   │ handlers                   112L  0C   11m  CC=10     ←0
-  │ server                      71L  0C    2m  CC=1      ←6
+  │ server                      74L  0C    2m  CC=1      ←0
   │ device-profile.json         61L  0C    0m  CC=0.0    ←0
+  │ docker-compose.yml          35L  0C    0m  CC=0.0    ←0
   │ move-test.uri.flow.yaml     35L  0C    0m  CC=0.0    ←0
   │ device-profile.rpi3.example.json    33L  0C    0m  CC=0.0    ←0
-  │ docker-compose.yml          31L  0C    0m  CC=0.0    ←0
   │ Makefile                    25L  0C    0m  CC=0.0    ←0
   │ docker-compose.rpi3.example.yml    21L  0C    0m  CC=0.0    ←0
   │ safety-denied.uri.flow.yaml    17L  0C    0m  CC=0.0    ←0
-  │ Dockerfile                  15L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                  16L  0C    0m  CC=0.0    ←0
   │ call-http.sh                10L  0C    0m  CC=0.0    ←0
-  │ test-local.sh                9L  0C    0m  CC=0.0    ←0
+  │ test-local.sh               10L  0C    0m  CC=0.0    ←0
   │ test-docker.sh               7L  0C    0m  CC=0.0    ←0
-  │ __main__                     2L  0C    0m  CC=0.0    ←0
-  │ __init__                     1L  0C    0m  CC=0.0    ←0
+  │ __main__                     3L  0C    0m  CC=0.0    ←0
   │ __init__                     1L  0C    0m  CC=0.0    ←0
   │
   examples/                       CC̄=1.0    ←in:0  →out:0
@@ -1295,7 +1340,7 @@ LAYERS:
   ./                              CC̄=0.0    ←in:0  →out:0
   │ !! planfile.yaml             1319L  0C    0m  CC=0.0    ←0
   │ !! goal.yaml                  512L  0C    0m  CC=0.0    ←0
-  │ pyproject.toml             102L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml             106L  0C    0m  CC=0.0    ←0
   │ prefact.yaml                94L  0C    0m  CC=0.0    ←0
   │ project.sh                  63L  0C    0m  CC=0.0    ←0
   │ tree.sh                      1L  0C    0m  CC=0.0    ←0
@@ -1328,23 +1373,26 @@ LAYERS:
      src/urisys/controllers/__init__.py        0L
 
 COUPLING:
-                                             packages.python    uristepper-docker.packages        urikvm-docker.packages        urirdp-docker.packages        urienv-docker.packages          urisys-node.packages    uribrowser-docker.packages                    src.urisys         urikvm-docker.scripts  urisys-automation-lab.server
-               packages.python                            ──                                                          ←7                            ←6                             2                                                                                                                                                        hub
-    uristepper-docker.packages                                                          ──                            ←2                            ←2                            ←3                            ←4                            ←2                                                          ←1                            ←1  hub
-        urikvm-docker.packages                             7                             2                            ──                                                           1                             1                                                                                                                          !! fan-out
-        urirdp-docker.packages                             6                             2                                                          ──                             1                             1                                                                                                                          !! fan-out
-        urienv-docker.packages                            ←2                             3                            ←1                            ←1                            ──                                                          ←1                             1                                                              hub
-          urisys-node.packages                                                           4                            ←1                            ←1                                                          ──                                                                                                                        
-    uribrowser-docker.packages                                                           2                                                                                         1                                                          ──                                                                                          
-                    src.urisys                                                                                                                                                    ←1                                                                                        ──                                                            
-         urikvm-docker.scripts                                                           1                                                                                                                                                                                                                ──                              
-  urisys-automation-lab.server                                                           1                                                                                                                                                                                                                                              ──
+                                                     scripts               packages.python          urisys-node.packages        urirdp-docker.packages        urienv-docker.packages        urikvm-docker.packages    uristepper-docker.packages  urisys-automation-lab.server    uribrowser-docker.packages                    src.urisys         urikvm-docker.scripts
+                       scripts                            ──                            ←3                           ←18                            ←2                            ←5                            ←2                            ←7                            ←5                            ←2                            ←3                            ←2  hub
+               packages.python                             3                            ──                            ←5                           ←14                             2                           ←11                            ←1                            ←1                            ←3                                                          ←1  hub
+          urisys-node.packages                            18                             5                            ──                                                           2                                                           2                                                                                                                          !! fan-out
+        urirdp-docker.packages                             2                            14                                                          ──                                                                                                                                                                                                                    !! fan-out
+        urienv-docker.packages                             5                             2                            ←2                                                          ──                                                           2                                                                                         1                                !! fan-out
+        urikvm-docker.packages                             2                            11                                                                                                                      ──                                                                                                                                                        !! fan-out
+    uristepper-docker.packages                             7                             1                            ←2                                                          ←2                                                          ──                                                                                                                          !! fan-out
+  urisys-automation-lab.server                             5                             1                                                                                                                                                                                  ──                                                                                          
+    uribrowser-docker.packages                             2                             3                                                                                                                                                                                                                ──                                                            
+                    src.urisys                             3                                                                                                                      ←1                                                                                                                                                    ──                              
+         urikvm-docker.scripts                             2                             1                                                                                                                                                                                                                                                                            ──
   CYCLES: none
-  HUB: uristepper-docker.packages/ (fan-in=15)
-  HUB: urienv-docker.packages/ (fan-in=5)
-  HUB: packages.python/ (fan-in=13)
-  SMELL: urirdp-docker.packages/ fan-out=10 → split needed
-  SMELL: urikvm-docker.packages/ fan-out=11 → split needed
+  HUB: scripts/ (fan-in=49)
+  HUB: packages.python/ (fan-in=38)
+  SMELL: uristepper-docker.packages/ fan-out=8 → split needed
+  SMELL: urikvm-docker.packages/ fan-out=13 → split needed
+  SMELL: urirdp-docker.packages/ fan-out=16 → split needed
+  SMELL: urisys-node.packages/ fan-out=27 → split needed
+  SMELL: urienv-docker.packages/ fan-out=10 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon
@@ -1354,75 +1402,74 @@ EXTERNAL:
 ### Duplication (`project/duplication.toon.yaml`)
 
 ```toon markpact:analysis path=project/duplication.toon.yaml
-# redup/duplication | 0 groups | 24f 2477L | 2026-06-16
+# redup/duplication | 0 groups | 26f 2905L | 2026-06-16
 
 SUMMARY:
-  files_scanned: 24
-  total_lines:   2477
+  files_scanned: 26
+  total_lines:   2905
   dup_groups:    0
   dup_fragments: 0
   saved_lines:   0
-  scan_ms:       2117
+  scan_ms:       2080
 ```
 
 ### Evolution / Churn (`project/evolution.toon.yaml`)
 
 ```toon markpact:analysis path=project/evolution.toon.yaml
-# code2llm/evolution | 430 func | 81f | 2026-06-16
+# code2llm/evolution | 459 func | 86f | 2026-06-16
 # generated in 0.00s
 
 NEXT[10] (ranked by impact):
-  [1] !! SPLIT           src/urisys/managers/markpact_manager.py
-      WHY: 579L, 4 classes, max CC=28
-      EFFORT: ~4h  IMPACT: 16212
-
-  [2] !  SPLIT-FUNC      MarkpactManager.compile  CC=21  fan=34
+  [1] !  SPLIT-FUNC      MarkpactManager.compile  CC=21  fan=34
       WHY: CC=21 exceeds 15
       EFFORT: ~1h  IMPACT: 714
 
-  [3] !  SPLIT-FUNC      main  CC=16  fan=41
+  [2] !  SPLIT-FUNC      main  CC=16  fan=41
       WHY: CC=16 exceeds 15
       EFFORT: ~1h  IMPACT: 656
 
-  [4] !  SPLIT-FUNC      main  CC=18  fan=27
-      WHY: CC=18 exceeds 15
-      EFFORT: ~1h  IMPACT: 486
+  [3] !  SPLIT-FUNC      main  CC=20  fan=28
+      WHY: CC=20 exceeds 15
+      EFFORT: ~1h  IMPACT: 560
 
-  [5] !! SPLIT-FUNC      MarkpactManager._compile_manifest  CC=28  fan=17
+  [4] !! SPLIT-FUNC      MarkpactManager._compile_manifest  CC=28  fan=17
       WHY: CC=28 exceeds 15
       EFFORT: ~1h  IMPACT: 476
+
+  [5] !  SPLIT-FUNC      decide  CC=23  fan=19
+      WHY: CC=23 exceeds 15
+      EFFORT: ~1h  IMPACT: 437
 
   [6] !  SPLIT-FUNC      MarkpactManager.run_tests  CC=20  fan=21
       WHY: CC=20 exceeds 15
       EFFORT: ~1h  IMPACT: 420
 
-  [7] !  SPLIT-FUNC      _vision_analyze  CC=22  fan=18
-      WHY: CC=22 exceeds 15
-      EFFORT: ~1h  IMPACT: 396
-
-  [8] !  SPLIT-FUNC      analyze  CC=18  fan=19
+  [7] !  SPLIT-FUNC      analyze  CC=18  fan=19
       WHY: CC=18 exceeds 15
       EFFORT: ~1h  IMPACT: 342
 
-  [9] !  SPLIT-FUNC      build_lab_runtime  CC=16  fan=18
-      WHY: CC=16 exceeds 15
-      EFFORT: ~1h  IMPACT: 288
+  [8] !  SPLIT-FUNC      open_page  CC=15  fan=22
+      WHY: CC=15 exceeds 15
+      EFFORT: ~1h  IMPACT: 330
 
-  [10] !  SPLIT-FUNC      MarkpactManager._validate_contract  CC=23  fan=11
+  [9] !  SPLIT-FUNC      build_lab_runtime  CC=17  fan=19
+      WHY: CC=17 exceeds 15
+      EFFORT: ~1h  IMPACT: 323
+
+  [10] !  SPLIT-FUNC      LabHandler.do_POST  CC=23  fan=11
       WHY: CC=23 exceeds 15
       EFFORT: ~1h  IMPACT: 253
 
 
-RISKS[3]:
+RISKS[2]:
   ⚠ Splitting planfile.yaml may break 0 import paths
-  ⚠ Splitting src/urisys/managers/markpact_manager.py may break 25 import paths
   ⚠ Splitting goal.yaml may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          3.7 → ≤2.6
+  CC̄:          3.8 → ≤2.7
   max-CC:      28 → ≤14
-  god-modules: 3 → 0
-  high-CC(≥15): 16 → ≤8
+  god-modules: 2 → 0
+  high-CC(≥15): 17 → ≤8
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -1450,7 +1497,7 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=3.7 → now CC̄=3.7
+  prev CC̄=3.8 → now CC̄=3.8
 ```
 
 ## Intent

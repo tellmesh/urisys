@@ -25,6 +25,5 @@ do:
     after: webrtc_send
     payload: {}
 
-# Effect-level contract asserted by scripts/run_test_sessions.py (uri2flow ignores it).
-expect:
-  screen_changed: true
+# WebRTC is a transport/protocol flow — no guaranteed desktop visual change.
+# Pass/fail is steps_ok + envelope round-trip (see responses webrtc_send).
