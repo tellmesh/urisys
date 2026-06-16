@@ -12,13 +12,15 @@ from typing import Any
 PACK_MODULES: dict[str, str] = {
     "node": "urisysnode.routes",
     "screen": "uriscreen.routes",
+    "shell": "urishell.routes",
     "kvm": "urikvm",
     "him": "urihim",
     "ocr": "uriocr",
     "llm": "urillm",
 }
 
-CORE_PACKS = frozenset({"node"})
+CORE_PACKS = frozenset({"node", "screen", "shell"})
+BUNDLED_PACKS = frozenset({"node", "screen", "shell"})
 PACK_PYPI: dict[str, str] = {
     "urisysedge": "urisysedge>=0.1.0",
     "kvm": "urikvm>=0.1.0",
@@ -156,7 +158,7 @@ def ensure_pack_pypi(pack: str, *, install: bool = True, specs: list[str] | None
     """Install pack + urisysedge from PyPI or GitHub Releases when import would fail."""
     resolved = pack_install_specs(pack, specs)
     if not resolved:
-        if pack in ("node", "screen"):
+        if pack in BUNDLED_PACKS:
             return {"ok": True, "pack": pack, "skipped": True, "reason": "bundled in urisys"}
         return {"ok": False, "error": f"no install mapping for pack {pack!r}"}
     out = ensure_pip_specs(resolved, install=install)
@@ -173,7 +175,18 @@ def ensure_real_deps(pack: str, *, install: bool = True) -> dict[str, Any]:
     return out
 
 
-def import_pack_module(pack: str):
+def github_wheel_urls(*packs: str) -> list[str]:
+    """Pip install specs (urisysedge + wheels) for shell:// bootstrap flows."""
+    specs: list[str] = []
+    edge = resolve_pack_spec("urisysedge")
+    if edge:
+        specs.append(edge)
+    for pack in packs:
+        spec = resolve_pack_spec(pack)
+        if spec and spec not in specs:
+            specs.append(spec)
+    return specs
+
     module_name = pack_module(pack)
     return importlib.import_module(module_name)
 

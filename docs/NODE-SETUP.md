@@ -6,7 +6,45 @@ Po `pip install urisys` wystarczy:
 urisys node serve --host 0.0.0.0 --port 8790
 ```
 
-Node startuje z **`node` + `screen`** (wbudowane w wheel). Packi **kvm/him/ocr/llm** i backendy **`[real]`** (mss, pyautogui, …) instalują się **automatycznie przy pierwszym URI**, jeśli `URISYS_NODE_AUTO_INSTALL=1` (domyślnie przy `urisys node serve`).
+Node startuje z **`node` + `screen` + `shell`** (wbudowane w wheel). Packi **kvm/him/ocr/llm** instalujesz przez:
+
+1. **lazy install** przy pierwszym URI (`him://`, …), albo
+2. **`shell://pip`** z GitHub Releases (gdy PyPI niedostępne)
+
+## Bootstrap packów przez shell:// (bez PyPI)
+
+Z hosta (route-map → lenovo):
+
+```bash
+curl -sS -X POST http://192.168.188.201:8790/uri/call \
+  -H 'Content-Type: application/json' \
+  -d '{"uri":"shell://pip","payload":{"args":["install","-U","https://github.com/tellmesh/urihim/releases/download/v0.1.2/urihim-0.1.2-py3-none-any.whl"]},"context":{"approved":true,"allow_real":true}}'
+```
+
+Flow (wszystkie packi z GitHub):
+
+```bash
+# na node z urishell — lokalnie lub przez forward
+urisys --packs shell flow urisys-node/flows/bootstrap-kvm-github.uri.flow.yaml --approve --allow-real
+```
+
+Z mastera przez route-map:
+
+```bash
+urisys-node call "shell://pip" \
+  --payload '{"args":["install","-U","https://github.com/tellmesh/urihim/releases/download/v0.1.2/urihim-0.1.2-py3-none-any.whl"]}' \
+  --approve --allow-real \
+  --route-map urisys-node/config/route-map.lenovo.yaml \
+  --nodes-registry urisys-node/config/nodes.registry.json
+```
+
+Po `pip install` packów zrób hot-load (bez restartu):
+
+```bash
+curl -sS -X POST http://192.168.188.201:8790/uri/pack \
+  -H 'Content-Type: application/json' \
+  -d '{"pack":"him","install":false}'
+```
 
 Wyłączenie auto-install:
 

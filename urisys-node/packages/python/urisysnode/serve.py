@@ -77,8 +77,8 @@ def build_runtime(config_path: str | None = None) -> Runtime:
     config = load_json(config_file) if Path(config_file).exists() else {}
     rt = Runtime(events_path=os.environ.get("URISYS_NODE_EVENTS", "data/events.jsonl"), config=config)
 
-    # Minimal boot: node + screen (bundled in urisys). Other packs load on first URI or install-pack.
-    packs = os.environ.get("URISYS_NODE_PACKS", "node,screen").split(",")
+    # Minimal boot: node + screen + shell (bundled). kvm/him/ocr/llm on first URI or shell://pip.
+    packs = os.environ.get("URISYS_NODE_PACKS", "node,screen,shell").split(",")
     packs = [p.strip() for p in packs if p.strip()]
 
     rt._loaded_packs = set()  # type: ignore[attr-defined]

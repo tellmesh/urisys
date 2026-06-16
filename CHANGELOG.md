@@ -190,6 +190,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.22] - 2026-06-16
+
+### Docs
+- Update README.md
+- Update docs/NODE-SETUP.md
+
+### Other
+- Update urirdp-docker/packages/python/urirdp_shell/handlers.py
+- Update urirdp-docker/packages/python/urirdp_shell/routes.py
+- Update urisys-node/config/route-map.lenovo.yaml
+- Update urisys-node/flows/bootstrap-kvm-github.uri.flow.yaml
+- Update urisys-node/packages/python/urishell/__init__.py
+- Update urisys-node/packages/python/urishell/handlers.py
+- Update urisys-node/packages/python/urishell/routes.py
+- Update urisys-node/packages/python/urisysnode/pack_resolver.py
+- Update urisys-node/packages/python/urisysnode/serve.py
+- Update urisys-node/tests/test_urishell.py
+- ... and 1 more files
+
 ## [0.1.21] - 2026-06-16
 
 ### Docs

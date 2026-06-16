@@ -11,6 +11,11 @@ routes:
     target: http://192.168.188.201:8790
     transport: http
     node: lenovo
+  - match: shell://**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo
+    approval: required
   - match: kvm://lenovo/**
     target: http://192.168.188.201:8790
     transport: http
