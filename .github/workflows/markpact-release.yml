@@ -115,7 +115,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "releases/${CONTRACT_ID}/${VERSION}/"
           git diff --staged --quiet || git commit -m "release: ${CONTRACT_ID} ${VERSION} [skip ci]"
-          git push origin "HEAD:${{ steps.ver.outputs.git_ref }}"
+          git push origin "HEAD:main"
+          git push origin "HEAD:${{ steps.ver.outputs.git_ref }}" --force
 
       - name: Register release on markpact.com
         env:
