@@ -35,8 +35,8 @@ services:
 
   automation-lab:
     build:
-      context: ..
-      dockerfile: urisys-automation-lab/Dockerfile
+      context: ../..
+      dockerfile: urisys/urisys-automation-lab/Dockerfile
     container_name: urisys-lab-ui
     restart: unless-stopped
     depends_on:

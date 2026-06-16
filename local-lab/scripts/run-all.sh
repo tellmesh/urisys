@@ -22,4 +22,4 @@ $COMPOSE run --rm urisys-node-lab bash local-lab/scripts/05-resolve-from-url.sh
 log "smoke from host (WORKER_PORT=${WORKER_PORT:-8796})"
 WORKER_PORT="${WORKER_PORT:-8796}" bash local-lab/scripts/04-smoke.sh
 
-log "ALL PASSED — artifacts in local-lab/generated/ and releases/"
+log "ALL PASSED — artifacts in local-lab/generated/ (releases under local-lab/generated/releases/)"

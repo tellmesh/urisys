@@ -30,10 +30,12 @@ COPY urirdp-docker/docker/entrypoint.sh /usr/local/bin/urirdp-entrypoint
 COPY urienv-docker/packages/python/urienv /tmp/vendor/urienv
 COPY uribrowser-docker /tmp/vendor/uribrowser-docker
 RUN chmod +x /etc/xrdp/startwm.sh /opt/urirdp/docker/bootstrap-rdp-session.sh /usr/local/bin/urirdp-entrypoint \
-    && python3 -m pip install --break-system-packages "uricore>=0.1.3" \
+    && python3 -m pip install --break-system-packages "uricore>=0.1.2" \
     && python3 -m pip install --break-system-packages -e ".[real]" \
        -e /tmp/vendor/urienv \
        -e /tmp/vendor/uribrowser-docker
+
+ENV PYTHONPATH="/opt/urirdp/packages/python"
 
 EXPOSE 3389 8795
 ENTRYPOINT ["/usr/local/bin/urirdp-entrypoint"]

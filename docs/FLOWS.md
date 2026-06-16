@@ -53,8 +53,6 @@ curl -X POST http://127.0.0.1:8099/uri/flow \
   -d '{"path":"/opt/lab/flows/06_terminal_htop_tui.uri.flow.yaml","context":{"approved":true,"allow_real":true,"dry_run":false,"display":":10","xauthority":"/home/urisys/.Xauthority"}}'
 ```
 
-Implementacja: `urisys-automation-lab/server/flow_runner.py`
-
 - `uri2flow.expand_flow()` — compact YAML → workflow graph
 - `uri3.graph.run_workflow_node()` — topo-order, warunki `if:`, zależności
 - `LabCallAdapter` — sync HTTP przez lab gateway / forward do urirdp

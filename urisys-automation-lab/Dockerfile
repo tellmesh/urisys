@@ -11,21 +11,25 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl \
-    && rm -rf /var/lib/apt/lists/* \
-    && pip install --no-cache-dir PyYAML
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/lab
 
-COPY packages/python/urisysedge /opt/lab/packages/python/urisysedge
-COPY urisys-automation-lab/packages/python ./packages/python
-COPY urisys-automation-lab/server ./server
-COPY urisys-automation-lab/web ./web
-COPY urisys-automation-lab/flows ./flows
-COPY urisys-automation-lab/docker/entrypoint.sh /usr/local/bin/lab-entrypoint
+# Build context: tellmesh repo root (see docker-compose.lab.yml).
+COPY urisys/packages/python/urisysedge /opt/lab/packages/python/urisysedge
+COPY urisys/urisys-automation-lab/packages/python ./packages/python
+COPY urisys/urisys-automation-lab/server ./server
+COPY urisys/urisys-automation-lab/web ./web
+COPY urisys/urisys-automation-lab/flows ./flows
+COPY urisys/urisys-automation-lab/docker/entrypoint.sh /usr/local/bin/lab-entrypoint
+COPY uri2ops /tmp/uri2ops
+COPY uri3 /tmp/uri3
+COPY uri2flow /tmp/uri2flow
 
 RUN chmod +x /usr/local/bin/lab-entrypoint \
     && mkdir -p /opt/lab/data \
-    && pip install --no-cache-dir "uri2flow>=0.1.2"
+    && pip install --no-cache-dir /tmp/uri2ops /tmp/uri3 /tmp/uri2flow \
+    && rm -rf /tmp/uri2ops /tmp/uri3 /tmp/uri2flow
 
 EXPOSE 8099
 

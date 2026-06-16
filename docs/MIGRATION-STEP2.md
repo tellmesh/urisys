@@ -55,9 +55,12 @@ releases_dir   # → local-lab/generated/releases (lokalnie)
 RELEASES_DIR=releases releases_dir   # → releases (CI)
 ```
 
-## Krok 3 (planowany)
+## Krok 3 (zrobione)
 
-- `labedge` / `urirdpedge` → shim do `urisysedge` (jak kvm/browser)
+- `labedge` / `urirdpedge` → shim do `urisysedge` ✅
+
+## Krok 4 (planowany)
+
 - `uri2flow`/`uri3` jako optional dependency w `pyproject.toml` (dev/lab group)
 - Pełny `uri3 run-workflow` zamiast `run_workflow_node` loop (gdy schema root dostępny w kontenerze)
 

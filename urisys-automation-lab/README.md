@@ -6,6 +6,8 @@
 
 ### Docker (zalecane — jeden stack)
 
+Wymaga checkout **tellmesh** workspace (`urisys/` obok `uri2flow/`, `uri3/`, `uri2ops/`).
+
 ```bash
 cd urisys/urisys-automation-lab
 bash scripts/docker-up.sh

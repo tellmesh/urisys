@@ -12,6 +12,17 @@ license = "Apache-2.0"
 dependencies = ["uricore>=0.1.0", "PyYAML>=6.0"]
 keywords = ["uri", "control-plane", "controllers", "managers", "devices", "services"]
 
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "uricore",
+  "uribrowser",
+  "uridocker",
+]
+lab = [
+  "uri2flow>=0.1.2",
+]
+
 [dependency-groups]
 dev = [
   "pytest>=8.0",
@@ -19,11 +30,17 @@ dev = [
   "uribrowser",
   "uridocker",
 ]
+lab = [
+  "uri2flow>=0.1.2",
+]
 
 [tool.uv.sources]
 uricore = { path = "../uricore", editable = true }
 uribrowser = { path = "../uri-packs/packages/python/uribrowser", editable = true }
 uridocker = { path = "../uri-packs/packages/python/uridocker", editable = true }
+uri2flow = { path = "../uri2flow", editable = true }
+uri2ops = { path = "../uri2ops", editable = true }
+uri3 = { path = "../uri3", editable = true }
 
 [tool.uv]
 default-groups = ["dev"]

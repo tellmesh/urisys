@@ -20,9 +20,9 @@ if URIRDP_PACKAGES.is_dir() and str(URIRDP_PACKAGES) not in sys.path:
     sys.path.insert(0, str(URIRDP_PACKAGES))
 
 try:
-    from urirdpedge.runtime import Runtime, load_json  # type: ignore
-except ImportError:
     from labedge.runtime import Runtime, load_json
+except ImportError:
+    from urirdpedge.runtime import Runtime, load_json  # type: ignore
 
 
 def build_lab_runtime(config_path: str | None = None) -> Runtime:

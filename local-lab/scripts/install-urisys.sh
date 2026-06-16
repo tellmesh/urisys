@@ -12,7 +12,7 @@ elif [ -d "$WORKSPACE/../uricore" ]; then
   pip install "$WORKSPACE/../uricore" -q
 else
   echo "INFO: sibling uricore not mounted — installing from PyPI" >&2
-  pip install "uricore>=0.1.3" -q
+  pip install "uricore>=0.1.2" -q
 fi
 
 pip install -e "$WORKSPACE" -q

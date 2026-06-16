@@ -13,7 +13,7 @@ COPY flows /app/flows
 COPY tests /app/tests
 
 RUN pip install --upgrade pip \
-    && pip install "PyYAML>=6.0" "uricore>=0.1.3" \
+    && pip install "PyYAML>=6.0" "uricore>=0.1.2" \
     && printf '%s\n' '#!/usr/bin/env sh' 'exec python -m urisysedge.cli "$@"' > /usr/local/bin/urisys \
     && chmod +x /usr/local/bin/urisys \
     && ln -s /usr/local/bin/urisys /usr/local/bin/urisys-edge
