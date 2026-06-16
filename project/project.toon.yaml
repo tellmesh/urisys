@@ -1,0 +1,52 @@
+# urisys | 490 func | 93f | 11646L | python | 2026-06-16
+# generated in 0.00s
+
+HEALTH:
+  CC̄=3.4  critical=35 (limit:10)  dup=3  cycles=0
+
+ALERTS[20]:
+  !!! high_fan_out     MarkpactManager.compile = 34 (limit:10)
+  !!! cc_exceeded      MarkpactManager._compile_manifest = 28 (limit:15)
+  !!! high_fan_out     main = 28 (limit:10)
+  !!! high_fan_out     main = 27 (limit:10)
+  !!! high_fan_out     serve = 25 (limit:10)
+  !!! high_fan_out     make_handler = 23 (limit:10)
+  !!! high_fan_out     SourceManager._fetch_git = 22 (limit:10)
+  !!! high_fan_out     main = 22 (limit:10)
+  !!! high_fan_out     MarkpactManager.run_tests = 21 (limit:10)
+  !!! high_fan_out     main = 21 (limit:10)
+
+MODULES[220] (top by size):
+  M[planfile.yaml] 1319L C:0 F:0 CC↑0 D:0 (yaml)
+  M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
+  M[src/urisys/managers/markpact_manager.py] 408L C:4 F:20 CC↑28 D:0 (python)
+  M[urirdp-docker/packages/python/urirdpedge/runtime.py] 244L C:3 F:14 CC↑14 D:4 (python)
+  M[urikvm-docker/packages/python/urikvmedge/runtime.py] 228L C:3 F:14 CC↑10 D:0 (python)
+  M[src/urisys/managers/source_manager.py] 224L C:2 F:11 CC↑11 D:0 (python)
+  M[uribrowser-docker/packages/python/uribrowseredge/runtime.py] 222L C:3 F:14 CC↑10 D:0 (python)
+  M[urisys-automation-lab/server/automation_lab_server.py] 213L C:1 F:9 CC↑18 D:0 (python)
+  M[urienv-docker/vendor/uricore/core/python/uri_control/registry.py] 202L C:1 F:9 CC↑21 D:0 (python)
+  M[urikvm-docker/packages/python/urillm/handlers.py] 201L C:0 F:13 CC↑22 D:0 (python)
+  M[urirdp-docker/packages/python/urirdp_llm/handlers.py] 196L C:0 F:12 CC↑18 D:0 (python)
+  M[urienv-docker/packages/python/urienv/src/urienv/handlers.py] 196L C:0 F:19 CC↑7 D:2 (python)
+  M[uristepper-docker/packages/python/urisysedge/runtime.py] 193L C:5 F:12 CC↑6 D:11 (python)
+  M[src/urisys/cli.py] 176L C:0 F:6 CC↑18 D:0 (python)
+  M[uristepper-docker/packages/python/uristepper/drivers.py] 169L C:3 F:30 CC↑4 D:1 (python)
+  LANGS: python:105/yaml:34/shell:32/json:13/toml:9/other:9/yml:8/javascript:2/txt:2/proto:2/go:1/typescript:1/php:1/conf:1
+
+HOTSPOTS[10]:
+  ★ MarkpactManager.compile fan=34  // Orchestrates 34 calls
+  ★ main fan=28  // Orchestrates 28 calls
+  ★ main fan=27  // Orchestrates 27 calls
+  ★ serve fan=25  // Orchestrates 25 calls
+  ★ make_handler fan=23  // Orchestrates 23 calls
+
+REFACTOR[15]:
+  [1] H/L Split MarkpactManager._compile_manifest (CC=28)
+  [2] H/H Split god module goal.yaml (512L, 0 classes)
+  [3] H/H Split god module planfile.yaml (1319L, 0 classes)
+  [4] M/L Split main (CC=18)
+  [5] M/L Split MarkpactManager.compile (CC=21)
+
+EVOLUTION:
+  2026-06-16 CC̄=3.4 crit=35 11646L // Automated analysis

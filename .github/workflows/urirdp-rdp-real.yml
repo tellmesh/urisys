@@ -1,0 +1,24 @@
+name: urirdp-rdp-real
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "urirdp-docker/**"
+
+jobs:
+  rdp-real:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    defaults:
+      run:
+        working-directory: urirdp-docker
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and run real RDP/KVM integration test
+        run: |
+          chmod +x scripts/test-rdp-real.sh tests/e2e_rdp_real.sh
+          ./scripts/test-rdp-real.sh

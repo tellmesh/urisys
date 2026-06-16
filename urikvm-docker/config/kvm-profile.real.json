@@ -1,0 +1,24 @@
+{
+  "kvm": {
+    "driver": "mss"
+  },
+  "him": {
+    "driver": "pyautogui"
+  },
+  "ocr": {
+    "driver": "tesseract",
+    "lang": "eng"
+  },
+  "llm": {
+    "driver": "litellm",
+    "model_env": "LLM_MODEL",
+    "api_key_env": "OPENROUTER_API_KEY",
+    "base_url_env": "LLM_BASE_URL",
+    "temperature_env": "LLM_TEMPERATURE",
+    "max_tokens_env": "LLM_MAX_TOKENS"
+  },
+  "policy": {
+    "require_approval_for": ["him.*", "kvm.task.*"],
+    "real_control_requires_allow_real": true
+  }
+}

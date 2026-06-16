@@ -1,0 +1,17 @@
+flow:
+  id: rdp-kvm-smoke
+
+defaults:
+  approved: true
+  dry_run: true
+
+do:
+  - rdp://local/session/query/status
+  - rdp://local/session/query/display
+  - kvm://local/display/query/info
+  - kvm://local/monitor/primary/query/screenshot
+  - ocr://local/image/latest/query/text
+  - kvm://local/task/command/click-text:
+      text: OK
+  - kvm://local/task/command/type-text:
+      text: Hello from urisys RDP

@@ -1,0 +1,38 @@
+{
+  "profile_id": "urirdp-docker-real",
+  "target": "local",
+  "default_display": ":10",
+  "session_user": "urisys",
+  "xauthority": "/home/urisys/.Xauthority",
+  "screenshot_dir": "data/screenshots",
+  "rdp": {
+    "host": "127.0.0.1",
+    "port": 3389,
+    "user_env": "RDP_USER",
+    "password_env": "RDP_PASSWORD"
+  },
+  "drivers": {
+    "display": "xrdp-xorg",
+    "him": "xdotool",
+    "screenshot": "scrot",
+    "ocr": "tesseract",
+    "llm": "litellm"
+  },
+  "llm": {
+    "driver": "litellm",
+    "model_env": "LLM_MODEL",
+    "api_key_env": "OPENROUTER_API_KEY",
+    "base_url_env": "LLM_BASE_URL",
+    "temperature_env": "LLM_TEMPERATURE",
+    "max_tokens_env": "LLM_MAX_TOKENS"
+  },
+  "ocr": {
+    "driver": "tesseract",
+    "lang": "eng"
+  },
+  "safety": {
+    "default_allow_real": true,
+    "require_approval_for_him": true,
+    "require_active_rdp_session": true
+  }
+}

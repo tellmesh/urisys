@@ -1,0 +1,19 @@
+flow:
+  id: 09-webrtc-video-chat-rdp
+  description: WebRTC session + data channel URI envelope to control RDP desktop.
+
+defaults:
+  approved: true
+  dry_run: true
+
+do:
+  - webrtc://local/session/rdp-chat/command/start:
+      room: rdp-lab
+  - webrtc://local/session/rdp-chat/data/command/send:
+      envelope:
+        uri: rdp://local/display/query/status
+        payload: {}
+  - chat://local/uri/command/execute:
+      uri: kvm://local/monitor/primary/query/screenshot
+      payload: {}
+      approved: true

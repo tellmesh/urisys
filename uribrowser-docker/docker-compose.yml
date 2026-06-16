@@ -1,0 +1,10 @@
+services:
+  uribrowser:
+    build: .
+    ports:
+      - "8792:8792"
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config:ro
+    environment:
+      URISYS_ALLOW_REAL: "0"

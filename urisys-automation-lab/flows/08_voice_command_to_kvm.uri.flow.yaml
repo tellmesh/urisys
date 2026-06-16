@@ -1,0 +1,18 @@
+flow:
+  id: 08-voice-command-to-kvm
+  description: STT recognizes command and executes mapped URI via chat bridge.
+
+defaults:
+  approved: true
+  dry_run: true
+
+do:
+  - stt://local/session/main/command/start:
+      language: pl-PL
+      mode: browser
+  - stt://local/session/main/query/transcript
+  - chat://local/uri/command/execute:
+      uri: kvm://local/task/command/click-text
+      payload:
+        text: OK
+      approved: true

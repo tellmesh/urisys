@@ -1,0 +1,14 @@
+flow:
+  id: browser-demo
+
+defaults:
+  approved: true
+  dry_run: false
+
+do:
+  - browser://default/query/status
+  - browser://default/page/command/open:
+      url: https://example.com
+  - browser://default/page/query/dom
+  - browser://default/page/command/screenshot:
+      full_page: true

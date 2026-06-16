@@ -1,0 +1,26 @@
+{
+  "kvm": {
+    "driver": "mock",
+    "monitors": [
+      {"id": "primary", "width": 1280, "height": 720}
+    ]
+  },
+  "him": {
+    "driver": "mock"
+  },
+  "ocr": {
+    "driver": "mock",
+    "mock_boxes": [
+      {"text": "Start", "x": 100, "y": 120, "w": 80, "h": 30},
+      {"text": "OK", "x": 320, "y": 240, "w": 60, "h": 30},
+      {"text": "Cancel", "x": 400, "y": 240, "w": 90, "h": 30}
+    ]
+  },
+  "llm": {
+    "driver": "mock"
+  },
+  "policy": {
+    "require_approval_for": ["him.*", "kvm.task.*"],
+    "real_control_requires_allow_real": true
+  }
+}

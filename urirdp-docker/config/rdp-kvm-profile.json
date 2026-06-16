@@ -1,0 +1,26 @@
+{
+  "profile_id": "urirdp-docker-local",
+  "target": "local",
+  "default_display": ":10",
+  "session_user": "urisys",
+  "xauthority": "/home/urisys/.Xauthority",
+  "screenshot_dir": "data/screenshots",
+  "rdp": {
+    "host": "127.0.0.1",
+    "port": 3389,
+    "user_env": "RDP_USER",
+    "password_env": "RDP_PASSWORD"
+  },
+  "drivers": {
+    "display": "xrdp-xorg",
+    "him": "xdotool",
+    "screenshot": "scrot",
+    "ocr": "tesseract",
+    "llm": "mock-vision"
+  },
+  "safety": {
+    "default_allow_real": false,
+    "require_approval_for_him": true,
+    "require_active_rdp_session": true
+  }
+}

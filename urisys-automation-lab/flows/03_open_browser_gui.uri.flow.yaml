@@ -1,0 +1,13 @@
+flow:
+  id: 03-open-browser-gui
+  description: Open browser GUI and capture health page.
+
+defaults:
+  approved: true
+  dry_run: true
+
+do:
+  - browser://chrome/page/open:
+      url: http://localhost:8101/health
+  - browser://chrome/page/active/dom
+  - browser://chrome/page/active/screenshot

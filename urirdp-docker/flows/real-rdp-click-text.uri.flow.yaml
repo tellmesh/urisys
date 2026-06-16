@@ -1,0 +1,14 @@
+flow:
+  id: real-rdp-click-text
+  description: Requires an active RDP session and --allow-real.
+
+defaults:
+  approved: true
+  dry_run: false
+
+do:
+  - rdp://local/session/query/display
+  - kvm://local/monitor/primary/query/screenshot
+  - ocr://local/image/latest/query/text
+  - kvm://local/task/command/click-text:
+      text: OK

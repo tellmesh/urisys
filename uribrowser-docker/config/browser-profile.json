@@ -1,0 +1,10 @@
+{
+  "browser": {
+    "driver": "mock",
+    "headless": true,
+    "remote_cdp_url": "ws://chrome:9222/devtools/browser"
+  },
+  "policy": {
+    "require_approval_for": ["browser.page.open", "browser.page.screenshot"]
+  }
+}

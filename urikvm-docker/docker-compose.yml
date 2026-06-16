@@ -1,0 +1,10 @@
+services:
+  urikvm:
+    build: .
+    ports:
+      - "8794:8794"
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config:ro
+    environment:
+      URISYS_ALLOW_REAL: "0"

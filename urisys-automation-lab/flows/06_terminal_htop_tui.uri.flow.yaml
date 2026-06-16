@@ -1,0 +1,18 @@
+flow:
+  id: 06-terminal-htop-tui
+  description: Launch htop in terminal (TUI monitoring).
+
+defaults:
+  approved: true
+  dry_run: true
+
+do:
+  - shell://which:
+      args: ["htop"]
+  - him://local/keyboard/command/hotkey:
+      keys: ["ctrl", "alt", "t"]
+  - him://local/keyboard/command/type-text:
+      text: htop
+  - him://local/keyboard/command/key:
+      key: Return
+  - kvm://local/monitor/primary/query/screenshot

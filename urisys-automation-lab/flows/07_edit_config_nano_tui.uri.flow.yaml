@@ -1,0 +1,18 @@
+flow:
+  id: 07-edit-config-nano-tui
+  description: Edit config file in nano (TUI).
+
+defaults:
+  approved: true
+  dry_run: true
+
+do:
+  - shell://test:
+      args: ["-f", "/tmp/urisys-lab.conf"]
+  - shell://sh:
+      args: ["-c", "echo '# urisys lab' > /tmp/urisys-lab.conf"]
+  - him://local/keyboard/command/type-text:
+      text: "nano /tmp/urisys-lab.conf"
+  - him://local/keyboard/command/key:
+      key: Return
+  - kvm://local/monitor/primary/query/screenshot

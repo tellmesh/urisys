@@ -1,0 +1,18 @@
+flow:
+  id: 05-fill-form-gui
+  description: Fill a form through OCR + KVM + HIM on RDP desktop.
+
+defaults:
+  approved: true
+  dry_run: true
+
+do:
+  - rdp://local/session/query/status
+  - kvm://local/monitor/primary/query/screenshot
+  - ocr://local/image/latest/query/text
+  - llm://local/vision/query/analyze:
+      target_text: Name
+  - him://local/keyboard/command/type-text:
+      text: "TellMesh Demo"
+  - kvm://local/task/command/click-text:
+      text: Submit

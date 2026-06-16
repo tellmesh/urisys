@@ -1,0 +1,1319 @@
+name: Code Quality Improvement
+project_name: ''
+project_type: prefactoring
+domain: dev-tools
+goal: Improve code quality using prefact
+goals:
+- Fix all prefact-detected issues
+- Improve code maintainability
+- Ensure consistent code style
+quality_gates:
+- metric: Prefact Issues
+  threshold: '0'
+sprints:
+- id: sprint-1
+  name: Code Quality Improvements
+  duration: 2 weeks
+  objectives:
+  - Fix code quality issues
+  task_patterns:
+  - id: ticket-30bb4018
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/urisys/__init__.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/__init__.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-fc024f4e
+    name: Fix relative-imports issues
+    description: Resolve 6 relative-imports issues in src/urisys/controllers/flow_controller.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/urisys/controllers/flow_controller.py
+    rule_id: relative-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8f709667
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/urisys/controllers/flow_controller.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/controllers/flow_controller.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2c67b855
+    name: Fix relative-imports issues
+    description: Resolve 2 relative-imports issues in src/urisys/controllers/server_controller.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/controllers/server_controller.py
+    rule_id: relative-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-518036f8
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/urisys/controllers/server_controller.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/controllers/server_controller.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d841c7c8
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in src/urisys/controllers/server_controller.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/controllers/server_controller.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2793a7d8
+    name: Fix relative-imports issues
+    description: Resolve 14 relative-imports issues in src/urisys/cli.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - src/urisys/cli.py
+    rule_id: relative-imports
+    count: 14
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-39409545
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/urisys/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/cli.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-29f16a71
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in src/urisys/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/cli.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6553487a
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in src/urisys/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/cli.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-96f9891c
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/urisys/defaults.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/defaults.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e79d4ca3
+    name: Fix relative-imports issues
+    description: Resolve 8 relative-imports issues in src/urisys/controllers/uri_controller.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/urisys/controllers/uri_controller.py
+    rule_id: relative-imports
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-cec7f0cc
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/urisys/controllers/uri_controller.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/controllers/uri_controller.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-dcd4773e
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in src/urisys/flow.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/flow.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4bb42732
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/urisys/flow.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/flow.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c2e80424
+    name: Fix relative-imports issues
+    description: Resolve 6 relative-imports issues in src/urisys/http_server.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/urisys/http_server.py
+    rule_id: relative-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-fef6705c
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in src/urisys/http_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/urisys/http_server.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-be76d941
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/urisys/http_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/http_server.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5cc012a1
+    name: Fix magic-numbers issues
+    description: Resolve 10 magic-numbers issues in src/urisys/http_server.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/urisys/http_server.py
+    rule_id: magic-numbers
+    count: 10
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b6345a65
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/urisys/managers/bridge_manager.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/managers/bridge_manager.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-85c65bbf
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in src/urisys/managers/bridge_manager.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/managers/bridge_manager.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b776131d
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/urisys/managers/event_manager.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/managers/event_manager.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d7dcad72
+    name: Fix relative-imports issues
+    description: Resolve 6 relative-imports issues in src/urisys/managers/pack_manager.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/urisys/managers/pack_manager.py
+    rule_id: relative-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-9ce258ce
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/urisys/managers/pack_manager.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/managers/pack_manager.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-cd8357c3
+    name: Fix relative-imports issues
+    description: Resolve 2 relative-imports issues in src/urisys/managers/policy_manager.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/managers/policy_manager.py
+    rule_id: relative-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a12701ce
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/urisys/managers/policy_manager.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/managers/policy_manager.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1c621c42
+    name: Fix relative-imports issues
+    description: Resolve 4 relative-imports issues in src/urisys/managers/markpact_manager.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/urisys/managers/markpact_manager.py
+    rule_id: relative-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-96b9c612
+    name: Fix string-concat issues
+    description: Resolve 3 string-concat issues in src/urisys/managers/markpact_manager.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/managers/markpact_manager.py
+    rule_id: string-concat
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-705cadeb
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/urisys/managers/markpact_manager.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/managers/markpact_manager.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d6cd4406
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/urisys/managers/route_manager.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/managers/route_manager.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5db70ec6
+    name: Fix relative-imports issues
+    description: Resolve 4 relative-imports issues in src/urisys/managers/runtime_manager.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/urisys/managers/runtime_manager.py
+    rule_id: relative-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8a5b7a82
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/urisys/managers/runtime_manager.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/managers/runtime_manager.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1e40f542
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in src/urisys/managers/source_manager.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/urisys/managers/source_manager.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-567b3ea0
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in src/urisys/managers/source_manager.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/urisys/managers/source_manager.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2cfefb7a
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in tests/test_source_manager.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_source_manager.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1ae2965a
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_source_manager.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_source_manager.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1375e09a
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in tests/test_markpact.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - tests/test_markpact.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-dde03b11
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_markpact.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_markpact.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-44406fec
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in tests/test_urisys.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_urisys.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-63daebec
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in tests/test_urisys.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - tests/test_urisys.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-867db8ff
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in urienv-docker/packages/python/urienv/src/urienv/handlers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/packages/python/urienv/src/urienv/handlers.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-10e09066
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urienv-docker/packages/python/urienv/src/urienv/handlers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/packages/python/urienv/src/urienv/handlers.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a96c07b1
+    name: Fix relative-imports issues
+    description: Resolve 6 relative-imports issues in urienv-docker/packages/python/urisysedge/src/urisysedge/cli.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - urienv-docker/packages/python/urisysedge/src/urisysedge/cli.py
+    rule_id: relative-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-723fc429
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in urienv-docker/packages/python/urisysedge/src/urisysedge/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/packages/python/urisysedge/src/urisysedge/cli.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-15a3ac4f
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urienv-docker/packages/python/urisysedge/src/urisysedge/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/packages/python/urisysedge/src/urisysedge/cli.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8b5e15f4
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in urienv-docker/packages/python/urisysedge/src/urisysedge/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/packages/python/urisysedge/src/urisysedge/cli.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b7278838
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in urienv-docker/packages/python/urisysedge/src/urisysedge/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/packages/python/urisysedge/src/urisysedge/cli.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2f589957
+    name: Fix relative-imports issues
+    description: Resolve 2 relative-imports issues in urienv-docker/packages/python/urisysedge/src/urisysedge/flow.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/packages/python/urisysedge/src/urisysedge/flow.py
+    rule_id: relative-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-fd90cfb5
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urienv-docker/packages/python/urisysedge/src/urisysedge/flow.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/packages/python/urisysedge/src/urisysedge/flow.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-cb4191e3
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urienv-docker/packages/python/urisysedge/src/urisysedge/pack_loader.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/packages/python/urisysedge/src/urisysedge/pack_loader.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-fc232685
+    name: Fix relative-imports issues
+    description: Resolve 2 relative-imports issues in urienv-docker/packages/python/urisysedge/src/urisysedge/runtime.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/packages/python/urisysedge/src/urisysedge/runtime.py
+    rule_id: relative-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-948f8f39
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in urienv-docker/packages/python/urisysedge/src/urisysedge/runtime.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/packages/python/urisysedge/src/urisysedge/runtime.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-48cf8a55
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urienv-docker/packages/python/urisysedge/src/urisysedge/runtime.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/packages/python/urisysedge/src/urisysedge/runtime.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a5314e38
+    name: Fix relative-imports issues
+    description: Resolve 2 relative-imports issues in urienv-docker/packages/python/urisysedge/src/urisysedge/server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/packages/python/urisysedge/src/urisysedge/server.py
+    rule_id: relative-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0be3c18c
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in urienv-docker/packages/python/urisysedge/src/urisysedge/server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - urienv-docker/packages/python/urisysedge/src/urisysedge/server.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d6a10364
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urienv-docker/packages/python/urisysedge/src/urisysedge/server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/packages/python/urisysedge/src/urisysedge/server.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ae38cbc6
+    name: Fix magic-numbers issues
+    description: Resolve 7 magic-numbers issues in urienv-docker/packages/python/urisysedge/src/urisysedge/server.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - urienv-docker/packages/python/urisysedge/src/urisysedge/server.py
+    rule_id: magic-numbers
+    count: 7
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-41936084
+    name: Fix relative-imports issues
+    description: Resolve 14 relative-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/__init__.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/__init__.py
+    rule_id: relative-imports
+    count: 14
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2b301453
+    name: Fix relative-imports issues
+    description: Resolve 8 relative-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/cli.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/cli.py
+    rule_id: relative-imports
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8cd3f7ed
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/cli.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6b5fbb54
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in urienv-docker/vendor/uricore/core/python/uri_control/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/cli.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c6c53d0b
+    name: Fix relative-imports issues
+    description: Resolve 8 relative-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/dispatcher.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/dispatcher.py
+    rule_id: relative-imports
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-38627265
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/dispatcher.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/dispatcher.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-931df1dc
+    name: Fix relative-imports issues
+    description: Resolve 2 relative-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/event_store.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/event_store.py
+    rule_id: relative-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b8bfa4e2
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in urienv-docker/vendor/uricore/core/python/uri_control/event_store.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/event_store.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4e66aedc
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/event_store.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/event_store.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-f535cd8e
+    name: Fix relative-imports issues
+    description: Resolve 4 relative-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/parser.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/parser.py
+    rule_id: relative-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-04f7c97a
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/parser.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/parser.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-511e94e4
+    name: Fix relative-imports issues
+    description: Resolve 2 relative-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/policy.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/policy.py
+    rule_id: relative-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-caff6088
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/policy.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/policy.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2e475f9b
+    name: Fix relative-imports issues
+    description: Resolve 6 relative-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/projection.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/projection.py
+    rule_id: relative-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d6481792
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/projection.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/projection.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5e4dd8a5
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/models.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/models.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c1add2de
+    name: Fix llm-generated-code issues
+    description: Resolve 1 llm-generated-code issues in urienv-docker/vendor/uricore/core/python/uri_control/models.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/models.py
+    rule_id: llm-generated-code
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-467573e1
+    name: Fix relative-imports issues
+    description: Resolve 6 relative-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/registry.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/registry.py
+    rule_id: relative-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-77ea7993
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in urienv-docker/vendor/uricore/core/python/uri_control/registry.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/registry.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-81c1b4bc
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urienv-docker/vendor/uricore/core/python/uri_control/registry.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urienv-docker/vendor/uricore/core/python/uri_control/registry.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-7bfd67bd
+    name: Fix relative-imports issues
+    description: Resolve 2 relative-imports issues in uristepper-docker/packages/python/uristepper/handlers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - uristepper-docker/packages/python/uristepper/handlers.py
+    rule_id: relative-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-11a0bc94
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in uristepper-docker/packages/python/uristepper/handlers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - uristepper-docker/packages/python/uristepper/handlers.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2ffd0049
+    name: Fix magic-numbers issues
+    description: Resolve 4 magic-numbers issues in uristepper-docker/packages/python/uristepper/handlers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - uristepper-docker/packages/python/uristepper/handlers.py
+    rule_id: magic-numbers
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-f6ad4ab8
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in uristepper-docker/packages/python/uristepper/drivers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - uristepper-docker/packages/python/uristepper/drivers.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e1c5ccda
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in uristepper-docker/packages/python/uristepper/drivers.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - uristepper-docker/packages/python/uristepper/drivers.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b4aa982c
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in uristepper-docker/packages/python/uristepper/drivers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - uristepper-docker/packages/python/uristepper/drivers.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1487c601
+    name: Fix relative-imports issues
+    description: Resolve 4 relative-imports issues in uristepper-docker/packages/python/urisysedge/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - uristepper-docker/packages/python/urisysedge/cli.py
+    rule_id: relative-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a0438550
+    name: Fix smart-return-type issues
+    description: Resolve 7 smart-return-type issues in uristepper-docker/packages/python/urisysedge/cli.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - uristepper-docker/packages/python/urisysedge/cli.py
+    rule_id: smart-return-type
+    count: 7
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-41fe5e45
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in uristepper-docker/packages/python/urisysedge/cli.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - uristepper-docker/packages/python/urisysedge/cli.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b44b1074
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in uristepper-docker/packages/python/urisysedge/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - uristepper-docker/packages/python/urisysedge/cli.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-eda2163a
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in uristepper-docker/packages/python/urisysedge/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - uristepper-docker/packages/python/urisysedge/cli.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-dc3036ef
+    name: Fix relative-imports issues
+    description: Resolve 2 relative-imports issues in uristepper-docker/packages/python/urisysedge/server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - uristepper-docker/packages/python/urisysedge/server.py
+    rule_id: relative-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3bbd4861
+    name: Fix smart-return-type issues
+    description: Resolve 6 smart-return-type issues in uristepper-docker/packages/python/urisysedge/server.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - uristepper-docker/packages/python/urisysedge/server.py
+    rule_id: smart-return-type
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0fcc2acc
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in uristepper-docker/packages/python/urisysedge/server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - uristepper-docker/packages/python/urisysedge/server.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-7a036879
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in uristepper-docker/packages/python/urisysedge/server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - uristepper-docker/packages/python/urisysedge/server.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1538135c
+    name: Fix magic-numbers issues
+    description: Resolve 13 magic-numbers issues in uristepper-docker/packages/python/urisysedge/server.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - uristepper-docker/packages/python/urisysedge/server.py
+    rule_id: magic-numbers
+    count: 13
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b106be37
+    name: Fix string-concat issues
+    description: Resolve 3 string-concat issues in uristepper-docker/packages/python/urisysedge/runtime.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - uristepper-docker/packages/python/urisysedge/runtime.py
+    rule_id: string-concat
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c2e8d82c
+    name: Fix unused-imports issues
+    description: Resolve 10 unused-imports issues in uristepper-docker/packages/python/urisysedge/runtime.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - uristepper-docker/packages/python/urisysedge/runtime.py
+    rule_id: unused-imports
+    count: 10
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-210b19c0
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in uribrowser-docker/packages/python/uribrowserdocker/routes.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - uribrowser-docker/packages/python/uribrowserdocker/routes.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-9c936f2d
+    name: Fix relative-imports issues
+    description: Resolve 2 relative-imports issues in uribrowser-docker/packages/python/uribrowseredge/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - uribrowser-docker/packages/python/uribrowseredge/cli.py
+    rule_id: relative-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-dbe59d30
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in uribrowser-docker/packages/python/uribrowseredge/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - uribrowser-docker/packages/python/uribrowseredge/cli.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6e8eb7a8
+    name: Fix unused-imports issues
+    description: Resolve 8 unused-imports issues in uribrowser-docker/packages/python/uribrowseredge/cli.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - uribrowser-docker/packages/python/uribrowseredge/cli.py
+    rule_id: unused-imports
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c573dac2
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in uribrowser-docker/packages/python/uribrowseredge/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - uribrowser-docker/packages/python/uribrowseredge/cli.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced

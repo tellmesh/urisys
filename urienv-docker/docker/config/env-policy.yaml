@@ -7,6 +7,11 @@ public_vars:
   - URISYS_NODE_ID
   - URISYS_RUNTIME_MODE
   - FEATURE_FLAG_DEMO
+  - URISYS_ALLOW_REAL
+  - LLM_MODEL
+  - LLM_BASE_URL
+  - LLM_TEMPERATURE
+  - LLM_MAX_TOKENS
 
 # You may also expose groups by prefix, e.g. APP_PUBLIC_*
 public_prefixes:
@@ -18,6 +23,8 @@ secret_vars:
   - SMTP_PASSWORD
   - MARKPACT_TOKEN
   - OPENAI_API_KEY
+  - OPENROUTER_API_KEY
+  - LLM_API_KEY
 secret_prefixes:
   - SECRET_
 

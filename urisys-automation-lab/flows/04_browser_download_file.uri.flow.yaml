@@ -1,0 +1,13 @@
+flow:
+  id: 04-browser-download-file
+  description: Open Markpact/raw URL in browser and capture page state.
+
+defaults:
+  approved: true
+  dry_run: true
+
+do:
+  - browser://chrome/page/open:
+      url: https://raw.githubusercontent.com/github/markup/master/README.md
+  - browser://chrome/page/active/dom
+  - browser://chrome/page/active/screenshot

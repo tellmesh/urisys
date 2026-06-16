@@ -1,0 +1,9 @@
+{
+  "browser": {
+    "driver": "playwright",
+    "headless": true
+  },
+  "policy": {
+    "require_approval_for": ["browser.page.open", "browser.page.screenshot"]
+  }
+}

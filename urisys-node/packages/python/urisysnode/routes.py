@@ -1,0 +1,19 @@
+def register(rt):
+    rt.register("node://{target}/query/health", "python://urisysnode.handlers:query_health", kind="query", operation="node.health")
+    rt.register("node://{target}/query/identity", "python://urisysnode.handlers:query_identity", kind="query", operation="node.identity")
+    rt.register(
+        "node://{target}/command/indicator-on",
+        "python://urisysnode.handlers:command_indicator_on",
+        kind="command",
+        operation="node.indicator_on",
+        approval="required",
+        side_effects=True,
+    )
+    rt.register(
+        "node://{target}/command/indicator-off",
+        "python://urisysnode.handlers:command_indicator_off",
+        kind="command",
+        operation="node.indicator_off",
+        approval="required",
+        side_effects=True,
+    )
