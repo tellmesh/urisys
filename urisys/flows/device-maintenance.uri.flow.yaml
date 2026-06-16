@@ -1,0 +1,17 @@
+flow:
+  id: device-maintenance-demo
+  description: Safe mock flow over systemd, docker, printer and display.
+
+defaults:
+  approved: true
+  environment: mock
+  dry_run: true
+
+do:
+  - systemd://unit/docker.service/query/status
+  - docker://container/web/command/restart:
+      reason: demo restart
+  - printer://epson-l11050/query/status
+  - printer://epson-l11050/command/nozzle-check
+  - display://board-86/command/set-input:
+      input: HDMI1

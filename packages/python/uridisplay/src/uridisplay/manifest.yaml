@@ -1,0 +1,25 @@
+id: uridisplay
+version: 1
+scheme: display
+description: Display/interactive board control pack. Mock by default.
+uri_patterns:
+  - pattern: display://{device}/query/status
+    kind: query
+    operation: status
+    side_effects: false
+    approval: not_required
+  - pattern: display://{device}/command/set-input
+    kind: command
+    operation: set_input
+    side_effects: true
+    approval: required
+  - pattern: display://{device}/command/set-brightness
+    kind: command
+    operation: set_brightness
+    side_effects: true
+    approval: required
+handlers:
+  python:
+    status: python://uridisplay.handlers:status
+    set_input: python://uridisplay.handlers:set_input
+    set_brightness: python://uridisplay.handlers:set_brightness

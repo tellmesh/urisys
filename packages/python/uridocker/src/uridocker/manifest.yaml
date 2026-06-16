@@ -1,0 +1,43 @@
+id: uridocker
+version: 1
+scheme: docker
+description: Docker/container control pack. Uses Docker CLI only when real mode is enabled.
+uri_patterns:
+  - pattern: docker://container/{name}/query/status
+    kind: query
+    operation: container_status
+    side_effects: false
+    approval: not_required
+  - pattern: docker://container/{name}/command/start
+    kind: command
+    operation: container_start
+    side_effects: true
+    approval: required
+  - pattern: docker://container/{name}/command/stop
+    kind: command
+    operation: container_stop
+    side_effects: true
+    approval: required
+  - pattern: docker://container/{name}/command/restart
+    kind: command
+    operation: container_restart
+    side_effects: true
+    approval: required
+  - pattern: docker://compose/{project}/command/up
+    kind: command
+    operation: compose_up
+    side_effects: true
+    approval: required
+  - pattern: docker://compose/{project}/command/down
+    kind: command
+    operation: compose_down
+    side_effects: true
+    approval: required
+handlers:
+  python:
+    container_status: python://uridocker.handlers:container_status
+    container_start: python://uridocker.handlers:container_start
+    container_stop: python://uridocker.handlers:container_stop
+    container_restart: python://uridocker.handlers:container_restart
+    compose_up: python://uridocker.handlers:compose_up
+    compose_down: python://uridocker.handlers:compose_down

@@ -1,0 +1,25 @@
+id: uricamera
+version: 1
+scheme: camera
+description: Camera frame/capture pack. Mock by default.
+uri_patterns:
+  - pattern: camera://{device}/query/status
+    kind: query
+    operation: status
+    side_effects: false
+    approval: not_required
+  - pattern: camera://{device}/query/frame
+    kind: query
+    operation: frame
+    side_effects: false
+    approval: not_required
+  - pattern: camera://{device}/command/capture
+    kind: command
+    operation: capture
+    side_effects: true
+    approval: required
+handlers:
+  python:
+    status: python://uricamera.handlers:status
+    frame: python://uricamera.handlers:frame
+    capture: python://uricamera.handlers:capture

@@ -1,0 +1,31 @@
+id: uridesktop
+version: 1
+scheme: desktop
+description: Local desktop/OS surface pack.
+uri_patterns:
+  - pattern: desktop://{target}/query/info
+    kind: query
+    operation: info
+    side_effects: false
+    approval: not_required
+  - pattern: desktop://{target}/command/notify
+    kind: command
+    operation: notify
+    side_effects: true
+    approval: not_required
+  - pattern: desktop://{target}/command/open-url
+    kind: command
+    operation: open_url
+    side_effects: true
+    approval: required
+  - pattern: desktop://{target}/command/shell
+    kind: command
+    operation: shell
+    side_effects: true
+    approval: required
+handlers:
+  python:
+    info: python://uridesktop.handlers:info
+    notify: python://uridesktop.handlers:notify
+    open_url: python://uridesktop.handlers:open_url
+    shell: python://uridesktop.handlers:shell

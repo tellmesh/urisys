@@ -1,0 +1,31 @@
+id: uriagent
+version: 1
+scheme: agent
+description: Generic service/agent lifecycle bridge. Not a full agent runtime.
+uri_patterns:
+  - pattern: agent://{name}/query/health
+    kind: query
+    operation: health
+    side_effects: false
+    approval: not_required
+  - pattern: agent://{name}/command/call
+    kind: command
+    operation: call
+    side_effects: true
+    approval: required
+  - pattern: agent://{name}/command/start
+    kind: command
+    operation: start
+    side_effects: true
+    approval: required
+  - pattern: agent://{name}/command/stop
+    kind: command
+    operation: stop
+    side_effects: true
+    approval: required
+handlers:
+  python:
+    health: python://uriagent.handlers:health
+    call: python://uriagent.handlers:call
+    start: python://uriagent.handlers:start
+    stop: python://uriagent.handlers:stop

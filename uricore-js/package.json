@@ -1,0 +1,34 @@
+{
+  "name": "@uricore/js",
+  "version": "0.1.0",
+  "description": "URI-native control core for browser and Node.js: URI -> manifest -> policy -> handler -> events.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./server/http": "./src/server/http-server.js",
+    "./server/ws": "./src/server/ws-server.js",
+    "./server/grpc": "./src/server/grpc-adapter.js",
+    "./transports/http": "./src/transports/http-client.js",
+    "./transports/sse": "./src/transports/sse-client.js",
+    "./transports/ws": "./src/transports/ws-client.js",
+    "./transports/broadcast": "./src/transports/broadcast-channel.js",
+    "./transports/post-message": "./src/transports/post-message.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "demo:node": "node examples/node-server/server.mjs",
+    "demo:page": "node examples/node-server/server.mjs --static examples/browser-page --port 8080"
+  },
+  "keywords": ["uri", "cqrs", "event-sourcing", "control-plane", "browser", "node", "sse", "websocket"],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "optionalDependencies": {
+    "ws": "^8.18.0",
+    "@grpc/grpc-js": "^1.12.0",
+    "@grpc/proto-loader": "^0.7.13"
+  }
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>uricore-js demo</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; line-height: 1.4; }
+    button { margin: .25rem; padding: .55rem .75rem; }
+    pre { background: #f4f4f4; padding: 1rem; overflow: auto; max-height: 240px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; }
+  </style>
+</head>
+<body>
+  <h1 id="title">uricore-js demo</h1>
+  <p>Jedna strona ma własny runtime URI. Te same komendy można wysłać lokalnie, do Node backendu, do Python backendu przez Node proxy albo do innej karty przez BroadcastChannel.</p>
+
+  <div class="card">
+    <strong>Local page state:</strong> counter = <span id="counter">0</span><br />
+    <button id="local-inc">call page://state/counter/command/increment</button>
+    <button id="set-title">call page://dom/title/command/set</button>
+    <button id="node-inc">HTTP → node://counter/command/increment</button>
+    <button id="python-add">HTTP → node proxy → py://math/add</button>
+    <button id="peer-inc">BroadcastChannel → peer page increment +5</button>
+    <p><a href="peer.html" target="_blank">Otwórz peer page</a></p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Last result</h2>
+      <pre id="last"></pre>
+    </div>
+    <div class="card">
+      <h2>Local events</h2>
+      <pre id="events"></pre>
+    </div>
+    <div class="card">
+      <h2>Remote SSE events from Node</h2>
+      <pre id="remote-events"></pre>
+    </div>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

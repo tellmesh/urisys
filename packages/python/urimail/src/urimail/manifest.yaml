@@ -1,0 +1,25 @@
+id: urimail
+version: 1
+scheme: mail
+description: Mail draft/send/query pack. Mock by default; use provider-specific pack in urisys.
+uri_patterns:
+  - pattern: mail://{account}/draft/create
+    kind: command
+    operation: create_draft
+    side_effects: true
+    approval: not_required
+  - pattern: mail://{account}/draft/send
+    kind: command
+    operation: send_draft
+    side_effects: true
+    approval: required
+  - pattern: mail://{account}/query/inbox
+    kind: query
+    operation: inbox
+    side_effects: false
+    approval: not_required
+handlers:
+  python:
+    create_draft: python://urimail.handlers:create_draft
+    send_draft: python://urimail.handlers:send_draft
+    inbox: python://urimail.handlers:inbox

@@ -1,0 +1,37 @@
+id: urisystemd
+version: 1
+scheme: systemd
+description: systemd unit control pack. Uses systemctl/journalctl only when real mode is enabled.
+uri_patterns:
+  - pattern: systemd://unit/{unit}/query/status
+    kind: query
+    operation: status
+    side_effects: false
+    approval: not_required
+  - pattern: systemd://unit/{unit}/command/start
+    kind: command
+    operation: start
+    side_effects: true
+    approval: required
+  - pattern: systemd://unit/{unit}/command/stop
+    kind: command
+    operation: stop
+    side_effects: true
+    approval: required
+  - pattern: systemd://unit/{unit}/command/restart
+    kind: command
+    operation: restart
+    side_effects: true
+    approval: required
+  - pattern: systemd://unit/{unit}/query/logs
+    kind: query
+    operation: logs
+    side_effects: false
+    approval: not_required
+handlers:
+  python:
+    status: python://urisystemd.handlers:status
+    start: python://urisystemd.handlers:start
+    stop: python://urisystemd.handlers:stop
+    restart: python://urisystemd.handlers:restart
+    logs: python://urisystemd.handlers:logs

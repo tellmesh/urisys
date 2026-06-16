@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "urisys"
+version = "0.1.0"
+description = "URI control system managers/controllers over separate uri* capability packs."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = ["uricore>=0.1.0", "PyYAML>=6.0"]
+keywords = ["uri", "control-plane", "controllers", "managers", "devices", "services"]
+
+[project.scripts]
+urisys = "urisys.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["urisys*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

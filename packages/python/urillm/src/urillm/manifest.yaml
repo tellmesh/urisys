@@ -1,0 +1,25 @@
+id: urillm
+version: 1
+scheme: llm
+description: LLM abstraction pack. Mock by default; map provider calls in urisys.
+uri_patterns:
+  - pattern: llm://{provider}/chat/complete
+    kind: command
+    operation: chat_complete
+    side_effects: true
+    approval: not_required
+  - pattern: llm://{provider}/embedding/create
+    kind: command
+    operation: embedding_create
+    side_effects: true
+    approval: not_required
+  - pattern: llm://{provider}/model/list
+    kind: query
+    operation: model_list
+    side_effects: false
+    approval: not_required
+handlers:
+  python:
+    chat_complete: python://urillm.handlers:chat_complete
+    embedding_create: python://urillm.handlers:embedding_create
+    model_list: python://urillm.handlers:model_list

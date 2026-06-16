@@ -1,0 +1,31 @@
+id: uriprinter
+version: 1
+scheme: printer
+description: Printer maintenance/control pack. Mock vendor-neutral operations.
+uri_patterns:
+  - pattern: printer://{device}/query/status
+    kind: query
+    operation: status
+    side_effects: false
+    approval: not_required
+  - pattern: printer://{device}/command/print-test-page
+    kind: command
+    operation: print_test_page
+    side_effects: true
+    approval: required
+  - pattern: printer://{device}/command/nozzle-check
+    kind: command
+    operation: nozzle_check
+    side_effects: true
+    approval: required
+  - pattern: printer://{device}/command/clean-head
+    kind: command
+    operation: clean_head
+    side_effects: true
+    approval: required
+handlers:
+  python:
+    status: python://uriprinter.handlers:status
+    print_test_page: python://uriprinter.handlers:print_test_page
+    nozzle_check: python://uriprinter.handlers:nozzle_check
+    clean_head: python://uriprinter.handlers:clean_head

@@ -1,0 +1,10 @@
+{
+  "name": "uridom-js",
+  "version": "0.1.0",
+  "description": "URI capability pack uridom-js.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": { ".": "./src/index.js" },
+  "peerDependencies": { "@uricore/js": ">=0.1.0" },
+  "license": "MIT"
+}

@@ -1,0 +1,39 @@
+id: uribrowser
+version: 1
+scheme: browser
+description: Browser control pack. Mock by default; replace handlers with Playwright/Selenium/CDP in urisys.
+uri_patterns:
+  - pattern: browser://{session}/page/open
+    kind: command
+    operation: open_page
+    command_type: browser.v1.OpenPageCommand
+    success_event_type: browser.v1.PageOpenedEvent
+    side_effects: true
+    approval: required
+  - pattern: browser://{session}/page/dom
+    kind: query
+    operation: get_dom
+    query_type: browser.v1.GetDomQuery
+    result_type: browser.v1.DomSnapshot
+    side_effects: false
+    approval: not_required
+  - pattern: browser://{session}/page/screenshot
+    kind: command
+    operation: screenshot
+    command_type: browser.v1.ScreenshotCommand
+    success_event_type: browser.v1.ScreenshotCapturedEvent
+    side_effects: true
+    approval: required
+  - pattern: browser://{session}/page/click
+    kind: command
+    operation: click
+    command_type: browser.v1.ClickCommand
+    success_event_type: browser.v1.ClickedEvent
+    side_effects: true
+    approval: required
+handlers:
+  python:
+    open_page: python://uribrowser.handlers:open_page
+    get_dom: python://uribrowser.handlers:get_dom
+    screenshot: python://uribrowser.handlers:screenshot
+    click: python://uribrowser.handlers:click

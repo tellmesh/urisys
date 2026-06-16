@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "uriprinter"
+version = "0.1.0"
+description = "URI capability pack for printer:// operations."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = ["uricore>=0.1.0"]
+keywords = ["uri", "urisys", "printer", "control-plane"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["uriprinter*"]
+
+[tool.setuptools.package-data]
+"uriprinter" = ["manifest.yaml"]

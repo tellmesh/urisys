@@ -1,0 +1,31 @@
+id: uriandroid
+version: 1
+scheme: android
+description: Android device control pack via ADB-compatible commands. Mock unless real mode is enabled.
+uri_patterns:
+  - pattern: android://{device}/query/status
+    kind: query
+    operation: status
+    side_effects: false
+    approval: not_required
+  - pattern: android://{device}/command/tap
+    kind: command
+    operation: tap
+    side_effects: true
+    approval: required
+  - pattern: android://{device}/command/open-url
+    kind: command
+    operation: open_url
+    side_effects: true
+    approval: required
+  - pattern: android://{device}/query/screenshot
+    kind: query
+    operation: screenshot
+    side_effects: false
+    approval: not_required
+handlers:
+  python:
+    status: python://uriandroid.handlers:status
+    tap: python://uriandroid.handlers:tap
+    open_url: python://uriandroid.handlers:open_url
+    screenshot: python://uriandroid.handlers:screenshot
