@@ -3463,11 +3463,96 @@ wheels = [
 ]
 
 [[package]]
+name = "urihim"
+version = "0.1.0"
+source = { editable = "../urikvm-docker/packages/python/urihim" }
+dependencies = [
+    { name = "urisysedge" },
+]
+
+[package.optional-dependencies]
+real = [
+    { name = "pyautogui" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pyautogui", marker = "extra == 'real'", specifier = ">=0.9.54" },
+    { name = "urisysedge", editable = "../packages/python/urisysedge" },
+]
+provides-extras = ["real"]
+
+[[package]]
+name = "urikvm"
+version = "0.1.1"
+source = { editable = "../urikvm-docker/packages/python/urikvm" }
+dependencies = [
+    { name = "urisysedge" },
+]
+
+[package.optional-dependencies]
+real = [
+    { name = "mss" },
+    { name = "pillow" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "mss", marker = "extra == 'real'", specifier = ">=9.0" },
+    { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
+    { name = "urisysedge", editable = "../packages/python/urisysedge" },
+]
+provides-extras = ["real"]
+
+[[package]]
+name = "urillm"
+version = "0.1.0"
+source = { editable = "../urikvm-docker/packages/python/urillm" }
+dependencies = [
+    { name = "urisysedge" },
+]
+
+[package.optional-dependencies]
+vision = [
+    { name = "litellm" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "litellm", marker = "extra == 'vision'", specifier = ">=1.40" },
+    { name = "urisysedge", editable = "../packages/python/urisysedge" },
+]
+provides-extras = ["vision"]
+
+[[package]]
+name = "uriocr"
+version = "0.1.0"
+source = { editable = "../urikvm-docker/packages/python/uriocr" }
+dependencies = [
+    { name = "urisysedge" },
+]
+
+[package.optional-dependencies]
+real = [
+    { name = "pillow" },
+    { name = "pytesseract" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
+    { name = "pytesseract", marker = "extra == 'real'", specifier = ">=0.3.10" },
+    { name = "urisysedge", editable = "../packages/python/urisysedge" },
+]
+provides-extras = ["real"]
+
+[[package]]
 name = "urisys-node"
 version = "0.1.3"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
+    { name = "urisysedge" },
 ]
 
 [package.optional-dependencies]
@@ -3479,6 +3564,12 @@ dev = [
 ]
 discovery = [
     { name = "zeroconf" },
+]
+kvm = [
+    { name = "urihim", extra = ["real"] },
+    { name = "urikvm", extra = ["real"] },
+    { name = "urillm", extra = ["vision"] },
+    { name = "uriocr", extra = ["real"] },
 ]
 real = [
     { name = "litellm" },
@@ -3508,9 +3599,14 @@ requires-dist = [
     { name = "pytesseract", marker = "extra == 'real'", specifier = ">=0.3.10" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
     { name = "pyyaml", specifier = ">=6.0" },
+    { name = "urihim", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm-docker/packages/python/urihim" },
+    { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm-docker/packages/python/urikvm" },
+    { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "../urikvm-docker/packages/python/urillm" },
+    { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm-docker/packages/python/uriocr" },
+    { name = "urisysedge", editable = "../packages/python/urisysedge" },
     { name = "zeroconf", marker = "extra == 'discovery'", specifier = ">=0.131.0" },
 ]
-provides-extras = ["real", "discovery", "dev"]
+provides-extras = ["real", "kvm", "discovery", "dev"]
 
 [package.metadata.requires-dev]
 dev = [
@@ -3519,6 +3615,11 @@ dev = [
     { name = "pfix", specifier = ">=0.1.60" },
     { name = "pytest", specifier = ">=8.0" },
 ]
+
+[[package]]
+name = "urisysedge"
+version = "0.1.1"
+source = { editable = "../packages/python/urisysedge" }
 
 [[package]]
 name = "urllib3"

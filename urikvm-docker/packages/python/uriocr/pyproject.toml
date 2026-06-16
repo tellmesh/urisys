@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "uriocr"
+version = "0.1.0"
+description = "ocr:// URI capability pack (text/boxes) for urisys-node"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+dependencies = ["urisysedge>=0.1.0"]
+keywords = ["uri", "ocr", "tesseract", "urisys"]
+
+[project.optional-dependencies]
+real = ["pytesseract>=0.3.10", "Pillow>=10.0"]
+
+[tool.uv.sources]
+urisysedge = { path = "../../../../packages/python/urisysedge", editable = true }
+
+[tool.setuptools]
+packages = ["uriocr"]
+package-dir = { "uriocr" = "." }

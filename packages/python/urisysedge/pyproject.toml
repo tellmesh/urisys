@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "urisysedge"
+version = "0.1.1"
+description = "Shared URI edge runtime (Route, Runtime, JsonlEventStore) for urisys capability packs"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [{ name = "urisys contributors" }]
+keywords = ["uri", "runtime", "edge", "urisys"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+]
+
+[tool.setuptools]
+packages = ["urisysedge"]
+package-dir = { "urisysedge" = "." }

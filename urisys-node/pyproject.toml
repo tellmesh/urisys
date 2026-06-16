@@ -48,7 +48,11 @@ dev = [
 ]
 
 [tool.uv.sources]
-urisysedge = { path = "../../urisysedge", editable = true }
+urisysedge = { path = "../packages/python/urisysedge", editable = true }
+urikvm = { path = "../urikvm-docker/packages/python/urikvm", editable = true }
+urihim = { path = "../urikvm-docker/packages/python/urihim", editable = true }
+uriocr = { path = "../urikvm-docker/packages/python/uriocr", editable = true }
+urillm = { path = "../urikvm-docker/packages/python/urillm", editable = true }
 
 [tool.uv]
 default-groups = ["dev"]
@@ -60,7 +64,7 @@ package-dir = {"" = "packages/python"}
 where = ["packages/python"]
 
 [tool.pytest.ini_options]
-pythonpath = ["../../packages/python", "packages/python"]
+pythonpath = ["../packages/python", "packages/python"]
 testpaths = ["tests"]
 
 [project.scripts]

@@ -162,6 +162,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.18] - 2026-06-16
+
+### Docs
+- Update README.md
+- Update packages/python/urisysedge/README.md
+
+### Test
+- Update tests/test_kvm_pack_pyprojects.py
+
+### Other
+- Update packages/python/urisysedge
+- Update packages/python/urisysedge/__init__.py
+- Update packages/python/urisysedge/env.py
+- Update packages/python/urisysedge/pyproject.toml
+- Update packages/python/urisysedge/runtime.py
+- Update scripts/install-kvm-packs-editable.sh
+- Update urikvm-docker/packages/python/urihim
+- Update urikvm-docker/packages/python/urihim/__init__.py
+- Update urikvm-docker/packages/python/urihim/handlers.py
+- Update urikvm-docker/packages/python/urihim/pyproject.toml
+- ... and 20 more files
+
 ## [0.1.17] - 2026-06-16
 
 ### Docs

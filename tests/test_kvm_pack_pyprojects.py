@@ -1,4 +1,4 @@
-"""PyPI-ready layout for kvm/him/ocr/llm capability packs."""
+"""PyPI-ready layout for kvm/him/ocr/llm capability packs (vendored in monorepo)."""
 
 from __future__ import annotations
 
@@ -6,8 +6,7 @@ import tomllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TELLMESH = ROOT.parent
-EDGE = TELLMESH / "urisysedge" / "pyproject.toml"
+EDGE = ROOT / "packages" / "python" / "urisysedge" / "pyproject.toml"
 PACKS = ("urikvm", "urihim", "uriocr", "urillm")
 
 
@@ -23,14 +22,14 @@ def test_urisysedge_pyproject():
 
 def test_each_pack_has_own_pyproject():
     for pkg in PACKS:
-        path = TELLMESH / pkg / "pyproject.toml"
+        path = ROOT / "urikvm-docker" / "packages" / "python" / pkg / "pyproject.toml"
         assert path.is_file(), f"missing {path}"
         assert _name(path) == pkg
 
 
 def test_pack_pyprojects_depend_on_urisysedge():
     for pkg in PACKS:
-        path = TELLMESH / pkg / "pyproject.toml"
+        path = ROOT / "urikvm-docker" / "packages" / "python" / pkg / "pyproject.toml"
         deps = tomllib.loads(path.read_text(encoding="utf-8"))["project"]["dependencies"]
         assert any(d.startswith("urisysedge>=") for d in deps), pkg
 
@@ -43,13 +42,17 @@ def test_urillm_imports_urisysedge_not_urikvmedge():
     assert "urikvmedge" not in src
 
 
-def test_publish_pypi_packs_script():
-    script = TELLMESH / "scripts" / "publish-kvm-packs-goal.sh"
-    assert script.is_file()
-    text = script.read_text(encoding="utf-8")
-    assert "urisysedge" in text
+def test_urisys_bundles_urisysedge():
+    data = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+    include = data["tool"]["setuptools"]["packages"]["find"]["include"]
+    assert any("urisysedge" in item for item in include)
+
+
+def test_urisys_kvm_optional_uses_local_sources():
+    data = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+    sources = data["tool"]["uv"]["sources"]
     for pkg in PACKS:
-        assert pkg in text
+        assert pkg in sources, pkg
 
 
 def test_urisys_node_kvm_optional_deps():
