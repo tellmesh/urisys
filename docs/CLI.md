@@ -41,6 +41,23 @@ POST /uri/call
 POST /uri/explain
 ```
 
+## Node (slave)
+
+Minimalna instalacja na maszynie zdalnej (lenovo):
+
+```bash
+pip install urisys
+urisys node serve --host 0.0.0.0 --port 8790
+```
+
+Packi **kvm/him/ocr/llm** i backendy **`[real]`** doinstalowują się przy pierwszym URI (domyślnie `URISYS_NODE_AUTO_INSTALL=1`). Wyłączenie:
+
+```bash
+urisys node serve --no-auto-install
+```
+
+Szczegóły: [`NODE-SETUP.md`](NODE-SETUP.md).
+
 ## Flow
 
 ```bash

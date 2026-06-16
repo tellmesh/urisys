@@ -10,19 +10,17 @@ from pathlib import Path
 from typing import Any
 
 from .identity import health_payload, load_identity
+from .pack_resolver import (
+    CORE_PACKS,
+    PACK_MODULES,
+    auto_install_enabled,
+    ensure_pack_pypi,
+    ensure_real_deps,
+    pack_for_scheme,
+    pack_importable,
+    scheme_for_uri,
+)
 from .runtime import Runtime, load_json
-
-# pack alias -> module exposing register(runtime). `node` is the package's own
-# routes (always present); the rest are optional hardware/AI capability packs.
-PACK_MODULES: dict[str, str] = {
-    "node": "urisysnode.routes",
-    "screen": "uriscreen.routes",
-    "kvm": "urikvm",
-    "him": "urihim",
-    "ocr": "uriocr",
-    "llm": "urillm",
-}
-CORE_PACKS = {"node"}
 
 
 def _extend_pack_paths() -> None:
@@ -33,9 +31,9 @@ def _extend_pack_paths() -> None:
             sys.path.insert(0, str(path))
 
 
-def _register_pack(rt: Runtime, pack: str) -> bool:
+def _register_pack(rt: Runtime, pack: str, *, try_install: bool = False) -> bool:
     """Import and register one capability pack. Optional packs that are not
-    installed are skipped with a warning so the node still serves the rest."""
+    installed are skipped with a warning unless try_install triggers PyPI."""
     module_name = PACK_MODULES.get(pack)
     if module_name is None:
         warnings.warn(f"Unknown urisys-node pack '{pack}' — skipping.", stacklevel=2)
@@ -44,17 +42,28 @@ def _register_pack(rt: Runtime, pack: str) -> bool:
         module = importlib.import_module(module_name)
     except ModuleNotFoundError as exc:
         top = module_name.split(".", 1)[0]
-        # A missing dependency *of* an installed pack must not be swallowed.
         if exc.name not in (module_name, top):
             raise
         if pack in CORE_PACKS:
             raise
-        warnings.warn(
-            f"Skipping urisys-node pack '{pack}': module '{module_name}' is not "
-            f"installed (pip install {top}).",
-            stacklevel=2,
-        )
-        return False
+        if try_install and auto_install_enabled():
+            pip_result = ensure_pack_pypi(pack, install=True)
+            if pip_result.get("ok"):
+                importlib.invalidate_caches()
+                module = importlib.import_module(module_name)
+            else:
+                warnings.warn(
+                    f"Skipping urisys-node pack '{pack}': pip install failed ({pip_result.get('error')})",
+                    stacklevel=2,
+                )
+                return False
+        else:
+            warnings.warn(
+                f"Skipping urisys-node pack '{pack}': module '{module_name}' is not "
+                f"installed (pip install {top} or enable URISYS_NODE_AUTO_INSTALL=1).",
+                stacklevel=2,
+            )
+            return False
     module.register(rt)
     return True
 
@@ -68,21 +77,20 @@ def build_runtime(config_path: str | None = None) -> Runtime:
     config = load_json(config_file) if Path(config_file).exists() else {}
     rt = Runtime(events_path=os.environ.get("URISYS_NODE_EVENTS", "data/events.jsonl"), config=config)
 
-    packs = os.environ.get("URISYS_NODE_PACKS", "node,screen,kvm,him,ocr,llm").split(",")
+    # Minimal boot: node + screen (bundled in urisys). Other packs load on first URI or install-pack.
+    packs = os.environ.get("URISYS_NODE_PACKS", "node,screen").split(",")
     packs = [p.strip() for p in packs if p.strip()]
 
     rt._loaded_packs = set()  # type: ignore[attr-defined]
     for pack in packs:
-        if _register_pack(rt, pack):
+        if _register_pack(rt, pack, try_install=auto_install_enabled()):
             rt._loaded_packs.add(pack)  # type: ignore[attr-defined]
 
     return rt
 
 
-def load_pack_into_runtime(runtime: Runtime, pack: str) -> dict[str, Any]:
-    """Hot-load an installed capability pack into a live runtime, so an already
-    deployed node can gain new URI handlers over the wire without a restart.
-    Idempotent: re-loading an active pack is a no-op (no duplicate routes)."""
+def load_pack_into_runtime(runtime: Runtime, pack: str, *, install: bool = False) -> dict[str, Any]:
+    """Hot-load a capability pack. With install=True or auto-install, pip install first."""
     pack = (pack or "").strip()
     if not pack:
         return {"ok": False, "error": "pack name is required"}
@@ -93,14 +101,65 @@ def load_pack_into_runtime(runtime: Runtime, pack: str) -> dict[str, Any]:
     if pack in loaded:
         return {"ok": True, "pack": pack, "loaded": True, "already_loaded": True, "new_routes": []}
     before = {r.pattern for r in runtime.routes}
+    pip_result = None
+    if install or (auto_install_enabled() and not pack_importable(pack)):
+        pip_result = ensure_pack_pypi(pack, install=True)
+        if not pip_result.get("ok"):
+            return {"ok": False, "pack": pack, "loaded": False, "pip": pip_result}
     try:
-        ok = _register_pack(runtime, pack)
+        ok = _register_pack(runtime, pack, try_install=False)
     except ModuleNotFoundError as exc:
-        return {"ok": False, "pack": pack, "loaded": False, "error": str(exc)}
+        return {"ok": False, "pack": pack, "loaded": False, "error": str(exc), "pip": pip_result}
     if ok:
         loaded.add(pack)
     new_routes = sorted({r.pattern for r in runtime.routes} - before)
-    return {"ok": bool(ok), "pack": pack, "loaded": bool(ok), "new_routes": new_routes}
+    out: dict[str, Any] = {"ok": bool(ok), "pack": pack, "loaded": bool(ok), "new_routes": new_routes}
+    if pip_result:
+        out["pip"] = pip_result
+    return out
+
+
+def ensure_pack_for_uri(runtime: Runtime, uri: str) -> dict[str, Any] | None:
+    """If URI scheme maps to an unloaded pack, install (PyPI) and register it."""
+    scheme = scheme_for_uri(uri)
+    pack = pack_for_scheme(scheme)
+    if not pack:
+        return None
+    loaded = getattr(runtime, "_loaded_packs", set())
+    if pack in loaded:
+        return None
+    return load_pack_into_runtime(runtime, pack, install=True)
+
+
+def call_uri(runtime: Runtime, uri: str, payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
+    """Runtime.call with lazy pack install and real-backend deps on first use."""
+    result = runtime.call(uri, payload, context)
+    if (
+        not result.get("ok")
+        and result.get("type") == "route_not_found"
+        and auto_install_enabled()
+    ):
+        prep = ensure_pack_for_uri(runtime, uri)
+        if prep and prep.get("loaded"):
+            result = runtime.call(uri, payload, context)
+            result.setdefault("auto_install", {})["pack"] = prep
+    err = str(result.get("error") or "")
+    if not result.get("ok") and auto_install_enabled() and "pip install" in err.lower():
+        scheme = scheme_for_uri(uri)
+        pack = pack_for_scheme(scheme) or ("screen" if scheme == "screen" else None)
+        if pack and (context.get("allow_real") or os.environ.get("URISYS_ALLOW_REAL") == "1"):
+            real = ensure_real_deps(pack, install=True)
+            if real.get("ok"):
+                importlib.invalidate_caches()
+                result = runtime.call(uri, payload, context)
+                result.setdefault("auto_install", {})["real"] = real
+        elif scheme == "screen" and (context.get("allow_real") or os.environ.get("URISYS_ALLOW_REAL") == "1"):
+            real = ensure_real_deps("screen", install=True)
+            if real.get("ok"):
+                importlib.invalidate_caches()
+                result = runtime.call(uri, payload, context)
+                result.setdefault("auto_install", {})["real"] = real
+    return result
 
 
 def register_forward_pack(
@@ -143,9 +202,9 @@ def register_forward_pack(
 
 
 def make_handler(runtime: Runtime):
-    # Secure by default: remote capability injection is off unless explicitly
-    # enabled, since loading packs grants the node new powers over the wire.
-    allow_pack_load = os.environ.get("URISYS_NODE_ALLOW_PACK_LOAD", "0") == "1"
+    allow_pack_load = (
+        os.environ.get("URISYS_NODE_ALLOW_PACK_LOAD", "1" if auto_install_enabled() else "0") == "1"
+    )
 
     class Handler(BaseHTTPRequestHandler):
         def _json(self, status: int, data: dict[str, Any]) -> None:
@@ -176,18 +235,24 @@ def make_handler(runtime: Runtime):
                 if not allow_pack_load:
                     return self._json(403, {
                         "ok": False,
-                        "error": "pack loading disabled; start node with URISYS_NODE_ALLOW_PACK_LOAD=1",
+                        "error": "pack loading disabled; set URISYS_NODE_ALLOW_PACK_LOAD=1",
                     })
                 length = int(self.headers.get("Content-Length") or "0")
                 req = json.loads(self.rfile.read(length).decode("utf-8") or "{}")
-                result = load_pack_into_runtime(runtime, str(req.get("pack") or ""))
+                install = bool(req.get("install", True))
+                result = load_pack_into_runtime(runtime, str(req.get("pack") or ""), install=install)
                 return self._json(200 if result.get("ok") else 400, result)
             if self.path != "/uri/call":
                 return self._json(404, {"ok": False, "error": "not found"})
             length = int(self.headers.get("Content-Length") or "0")
             body = self.rfile.read(length).decode("utf-8")
             req = json.loads(body or "{}")
-            result = runtime.call(req.get("uri", ""), req.get("payload") or {}, req.get("context") or {})
+            result = call_uri(
+                runtime,
+                req.get("uri", ""),
+                req.get("payload") or {},
+                req.get("context") or {},
+            )
             return self._json(200 if result.get("ok") else 400, result)
 
     return Handler
@@ -199,6 +264,7 @@ def serve(runtime: Runtime, host: str, port: int) -> None:
     print(f"urisys-node listening on http://{host}:{port}")
     print(f"node_id={identity['node_id']} fingerprint={identity.get('fingerprint')}")
     print("endpoints: GET /health  GET /uri/routes  GET /events  POST /uri/call  POST /uri/pack")
+    print(f"auto_install={'on' if auto_install_enabled() else 'off'} (URISYS_NODE_AUTO_INSTALL)")
     for route in runtime.routes:
         print(" -", route.pattern)
     server.serve_forever()

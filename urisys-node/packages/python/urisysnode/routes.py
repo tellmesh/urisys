@@ -17,3 +17,17 @@ def register(rt):
         approval="required",
         side_effects=True,
     )
+    rt.register(
+        "node://{target}/query/packs",
+        "python://urisysnode.handlers:query_packs",
+        kind="query",
+        operation="node.packs",
+    )
+    rt.register(
+        "node://{target}/command/install-pack",
+        "python://urisysnode.handlers:command_install_pack",
+        kind="command",
+        operation="node.install_pack",
+        approval="required",
+        side_effects=True,
+    )

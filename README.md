@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.19-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$6.83-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-12.5h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.20-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$6.83-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-12.6h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $6.8305 (30 commits)
-- 👤 **Human dev:** ~$1252 (12.5h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $6.8324 (31 commits)
+- 👤 **Human dev:** ~$1256 (12.6h @ $100/h, 30min dedup)
 
 Generated on 2026-06-16 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -49,6 +49,20 @@ which urisys   # → .venv/bin/urisys
 
 Zależności runtime: **`uricore`** (PyPI `uricore>=0.1.2` lub editable `../uricore`), paczki URI z **`uri-packs`** (dev group w `pyproject.toml`).
 
+Capability packi **kvm/him/ocr/llm** doinstalowują się **lazy przy pierwszym URI** — [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md).
+
+```bash
+# slave / lenovo — tylko urisys, potem node
+pip install urisys
+urisys node serve --host 0.0.0.0 --port 8790
+```
+
+Dev monorepo (wszystkie packi od razu):
+
+```bash
+uv sync --extra kvm
+```
+
 ## Szybki start
 
 ```bash
@@ -82,11 +96,14 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 | Dokument | Temat |
 |----------|--------|
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Jak działa urisys — warstwy, runtime, testy |
+| [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md) | **Slave bez `.sh`** — pip, `shell://` flow, URI probe (lenovo) |
+| [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md) | **PyPI · Markpact · GitHub** — packi kvm, publikacja |
 | [`docs/PACKAGES.md`](docs/PACKAGES.md) | Layout monorepo, duplikaty, plan konsolidacji |
 | [`docs/FLOWS.md`](docs/FLOWS.md) | URI flows, zależności, walidacja |
 | [`docs/EXAMPLES.md`](docs/EXAMPLES.md) | Przykłady shell/frontend/Docker |
 | [`docs/CLI.md`](docs/CLI.md) | Komendy CLI |
 | [`docs/MARKPACT.md`](docs/MARKPACT.md) | Markpact validate/compile/test |
+| [`urisys-node/README.md`](urisys-node/README.md) | Slave node, kvm packs, hot-load, forward OCI |
 | [`project/MAP.md`](project/MAP.md) | Przewodnik po `map.toon.yaml` (code2llm) |
 | [`project/PACKAGES.md`](project/PACKAGES.md) | Indeks paczek sync z mapą |
 

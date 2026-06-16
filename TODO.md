@@ -6,6 +6,48 @@
 
 ---
 
+## 🎯 Roadmap — dystrybucja packów kvm
+
+Źródło prawdy: [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md)
+
+### PyPI (ścieżka A)
+
+- [x] Layout pyproject + vendored copy w monorepo (`urisysedge`, `urikvm`, `urihim`, `uriocr`, `urillm`)
+- [x] Repo tellmesh/* + publikacja `urisysedge` 0.1.1, `urikvm` 0.1.1
+- [x] `docs/NODE-SETUP.md` — slave bez `.sh` (pip / shell:// / URI)
+- [x] Flow: `bootstrap-kvm-pypi.uri.flow.yaml`, `remote-probe.uri.flow.yaml`
+- [ ] `goal -a` → PyPI: `urihim`, `uriocr`, `urillm` (wtedy lenovo: samo `pip install`)
+- [ ] Po pełnej publikacji: `pip install "urisys-node[real,kvm]"` bez checkout monorepo
+
+### Markpact (ścieżka B — równolegle)
+
+- [ ] Skopiować kontrakty `urikvm-docker/markpacts/*.markpact.md` → `markpact-contracts/packs/`
+- [ ] `urisys markpact validate` + `markpact-contracts/scripts/publish-all.sh`
+- [ ] Rejestr release na markpact.com (`local-lab/scripts/06-register-release.sh`)
+
+### GitHub OCI (ścieżka C — równolegle)
+
+- [ ] Rozszerzyć `.github/workflows/markpact-release.yml` o `urikvm-docker` (matrix kvm/him/ocr/llm)
+- [ ] `releases/{contract-id}/{version}/artifact-index.json` na tag `v*`
+- [ ] E2E local-lab: resolve → worker → forward
+
+### Node runtime
+
+- [x] `register_forward_pack()` + `forward.py` (HTTP do workera)
+- [x] `load_pack_into_runtime()` + `POST /uri/pack` (hot-load PyPI)
+- [ ] Auto-wire: `ArtifactResolver` → `register_forward_pack` przy starcie node
+- [ ] Test E2E: OCI worker bez PyPI na lenovo
+- [x] `scripts/remote-node-smoke.sh` — smoke HTTP (`192.168.1.2:8790` tested 2026-06-16)
+
+### Konsolidacja / refactor (później)
+
+- [ ] REFACTOR[1]: split 20 metod CC>15 (`project/analysis.toon.yaml`)
+- [ ] `packages/python/urioperators/` — wspólne handlery OCR/LLM/HIM
+- [ ] `FlowController`: `after` / `depends_on`
+- [ ] Deprecacja `chat://` → `llm://` (lab shim)
+
+---
+
 ## ✅ Completed Tasks
 
 - [x] scripts/run_test_sessions.py:22 - Duplicate import: urllib

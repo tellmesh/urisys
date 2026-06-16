@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from urisysnode.identity import load_pairing, require_paired, set_remote_control
+from urisysnode.pack_resolver import PACK_MODULES, auto_install_enabled
 
 
 def query_health(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
@@ -39,3 +40,26 @@ def command_indicator_off(payload: dict[str, Any], context: dict[str, Any]) -> d
     require_paired(context)
     set_remote_control(False)
     return {"remote_control_active": False}
+
+
+def query_packs(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
+    del payload
+    runtime = context.get("runtime")
+    loaded = sorted(getattr(runtime, "_loaded_packs", set()) or [])
+    return {
+        "loaded": loaded,
+        "available": sorted(PACK_MODULES.keys()),
+        "auto_install": auto_install_enabled(),
+    }
+
+
+def command_install_pack(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
+    if not context.get("approved"):
+        return {"ok": False, "error": "approval required for install-pack"}
+    pack = str(payload.get("pack") or "").strip()
+    runtime = context.get("runtime")
+    if runtime is None:
+        return {"ok": False, "error": "no runtime in context"}
+    from urisysnode.serve import load_pack_into_runtime
+
+    return load_pack_into_runtime(runtime, pack, install=bool(payload.get("install", True)))

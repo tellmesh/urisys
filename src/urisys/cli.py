@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 
 from uri_control import CapabilityRegistry
@@ -65,6 +66,18 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("serve", help="Run HTTP URI server.")
     p.add_argument("--host", default="127.0.0.1")
     p.add_argument("--port", type=int, default=8789)
+
+    node = sub.add_parser("node", help="urisys-node slave runtime (bundled; lazy pack install via URI).")
+    node_sub = node.add_subparsers(dest="node_command", required=True)
+    ns = node_sub.add_parser("serve", help="Start node HTTP server (:8790); extra packs install on first URI use.")
+    ns.add_argument("--host", default=os.environ.get("URISYS_NODE_HOST", "0.0.0.0"))
+    ns.add_argument("--port", type=int, default=int(os.environ.get("URISYS_NODE_PORT", "8790")))
+    ns.add_argument("--config", default=os.environ.get("URISYS_NODE_CONFIG", "config/node-profile.json"))
+    ns.add_argument(
+        "--no-auto-install",
+        action="store_true",
+        help="Disable URISYS_NODE_AUTO_INSTALL (no pip on first kvm/him/… URI).",
+    )
 
     p = sub.add_parser("markpact", help="Validate, compile, fetch and test one-file UriPack Markpacts.")
     msub = p.add_subparsers(dest="markpact_command", required=True)
@@ -137,6 +150,19 @@ def main(argv: list[str] | None = None) -> int:
 
         if args.command == "serve":
             ServerController(host=args.host, port=args.port, packs=args.packs, markpacts=args.markpact, events_path=args.events).serve_forever()
+            return 0
+
+        if args.command == "node":
+            if args.node_command == "serve":
+                if args.no_auto_install:
+                    os.environ["URISYS_NODE_AUTO_INSTALL"] = "0"
+                else:
+                    os.environ.setdefault("URISYS_NODE_AUTO_INSTALL", "1")
+                os.environ.setdefault("URISYS_NODE_ALLOW_PACK_LOAD", "1")
+                from urisysnode.serve import build_runtime, serve as node_serve
+
+                rt = build_runtime(args.config)
+                node_serve(rt, args.host, args.port)
             return 0
 
         if args.command == "flow":

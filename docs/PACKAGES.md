@@ -94,39 +94,56 @@ COPY packages/python/urisysedge ./packages/python/urisysedge
 | `urirdpedge/env.py` | shim |
 | `urikvmedge/env.py` | shim |
 
-## Paczki PyPI (stan 2026-06)
+## Paczki PyPI i dystrybucja (stan 2026-06-16)
 
-| Pakiet | PyPI | Instalacja |
-|--------|------|------------|
-| `urisys`, `urisys-node` | ✅ opublikowane | `pip install urisys-node` |
-| `uriscreen` | bundled w node | `[real]` → mss/Pillow |
-| **`urisysedge`** | 🔲 pyproject gotowy | `pip install -e packages/python/urisysedge` |
-| **`urikvm`, `urihim`, `uriocr`, `urillm`** | 🔲 pyproject gotowy | `bash scripts/install-kvm-packs-editable.sh` |
-| `urikvm-docker-example` | ❌ nie publikować | tylko dev bundle (`pip install -e urikvm-docker/`) |
+Pełny opis trzech ścieżek (PyPI · Markpact · GitHub): **[`docs/DISTRIBUTION.md`](DISTRIBUTION.md)**.
 
-**Publikacja PyPI** (kolejność: `urisysedge` → packi kvm):
+| Pakiet | PyPI | Monorepo (vendored) |
+|--------|------|---------------------|
+| `urisys`, `urisys-node` | ✅ | ✅ |
+| `uriscreen` | bundled w node | ✅ |
+| `urisysedge` | ✅ 0.1.1 | `packages/python/urisysedge/` |
+| `urikvm` | ✅ 0.1.1 | `urikvm-docker/packages/python/urikvm/` |
+| `urihim`, `uriocr`, `urillm` | 🔲 brak | vendored w monorepo |
+| `urikvm-docker-example` | ❌ nie publikować | dev bundle only |
+
+### Dev — monorepo (gdy PyPI nie ma packa)
 
 ```bash
-# build lokalnie (bez tokenu)
-bash scripts/publish-pypi-packs.sh
-
-# TestPyPI
-PYPI_REPOSITORY=testpypi PYPI_TOKEN=pypi-... bash scripts/publish-pypi-packs.sh
-
-# produkcja (po TestPyPI)
-PYPI_TOKEN=pypi-... bash scripts/publish-pypi-packs.sh
+cd urisys
+uv sync --extra kvm
 ```
 
-Po publikacji:
+Slave (lenovo): **pip one-liners** lub **`shell://` flow** — [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md).  
+Nie używaj `bash scripts/install-kvm-packs-editable.sh` na maszynie slave.
+
+### PyPI — publikacja z repo tellmesh
+
+```bash
+# pojedynczo
+cd ~/github/tellmesh/urihim && goal -a -y
+
+# wszystkie packi (kolejność: urisysedge → urikvm → …)
+bash ~/github/tellmesh/scripts/publish-kvm-packs-goal.sh
+```
+
+Build tylko lokalnie (monorepo):
+
+```bash
+bash scripts/publish-pypi-packs.sh   # bez PYPI_TOKEN = tylko dist/
+```
+
+### Po pełnej publikacji PyPI
 
 ```bash
 pip install "urisys-node[real,kvm]"
 URISYS_NODE_ALLOW_PACK_LOAD=1 URISYS_NODE_PACKS=node,screen,kvm,him urisys-node serve --port 8790
 ```
 
-**Ważne:** `pip install urikvm` nie zadziała dopóki `urikvm` nie zostanie wypchnięty na PyPI (osobny pakiet, nie meta-bundle).
+### Bez PyPI — Markpact + GitHub OCI
 
-Alternatywa bez PyPI: **ArtifactResolver** + `register_forward_pack()` — worker OCI z markpact.com.
+Kontrakty: `urikvm-docker/markpacts/*.markpact.md` → docelowo `markpact-contracts/packs/`.  
+Runtime: `ArtifactResolver` + `register_forward_pack()` — szczegóły w [`DISTRIBUTION.md`](DISTRIBUTION.md).
 
 
 | Pakiet | Gdzie używany |
@@ -140,7 +157,7 @@ Alternatywa bez PyPI: **ArtifactResolver** + `register_forward_pack()` — worke
 1. ✅ **`urisysedge`** — runtime + env; shimy urirdpedge/labedge/urikvmedge/uribrowseredge/**urisysnode**
 2. ✅ **`flow_runner`** — uri2flow + uri3 (`LabCallAdapter`)
 3. ✅ **`JsonlEventStore`/`Runtime` dedup** — urisys-node + uristepper → urisysedge ([`MIGRATION-STEP3.md`](MIGRATION-STEP3.md))
-4. ✅ **PyPI layout packów** — `urisysedge` + `urikvm`/`urihim`/`uriocr`/`urillm` własne `pyproject.toml`; `install-kvm-packs-editable.sh`; `publish-pypi-packs.sh`
+4. ✅ **PyPI layout packów** — vendored w monorepo + osobne repo `tellmesh/{urisysedge,urikvm,urihim,uriocr,urillm}`; [`DISTRIBUTION.md`](DISTRIBUTION.md)
 5. 🔲 **Handlery OCR/LLM/HIM** — wspólny `packages/python/urioperators/` z adapterem display
 6. 🔲 **`FlowController`** — dodać `after`/`depends_on` (parity z uri2flow)
 7. 🔲 **Pełny `uri3 run-workflow`** w lab (schema root w kontenerze)

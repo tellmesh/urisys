@@ -36,13 +36,53 @@ Opcjonalnie: `pip install "urisys-node[real]"` (capture/OCR), `"urisys-node[disc
 
 ### Capability packs (kvm/him/ocr/llm)
 
-| Pack | PyPI (po publikacji) | Dziś — monorepo |
-|------|----------------------|-----------------|
-| `urisys`, `urisys-node` | `pip install urisys-node` | ✅ |
-| `uriscreen` | bundled w node | ✅ z `[real]` |
-| `urikvm`, `urihim`, `uriocr`, `urillm` | osobne pakiety (pyproject gotowy) | **tylko ze źródła** |
+Pełna dokumentacja dystrybucji: **[`../docs/DISTRIBUTION.md`](../docs/DISTRIBUTION.md)**.  
+**Slave (lenovo) bez skryptów `.sh`:** **[`../docs/NODE-SETUP.md`](../docs/NODE-SETUP.md)**.
 
-**Nie używaj** `pip install urikvm` dopóki pakiety nie trafią na PyPI — stary meta-package `urikvm-docker-example` nie jest publikowany.
+| Pack | PyPI | Monorepo (vendored) |
+|------|------|---------------------|
+| `urisysedge` | ✅ 0.1.1 | `packages/python/urisysedge/` |
+| `urikvm` | ✅ 0.1.1 | `urikvm-docker/packages/python/urikvm/` |
+| `urihim`, `uriocr`, `urillm` | 🔲 | vendored — `uv sync --extra kvm` (dev) |
+
+### Bootstrap na slave (PyPI — bez `.sh`)
+
+```bash
+pip install urisys
+urisys node serve --host 0.0.0.0 --port 8790
+```
+
+Node startuje z **`node` + `screen`**. Packi **kvm/him/ocr/llm** i backendy **`[real]`** (mss, pyautogui, …) instalują się przy pierwszym URI (`URISYS_NODE_AUTO_INSTALL=1`, domyślnie włączone).
+
+Ręczna instalacja packa przez URI:
+
+```bash
+curl -sS -X POST http://127.0.0.1:8790/uri/call \
+  -H 'Content-Type: application/json' \
+  -d '{"uri":"node://local/command/install-pack","payload":{"pack":"kvm"},"context":{"approved":true}}'
+```
+
+Szczegóły: **[`../docs/NODE-SETUP.md`](../docs/NODE-SETUP.md)**.
+
+### Stary bootstrap (urisys-node bez lazy install)
+
+```text
+pip install -U urisysedge urikvm "urisys-node[real]"
+URISYS_NODE_ALLOW_PACK_LOAD=1 URISYS_NODE_PACKS=node,screen,kvm,him urisys-node serve --host 0.0.0.0 --port 8790
+```
+
+### Bootstrap przez `shell://` (RDP stack)
+
+```bash
+urisys --packs shell flow urisys-node/flows/bootstrap-kvm-pypi.uri.flow.yaml --approve --allow-real
+```
+
+### Dev monorepo (checkout tellmesh — nie na lenovo)
+
+```bash
+uv sync --extra kvm
+# scripts/install-kvm-packs-editable.sh — tylko CI/dev
+```
 
 Zrzut ekranu (lenovo, od ręki):
 
@@ -51,26 +91,28 @@ pip install "urisys-node[real]"
 URISYS_NODE_ALLOW_PACK_LOAD=1 URISYS_NODE_PACKS=node,screen urisys-node serve --port 8790
 ```
 
-KVM + HIM (mysz/klawiatura) — checkout monorepo:
+KVM + HIM — **nie używaj** `bash scripts/install-kvm-packs-editable.sh` na slave. Zamiast tego [`../docs/NODE-SETUP.md`](../docs/NODE-SETUP.md):
 
-```bash
-bash scripts/install-kvm-packs-editable.sh
-# albo ręcznie:
-pip install -e packages/python/urisysedge
-pip install -e 'urikvm-docker/packages/python/urikvm[real]' \
-  -e 'urikvm-docker/packages/python/urihim[real]' \
-  -e 'urikvm-docker/packages/python/uriocr[real]' \
-  -e 'urikvm-docker/packages/python/urillm[vision]'
-URISYS_NODE_ALLOW_PACK_LOAD=1 URISYS_NODE_PACKS=node,screen,kvm,him urisys-node serve --port 8790
+```text
+pip install -U urisysedge urikvm "urisys-node[real]"
 ```
 
-Hot-load po starcie (gdy `URISYS_NODE_ALLOW_PACK_LOAD=1`):
+Hot-load po starcie:
 
 ```bash
 curl -X POST http://127.0.0.1:8790/uri/pack -H 'Content-Type: application/json' -d '{"pack":"kvm"}'
 ```
 
-Worker OCI (markpact + GitHub artefakt, bez PyPI): `register_forward_pack()` w `urisysnode/serve.py` — forward HTTP do workera.
+Zdalny probe (URI, bez `.sh` na slave):
+
+```bash
+urisys --packs node,screen flow urisys-node/flows/remote-probe.uri.flow.yaml --approve --allow-real
+curl -sS http://192.168.188.201:8790/health
+```
+
+Dev/CI: `URISYS_NODE_BASE=http://192.168.188.201:8790 bash scripts/remote-node-smoke.sh`
+
+Worker OCI (markpact + GitHub artefakt, bez PyPI): `register_forward_pack()` w `urisysnode/serve.py` — forward HTTP do workera. Zobacz [`../docs/DISTRIBUTION.md`](../docs/DISTRIBUTION.md).
 
 ## Model
 

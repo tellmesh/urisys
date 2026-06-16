@@ -139,3 +139,5 @@ Najlepszy kompromis to:
 ```text
 Markpact jako źródło → compile → materializowany runtime
 ```
+
+Release chain (kontrakt → GitHub OCI → markpact.com catalog): [`DISTRIBUTION.md`](DISTRIBUTION.md).

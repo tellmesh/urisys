@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.19] - 2026-06-16
+
+### Added
+- [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md) — trzy ścieżki dystrybucji packów (PyPI · Markpact · GitHub OCI), stan publikacji, równoległy podział pracy
+- Osobne repo tellmesh: `urisysedge`, `urikvm`, `urihim`, `uriocr`, `urillm` (publikacja `goal -a`)
+- `scripts/publish-pypi-packs.sh`, `tellmesh/scripts/publish-kvm-packs-goal.sh`
+- `[kvm]` optional-deps + `uv.sources` dla vendored packów w root `pyproject.toml`
+- `urisys-node`: `register_forward_pack()`, `load_pack_into_runtime()`, `POST /uri/pack`
+- **`urisys node serve`** — slave HTTP node z lazy install packów (`URISYS_NODE_AUTO_INSTALL=1`)
+- `urisysnode/pack_resolver.py` — PyPI mapowanie kvm/him/ocr/llm + `[real]` deps (mss, pyautogui, …)
+- URI: `node://…/query/packs`, `node://…/command/install-pack`
+- Testy: `urisys-node/tests/test_pack_auto_install.py`
+
+### Changed
+- Packi kvm vendored w monorepo — bez symlinków do sibling repo (fix walidacji `goal`)
+- `urisysedge` bundlowany w wheel `urisys`; usunięty pusty stub `urisys-node/packages/python/urisysedge/`
+- Domyślne `URISYS_NODE_PACKS=node,screen` — kvm/him/ocr/llm ładują się przy pierwszym URI
+- [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md) — główna ścieżka: `pip install urisys && urisys node serve`
+- [`docs/PACKAGES.md`](docs/PACKAGES.md), [`README.md`](README.md), [`TODO.md`](TODO.md) — dystrybucja kvm
+- Flow: `urisys-node/flows/bootstrap-kvm-pypi.uri.flow.yaml`, `remote-probe.uri.flow.yaml`
+
+### Fixed
+- Import `urisysedge` po reinstalacji editable urisys
+- `goal -a` validation error: `Is a directory: packages/python/urisysedge`
+
+### Published (PyPI)
+- `urisysedge` 0.1.1, `urikvm` 0.1.1
+
 ## [0.1.10] - 2026-06-16
 
 ### Fixed
@@ -161,6 +189,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix unused-imports issues (ticket-c2e8d82c)
 
 ## [Unreleased]
+
+## [0.1.20] - 2026-06-16
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+- Update docs/CLI.md
+- Update docs/DISTRIBUTION.md
+- Update docs/FLOWS.md
+- Update docs/MARKPACT.md
+- Update docs/NODE-SETUP.md
+- Update docs/PACKAGES.md
+- Update urisys-node/README.md
+
+### Other
+- Update scripts/install-kvm-packs-editable.sh
+- Update scripts/remote-node-smoke.sh
+- Update urisys-node/flows/bootstrap-kvm-pypi.uri.flow.yaml
+- Update urisys-node/flows/remote-probe.uri.flow.yaml
+- Update urisys-node/packages/python/urisysnode/handlers.py
+- Update urisys-node/packages/python/urisysnode/pack_resolver.py
+- Update urisys-node/packages/python/urisysnode/routes.py
+- Update urisys-node/packages/python/urisysnode/serve.py
+- Update urisys-node/tests/test_pack_auto_install.py
+- Update uv.lock
 
 ## [0.1.19] - 2026-06-16
 

@@ -1,3 +1,4 @@
+# DEV/CI ONLY — on slave (lenovo) use pip one-liners or shell:// flow; see docs/NODE-SETUP.md
 #!/usr/bin/env bash
 # Editable install of urisysedge + kvm/him/ocr/llm from urisys monorepo (vendored copies).
 set -euo pipefail
@@ -10,5 +11,5 @@ for pkg in urikvm urihim uriocr; do
 done
 pip install -e "urikvm-docker/packages/python/urillm[vision]" 2>/dev/null || \
   pip install -e "urikvm-docker/packages/python/urillm"
-echo "OK: urisysedge + urikvm urihim uriocr urillm (editable, monorepo)"
-echo "Start node: URISYS_NODE_ALLOW_PACK_LOAD=1 URISYS_NODE_PACKS=node,screen,kvm,him urisys-node serve --port 8790"
+echo "OK: urisysedge + urikvm urihim uriocr urillm (editable, monorepo dev)"
+echo "Slave/lenovo: see docs/NODE-SETUP.md (pip / shell:// / URI — not this script)"

@@ -3721,11 +3721,12 @@ provides-extras = ["real"]
 
 [[package]]
 name = "urisys"
-version = "0.1.19"
+version = "0.1.20"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
     { name = "uricore" },
+    { name = "urisysedge" },
 ]
 
 [package.optional-dependencies]
@@ -3790,6 +3791,7 @@ requires-dist = [
     { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "urikvm-docker/packages/python/urikvm" },
     { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "urikvm-docker/packages/python/urillm" },
     { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "urikvm-docker/packages/python/uriocr" },
+    { name = "urisysedge", editable = "packages/python/urisysedge" },
     { name = "zeroconf", marker = "extra == 'discovery'", specifier = ">=0.131.0" },
 ]
 provides-extras = ["dev", "lab", "real", "kvm", "discovery"]
