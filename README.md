@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.11-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$3.93-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-8.9h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.12-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$3.95-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-9.5h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $3.9320 (19 commits)
-- 👤 **Human dev:** ~$891 (8.9h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $3.9547 (20 commits)
+- 👤 **Human dev:** ~$952 (9.5h @ $100/h, 30min dedup)
 
 Generated on 2026-06-16 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -15,10 +15,13 @@ Generated on 2026-06-16 using [openrouter/qwen/qwen3-coder-next](https://openrou
 
 Centralny **URI control plane** dla TellMesh: CLI (`urisys`), managers, Markpact oraz monorepo obrazów Docker z edge runtime.
 
-> **Nie mylić z:** produktem Roche „UriSys” (analizator moczu) ani pakietem PyPI `uritools` (RFC 3986).  
-> **`urisys` w tym repo** to lokalny pakiet Python (`tellmesh/urisys`) — **nie ma go na PyPI**; instalujesz z checkoutu (poniżej).
+## Instalacja
 
-## Instalacja (host / dev)
+```bash
+pip install urisys
+```
+
+### Dev (checkout tellmesh)
 
 Wymaga checkout **tellmesh** (urisys obok `uricore/`, `uri-packs/`, opcjonalnie `nl2uri/`, `uri2flow/`).
 

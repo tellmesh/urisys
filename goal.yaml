@@ -226,7 +226,7 @@ strategies:
     test: uv sync --group dev && uv run pytest tests/ -q
     build: python -m build
     publish: twine upload dist/urisys-{version}*
-    publish_enabled: false
+    publish_enabled: true
     dependencies:
       file: requirements.txt
       lock: pip freeze > requirements.txt

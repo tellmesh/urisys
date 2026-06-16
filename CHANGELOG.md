@@ -115,6 +115,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.12] - 2026-06-16
+
+### Docs
+- Update README.md
+
+### Other
+- Update urisys-automation-lab/data/events.jsonl
+
 ## [0.1.11] - 2026-06-16
 
 ### Docs
