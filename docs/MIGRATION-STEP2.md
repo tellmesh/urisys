@@ -14,14 +14,12 @@
 - `urisys-automation-lab/server/lab_uri_adapter.py` — adapter HTTP (`call_uri` z lab gateway)
 - `urisys-automation-lab/Dockerfile` — `pip install uri2flow>=0.1.2`
 
-### Weryfikacja
+### Weryfikacja lokalna
 
 ```bash
-pip install -e ../uri2flow   # tellmesh workspace
-cd urisys-automation-lab
-python3 -c "import sys; sys.path.insert(0,'server'); from flow_runner import plan_flow; print(plan_flow('flows/01_install_browser.uri.flow.yaml')['flow_id'])"
-
-python3 ../scripts/run_test_sessions.py --sessions lab-10-flows
+# z katalogu tellmesh/urisys (NIE cd urisys gdy już tam jesteś)
+bash scripts/run-lab-e2e.sh
+# PASS 12/12 (2026-06-16, session 20260616-200505)
 ```
 
 API `POST /uri/flow` — bez zmian (ten sam kształt odpowiedzi: `ok`, `graph`, `steps[]`).

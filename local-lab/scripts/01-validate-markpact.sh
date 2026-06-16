@@ -2,9 +2,11 @@
 set -euo pipefail
 cd /workspace
 
+export PIP_DISABLE_PIP_VERSION_CHECK=1
+
 CONTRACT_FILE="${CONTRACT_FILE:-uristepper-docker/markpacts/uristepper.pack.markpact.md}"
 
-python3 -m pip install --upgrade pip -q
+python3 -m pip install --upgrade pip -q 2>/dev/null || true
 bash local-lab/scripts/install-urisys.sh
 
 echo "== validate =="

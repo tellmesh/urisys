@@ -10,7 +10,7 @@ Indeks modułów z liczbami linii: [`project/map.toon.yaml`](../project/map.toon
 | **core** | Centralny controller | `src/urisys/` |
 | **edge-shared** | Wspólny runtime Docker | `packages/python/urisysedge/` |
 | **edge-shim** | Alias kompatybilności | `urirdpedge`, `labedge` |
-| **edge-fork** | Kopia do konsolidacji | `urikvmedge`, `uribrowseredge` |
+| **edge-fork** | Kopia do konsolidacji | _(wszystkie edge → urisysedge)_ |
 | **handlers** | Implementacja schematu URI | `urirdp_kvm`, `uriocr` |
 | **lab-pack** | MVP mock/real w automation-lab | `uristt`, `urichat`, `uriwebrtc` |
 
@@ -47,6 +47,8 @@ Shimy (tylko re-export):
 
 - `urirdp-docker/packages/python/urirdpedge/{runtime,env}.py`
 - `urisys-automation-lab/packages/python/labedge/runtime.py`
+- `urikvm-docker/packages/python/urikvmedge/{runtime,env}.py`
+- `uribrowser-docker/packages/python/uribrowseredge/runtime.py`
 
 Docker COPY (build context = katalog `urisys/`):
 
@@ -61,10 +63,9 @@ COPY packages/python/urisysedge ./packages/python/urisysedge
 | **urisysedge** | `packages/python/urisysedge/` | ~255 | ★ canonical |
 | urirdpedge | `urirdp-docker/.../urirdpedge/` | shim | ✅ migrowany |
 | labedge | `urisys-automation-lab/.../labedge/` | shim | ✅ migrowany |
-| urikvmedge | `urikvm-docker/.../urikvmedge/` | ~228 | 🔶 fork — konsolidacja TODO |
-| uribrowseredge | `uribrowser-docker/.../` | ~222 | 🔶 fork |
+| urikvmedge | `urikvm-docker/.../urikvmedge/` | shim | ✅ migrowany |
+| uribrowseredge | `uribrowser-docker/.../` | shim | ✅ migrowany |
 | urisysnode | `urisys-node/.../urisysnode/runtime.py` | ~165 | 🔶 node-specific (tail events) |
-| urisysedge (env) | `urienv-docker/.../urisysedge/` | ~21 | 🔶 thin wrapper na uricore |
 | uristepper StepperRuntime | `uristepper-docker/.../` | ~193 | 🔶 osobna polityka stepper |
 
 ## Duplikaty — handlery (fork lineage urikvm → urirdp)
@@ -86,7 +87,7 @@ COPY packages/python/urisysedge ./packages/python/urisysedge
 |------|--------|
 | `packages/python/urisysedge/env.py` | ★ canonical |
 | `urirdpedge/env.py` | shim |
-| `urikvmedge/env.py` | ~95% identyczny — TODO: shim |
+| `urikvmedge/env.py` | shim |
 
 ## Paczki zewnętrzne (nie duplikować w urisys)
 
@@ -98,11 +99,11 @@ COPY packages/python/urisysedge ./packages/python/urisysedge
 
 ## Plan konsolidacji (kolejność)
 
-1. ✅ **`urisysedge`** — runtime + env; shimy urirdpedge/labedge
-2. 🔲 **`urikvmedge` / `uribrowseredge`** — shims do urisysedge + osobne `serve()` w cli
+1. ✅ **`urisysedge`** — runtime + env; shimy urirdpedge/labedge/urikvmedge/uribrowseredge
+2. ✅ **`flow_runner`** — uri2flow + uri3 (`LabCallAdapter`)
 3. 🔲 **Handlery OCR/LLM/HIM** — wspólny `packages/python/urioperators/` z adapterem display
-4. 🔲 **`FlowController`** — dodać `after`/`depends_on` (parity z flow_runner)
-5. 🔲 **uri3** jako executor w lab zamiast własnego flow_runner (opcjonalnie)
+4. 🔲 **`FlowController`** — dodać `after`/`depends_on` (parity z uri2flow)
+5. 🔲 **Pełny `uri3 run-workflow`** w lab (schema root w kontenerze)
 
 ## Zależności importów (z map.toon.yaml)
 

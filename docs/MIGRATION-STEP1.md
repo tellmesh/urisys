@@ -6,7 +6,7 @@ Wykonane w ramach konsolidacji `urisys/` → `tellmesh/*`.
 
 | Było | Jest |
 |------|------|
-| Kopia ~364 KB w repo | `pip install uricore>=0.1.3` w Docker/CI |
+| Kopia ~364 KB w repo | `pip install uricore>=0.1.2` w Docker/CI (lub `../uricore` editable) |
 | Lokalny dev | `../uricore` (tellmesh workspace) via `scripts/paths.sh` |
 | Fallback | PyPI `uricore` gdy sibling brak |
 

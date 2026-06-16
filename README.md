@@ -3,17 +3,48 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.10-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$3.62-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-8.9h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.11-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$3.93-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-8.9h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $3.6189 (18 commits)
-- 👤 **Human dev:** ~$889 (8.9h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $3.9320 (19 commits)
+- 👤 **Human dev:** ~$891 (8.9h @ $100/h, 30min dedup)
 
 Generated on 2026-06-16 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
 ---
 
 Centralny **URI control plane** dla TellMesh: CLI (`urisys`), managers, Markpact oraz monorepo obrazów Docker z edge runtime.
+
+> **Nie mylić z:** produktem Roche „UriSys” (analizator moczu) ani pakietem PyPI `uritools` (RFC 3986).  
+> **`urisys` w tym repo** to lokalny pakiet Python (`tellmesh/urisys`) — **nie ma go na PyPI**; instalujesz z checkoutu (poniżej).
+
+## Instalacja (host / dev)
+
+Wymaga checkout **tellmesh** (urisys obok `uricore/`, `uri-packs/`, opcjonalnie `nl2uri/`, `uri2flow/`).
+
+```bash
+cd tellmesh/urisys
+
+# wirtualne środowisko (poprawna składnia — NIE komenda `venv`)
+python3 -m venv .venv
+source .venv/bin/activate
+
+# zalecane: uv (lockfile)
+uv sync
+
+# alternatywa bez uv:
+pip install -e ".[dev]"
+pip install -e ../uricore          # sibling w tellmesh workspace
+```
+
+Po instalacji CLI:
+
+```bash
+urisys --help
+which urisys   # → .venv/bin/urisys
+```
+
+Zależności runtime: **`uricore`** (PyPI `uricore>=0.1.2` lub editable `../uricore`), paczki URI z **`uri-packs`** (dev group w `pyproject.toml`).
 
 ## Szybki start
 
@@ -39,7 +70,8 @@ bash scripts/docker-up.sh
 bash scripts/docker-smoke.sh
 
 # Pełny test E2E
-cd .. && python3 scripts/run_test_sessions.py --sessions lab-10-flows
+python3 scripts/run_test_sessions.py --sessions lab-10-flows
+# lub: bash scripts/run-lab-e2e.sh
 ```
 
 ## Dokumentacja

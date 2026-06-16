@@ -2,6 +2,8 @@
 set -e
 clear
 
+export PIP_DISABLE_PIP_VERSION_CHECK=1
+
 VENV="venv"
 PIP="$VENV/bin/pip"
 
@@ -9,6 +11,8 @@ if [ ! -f "$PIP" ]; then
     echo "Creating virtual environment..."
     python3 -m venv "$VENV"
 fi
+
+"$PIP" install --upgrade pip -q 2>/dev/null || true
 
 #$PIP install -e .
 $PIP install regix --upgrade --quiet

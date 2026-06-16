@@ -1,0 +1,37 @@
+# Root build context for urirdp / urikvm / uribrowser (docker-compose context: urisys/)
+.git
+.github
+.venv/
+venv/
+**/.venv/
+**/venv/
+
+output/
+project/
+local-lab/generated/
+releases/
+
+# Docs / analysis artifacts (not needed in images)
+*.md
+!urirdp-docker/**/*.md
+SUMD.md
+SUMR.md
+TODO.md
+planfile.yaml
+prefact.yaml
+app.doql.less
+
+# Test / dev
+tests
+testql-scenarios
+examples
+scripts/run_test_sessions.py
+scripts/session_report.py
+
+# Large or unrelated trees
+urisys-automation-lab/output
+urirdp-docker/data
+urikvm-docker/data
+uribrowser-docker/data
+uristepper-docker/data
+urisys-node/data

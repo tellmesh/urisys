@@ -115,6 +115,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.11] - 2026-06-16
+
+### Docs
+- Update README.md
+- Update docs/MIGRATION-STEP1.md
+- Update docs/MIGRATION-STEP2.md
+- Update docs/PACKAGES.md
+
+### Other
+- Update .dockerignore
+- Update .gitignore
+- Update local-lab/scripts/01-validate-markpact.sh
+- Update local-lab/scripts/install-urisys.sh
+- Update project.sh
+- Update scripts/run-lab-e2e.sh
+- Update urirdp-docker/Dockerfile
+- Update urisys-automation-lab/Dockerfile
+- Update urisys-automation-lab/data/events.jsonl
+- Update uv.lock
+
 ## [0.1.10] - 2026-06-16
 
 ### Docs

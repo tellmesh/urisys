@@ -2,6 +2,7 @@ FROM python:3.12-slim
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PYTHONPATH=/opt/lab/packages/python \
     URISYS_LAB_HOST=0.0.0.0 \
     URISYS_LAB_PORT=8099 \

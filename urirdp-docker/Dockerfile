@@ -1,6 +1,7 @@
 FROM debian:bookworm-slim
 
 ENV DEBIAN_FRONTEND=noninteractive \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
     RDP_USER=urisys \
     RDP_PASSWORD=urisys \
     RDP_PORT=3389 \
