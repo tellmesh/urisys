@@ -11,8 +11,8 @@ Nie ma tutaj ciężkiego hypervisora ani systemu agentowego. `urisys` jest centr
 ## Skład
 
 ```text
-uricore/        # niski poziom: parser, registry, dispatcher, event store, policy
-uricore-js/     # JS/browser/Node runtime
+../uricore/     # osobne repo: parser, registry, dispatcher, event store, policy
+../uricore-js/  # osobne repo: JS/browser/Node runtime
 urisys/         # kontrolery, managery, HTTP server, flow, Markpact
 packages/python # osobne paczki: uribrowser, uridocker, urisystemd...
 packages/js     # osobne paczki JS: uridom-js, uripage-js, urinode-js...

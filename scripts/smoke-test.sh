@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-export PYTHONPATH="$ROOT/uricore/core/python:$ROOT/urisys/src:$(find "$ROOT/packages/python" -mindepth 1 -maxdepth 1 -type d -printf '%p/src:')"
+TELLMESH_ROOT="$(cd "$ROOT/.." && pwd)"
+export PYTHONPATH="$TELLMESH_ROOT/uricore/core/python:$ROOT/urisys/src:$(find "$ROOT/packages/python" -mindepth 1 -maxdepth 1 -type d -printf '%p/src:')"
 cd "$ROOT"
 
 python -m urisys.cli --packs browser call browser://default/page/open --payload '{"url":"https://example.com"}' --approve

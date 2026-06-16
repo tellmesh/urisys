@@ -1,5 +1,5 @@
-import { CapabilityRegistry, UriControlRuntime, MemoryEventStore } from '../../uricore-js/src/index.js';
-import { createHttpUriServer } from '../../uricore-js/src/server/http-server.js';
+import { CapabilityRegistry, UriControlRuntime, MemoryEventStore } from '../../../uricore-js/src/index.js';
+import { createHttpUriServer } from '../../../uricore-js/src/server/http-server.js';
 import { register as registerNode } from '../../packages/js/urinode-js/src/index.js';
 
 const registry = new CapabilityRegistry();
