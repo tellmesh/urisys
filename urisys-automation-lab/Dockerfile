@@ -6,8 +6,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONPATH=/opt/lab/packages/python \
     URISYS_LAB_HOST=0.0.0.0 \
     URISYS_LAB_PORT=8099 \
-    URISYS_LAB_PACKS=stt,chat,webrtc \
-    URISYS_LAB_FORWARD_SCHEMES=rdp,kvm,him,ocr,llm,browser,shell,http,https,env \
+    URISYS_LAB_PACKS=stt,chat,message,webrtc \
+    URISYS_LAB_FORWARD_SCHEMES=rdp,kvm,him,ocr,llm,browser,shell,http,https,env,log \
     URISYS_RDP_URL=http://urirdp:8795
 
 RUN apt-get update \

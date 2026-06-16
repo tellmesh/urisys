@@ -363,6 +363,8 @@ class FlowOutcome:
     is_gui: bool
     duplicate_of: str | None
     vision_confidences: list[float] = field(default_factory=list)
+    has_contract: bool = False
+    expect_failures: list[str] = field(default_factory=list)
 
     @property
     def no_visible_effect(self) -> bool:
@@ -404,13 +406,31 @@ def _load_flow_outcomes(session_dir: Path) -> list[FlowOutcome]:
                 is_gui=any(str(s.get("uri") or "").startswith(GUI_SCHEMES) for s in steps),
                 duplicate_of=data.get("duplicate_of"),
                 vision_confidences=confidences,
+                has_contract=bool(data.get("expect")),
+                expect_failures=list(data.get("expect_failures") or []),
             )
         )
     return outcomes
 
 
+def check_declared_expectations(outcomes: list[FlowOutcome]) -> list[Finding]:
+    """Flows with an explicit `expect:` contract: report violations verbatim.
+    The runner already gated pass/fail on these; here we surface the reason."""
+    findings: list[Finding] = []
+    for o in outcomes:
+        for failure in o.expect_failures:
+            findings.append(
+                Finding(
+                    code="expectation-failed",
+                    message=f"Flow `{o.flow}` złamał zadeklarowany kontrakt `expect:` — {failure}.",
+                )
+            )
+    return findings
+
+
 def check_gui_no_effect(outcomes: list[FlowOutcome]) -> list[Finding]:
-    flows = [o.flow for o in outcomes if o.no_visible_effect]
+    # Heuristic fallback only — flows declaring `expect:` are judged by their contract.
+    flows = [o.flow for o in outcomes if o.no_visible_effect and not o.has_contract]
     if not flows:
         return []
     return [
@@ -427,8 +447,10 @@ def check_gui_no_effect(outcomes: list[FlowOutcome]) -> list[Finding]:
 
 
 def check_vision_never_decides(outcomes: list[FlowOutcome]) -> list[Finding]:
-    calls = [c for o in outcomes for c in o.vision_confidences]
-    if not calls or any(o.vision_decided for o in outcomes):
+    # Heuristic fallback only — skip flows whose `expect:` contract already covers this.
+    relevant = [o for o in outcomes if not o.has_contract]
+    calls = [c for o in relevant for c in o.vision_confidences]
+    if not calls or any(o.vision_decided for o in relevant):
         return []
     return [
         Finding(
@@ -448,6 +470,7 @@ def check_vision_never_decides(outcomes: list[FlowOutcome]) -> list[Finding]:
 
 # Registry: add a check function here, no edits to the analysis loop.
 LAB_FLOW_CHECKS: list[Callable[[list[FlowOutcome]], list[Finding]]] = [
+    check_declared_expectations,
     check_gui_no_effect,
     check_vision_never_decides,
 ]

@@ -3330,7 +3330,7 @@ requires-dist = [{ name = "uricore", specifier = ">=0.1.0" }]
 
 [[package]]
 name = "uricore"
-version = "0.1.6"
+version = "0.1.7"
 source = { editable = "../uricore" }
 dependencies = [
     { name = "pyyaml" },
@@ -3360,7 +3360,7 @@ requires-dist = [{ name = "uricore", specifier = ">=0.1.0" }]
 
 [[package]]
 name = "urisys"
-version = "0.1.13"
+version = "0.1.14"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },

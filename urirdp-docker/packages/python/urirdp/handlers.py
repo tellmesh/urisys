@@ -66,11 +66,31 @@ def display_status(payload: dict[str, Any], context: dict[str, Any]) -> dict[str
 
 def prepare_target(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
     display_name = detect_display(context)
+    kind = str(payload.get('kind') or 'info')
     text = str(payload.get('text') or 'OK')
     if context.get('dry_run') or not allow_real(context):
-        return {'prepared': True, 'driver': 'mock', 'display': display_name, 'text': text}
+        return {'prepared': True, 'driver': 'mock', 'display': display_name, 'text': text, 'kind': kind}
 
     env = base_env(context)
+    if kind == 'form':
+        subprocess.Popen(
+            [
+                'zenity', '--forms',
+                '--title=TellMesh Demo',
+                '--text=Fill the form',
+                '--add-entry=Name',
+                '--ok-label=Submit',
+                '--width=420',
+                '--height=220',
+            ],
+            env=env,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        time.sleep(2.0)
+        run_cmd(['xdotool', 'search', '--name', 'TellMesh Demo', 'windowactivate'], context, timeout=5)
+        return {'prepared': True, 'display': display_name, 'kind': 'form', 'driver': 'zenity-forms'}
+
     subprocess.Popen(
         [
             'zenity', '--info',
@@ -86,4 +106,4 @@ def prepare_target(payload: dict[str, Any], context: dict[str, Any]) -> dict[str
     )
     time.sleep(1.5)
     run_cmd(['xdotool', 'search', '--name', 'Automation Target', 'windowactivate'], context, timeout=5)
-    return {'prepared': True, 'display': display_name, 'text': text, 'driver': 'zenity'}
+    return {'prepared': True, 'display': display_name, 'text': text, 'driver': 'zenity', 'kind': kind}

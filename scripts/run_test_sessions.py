@@ -678,6 +678,88 @@ def _file_md5(path: Path) -> str | None:
     return hashlib.md5(path.read_bytes()).hexdigest()
 
 
+def _flow_expectations(flow_path: Path) -> dict[str, Any]:
+    """Read the optional `expect:` contract a flow declares about its own effect.
+    Unknown to the flow executor (uri2flow ignores it); only the runner asserts it."""
+    try:
+        import yaml
+
+        data = yaml.safe_load(flow_path.read_text(encoding="utf-8")) or {}
+    except Exception:
+        return {}
+    expect = data.get("expect") if isinstance(data, dict) else None
+    return dict(expect) if isinstance(expect, dict) else {}
+
+
+def _ocr_texts(step_results: list[dict[str, Any]]) -> list[str]:
+    """All OCR text strings produced anywhere in a flow's steps (incl. click pipelines)."""
+    texts: list[str] = []
+    for step in step_results:
+        result = ((step.get("response") or {}).get("result")) or {}
+        stages = [result, *(s for s in (result.get("pipeline") or {}).values() if isinstance(s, dict))]
+        for stage in stages:
+            res = stage.get("result") if "result" in stage else stage
+            if isinstance(res, dict) and isinstance(res.get("text"), str):
+                texts.append(res["text"])
+    return texts
+
+
+def _vision_confidences(step_results: list[dict[str, Any]]) -> list[float]:
+    out: list[float] = []
+    for step in step_results:
+        result = ((step.get("response") or {}).get("result")) or {}
+        stages = [result, *(s.get("result") for s in (result.get("pipeline") or {}).values() if isinstance(s, dict))]
+        for res in stages:
+            if isinstance(res, dict) and {"action", "confidence", "model"} <= res.keys():
+                out.append(float(res.get("confidence") or 0.0))
+    return out
+
+
+def evaluate_expectations(
+    expect: dict[str, Any],
+    *,
+    duplicate_of: str | None,
+    step_results: list[dict[str, Any]],
+) -> list[str]:
+    """Assert a flow's declared `expect:` contract against its actual outcome.
+    Returns a list of human-readable failures (empty == contract satisfied).
+
+    Supported keys:
+      screen_changed: bool          screenshot differs from / equals baseline
+      ocr_contains: [str, ...]      each substring must appear in some OCR text
+      min_vision_confidence: float  at least one vision call must reach this
+    """
+    failures: list[str] = []
+    if not expect:
+        return failures
+
+    if "screen_changed" in expect:
+        changed = duplicate_of is None
+        want = bool(expect["screen_changed"])
+        if changed != want:
+            failures.append(
+                f"screen_changed: expected {want}, got {changed} (duplicate_of={duplicate_of})"
+            )
+
+    wanted = expect.get("ocr_contains") or []
+    if wanted:
+        haystack = " \n".join(_ocr_texts(step_results)).lower()
+        for needle in wanted:
+            if str(needle).lower() not in haystack:
+                failures.append(f"ocr_contains: '{needle}' not found in OCR output")
+
+    if "min_vision_confidence" in expect:
+        threshold = float(expect["min_vision_confidence"])
+        confidences = _vision_confidences(step_results)
+        best = max(confidences) if confidences else 0.0
+        if best < threshold:
+            failures.append(
+                f"min_vision_confidence: best {best:.2f} < required {threshold:.2f}"
+            )
+
+    return failures
+
+
 def _step_pause(uri: str, *, real_mode: bool) -> None:
     if not real_mode:
         return
@@ -899,6 +981,13 @@ def session_lab_10_flows(session_dir: Path) -> int:
                         break
                 screenshot_hashes[f"{idx:02d}-{flow_id}"] = png_md5 or ""
 
+            # Opt-in effect-level contract: flows without `expect:` keep the old
+            # transport-only behavior; declared expectations gate pass/fail.
+            expect = _flow_expectations(flow_path)
+            expect_failures = evaluate_expectations(
+                expect, duplicate_of=duplicate_of, step_results=step_results
+            )
+
             _save_json(
                 session_dir / "responses" / f"{idx:02d}-{flow_id}.json",
                 {
@@ -916,10 +1005,19 @@ def session_lab_10_flows(session_dir: Path) -> int:
                     "captured": captured,
                     "md5": png_md5,
                     "duplicate_of": duplicate_of,
+                    "expect": expect,
+                    "expect_failures": expect_failures,
                 },
             )
 
-            flow_pass = bool(flow_result.get("ok")) and steps_ok == steps_total and steps_total > 0
+            transport_ok = bool(flow_result.get("ok")) and steps_ok == steps_total and steps_total > 0
+            flow_pass = transport_ok and not expect_failures
+            if transport_ok and expect_failures:
+                detail = "; ".join(expect_failures)
+            elif flow_pass:
+                detail = ""
+            else:
+                detail = f"{steps_ok}/{steps_total} ok, flow_ok={flow_result.get('ok')}, dup={duplicate_of}"
             steps.append(
                 {
                     "name": flow_id,
@@ -932,11 +1030,10 @@ def session_lab_10_flows(session_dir: Path) -> int:
                         "captured": captured,
                         "md5": png_md5,
                         "duplicate_of": duplicate_of,
+                        "expect_failures": expect_failures,
                     },
                     "screenshot": shot_rel,
-                    "detail": ""
-                    if flow_pass
-                    else f"{steps_ok}/{steps_total} ok, flow_ok={flow_result.get('ok')}, dup={duplicate_of}",
+                    "detail": detail,
                 }
             )
             if not flow_pass:

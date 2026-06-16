@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Callable
@@ -28,6 +29,18 @@ def _require_uri_stack() -> None:
         raise ImportError(
             "flow execution requires uri2flow and uri3 (pip install 'uri2flow>=0.1.2')"
         ) from _IMPORT_ERROR
+
+
+def _execution_root(flow_path: Path, ctx: dict[str, Any]) -> Path:
+    if ctx.get("repo_root"):
+        return Path(str(ctx["repo_root"]))
+    env_root = os.environ.get("URISYS_REPO_ROOT")
+    if env_root:
+        return Path(env_root)
+    resolved = flow_path.resolve()
+    if resolved.parent.name == "flows":
+        return resolved.parents[1]
+    return resolved.parent
 
 
 def _load_defaults(flow_path: str | Path) -> dict[str, Any]:
@@ -110,7 +123,7 @@ def run_flow_file(
     execution = ExecutionContext(
         workflow_id=str(plan["flow_id"]),
         run_id=str(uuid4()),
-        root=Path(plan["flow_path"]).parent,
+        root=_execution_root(Path(plan["flow_path"]), ctx),
         approve_commands=bool(ctx.get("approved", True)),
         dry_run=bool(ctx.get("dry_run", False)),
     )

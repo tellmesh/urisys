@@ -11,3 +11,7 @@ do:
       url: https://raw.githubusercontent.com/github/markup/master/README.md
   - browser://chrome/page/active/dom
   - browser://chrome/page/active/screenshot
+
+# Effect-level contract asserted by scripts/run_test_sessions.py (uri2flow ignores it).
+expect:
+  screen_changed: true

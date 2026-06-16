@@ -20,3 +20,8 @@ do:
   - him://local/keyboard/command/key:
       key: n
   - kvm://local/monitor/primary/query/screenshot
+
+# Effect-level contract asserted by scripts/run_test_sessions.py (uri2flow ignores it).
+# Opening nano in a terminal must visibly change the desktop.
+expect:
+  screen_changed: true

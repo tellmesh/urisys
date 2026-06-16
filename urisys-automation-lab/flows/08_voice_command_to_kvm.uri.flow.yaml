@@ -31,4 +31,10 @@ do:
     uri: kvm://local/task/command/click-text
     after: map_voice
     if: map_voice.ok == true
-    payload_from: map_voice
+    payload:
+      payload_from: map_voice
+
+# Effect-level contract asserted by scripts/run_test_sessions.py (uri2flow ignores it).
+# The mapped voice command must visibly act on the desktop.
+expect:
+  screen_changed: true

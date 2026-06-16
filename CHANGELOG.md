@@ -139,6 +139,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.14] - 2026-06-16
+
+### Docs
+- Update README.md
+- Update urisys-automation-lab/README.md
+- Update urisys-automation-lab/docs/10_AUTOMATIONS.md
+- Update urisys-automation-lab/markpacts/log-flow.contract.markpact.md
+
+### Other
+- Update scripts/run-nl-log-smoke.sh
+- Update scripts/run-smoke-all.sh
+- Update scripts/run_test_sessions.py
+- Update scripts/session_report.py
+- Update urirdp-docker/packages/python/urirdp/handlers.py
+- Update urisys-automation-lab/Dockerfile
+- Update urisys-automation-lab/data/events.jsonl
+- Update urisys-automation-lab/flows/03_open_browser_gui.uri.flow.yaml
+- Update urisys-automation-lab/flows/04_browser_download_file.uri.flow.yaml
+- Update urisys-automation-lab/flows/05_fill_form_gui.uri.flow.yaml
+- ... and 7 more files
+
 ## [0.1.13] - 2026-06-16
 
 ### Docs

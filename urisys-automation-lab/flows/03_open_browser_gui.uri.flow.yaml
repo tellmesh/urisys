@@ -11,3 +11,8 @@ do:
       url: http://automation-lab:8099/health
   - browser://chrome/page/active/dom
   - browser://chrome/page/active/screenshot
+
+# Effect-level contract asserted by scripts/run_test_sessions.py (uri2flow ignores it).
+# Opening a browser GUI must visibly change the desktop vs. the baseline.
+expect:
+  screen_changed: true

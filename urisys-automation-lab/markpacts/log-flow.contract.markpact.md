@@ -35,4 +35,5 @@ Pass to `llm://…/decide` via `context_from: read_logs`.
 
 ## Lab gap
 
-`log://` is **not** yet forwarded in `lab_uri_adapter.py`. Host-side uri3 workflows only (MVP).
+`log://` reads via uri3 `LogAdapter` inside `LabCallAdapter`. Set `context.repo_root` or
+`URISYS_REPO_ROOT` to the checkout with `output/logs/` when running log flows from the lab container.

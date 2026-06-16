@@ -1,19 +1,26 @@
 flow:
   id: 09-webrtc-video-chat-rdp
-  description: WebRTC session + data channel URI envelope to control RDP desktop.
+  description: WebRTC session + data channel envelope, then direct kvm screenshot.
 
 defaults:
   approved: true
   dry_run: false
 
 do:
-  - webrtc://local/session/rdp-chat/command/start:
+  - id: webrtc_start
+    uri: webrtc://local/session/rdp-chat/command/start
+    payload:
       room: rdp-lab
-  - webrtc://local/session/rdp-chat/data/command/send:
+
+  - id: webrtc_send
+    uri: webrtc://local/session/rdp-chat/data/command/send
+    after: webrtc_start
+    payload:
       envelope:
         uri: rdp://local/display/query/status
         payload: {}
-  - chat://local/uri/command/execute:
-      uri: kvm://local/monitor/primary/query/screenshot
-      payload: {}
-      approved: true
+
+  - id: capture_desktop
+    uri: kvm://local/monitor/primary/query/screenshot
+    after: webrtc_send
+    payload: {}
