@@ -1,6 +1,6 @@
-# code2llm | 220f 13389L | python:105,yaml:34,shell:32,json:13,toml:9,yml:8,javascript:2,txt:2,proto:2,go:1,php:1,typescript:1,conf:1 | 2026-06-16
+# code2llm | 233f 13953L | python:106,shell:39,yaml:35,json:14,yml:9,toml:9,javascript:2,txt:2,proto:2,conf:1,go:1,php:1,typescript:1 | 2026-06-16
 # generated in 0.04s
-# CC̅=3.7 | critical:19/542 | dups:11 | cycles:0
+# CC̅=3.7 | critical:20/552 | dups:11 | cycles:0
 
 HEALTH[20]:
   🔴 DUP   11 classes duplicated
@@ -9,12 +9,6 @@ HEALTH[20]:
   🟡 CC    run_tests CC=20 (limit:15)
   🟡 CC    _compile_manifest CC=28 (limit:15)
   🟡 CC    parse_packs CC=15 (limit:15)
-  🟡 CC    analyze CC=18 (limit:15)
-  🟡 CC    _heuristic_analyze CC=16 (limit:15)
-  🟡 CC    _vision_analyze CC=22 (limit:15)
-  🟡 CC    build_lab_runtime CC=16 (limit:15)
-  🟡 CC    do_POST CC=18 (limit:15)
-  🟡 CC    load_manifest CC=21 (limit:15)
   🟡 CC    session_urirdp_real_docker CC=30 (limit:15)
   🟡 CC    session_automation_lab CC=16 (limit:15)
   🟡 CC    session_lab_10_flows CC=28 (limit:15)
@@ -22,7 +16,13 @@ HEALTH[20]:
   🟡 CC    _infer_steps CC=20 (limit:15)
   🟡 CC    write_session_report CC=28 (limit:15)
   🟡 CC    analyze_run CC=34 (limit:15)
+  🟡 CC    analyze CC=18 (limit:15)
+  🟡 CC    _heuristic_analyze CC=16 (limit:15)
+  🟡 CC    _vision_analyze CC=22 (limit:15)
   🟡 CC    uri_execute CC=15 (limit:15)
+  🟡 CC    build_lab_runtime CC=16 (limit:15)
+  🟡 CC    do_POST CC=18 (limit:15)
+  🟡 CC    load_manifest CC=21 (limit:15)
 
 REFACTOR[2]:
   1. rm duplicates  (-11 dup classes)
@@ -232,6 +232,28 @@ LAYERS:
   │ __init__                     1L  0C    0m  CC=0.0    ←0
   │ __init__                     1L  0C    0m  CC=0.0    ←0
   │
+  urisys-node/                    CC̄=3.3    ←in:0  →out:0  ×DUP
+  │ runtime                    165L  3C   11m  CC=8      ←0  ×DUP
+  │ cli                        136L  0C    1m  CC=14     ←0
+  │ !! artifact_resolver          120L  0C    7m  CC=15     ←1
+  │ identity                   110L  0C   12m  CC=4      ←3
+  │ serve                      107L  0C    4m  CC=11     ←0
+  │ handlers                   102L  0C    9m  CC=7      ←0
+  │ client                      92L  0C    3m  CC=6      ←1
+  │ pyproject.toml              57L  0C    0m  CC=0.0    ←0
+  │ router                      47L  0C    5m  CC=6      ←2
+  │ handlers                    41L  0C    4m  CC=2      ←0
+  │ node-profile.json           32L  0C    0m  CC=0.0    ←0
+  │ routes                      23L  0C    1m  CC=1      ←0
+  │ env                         22L  0C    1m  CC=8      ←0
+  │ routes                      19L  0C    1m  CC=1      ←0
+  │ route-map.master.yaml       19L  0C    0m  CC=0.0    ←0
+  │ install-linux.sh            16L  0C    0m  CC=0.0    ←0
+  │ route-map.slave.yaml        14L  0C    0m  CC=0.0    ←0
+  │ slave-kvm-demo.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
+  │ screen-capture-mss.uri.flow.yaml    12L  0C    0m  CC=0.0    ←0
+  │ nodes.registry.json         10L  0C    0m  CC=0.0    ←0
+  │
   urisys-automation-lab/          CC̄=3.2    ←in:0  →out:0  ×DUP
   │ !! automation_lab_server      213L  1C    9m  CC=18     ←0
   │ runtime                    153L  3C   10m  CC=8      ←0  ×DUP
@@ -312,27 +334,6 @@ LAYERS:
   │ smtp_password.txt            1L  0C    0m  CC=0.0    ←0
   │ markpact_token.txt           1L  0C    0m  CC=0.0    ←0
   │
-  urisys-node/                    CC̄=3.0    ←in:0  →out:0  ×DUP
-  │ runtime                    165L  3C   11m  CC=8      ←0  ×DUP
-  │ identity                   110L  0C   12m  CC=4      ←3
-  │ cli                        109L  0C    1m  CC=11     ←0
-  │ serve                      107L  0C    4m  CC=11     ←0
-  │ handlers                   102L  0C    9m  CC=7      ←0
-  │ client                      92L  0C    3m  CC=6      ←1
-  │ pyproject.toml              57L  0C    0m  CC=0.0    ←0
-  │ router                      47L  0C    5m  CC=6      ←2
-  │ handlers                    41L  0C    4m  CC=2      ←0
-  │ node-profile.json           32L  0C    0m  CC=0.0    ←0
-  │ routes                      23L  0C    1m  CC=1      ←0
-  │ env                         22L  0C    1m  CC=8      ←0
-  │ routes                      19L  0C    1m  CC=1      ←0
-  │ route-map.master.yaml       19L  0C    0m  CC=0.0    ←0
-  │ install-linux.sh            16L  0C    0m  CC=0.0    ←0
-  │ route-map.slave.yaml        14L  0C    0m  CC=0.0    ←0
-  │ slave-kvm-demo.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
-  │ screen-capture-mss.uri.flow.yaml    12L  0C    0m  CC=0.0    ←0
-  │ nodes.registry.json         10L  0C    0m  CC=0.0    ←0
-  │
   uristepper-docker/              CC̄=2.2    ←in:0  →out:0  ×DUP
   │ runtime                    193L  5C   12m  CC=6      ←11  ×DUP
   │ drivers                    169L  3C   30m  CC=4      ←1
@@ -359,6 +360,20 @@ LAYERS:
   │ browser-call.sh              8L  0C    0m  CC=0.0    ←0
   │ server-curl.sh               8L  0C    0m  CC=0.0    ←0
   │ call-uri.sh                  6L  0C    0m  CC=0.0    ←0
+  │
+  local-lab/                      CC̄=0.0    ←in:0  →out:0
+  │ 02-build-publish.sh         94L  0C    0m  CC=0.0    ←0
+  │ docker-compose.yml          81L  0C    0m  CC=0.0    ←0
+  │ 00-init-nexus.sh            68L  0C    3m  CC=0.0    ←0
+  │ 04-smoke.sh                 35L  0C    0m  CC=0.0    ←0
+  │ run-all.sh                  28L  0C    0m  CC=0.0    ←0
+  │ artifact-index.json         23L  0C    0m  CC=0.0    ←0
+  │ 01-validate-markpact.sh     22L  0C    0m  CC=0.0    ←0
+  │ install-urisys.sh           17L  0C    0m  CC=0.0    ←0
+  │ 03-resolve-run.sh           16L  0C    0m  CC=0.0    ←0
+  │ node-profile.local.yaml     11L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                  11L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                  11L  0C    0m  CC=0.0    ←0
   │
   ./                              CC̄=0.0    ←in:0  →out:0
   │ !! planfile.yaml             1319L  0C    0m  CC=0.0    ←0

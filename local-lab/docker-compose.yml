@@ -1,0 +1,81 @@
+# Markpact / urisys local materialization lab
+# contract → build → registry → artifact-index → node resolve → /uri/call
+
+services:
+  nexus:
+    image: sonatype/nexus3:latest
+    container_name: markpact-nexus
+    ports:
+      - "${NEXUS_HOST_PORT:-8082}:8081"
+    volumes:
+      - nexus-data:/nexus-data
+    environment:
+      INSTALL4J_ADD_VM_PARAMS: "-Dnexus.security.randompassword=false"
+      NEXUS_SECURITY_RANDOMPASSWORD: "false"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8081/service/rest/v1/status || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 40
+      start_period: 90s
+
+  oci-registry:
+    image: registry:2
+    container_name: markpact-oci-registry
+    ports:
+      - "5000:5000"
+    volumes:
+      - registry-data:/var/lib/registry
+
+  builder:
+    build:
+      context: ..
+      dockerfile: local-lab/builder/Dockerfile
+    container_name: markpact-builder
+    working_dir: /workspace
+    volumes:
+      - ..:/workspace
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      CONTRACT_ID: uristepper.contract
+      VERSION: "0.1.0"
+      CONTRACT_FILE: uristepper-docker/markpacts/uristepper.pack.markpact.md
+      IMAGE_NAME: stepper-axis-control
+      IMAGE_TARGET: linux-amd64-mock
+      OCI_REGISTRY_FOR_DOCKER: localhost:5000
+      NEXUS_URL: http://nexus:8081
+      NEXUS_RAW_CONTRACTS: markpact-contracts-release
+      NEXUS_RAW_ARTIFACTS: markpact-artifacts-release
+      NEXUS_USER: admin
+      NEXUS_PASSWORD: admin123
+      WORKER_PORT: "8796"
+    depends_on:
+      oci-registry:
+        condition: service_started
+    profiles: ["lab"]
+
+  urisys-node-lab:
+    build:
+      context: ..
+      dockerfile: local-lab/node/Dockerfile
+    container_name: urisys-node-lab
+    working_dir: /workspace
+    network_mode: host
+    volumes:
+      - ..:/workspace
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      CONTRACT_ID: uristepper.contract
+      VERSION: "0.1.0"
+      NODE_PROFILE: /workspace/local-lab/node-profile.local.yaml
+      ARTIFACT_INDEX: /workspace/local-lab/generated/artifact-index.json
+      OCI_REGISTRY_FOR_DOCKER: localhost:5000
+      WORKER_PORT: "8796"
+    depends_on:
+      oci-registry:
+        condition: service_started
+    profiles: ["lab"]
+
+volumes:
+  nexus-data:
+  registry-data:

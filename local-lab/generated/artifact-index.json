@@ -1,0 +1,23 @@
+{
+  "schema": "markpact.artifact-index.v1",
+  "contract": {
+    "id": "uristepper.contract",
+    "version": "0.1.0",
+    "digest": "sha256:ffc08e4ee1cbb55345633a793a2710dc6eb46948e8a60bb7b4aa6f041d60ea59",
+    "file": "uristepper-docker/markpacts/uristepper.pack.markpact.md"
+  },
+  "artifacts": [
+    {
+      "target": "linux-amd64-mock",
+      "kind": "oci-image",
+      "platform": "linux/amd64",
+      "runtime": "docker",
+      "capabilities": [
+        "mock-stepper",
+        "uri-process"
+      ],
+      "ref": "localhost:5000/stepper-axis-control@sha256:cdec405842e2b60d431d8bee9ecb8233cabd82cddd091997bf2209033a4d1bcd",
+      "tag": "localhost:5000/stepper-axis-control:0.1.0-linux-amd64-mock"
+    }
+  ]
+}

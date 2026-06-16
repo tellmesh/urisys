@@ -1,10 +1,11 @@
-# urisys | 542 func | 98f | 13389L | python | 2026-06-16
+# urisys | 552 func | 100f | 13953L | python | 2026-06-16
 # generated in 0.00s
 
 HEALTH:
-  CC̄=3.7  critical=47 (limit:10)  dup=3  cycles=0
+  CC̄=3.7  critical=48 (limit:10)  dup=3  cycles=0
 
 ALERTS[20]:
+  !!! high_fan_out     main = 36 (limit:10)
   !!! cc_exceeded      analyze_run = 34 (limit:15)
   !!! high_fan_out     MarkpactManager.compile = 34 (limit:10)
   !!! high_fan_out     analyze_run = 32 (limit:10)
@@ -14,9 +15,8 @@ ALERTS[20]:
   !!! cc_exceeded      MarkpactManager._compile_manifest = 28 (limit:15)
   !!! cc_exceeded      session_lab_10_flows = 28 (limit:15)
   !!! cc_exceeded      write_session_report = 28 (limit:15)
-  !!! high_fan_out     main = 28 (limit:10)
 
-MODULES[220] (top by size):
+MODULES[233] (top by size):
   M[planfile.yaml] 1319L C:0 F:0 CC↑0 D:0 (yaml)
   M[scripts/run_test_sessions.py] 1002L C:0 F:33 CC↑30 D:0 (python)
   M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
@@ -32,14 +32,14 @@ MODULES[220] (top by size):
   M[urirdp-docker/packages/python/urirdp_llm/handlers.py] 196L C:0 F:12 CC↑18 D:0 (python)
   M[urienv-docker/packages/python/urienv/src/urienv/handlers.py] 196L C:0 F:19 CC↑7 D:2 (python)
   M[uristepper-docker/packages/python/urisysedge/runtime.py] 193L C:5 F:12 CC↑6 D:11 (python)
-  LANGS: python:105/yaml:34/shell:32/json:13/toml:9/other:9/yml:8/javascript:2/txt:2/proto:2/go:1/typescript:1/php:1/conf:1
+  LANGS: python:106/shell:39/yaml:35/json:14/other:11/yml:9/toml:9/javascript:2/txt:2/proto:2/go:1/typescript:1/php:1/conf:1
 
 HOTSPOTS[10]:
+  ★ main fan=36  // Orchestrates 36 calls
   ★ MarkpactManager.compile fan=34  // Orchestrates 34 calls
   ★ analyze_run fan=32  // Analysis pipeline, 32 stages
   ★ session_urirdp_real_docker fan=31  // Orchestrates 31 calls
   ★ session_lab_10_flows fan=31  // Run all 10 automation-lab flows; capture one RDP screenshot per flow.
-  ★ main fan=28  // Orchestrates 28 calls
 
 REFACTOR[15]:
   [1] H/L Split MarkpactManager._compile_manifest (CC=28)
@@ -49,4 +49,4 @@ REFACTOR[15]:
   [5] H/L Split analyze_run (CC=34)
 
 EVOLUTION:
-  2026-06-16 CC̄=3.7 crit=47 13389L // Automated analysis
+  2026-06-16 CC̄=3.7 crit=48 13953L // Automated analysis

@@ -5,6 +5,7 @@ import json
 import os
 import sys
 
+from urisysnode.artifact_resolver import load_artifact_index, load_node_profile, resolve_and_run, select_artifact
 from urisysnode.client import call_via_route_map, discover_mdns
 from urisysnode.identity import enroll, load_identity, load_pairing
 from urisysnode.router import load_route_map, rewrite_uri_for_slave
@@ -44,6 +45,17 @@ def main(argv=None) -> int:
     c.add_argument("--allow-real", action="store_true")
     c.add_argument("--route-map", default=None)
     c.add_argument("--nodes-registry", default="config/nodes.registry.json")
+
+    art = sub.add_parser("artifact", help="Resolve artifact-index and run OCI worker (lab/prototype)")
+    art_sub = art.add_subparsers(dest="artifact_command", required=True)
+    art_sel = art_sub.add_parser("select", help="Print selected artifact for node profile")
+    art_sel.add_argument("--index", required=True)
+    art_sel.add_argument("--profile", required=True)
+    art_run = art_sub.add_parser("resolve-run", help="Pull image from index and start worker container")
+    art_run.add_argument("--index", required=True)
+    art_run.add_argument("--profile", required=True)
+    art_run.add_argument("--port", type=int, default=int(os.environ.get("WORKER_PORT", "8791")))
+    art_run.add_argument("--container", default=os.environ.get("WORKER_NAME", "urisys-stepper-worker"))
 
     args = p.parse_args(argv)
 
@@ -101,6 +113,21 @@ def main(argv=None) -> int:
             result = rt.call(uri, payload, context)
         print(json.dumps(result, indent=2, ensure_ascii=False))
         return 0 if result.get("ok") else 1
+
+    if args.cmd == "artifact":
+        if args.artifact_command == "select":
+            art = select_artifact(load_artifact_index(args.index), load_node_profile(args.profile))
+            print(json.dumps(art, indent=2, ensure_ascii=False))
+            return 0
+        if args.artifact_command == "resolve-run":
+            result = resolve_and_run(
+                args.index,
+                args.profile,
+                container=args.container,
+                port=args.port,
+            )
+            print(json.dumps(result, indent=2, ensure_ascii=False))
+            return 0
 
     return 2
 

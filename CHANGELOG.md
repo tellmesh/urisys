@@ -115,6 +115,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.6] - 2026-06-16
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update project/README.md
+- Update project/context.md
+- Update uristepper-docker/markpacts/uristepper.pack.markpact.md
+
+### Other
+- Update app.doql.less
+- Update local-lab/builder/Dockerfile
+- Update local-lab/docker-compose.yml
+- Update local-lab/generated/.gitkeep
+- Update local-lab/generated/artifact-index.json
+- Update local-lab/node-profile.local.yaml
+- Update local-lab/node/Dockerfile
+- Update local-lab/scripts/00-init-nexus.sh
+- Update local-lab/scripts/01-validate-markpact.sh
+- Update local-lab/scripts/02-build-publish.sh
+- ... and 25 more files
+
 ## [0.1.5] - 2026-06-16
 
 ### Docs
