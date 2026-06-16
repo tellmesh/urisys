@@ -1,17 +1,12 @@
-# code2llm | 233f 13953L | python:106,shell:39,yaml:35,json:14,yml:9,toml:9,javascript:2,txt:2,proto:2,conf:1,go:1,php:1,typescript:1 | 2026-06-16
+# code2llm | 243f 14958L | python:112,shell:41,yaml:36,json:16,yml:9,toml:9,javascript:2,txt:2,proto:2,go:1,php:1,typescript:1,conf:1 | 2026-06-16
 # generated in 0.04s
-# CC̅=3.7 | critical:20/552 | dups:11 | cycles:0
+# CC̅=3.9 | critical:26/581 | dups:11 | cycles:0
 
 HEALTH[20]:
   🔴 DUP   11 classes duplicated
+  🔴 GOD   src/urisys/managers/markpact_manager.py = 579L, 4 classes, 25m, max CC=28
   🟡 CC    main CC=18 (limit:15)
-  🟡 CC    compile CC=21 (limit:15)
-  🟡 CC    run_tests CC=20 (limit:15)
-  🟡 CC    _compile_manifest CC=28 (limit:15)
   🟡 CC    parse_packs CC=15 (limit:15)
-  🟡 CC    session_urirdp_real_docker CC=30 (limit:15)
-  🟡 CC    session_automation_lab CC=16 (limit:15)
-  🟡 CC    session_lab_10_flows CC=28 (limit:15)
   🟡 CC    _summarize_events CC=18 (limit:15)
   🟡 CC    _infer_steps CC=20 (limit:15)
   🟡 CC    write_session_report CC=28 (limit:15)
@@ -20,15 +15,21 @@ HEALTH[20]:
   🟡 CC    _heuristic_analyze CC=16 (limit:15)
   🟡 CC    _vision_analyze CC=22 (limit:15)
   🟡 CC    uri_execute CC=15 (limit:15)
-  🟡 CC    build_lab_runtime CC=16 (limit:15)
-  🟡 CC    do_POST CC=18 (limit:15)
   🟡 CC    load_manifest CC=21 (limit:15)
+  🟡 CC    main CC=16 (limit:15)
+  🟡 CC    _topo_sort CC=15 (limit:15)
+  🟡 CC    run_flow_file CC=17 (limit:15)
+  🟡 CC    shell_run CC=16 (limit:15)
+  🟡 CC    session_urirdp_real_docker CC=30 (limit:15)
+  🟡 CC    session_automation_lab CC=16 (limit:15)
+  🟡 CC    session_lab_10_flows CC=26 (limit:15)
 
-REFACTOR[2]:
+REFACTOR[3]:
   1. rm duplicates  (-11 dup classes)
-  2. split 19 high-CC methods  (CC>15)
+  2. split src/urisys/managers/markpact_manager.py  (god module)
+  3. split 18 high-CC methods  (CC>15)
 
-PIPELINES[309]:
+PIPELINES[324]:
   [1] Src [registry]: registry
       PURITY: 100% pure
   [2] Src [runtime]: runtime
@@ -77,67 +78,68 @@ PIPELINES[309]:
       PURITY: 100% pure
   [24] Src [__exit__]: __exit__
       PURITY: 100% pure
-  [25] Src [to_dict]: to_dict
+  [25] Src [call_http]: call_http
       PURITY: 100% pure
   [26] Src [__init__]: __init__
       PURITY: 100% pure
-  [27] Src [read_blocks]: read_blocks → _parse_meta
+  [27] Src [parse_packs]: parse_packs
       PURITY: 100% pure
-  [28] Src [source_hash]: source_hash
+  [28] Src [parse_markpacts]: parse_markpacts
       PURITY: 100% pure
-  [29] Src [load_pack_block]: load_pack_block
+  [29] Src [resolve_package_name]: resolve_package_name
       PURITY: 100% pure
-  [30] Src [validate]: validate
+  [30] Src [_is_markpact_path]: _is_markpact_path
       PURITY: 100% pure
-  [31] Src [compile]: compile → _safe_identifier
+  [31] Src [_is_manifest_path]: _is_manifest_path
       PURITY: 100% pure
-  [32] Src [manifest_path_for]: manifest_path_for
+  [32] Src [create_registry]: create_registry
       PURITY: 100% pure
-  [33] Src [run_tests]: run_tests
+  [33] Src [capabilities]: capabilities
       PURITY: 100% pure
-  [34] Src [_compile_manifest]: _compile_manifest → _scheme_from_uri
+  [34] Src [close]: close
       PURITY: 100% pure
-  [35] Src [_package_id]: _package_id
+  [35] Src [__exit__]: __exit__
       PURITY: 100% pure
-  [36] Src [_capabilities]: _capabilities
+  [36] Src [__init__]: __init__
       PURITY: 100% pure
-  [37] Src [_scheme]: _scheme → _scheme_from_uri
+  [37] Src [is_remote_source]: is_remote_source
       PURITY: 100% pure
-  [38] Src [_handler_blocks]: _handler_blocks
+  [38] Src [resolve]: resolve
       PURITY: 100% pure
-  [39] Src [_load_yaml_blocks]: _load_yaml_blocks
+  [39] Src [fetch]: fetch
       PURITY: 100% pure
-  [40] Src [_handler_id_from_ref]: _handler_id_from_ref
+  [40] Src [_result]: _result
       PURITY: 100% pure
-  [41] Src [_ensure_importable]: _ensure_importable
+  [41] Src [_cache_dir]: _cache_dir
       PURITY: 100% pure
-  [42] Src [call_http]: call_http
+  [42] Src [_fetch_http]: _fetch_http
       PURITY: 100% pure
-  [43] Src [__init__]: __init__
+  [43] Src [_fetch_github_uri]: _fetch_github_uri
       PURITY: 100% pure
-  [44] Src [parse_packs]: parse_packs
+  [44] Src [_fetch_github_raw]: _fetch_github_raw
       PURITY: 100% pure
-  [45] Src [parse_markpacts]: parse_markpacts
+  [45] Src [_fetch_git]: _fetch_git
       PURITY: 100% pure
-  [46] Src [resolve_package_name]: resolve_package_name
+  [46] Src [_fetch_zip]: _fetch_zip
       PURITY: 100% pure
-  [47] Src [_is_markpact_path]: _is_markpact_path
+  [47] Src [move_absolute]: move_absolute
       PURITY: 100% pure
-  [48] Src [_is_manifest_path]: _is_manifest_path
+  [48] Src [__init__]: __init__
       PURITY: 100% pure
-  [49] Src [create_registry]: create_registry
+  [49] Src [_load]: _load
       PURITY: 100% pure
-  [50] Src [capabilities]: capabilities
+  [50] Src [_save]: _save
       PURITY: 100% pure
 
 LAYERS:
-  scripts/                        CC̄=7.4    ←in:0  →out:0
-  │ !! run_test_sessions         1002L  0C   33m  CC=30     ←0
+  scripts/                        CC̄=7.5    ←in:0  →out:0
+  │ !! run_test_sessions         1031L  0C   33m  CC=30     ←0
   │ !! session_report             509L  3C   13m  CC=34     ←0
+  │ validate-all-markpacts.sh    40L  0C    0m  CC=0.0    ←0
   │ test-goal.sh                11L  0C    0m  CC=0.0    ←0
   │
-  src/                            CC̄=4.2    ←in:0  →out:0
-  │ !! markpact_manager           408L  4C   20m  CC=28     ←0
+  src/                            CC̄=4.8    ←in:0  →out:0
+  │ !! markpact_manager           579L  4C   25m  CC=28     ←0
   │ source_manager             224L  2C   11m  CC=11     ←0
   │ !! cli                        176L  0C    6m  CC=18     ←0
   │ !! pack_manager                97L  1C   12m  CC=15     ←1
@@ -155,27 +157,64 @@ LAYERS:
   │ __init__                     3L  0C    0m  CC=0.0    ←0
   │ __init__                     0L  0C    0m  CC=0.0    ←0
   │
+  urisys-automation-lab/          CC̄=4.2    ←in:0  →out:0  ×DUP
+  │ !! automation_lab_server      243L  1C    9m  CC=23     ←0
+  │ !! flow_runner                221L  0C    9m  CC=17     ←1
+  │ runtime                    164L  3C   11m  CC=8      ←1  ×DUP
+  │ app.js                     131L  0C   17m  CC=2      ←0
+  │ !! handlers                    81L  0C    4m  CC=15     ←0
+  │ docker-compose.lab.yml      66L  0C    0m  CC=0.0    ←0
+  │ handlers                    57L  0C    4m  CC=5      ←0
+  │ 10_full_maintenance_rdp.uri.flow.yaml    37L  0C    0m  CC=0.0    ←0
+  │ handlers                    35L  0C    3m  CC=4      ←0
+  │ Dockerfile                  34L  0C    0m  CC=0.0    ←0
+  │ local-rdp.routes.yaml       29L  0C    0m  CC=0.0    ←0
+  │ validate-flows.sh           28L  0C    0m  CC=0.0    ←0
+  │ routes                      23L  0C    1m  CC=1      ←0
+  │ 07_edit_config_nano_tui.uri.flow.yaml    22L  0C    0m  CC=0.0    ←0
+  │ docker-up.sh                21L  0C    0m  CC=0.0    ←0
+  │ docker-smoke.sh             20L  0C    0m  CC=0.0    ←0
+  │ 09_webrtc_video_chat_rdp.uri.flow.yaml    19L  0C    0m  CC=0.0    ←0
+  │ entrypoint.sh               18L  0C    0m  CC=0.0    ←0
+  │ 05_fill_form_gui.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
+  │ 08_voice_command_to_kvm.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
+  │ 06_terminal_htop_tui.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
+  │ routes                      17L  0C    1m  CC=1      ←0
+  │ routes                      17L  0C    1m  CC=1      ←0
+  │ 02_update_system_tui.uri.flow.yaml    15L  0C    0m  CC=0.0    ←0
+  │ run-lab.sh                  13L  0C    0m  CC=0.0    ←0
+  │ 04_browser_download_file.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
+  │ 01_install_browser.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
+  │ 03_open_browser_gui.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
+  │ docker-logs.sh               6L  0C    0m  CC=0.0    ←0
+  │ docker-down.sh               6L  0C    0m  CC=0.0    ←0
+  │ static_server                6L  0C    0m  CC=0.0    ←0
+  │
   urirdp-docker/                  CC̄=3.9    ←in:0  →out:0  ×DUP
-  │ runtime                    244L  3C   14m  CC=14     ←4  ×DUP
+  │ runtime                    255L  3C   15m  CC=14     ←0  ×DUP
   │ !! handlers                   196L  0C   12m  CC=18     ←0
   │ handlers                   133L  0C    5m  CC=10     ←0
-  │ env                        123L  0C    6m  CC=11     ←7
+  │ env                        125L  0C    6m  CC=11     ←0
+  │ handlers                   124L  0C    6m  CC=14     ←0
   │ bootstrap-rdp-session.sh   111L  0C    7m  CC=0.0    ←0
-  │ cli                         92L  0C    2m  CC=8      ←0
+  │ cli                         98L  0C    2m  CC=10     ←0
   │ handlers                    89L  0C    5m  CC=7      ←0
   │ handlers                    79L  0C    5m  CC=9      ←0
   │ handlers                    72L  0C    7m  CC=11     ←0
   │ display                     63L  0C    6m  CC=7      ←6
   │ test-real-docker.sh         63L  0C    1m  CC=0.0    ←0
-  │ handlers                    53L  0C    2m  CC=14     ←0
+  │ !! handlers                    57L  0C    2m  CC=16     ←0
   │ pyproject.toml              50L  0C    0m  CC=0.0    ←0
-  │ docker-compose.rdp-e2e.yml    39L  0C    0m  CC=0.0    ←0
-  │ rdp-kvm-profile.real.json    38L  0C    0m  CC=0.0    ←0
+  │ routes                      45L  0C    1m  CC=3      ←0
+  │ docker-compose.rdp-e2e.yml    41L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                  40L  0C    0m  CC=0.0    ←0
+  │ rdp-kvm-profile.real.json    39L  0C    0m  CC=0.0    ←0
+  │ routes                      35L  0C    1m  CC=3      ←0
   │ supervisord.conf            35L  0C    0m  CC=0.0    ←0
-  │ Dockerfile                  33L  0C    0m  CC=0.0    ←0
-  │ rdp-kvm-profile.json        26L  0C    0m  CC=0.0    ←0
-  │ entrypoint.sh               23L  0C    0m  CC=0.0    ←0
-  │ docker-compose.yml          21L  0C    0m  CC=0.0    ←0
+  │ env-policy.yaml             31L  0C    0m  CC=0.0    ←0
+  │ rdp-kvm-profile.json        30L  0C    0m  CC=0.0    ←0
+  │ entrypoint.sh               25L  0C    0m  CC=0.0    ←0
+  │ docker-compose.yml          24L  0C    0m  CC=0.0    ←0
   │ Makefile                    20L  0C    0m  CC=0.0    ←0
   │ test-docker.sh              17L  0C    0m  CC=0.0    ←0
   │ rdp-kvm-smoke.uri.flow.yaml    17L  0C    0m  CC=0.0    ←0
@@ -186,6 +225,8 @@ LAYERS:
   │ routes                       9L  0C    1m  CC=1      ←0
   │ test-local.sh                8L  0C    0m  CC=0.0    ←0
   │ routes                       7L  0C    1m  CC=1      ←0
+  │ __init__                     7L  0C    0m  CC=0.0    ←0
+  │ __init__                     7L  0C    0m  CC=0.0    ←0
   │ startwm.sh                   6L  0C    0m  CC=0.0    ←0
   │ routes                       5L  0C    1m  CC=1      ←0
   │ __init__                     4L  0C    1m  CC=1      ←0
@@ -196,7 +237,7 @@ LAYERS:
   urikvm-docker/                  CC̄=3.9    ←in:0  →out:0  ×DUP
   │ runtime                    228L  3C   14m  CC=10     ←0  ×DUP
   │ !! handlers                   201L  0C   13m  CC=22     ←0
-  │ env                        115L  0C    6m  CC=11     ←0
+  │ env                        115L  0C    6m  CC=11     ←7
   │ handlers                   115L  0C   10m  CC=8      ←0
   │ handlers                   103L  0C    6m  CC=8      ←0
   │ real_pipeline               95L  0C    4m  CC=14     ←0
@@ -217,7 +258,7 @@ LAYERS:
   │ routes                       2L  0C    1m  CC=1      ←0
   │
   uribrowser-docker/              CC̄=3.3    ←in:0  →out:0  ×DUP
-  │ runtime                    222L  3C   14m  CC=10     ←0  ×DUP
+  │ runtime                    222L  3C   14m  CC=10     ←4  ×DUP
   │ handlers                    87L  0C    6m  CC=11     ←0
   │ pyproject.toml              50L  0C    0m  CC=0.0    ←0
   │ cli                         49L  0C    2m  CC=7      ←0
@@ -233,9 +274,9 @@ LAYERS:
   │ __init__                     1L  0C    0m  CC=0.0    ←0
   │
   urisys-node/                    CC̄=3.3    ←in:0  →out:0  ×DUP
+  │ !! artifact_resolver          225L  1C   15m  CC=15     ←1
+  │ !! cli                        170L  0C    1m  CC=16     ←0
   │ runtime                    165L  3C   11m  CC=8      ←0  ×DUP
-  │ cli                        136L  0C    1m  CC=14     ←0
-  │ !! artifact_resolver          120L  0C    7m  CC=15     ←1
   │ identity                   110L  0C   12m  CC=4      ←3
   │ serve                      107L  0C    4m  CC=11     ←0
   │ handlers                   102L  0C    9m  CC=7      ←0
@@ -253,38 +294,6 @@ LAYERS:
   │ slave-kvm-demo.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
   │ screen-capture-mss.uri.flow.yaml    12L  0C    0m  CC=0.0    ←0
   │ nodes.registry.json         10L  0C    0m  CC=0.0    ←0
-  │
-  urisys-automation-lab/          CC̄=3.2    ←in:0  →out:0  ×DUP
-  │ !! automation_lab_server      213L  1C    9m  CC=18     ←0
-  │ runtime                    153L  3C   10m  CC=8      ←0  ×DUP
-  │ app.js                     131L  0C   17m  CC=2      ←0
-  │ !! handlers                    81L  0C    4m  CC=15     ←0
-  │ docker-compose.lab.yml      65L  0C    0m  CC=0.0    ←0
-  │ handlers                    57L  0C    4m  CC=5      ←0
-  │ 10_full_maintenance_rdp.uri.flow.yaml    37L  0C    0m  CC=0.0    ←0
-  │ handlers                    35L  0C    3m  CC=4      ←0
-  │ Dockerfile                  33L  0C    0m  CC=0.0    ←0
-  │ local-rdp.routes.yaml       29L  0C    0m  CC=0.0    ←0
-  │ validate-flows.sh           28L  0C    0m  CC=0.0    ←0
-  │ routes                      23L  0C    1m  CC=1      ←0
-  │ docker-up.sh                21L  0C    0m  CC=0.0    ←0
-  │ docker-smoke.sh             20L  0C    0m  CC=0.0    ←0
-  │ 09_webrtc_video_chat_rdp.uri.flow.yaml    19L  0C    0m  CC=0.0    ←0
-  │ entrypoint.sh               18L  0C    0m  CC=0.0    ←0
-  │ 05_fill_form_gui.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
-  │ 08_voice_command_to_kvm.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
-  │ 06_terminal_htop_tui.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
-  │ 07_edit_config_nano_tui.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
-  │ routes                      17L  0C    1m  CC=1      ←0
-  │ routes                      17L  0C    1m  CC=1      ←0
-  │ 02_update_system_tui.uri.flow.yaml    15L  0C    0m  CC=0.0    ←0
-  │ run-lab.sh                  13L  0C    0m  CC=0.0    ←0
-  │ 04_browser_download_file.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
-  │ 01_install_browser.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
-  │ 03_open_browser_gui.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
-  │ docker-logs.sh               6L  0C    0m  CC=0.0    ←0
-  │ docker-down.sh               6L  0C    0m  CC=0.0    ←0
-  │ static_server                6L  0C    0m  CC=0.0    ←0
   │
   urienv-docker/                  CC̄=3.2    ←in:0  →out:0
   │ !! registry                   202L  1C    9m  CC=21     ←0
@@ -361,20 +370,6 @@ LAYERS:
   │ server-curl.sh               8L  0C    0m  CC=0.0    ←0
   │ call-uri.sh                  6L  0C    0m  CC=0.0    ←0
   │
-  local-lab/                      CC̄=0.0    ←in:0  →out:0
-  │ 02-build-publish.sh         94L  0C    0m  CC=0.0    ←0
-  │ docker-compose.yml          81L  0C    0m  CC=0.0    ←0
-  │ 00-init-nexus.sh            68L  0C    3m  CC=0.0    ←0
-  │ 04-smoke.sh                 35L  0C    0m  CC=0.0    ←0
-  │ run-all.sh                  28L  0C    0m  CC=0.0    ←0
-  │ artifact-index.json         23L  0C    0m  CC=0.0    ←0
-  │ 01-validate-markpact.sh     22L  0C    0m  CC=0.0    ←0
-  │ install-urisys.sh           17L  0C    0m  CC=0.0    ←0
-  │ 03-resolve-run.sh           16L  0C    0m  CC=0.0    ←0
-  │ node-profile.local.yaml     11L  0C    0m  CC=0.0    ←0
-  │ Dockerfile                  11L  0C    0m  CC=0.0    ←0
-  │ Dockerfile                  11L  0C    0m  CC=0.0    ←0
-  │
   ./                              CC̄=0.0    ←in:0  →out:0
   │ !! planfile.yaml             1319L  0C    0m  CC=0.0    ←0
   │ !! goal.yaml                  512L  0C    0m  CC=0.0    ←0
@@ -386,6 +381,21 @@ LAYERS:
   schemas/                        CC̄=0.0    ←in:0  →out:0
   │ uripack-markpact.schema.json    47L  0C    0m  CC=0.0    ←0
   │
+  local-lab/                      CC̄=0.0    ←in:0  →out:0
+  │ 02-build-publish.sh        129L  0C    0m  CC=0.0    ←0
+  │ docker-compose.yml          72L  0C    0m  CC=0.0    ←0
+  │ 06-register-release.sh      62L  0C    0m  CC=0.0    ←0
+  │ 04-smoke.sh                 35L  0C    0m  CC=0.0    ←0
+  │ run-all.sh                  25L  0C    0m  CC=0.0    ←0
+  │ artifact-index.json         23L  0C    0m  CC=0.0    ←0
+  │ 05-resolve-from-url.sh      23L  0C    0m  CC=0.0    ←0
+  │ 01-validate-markpact.sh     22L  0C    0m  CC=0.0    ←0
+  │ install-urisys.sh           17L  0C    0m  CC=0.0    ←0
+  │ 03-resolve-run.sh           16L  0C    0m  CC=0.0    ←0
+  │ release-manifest.json       15L  0C    0m  CC=0.0    ←0
+  │ node-profile.local.yaml     11L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                  11L  0C    0m  CC=0.0    ←0
+  │
   testql-scenarios/               CC̄=0.0    ←in:0  →out:0
   │ generated-api-smoke.testql.toon.yaml    39L  0C    0m  CC=0.0    ←0
   │ generated-from-pytests.testql.toon.yaml    24L  0C    0m  CC=0.0    ←0
@@ -394,25 +404,29 @@ LAYERS:
   flows/                          CC̄=0.0    ←in:0  →out:0
   │ device-maintenance.uri.flow.yaml    17L  0C    0m  CC=0.0    ←0
   │
+  releases/                       CC̄=0.0    ←in:0  →out:0
+  │ artifact-index.json         23L  0C    0m  CC=0.0    ←0
+  │
   ── zero ──
      src/urisys/controllers/__init__.py        0L
 
 COUPLING:
-                                      urirdp-docker.packages    uristepper-docker.packages        urikvm-docker.packages        urienv-docker.packages          urisys-node.packages    uribrowser-docker.packages                    src.urisys          urienv-docker.vendor         urikvm-docker.scripts  urisys-automation-lab.server
-        urirdp-docker.packages                            ──                             2                           ←10                             2                            ←1                            ←1                                                                                                                          hub
-    uristepper-docker.packages                            ←2                            ──                            ←2                            ←3                            ←4                            ←2                                                                                        ←1                            ←1  hub
-        urikvm-docker.packages                            10                             2                            ──                             2                                                                                                                                                                                      !! fan-out
-        urienv-docker.packages                             1                             3                            ←2                            ──                                                                                         1                                                                                          
-          urisys-node.packages                             1                             4                                                                                        ──                                                                                                                                                      
-    uribrowser-docker.packages                             1                             2                                                                                                                      ──                                                                                                                        
-                    src.urisys                                                                                                                      ←1                                                                                        ──                             1                                                            
-          urienv-docker.vendor                                                                                                                                                                                                                ←1                            ──                                                            
-         urikvm-docker.scripts                                                           1                                                                                                                                                                                                                ──                              
-  urisys-automation-lab.server                                                           1                                                                                                                                                                                                                                              ──
+                                      uristepper-docker.packages          urikvm-docker.packages          urirdp-docker.packages          urienv-docker.packages      uribrowser-docker.packages            urisys-node.packages                      src.urisys            urienv-docker.vendor           urikvm-docker.scripts  urisys-automation-lab.packages    urisys-automation-lab.server
+      uristepper-docker.packages                              ──                              ←2                              ←2                              ←3                              ←2                              ←4                                                                                              ←1                                                              ←1  hub
+          urikvm-docker.packages                               2                              ──                              ←8                               2                               1                              ←1                                                                                                                                                                  hub
+          urirdp-docker.packages                               2                               8                              ──                               2                               1                                                                                                                                                               1                                  !! fan-out
+          urienv-docker.packages                               3                              ←2                              ←2                              ──                               1                                                               1                                                                                                                                
+      uribrowser-docker.packages                               2                              ←1                              ←1                              ←1                              ──                                                                                                                                                                                                
+            urisys-node.packages                               4                               1                                                                                                                              ──                                                                                                                                                                
+                      src.urisys                                                                                                                              ←1                                                                                              ──                               1                                                                                                
+            urienv-docker.vendor                                                                                                                                                                                                                              ←1                              ──                                                                                                
+           urikvm-docker.scripts                               1                                                                                                                                                                                                                                                              ──                                                                
+  urisys-automation-lab.packages                                                                                              ←1                                                                                                                                                                                                                              ──                                
+    urisys-automation-lab.server                               1                                                                                                                                                                                                                                                                                                                              ──
   CYCLES: none
+  HUB: urikvm-docker.packages/ (fan-in=9)
   HUB: uristepper-docker.packages/ (fan-in=15)
-  HUB: urirdp-docker.packages/ (fan-in=13)
-  SMELL: urikvm-docker.packages/ fan-out=14 → split needed
+  SMELL: urirdp-docker.packages/ fan-out=14 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

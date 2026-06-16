@@ -1,27 +1,30 @@
 flowchart TD
-%% generated in 0.02s
-    src__urisys["src.urisys<br/>76 funcs"]
+%% generated in 0.01s
+    src__urisys["src.urisys<br/>81 funcs"]
     uribrowser_docker__packages["uribrowser-docker.packages<br/>23 funcs"]
     urienv_docker__packages["urienv-docker.packages<br/>29 funcs"]
     urienv_docker__vendor["urienv-docker.vendor<br/>49 funcs"]
     urikvm_docker__packages["urikvm-docker.packages<br/>64 funcs"]
     urikvm_docker__scripts["urikvm-docker.scripts<br/>5 funcs"]
-    urirdp_docker__packages["urirdp-docker.packages<br/>72 funcs"]
+    urirdp_docker__packages["urirdp-docker.packages<br/>81 funcs"]
     uristepper_docker__packages["uristepper-docker.packages<br/>63 funcs"]
-    urisys_automation_lab__server["urisys-automation-lab.server<br/>9 funcs"]
-    urisys_node__packages["urisys-node.packages<br/>59 funcs"]
-    urikvm_docker__packages ==>|10| urirdp_docker__packages
+    urisys_automation_lab__packages["urisys-automation-lab.packages<br/>25 funcs"]
+    urisys_automation_lab__server["urisys-automation-lab.server<br/>18 funcs"]
+    urisys_node__packages["urisys-node.packages<br/>67 funcs"]
+    urirdp_docker__packages ==>|8| urikvm_docker__packages
     urisys_node__packages ==>|4| uristepper_docker__packages
     urienv_docker__packages -->|3| uristepper_docker__packages
-    urirdp_docker__packages -->|2| uristepper_docker__packages
-    urirdp_docker__packages -->|2| urienv_docker__packages
     uribrowser_docker__packages -->|2| uristepper_docker__packages
     urikvm_docker__packages -->|2| uristepper_docker__packages
     urikvm_docker__packages -->|2| urienv_docker__packages
+    urirdp_docker__packages -->|2| uristepper_docker__packages
+    urirdp_docker__packages -->|2| urienv_docker__packages
     src__urisys -->|1| urienv_docker__vendor
-    uribrowser_docker__packages -->|1| urirdp_docker__packages
+    urikvm_docker__packages -->|1| uribrowser_docker__packages
     urikvm_docker__scripts -->|1| uristepper_docker__packages
-    urisys_automation_lab__server -->|1| uristepper_docker__packages
     urienv_docker__packages -->|1| src__urisys
-    urienv_docker__packages -->|1| urirdp_docker__packages
-    urisys_node__packages -->|1| urirdp_docker__packages
+    urienv_docker__packages -->|1| uribrowser_docker__packages
+    urisys_node__packages -->|1| urikvm_docker__packages
+    urirdp_docker__packages -->|1| uribrowser_docker__packages
+    urisys_automation_lab__server -->|1| uristepper_docker__packages
+    urirdp_docker__packages -->|1| urisys_automation_lab__packages
