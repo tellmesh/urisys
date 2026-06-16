@@ -4,10 +4,10 @@ flow:
 
 defaults:
   approved: true
-  dry_run: true
+  dry_run: false
 
 do:
-  - shell://apt-get:
-      args: ["install", "-y", "chromium-browser"]
+  - shell://sudo:
+      args: ["apt-get", "install", "-y", "chromium"]
   - shell://which:
-      args: ["chromium-browser"]
+      args: ["chromium"]

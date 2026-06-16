@@ -2,6 +2,27 @@
 
 Scheme: `stt://`
 
+```yaml markpact:contract
+apiVersion: urisys.io/v1
+kind: UriContract
+metadata:
+  id: uristt.contract
+  version: 0.1.0
+scheme: stt
+commands:
+  - id: stt.session.start
+    pattern: stt://local/session/{session}/command/start
+    side_effects: true
+    requires_approval: true
+  - id: stt.audio.transcribe
+    pattern: stt://local/audio/command/transcribe
+    side_effects: true
+    requires_approval: true
+queries:
+  - id: stt.session.transcript
+    pattern: stt://local/session/{session}/query/transcript
+```
+
 ## Routes
 
 ```txt

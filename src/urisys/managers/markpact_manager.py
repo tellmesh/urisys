@@ -126,10 +126,53 @@ class MarkpactManager:
             raise MarkpactError(f"{path}: markpact:pack block must contain a YAML mapping.")
         return data
 
+    def load_pack_block(self, path: str | Path) -> dict[str, Any]:
+        blocks = self.read_blocks(path)
+        pack_blocks = self._yaml_blocks(blocks, "pack")
+        if len(pack_blocks) != 1:
+            raise MarkpactError(f"{path}: expected exactly one ```yaml markpact:pack``` block, found {len(pack_blocks)}.")
+        data = yaml.safe_load(pack_blocks[0].content) or {}
+        if not isinstance(data, dict):
+            raise MarkpactError(f"{path}: markpact:pack block must contain a YAML mapping.")
+        return data
+
     def validate(self, path: str | Path) -> dict[str, Any]:
         source_path = Path(path)
         blocks = self.read_blocks(source_path)
-        pack = self.load_pack_block(source_path)
+        pack_blocks = self._yaml_blocks(blocks, "pack")
+        contract_blocks = self._yaml_blocks(blocks, "contract")
+        bundle_blocks = self._yaml_blocks(blocks, "bundle")
+        impl_blocks = self._yaml_blocks(blocks, "implementation")
+
+        kinds = [
+            name
+            for name, items in (
+                ("pack", pack_blocks),
+                ("contract", contract_blocks),
+                ("bundle", bundle_blocks),
+                ("implementation", impl_blocks),
+            )
+            if len(items) == 1
+        ]
+        if len(kinds) > 1:
+            raise MarkpactError(f"{path}: expected one markpact kind per file, found: {', '.join(kinds)}.")
+
+        if len(pack_blocks) == 1:
+            return self._validate_pack(source_path, blocks, yaml.safe_load(pack_blocks[0].content) or {})
+        if len(contract_blocks) == 1:
+            return self._validate_contract(source_path, yaml.safe_load(contract_blocks[0].content) or {})
+        if len(bundle_blocks) == 1:
+            return self._validate_bundle(source_path, yaml.safe_load(bundle_blocks[0].content) or {})
+        if len(impl_blocks) == 1:
+            return self._validate_implementation(source_path, yaml.safe_load(impl_blocks[0].content) or {})
+
+        raise MarkpactError(
+            f"{path}: expected exactly one ```yaml markpact:{{pack|contract|bundle|implementation}}``` block."
+        )
+
+    def _validate_pack(self, source_path: Path, blocks: list[MarkpactBlock], pack: dict[str, Any]) -> dict[str, Any]:
+        if not isinstance(pack, dict):
+            raise MarkpactError(f"{source_path}: markpact:pack block must contain a YAML mapping.")
         package_id = self._package_id(pack, source_path)
         capabilities = self._capabilities(pack)
         handler_blocks = self._handler_blocks(blocks)
@@ -144,10 +187,11 @@ class MarkpactManager:
         if missing_handlers:
             warnings.append(f"Missing handler blocks: {', '.join(missing_handlers)}")
         if not capabilities:
-            raise MarkpactError(f"{path}: no capabilities/uri_patterns defined.")
+            raise MarkpactError(f"{source_path}: no capabilities/uri_patterns defined.")
         scheme = self._scheme(pack, capabilities)
         return {
             "ok": not missing_handlers,
+            "kind": "pack",
             "path": str(source_path),
             "package_id": package_id,
             "scheme": scheme,
@@ -156,6 +200,133 @@ class MarkpactManager:
             "source_hash": self.source_hash(source_path),
             "warnings": warnings,
         }
+
+    def _validate_contract(self, source_path: Path, data: dict[str, Any]) -> dict[str, Any]:
+        if not isinstance(data, dict):
+            raise MarkpactError(f"{source_path}: markpact:contract block must contain a YAML mapping.")
+        metadata = data.get("metadata") or {}
+        contract_id = str(metadata.get("id") or "").strip()
+        if not contract_id:
+            raise MarkpactError(f"{source_path}: contract metadata.id is required.")
+        kind = str(data.get("kind") or "UriContract")
+        if kind != "UriContract":
+            raise MarkpactError(f"{source_path}: expected kind UriContract, got {kind!r}.")
+        scheme = str(data.get("scheme") or "").strip()
+        if not scheme:
+            raise MarkpactError(f"{source_path}: contract scheme is required.")
+
+        routes: list[dict[str, Any]] = []
+        warnings: list[str] = []
+        for section in ("queries", "commands"):
+            items = data.get(section) or []
+            if not isinstance(items, list):
+                raise MarkpactError(f"{source_path}: contract {section} must be a list.")
+            for item in items:
+                if not isinstance(item, dict):
+                    raise MarkpactError(f"{source_path}: invalid entry in contract {section}.")
+                item_id = str(item.get("id") or "").strip()
+                pattern = str(item.get("pattern") or "").strip()
+                if not item_id or not pattern:
+                    raise MarkpactError(f"{source_path}: contract {section} entries require id and pattern.")
+                item_scheme = _scheme_from_uri(pattern)
+                if item_scheme != scheme:
+                    raise MarkpactError(
+                        f"{source_path}: pattern {pattern!r} scheme {item_scheme!r} != contract scheme {scheme!r}."
+                    )
+                routes.append(item)
+
+        resources = data.get("resources") or []
+        if not routes and not resources:
+            raise MarkpactError(f"{source_path}: contract must define queries, commands, or resources.")
+
+        return {
+            "ok": True,
+            "kind": "contract",
+            "path": str(source_path),
+            "contract_id": contract_id,
+            "scheme": scheme,
+            "capabilities": len(routes),
+            "resources": len(resources) if isinstance(resources, list) else 0,
+            "source_hash": self.source_hash(source_path),
+            "warnings": warnings,
+        }
+
+    def _validate_bundle(self, source_path: Path, data: dict[str, Any]) -> dict[str, Any]:
+        if not isinstance(data, dict):
+            raise MarkpactError(f"{source_path}: markpact:bundle block must contain a YAML mapping.")
+        metadata = data.get("metadata") or {}
+        bundle_id = str(metadata.get("id") or "").strip()
+        if not bundle_id:
+            raise MarkpactError(f"{source_path}: bundle metadata.id is required.")
+        kind = str(data.get("kind") or "UriBundle")
+        if kind != "UriBundle":
+            raise MarkpactError(f"{source_path}: expected kind UriBundle, got {kind!r}.")
+
+        imports = data.get("imports") or {}
+        warnings: list[str] = []
+        missing: list[str] = []
+        if isinstance(imports, dict):
+            for section in ("contracts", "implementations"):
+                for rel in imports.get(section) or []:
+                    ref = source_path.parent / str(rel)
+                    if not ref.is_file():
+                        missing.append(str(rel))
+        if missing:
+            warnings.append(f"Missing import files: {', '.join(missing)}")
+
+        return {
+            "ok": not missing,
+            "kind": "bundle",
+            "path": str(source_path),
+            "bundle_id": bundle_id,
+            "imports": imports,
+            "source_hash": self.source_hash(source_path),
+            "warnings": warnings,
+        }
+
+    def _validate_implementation(self, source_path: Path, data: dict[str, Any]) -> dict[str, Any]:
+        if not isinstance(data, dict):
+            raise MarkpactError(f"{source_path}: markpact:implementation block must contain a YAML mapping.")
+        metadata = data.get("metadata") or {}
+        impl_id = str(metadata.get("id") or "").strip()
+        if not impl_id:
+            raise MarkpactError(f"{source_path}: implementation metadata.id is required.")
+        kind = str(data.get("kind") or "UriImplementation")
+        if kind != "UriImplementation":
+            raise MarkpactError(f"{source_path}: expected kind UriImplementation, got {kind!r}.")
+
+        implements = data.get("implements") or {}
+        contract_ref = ""
+        if isinstance(implements, dict):
+            contract_ref = str(implements.get("contract") or "").strip()
+        if not contract_ref:
+            raise MarkpactError(f"{source_path}: implementation implements.contract is required.")
+
+        capabilities = data.get("capabilities") or []
+        if not isinstance(capabilities, list) or not capabilities:
+            raise MarkpactError(f"{source_path}: implementation must declare capabilities.")
+
+        warnings: list[str] = []
+        for item in capabilities:
+            if not isinstance(item, dict):
+                raise MarkpactError(f"{source_path}: invalid implementation capability entry.")
+            handler = str(item.get("handler") or "").strip()
+            if not handler:
+                warnings.append("Capability without handler reference.")
+
+        return {
+            "ok": True,
+            "kind": "implementation",
+            "path": str(source_path),
+            "implementation_id": impl_id,
+            "implements": contract_ref,
+            "capabilities": len(capabilities),
+            "source_hash": self.source_hash(source_path),
+            "warnings": warnings,
+        }
+
+    def _yaml_blocks(self, blocks: list[MarkpactBlock], kind: str) -> list[MarkpactBlock]:
+        return [b for b in blocks if b.kind == kind and b.lang in {"yaml", "yml"}]
 
     def compile(self, path: str | Path, *, out_dir: str | Path | None = None, force: bool = False) -> CompiledMarkpact:
         source_path = Path(path)

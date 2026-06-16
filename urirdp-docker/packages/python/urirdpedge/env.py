@@ -45,7 +45,9 @@ def _env_policy_candidates() -> list[Path]:
     root = Path(__file__).resolve().parents[4]
     candidates.extend(
         [
+            root / "config" / "env-policy.yaml",
             root / "urienv-docker/docker/config/env-policy.yaml",
+            Path("/opt/urirdp/config/env-policy.yaml"),
             Path("/etc/urisys/env-policy.yaml"),
         ]
     )

@@ -13,8 +13,33 @@ SYSTEMD_MARKPACT = ROOT / "markpacts" / "packs" / "urisystemd.markpact.md"
 def test_markpact_validate():
     info = MarkpactManager().validate(BROWSER_MARKPACT)
     assert info["ok"] is True
+    assert info["kind"] == "pack"
     assert info["scheme"] == "browser"
     assert info["capabilities"] >= 2
+
+
+def test_markpact_validate_contract():
+    path = ROOT / "urirdp-docker" / "markpacts" / "urikvm.contract.markpact.md"
+    info = MarkpactManager().validate(path)
+    assert info["ok"] is True
+    assert info["kind"] == "contract"
+    assert info["scheme"] == "kvm"
+    assert info["capabilities"] >= 2
+
+
+def test_markpact_validate_implementation():
+    path = ROOT / "urienv-docker" / "markpacts" / "urienv-python.markpact.md"
+    info = MarkpactManager().validate(path)
+    assert info["ok"] is True
+    assert info["kind"] == "implementation"
+    assert info["implements"] == "urienv.contract"
+
+
+def test_markpact_validate_bundle():
+    path = ROOT / "urirdp-docker" / "markpacts" / "urikvm-rdp.contract.markpact.md"
+    info = MarkpactManager().validate(path)
+    assert info["ok"] is True
+    assert info["kind"] == "bundle"
 
 
 def test_markpact_compile_and_call(tmp_path):

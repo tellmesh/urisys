@@ -115,6 +115,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.8] - 2026-06-16
+
+### Docs
+- Update README.md
+- Update urisys-automation-lab/markpacts/urichat.contract.markpact.md
+- Update urisys-automation-lab/markpacts/uristt.contract.markpact.md
+- Update urisys-automation-lab/markpacts/uriwebrtc.contract.markpact.md
+- Update urisys-node/markpacts/uriscreen.contract.markpact.md
+- Update urisys-node/markpacts/urisys-node.contract.markpact.md
+
+### Test
+- Update tests/test_markpact.py
+
+### Other
+- Update data/events.jsonl
+- Update scripts/run_test_sessions.py
+- Update scripts/validate-all-markpacts.sh
+- Update urirdp-docker/Dockerfile
+- Update urirdp-docker/config/env-policy.yaml
+- Update urirdp-docker/config/rdp-kvm-profile.json
+- Update urirdp-docker/config/rdp-kvm-profile.real.json
+- Update urirdp-docker/docker-compose.rdp-e2e.yml
+- Update urirdp-docker/docker-compose.yml
+- Update urirdp-docker/docker/entrypoint.sh
+- ... and 27 more files
+
 ## [0.1.7] - 2026-06-16
 
 ### Docs

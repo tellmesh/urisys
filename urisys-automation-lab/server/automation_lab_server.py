@@ -84,8 +84,15 @@ def forward_uri_call(base_url: str, uri: str, payload: dict[str, Any], context: 
         headers={"Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=60) as resp:
-        return json.loads(resp.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            return json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        raw = exc.read().decode("utf-8")
+        try:
+            return json.loads(raw)
+        except json.JSONDecodeError:
+            return {"ok": False, "uri": uri, "error": raw or str(exc)}
 
 
 class LabHandler(BaseHTTPRequestHandler):
@@ -178,6 +185,29 @@ class LabHandler(BaseHTTPRequestHandler):
                 {"approved": True, **(req.get("context") or {})},
             )
             return self._json(200 if result.get("ok") else 400, result)
+
+        if self.path == "/uri/flow":
+            from flow_runner import run_flow_file
+
+            req = self._read_json()
+            flow_path = req.get("path") or req.get("flow")
+            if not flow_path:
+                return self._json(400, {"ok": False, "error": "path or flow required"})
+            context = req.get("context") or {}
+            context.setdefault("approved", True)
+            context.setdefault("urisys_base_url", self.forward_url)
+
+            def _call(uri: str, payload: dict[str, Any], ctx: dict[str, Any]) -> dict[str, Any]:
+                scheme = uri.split("://", 1)[0] if "://" in uri else ""
+                if scheme in self.forward_schemes:
+                    return forward_uri_call(self.forward_url, uri, payload, ctx)
+                return self.runtime.call(uri, payload, ctx)
+
+            try:
+                result = run_flow_file(flow_path, call_uri=_call, context=context)
+            except Exception as exc:
+                return self._json(400, {"ok": False, "error": str(exc)})
+            return self._json(200, result)
 
         return self._json(404, {"ok": False, "error": "not found"})
 

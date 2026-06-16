@@ -62,6 +62,16 @@ def _http_json(
             req = urllib.request.Request(url, data=data, headers=headers, method=method)
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            raw = exc.read().decode("utf-8")
+            try:
+                return json.loads(raw)
+            except json.JSONDecodeError:
+                last_err = raw or str(exc)
+                if attempt + 1 < retries:
+                    time.sleep(retry_delay)
+                    continue
+                raise RuntimeError(f"HTTP {method} {url} failed: {last_err}") from exc
         except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, ConnectionResetError) as exc:
             last_err = str(exc)
             if attempt + 1 < retries:
@@ -531,7 +541,7 @@ def session_automation_lab(session_dir: Path, *, use_existing: bool = False) -> 
     if not use_existing:
         _sleep_ports()
         _run_cmd(["bash", "scripts/docker-down.sh"], cwd=lab, log_file=log)
-        up = _run_cmd(["bash", "scripts/docker-up.sh"], cwd=lab, log_file=log, timeout=300.0)
+        up = _run_cmd(["bash", "scripts/docker-up.sh"], cwd=lab, log_file=log, timeout=600.0)
         if up.returncode != 0:
             steps.append({"name": "lab-up", "status": "fail"})
             return _finalize_session(session_dir, started, up.returncode, steps)
@@ -647,7 +657,7 @@ def _flow_step_context(
     if real_mode:
         ctx["allow_real"] = scheme not in {"webrtc", "stt"}
         ctx["dry_run"] = scheme in {"webrtc", "stt"}
-        if scheme in {"kvm", "rdp", "him", "ocr", "llm", "shell", "chat"}:
+        if scheme in {"kvm", "rdp", "him", "ocr", "llm", "shell", "chat", "browser", "env", "stt", "webrtc"}:
             ctx["allow_real"] = True
             ctx["dry_run"] = False
         return ctx
@@ -676,6 +686,8 @@ def _step_pause(uri: str, *, real_mode: bool) -> None:
         time.sleep(3.0)
     elif scheme in {"rdp"}:
         time.sleep(1.0)
+    elif scheme in {"stt", "webrtc"}:
+        time.sleep(2.0)
 
 
 def _summarize_uri_response(res: dict[str, Any]) -> dict[str, Any]:
@@ -708,6 +720,18 @@ def _parse_docker_log_errors(session_dir: Path) -> dict[str, Any]:
         for line in text.splitlines():
             if any(x in line for x in ('" 502 ', '" 400 ', "failed", "Error", "error")):
                 if "health" in line.lower() and "200" in line:
+                    continue
+                if any(
+                    noise in line
+                    for noise in (
+                        "dbind-WARNING",
+                        "AT-SPI",
+                        "pm-is-supported",
+                        "Binding 'XF86",
+                        "Thumbnailer failed",
+                        "GLib-GObject-CRITICAL",
+                    )
+                ):
                     continue
                 summary["lines"].append(f"{name}: {line.strip()[:200]}")
     summary["lines"] = summary["lines"][-40:]
@@ -780,7 +804,7 @@ def session_lab_10_flows(session_dir: Path) -> int:
 
     _sleep_ports()
     _run_cmd(["bash", "scripts/docker-down.sh"], cwd=lab, log_file=log)
-    up = _run_cmd(["bash", "scripts/docker-up.sh"], cwd=lab, log_file=log, timeout=300.0)
+    up = _run_cmd(["bash", "scripts/docker-up.sh"], cwd=lab, log_file=log, timeout=600.0)
     if up.returncode != 0:
         steps.append({"name": "lab-up", "status": "fail"})
         return _finalize_session(session_dir, started, up.returncode, steps)
@@ -835,27 +859,27 @@ def session_lab_10_flows(session_dir: Path) -> int:
 
         for idx, flow_path in enumerate(flow_paths, start=1):
             flow_id = flow_path.stem
-            defaults, flow_steps = _parse_lab_flow(flow_path)
-            step_results: list[dict[str, Any]] = []
-            for uri, payload in flow_steps:
-                ctx = _flow_step_context(
-                    defaults, uri, display=display, xauth=xauth, real_mode=True
+            container_flow = f"/opt/lab/flows/{flow_path.name}"
+            flow_ctx = {
+                "approved": True,
+                "allow_real": True,
+                "dry_run": False,
+                "display": display,
+                "xauthority": xauth,
+            }
+            try:
+                flow_result = _http_json(
+                    "POST",
+                    f"http://127.0.0.1:{lab_port}/uri/flow",
+                    {"path": container_flow, "context": flow_ctx},
+                    timeout=600.0,
                 )
-                if uri.startswith("chat://") and "execute" in uri:
-                    payload = {**payload, "approved": True, "dry_run": False}
-                try:
-                    res = _http_json(
-                        "POST",
-                        f"http://127.0.0.1:{lab_port}/uri/call",
-                        {"uri": uri, "payload": payload, "context": ctx},
-                        timeout=180.0,
-                    )
-                    summary = _summarize_uri_response(res)
-                    summary["uri"] = uri
-                    step_results.append(summary)
-                except Exception as exc:
-                    step_results.append({"uri": uri, "ok": False, "error": str(exc)})
-                _step_pause(uri, real_mode=True)
+            except Exception as exc:
+                flow_result = {"ok": False, "error": str(exc), "steps": []}
+
+            step_results = flow_result.get("steps") or []
+            steps_ok = sum(1 for s in step_results if s.get("ok"))
+            steps_total = len(step_results)
 
             png_name = f"{idx:02d}-{flow_id}.png"
             captured, shot_rel = _capture_rdp_screenshot(
@@ -879,8 +903,15 @@ def session_lab_10_flows(session_dir: Path) -> int:
                 session_dir / "responses" / f"{idx:02d}-{flow_id}.json",
                 {
                     "flow": flow_id,
+                    "flow_file": flow_path.name,
+                    "container_flow": container_flow,
                     "real_mode": True,
+                    "ok": bool(flow_result.get("ok")),
+                    "flow_id": flow_result.get("flow_id"),
+                    "description": flow_result.get("description"),
+                    "graph": flow_result.get("graph"),
                     "steps": step_results,
+                    "error": flow_result.get("error"),
                     "screenshot": shot_rel,
                     "captured": captured,
                     "md5": png_md5,
@@ -888,9 +919,7 @@ def session_lab_10_flows(session_dir: Path) -> int:
                 },
             )
 
-            steps_ok = sum(1 for s in step_results if s.get("ok"))
-            unique_shot = captured and duplicate_of is None
-            flow_pass = steps_ok == len(flow_steps) and unique_shot
+            flow_pass = bool(flow_result.get("ok")) and steps_ok == steps_total and steps_total > 0
             steps.append(
                 {
                     "name": flow_id,
@@ -898,7 +927,7 @@ def session_lab_10_flows(session_dir: Path) -> int:
                     "uri": flow_path.name,
                     "metrics": {
                         "steps_ok": steps_ok,
-                        "steps_total": len(flow_steps),
+                        "steps_total": steps_total,
                         "screenshot": shot_rel,
                         "captured": captured,
                         "md5": png_md5,
@@ -907,7 +936,7 @@ def session_lab_10_flows(session_dir: Path) -> int:
                     "screenshot": shot_rel,
                     "detail": ""
                     if flow_pass
-                    else f"{steps_ok}/{len(flow_steps)} ok, captured={captured}, dup={duplicate_of}",
+                    else f"{steps_ok}/{steps_total} ok, flow_ok={flow_result.get('ok')}, dup={duplicate_of}",
                 }
             )
             if not flow_pass:

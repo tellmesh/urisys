@@ -2,6 +2,24 @@
 
 Scheme: `webrtc://`
 
+```yaml markpact:contract
+apiVersion: urisys.io/v1
+kind: UriContract
+metadata:
+  id: uriwebrtc.contract
+  version: 0.1.0
+scheme: webrtc
+commands:
+  - id: webrtc.session.start
+    pattern: webrtc://local/session/{session}/command/start
+    side_effects: true
+    requires_approval: true
+  - id: webrtc.data.send
+    pattern: webrtc://local/session/{session}/data/command/send
+    side_effects: true
+    requires_approval: true
+```
+
 ## Routes
 
 ```txt

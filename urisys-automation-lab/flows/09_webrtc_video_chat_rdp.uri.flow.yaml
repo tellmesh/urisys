@@ -4,7 +4,7 @@ flow:
 
 defaults:
   approved: true
-  dry_run: true
+  dry_run: false
 
 do:
   - webrtc://local/session/rdp-chat/command/start:

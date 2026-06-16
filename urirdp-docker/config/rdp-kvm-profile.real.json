@@ -30,9 +30,10 @@
     "driver": "tesseract",
     "lang": "eng"
   },
-  "safety": {
-    "default_allow_real": true,
-    "require_approval_for_him": true,
-    "require_active_rdp_session": true
+  "browser": {
+    "driver": "display-chromium",
+    "binary": "chromium",
+    "headless": false,
+    "launch_delay_s": 2.5
   }
 }

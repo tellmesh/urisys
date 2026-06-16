@@ -1,0 +1,31 @@
+# Mounted in urirdp container as /opt/urirdp/config/env-policy.yaml
+public_vars:
+  - APP_NAME
+  - APP_ENV
+  - APP_VERSION
+  - URISYS_NODE_ID
+  - URISYS_RUNTIME_MODE
+  - FEATURE_FLAG_DEMO
+  - URISYS_ALLOW_REAL
+  - LLM_MODEL
+  - LLM_BASE_URL
+  - LLM_TEMPERATURE
+  - LLM_MAX_TOKENS
+
+public_prefixes:
+  - APP_PUBLIC_
+
+secret_vars:
+  - SMTP_PASSWORD
+  - MARKPACT_TOKEN
+  - OPENAI_API_KEY
+  - OPENROUTER_API_KEY
+  - LLM_API_KEY
+secret_prefixes:
+  - SECRET_
+
+mutable_vars:
+  - FEATURE_FLAG_DEMO
+
+docker_secrets_dir: /run/secrets
+include_process_metadata: true

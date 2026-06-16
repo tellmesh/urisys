@@ -3,8 +3,8 @@
 services:
   urirdp:
     build:
-      context: ../urirdp-docker
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: urirdp-docker/Dockerfile
     container_name: urisys-lab-urirdp
     restart: unless-stopped
     env_file:
@@ -17,6 +17,7 @@ services:
       URISYS_RDP_DISPLAY: ${URISYS_RDP_DISPLAY:-:10}
       URISYS_CONFIG: ${URISYS_CONFIG:-/opt/urirdp/config/rdp-kvm-profile.real.json}
       URISYS_ALLOW_REAL: ${URISYS_ALLOW_REAL:-1}
+      URISYS_ENV_POLICY: ${URISYS_ENV_POLICY:-/opt/urirdp/config/env-policy.yaml}
     ports:
       - "${RDP_PORT:-3389}:3389"
       - "${URISYS_RDP_PORT:-8795}:8795"
@@ -34,8 +35,8 @@ services:
 
   automation-lab:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: urisys-automation-lab/Dockerfile
     container_name: urisys-lab-ui
     restart: unless-stopped
     depends_on:

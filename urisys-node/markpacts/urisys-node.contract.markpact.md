@@ -2,6 +2,31 @@
 
 Installable slave service exposing:
 
+```yaml markpact:contract
+apiVersion: urisys.io/v1
+kind: UriContract
+metadata:
+  id: urisys-node.service
+  version: 0.1.0
+  title: urisys-node HTTP edge service
+scheme: urisys-node
+resources:
+  - pattern: urisys-node://local/http/health
+  - pattern: urisys-node://local/http/uri/routes
+  - pattern: urisys-node://local/http/events
+  - pattern: urisys-node://local/http/uri/call
+queries:
+  - id: node.health
+    pattern: urisys-node://local/http/query/health
+  - id: node.routes
+    pattern: urisys-node://local/http/query/routes
+commands:
+  - id: node.uri.call
+    pattern: urisys-node://local/http/command/uri-call
+    side_effects: true
+    requires_approval: true
+```
+
 ```txt
 GET  /health
 GET  /uri/routes

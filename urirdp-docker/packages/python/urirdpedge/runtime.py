@@ -14,6 +14,16 @@ from urllib.parse import unquote
 from .env import load_env_policy
 
 
+def _result_ok(result: Any) -> bool:
+    if isinstance(result, dict):
+        if result.get("ok") is False:
+            return False
+        exit_code = result.get("exit_code")
+        if exit_code is not None and exit_code != 0:
+            return False
+    return True
+
+
 @dataclass
 class Route:
     pattern: str
@@ -130,9 +140,10 @@ class Runtime:
         try:
             handler = self._load_handler(route.handler_ref)
             result = handler(payload, ctx)
+            ok = _result_ok(result)
             event = {**event_base, "event_id": str(uuid.uuid4()), "event_type": f"{route.operation}.completed", "result": result}
             self.events.append(event)
-            return {"ok": True, "uri": uri, "operation": route.operation, "params": params, "result": result, "event": event}
+            return {"ok": ok, "uri": uri, "operation": route.operation, "params": params, "result": result, "event": event}
         except Exception as exc:
             event = {**event_base, "event_id": str(uuid.uuid4()), "event_type": f"{route.operation}.failed", "error": str(exc)}
             self.events.append(event)

@@ -11,7 +11,7 @@ from .runtime import Runtime, load_json, run_flow, serve
 def build_runtime(args) -> Runtime:
     config = load_json(getattr(args, "config", None))
     rt = Runtime(events_path=getattr(args, "events", "data/events.jsonl"), config=config)
-    packs = set(filter(None, (getattr(args, "packs", "rdp,kvm,him,ocr,llm") or "").split(",")))
+    packs = set(filter(None, (getattr(args, "packs", "rdp,kvm,him,ocr,llm,shell,env,browser") or "").split(",")))
     if "rdp" in packs:
         import urirdp
         urirdp.register(rt)
@@ -30,12 +30,18 @@ def build_runtime(args) -> Runtime:
     if "shell" in packs:
         import urirdp_shell
         urirdp_shell.register(rt)
+    if "env" in packs:
+        import urirdp_env
+        urirdp_env.register(rt)
+    if "browser" in packs:
+        import urirdp_browser
+        urirdp_browser.register(rt)
     return rt
 
 
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="urisys-rdp")
-    p.add_argument("--packs", default="rdp,kvm,him,ocr,llm,shell")
+    p.add_argument("--packs", default="rdp,kvm,him,ocr,llm,shell,env,browser")
     p.add_argument("--config", default=os.environ.get("URISYS_CONFIG", "config/rdp-kvm-profile.json"))
     p.add_argument("--events", default="data/events.jsonl")
     sub = p.add_subparsers(dest="cmd", required=True)

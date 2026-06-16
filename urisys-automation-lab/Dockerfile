@@ -11,15 +11,16 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && pip install --no-cache-dir PyYAML
 
 WORKDIR /opt/lab
 
-COPY packages/python ./packages/python
-COPY server ./server
-COPY web ./web
-COPY flows ./flows
-COPY docker/entrypoint.sh /usr/local/bin/lab-entrypoint
+COPY urisys-automation-lab/packages/python ./packages/python
+COPY urisys-automation-lab/server ./server
+COPY urisys-automation-lab/web ./web
+COPY urisys-automation-lab/flows ./flows
+COPY urisys-automation-lab/docker/entrypoint.sh /usr/local/bin/lab-entrypoint
 
 RUN chmod +x /usr/local/bin/lab-entrypoint \
     && mkdir -p /opt/lab/data

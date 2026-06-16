@@ -4,7 +4,7 @@ flow:
 
 defaults:
   approved: true
-  dry_run: true
+  dry_run: false
 
 do:
   - id: env_check
@@ -13,15 +13,15 @@ do:
     kind: query
 
   - id: apt_update
-    uri: shell://apt-get
+    uri: shell://sudo
     payload:
-      args: ["update"]
+      args: ["apt-get", "update"]
     after: env_check
 
   - id: open_browser
     uri: browser://chrome/page/open
     payload:
-      url: http://localhost:8101/health
+      url: http://automation-lab:8099/health
     after: apt_update
 
   - id: screenshot

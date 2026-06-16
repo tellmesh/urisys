@@ -1,6 +1,8 @@
 services:
   urirdp:
-    build: .
+    build:
+      context: ..
+      dockerfile: urirdp-docker/Dockerfile
     container_name: urirdp-real
     env_file:
       - ../.env

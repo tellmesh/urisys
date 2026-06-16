@@ -27,6 +27,10 @@ def shell_run(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any
     if context.get("dry_run") or not allow_real(context):
         return _mock(command, payload, context)
 
+    if command == "apt-get" and os.geteuid() != 0:
+        args = [command, *args]
+        command = "sudo"
+
     env = os.environ.copy()
     display = detect_display(context)
     if display:

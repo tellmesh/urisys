@@ -22,5 +22,9 @@
     "default_allow_real": false,
     "require_approval_for_him": true,
     "require_active_rdp_session": true
+  },
+  "browser": {
+    "driver": "mock",
+    "headless": true
   }
 }

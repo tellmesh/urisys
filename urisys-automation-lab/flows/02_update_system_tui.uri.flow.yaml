@@ -4,12 +4,12 @@ flow:
 
 defaults:
   approved: true
-  dry_run: true
+  dry_run: false
 
 do:
-  - shell://apt-get:
-      args: ["update"]
-  - shell://apt-get:
-      args: ["upgrade", "-y"]
+  - shell://sudo:
+      args: ["apt-get", "update"]
+  - shell://sudo:
+      args: ["apt-get", "upgrade", "-y"]
   - shell://uname:
       args: ["-a"]

@@ -10,6 +10,8 @@ if ! id "$USER_NAME" >/dev/null 2>&1; then
 fi
 
 echo "$USER_NAME:$USER_PASS" | chpasswd
+echo "$USER_NAME ALL=(ALL) NOPASSWD:ALL" > "/etc/sudoers.d/${USER_NAME}-lab"
+chmod 440 "/etc/sudoers.d/${USER_NAME}-lab"
 mkdir -p /home/$USER_NAME/.config/xfce4 /opt/urirdp/data/screenshots
 chown -R "$USER_NAME:$USER_NAME" /home/$USER_NAME /opt/urirdp/data || true
 

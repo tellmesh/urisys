@@ -4,15 +4,19 @@ flow:
 
 defaults:
   approved: true
-  dry_run: true
+  dry_run: false
 
 do:
-  - shell://test:
-      args: ["-f", "/tmp/urisys-lab.conf"]
   - shell://sh:
       args: ["-c", "echo '# urisys lab' > /tmp/urisys-lab.conf"]
+  - him://local/keyboard/command/hotkey:
+      keys: ["ctrl", "alt", "t"]
   - him://local/keyboard/command/type-text:
       text: "nano /tmp/urisys-lab.conf"
   - him://local/keyboard/command/key:
       key: Return
+  - him://local/keyboard/command/hotkey:
+      keys: ["ctrl", "x"]
+  - him://local/keyboard/command/key:
+      key: n
   - kvm://local/monitor/primary/query/screenshot
