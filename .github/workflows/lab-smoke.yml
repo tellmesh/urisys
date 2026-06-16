@@ -59,3 +59,38 @@ jobs:
           else
             echo "Skipped run-smoke-all — run locally from tellmesh workspace"
           fi
+
+  lab-e2e:
+    # Full Docker/RDP run of lab-10-flows, gating on the `expect:` contracts.
+    # Manual only: needs Docker + the tellmesh monorepo siblings to build images.
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: github.event_name == 'workflow_dispatch'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: urisys
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run lab-10-flows E2E (skips if monorepo siblings absent)
+        working-directory: urisys
+        run: |
+          # The lab images build from sibling repos (uri3/uri2flow/uri2ops) at the
+          # workspace root; without them the Docker build can't run in CI.
+          if [ ! -d "../uri3" ] || [ ! -d "../uri2flow" ]; then
+            echo "Skipped lab-e2e — run from a full tellmesh checkout (uri3/uri2flow missing)."
+            exit 0
+          fi
+          bash scripts/run-lab-e2e.sh
+
+      - name: Upload session artifacts (screenshots, reports, responses)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-10-flows-session
+          path: urisys/output/test-sessions/
+          if-no-files-found: ignore

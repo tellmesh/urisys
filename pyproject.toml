@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "urisys"
-version = "0.1.14"
+version = "0.1.15"
 description = "URI control system managers/controllers over separate uri* capability packs."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -35,6 +35,9 @@ dev = [
 lab = [
   "uri2flow>=0.1.2",
 ]
+# urisys-node bundled in wheel until separate PyPI project is available
+real = ["mss>=9.0", "Pillow>=10.0", "pyautogui>=0.9.54", "pytesseract>=0.3.10", "litellm>=1.40"]
+discovery = ["zeroconf>=0.131.0"]
 
 [dependency-groups]
 dev = [
@@ -60,13 +63,14 @@ default-groups = ["dev"]
 
 [project.scripts]
 urisys = "urisys.cli:main"
+urisys-node = "urisysnode.cli:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
-where = ["src"]
-include = ["urisys*"]
+where = ["src", "urisys-node/packages/python"]
+include = ["urisys*", "urisysnode*", "uriscreen*", "urisysedge*"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
