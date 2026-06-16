@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 from typing import Any
@@ -13,13 +15,77 @@ from typing import Any
 import yaml
 
 
+def is_url(source: str) -> bool:
+    return source.startswith(("http://", "https://"))
+
+
+def _auth_opener(for_url: str) -> urllib.request.OpenerDirector:
+    token = os.environ.get("GITHUB_TOKEN")
+    if token:
+        return urllib.request.build_opener(_GitHubHeaderAuth(token))
+
+    user = os.environ.get("URISYS_REGISTRY_USER")
+    password = os.environ.get("URISYS_REGISTRY_PASSWORD")
+    if not user or password is None:
+        return urllib.request.build_opener()
+    parsed = urllib.parse.urlparse(for_url)
+    origin = f"{parsed.scheme}://{parsed.netloc}"
+    manager = urllib.request.HTTPPasswordMgrWithDefaultRealm()
+    manager.add_password(None, origin, user, password)
+    return urllib.request.build_opener(urllib.request.HTTPBasicAuthHandler(manager))
+
+
+class _GitHubHeaderAuth(urllib.request.BaseHandler):
+    handler_order = 480
+
+    def __init__(self, token: str) -> None:
+        self.token = token
+
+    def https_request(self, req):  # noqa: ANN001
+        req.add_header("Authorization", f"Bearer {self.token}")
+        return req
+
+    http_request = https_request
+
+
+def fetch_json(url: str, *, timeout: int = 60) -> Any:
+    req = urllib.request.Request(url, headers={"Accept": "application/json"})
+    with _auth_opener(url).open(req, timeout=timeout) as resp:
+        return json.loads(resp.read().decode("utf-8"))
+
+
 def load_node_profile(path: str | Path) -> dict[str, Any]:
     data = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
     return data.get("node") or data
 
 
-def load_artifact_index(path: str | Path) -> dict[str, Any]:
-    return json.loads(Path(path).read_text(encoding="utf-8"))
+def load_artifact_index(source: str | Path) -> dict[str, Any]:
+    source_str = str(source)
+    if is_url(source_str):
+        data = fetch_json(source_str)
+        if not isinstance(data, dict):
+            raise ValueError("artifact-index must be a JSON object")
+        return data
+    return json.loads(Path(source_str).read_text(encoding="utf-8"))
+
+
+def release_api_url(catalog_url: str, contract_id: str, version: str) -> str:
+    base = catalog_url.rstrip("/")
+    cid = urllib.parse.quote(contract_id, safe="")
+    ver = urllib.parse.quote(version, safe="")
+    return f"{base}/api/contracts/{cid}/releases/{ver}"
+
+
+def fetch_release(catalog_url: str, contract_id: str, version: str) -> dict[str, Any]:
+    data = fetch_json(release_api_url(catalog_url, contract_id, version))
+    if not isinstance(data, dict):
+        raise ValueError("release response must be a JSON object")
+    if not data.get("ok"):
+        raise ValueError(str(data.get("error") or "release fetch failed"))
+    release = data.get("release")
+    if not isinstance(release, dict):
+        raise ValueError("release payload missing")
+    return release
 
 
 def select_artifact(index: dict[str, Any], node_profile: dict[str, Any]) -> dict[str, Any]:
@@ -41,7 +107,6 @@ def select_artifact(index: dict[str, Any], node_profile: dict[str, Any]) -> dict
             continue
         return art
 
-    # fallback: first artifact
     return candidates[0]
 
 
@@ -77,7 +142,7 @@ def docker_run_worker(
         raise RuntimeError(proc.stderr.strip() or "docker run failed")
 
 
-def wait_health(port: int = 8791, attempts: int = 30) -> None:
+def wait_health(port: int = 8791, attempts: int = 30, container: str = "urisys-stepper-worker") -> None:
     url = f"http://127.0.0.1:{port}/health"
     last = ""
     for _ in range(attempts):
@@ -88,18 +153,18 @@ def wait_health(port: int = 8791, attempts: int = 30) -> None:
         except (urllib.error.URLError, TimeoutError, ConnectionResetError, OSError) as exc:
             last = str(exc)
         time.sleep(1)
-    logs = subprocess.run(["docker", "logs", "--tail", "50", "urisys-stepper-worker"], capture_output=True, text=True)
+    logs = subprocess.run(["docker", "logs", "--tail", "50", container], capture_output=True, text=True)
     raise RuntimeError(f"worker health timeout on {url}: {last}\n{logs.stdout}\n{logs.stderr}")
 
 
 def resolve_and_run(
-    index_path: str | Path,
+    index_source: str | Path,
     profile_path: str | Path,
     *,
     container: str = "urisys-stepper-worker",
     port: int = 8791,
 ) -> dict[str, Any]:
-    index = load_artifact_index(index_path)
+    index = load_artifact_index(index_source)
     profile = load_node_profile(profile_path)
     art = select_artifact(index, profile)
     ref = str(art.get("ref") or art.get("tag") or "")
@@ -108,10 +173,50 @@ def resolve_and_run(
 
     docker_pull(ref)
     docker_run_worker(ref, container=container, host_port=port, container_port=8790)
-    wait_health(port=port)
+    wait_health(port=port, container=container)
 
     return {
         "ok": True,
+        "platform": profile.get("platform"),
+        "artifact": art,
+        "ref": ref,
+        "container": container,
+        "port": port,
+        "index_source": str(index_source),
+    }
+
+
+def resolve_from_release(
+    catalog_url: str,
+    contract_id: str,
+    version: str,
+    profile_path: str | Path,
+    *,
+    container: str = "urisys-stepper-worker",
+    port: int = 8791,
+) -> dict[str, Any]:
+    release = fetch_release(catalog_url, contract_id, version)
+    index_url = str(release.get("artifact_index_url") or "")
+    if not index_url:
+        raise ValueError("release has no artifact_index_url")
+
+    index = load_artifact_index(index_url)
+    profile = load_node_profile(profile_path)
+    art = select_artifact(index, profile)
+    ref = str(art.get("ref") or art.get("tag") or "")
+    if not ref:
+        raise ValueError("selected artifact has no ref or tag")
+
+    docker_pull(ref)
+    docker_run_worker(ref, container=container, host_port=port, container_port=8790)
+    wait_health(port=port, container=container)
+
+    return {
+        "ok": True,
+        "contract_id": contract_id,
+        "version": version,
+        "release": release,
+        "artifact_index_url": index_url,
         "platform": profile.get("platform"),
         "artifact": art,
         "ref": ref,

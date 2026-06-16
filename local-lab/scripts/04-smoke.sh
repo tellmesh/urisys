@@ -9,7 +9,7 @@ curl -fsS "${BASE}/health"
 echo
 
 echo "== routes =="
-curl -fsS "${BASE}/uri/routes" | python3 -m json.tool | head -30
+curl -fsS "${BASE}/routes" | python3 -m json.tool | head -30
 echo
 
 echo "== call stepper status =="

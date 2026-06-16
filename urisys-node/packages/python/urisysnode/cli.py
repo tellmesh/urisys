@@ -5,7 +5,15 @@ import json
 import os
 import sys
 
-from urisysnode.artifact_resolver import load_artifact_index, load_node_profile, resolve_and_run, select_artifact
+from urisysnode.artifact_resolver import (
+    fetch_release,
+    load_artifact_index,
+    load_node_profile,
+    release_api_url,
+    resolve_and_run,
+    resolve_from_release,
+    select_artifact,
+)
 from urisysnode.client import call_via_route_map, discover_mdns
 from urisysnode.identity import enroll, load_identity, load_pairing
 from urisysnode.router import load_route_map, rewrite_uri_for_slave
@@ -49,13 +57,24 @@ def main(argv=None) -> int:
     art = sub.add_parser("artifact", help="Resolve artifact-index and run OCI worker (lab/prototype)")
     art_sub = art.add_subparsers(dest="artifact_command", required=True)
     art_sel = art_sub.add_parser("select", help="Print selected artifact for node profile")
-    art_sel.add_argument("--index", required=True)
+    art_sel.add_argument("--index", required=True, help="Local path or http(s) URL to artifact-index.json")
     art_sel.add_argument("--profile", required=True)
     art_run = art_sub.add_parser("resolve-run", help="Pull image from index and start worker container")
-    art_run.add_argument("--index", required=True)
+    art_run.add_argument("--index", required=True, help="Local path or http(s) URL to artifact-index.json")
     art_run.add_argument("--profile", required=True)
     art_run.add_argument("--port", type=int, default=int(os.environ.get("WORKER_PORT", "8791")))
     art_run.add_argument("--container", default=os.environ.get("WORKER_NAME", "urisys-stepper-worker"))
+    art_rel = art_sub.add_parser("resolve-release", help="Fetch release from markpact.com catalog, then pull and run")
+    art_rel.add_argument("--catalog", default=os.environ.get("MARKPACT_CATALOG_URL", "https://markpact.com"))
+    art_rel.add_argument("--contract", required=True, help="Contract id, e.g. uristepper.contract")
+    art_rel.add_argument("--version", required=True)
+    art_rel.add_argument("--profile", required=True)
+    art_rel.add_argument("--port", type=int, default=int(os.environ.get("WORKER_PORT", "8791")))
+    art_rel.add_argument("--container", default=os.environ.get("WORKER_NAME", "urisys-stepper-worker"))
+    art_fetch = art_sub.add_parser("fetch-release", help="Print release metadata from catalog API")
+    art_fetch.add_argument("--catalog", default=os.environ.get("MARKPACT_CATALOG_URL", "https://markpact.com"))
+    art_fetch.add_argument("--contract", required=True)
+    art_fetch.add_argument("--version", required=True)
 
     args = p.parse_args(argv)
 
@@ -119,9 +138,24 @@ def main(argv=None) -> int:
             art = select_artifact(load_artifact_index(args.index), load_node_profile(args.profile))
             print(json.dumps(art, indent=2, ensure_ascii=False))
             return 0
+        if args.artifact_command == "fetch-release":
+            release = fetch_release(args.catalog, args.contract, args.version)
+            print(json.dumps({"ok": True, "release": release, "api": release_api_url(args.catalog, args.contract, args.version)}, indent=2, ensure_ascii=False))
+            return 0
         if args.artifact_command == "resolve-run":
             result = resolve_and_run(
                 args.index,
+                args.profile,
+                container=args.container,
+                port=args.port,
+            )
+            print(json.dumps(result, indent=2, ensure_ascii=False))
+            return 0
+        if args.artifact_command == "resolve-release":
+            result = resolve_from_release(
+                args.catalog,
+                args.contract,
+                args.version,
                 args.profile,
                 container=args.container,
                 port=args.port,

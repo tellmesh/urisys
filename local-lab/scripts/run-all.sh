@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Full local Markpact materialization lab (3 levels).
+# Full local Markpact materialization lab (GitHub model: ghcr/raw, no Nexus).
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT/.."
@@ -7,22 +7,19 @@ COMPOSE="docker compose --profile lab -f local-lab/docker-compose.yml"
 
 log() { echo "[local-lab] $*"; }
 
-log "1/5 start nexus + oci-registry"
-$COMPOSE up -d nexus oci-registry
+log "1/4 start oci-registry + artifacts-server"
+$COMPOSE up -d oci-registry artifacts-server
 
-log "2/5 init nexus repos"
-$COMPOSE run --rm builder bash local-lab/scripts/00-init-nexus.sh
-
-log "3/5 validate markpact"
+log "2/4 validate markpact"
 $COMPOSE run --rm builder bash local-lab/scripts/01-validate-markpact.sh
 
-log "4/5 build + push + artifact-index"
+log "3/4 build + push + artifact-index + releases/"
 $COMPOSE run --rm builder bash local-lab/scripts/02-build-publish.sh
 
-log "5/5 resolve + run worker"
-$COMPOSE run --rm urisys-node-lab bash local-lab/scripts/03-resolve-run.sh
+log "4/4 resolve from URL + run worker"
+$COMPOSE run --rm urisys-node-lab bash local-lab/scripts/05-resolve-from-url.sh
 
 log "smoke from host (WORKER_PORT=${WORKER_PORT:-8796})"
 WORKER_PORT="${WORKER_PORT:-8796}" bash local-lab/scripts/04-smoke.sh
 
-log "ALL PASSED — artifacts in local-lab/generated/"
+log "ALL PASSED — artifacts in local-lab/generated/ and releases/"

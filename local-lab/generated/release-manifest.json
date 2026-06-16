@@ -1,0 +1,15 @@
+{
+  "schema": "markpact.release-manifest.v1",
+  "contract_id": "uristepper-pack",
+  "version": "0.1.0",
+  "contract_digest": "sha256:ffc08e4ee1cbb55345633a793a2710dc6eb46948e8a60bb7b4aa6f041d60ea59",
+  "contract_url": "https://raw.githubusercontent.com/tellmesh/urisys/main/releases/uristepper-pack/0.1.0/contract.markpact.md",
+  "artifact_index_url": "https://raw.githubusercontent.com/tellmesh/urisys/main/releases/uristepper-pack/0.1.0/artifact-index.json",
+  "artifact_index_local_url": "http://127.0.0.1:8190/artifact-index.json",
+  "oci_ref": "localhost:5000/stepper-axis-control@sha256:c3ebe49f51544a3200e3f2f530ff20816bec62c8608954161c25a18e51f202b1",
+  "github": {
+    "owner": "tellmesh",
+    "repo": "urisys",
+    "ref": "main"
+  }
+}

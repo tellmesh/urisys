@@ -2,17 +2,16 @@
 set -euo pipefail
 cd /workspace
 
-CONTRACT_ID="${CONTRACT_ID:-uristepper.contract}"
+CONTRACT_ID="${CONTRACT_ID:-uristepper-pack}"
 VERSION="${VERSION:-0.1.0}"
 CONTRACT_FILE="${CONTRACT_FILE:-uristepper-docker/markpacts/uristepper.pack.markpact.md}"
 IMAGE_NAME="${IMAGE_NAME:-stepper-axis-control}"
 IMAGE_TARGET="${IMAGE_TARGET:-linux-amd64-mock}"
 OCI_REGISTRY_FOR_DOCKER="${OCI_REGISTRY_FOR_DOCKER:-localhost:5000}"
-NEXUS_URL="${NEXUS_URL:-http://nexus:8081}"
-NEXUS_RAW_CONTRACTS="${NEXUS_RAW_CONTRACTS:-markpact-contracts-release}"
-NEXUS_RAW_ARTIFACTS="${NEXUS_RAW_ARTIFACTS:-markpact-artifacts-release}"
-NEXUS_USER="${NEXUS_USER:-admin}"
-NEXUS_PASSWORD="${NEXUS_PASSWORD:-admin123}"
+GHCR_REGISTRY="${GHCR_REGISTRY:-}"
+GITHUB_OWNER="${GITHUB_OWNER:-tellmesh}"
+GITHUB_REPO="${GITHUB_REPO:-urisys}"
+GIT_REF="${GIT_REF:-main}"
 
 mkdir -p local-lab/generated
 
@@ -33,7 +32,7 @@ docker build \
   -t "$IMAGE_TAG" \
   uristepper-docker
 
-echo "== Push image to local OCI registry =="
+echo "== Push image to OCI registry =="
 docker push "$IMAGE_TAG"
 
 IMAGE_DIGEST="$(docker inspect --format='{{index .RepoDigests 0}}' "$IMAGE_TAG" 2>/dev/null || true)"
@@ -41,6 +40,21 @@ if [ -z "$IMAGE_DIGEST" ] || [ "$IMAGE_DIGEST" = "<no value>" ]; then
   IMAGE_REF="$IMAGE_TAG"
 else
   IMAGE_REF="$IMAGE_DIGEST"
+fi
+
+if [ -n "$GHCR_REGISTRY" ]; then
+  echo "== Push image to GHCR =="
+  GHCR_TAG="${GHCR_REGISTRY}/${IMAGE_NAME}:${VERSION}-${IMAGE_TARGET}"
+  docker tag "$IMAGE_TAG" "$GHCR_TAG"
+  docker push "$GHCR_TAG"
+  GHCR_DIGEST="$(docker inspect --format='{{index .RepoDigests 0}}' "$GHCR_TAG" 2>/dev/null || true)"
+  if [ -n "$GHCR_DIGEST" ] && [ "$GHCR_DIGEST" != "<no value>" ]; then
+    IMAGE_REF="$GHCR_DIGEST"
+    IMAGE_TAG="$GHCR_TAG"
+  else
+    IMAGE_REF="$GHCR_TAG"
+    IMAGE_TAG="$GHCR_TAG"
+  fi
 fi
 
 echo "== Generate artifact-index.json =="
@@ -75,20 +89,41 @@ Path("local-lab/generated/artifact-index.json").write_text(
 print(json.dumps(payload, indent=2))
 PY
 
-if curl -fsS -u "${NEXUS_USER}:${NEXUS_PASSWORD}" "${NEXUS_URL}/service/rest/v1/status" >/dev/null 2>&1; then
-  echo "== Upload contract + artifact-index to Nexus Raw =="
-  CONTRACT_PATH="contracts/uristepper/${VERSION}/contract.bundle.markpact.md"
-  INDEX_PATH="releases/uristepper/${VERSION}/artifact-index.json"
-  curl -fsS -u "${NEXUS_USER}:${NEXUS_PASSWORD}" \
-    --upload-file "$CONTRACT_FILE" \
-    "${NEXUS_URL}/repository/${NEXUS_RAW_CONTRACTS}/${CONTRACT_PATH}"
-  curl -fsS -u "${NEXUS_USER}:${NEXUS_PASSWORD}" \
-    --upload-file local-lab/generated/artifact-index.json \
-    "${NEXUS_URL}/repository/${NEXUS_RAW_ARTIFACTS}/${INDEX_PATH}"
-  echo "nexus_contract=${NEXUS_URL}/repository/${NEXUS_RAW_CONTRACTS}/${CONTRACT_PATH}"
-  echo "nexus_index=${NEXUS_URL}/repository/${NEXUS_RAW_ARTIFACTS}/${INDEX_PATH}"
-else
-  echo "Nexus not reachable — skipped raw upload (OCI push OK)"
-fi
+RELEASE_DIR="releases/${CONTRACT_ID}/${VERSION}"
+mkdir -p "$RELEASE_DIR"
+cp local-lab/generated/artifact-index.json "${RELEASE_DIR}/artifact-index.json"
+cp "$CONTRACT_FILE" "${RELEASE_DIR}/contract.markpact.md"
 
+GITHUB_RAW_BASE="https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GIT_REF}"
+ARTIFACT_INDEX_GITHUB_URL="${GITHUB_RAW_BASE}/releases/${CONTRACT_ID}/${VERSION}/artifact-index.json"
+CONTRACT_GITHUB_URL="${GITHUB_RAW_BASE}/releases/${CONTRACT_ID}/${VERSION}/contract.markpact.md"
+
+python3 - <<PY
+import json
+from pathlib import Path
+
+manifest = {
+    "schema": "markpact.release-manifest.v1",
+    "contract_id": "${CONTRACT_ID}",
+    "version": "${VERSION}",
+    "contract_digest": "${CONTRACT_SHA}",
+    "contract_url": "${CONTRACT_GITHUB_URL}",
+    "artifact_index_url": "${ARTIFACT_INDEX_GITHUB_URL}",
+    "artifact_index_local_url": "http://127.0.0.1:8190/artifact-index.json",
+    "oci_ref": "${IMAGE_REF}",
+    "github": {
+        "owner": "${GITHUB_OWNER}",
+        "repo": "${GITHUB_REPO}",
+        "ref": "${GIT_REF}",
+    },
+}
+Path("local-lab/generated/release-manifest.json").write_text(
+    json.dumps(manifest, indent=2, ensure_ascii=False) + "\n",
+    encoding="utf-8",
+)
+print(json.dumps(manifest, indent=2))
+PY
+
+echo "github_artifact_index=${ARTIFACT_INDEX_GITHUB_URL}"
+echo "local_artifact_index=http://127.0.0.1:8190/artifact-index.json"
 echo "PASS build-publish"
