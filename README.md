@@ -1,131 +1,76 @@
-# urisys workspace
+# urisys
 
-Workspace zawiera lekki, deterministyczny URI control plane:
+`urisys` jest centralnym runtime/controllerem dla URI control plane. Osobne paczki `uribrowser`, `uridocker`, `urisystemd` itd. (repo [`uri-packs`](../uri-packs)) dostarczają tylko `manifest.yaml` i handlery. Alternatywnie można używać jednoplikowych `UriPack Markpact`.
 
-```text
-URI → manifest/Markpact → policy → handler → event → result
-```
-
-Nie ma tutaj ciężkiego hypervisora ani systemu agentowego. `urisys` jest centralnym runtime/controllerem, a osobne paczki `uri*` lub jednoplikowe `*.markpact.md` dostarczają capabilities i handlery.
-
-## Skład
-
-```text
-../uricore/     # osobne repo: parser, registry, dispatcher, event store, policy
-../uricore-js/  # osobne repo: JS/browser/Node runtime
-urisys/         # kontrolery, managery, HTTP server, flow, Markpact
-packages/python # osobne paczki: uribrowser, uridocker, urisystemd...
-packages/js     # osobne paczki JS: uridom-js, uripage-js, urinode-js...
-```
-
-## Python URI packs
-
-- `uribrowser` → `browser://`
-- `uridesktop` → `desktop://`
-- `uriandroid` → `android://`
-- `uridocker` → `docker://`
-- `urisystemd` → `systemd://`
-- `uriprinter` → `printer://`
-- `uricamera` → `camera://`
-- `uridisplay` → `display://`
-- `urimail` → `mail://`
-- `urillm` → `llm://`
-- `uriagent` → `agent://`
-
-## JavaScript URI packs
-
-- `uridom-js` → `dom://`
-- `uripage-js` → `page://`
-- `urinode-js` → `node://`
-- `uribrowser-js` → browser-side umbrella package
-
-## UriPack Markpact
-
-Nowa wersja dodaje jednoplikowe paczki:
-
-```text
-urisys/markpacts/packs/uribrowser.markpact.md
-urisys/markpacts/packs/urisystemd.markpact.md
-urisys/markpacts/packs/uridom-js.markpact.md
-```
-
-Markpact jest źródłem paczki: zawiera manifest, kod handlerów, testy i dokumentację. `urisys` kompiluje go do cache runtime:
-
-```text
-*.markpact.md → .urisys/cache/markpacts/<pack>/<hash>/manifest.yaml + handlers
-```
-
-## Instalacja lokalna
+Nie używamy już `uripacks-serve` ani `uripacks call`. CLI to:
 
 ```bash
-python -m venv .venv
-. .venv/bin/activate
-./scripts/install-editable.sh
-```
-
-## Przykłady zwykłych paczek
-
-Globalne opcje `--packs`, `--markpact`, `--events` podaje się przed subkomendą:
-
-```bash
-urisys --packs browser call browser://default/page/open \
-  --payload '{"url":"https://example.com"}' \
-  --approve
-```
-
-```bash
-urisys --packs docker call docker://container/web/command/restart \
-  --approve \
-  --dry-run
-```
-
-```bash
+urisys --packs browser call browser://default/page/open --payload '{"url":"https://example.com"}' --approve
+urisys --packs docker explain docker://container/web/query/status
+urisys --packs browser,docker,systemd routes
 urisys --packs all serve --port 8789
+urisys --packs all flow flows/device-maintenance.uri.flow.yaml --approve --dry-run
 ```
+
+## Managers/controllers
+
+- `PackManager` ładuje paczki `uri*`, plain `manifest.yaml` i Markpact.
+- `MarkpactManager` waliduje, kompiluje i testuje jednoplikowe `*.markpact.md`.
+- `RuntimeManager` buduje `uri_control.UriControlRuntime` z registry, policy i event store.
+- `UriController` wystawia `call`, `explain`, `routes`.
+- `FlowController` uruchamia compact URI YAML flows.
+- `ServerController` wystawia HTTP endpointy.
+- `EventManager` czyta eventy JSONL.
+- `BridgeManager` przekazuje URI envelopes do innych URI serverów.
+
+## Markpact
+
+Przykładowe pliki:
+
+```text
+markpacts/packs/uribrowser.markpact.md
+markpacts/packs/urisystemd.markpact.md
+markpacts/packs/uridom-js.markpact.md
+```
+
+Komendy:
 
 ```bash
-urisys --packs all flow urisys/flows/device-maintenance.uri.flow.yaml \
-  --approve \
-  --dry-run
+urisys markpact validate markpacts/packs/uribrowser.markpact.md
+urisys markpact compile markpacts/packs/uribrowser.markpact.md
+urisys markpact routes markpacts/packs/uribrowser.markpact.md
+urisys markpact test markpacts/packs/uribrowser.markpact.md
 ```
 
-## Przykłady Markpact
-
-```bash
-urisys markpact validate urisys/markpacts/packs/uribrowser.markpact.md
-urisys markpact compile urisys/markpacts/packs/uribrowser.markpact.md
-urisys markpact test urisys/markpacts/packs/uribrowser.markpact.md
-```
-
-Ładowanie bez instalowania paczki:
+Wywołanie przez runtime bez instalowania paczki:
 
 ```bash
 urisys --packs none \
-  --markpact urisys/markpacts/packs/uribrowser.markpact.md \
+  --markpact markpacts/packs/uribrowser.markpact.md \
   call browser://default/page/open \
   --payload '{"url":"https://example.com"}' \
   --approve \
   --dry-run
 ```
 
-## Architektura
+## HTTP server
 
-```text
-shell / frontend / backend / flow
-  ↓
-urisys controller
-  ↓
-urisys managers: PackManager, MarkpactManager, RuntimeManager, PolicyManager, EventManager
-  ↓
-uricore runtime
-  ↓
-separate uri* pack OR compiled Markpact manifest + handler
-  ↓
-event log / result
+```bash
+urisys --packs all serve --host 127.0.0.1 --port 8789
 ```
 
-Dokumentacja:
+Endpointy:
 
-- `urisys/docs/MARKPACT.md`
-- `urisys/docs/CLI.md`
-- `urisys/README.md`
+```text
+GET  /health
+GET  /uri/routes
+GET  /uri/events
+POST /uri/call
+POST /uri/explain
+```
+
+## Safe execution
+
+Handlery są mock/safe domyślnie. `--approve` jest wymagane dla mutacji. `--allow-real` lub `URISYS_ALLOW_REAL=1` jest wymagane, zanim handler wykona realne komendy OS/urządzenia.
+
+Więcej: `docs/MARKPACT.md` i `docs/CLI.md`.
