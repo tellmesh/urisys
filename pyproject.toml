@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "urisys"
-version = "0.1.9"
+version = "0.1.10"
 description = "URI control system managers/controllers over separate uri* capability packs."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -18,6 +18,9 @@ dev = [
   "uricore",
   "uribrowser",
   "uridocker",
+  "goal>=2.1.0",
+  "costs>=0.1.20",
+  "pfix>=0.1.60",
 ]
 lab = [
   "uri2flow>=0.1.2",
