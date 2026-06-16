@@ -12,7 +12,8 @@ urisys --packs browser call browser://default/page/open --payload '{"url":"https
 `--packs none` nie ładuje żadnej domyślnej paczki. To jest przydatne przy Markpact:
 
 ```bash
-urisys --packs none --markpact markpacts/packs/uribrowser.markpact.md routes
+source scripts/paths.sh
+urisys --packs none --markpact "$(markpact_contracts_packs)/uribrowser.markpact.md" routes
 ```
 
 ## Markpact

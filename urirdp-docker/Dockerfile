@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /opt/urirdp
 COPY urirdp-docker/pyproject.toml ./
+COPY packages/python/urisysedge ./packages/python/urisysedge
 COPY urirdp-docker/packages ./packages
 COPY urirdp-docker/config ./config
 COPY urirdp-docker/flows ./flows
@@ -26,12 +27,11 @@ COPY urirdp-docker/docker/startwm.sh /etc/xrdp/startwm.sh
 COPY urirdp-docker/docker/bootstrap-rdp-session.sh /opt/urirdp/docker/bootstrap-rdp-session.sh
 COPY urirdp-docker/docker/supervisord.conf /etc/supervisor/conf.d/urirdp.conf
 COPY urirdp-docker/docker/entrypoint.sh /usr/local/bin/urirdp-entrypoint
-COPY urienv-docker/vendor/uricore /tmp/vendor/uricore
 COPY urienv-docker/packages/python/urienv /tmp/vendor/urienv
 COPY uribrowser-docker /tmp/vendor/uribrowser-docker
 RUN chmod +x /etc/xrdp/startwm.sh /opt/urirdp/docker/bootstrap-rdp-session.sh /usr/local/bin/urirdp-entrypoint \
+    && python3 -m pip install --break-system-packages "uricore>=0.1.3" \
     && python3 -m pip install --break-system-packages -e ".[real]" \
-       -e /tmp/vendor/uricore \
        -e /tmp/vendor/urienv \
        -e /tmp/vendor/uribrowser-docker
 

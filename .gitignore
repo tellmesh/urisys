@@ -166,6 +166,7 @@ activemq-data/
 .env
 .envrc
 .venv
+urienv-docker/vendor/uricore/
 env/
 venv/
 ENV/

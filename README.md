@@ -1,94 +1,85 @@
 # urisys
 
+Centralny **URI control plane** dla TellMesh: CLI (`urisys`), managers, Markpact oraz monorepo obrazów Docker z edge runtime.
 
-## AI Cost Tracking
-
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.8-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$2.85-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-6.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
-
-- 🤖 **LLM usage:** $2.8504 (11 commits)
-- 👤 **Human dev:** ~$596 (6.0h @ $100/h, 30min dedup)
-
-Generated on 2026-06-16 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
-
----
-
-`urisys` jest centralnym runtime/controllerem dla URI control plane. Osobne paczki `uribrowser`, `uridocker`, `urisystemd` itd. (repo [`uri-packs`](../uri-packs)) dostarczają tylko `manifest.yaml` i handlery. Alternatywnie można używać jednoplikowych `UriPack Markpact`.
-
-Nie używamy już `uripacks-serve` ani `uripacks call`. CLI to:
+## Szybki start
 
 ```bash
-urisys --packs browser call browser://default/page/open --payload '{"url":"https://example.com"}' --approve
-urisys --packs docker explain docker://container/web/query/status
-urisys --packs browser,docker,systemd routes
-urisys --packs all serve --port 8789
+cd urisys && uv sync
+
+# Pojedyncze URI (paczki z uri-packs)
+urisys --packs browser call browser://default/page/open \
+  --payload '{"url":"https://example.com"}' --approve
+
+# Flow mock
 urisys --packs all flow flows/device-maintenance.uri.flow.yaml --approve --dry-run
+
+# HTTP server
+urisys --packs all serve --port 8789
 ```
 
-## Managers/controllers
+## Docker lab (10 automatyzacji + RDP)
 
-- `PackManager` ładuje paczki `uri*`, plain `manifest.yaml` i Markpact.
-- `MarkpactManager` waliduje, kompiluje i testuje jednoplikowe `*.markpact.md`.
-- `RuntimeManager` buduje `uri_control.UriControlRuntime` z registry, policy i event store.
-- `UriController` wystawia `call`, `explain`, `routes`.
-- `FlowController` uruchamia compact URI YAML flows.
-- `ServerController` wystawia HTTP endpointy.
-- `EventManager` czyta eventy JSONL.
-- `BridgeManager` przekazuje URI envelopes do innych URI serverów.
+```bash
+cd urisys-automation-lab
+bash scripts/docker-up.sh
+bash scripts/docker-smoke.sh
+
+# Pełny test E2E
+cd .. && python3 scripts/run_test_sessions.py --sessions lab-10-flows
+```
+
+## Dokumentacja
+
+| Dokument | Temat |
+|----------|--------|
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Jak działa urisys — warstwy, runtime, testy |
+| [`docs/PACKAGES.md`](docs/PACKAGES.md) | Layout monorepo, duplikaty, plan konsolidacji |
+| [`docs/FLOWS.md`](docs/FLOWS.md) | URI flows, zależności, walidacja |
+| [`docs/EXAMPLES.md`](docs/EXAMPLES.md) | Przykłady shell/frontend/Docker |
+| [`docs/CLI.md`](docs/CLI.md) | Komendy CLI |
+| [`docs/MARKPACT.md`](docs/MARKPACT.md) | Markpact validate/compile/test |
+| [`project/MAP.md`](project/MAP.md) | Przewodnik po `map.toon.yaml` (code2llm) |
+| [`project/PACKAGES.md`](project/PACKAGES.md) | Indeks paczek sync z mapą |
+
+## Struktura monorepo
+
+```text
+src/urisys/              pip package — CLI + managers
+packages/python/urisysedge/   wspólny edge runtime (canonical)
+urirdp-docker/           RDP + KVM/HIM/OCR/LLM/shell/browser
+urisys-automation-lab/   10 flows, lab UI :8099
+urisys-node/             slave node + ArtifactResolver
+local-lab/               markpact.com release chain
+flows/                   przykład flow dla CLI
+examples/                shell + frontend
+markpacts/packs/         Markpact do walidacji
+scripts/                 test sessions, validate-all-markpacts
+```
+
+## Managers
+
+- `PackManager` — paczki `uri*`, manifest.yaml, Markpact
+- `MarkpactManager` — validate / compile / test `*.markpact.md`
+- `RuntimeManager` — `uri_control.UriControlRuntime`
+- `UriController` — call, explain, routes
+- `FlowController` — sekwencyjne `*.uri.flow.yaml`
+- `BridgeManager` — forward do zdalnego `/uri/call`
 
 ## Markpact
 
-Przykładowe pliki:
-
-```text
-markpacts/packs/uribrowser.markpact.md
-markpacts/packs/urisystemd.markpact.md
-markpacts/packs/uridom-js.markpact.md
-```
-
-Komendy:
-
 ```bash
 urisys markpact validate markpacts/packs/uribrowser.markpact.md
-urisys markpact compile markpacts/packs/uribrowser.markpact.md
-urisys markpact routes markpacts/packs/uribrowser.markpact.md
-urisys markpact test markpacts/packs/uribrowser.markpact.md
+bash scripts/validate-all-markpacts.sh
 ```
 
-Wywołanie przez runtime bez instalowania paczki:
+## Analiza projektu (code2llm)
 
 ```bash
-urisys --packs none \
-  --markpact markpacts/packs/uribrowser.markpact.md \
-  call browser://default/page/open \
-  --payload '{"url":"https://example.com"}' \
-  --approve \
-  --dry-run
+code2llm ./ -f all -o ./project
+# → project/map.toon.yaml, calls.mmd, context.md
 ```
-
-## HTTP server
-
-```bash
-urisys --packs all serve --host 127.0.0.1 --port 8789
-```
-
-Endpointy:
-
-```text
-GET  /health
-GET  /uri/routes
-GET  /uri/events
-POST /uri/call
-POST /uri/explain
-```
-
-## Safe execution
-
-Domyślnie handlery działają w trybie **real** (`--environment real`). `--approve` jest wymagane dla mutacji. Aby wymusić symulację, użyj `--dry-run` lub `--environment mock`.
-
-Więcej: `docs/MARKPACT.md` i `docs/CLI.md`.
-
 
 ## License
 
-Licensed under Apache-2.0.
+Apache-2.0

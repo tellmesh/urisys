@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.6', 'python').
+project_metadata('urisys', '0.1.8', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 40, 'less').
@@ -7,17 +7,22 @@ project_file('examples/frontend/app.js', 22, 'javascript').
 project_file('examples/markpact/browser-call.sh', 9, 'shell').
 project_file('examples/shell/call-uri.sh', 7, 'shell').
 project_file('examples/shell/server-curl.sh', 9, 'shell').
-project_file('local-lab/scripts/00-init-nexus.sh', 90, 'shell').
 project_file('local-lab/scripts/01-validate-markpact.sh', 23, 'shell').
-project_file('local-lab/scripts/02-build-publish.sh', 95, 'shell').
+project_file('local-lab/scripts/02-build-publish.sh', 130, 'shell').
 project_file('local-lab/scripts/03-resolve-run.sh', 17, 'shell').
 project_file('local-lab/scripts/04-smoke.sh', 36, 'shell').
+project_file('local-lab/scripts/05-resolve-from-url.sh', 24, 'shell').
+project_file('local-lab/scripts/06-register-release.sh', 63, 'shell').
 project_file('local-lab/scripts/install-urisys.sh', 18, 'shell').
-project_file('local-lab/scripts/run-all.sh', 29, 'shell').
+project_file('local-lab/scripts/run-all.sh', 26, 'shell').
+project_file('packages/python/urisysedge/__init__.py', 13, 'python').
+project_file('packages/python/urisysedge/env.py', 130, 'python').
+project_file('packages/python/urisysedge/runtime.py', 256, 'python').
 project_file('project.sh', 59, 'shell').
-project_file('scripts/run_test_sessions.py', 1003, 'python').
+project_file('scripts/run_test_sessions.py', 1032, 'python').
 project_file('scripts/session_report.py', 510, 'python').
 project_file('scripts/test-goal.sh', 12, 'shell').
+project_file('scripts/validate-all-markpacts.sh', 41, 'shell').
 project_file('src/urisys/__init__.py', 4, 'python').
 project_file('src/urisys/cli.py', 177, 'python').
 project_file('src/urisys/controllers/__init__.py', 1, 'python').
@@ -30,13 +35,13 @@ project_file('src/urisys/http_server.py', 79, 'python').
 project_file('src/urisys/managers/__init__.py', 1, 'python').
 project_file('src/urisys/managers/bridge_manager.py', 15, 'python').
 project_file('src/urisys/managers/event_manager.py', 14, 'python').
-project_file('src/urisys/managers/markpact_manager.py', 409, 'python').
+project_file('src/urisys/managers/markpact_manager.py', 580, 'python').
 project_file('src/urisys/managers/pack_manager.py', 98, 'python').
 project_file('src/urisys/managers/policy_manager.py', 19, 'python').
 project_file('src/urisys/managers/route_manager.py', 24, 'python').
 project_file('src/urisys/managers/runtime_manager.py', 31, 'python').
 project_file('src/urisys/managers/source_manager.py', 225, 'python').
-project_file('tests/test_markpact.py', 56, 'python').
+project_file('tests/test_markpact.py', 81, 'python').
 project_file('tests/test_source_manager.py', 36, 'python').
 project_file('tests/test_urisys.py', 25, 'python').
 project_file('tree.sh', 2, 'shell').
@@ -107,11 +112,16 @@ project_file('urikvm-docker/scripts/test-real.sh', 48, 'shell').
 project_file('urikvm-docker/tests/test_kvm.py', 35, 'python').
 project_file('urikvm-docker/tests/test_ocr_llm.py', 81, 'python').
 project_file('urirdp-docker/docker/bootstrap-rdp-session.sh', 112, 'shell').
-project_file('urirdp-docker/docker/entrypoint.sh', 24, 'shell').
+project_file('urirdp-docker/docker/entrypoint.sh', 26, 'shell').
 project_file('urirdp-docker/docker/startwm.sh', 7, 'shell').
 project_file('urirdp-docker/packages/python/urirdp/__init__.py', 4, 'python').
 project_file('urirdp-docker/packages/python/urirdp/handlers.py', 90, 'python').
 project_file('urirdp-docker/packages/python/urirdp/routes.py', 13, 'python').
+project_file('urirdp-docker/packages/python/urirdp_browser/__init__.py', 8, 'python').
+project_file('urirdp-docker/packages/python/urirdp_browser/handlers.py', 125, 'python').
+project_file('urirdp-docker/packages/python/urirdp_browser/routes.py', 46, 'python').
+project_file('urirdp-docker/packages/python/urirdp_env/__init__.py', 8, 'python').
+project_file('urirdp-docker/packages/python/urirdp_env/routes.py', 36, 'python').
 project_file('urirdp-docker/packages/python/urirdp_him/__init__.py', 4, 'python').
 project_file('urirdp-docker/packages/python/urirdp_him/handlers.py', 73, 'python').
 project_file('urirdp-docker/packages/python/urirdp_him/routes.py', 8, 'python').
@@ -126,18 +136,19 @@ project_file('urirdp-docker/packages/python/urirdp_ocr/__init__.py', 4, 'python'
 project_file('urirdp-docker/packages/python/urirdp_ocr/handlers.py', 80, 'python').
 project_file('urirdp-docker/packages/python/urirdp_ocr/routes.py', 4, 'python').
 project_file('urirdp-docker/packages/python/urirdp_shell/__init__.py', 5, 'python').
-project_file('urirdp-docker/packages/python/urirdp_shell/handlers.py', 54, 'python').
+project_file('urirdp-docker/packages/python/urirdp_shell/handlers.py', 58, 'python').
 project_file('urirdp-docker/packages/python/urirdp_shell/routes.py', 10, 'python').
 project_file('urirdp-docker/packages/python/urirdpedge/__init__.py', 1, 'python').
-project_file('urirdp-docker/packages/python/urirdpedge/cli.py', 93, 'python').
-project_file('urirdp-docker/packages/python/urirdpedge/env.py', 124, 'python').
-project_file('urirdp-docker/packages/python/urirdpedge/runtime.py', 245, 'python').
+project_file('urirdp-docker/packages/python/urirdpedge/cli.py', 99, 'python').
+project_file('urirdp-docker/packages/python/urirdpedge/env.py', 126, 'python').
+project_file('urirdp-docker/packages/python/urirdpedge/runtime.py', 256, 'python').
 project_file('urirdp-docker/scripts/call-http.sh', 11, 'shell').
 project_file('urirdp-docker/scripts/test-docker.sh', 18, 'shell').
 project_file('urirdp-docker/scripts/test-local.sh', 9, 'shell').
 project_file('urirdp-docker/scripts/test-rdp-real.sh', 13, 'shell').
 project_file('urirdp-docker/scripts/test-real-docker.sh', 64, 'shell').
 project_file('urirdp-docker/tests/e2e_rdp_real.sh', 101, 'shell').
+project_file('urirdp-docker/tests/test_env_browser_routes.py', 50, 'python').
 project_file('urirdp-docker/tests/test_env_resolve.py', 29, 'python').
 project_file('urirdp-docker/tests/test_rdp_kvm.py', 76, 'python').
 project_file('uristepper-docker/packages/python/uristepper/__init__.py', 2, 'python').
@@ -155,7 +166,7 @@ project_file('uristepper-docker/tests/e2e.py', 71, 'python').
 project_file('uristepper-docker/tests/test_runtime.py', 53, 'python').
 project_file('urisys-automation-lab/docker/entrypoint.sh', 19, 'shell').
 project_file('urisys-automation-lab/packages/python/labedge/__init__.py', 1, 'python').
-project_file('urisys-automation-lab/packages/python/labedge/runtime.py', 154, 'python').
+project_file('urisys-automation-lab/packages/python/labedge/runtime.py', 165, 'python').
 project_file('urisys-automation-lab/packages/python/urichat/__init__.py', 1, 'python').
 project_file('urisys-automation-lab/packages/python/urichat/handlers.py', 82, 'python').
 project_file('urisys-automation-lab/packages/python/urichat/routes.py', 18, 'python').
@@ -171,7 +182,8 @@ project_file('urisys-automation-lab/scripts/docker-smoke.sh', 21, 'shell').
 project_file('urisys-automation-lab/scripts/docker-up.sh', 22, 'shell').
 project_file('urisys-automation-lab/scripts/run-lab.sh', 14, 'shell').
 project_file('urisys-automation-lab/scripts/validate-flows.sh', 29, 'shell').
-project_file('urisys-automation-lab/server/automation_lab_server.py', 214, 'python').
+project_file('urisys-automation-lab/server/automation_lab_server.py', 244, 'python').
+project_file('urisys-automation-lab/server/flow_runner.py', 222, 'python').
 project_file('urisys-automation-lab/server/static_server.py', 7, 'python').
 project_file('urisys-automation-lab/tests/test_lab_handlers.py', 62, 'python').
 project_file('urisys-automation-lab/web/app.js', 132, 'javascript').
@@ -179,8 +191,8 @@ project_file('urisys-node/packages/python/uriscreen/__init__.py', 1, 'python').
 project_file('urisys-node/packages/python/uriscreen/handlers.py', 103, 'python').
 project_file('urisys-node/packages/python/uriscreen/routes.py', 24, 'python').
 project_file('urisys-node/packages/python/urisysnode/__init__.py', 1, 'python').
-project_file('urisys-node/packages/python/urisysnode/artifact_resolver.py', 121, 'python').
-project_file('urisys-node/packages/python/urisysnode/cli.py', 137, 'python').
+project_file('urisys-node/packages/python/urisysnode/artifact_resolver.py', 226, 'python').
+project_file('urisys-node/packages/python/urisysnode/cli.py', 171, 'python').
 project_file('urisys-node/packages/python/urisysnode/client.py', 93, 'python').
 project_file('urisys-node/packages/python/urisysnode/env.py', 23, 'python').
 project_file('urisys-node/packages/python/urisysnode/handlers.py', 42, 'python').
@@ -190,14 +202,27 @@ project_file('urisys-node/packages/python/urisysnode/routes.py', 20, 'python').
 project_file('urisys-node/packages/python/urisysnode/runtime.py', 166, 'python').
 project_file('urisys-node/packages/python/urisysnode/serve.py', 108, 'python').
 project_file('urisys-node/scripts/install-linux.sh', 17, 'shell').
-project_file('urisys-node/tests/test_artifact_resolver.py', 31, 'python').
+project_file('urisys-node/tests/test_artifact_resolver.py', 70, 'python').
 project_file('urisys-node/tests/test_urisys_node.py', 51, 'python').
 
 % ── Python Functions ─────────────────────────────────────
+python_function('packages/python/urisysedge/env.py', '_urisys_root', 0, 1, 2).
+python_function('packages/python/urisysedge/env.py', 'load_urisys_env', 0, 8, 12).
+python_function('packages/python/urisysedge/env.py', '_env_policy_candidates', 0, 2, 5).
+python_function('packages/python/urisysedge/env.py', 'load_env_policy', 0, 6, 5).
+python_function('packages/python/urisysedge/env.py', '_env_config', 1, 7, 2).
+python_function('packages/python/urisysedge/env.py', 'resolve_env_var', 2, 11, 8).
+python_function('packages/python/urisysedge/env.py', 'is_secret_env', 1, 1, 1).
+python_function('packages/python/urisysedge/runtime.py', '_result_ok', 1, 5, 2).
+python_function('packages/python/urisysedge/runtime.py', 'load_json', 1, 3, 5).
+python_function('packages/python/urisysedge/runtime.py', 'load_yaml_flow', 1, 14, 16).
+python_function('packages/python/urisysedge/runtime.py', 'run_flow', 3, 7, 11).
+python_function('packages/python/urisysedge/runtime.py', 'make_handler', 1, 1, 15).
+python_function('packages/python/urisysedge/runtime.py', 'serve', 3, 2, 4).
 python_function('scripts/run_test_sessions.py', '_now_iso', 0, 1, 3).
 python_function('scripts/run_test_sessions.py', '_run_id', 0, 1, 2).
 python_function('scripts/run_test_sessions.py', '_host_id', 0, 1, 3).
-python_function('scripts/run_test_sessions.py', '_http_json', 4, 5, 11).
+python_function('scripts/run_test_sessions.py', '_http_json', 4, 9, 11).
 python_function('scripts/run_test_sessions.py', '_wait_health', 3, 3, 5).
 python_function('scripts/run_test_sessions.py', '_compose_cmd', 0, 4, 3).
 python_function('scripts/run_test_sessions.py', '_prepare_urirdp_data', 1, 4, 5).
@@ -220,12 +245,12 @@ python_function('scripts/run_test_sessions.py', 'session_automation_lab', 1, 16,
 python_function('scripts/run_test_sessions.py', '_parse_lab_flow', 1, 10, 10).
 python_function('scripts/run_test_sessions.py', '_flow_step_context', 2, 6, 3).
 python_function('scripts/run_test_sessions.py', '_file_md5', 1, 2, 4).
-python_function('scripts/run_test_sessions.py', '_step_pause', 1, 5, 2).
+python_function('scripts/run_test_sessions.py', '_step_pause', 1, 6, 2).
 python_function('scripts/run_test_sessions.py', '_summarize_uri_response', 1, 11, 3).
-python_function('scripts/run_test_sessions.py', '_parse_docker_log_errors', 1, 8, 8).
+python_function('scripts/run_test_sessions.py', '_parse_docker_log_errors', 1, 10, 8).
 python_function('scripts/run_test_sessions.py', '_prepare_ok_target', 3, 1, 2).
 python_function('scripts/run_test_sessions.py', '_capture_rdp_screenshot', 1, 5, 4).
-python_function('scripts/run_test_sessions.py', 'session_lab_10_flows', 1, 28, 30).
+python_function('scripts/run_test_sessions.py', 'session_lab_10_flows', 1, 26, 26).
 python_function('scripts/run_test_sessions.py', 'main', 0, 13, 19).
 python_function('scripts/session_report.py', '_now_iso', 0, 1, 3).
 python_function('scripts/session_report.py', '_host_id', 0, 1, 3).
@@ -254,7 +279,10 @@ python_function('src/urisys/http_server.py', 'create_server', 2, 1, 13).
 python_function('src/urisys/managers/markpact_manager.py', '_safe_identifier', 1, 3, 4).
 python_function('src/urisys/managers/markpact_manager.py', '_parse_meta', 1, 4, 2).
 python_function('src/urisys/managers/markpact_manager.py', '_scheme_from_uri', 1, 2, 2).
-python_function('tests/test_markpact.py', 'test_markpact_validate', 0, 4, 2).
+python_function('tests/test_markpact.py', 'test_markpact_validate', 0, 5, 2).
+python_function('tests/test_markpact.py', 'test_markpact_validate_contract', 0, 5, 2).
+python_function('tests/test_markpact.py', 'test_markpact_validate_implementation', 0, 4, 2).
+python_function('tests/test_markpact.py', 'test_markpact_validate_bundle', 0, 3, 2).
 python_function('tests/test_markpact.py', 'test_markpact_compile_and_call', 1, 5, 7).
 python_function('tests/test_markpact.py', 'test_uri_controller_loads_markpact_directly', 1, 4, 4).
 python_function('tests/test_markpact.py', 'test_markpact_embedded_tests', 1, 3, 3).
@@ -422,6 +450,14 @@ python_function('urirdp-docker/packages/python/urirdp/handlers.py', 'display', 2
 python_function('urirdp-docker/packages/python/urirdp/handlers.py', 'display_status', 2, 7, 9).
 python_function('urirdp-docker/packages/python/urirdp/handlers.py', 'prepare_target', 2, 4, 8).
 python_function('urirdp-docker/packages/python/urirdp/routes.py', 'register', 1, 1, 1).
+python_function('urirdp-docker/packages/python/urirdp_browser/handlers.py', '_profile', 1, 1, 1).
+python_function('urirdp-docker/packages/python/urirdp_browser/handlers.py', '_session_state', 1, 1, 2).
+python_function('urirdp-docker/packages/python/urirdp_browser/handlers.py', '_chromium_binary', 1, 4, 3).
+python_function('urirdp-docker/packages/python/urirdp_browser/handlers.py', 'open_page', 2, 14, 16).
+python_function('urirdp-docker/packages/python/urirdp_browser/handlers.py', 'get_dom', 2, 1, 1).
+python_function('urirdp-docker/packages/python/urirdp_browser/handlers.py', 'screenshot', 2, 1, 1).
+python_function('urirdp-docker/packages/python/urirdp_browser/routes.py', 'register', 1, 3, 1).
+python_function('urirdp-docker/packages/python/urirdp_env/routes.py', 'register', 1, 3, 1).
 python_function('urirdp-docker/packages/python/urirdp_him/__init__.py', 'register', 1, 1, 1).
 python_function('urirdp-docker/packages/python/urirdp_him/handlers.py', '_mock', 3, 1, 1).
 python_function('urirdp-docker/packages/python/urirdp_him/handlers.py', 'mouse_move', 2, 5, 9).
@@ -467,9 +503,9 @@ python_function('urirdp-docker/packages/python/urirdp_ocr/handlers.py', 'image_t
 python_function('urirdp-docker/packages/python/urirdp_ocr/routes.py', 'register', 1, 1, 1).
 python_function('urirdp-docker/packages/python/urirdp_shell/__init__.py', 'register', 1, 1, 1).
 python_function('urirdp-docker/packages/python/urirdp_shell/handlers.py', '_mock', 3, 2, 2).
-python_function('urirdp-docker/packages/python/urirdp_shell/handlers.py', 'shell_run', 2, 14, 9).
+python_function('urirdp-docker/packages/python/urirdp_shell/handlers.py', 'shell_run', 2, 16, 10).
 python_function('urirdp-docker/packages/python/urirdp_shell/routes.py', 'register', 1, 1, 1).
-python_function('urirdp-docker/packages/python/urirdpedge/cli.py', 'build_runtime', 1, 8, 7).
+python_function('urirdp-docker/packages/python/urirdpedge/cli.py', 'build_runtime', 1, 10, 7).
 python_function('urirdp-docker/packages/python/urirdpedge/cli.py', 'main', 1, 8, 16).
 python_function('urirdp-docker/packages/python/urirdpedge/env.py', 'load_urisys_env', 0, 8, 12).
 python_function('urirdp-docker/packages/python/urirdpedge/env.py', '_env_policy_candidates', 0, 2, 5).
@@ -477,11 +513,15 @@ python_function('urirdp-docker/packages/python/urirdpedge/env.py', 'load_env_pol
 python_function('urirdp-docker/packages/python/urirdpedge/env.py', '_env_config', 1, 7, 2).
 python_function('urirdp-docker/packages/python/urirdpedge/env.py', 'resolve_env_var', 2, 11, 8).
 python_function('urirdp-docker/packages/python/urirdpedge/env.py', 'is_secret_env', 1, 1, 1).
+python_function('urirdp-docker/packages/python/urirdpedge/runtime.py', '_result_ok', 1, 5, 2).
 python_function('urirdp-docker/packages/python/urirdpedge/runtime.py', 'load_json', 1, 3, 5).
 python_function('urirdp-docker/packages/python/urirdpedge/runtime.py', 'load_yaml_flow', 1, 14, 16).
 python_function('urirdp-docker/packages/python/urirdpedge/runtime.py', 'run_flow', 3, 7, 11).
 python_function('urirdp-docker/packages/python/urirdpedge/runtime.py', 'make_handler', 1, 1, 15).
 python_function('urirdp-docker/packages/python/urirdpedge/runtime.py', 'serve', 3, 2, 4).
+python_function('urirdp-docker/tests/test_env_browser_routes.py', 'test_env_and_browser_routes_registered', 0, 5, 2).
+python_function('urirdp-docker/tests/test_env_browser_routes.py', 'test_env_health_call', 0, 3, 3).
+python_function('urirdp-docker/tests/test_env_browser_routes.py', 'test_browser_lab_alias_open_and_dom', 0, 6, 4).
 python_function('urirdp-docker/tests/test_env_resolve.py', 'test_load_env_policy_includes_llm_vars', 0, 4, 2).
 python_function('urirdp-docker/tests/test_env_resolve.py', 'test_resolve_env_var_falls_back_to_process_env', 0, 3, 2).
 python_function('urirdp-docker/tests/test_env_resolve.py', 'test_resolve_env_var_secret_via_env_policy', 1, 4, 3).
@@ -520,6 +560,7 @@ python_function('uristepper-docker/tests/e2e.py', 'post', 2, 1, 7).
 python_function('uristepper-docker/tests/e2e.py', 'get', 1, 1, 4).
 python_function('uristepper-docker/tests/e2e.py', 'assert_ok', 2, 2, 4).
 python_function('uristepper-docker/tests/e2e.py', 'main', 0, 3, 7).
+python_function('urisys-automation-lab/packages/python/labedge/runtime.py', '_result_ok', 1, 5, 2).
 python_function('urisys-automation-lab/packages/python/labedge/runtime.py', 'load_json', 1, 3, 4).
 python_function('urisys-automation-lab/packages/python/urichat/handlers.py', '_match_transcript', 1, 4, 3).
 python_function('urisys-automation-lab/packages/python/urichat/handlers.py', '_forward_uri', 4, 2, 9).
@@ -536,8 +577,17 @@ python_function('urisys-automation-lab/packages/python/uriwebrtc/handlers.py', '
 python_function('urisys-automation-lab/packages/python/uriwebrtc/handlers.py', 'data_send', 2, 3, 3).
 python_function('urisys-automation-lab/packages/python/uriwebrtc/routes.py', 'register', 1, 1, 1).
 python_function('urisys-automation-lab/server/automation_lab_server.py', 'build_lab_runtime', 1, 16, 11).
-python_function('urisys-automation-lab/server/automation_lab_server.py', 'forward_uri_call', 4, 1, 8).
+python_function('urisys-automation-lab/server/automation_lab_server.py', 'forward_uri_call', 4, 4, 9).
 python_function('urisys-automation-lab/server/automation_lab_server.py', 'serve', 2, 4, 8).
+python_function('urisys-automation-lab/server/flow_runner.py', '_as_list', 1, 5, 4).
+python_function('urisys-automation-lab/server/flow_runner.py', '_parse_step', 1, 9, 11).
+python_function('urisys-automation-lab/server/flow_runner.py', '_load_flow_document', 1, 11, 10).
+python_function('urisys-automation-lab/server/flow_runner.py', '_node_id', 2, 4, 5).
+python_function('urisys-automation-lab/server/flow_runner.py', '_expand_graph', 1, 8, 4).
+python_function('urisys-automation-lab/server/flow_runner.py', '_topo_sort', 1, 15, 5).
+python_function('urisys-automation-lab/server/flow_runner.py', 'plan_flow', 1, 2, 5).
+python_function('urisys-automation-lab/server/flow_runner.py', '_step_ok', 1, 9, 3).
+python_function('urisys-automation-lab/server/flow_runner.py', 'run_flow_file', 1, 17, 11).
 python_function('urisys-automation-lab/tests/test_lab_handlers.py', '_rt', 0, 1, 2).
 python_function('urisys-automation-lab/tests/test_lab_handlers.py', 'test_stt_session_and_transcript', 0, 4, 3).
 python_function('urisys-automation-lab/tests/test_lab_handlers.py', 'test_chat_uri_execute_dry_run', 0, 4, 2).
@@ -552,14 +602,20 @@ python_function('urisys-node/packages/python/uriscreen/handlers.py', 'capture', 
 python_function('urisys-node/packages/python/uriscreen/handlers.py', 'frame', 2, 1, 5).
 python_function('urisys-node/packages/python/uriscreen/handlers.py', 'capture_loop', 2, 4, 9).
 python_function('urisys-node/packages/python/uriscreen/routes.py', 'register', 1, 1, 1).
+python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'is_url', 1, 1, 1).
+python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', '_auth_opener', 1, 4, 7).
+python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'fetch_json', 1, 1, 6).
 python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'load_node_profile', 1, 3, 4).
-python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'load_artifact_index', 1, 1, 3).
+python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'load_artifact_index', 1, 3, 8).
+python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'release_api_url', 3, 1, 2).
+python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'fetch_release', 3, 5, 6).
 python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'select_artifact', 2, 15, 6).
 python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'docker_pull', 1, 4, 3).
 python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'docker_run_worker', 1, 3, 3).
-python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'wait_health', 2, 4, 6).
+python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'wait_health', 3, 4, 6).
 python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'resolve_and_run', 2, 4, 9).
-python_function('urisys-node/packages/python/urisysnode/cli.py', 'main', 1, 14, 26).
+python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'resolve_from_release', 4, 6, 10).
+python_function('urisys-node/packages/python/urisysnode/cli.py', 'main', 1, 16, 29).
 python_function('urisys-node/packages/python/urisysnode/client.py', 'discover_mdns', 1, 2, 12).
 python_function('urisys-node/packages/python/urisysnode/client.py', 'remote_call', 4, 3, 8).
 python_function('urisys-node/packages/python/urisysnode/client.py', 'call_via_route_map', 1, 6, 12).
@@ -592,13 +648,28 @@ python_function('urisys-node/packages/python/urisysnode/serve.py', 'build_runtim
 python_function('urisys-node/packages/python/urisysnode/serve.py', 'make_handler', 1, 1, 19).
 python_function('urisys-node/packages/python/urisysnode/serve.py', 'serve', 3, 2, 6).
 python_function('urisys-node/tests/test_artifact_resolver.py', 'test_select_artifact_by_platform', 1, 2, 4).
-python_function('urisys-node/tests/test_artifact_resolver.py', 'test_load_artifact_index', 1, 2, 3).
+python_function('urisys-node/tests/test_artifact_resolver.py', 'test_load_artifact_index_from_file', 1, 2, 3).
+python_function('urisys-node/tests/test_artifact_resolver.py', 'test_load_artifact_index_from_url', 0, 2, 2).
+python_function('urisys-node/tests/test_artifact_resolver.py', 'test_fetch_release', 0, 2, 3).
+python_function('urisys-node/tests/test_artifact_resolver.py', 'test_release_api_url', 0, 2, 1).
 python_function('urisys-node/tests/test_urisys_node.py', 'test_identity_and_enroll', 0, 5, 3).
 python_function('urisys-node/tests/test_urisys_node.py', 'test_screen_capture_mock', 0, 4, 4).
 python_function('urisys-node/tests/test_urisys_node.py', 'test_rewrite_uri_for_slave', 0, 2, 1).
 python_function('urisys-node/tests/test_urisys_node.py', 'test_health_payload', 0, 3, 1).
 
 % ── Python Classes ───────────────────────────────────────
+python_class('packages/python/urisysedge/runtime.py', 'Route').
+python_method('Route', 'compile', 0, 3, 6).
+python_method('Route', 'match', 1, 5, 5).
+python_class('packages/python/urisysedge/runtime.py', 'JsonlEventStore').
+python_method('JsonlEventStore', '__init__', 1, 2, 2).
+python_method('JsonlEventStore', 'append', 1, 1, 3).
+python_class('packages/python/urisysedge/runtime.py', 'Runtime').
+python_method('Runtime', '__init__', 2, 2, 1).
+python_method('Runtime', 'register', 2, 2, 4).
+python_method('Runtime', 'resolve', 1, 3, 2).
+python_method('Runtime', '_load_handler', 1, 2, 5).
+python_method('Runtime', 'call', 3, 10, 14).
 python_class('scripts/session_report.py', 'StepResult').
 python_class('scripts/session_report.py', 'SessionReport').
 python_method('SessionReport', 'passed', 0, 3, 1).
@@ -631,8 +702,14 @@ python_class('src/urisys/managers/markpact_manager.py', 'MarkpactManager').
 python_method('MarkpactManager', '__init__', 1, 1, 1).
 python_method('MarkpactManager', 'read_blocks', 1, 3, 8).
 python_method('MarkpactManager', 'source_hash', 1, 1, 4).
-python_method('MarkpactManager', 'load_pack_block', 1, 7, 5).
-python_method('MarkpactManager', 'validate', 1, 10, 18).
+python_method('MarkpactManager', 'load_pack_block', 1, 4, 5).
+python_method('MarkpactManager', 'load_pack_block', 1, 4, 6).
+python_method('MarkpactManager', 'validate', 1, 12, 11).
+python_method('MarkpactManager', '_validate_pack', 3, 11, 16).
+python_method('MarkpactManager', '_validate_contract', 2, 23, 9).
+python_method('MarkpactManager', '_validate_bundle', 2, 14, 9).
+python_method('MarkpactManager', '_validate_implementation', 2, 18, 8).
+python_method('MarkpactManager', '_yaml_blocks', 2, 4, 0).
 python_method('MarkpactManager', 'compile', 1, 21, 25).
 python_method('MarkpactManager', 'manifest_path_for', 1, 1, 1).
 python_method('MarkpactManager', 'run_tests', 1, 20, 15).
@@ -765,7 +842,8 @@ python_method('Runtime', '__init__', 2, 2, 1).
 python_method('Runtime', 'register', 2, 2, 4).
 python_method('Runtime', 'resolve', 1, 3, 2).
 python_method('Runtime', '_load_handler', 1, 2, 5).
-python_method('Runtime', 'call', 3, 10, 13).
+python_method('Runtime', 'call', 3, 10, 14).
+python_class('urirdp-docker/tests/test_env_browser_routes.py', '_Args').
 python_class('urirdp-docker/tests/test_rdp_kvm.py', 'Args').
 python_class('uristepper-docker/packages/python/uristepper/drivers.py', 'StepperDriver').
 python_method('StepperDriver', 'status', 3, 1, 0).
@@ -831,14 +909,17 @@ python_method('Runtime', '__init__', 2, 2, 1).
 python_method('Runtime', 'register', 2, 2, 4).
 python_method('Runtime', 'resolve', 1, 3, 2).
 python_method('Runtime', '_load_handler', 1, 2, 5).
-python_method('Runtime', 'call', 3, 8, 12).
+python_method('Runtime', 'call', 3, 8, 13).
 python_class('urisys-automation-lab/server/automation_lab_server.py', 'LabHandler').
 python_method('LabHandler', 'log_message', 1, 1, 2).
 python_method('LabHandler', '_json', 2, 1, 8).
 python_method('LabHandler', '_read_json', 0, 4, 5).
 python_method('LabHandler', 'do_OPTIONS', 0, 1, 3).
 python_method('LabHandler', 'do_GET', 0, 9, 12).
-python_method('LabHandler', 'do_POST', 0, 18, 8).
+python_method('LabHandler', 'do_POST', 0, 23, 9).
+python_class('urisys-node/packages/python/urisysnode/artifact_resolver.py', '_GitHubHeaderAuth').
+python_method('_GitHubHeaderAuth', '__init__', 1, 1, 0).
+python_method('_GitHubHeaderAuth', 'https_request', 1, 1, 1).
 python_class('urisys-node/packages/python/urisysnode/runtime.py', 'Route').
 python_method('Route', 'compile', 0, 3, 6).
 python_method('Route', 'match', 1, 5, 5).

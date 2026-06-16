@@ -55,35 +55,21 @@ W prawdziwym pliku nie zagnieżdżaj bloków ``` w środku innych bloków Markdo
 
 ## Komendy
 
-Walidacja:
-
 ```bash
-urisys markpact validate markpacts/packs/uribrowser.markpact.md
-```
+source scripts/paths.sh
+PACK="$(markpact_contracts_packs)/uribrowser.markpact.md"
 
-Kompilacja do cache:
-
-```bash
-urisys markpact compile markpacts/packs/uribrowser.markpact.md
-```
-
-Lista tras wygenerowanych z Markpact:
-
-```bash
-urisys markpact routes markpacts/packs/uribrowser.markpact.md
-```
-
-Testy z pliku:
-
-```bash
-urisys markpact test markpacts/packs/uribrowser.markpact.md
+urisys markpact validate "$PACK"
+urisys markpact compile "$PACK"
+urisys markpact routes "$PACK"
+urisys markpact test "$PACK"
 ```
 
 Wywołanie URI bez instalowania paczki:
 
 ```bash
 urisys --packs none \
-  --markpact markpacts/packs/uribrowser.markpact.md \
+  --markpact "$PACK" \
   call browser://default/page/open \
   --payload '{"url":"https://example.com"}' \
   --approve \
@@ -94,7 +80,7 @@ Server URI z Markpact:
 
 ```bash
 urisys --packs none \
-  --markpact markpacts/packs/urisystemd.markpact.md \
+  --markpact "$(markpact_contracts_packs)/urisystemd.markpact.md" \
   serve --port 8789
 ```
 

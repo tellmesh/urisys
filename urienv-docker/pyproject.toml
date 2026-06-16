@@ -4,8 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
 pythonpath = [
-  "vendor/uricore/core/python",
   "packages/python/urisysedge/src",
-  "packages/python/urienv/src"
+  "packages/python/urienv/src",
 ]
 testpaths = ["tests"]

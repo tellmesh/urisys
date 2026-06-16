@@ -6,7 +6,6 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-COPY vendor/uricore /app/vendor/uricore
 COPY packages/python/urisysedge /app/packages/python/urisysedge
 COPY packages/python/urienv /app/packages/python/urienv
 COPY docker/config /app/docker/config
@@ -14,12 +13,12 @@ COPY flows /app/flows
 COPY tests /app/tests
 
 RUN pip install --upgrade pip \
-    && pip install "PyYAML>=6.0" \
+    && pip install "PyYAML>=6.0" "uricore>=0.1.3" \
     && printf '%s\n' '#!/usr/bin/env sh' 'exec python -m urisysedge.cli "$@"' > /usr/local/bin/urisys \
     && chmod +x /usr/local/bin/urisys \
     && ln -s /usr/local/bin/urisys /usr/local/bin/urisys-edge
 
-ENV PYTHONPATH="/app/vendor/uricore/core/python:/app/packages/python/urisysedge/src:/app/packages/python/urienv/src"
+ENV PYTHONPATH="/app/packages/python/urisysedge/src:/app/packages/python/urienv/src"
 
 EXPOSE 8790
 

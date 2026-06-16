@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Resolve sibling repo paths in tellmesh workspace (urisys checkout may be standalone).
+set -euo pipefail
+
+_urisys_root() {
+  cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd
+}
+
+urisys_root() {
+  _urisys_root
+}
+
+# tellmesh/markpact-contracts/packs when urisys lives in tellmesh/urisys
+markpact_contracts_packs() {
+  local root
+  root="$(_urisys_root)"
+  if [ -d "$root/../markpact-contracts/packs" ]; then
+    echo "$root/../markpact-contracts/packs"
+    return 0
+  fi
+  if [ -d "$root/markpacts/packs" ]; then
+    echo "$root/markpacts/packs"
+    return 0
+  fi
+  return 1
+}
+
+# tellmesh/uricore when present; empty if missing (use pip install uricore)
+uricore_root() {
+  local root
+  root="$(_urisys_root)"
+  if [ -d "$root/../uricore/core/python" ]; then
+    echo "$root/../uricore"
+    return 0
+  fi
+  return 1
+}
+
+uricore_pythonpath() {
+  local root
+  root="$(uricore_root)" || return 1
+  echo "$root/core/python"
+}
