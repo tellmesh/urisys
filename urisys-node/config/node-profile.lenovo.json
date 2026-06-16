@@ -1,0 +1,33 @@
+{
+  "profile_id": "urisys-node-lenovo",
+  "node_id": "lenovo",
+  "screen": {
+    "default_backend": "auto",
+    "output_dir": "data/screens"
+  },
+  "him": {
+    "driver": "ydotool"
+  },
+  "forwards": [
+    {
+      "scheme": "imgl",
+      "endpoint": "http://127.0.0.1:8219",
+      "patterns": [
+        "imgl://{host}/image/latest/query/layout",
+        "imgl://{host}/image/latest/command/execute"
+      ]
+    },
+    {
+      "scheme": "vql",
+      "endpoint": "http://127.0.0.1:8220",
+      "patterns": [
+        "vql://{host}/ui/latest/query/detect",
+        "vql://{host}/ui/latest/query/compare"
+      ]
+    }
+  ],
+  "policy": {
+    "require_pairing": false,
+    "require_approval_for": ["him.*", "kvm.task.*", "screen.*.capture*"]
+  }
+}

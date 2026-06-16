@@ -42,10 +42,10 @@ tickets:
     analyze_run'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: build_parser'
-  description: 'code2llm reports `God Function: build_parser` in `src/urisys/cli.py:43`.
+  description: 'code2llm reports `God Function: build_parser` in `src/urisys/cli.py:44`.
 
 
-    Function ''build_parser'' is oversized: CC=1, fan-out=13, mutations=46.
+    Function ''build_parser'' is oversized: CC=1, fan-out=18, mutations=56.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -57,7 +57,7 @@ tickets:
   - god-function
   files:
   - src/urisys/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/urisys/cli.py:43:God Function: build_parser'
+  dedupe_key: 'code2llm:smell:god_function:src/urisys/cli.py:44:God Function: build_parser'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: cmd_flow'
   description: 'code2llm reports `God Function: cmd_flow` in `uristepper-docker/packages/python/uristepperedge/cli.py:50`.
@@ -288,7 +288,7 @@ tickets:
     Function: session_lab_10_flows'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: args'
-  description: 'code2llm reports `Shotgun Surgery: args` in `scripts/report/cli.py:11`.
+  description: 'code2llm reports `Shotgun Surgery: args` in `urikvm-docker/scripts/real_pipeline.py:59`.
 
 
     Mutation of variable ''args'' spans 13 functions. Changing this logic requires
@@ -303,12 +303,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/report/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/report/cli.py:11:Shotgun Surgery:
-    args'
+  - urikvm-docker/scripts/real_pipeline.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/scripts/real_pipeline.py:59:Shotgun
+    Surgery: args'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: axis'
-  description: 'code2llm reports `Shotgun Surgery: axis` in `uristepper-docker/packages/python/uristepper/handlers.py:105`.
+  description: 'code2llm reports `Shotgun Surgery: axis` in `uristepper-docker/packages/python/uristepper/handlers.py:72`.
 
 
     Mutation of variable ''axis'' spans 8 functions. Changing this logic requires
@@ -324,11 +324,11 @@ tickets:
   - shotgun-surgery
   files:
   - uristepper-docker/packages/python/uristepper/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:uristepper-docker/packages/python/uristepper/handlers.py:105:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:uristepper-docker/packages/python/uristepper/handlers.py:72:Shotgun
     Surgery: axis'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: base_url'
-  description: 'code2llm reports `Shotgun Surgery: base_url` in `urikvm-docker/packages/python/urillm/handlers.py:154`.
+  description: 'code2llm reports `Shotgun Surgery: base_url` in `urirdp-docker/packages/python/urirdp_llm/handlers.py:250`.
 
 
     Mutation of variable ''base_url'' spans 5 functions. Changing this logic requires
@@ -343,35 +343,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urikvm-docker/packages/python/urillm/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/packages/python/urillm/handlers.py:154:Shotgun
+  - urirdp-docker/packages/python/urirdp_llm/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp_llm/handlers.py:250:Shotgun
     Surgery: base_url'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: body'
-  description: 'code2llm reports `Shotgun Surgery: body` in `urisys-automation-lab/server/automation_lab_server.py:83`.
-
-
-    Mutation of variable ''body'' spans 15 functions. Changing this logic requires
-    work in many places.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - shotgun-surgery
-  files:
-  - urisys-automation-lab/server/automation_lab_server.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-automation-lab/server/automation_lab_server.py:83:Shotgun
-    Surgery: body'
-- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: cfg'
-  description: 'code2llm reports `Shotgun Surgery: cfg` in `uristepper-docker/packages/python/uristepper/handlers.py:105`.
+  description: 'code2llm reports `Shotgun Surgery: cfg` in `urienv-docker/packages/python/urienv/src/urienv/handlers.py:155`.
 
 
-    Mutation of variable ''cfg'' spans 27 functions. Changing this logic requires
+    Mutation of variable ''cfg'' spans 28 functions. Changing this logic requires
     work in many places.
 
 
@@ -383,15 +363,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - uristepper-docker/packages/python/uristepper/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:uristepper-docker/packages/python/uristepper/handlers.py:105:Shotgun
+  - urienv-docker/packages/python/urienv/src/urienv/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urienv-docker/packages/python/urienv/src/urienv/handlers.py:155:Shotgun
     Surgery: cfg'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: code'
-  description: 'code2llm reports `Shotgun Surgery: code` in `scripts/run_test_sessions.py:367`.
+  description: 'code2llm reports `Shotgun Surgery: code` in `urikvm-docker/packages/python/urihim/handlers.py:123`.
 
 
-    Mutation of variable ''code'' spans 5 functions. Changing this logic requires
+    Mutation of variable ''code'' spans 7 functions. Changing this logic requires
     work in many places.
 
 
@@ -403,12 +383,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/run_test_sessions.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:367:Shotgun
+  - urikvm-docker/packages/python/urihim/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/packages/python/urihim/handlers.py:123:Shotgun
     Surgery: code'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: config'
-  description: 'code2llm reports `Shotgun Surgery: config` in `urisys-node/packages/python/urisysnode/serve.py:62`.
+  description: 'code2llm reports `Shotgun Surgery: config` in `urisys-automation-lab/server/automation_lab_server.py:28`.
 
 
     Mutation of variable ''config'' spans 6 functions. Changing this logic requires
@@ -423,32 +403,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urisys-node/packages/python/urisysnode/serve.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/serve.py:62:Shotgun
+  - urisys-automation-lab/server/automation_lab_server.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-automation-lab/server/automation_lab_server.py:28:Shotgun
     Surgery: config'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: context'
-  description: 'code2llm reports `Shotgun Surgery: context` in `urienv-docker/packages/python/urisysedge/src/urisysedge/flow.py:6`.
-
-
-    Mutation of variable ''context'' spans 18 functions. Changing this logic requires
-    work in many places.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - shotgun-surgery
-  files:
-  - urienv-docker/packages/python/urisysedge/src/urisysedge/flow.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urienv-docker/packages/python/urisysedge/src/urisysedge/flow.py:6:Shotgun
-    Surgery: context'
-- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: ctx'
-  description: 'code2llm reports `Shotgun Surgery: ctx` in `scripts/run_test_sessions.py:168`.
+  description: 'code2llm reports `Shotgun Surgery: ctx` in `scripts/test_sessions/lab_rdp.py:116`.
 
 
     Mutation of variable ''ctx'' spans 9 functions. Changing this logic requires work
@@ -463,12 +423,32 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/run_test_sessions.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:168:Shotgun
+  - scripts/test_sessions/lab_rdp.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/lab_rdp.py:116:Shotgun
     Surgery: ctx'
 - signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: data'
+  description: 'code2llm reports `Shotgun Surgery: data` in `scripts/test_sessions/util.py:199`.
+
+
+    Mutation of variable ''data'' spans 36 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - scripts/test_sessions/util.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/util.py:199:Shotgun
+    Surgery: data'
+- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: device'
-  description: 'code2llm reports `Shotgun Surgery: device` in `uristepper-docker/packages/python/uristepper/handlers.py:105`.
+  description: 'code2llm reports `Shotgun Surgery: device` in `uristepper-docker/packages/python/uristepper/handlers.py:72`.
 
 
     Mutation of variable ''device'' spans 9 functions. Changing this logic requires
@@ -484,14 +464,14 @@ tickets:
   - shotgun-surgery
   files:
   - uristepper-docker/packages/python/uristepper/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:uristepper-docker/packages/python/uristepper/handlers.py:105:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:uristepper-docker/packages/python/uristepper/handlers.py:72:Shotgun
     Surgery: device'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: display'
-  description: 'code2llm reports `Shotgun Surgery: display` in `urirdp-docker/packages/python/urirdp_browser/handlers.py:49`.
+  description: 'code2llm reports `Shotgun Surgery: display` in `urisys-node/packages/python/urishell/handlers.py:33`.
 
 
-    Mutation of variable ''display'' spans 7 functions. Changing this logic requires
+    Mutation of variable ''display'' spans 8 functions. Changing this logic requires
     work in many places.
 
 
@@ -503,15 +483,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urirdp-docker/packages/python/urirdp_browser/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp_browser/handlers.py:49:Shotgun
+  - urisys-node/packages/python/urishell/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urishell/handlers.py:33:Shotgun
     Surgery: display'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: driver'
-  description: 'code2llm reports `Shotgun Surgery: driver` in `urikvm-docker/packages/python/uriocr/handlers.py:92`.
+  description: 'code2llm reports `Shotgun Surgery: driver` in `urikvm-docker/packages/python/urihim/handlers.py:123`.
 
 
-    Mutation of variable ''driver'' spans 10 functions. Changing this logic requires
+    Mutation of variable ''driver'' spans 14 functions. Changing this logic requires
     work in many places.
 
 
@@ -523,12 +503,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urikvm-docker/packages/python/uriocr/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/packages/python/uriocr/handlers.py:92:Shotgun
+  - urikvm-docker/packages/python/urihim/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/packages/python/urihim/handlers.py:123:Shotgun
     Surgery: driver'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: drv'
-  description: 'code2llm reports `Shotgun Surgery: drv` in `uristepper-docker/packages/python/uristepper/handlers.py:105`.
+  description: 'code2llm reports `Shotgun Surgery: drv` in `uristepper-docker/packages/python/uristepper/handlers.py:72`.
 
 
     Mutation of variable ''drv'' spans 7 functions. Changing this logic requires work
@@ -544,14 +524,14 @@ tickets:
   - shotgun-surgery
   files:
   - uristepper-docker/packages/python/uristepper/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:uristepper-docker/packages/python/uristepper/handlers.py:105:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:uristepper-docker/packages/python/uristepper/handlers.py:72:Shotgun
     Surgery: drv'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: entry'
-  description: 'code2llm reports `Shotgun Surgery: entry` in `urikvm-docker/packages/python/urikvm/handlers.py:29`.
+  title: 'Address code smell: Shotgun Surgery: endpoint'
+  description: 'code2llm reports `Shotgun Surgery: endpoint` in `urisys-node/packages/python/urisysnode/handlers.py:76`.
 
 
-    Mutation of variable ''entry'' spans 7 functions. Changing this logic requires
+    Mutation of variable ''endpoint'' spans 5 functions. Changing this logic requires
     work in many places.
 
 
@@ -563,16 +543,16 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urikvm-docker/packages/python/urikvm/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/packages/python/urikvm/handlers.py:29:Shotgun
-    Surgery: entry'
+  - urisys-node/packages/python/urisysnode/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/handlers.py:76:Shotgun
+    Surgery: endpoint'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: env'
-  description: 'code2llm reports `Shotgun Surgery: env` in `urirdp-docker/packages/python/urirdp_browser/handlers.py:49`.
+  title: 'Address code smell: Shotgun Surgery: entry'
+  description: 'code2llm reports `Shotgun Surgery: entry` in `urisys-node/packages/python/uriscreen/handlers.py:77`.
 
 
-    Mutation of variable ''env'' spans 8 functions. Changing this logic requires work
-    in many places.
+    Mutation of variable ''entry'' spans 9 functions. Changing this logic requires
+    work in many places.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -583,12 +563,32 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urirdp-docker/packages/python/urirdp_browser/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp_browser/handlers.py:49:Shotgun
+  - urisys-node/packages/python/uriscreen/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/uriscreen/handlers.py:77:Shotgun
+    Surgery: entry'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: env'
+  description: 'code2llm reports `Shotgun Surgery: env` in `urisys-node/packages/python/urishell/handlers.py:33`.
+
+
+    Mutation of variable ''env'' spans 11 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisys-node/packages/python/urishell/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urishell/handlers.py:33:Shotgun
     Surgery: env'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: findings'
-  description: 'code2llm reports `Shotgun Surgery: findings` in `scripts/report/lab_checks.py:128`.
+  description: 'code2llm reports `Shotgun Surgery: findings` in `scripts/report/lab_checks.py:177`.
 
 
     Mutation of variable ''findings'' spans 5 functions. Changing this logic requires
@@ -604,7 +604,7 @@ tickets:
   - shotgun-surgery
   files:
   - scripts/report/lab_checks.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/report/lab_checks.py:128:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/report/lab_checks.py:177:Shotgun
     Surgery: findings'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: identity'
@@ -627,11 +627,11 @@ tickets:
   dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/cli.py:24:Shotgun
     Surgery: identity'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: key'
-  description: 'code2llm reports `Shotgun Surgery: key` in `packages/python/urisysedge/runtime.py:177`.
+  title: 'Address code smell: Shotgun Surgery: kind'
+  description: 'code2llm reports `Shotgun Surgery: kind` in `scripts/report/events.py:109`.
 
 
-    Mutation of variable ''key'' spans 10 functions. Changing this logic requires
+    Mutation of variable ''kind'' spans 7 functions. Changing this logic requires
     work in many places.
 
 
@@ -643,15 +643,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - packages/python/urisysedge/runtime.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:packages/python/urisysedge/runtime.py:177:Shotgun
-    Surgery: key'
+  - scripts/report/events.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/report/events.py:109:Shotgun
+    Surgery: kind'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: lines'
-  description: 'code2llm reports `Shotgun Surgery: lines` in `scripts/report/session_markdown.py:64`.
+  title: 'Address code smell: Shotgun Surgery: length'
+  description: 'code2llm reports `Shotgun Surgery: length` in `src/urisys/http_server.py:12`.
 
 
-    Mutation of variable ''lines'' spans 9 functions. Changing this logic requires
+    Mutation of variable ''length'' spans 6 functions. Changing this logic requires
     work in many places.
 
 
@@ -663,16 +663,56 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/report/session_markdown.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/report/session_markdown.py:64:Shotgun
-    Surgery: lines'
+  - src/urisys/http_server.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/http_server.py:12:Shotgun
+    Surgery: length'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: local_path'
+  description: 'code2llm reports `Shotgun Surgery: local_path` in `src/urisys/cli.py:108`.
+
+
+    Mutation of variable ''local_path'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/urisys/cli.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/cli.py:108:Shotgun Surgery:
+    local_path'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: log'
-  description: 'code2llm reports `Shotgun Surgery: log` in `scripts/run_test_sessions.py:367`.
+  description: 'code2llm reports `Shotgun Surgery: log` in `urisys-node/packages/python/urisysnode/display_bootstrap.py:47`.
 
 
-    Mutation of variable ''log'' spans 9 functions. Changing this logic requires work
-    in many places.
+    Mutation of variable ''log'' spans 10 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisys-node/packages/python/urisysnode/display_bootstrap.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/display_bootstrap.py:47:Shotgun
+    Surgery: log'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: manifest'
+  description: 'code2llm reports `Shotgun Surgery: manifest` in `scripts/run_test_sessions.py:552`.
+
+
+    Mutation of variable ''manifest'' spans 5 functions. Changing this logic requires
+    work in many places.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -684,11 +724,11 @@ tickets:
   - shotgun-surgery
   files:
   - scripts/run_test_sessions.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:367:Shotgun
-    Surgery: log'
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:552:Shotgun
+    Surgery: manifest'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: messages'
-  description: 'code2llm reports `Shotgun Surgery: messages` in `urikvm-docker/packages/python/urillm/handlers.py:154`.
+  description: 'code2llm reports `Shotgun Surgery: messages` in `urirdp-docker/packages/python/urirdp_llm/handlers.py:250`.
 
 
     Mutation of variable ''messages'' spans 5 functions. Changing this logic requires
@@ -703,12 +743,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urikvm-docker/packages/python/urillm/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/packages/python/urillm/handlers.py:154:Shotgun
+  - urirdp-docker/packages/python/urirdp_llm/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp_llm/handlers.py:250:Shotgun
     Surgery: messages'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: model'
-  description: 'code2llm reports `Shotgun Surgery: model` in `urikvm-docker/packages/python/urillm/handlers.py:154`.
+  description: 'code2llm reports `Shotgun Surgery: model` in `urirdp-docker/packages/python/urirdp_llm/handlers.py:250`.
 
 
     Mutation of variable ''model'' spans 6 functions. Changing this logic requires
@@ -723,12 +763,32 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urikvm-docker/packages/python/urillm/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/packages/python/urillm/handlers.py:154:Shotgun
+  - urirdp-docker/packages/python/urirdp_llm/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp_llm/handlers.py:250:Shotgun
     Surgery: model'
 - signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: module_name'
+  description: 'code2llm reports `Shotgun Surgery: module_name` in `urisys-node/packages/python/urisysnode/serve.py:102`.
+
+
+    Mutation of variable ''module_name'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisys-node/packages/python/urisysnode/serve.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/serve.py:102:Shotgun
+    Surgery: module_name'
+- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: name'
-  description: 'code2llm reports `Shotgun Surgery: name` in `urienv-docker/packages/python/urienv/src/urienv/handlers.py:148`.
+  description: 'code2llm reports `Shotgun Surgery: name` in `urienv-docker/packages/python/urienv/src/urienv/handlers.py:188`.
 
 
     Mutation of variable ''name'' spans 11 functions. Changing this logic requires
@@ -744,11 +804,71 @@ tickets:
   - shotgun-surgery
   files:
   - urienv-docker/packages/python/urienv/src/urienv/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urienv-docker/packages/python/urienv/src/urienv/handlers.py:148:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urienv-docker/packages/python/urienv/src/urienv/handlers.py:188:Shotgun
     Surgery: name'
 - signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: ok'
+  description: 'code2llm reports `Shotgun Surgery: ok` in `urisys-node/packages/python/urisysnode/serve.py:102`.
+
+
+    Mutation of variable ''ok'' spans 6 functions. Changing this logic requires work
+    in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisys-node/packages/python/urisysnode/serve.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/serve.py:102:Shotgun
+    Surgery: ok'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: os.environ'
+  description: 'code2llm reports `Shotgun Surgery: os.environ` in `urienv-docker/packages/python/urienv/src/urienv/handlers.py:188`.
+
+
+    Mutation of variable ''os.environ'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urienv-docker/packages/python/urienv/src/urienv/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urienv-docker/packages/python/urienv/src/urienv/handlers.py:188:Shotgun
+    Surgery: os.environ'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: out'
+  description: 'code2llm reports `Shotgun Surgery: out` in `scripts/report/events.py:63`.
+
+
+    Mutation of variable ''out'' spans 13 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - scripts/report/events.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/report/events.py:63:Shotgun
+    Surgery: out'
+- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: p'
-  description: 'code2llm reports `Shotgun Surgery: p` in `packages/python/urisysedge/runtime.py:168`.
+  description: 'code2llm reports `Shotgun Surgery: p` in `urikvm-docker/scripts/real_pipeline.py:59`.
 
 
     Mutation of variable ''p'' spans 11 functions. Changing this logic requires work
@@ -763,12 +883,32 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - packages/python/urisysedge/runtime.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:packages/python/urisysedge/runtime.py:168:Shotgun
+  - urikvm-docker/scripts/real_pipeline.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/scripts/real_pipeline.py:59:Shotgun
     Surgery: p'
 - signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: pack'
+  description: 'code2llm reports `Shotgun Surgery: pack` in `urisys-node/packages/python/urisysnode/serve.py:102`.
+
+
+    Mutation of variable ''pack'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisys-node/packages/python/urisysnode/serve.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/serve.py:102:Shotgun
+    Surgery: pack'
+- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: packs'
-  description: 'code2llm reports `Shotgun Surgery: packs` in `urisys-node/packages/python/urisysnode/serve.py:62`.
+  description: 'code2llm reports `Shotgun Surgery: packs` in `urisys-automation-lab/server/automation_lab_server.py:28`.
 
 
     Mutation of variable ''packs'' spans 5 functions. Changing this logic requires
@@ -783,12 +923,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urisys-node/packages/python/urisysnode/serve.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/serve.py:62:Shotgun
+  - urisys-automation-lab/server/automation_lab_server.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-automation-lab/server/automation_lab_server.py:28:Shotgun
     Surgery: packs'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: pairing'
-  description: 'code2llm reports `Shotgun Surgery: pairing` in `urisys-node/packages/python/urisysnode/identity.py:80`.
+  description: 'code2llm reports `Shotgun Surgery: pairing` in `urisys-node/packages/python/urisysnode/identity.py:61`.
 
 
     Mutation of variable ''pairing'' spans 5 functions. Changing this logic requires
@@ -804,34 +944,14 @@ tickets:
   - shotgun-surgery
   files:
   - urisys-node/packages/python/urisysnode/identity.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/identity.py:80:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/identity.py:61:Shotgun
     Surgery: pairing'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: params'
-  description: 'code2llm reports `Shotgun Surgery: params` in `urirdp-docker/packages/python/urirdp_shell/handlers.py:20`.
-
-
-    Mutation of variable ''params'' spans 8 functions. Changing this logic requires
-    work in many places.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - shotgun-surgery
-  files:
-  - urirdp-docker/packages/python/urirdp_shell/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp_shell/handlers.py:20:Shotgun
-    Surgery: params'
-- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: parsed'
-  description: 'code2llm reports `Shotgun Surgery: parsed` in `urikvm-docker/packages/python/urillm/handlers.py:154`.
+  description: 'code2llm reports `Shotgun Surgery: parsed` in `urisys-node/packages/python/urisysnode/router.py:29`.
 
 
-    Mutation of variable ''parsed'' spans 13 functions. Changing this logic requires
+    Mutation of variable ''parsed'' spans 14 functions. Changing this logic requires
     work in many places.
 
 
@@ -843,12 +963,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urikvm-docker/packages/python/urillm/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/packages/python/urillm/handlers.py:154:Shotgun
+  - urisys-node/packages/python/urisysnode/router.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/router.py:29:Shotgun
     Surgery: parsed'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: parser'
-  description: 'code2llm reports `Shotgun Surgery: parser` in `scripts/report/cli.py:11`.
+  description: 'code2llm reports `Shotgun Surgery: parser` in `src/urisys/cli.py:32`.
 
 
     Mutation of variable ''parser'' spans 6 functions. Changing this logic requires
@@ -863,15 +983,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/report/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/report/cli.py:11:Shotgun Surgery:
+  - src/urisys/cli.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/cli.py:32:Shotgun Surgery:
     parser'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: path'
-  description: 'code2llm reports `Shotgun Surgery: path` in `scripts/test_sessions/lab_rdp.py:87`.
+  description: 'code2llm reports `Shotgun Surgery: path` in `urisys-node/packages/python/uriscreen/portal_capture.py:84`.
 
 
-    Mutation of variable ''path'' spans 20 functions. Changing this logic requires
+    Mutation of variable ''path'' spans 21 functions. Changing this logic requires
     work in many places.
 
 
@@ -883,32 +1003,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/test_sessions/lab_rdp.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/lab_rdp.py:87:Shotgun
+  - urisys-node/packages/python/uriscreen/portal_capture.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/uriscreen/portal_capture.py:84:Shotgun
     Surgery: path'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: payload'
-  description: 'code2llm reports `Shotgun Surgery: payload` in `src/urisys/flow.py:17`.
-
-
-    Mutation of variable ''payload'' spans 14 functions. Changing this logic requires
-    work in many places.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - shotgun-surgery
-  files:
-  - src/urisys/flow.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/flow.py:17:Shotgun Surgery:
-    payload'
-- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: pkg'
-  description: 'code2llm reports `Shotgun Surgery: pkg` in `scripts/run_test_sessions.py:168`.
+  description: 'code2llm reports `Shotgun Surgery: pkg` in `scripts/run_test_sessions.py:65`.
 
 
     Mutation of variable ''pkg'' spans 5 functions. Changing this logic requires work
@@ -924,14 +1024,14 @@ tickets:
   - shotgun-surgery
   files:
   - scripts/run_test_sessions.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:168:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:65:Shotgun
     Surgery: pkg'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: proc'
-  description: 'code2llm reports `Shotgun Surgery: proc` in `urirdp-docker/packages/python/urirdp_shell/handlers.py:20`.
+  title: 'Address code smell: Shotgun Surgery: port'
+  description: 'code2llm reports `Shotgun Surgery: port` in `urisys-node/packages/python/urisysnode/display_bootstrap.py:91`.
 
 
-    Mutation of variable ''proc'' spans 12 functions. Changing this logic requires
+    Mutation of variable ''port'' spans 5 functions. Changing this logic requires
     work in many places.
 
 
@@ -943,12 +1043,32 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urirdp-docker/packages/python/urirdp_shell/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp_shell/handlers.py:20:Shotgun
+  - urisys-node/packages/python/urisysnode/display_bootstrap.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/display_bootstrap.py:91:Shotgun
+    Surgery: port'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: proc'
+  description: 'code2llm reports `Shotgun Surgery: proc` in `urisys-node/packages/python/uriscreen/portal_capture.py:63`.
+
+
+    Mutation of variable ''proc'' spans 17 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisys-node/packages/python/uriscreen/portal_capture.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/uriscreen/portal_capture.py:63:Shotgun
     Surgery: proc'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: profile'
-  description: 'code2llm reports `Shotgun Surgery: profile` in `urirdp-docker/packages/python/urirdp_browser/handlers.py:87`.
+  description: 'code2llm reports `Shotgun Surgery: profile` in `uribrowser-docker/packages/python/uribrowserdocker/handlers.py:20`.
 
 
     Mutation of variable ''profile'' spans 7 functions. Changing this logic requires
@@ -963,15 +1083,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urirdp-docker/packages/python/urirdp_browser/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp_browser/handlers.py:87:Shotgun
+  - uribrowser-docker/packages/python/uribrowserdocker/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:uribrowser-docker/packages/python/uribrowserdocker/handlers.py:20:Shotgun
     Surgery: profile'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: raw'
-  description: 'code2llm reports `Shotgun Surgery: raw` in `urisys-automation-lab/server/automation_lab_server.py:83`.
+  description: 'code2llm reports `Shotgun Surgery: raw` in `src/urisys/http_server.py:19`.
 
 
-    Mutation of variable ''raw'' spans 13 functions. Changing this logic requires
+    Mutation of variable ''raw'' spans 14 functions. Changing this logic requires
     work in many places.
 
 
@@ -983,15 +1103,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urisys-automation-lab/server/automation_lab_server.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-automation-lab/server/automation_lab_server.py:83:Shotgun
+  - src/urisys/http_server.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/http_server.py:19:Shotgun
     Surgery: raw'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: req'
-  description: 'code2llm reports `Shotgun Surgery: req` in `urisys-automation-lab/server/automation_lab_server.py:83`.
+  description: 'code2llm reports `Shotgun Surgery: req` in `scripts/test_sessions/util.py:34`.
 
 
-    Mutation of variable ''req'' spans 12 functions. Changing this logic requires
+    Mutation of variable ''req'' spans 13 functions. Changing this logic requires
     work in many places.
 
 
@@ -1003,12 +1123,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urisys-automation-lab/server/automation_lab_server.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-automation-lab/server/automation_lab_server.py:83:Shotgun
+  - scripts/test_sessions/util.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/util.py:34:Shotgun
     Surgery: req'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: res'
-  description: 'code2llm reports `Shotgun Surgery: res` in `urirdp-docker/packages/python/urirdp/handlers.py:12`.
+  description: 'code2llm reports `Shotgun Surgery: res` in `urikvm-docker/scripts/real_pipeline.py:59`.
 
 
     Mutation of variable ''res'' spans 17 functions. Changing this logic requires
@@ -1023,12 +1143,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urirdp-docker/packages/python/urirdp/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp/handlers.py:12:Shotgun
+  - urikvm-docker/scripts/real_pipeline.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/scripts/real_pipeline.py:59:Shotgun
     Surgery: res'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: root'
-  description: 'code2llm reports `Shotgun Surgery: root` in `urisys-node/packages/python/urisysnode/identity.py:13`.
+  description: 'code2llm reports `Shotgun Surgery: root` in `urisys-node/packages/python/urisysnode/serve.py:26`.
 
 
     Mutation of variable ''root'' spans 5 functions. Changing this logic requires
@@ -1043,15 +1163,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urisys-node/packages/python/urisysnode/identity.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/identity.py:13:Shotgun
+  - urisys-node/packages/python/urisysnode/serve.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/serve.py:26:Shotgun
     Surgery: root'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: rt'
-  description: 'code2llm reports `Shotgun Surgery: rt` in `uribrowser-docker/packages/python/uribrowseredge/cli.py:15`.
+  description: 'code2llm reports `Shotgun Surgery: rt` in `urikvm-docker/scripts/real_pipeline.py:59`.
 
 
-    Mutation of variable ''rt'' spans 17 functions. Changing this logic requires work
+    Mutation of variable ''rt'' spans 18 functions. Changing this logic requires work
     in many places.
 
 
@@ -1063,15 +1183,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - uribrowser-docker/packages/python/uribrowseredge/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:uribrowser-docker/packages/python/uribrowseredge/cli.py:15:Shotgun
+  - urikvm-docker/scripts/real_pipeline.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/scripts/real_pipeline.py:59:Shotgun
     Surgery: rt'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: runtime'
-  description: 'code2llm reports `Shotgun Surgery: runtime` in `urikvm-docker/packages/python/urikvm/handlers.py:99`.
+  description: 'code2llm reports `Shotgun Surgery: runtime` in `urisys-node/packages/python/urisysnode/serve.py:102`.
 
 
-    Mutation of variable ''runtime'' spans 10 functions. Changing this logic requires
+    Mutation of variable ''runtime'' spans 14 functions. Changing this logic requires
     work in many places.
 
 
@@ -1083,12 +1203,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urikvm-docker/packages/python/urikvm/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/packages/python/urikvm/handlers.py:99:Shotgun
+  - urisys-node/packages/python/urisysnode/serve.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/serve.py:102:Shotgun
     Surgery: runtime'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: s'
-  description: 'code2llm reports `Shotgun Surgery: s` in `uribrowser-docker/packages/python/uribrowseredge/cli.py:15`.
+  description: 'code2llm reports `Shotgun Surgery: s` in `urisys-node/packages/python/urisysnode/cli.py:24`.
 
 
     Mutation of variable ''s'' spans 5 functions. Changing this logic requires work
@@ -1103,12 +1223,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - uribrowser-docker/packages/python/uribrowseredge/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:uribrowser-docker/packages/python/uribrowseredge/cli.py:15:Shotgun
+  - urisys-node/packages/python/urisysnode/cli.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/cli.py:24:Shotgun
     Surgery: s'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: safety'
-  description: 'code2llm reports `Shotgun Surgery: safety` in `uristepper-docker/packages/python/uristepper/handlers.py:105`.
+  description: 'code2llm reports `Shotgun Surgery: safety` in `uristepper-docker/packages/python/uristepper/handlers.py:72`.
 
 
     Mutation of variable ''safety'' spans 8 functions. Changing this logic requires
@@ -1124,11 +1244,31 @@ tickets:
   - shotgun-surgery
   files:
   - uristepper-docker/packages/python/uristepper/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:uristepper-docker/packages/python/uristepper/handlers.py:105:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:uristepper-docker/packages/python/uristepper/handlers.py:72:Shotgun
     Surgery: safety'
 - signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: scheme'
+  description: 'code2llm reports `Shotgun Surgery: scheme` in `urisys-node/packages/python/urisysnode/router.py:29`.
+
+
+    Mutation of variable ''scheme'' spans 16 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisys-node/packages/python/urisysnode/router.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/router.py:29:Shotgun
+    Surgery: scheme'
+- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: sess'
-  description: 'code2llm reports `Shotgun Surgery: sess` in `urirdp-docker/packages/python/urirdp_browser/handlers.py:87`.
+  description: 'code2llm reports `Shotgun Surgery: sess` in `uribrowser-docker/packages/python/uribrowserdocker/handlers.py:20`.
 
 
     Mutation of variable ''sess'' spans 5 functions. Changing this logic requires
@@ -1143,12 +1283,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urirdp-docker/packages/python/urirdp_browser/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp_browser/handlers.py:87:Shotgun
+  - uribrowser-docker/packages/python/uribrowserdocker/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:uribrowser-docker/packages/python/uribrowserdocker/handlers.py:20:Shotgun
     Surgery: sess'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: shot'
-  description: 'code2llm reports `Shotgun Surgery: shot` in `urirdp-docker/packages/python/urirdp/handlers.py:43`.
+  description: 'code2llm reports `Shotgun Surgery: shot` in `urikvm-docker/scripts/real_pipeline.py:59`.
 
 
     Mutation of variable ''shot'' spans 8 functions. Changing this logic requires
@@ -1163,15 +1303,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urirdp-docker/packages/python/urirdp/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp/handlers.py:43:Shotgun
+  - urikvm-docker/scripts/real_pipeline.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/scripts/real_pipeline.py:59:Shotgun
     Surgery: shot'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: source'
-  description: 'code2llm reports `Shotgun Surgery: source` in `urienv-docker/packages/python/urienv/src/urienv/handlers.py:148`.
+  description: 'code2llm reports `Shotgun Surgery: source` in `urienv-docker/packages/python/urienv/src/urienv/handlers.py:155`.
 
 
-    Mutation of variable ''source'' spans 6 functions. Changing this logic requires
+    Mutation of variable ''source'' spans 7 functions. Changing this logic requires
     work in many places.
 
 
@@ -1184,11 +1324,31 @@ tickets:
   - shotgun-surgery
   files:
   - urienv-docker/packages/python/urienv/src/urienv/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urienv-docker/packages/python/urienv/src/urienv/handlers.py:148:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urienv-docker/packages/python/urienv/src/urienv/handlers.py:155:Shotgun
     Surgery: source'
 - signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: specs'
+  description: 'code2llm reports `Shotgun Surgery: specs` in `urisys-node/packages/python/urisysnode/handlers.py:56`.
+
+
+    Mutation of variable ''specs'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisys-node/packages/python/urisysnode/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/handlers.py:56:Shotgun
+    Surgery: specs'
+- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: started'
-  description: 'code2llm reports `Shotgun Surgery: started` in `scripts/run_test_sessions.py:367`.
+  description: 'code2llm reports `Shotgun Surgery: started` in `scripts/test_sessions/lab_flows.py:227`.
 
 
     Mutation of variable ''started'' spans 11 functions. Changing this logic requires
@@ -1203,12 +1363,32 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/run_test_sessions.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:367:Shotgun
+  - scripts/test_sessions/lab_flows.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/lab_flows.py:227:Shotgun
     Surgery: started'
 - signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: steps'
+  description: 'code2llm reports `Shotgun Surgery: steps` in `scripts/report/lab_checks.py:25`.
+
+
+    Mutation of variable ''steps'' spans 18 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - scripts/report/lab_checks.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/report/lab_checks.py:25:Shotgun
+    Surgery: steps'
+- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: sub'
-  description: 'code2llm reports `Shotgun Surgery: sub` in `scripts/report/cli.py:11`.
+  description: 'code2llm reports `Shotgun Surgery: sub` in `urikvm-docker/packages/python/urikvmedge/cli.py:21`.
 
 
     Mutation of variable ''sub'' spans 8 functions. Changing this logic requires work
@@ -1223,12 +1403,32 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/report/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/report/cli.py:11:Shotgun Surgery:
-    sub'
+  - urikvm-docker/packages/python/urikvmedge/cli.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/packages/python/urikvmedge/cli.py:21:Shotgun
+    Surgery: sub'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: target'
+  description: 'code2llm reports `Shotgun Surgery: target` in `urikvm-docker/packages/python/urillm/handlers.py:117`.
+
+
+    Mutation of variable ''target'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urikvm-docker/packages/python/urillm/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/packages/python/urillm/handlers.py:117:Shotgun
+    Surgery: target'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: text'
-  description: 'code2llm reports `Shotgun Surgery: text` in `scripts/test_sessions/lab_rdp.py:87`.
+  description: 'code2llm reports `Shotgun Surgery: text` in `urirdp-docker/packages/python/urirdp/handlers.py:101`.
 
 
     Mutation of variable ''text'' spans 23 functions. Changing this logic requires
@@ -1243,15 +1443,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/test_sessions/lab_rdp.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/lab_rdp.py:87:Shotgun
+  - urirdp-docker/packages/python/urirdp/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp/handlers.py:101:Shotgun
     Surgery: text'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: uri'
-  description: 'code2llm reports `Shotgun Surgery: uri` in `src/urisys/flow.py:17`.
+  description: 'code2llm reports `Shotgun Surgery: uri` in `scripts/report/session_markdown.py:41`.
 
 
-    Mutation of variable ''uri'' spans 16 functions. Changing this logic requires
+    Mutation of variable ''uri'' spans 17 functions. Changing this logic requires
     work in many places.
 
 
@@ -1263,12 +1463,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/urisys/flow.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/flow.py:17:Shotgun Surgery:
-    uri'
+  - scripts/report/session_markdown.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/report/session_markdown.py:41:Shotgun
+    Surgery: uri'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: url'
-  description: 'code2llm reports `Shotgun Surgery: url` in `urirdp-docker/packages/python/urirdp_browser/handlers.py:87`.
+  description: 'code2llm reports `Shotgun Surgery: url` in `urisys-node/packages/python/urisysnode/artifact_resolver.py:145`.
 
 
     Mutation of variable ''url'' spans 7 functions. Changing this logic requires work
@@ -1283,32 +1483,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urirdp-docker/packages/python/urirdp_browser/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp_browser/handlers.py:87:Shotgun
+  - urisys-node/packages/python/urisysnode/artifact_resolver.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urisysnode/artifact_resolver.py:145:Shotgun
     Surgery: url'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: value'
-  description: 'code2llm reports `Shotgun Surgery: value` in `urienv-docker/packages/python/urienv/src/urienv/handlers.py:148`.
-
-
-    Mutation of variable ''value'' spans 15 functions. Changing this logic requires
-    work in many places.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - shotgun-surgery
-  files:
-  - urienv-docker/packages/python/urienv/src/urienv/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urienv-docker/packages/python/urienv/src/urienv/handlers.py:148:Shotgun
-    Surgery: value'
-- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: x'
-  description: 'code2llm reports `Shotgun Surgery: x` in `urirdp-docker/packages/python/urirdp_him/handlers.py:11`.
+  description: 'code2llm reports `Shotgun Surgery: x` in `urikvm-docker/packages/python/urihim/handlers.py:123`.
 
 
     Mutation of variable ''x'' spans 5 functions. Changing this logic requires work
@@ -1323,12 +1503,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urirdp-docker/packages/python/urirdp_him/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp_him/handlers.py:11:Shotgun
+  - urikvm-docker/packages/python/urihim/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/packages/python/urihim/handlers.py:123:Shotgun
     Surgery: x'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: xauth'
-  description: 'code2llm reports `Shotgun Surgery: xauth` in `urirdp-docker/packages/python/urirdp_browser/handlers.py:49`.
+  description: 'code2llm reports `Shotgun Surgery: xauth` in `urisys-node/packages/python/urishell/handlers.py:33`.
 
 
     Mutation of variable ''xauth'' spans 7 functions. Changing this logic requires
@@ -1343,12 +1523,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urirdp-docker/packages/python/urirdp_browser/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp_browser/handlers.py:49:Shotgun
+  - urisys-node/packages/python/urishell/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisys-node/packages/python/urishell/handlers.py:33:Shotgun
     Surgery: xauth'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: y'
-  description: 'code2llm reports `Shotgun Surgery: y` in `urirdp-docker/packages/python/urirdp_him/handlers.py:11`.
+  description: 'code2llm reports `Shotgun Surgery: y` in `urikvm-docker/packages/python/urihim/handlers.py:123`.
 
 
     Mutation of variable ''y'' spans 5 functions. Changing this logic requires work
@@ -1363,8 +1543,8 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - urirdp-docker/packages/python/urirdp_him/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:urirdp-docker/packages/python/urirdp_him/handlers.py:11:Shotgun
+  - urikvm-docker/packages/python/urihim/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urikvm-docker/packages/python/urihim/handlers.py:123:Shotgun
     Surgery: y'
 - signal: code2llm_cc
   title: 'Reduce cyclomatic complexity: scripts.report.lab_checks.load_flow_outcomes
@@ -1420,9 +1600,9 @@ tickets:
   - scripts/run_test_sessions.py
   dedupe_key: code2llm:cc:scripts/run_test_sessions.py:scripts.run_test_sessions.session_automation_lab
 - signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: src.urisys.cli.main (CC=20)'
-  description: 'code2llm reports `src.urisys.cli.main` at `src/urisys/cli.py:95` with
-    cyclomatic complexity 20 (limit 15).
+  title: 'Reduce cyclomatic complexity: src.urisys.cli.main (CC=23)'
+  description: 'code2llm reports `src.urisys.cli.main` at `src/urisys/cli.py:108`
+    with cyclomatic complexity 23 (limit 15).
 
 
     Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
@@ -1627,25 +1807,6 @@ tickets:
   - urirdp-docker/packages/python/urirdp_llm/handlers.py
   dedupe_key: code2llm:cc:urirdp-docker/packages/python/urirdp_llm/handlers.py:urirdp-docker.packages.python.urirdp_llm.handlers.plan
 - signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: urirdp-docker.packages.python.urirdp_shell.handlers.shell_run
-    (CC=16)'
-  description: 'code2llm reports `urirdp-docker.packages.python.urirdp_shell.handlers.shell_run`
-    at `urirdp-docker/packages/python/urirdp_shell/handlers.py:20` with cyclomatic
-    complexity 16 (limit 15).
-
-
-    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
-    code2llm after the change and keep tests green.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - complexity
-  - refactor
-  files:
-  - urirdp-docker/packages/python/urirdp_shell/handlers.py
-  dedupe_key: code2llm:cc:urirdp-docker/packages/python/urirdp_shell/handlers.py:urirdp-docker.packages.python.urirdp_shell.handlers.shell_run
-- signal: code2llm_cc
   title: 'Reduce cyclomatic complexity: urisys-automation-lab.packages.python.urichat.handlers.uri_execute
     (CC=15)'
   description: 'code2llm reports `urisys-automation-lab.packages.python.urichat.handlers.uri_execute`
@@ -1703,6 +1864,25 @@ tickets:
   - urisys-automation-lab/server/automation_lab_server.py
   dedupe_key: code2llm:cc:urisys-automation-lab/server/automation_lab_server.py:urisys-automation-lab.server.automation_lab_server.build_lab_runtime
 - signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisys-node.packages.python.urishell.handlers.shell_run
+    (CC=16)'
+  description: 'code2llm reports `urisys-node.packages.python.urishell.handlers.shell_run`
+    at `urisys-node/packages/python/urishell/handlers.py:33` with cyclomatic complexity
+    16 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - urisys-node/packages/python/urishell/handlers.py
+  dedupe_key: code2llm:cc:urisys-node/packages/python/urishell/handlers.py:urisys-node.packages.python.urishell.handlers.shell_run
+- signal: code2llm_cc
   title: 'Reduce cyclomatic complexity: urisys-node.packages.python.urisysnode.artifact_resolver.select_artifact
     (CC=15)'
   description: 'code2llm reports `urisys-node.packages.python.urisysnode.artifact_resolver.select_artifact`
@@ -1740,53 +1920,70 @@ tickets:
   files:
   - urisys-node/packages/python/urisysnode/cli.py
   dedupe_key: code2llm:cc:urisys-node/packages/python/urisysnode/cli.py:urisys-node.packages.python.urisysnode.cli.main
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: blocks, self, kind'
-  description: 'code2llm reports `Data Clump: blocks, self, kind` in `src/urisys/managers/markpact_manager.py:134`.
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisys-node.packages.python.urisysnode.forward_config.load_forward_entries
+    (CC=15)'
+  description: 'code2llm reports `urisys-node.packages.python.urisysnode.forward_config.load_forward_entries`
+    at `urisys-node/packages/python/urisysnode/forward_config.py:27` with cyclomatic
+    complexity 15 (limit 15).
 
 
-    Arguments (blocks, self, kind) are used together in multiple functions: src.urisys.managers.markpact_manager.MarkpactManager._yaml_blocks,
-    src.urisys.managers.markpact_manager.MarkpactManager._load_yaml_blocks.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
   priority: normal
   labels:
   - llm-ready
   - code2llm
-  - code-smell
-  - data-clump
+  - complexity
+  - refactor
   files:
-  - src/urisys/managers/markpact_manager.py
-  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_manager.py:134:Data
-    Clump: blocks, self, kind'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: blocks, self, kind'
-  description: 'code2llm reports `Data Clump: blocks, self, kind` in `src/urisys/managers/markpact_manager.py:382`.
+  - urisys-node/packages/python/urisysnode/forward_config.py
+  dedupe_key: code2llm:cc:urisys-node/packages/python/urisysnode/forward_config.py:urisys-node.packages.python.urisysnode.forward_config.load_forward_entries
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisys-node.packages.python.urisysnode.serve.call_uri
+    (CC=20)'
+  description: 'code2llm reports `urisys-node.packages.python.urisysnode.serve.call_uri`
+    at `urisys-node/packages/python/urisysnode/serve.py:167` with cyclomatic complexity
+    20 (limit 15).
 
 
-    Arguments (blocks, self, kind) are used together in multiple functions: src.urisys.managers.markpact_manager.MarkpactManager._yaml_blocks,
-    src.urisys.managers.markpact_manager.MarkpactManager._load_yaml_blocks.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
   priority: normal
   labels:
   - llm-ready
   - code2llm
-  - code-smell
-  - data-clump
+  - complexity
+  - refactor
   files:
-  - src/urisys/managers/markpact_manager.py
-  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_manager.py:382:Data
-    Clump: blocks, self, kind'
+  - urisys-node/packages/python/urisysnode/serve.py
+  dedupe_key: code2llm:cc:urisys-node/packages/python/urisysnode/serve.py:urisys-node.packages.python.urisysnode.serve.call_uri
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisys-node.packages.python.urisysnode.serve.load_pack_into_runtime
+    (CC=23)'
+  description: 'code2llm reports `urisys-node.packages.python.urisysnode.serve.load_pack_into_runtime`
+    at `urisys-node/packages/python/urisysnode/serve.py:102` with cyclomatic complexity
+    23 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - urisys-node/packages/python/urisysnode/serve.py
+  dedupe_key: code2llm:cc:urisys-node/packages/python/urisysnode/serve.py:urisys-node.packages.python.urisysnode.serve.load_pack_into_runtime
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: context, uri, base_url, payload'
-  description: 'code2llm reports `Data Clump: context, uri, base_url, payload` in
+  title: 'Address code smell: Data Clump: base_url, uri, payload, context'
+  description: 'code2llm reports `Data Clump: base_url, uri, payload, context` in
     `urisys-automation-lab/packages/python/urichat/handlers.py:25`.
 
 
-    Arguments (context, uri, base_url, payload) are used together in multiple functions:
+    Arguments (base_url, uri, payload, context) are used together in multiple functions:
     urisys-automation-lab.packages.python.urichat.handlers._forward_uri, urisys-automation-lab.server.automation_lab_server.forward_uri_call.
 
 
@@ -1800,14 +1997,14 @@ tickets:
   files:
   - urisys-automation-lab/packages/python/urichat/handlers.py
   dedupe_key: 'code2llm:smell:data_clump:urisys-automation-lab/packages/python/urichat/handlers.py:25:Data
-    Clump: context, uri, base_url, payload'
+    Clump: base_url, uri, payload, context'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: context, uri, base_url, payload'
-  description: 'code2llm reports `Data Clump: context, uri, base_url, payload` in
+  title: 'Address code smell: Data Clump: base_url, uri, payload, context'
+  description: 'code2llm reports `Data Clump: base_url, uri, payload, context` in
     `urisys-automation-lab/server/automation_lab_server.py:83`.
 
 
-    Arguments (context, uri, base_url, payload) are used together in multiple functions:
+    Arguments (base_url, uri, payload, context) are used together in multiple functions:
     urisys-automation-lab.packages.python.urichat.handlers._forward_uri, urisys-automation-lab.server.automation_lab_server.forward_uri_call.
 
 
@@ -1821,14 +2018,14 @@ tickets:
   files:
   - urisys-automation-lab/server/automation_lab_server.py
   dedupe_key: 'code2llm:smell:data_clump:urisys-automation-lab/server/automation_lab_server.py:83:Data
-    Clump: context, uri, base_url, payload'
+    Clump: base_url, uri, payload, context'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: context, uri, self, payload'
-  description: 'code2llm reports `Data Clump: context, uri, self, payload` in `packages/python/urisysedge/runtime.py:121`.
+  title: 'Address code smell: Data Clump: blocks, kind, self'
+  description: 'code2llm reports `Data Clump: blocks, kind, self` in `src/urisys/managers/markpact_manager.py:134`.
 
 
-    Arguments (context, uri, self, payload) are used together in multiple functions:
-    packages.python.urisysedge.runtime.Runtime.call, uristepper-docker.packages.python.uristepperedge.runtime.StepperRuntime.call.
+    Arguments (blocks, kind, self) are used together in multiple functions: src.urisys.managers.markpact_manager.MarkpactManager._yaml_blocks,
+    src.urisys.managers.markpact_manager.MarkpactManager._load_yaml_blocks.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -1839,16 +2036,16 @@ tickets:
   - code-smell
   - data-clump
   files:
-  - packages/python/urisysedge/runtime.py
-  dedupe_key: 'code2llm:smell:data_clump:packages/python/urisysedge/runtime.py:121:Data
-    Clump: context, uri, self, payload'
+  - src/urisys/managers/markpact_manager.py
+  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_manager.py:134:Data
+    Clump: blocks, kind, self'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: context, uri, self, payload'
-  description: 'code2llm reports `Data Clump: context, uri, self, payload` in `uristepper-docker/packages/python/uristepperedge/runtime.py:78`.
+  title: 'Address code smell: Data Clump: blocks, kind, self'
+  description: 'code2llm reports `Data Clump: blocks, kind, self` in `src/urisys/managers/markpact_manager.py:382`.
 
 
-    Arguments (context, uri, self, payload) are used together in multiple functions:
-    packages.python.urisysedge.runtime.Runtime.call, uristepper-docker.packages.python.uristepperedge.runtime.StepperRuntime.call.
+    Arguments (blocks, kind, self) are used together in multiple functions: src.urisys.managers.markpact_manager.MarkpactManager._yaml_blocks,
+    src.urisys.managers.markpact_manager.MarkpactManager._load_yaml_blocks.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -1859,55 +2056,15 @@ tickets:
   - code-smell
   - data-clump
   files:
-  - uristepper-docker/packages/python/uristepperedge/runtime.py
-  dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepperedge/runtime.py:78:Data
-    Clump: context, uri, self, payload'
+  - src/urisys/managers/markpact_manager.py
+  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_manager.py:382:Data
+    Clump: blocks, kind, self'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: device, axis, self'
-  description: 'code2llm reports `Data Clump: device, axis, self` in `uristepper-docker/packages/python/uristepper/drivers.py:53`.
+  title: 'Address code smell: Data Clump: cfg, self, device, axis'
+  description: 'code2llm reports `Data Clump: cfg, self, device, axis` in `uristepper-docker/packages/python/uristepper/drivers.py:11`.
 
 
-    Arguments (device, axis, self) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver._key,
-    uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver._axis.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - uristepper-docker/packages/python/uristepper/drivers.py
-  dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:53:Data
-    Clump: device, axis, self'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: device, axis, self'
-  description: 'code2llm reports `Data Clump: device, axis, self` in `uristepper-docker/packages/python/uristepper/drivers.py:56`.
-
-
-    Arguments (device, axis, self) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver._key,
-    uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver._axis.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - uristepper-docker/packages/python/uristepper/drivers.py
-  dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:56:Data
-    Clump: device, axis, self'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: device, axis, self, cfg'
-  description: 'code2llm reports `Data Clump: device, axis, self, cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:11`.
-
-
-    Arguments (device, axis, self, cfg) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
+    Arguments (cfg, self, device, axis) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.enable, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.disable,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.stop, uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.enable,
@@ -1928,13 +2085,13 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:11:Data
-    Clump: device, axis, self, cfg'
+    Clump: cfg, self, device, axis'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: device, axis, self, cfg'
-  description: 'code2llm reports `Data Clump: device, axis, self, cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:14`.
+  title: 'Address code smell: Data Clump: cfg, self, device, axis'
+  description: 'code2llm reports `Data Clump: cfg, self, device, axis` in `uristepper-docker/packages/python/uristepper/drivers.py:14`.
 
 
-    Arguments (device, axis, self, cfg) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
+    Arguments (cfg, self, device, axis) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.enable, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.disable,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.stop, uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.enable,
@@ -1955,13 +2112,13 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:14:Data
-    Clump: device, axis, self, cfg'
+    Clump: cfg, self, device, axis'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: device, axis, self, cfg'
-  description: 'code2llm reports `Data Clump: device, axis, self, cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:17`.
+  title: 'Address code smell: Data Clump: cfg, self, device, axis'
+  description: 'code2llm reports `Data Clump: cfg, self, device, axis` in `uristepper-docker/packages/python/uristepper/drivers.py:17`.
 
 
-    Arguments (device, axis, self, cfg) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
+    Arguments (cfg, self, device, axis) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.enable, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.disable,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.stop, uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.enable,
@@ -1982,13 +2139,13 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:17:Data
-    Clump: device, axis, self, cfg'
+    Clump: cfg, self, device, axis'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: device, axis, self, cfg'
-  description: 'code2llm reports `Data Clump: device, axis, self, cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:20`.
+  title: 'Address code smell: Data Clump: cfg, self, device, axis'
+  description: 'code2llm reports `Data Clump: cfg, self, device, axis` in `uristepper-docker/packages/python/uristepper/drivers.py:20`.
 
 
-    Arguments (device, axis, self, cfg) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
+    Arguments (cfg, self, device, axis) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.enable, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.disable,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.stop, uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.enable,
@@ -2009,13 +2166,13 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:20:Data
-    Clump: device, axis, self, cfg'
+    Clump: cfg, self, device, axis'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: device, axis, self, cfg'
-  description: 'code2llm reports `Data Clump: device, axis, self, cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:71`.
+  title: 'Address code smell: Data Clump: cfg, self, device, axis'
+  description: 'code2llm reports `Data Clump: cfg, self, device, axis` in `uristepper-docker/packages/python/uristepper/drivers.py:71`.
 
 
-    Arguments (device, axis, self, cfg) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
+    Arguments (cfg, self, device, axis) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.enable, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.disable,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.stop, uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.enable,
@@ -2036,13 +2193,13 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:71:Data
-    Clump: device, axis, self, cfg'
+    Clump: cfg, self, device, axis'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: device, axis, self, cfg'
-  description: 'code2llm reports `Data Clump: device, axis, self, cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:75`.
+  title: 'Address code smell: Data Clump: cfg, self, device, axis'
+  description: 'code2llm reports `Data Clump: cfg, self, device, axis` in `uristepper-docker/packages/python/uristepper/drivers.py:75`.
 
 
-    Arguments (device, axis, self, cfg) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
+    Arguments (cfg, self, device, axis) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.enable, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.disable,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.stop, uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.enable,
@@ -2063,13 +2220,13 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:75:Data
-    Clump: device, axis, self, cfg'
+    Clump: cfg, self, device, axis'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: device, axis, self, cfg'
-  description: 'code2llm reports `Data Clump: device, axis, self, cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:78`.
+  title: 'Address code smell: Data Clump: cfg, self, device, axis'
+  description: 'code2llm reports `Data Clump: cfg, self, device, axis` in `uristepper-docker/packages/python/uristepper/drivers.py:78`.
 
 
-    Arguments (device, axis, self, cfg) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
+    Arguments (cfg, self, device, axis) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.enable, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.disable,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.stop, uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.enable,
@@ -2090,13 +2247,13 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:78:Data
-    Clump: device, axis, self, cfg'
+    Clump: cfg, self, device, axis'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: device, axis, self, cfg'
-  description: 'code2llm reports `Data Clump: device, axis, self, cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:81`.
+  title: 'Address code smell: Data Clump: cfg, self, device, axis'
+  description: 'code2llm reports `Data Clump: cfg, self, device, axis` in `uristepper-docker/packages/python/uristepper/drivers.py:81`.
 
 
-    Arguments (device, axis, self, cfg) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
+    Arguments (cfg, self, device, axis) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.enable, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.disable,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.stop, uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.enable,
@@ -2117,13 +2274,13 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:81:Data
-    Clump: device, axis, self, cfg'
+    Clump: cfg, self, device, axis'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: device, axis, self, cfg'
-  description: 'code2llm reports `Data Clump: device, axis, self, cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:128`.
+  title: 'Address code smell: Data Clump: cfg, self, device, axis'
+  description: 'code2llm reports `Data Clump: cfg, self, device, axis` in `uristepper-docker/packages/python/uristepper/drivers.py:128`.
 
 
-    Arguments (device, axis, self, cfg) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
+    Arguments (cfg, self, device, axis) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.enable, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.disable,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.stop, uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.enable,
@@ -2144,13 +2301,13 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:128:Data
-    Clump: device, axis, self, cfg'
+    Clump: cfg, self, device, axis'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: device, axis, self, cfg'
-  description: 'code2llm reports `Data Clump: device, axis, self, cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:131`.
+  title: 'Address code smell: Data Clump: cfg, self, device, axis'
+  description: 'code2llm reports `Data Clump: cfg, self, device, axis` in `uristepper-docker/packages/python/uristepper/drivers.py:131`.
 
 
-    Arguments (device, axis, self, cfg) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
+    Arguments (cfg, self, device, axis) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.enable, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.disable,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.stop, uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.enable,
@@ -2171,13 +2328,13 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:131:Data
-    Clump: device, axis, self, cfg'
+    Clump: cfg, self, device, axis'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: device, axis, self, cfg'
-  description: 'code2llm reports `Data Clump: device, axis, self, cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:137`.
+  title: 'Address code smell: Data Clump: cfg, self, device, axis'
+  description: 'code2llm reports `Data Clump: cfg, self, device, axis` in `uristepper-docker/packages/python/uristepper/drivers.py:137`.
 
 
-    Arguments (device, axis, self, cfg) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
+    Arguments (cfg, self, device, axis) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.enable, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.disable,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.stop, uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.enable,
@@ -2198,13 +2355,13 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:137:Data
-    Clump: device, axis, self, cfg'
+    Clump: cfg, self, device, axis'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: device, axis, self, cfg'
-  description: 'code2llm reports `Data Clump: device, axis, self, cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:143`.
+  title: 'Address code smell: Data Clump: cfg, self, device, axis'
+  description: 'code2llm reports `Data Clump: cfg, self, device, axis` in `uristepper-docker/packages/python/uristepper/drivers.py:143`.
 
 
-    Arguments (device, axis, self, cfg) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
+    Arguments (cfg, self, device, axis) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.enable, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.disable,
     uristepper-docker.packages.python.uristepper.drivers.StepperDriver.stop, uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.status,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.enable,
@@ -2225,53 +2382,13 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:143:Data
-    Clump: device, axis, self, cfg'
+    Clump: cfg, self, device, axis'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: runtime, port, host'
-  description: 'code2llm reports `Data Clump: runtime, port, host` in `packages/python/urisysedge/runtime.py:264`.
+  title: 'Address code smell: Data Clump: exc, self, tb, exc_type'
+  description: 'code2llm reports `Data Clump: exc, self, tb, exc_type` in `src/urisys/managers/runtime_manager.py:29`.
 
 
-    Arguments (runtime, port, host) are used together in multiple functions: packages.python.urisysedge.runtime.serve,
-    urisys-node.packages.python.urisysnode.serve.serve.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - packages/python/urisysedge/runtime.py
-  dedupe_key: 'code2llm:smell:data_clump:packages/python/urisysedge/runtime.py:264:Data
-    Clump: runtime, port, host'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: runtime, port, host'
-  description: 'code2llm reports `Data Clump: runtime, port, host` in `urisys-node/packages/python/urisysnode/serve.py:196`.
-
-
-    Arguments (runtime, port, host) are used together in multiple functions: packages.python.urisysedge.runtime.serve,
-    urisys-node.packages.python.urisysnode.serve.serve.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - urisys-node/packages/python/urisysnode/serve.py
-  dedupe_key: 'code2llm:smell:data_clump:urisys-node/packages/python/urisysnode/serve.py:196:Data
-    Clump: runtime, port, host'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, exc, exc_type, tb'
-  description: 'code2llm reports `Data Clump: self, exc, exc_type, tb` in `src/urisys/managers/runtime_manager.py:29`.
-
-
-    Arguments (self, exc, exc_type, tb) are used together in multiple functions: src.urisys.managers.runtime_manager.RuntimeManager.__exit__,
+    Arguments (exc, self, tb, exc_type) are used together in multiple functions: src.urisys.managers.runtime_manager.RuntimeManager.__exit__,
     src.urisys.managers.pack_manager.PackManager.__exit__.
 
 
@@ -2285,13 +2402,13 @@ tickets:
   files:
   - src/urisys/managers/runtime_manager.py
   dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/runtime_manager.py:29:Data
-    Clump: self, exc, exc_type, tb'
+    Clump: exc, self, tb, exc_type'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, exc, exc_type, tb'
-  description: 'code2llm reports `Data Clump: self, exc, exc_type, tb` in `src/urisys/managers/pack_manager.py:127`.
+  title: 'Address code smell: Data Clump: exc, self, tb, exc_type'
+  description: 'code2llm reports `Data Clump: exc, self, tb, exc_type` in `src/urisys/managers/pack_manager.py:127`.
 
 
-    Arguments (self, exc, exc_type, tb) are used together in multiple functions: src.urisys.managers.runtime_manager.RuntimeManager.__exit__,
+    Arguments (exc, self, tb, exc_type) are used together in multiple functions: src.urisys.managers.runtime_manager.RuntimeManager.__exit__,
     src.urisys.managers.pack_manager.PackManager.__exit__.
 
 
@@ -2305,15 +2422,14 @@ tickets:
   files:
   - src/urisys/managers/pack_manager.py
   dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/pack_manager.py:127:Data
-    Clump: self, exc, exc_type, tb'
+    Clump: exc, self, tb, exc_type'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: source_hash, source_path, data'
-  description: 'code2llm reports `Data Clump: source_hash, source_path, data` in `src/urisys/managers/markpact_validation.py:16`.
+  title: 'Address code smell: Data Clump: runtime, host, port'
+  description: 'code2llm reports `Data Clump: runtime, host, port` in `packages/python/urisysedge/runtime.py:264`.
 
 
-    Arguments (source_hash, source_path, data) are used together in multiple functions:
-    src.urisys.managers.markpact_validation.validate_contract, src.urisys.managers.markpact_validation.validate_bundle,
-    src.urisys.managers.markpact_validation.validate_implementation.
+    Arguments (runtime, host, port) are used together in multiple functions: packages.python.urisysedge.runtime.serve,
+    urisys-node.packages.python.urisysnode.serve.serve.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -2324,17 +2440,16 @@ tickets:
   - code-smell
   - data-clump
   files:
-  - src/urisys/managers/markpact_validation.py
-  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_validation.py:16:Data
-    Clump: source_hash, source_path, data'
+  - packages/python/urisysedge/runtime.py
+  dedupe_key: 'code2llm:smell:data_clump:packages/python/urisysedge/runtime.py:264:Data
+    Clump: runtime, host, port'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: source_hash, source_path, data'
-  description: 'code2llm reports `Data Clump: source_hash, source_path, data` in `src/urisys/managers/markpact_validation.py:67`.
+  title: 'Address code smell: Data Clump: runtime, host, port'
+  description: 'code2llm reports `Data Clump: runtime, host, port` in `urisys-node/packages/python/urisysnode/serve.py:303`.
 
 
-    Arguments (source_hash, source_path, data) are used together in multiple functions:
-    src.urisys.managers.markpact_validation.validate_contract, src.urisys.managers.markpact_validation.validate_bundle,
-    src.urisys.managers.markpact_validation.validate_implementation.
+    Arguments (runtime, host, port) are used together in multiple functions: packages.python.urisysedge.runtime.serve,
+    urisys-node.packages.python.urisysnode.serve.serve.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -2345,40 +2460,16 @@ tickets:
   - code-smell
   - data-clump
   files:
-  - src/urisys/managers/markpact_validation.py
-  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_validation.py:67:Data
-    Clump: source_hash, source_path, data'
+  - urisys-node/packages/python/urisysnode/serve.py
+  dedupe_key: 'code2llm:smell:data_clump:urisys-node/packages/python/urisysnode/serve.py:303:Data
+    Clump: runtime, host, port'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: source_hash, source_path, data'
-  description: 'code2llm reports `Data Clump: source_hash, source_path, data` in `src/urisys/managers/markpact_validation.py:101`.
+  title: 'Address code smell: Data Clump: self, device, axis'
+  description: 'code2llm reports `Data Clump: self, device, axis` in `uristepper-docker/packages/python/uristepper/drivers.py:53`.
 
 
-    Arguments (source_hash, source_path, data) are used together in multiple functions:
-    src.urisys.managers.markpact_validation.validate_contract, src.urisys.managers.markpact_validation.validate_bundle,
-    src.urisys.managers.markpact_validation.validate_implementation.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/urisys/managers/markpact_validation.py
-  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_validation.py:101:Data
-    Clump: source_hash, source_path, data'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: speed_sps, cfg, position, self, device,
-    axis'
-  description: 'code2llm reports `Data Clump: speed_sps, cfg, position, self, device,
-    axis` in `uristepper-docker/packages/python/uristepper/drivers.py:26`.
-
-
-    Arguments (speed_sps, cfg, position, self, device, axis) are used together in
-    multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.move_absolute,
-    uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.move_absolute.
+    Arguments (self, device, axis) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver._key,
+    uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver._axis.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -2390,18 +2481,15 @@ tickets:
   - data-clump
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
-  dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:26:Data
-    Clump: speed_sps, cfg, position, self, device, axis'
+  dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:53:Data
+    Clump: self, device, axis'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: speed_sps, cfg, position, self, device,
-    axis'
-  description: 'code2llm reports `Data Clump: speed_sps, cfg, position, self, device,
-    axis` in `uristepper-docker/packages/python/uristepper/drivers.py:93`.
+  title: 'Address code smell: Data Clump: self, device, axis'
+  description: 'code2llm reports `Data Clump: self, device, axis` in `uristepper-docker/packages/python/uristepper/drivers.py:56`.
 
 
-    Arguments (speed_sps, cfg, position, self, device, axis) are used together in
-    multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.move_absolute,
-    uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.move_absolute.
+    Arguments (self, device, axis) are used together in multiple functions: uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver._key,
+    uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver._axis.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -2413,16 +2501,16 @@ tickets:
   - data-clump
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
-  dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:93:Data
-    Clump: speed_sps, cfg, position, self, device, axis'
+  dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:56:Data
+    Clump: self, device, axis'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: speed_sps, direction, cfg, self, device,
-    axis'
-  description: 'code2llm reports `Data Clump: speed_sps, direction, cfg, self, device,
-    axis` in `uristepper-docker/packages/python/uristepper/drivers.py:32`.
+  title: 'Address code smell: Data Clump: self, device, direction, axis, speed_sps,
+    cfg'
+  description: 'code2llm reports `Data Clump: self, device, direction, axis, speed_sps,
+    cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:32`.
 
 
-    Arguments (speed_sps, direction, cfg, self, device, axis) are used together in
+    Arguments (self, device, direction, axis, speed_sps, cfg) are used together in
     multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.home,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.home, uristepper-docker.packages.python.uristepper.drivers.RpiGpioStepDirDriver.home.
 
@@ -2437,15 +2525,15 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:32:Data
-    Clump: speed_sps, direction, cfg, self, device, axis'
+    Clump: self, device, direction, axis, speed_sps, cfg'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: speed_sps, direction, cfg, self, device,
-    axis'
-  description: 'code2llm reports `Data Clump: speed_sps, direction, cfg, self, device,
-    axis` in `uristepper-docker/packages/python/uristepper/drivers.py:99`.
+  title: 'Address code smell: Data Clump: self, device, direction, axis, speed_sps,
+    cfg'
+  description: 'code2llm reports `Data Clump: self, device, direction, axis, speed_sps,
+    cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:99`.
 
 
-    Arguments (speed_sps, direction, cfg, self, device, axis) are used together in
+    Arguments (self, device, direction, axis, speed_sps, cfg) are used together in
     multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.home,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.home, uristepper-docker.packages.python.uristepper.drivers.RpiGpioStepDirDriver.home.
 
@@ -2460,15 +2548,15 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:99:Data
-    Clump: speed_sps, direction, cfg, self, device, axis'
+    Clump: self, device, direction, axis, speed_sps, cfg'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: speed_sps, direction, cfg, self, device,
-    axis'
-  description: 'code2llm reports `Data Clump: speed_sps, direction, cfg, self, device,
-    axis` in `uristepper-docker/packages/python/uristepper/drivers.py:160`.
+  title: 'Address code smell: Data Clump: self, device, direction, axis, speed_sps,
+    cfg'
+  description: 'code2llm reports `Data Clump: self, device, direction, axis, speed_sps,
+    cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:160`.
 
 
-    Arguments (speed_sps, direction, cfg, self, device, axis) are used together in
+    Arguments (self, device, direction, axis, speed_sps, cfg) are used together in
     multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.home,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.home, uristepper-docker.packages.python.uristepper.drivers.RpiGpioStepDirDriver.home.
 
@@ -2483,15 +2571,61 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:160:Data
-    Clump: speed_sps, direction, cfg, self, device, axis'
+    Clump: self, device, direction, axis, speed_sps, cfg'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: speed_sps, direction, cfg, self, device,
-    axis, steps'
-  description: 'code2llm reports `Data Clump: speed_sps, direction, cfg, self, device,
-    axis, steps` in `uristepper-docker/packages/python/uristepper/drivers.py:23`.
+  title: 'Address code smell: Data Clump: self, device, speed_sps, axis, position,
+    cfg'
+  description: 'code2llm reports `Data Clump: self, device, speed_sps, axis, position,
+    cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:26`.
 
 
-    Arguments (speed_sps, direction, cfg, self, device, axis, steps) are used together
+    Arguments (self, device, speed_sps, axis, position, cfg) are used together in
+    multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.move_absolute,
+    uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.move_absolute.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - uristepper-docker/packages/python/uristepper/drivers.py
+  dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:26:Data
+    Clump: self, device, speed_sps, axis, position, cfg'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: self, device, speed_sps, axis, position,
+    cfg'
+  description: 'code2llm reports `Data Clump: self, device, speed_sps, axis, position,
+    cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:93`.
+
+
+    Arguments (self, device, speed_sps, axis, position, cfg) are used together in
+    multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.move_absolute,
+    uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.move_absolute.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - uristepper-docker/packages/python/uristepper/drivers.py
+  dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:93:Data
+    Clump: self, device, speed_sps, axis, position, cfg'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: self, device, steps, direction, axis, speed_sps,
+    cfg'
+  description: 'code2llm reports `Data Clump: self, device, steps, direction, axis,
+    speed_sps, cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:23`.
+
+
+    Arguments (self, device, steps, direction, axis, speed_sps, cfg) are used together
     in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.move_relative,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.move_relative,
     uristepper-docker.packages.python.uristepper.drivers.RpiGpioStepDirDriver.move_relative.
@@ -2507,15 +2641,15 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:23:Data
-    Clump: speed_sps, direction, cfg, self, device, axis, steps'
+    Clump: self, device, steps, direction, axis, speed_sps, cfg'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: speed_sps, direction, cfg, self, device,
-    axis, steps'
-  description: 'code2llm reports `Data Clump: speed_sps, direction, cfg, self, device,
-    axis, steps` in `uristepper-docker/packages/python/uristepper/drivers.py:84`.
+  title: 'Address code smell: Data Clump: self, device, steps, direction, axis, speed_sps,
+    cfg'
+  description: 'code2llm reports `Data Clump: self, device, steps, direction, axis,
+    speed_sps, cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:84`.
 
 
-    Arguments (speed_sps, direction, cfg, self, device, axis, steps) are used together
+    Arguments (self, device, steps, direction, axis, speed_sps, cfg) are used together
     in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.move_relative,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.move_relative,
     uristepper-docker.packages.python.uristepper.drivers.RpiGpioStepDirDriver.move_relative.
@@ -2531,15 +2665,15 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:84:Data
-    Clump: speed_sps, direction, cfg, self, device, axis, steps'
+    Clump: self, device, steps, direction, axis, speed_sps, cfg'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: speed_sps, direction, cfg, self, device,
-    axis, steps'
-  description: 'code2llm reports `Data Clump: speed_sps, direction, cfg, self, device,
-    axis, steps` in `uristepper-docker/packages/python/uristepper/drivers.py:146`.
+  title: 'Address code smell: Data Clump: self, device, steps, direction, axis, speed_sps,
+    cfg'
+  description: 'code2llm reports `Data Clump: self, device, steps, direction, axis,
+    speed_sps, cfg` in `uristepper-docker/packages/python/uristepper/drivers.py:146`.
 
 
-    Arguments (speed_sps, direction, cfg, self, device, axis, steps) are used together
+    Arguments (self, device, steps, direction, axis, speed_sps, cfg) are used together
     in multiple functions: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.move_relative,
     uristepper-docker.packages.python.uristepper.drivers.MockStepperDriver.move_relative,
     uristepper-docker.packages.python.uristepper.drivers.RpiGpioStepDirDriver.move_relative.
@@ -2555,7 +2689,110 @@ tickets:
   files:
   - uristepper-docker/packages/python/uristepper/drivers.py
   dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepper/drivers.py:146:Data
-    Clump: speed_sps, direction, cfg, self, device, axis, steps'
+    Clump: self, device, steps, direction, axis, speed_sps, cfg'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: source_path, source_hash, data'
+  description: 'code2llm reports `Data Clump: source_path, source_hash, data` in `src/urisys/managers/markpact_validation.py:16`.
+
+
+    Arguments (source_path, source_hash, data) are used together in multiple functions:
+    src.urisys.managers.markpact_validation.validate_contract, src.urisys.managers.markpact_validation.validate_bundle,
+    src.urisys.managers.markpact_validation.validate_implementation.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/urisys/managers/markpact_validation.py
+  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_validation.py:16:Data
+    Clump: source_path, source_hash, data'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: source_path, source_hash, data'
+  description: 'code2llm reports `Data Clump: source_path, source_hash, data` in `src/urisys/managers/markpact_validation.py:67`.
+
+
+    Arguments (source_path, source_hash, data) are used together in multiple functions:
+    src.urisys.managers.markpact_validation.validate_contract, src.urisys.managers.markpact_validation.validate_bundle,
+    src.urisys.managers.markpact_validation.validate_implementation.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/urisys/managers/markpact_validation.py
+  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_validation.py:67:Data
+    Clump: source_path, source_hash, data'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: source_path, source_hash, data'
+  description: 'code2llm reports `Data Clump: source_path, source_hash, data` in `src/urisys/managers/markpact_validation.py:101`.
+
+
+    Arguments (source_path, source_hash, data) are used together in multiple functions:
+    src.urisys.managers.markpact_validation.validate_contract, src.urisys.managers.markpact_validation.validate_bundle,
+    src.urisys.managers.markpact_validation.validate_implementation.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/urisys/managers/markpact_validation.py
+  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_validation.py:101:Data
+    Clump: source_path, source_hash, data'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: uri, self, payload, context'
+  description: 'code2llm reports `Data Clump: uri, self, payload, context` in `packages/python/urisysedge/runtime.py:121`.
+
+
+    Arguments (uri, self, payload, context) are used together in multiple functions:
+    packages.python.urisysedge.runtime.Runtime.call, uristepper-docker.packages.python.uristepperedge.runtime.StepperRuntime.call.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - packages/python/urisysedge/runtime.py
+  dedupe_key: 'code2llm:smell:data_clump:packages/python/urisysedge/runtime.py:121:Data
+    Clump: uri, self, payload, context'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: uri, self, payload, context'
+  description: 'code2llm reports `Data Clump: uri, self, payload, context` in `uristepper-docker/packages/python/uristepperedge/runtime.py:78`.
+
+
+    Arguments (uri, self, payload, context) are used together in multiple functions:
+    packages.python.urisysedge.runtime.Runtime.call, uristepper-docker.packages.python.uristepperedge.runtime.StepperRuntime.call.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - uristepper-docker/packages/python/uristepperedge/runtime.py
+  dedupe_key: 'code2llm:smell:data_clump:uristepper-docker/packages/python/uristepperedge/runtime.py:78:Data
+    Clump: uri, self, payload, context'
 - signal: code2llm_smell_data_clump
   title: 'Address code smell: Data Clump: version, contract_id, catalog_url'
   description: 'code2llm reports `Data Clump: version, contract_id, catalog_url` in
@@ -2903,6 +3140,25 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:urikvm-docker/packages/python/urillm/handlers.py:117:God
     Function: _vision_messages'
 - signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _ydotool_key_sequence'
+  description: 'code2llm reports `God Function: _ydotool_key_sequence` in `urikvm-docker/packages/python/urihim/handlers.py:76`.
+
+
+    Function ''_ydotool_key_sequence'' is oversized: CC=9, fan-out=7, mutations=10.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urikvm-docker/packages/python/urihim/handlers.py
+  dedupe_key: 'code2llm:smell:god_function:urikvm-docker/packages/python/urihim/handlers.py:76:God
+    Function: _ydotool_key_sequence'
+- signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: base_env'
   description: 'code2llm reports `God Function: base_env` in `urirdp-docker/packages/python/urirdp_kvm/display.py:33`.
 
@@ -2921,6 +3177,25 @@ tickets:
   - urirdp-docker/packages/python/urirdp_kvm/display.py
   dedupe_key: 'code2llm:smell:god_function:urirdp-docker/packages/python/urirdp_kvm/display.py:33:God
     Function: base_env'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: bootstrap_wayland_capture'
+  description: 'code2llm reports `God Function: bootstrap_wayland_capture` in `urisys-node/packages/python/urisysnode/display_bootstrap.py:91`.
+
+
+    Function ''bootstrap_wayland_capture'' is oversized: CC=7, fan-out=12, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisys-node/packages/python/urisysnode/display_bootstrap.py
+  dedupe_key: 'code2llm:smell:god_function:urisys-node/packages/python/urisysnode/display_bootstrap.py:91:God
+    Function: bootstrap_wayland_capture'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: build_runtime'
   description: 'code2llm reports `God Function: build_runtime` in `urirdp-docker/packages/python/urirdpedge/cli.py:11`.
@@ -2942,10 +3217,10 @@ tickets:
     Function: build_runtime'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: build_runtime'
-  description: 'code2llm reports `God Function: build_runtime` in `urisys-node/packages/python/urisysnode/serve.py:62`.
+  description: 'code2llm reports `God Function: build_runtime` in `urisys-node/packages/python/urisysnode/serve.py:71`.
 
 
-    Function ''build_runtime'' is oversized: CC=7, fan-out=12, mutations=7.
+    Function ''build_runtime'' is oversized: CC=9, fan-out=16, mutations=9.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -2957,7 +3232,7 @@ tickets:
   - god-function
   files:
   - urisys-node/packages/python/urisysnode/serve.py
-  dedupe_key: 'code2llm:smell:god_function:urisys-node/packages/python/urisysnode/serve.py:62:God
+  dedupe_key: 'code2llm:smell:god_function:urisys-node/packages/python/urisysnode/serve.py:71:God
     Function: build_runtime'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: call'
@@ -3002,7 +3277,7 @@ tickets:
   description: 'code2llm reports `God Function: capture` in `urisys-node/packages/python/uriscreen/handlers.py:48`.
 
 
-    Function ''capture'' is oversized: CC=7, fan-out=20, mutations=9.
+    Function ''capture'' is oversized: CC=5, fan-out=14, mutations=8.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -3016,6 +3291,44 @@ tickets:
   - urisys-node/packages/python/uriscreen/handlers.py
   dedupe_key: 'code2llm:smell:god_function:urisys-node/packages/python/uriscreen/handlers.py:48:God
     Function: capture'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: capture_portal'
+  description: 'code2llm reports `God Function: capture_portal` in `urisys-node/packages/python/uriscreen/backends.py:96`.
+
+
+    Function ''capture_portal'' is oversized: CC=2, fan-out=4, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisys-node/packages/python/uriscreen/backends.py
+  dedupe_key: 'code2llm:smell:god_function:urisys-node/packages/python/uriscreen/backends.py:96:God
+    Function: capture_portal'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: capture_portal_png'
+  description: 'code2llm reports `God Function: capture_portal_png` in `urisys-node/packages/python/uriscreen/portal_capture.py:84`.
+
+
+    Function ''capture_portal_png'' is oversized: CC=8, fan-out=10, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisys-node/packages/python/uriscreen/portal_capture.py
+  dedupe_key: 'code2llm:smell:god_function:urisys-node/packages/python/uriscreen/portal_capture.py:84:God
+    Function: capture_portal_png'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: capture_rdp_screenshot_wait'
   description: 'code2llm reports `God Function: capture_rdp_screenshot_wait` in `scripts/test_sessions/lab_rdp.py:151`.
@@ -3035,6 +3348,25 @@ tickets:
   - scripts/test_sessions/lab_rdp.py
   dedupe_key: 'code2llm:smell:god_function:scripts/test_sessions/lab_rdp.py:151:God
     Function: capture_rdp_screenshot_wait'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: capture_with_fallback'
+  description: 'code2llm reports `God Function: capture_with_fallback` in `urisys-node/packages/python/uriscreen/backends.py:116`.
+
+
+    Function ''capture_with_fallback'' is oversized: CC=13, fan-out=9, mutations=12.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisys-node/packages/python/uriscreen/backends.py
+  dedupe_key: 'code2llm:smell:god_function:urisys-node/packages/python/uriscreen/backends.py:116:God
+    Function: capture_with_fallback'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: click_text'
   description: 'code2llm reports `God Function: click_text` in `urirdp-docker/packages/python/urirdp_kvm/handlers.py:53`.
@@ -3340,6 +3672,25 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:urirdp-docker/packages/python/urirdp_him/handlers.py:62:God
     Function: keyboard_hotkey'
 - signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: keyboard_hotkey'
+  description: 'code2llm reports `God Function: keyboard_hotkey` in `urikvm-docker/packages/python/urihim/handlers.py:166`.
+
+
+    Function ''keyboard_hotkey'' is oversized: CC=8, fan-out=12, mutations=5.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urikvm-docker/packages/python/urihim/handlers.py
+  dedupe_key: 'code2llm:smell:god_function:urikvm-docker/packages/python/urihim/handlers.py:166:God
+    Function: keyboard_hotkey'
+- signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: keyboard_type'
   description: 'code2llm reports `God Function: keyboard_type` in `urirdp-docker/packages/python/urirdp_him/handlers.py:37`.
 
@@ -3415,25 +3766,6 @@ tickets:
   - urisys-node/packages/python/urisysnode/identity.py
   dedupe_key: 'code2llm:smell:god_function:urisys-node/packages/python/urisysnode/identity.py:31:God
     Function: load_identity'
-- signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: load_pack_into_runtime'
-  description: 'code2llm reports `God Function: load_pack_into_runtime` in `urisys-node/packages/python/urisysnode/serve.py:82`.
-
-
-    Function ''load_pack_into_runtime'' is oversized: CC=9, fan-out=8, mutations=8.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - god-function
-  files:
-  - urisys-node/packages/python/urisysnode/serve.py
-  dedupe_key: 'code2llm:smell:god_function:urisys-node/packages/python/urisysnode/serve.py:82:God
-    Function: load_pack_into_runtime'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: load_urisys_env'
   description: 'code2llm reports `God Function: load_urisys_env` in `packages/python/urisysedge/env.py:23`.
@@ -3512,10 +3844,10 @@ tickets:
     Function: make_handler'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: make_handler'
-  description: 'code2llm reports `God Function: make_handler` in `urisys-node/packages/python/urisysnode/serve.py:145`.
+  description: 'code2llm reports `God Function: make_handler` in `urisys-node/packages/python/urisysnode/serve.py:237`.
 
 
-    Function ''make_handler'' is oversized: CC=1, fan-out=23, mutations=1.
+    Function ''make_handler'' is oversized: CC=2, fan-out=26, mutations=1.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -3527,7 +3859,7 @@ tickets:
   - god-function
   files:
   - urisys-node/packages/python/urisysnode/serve.py
-  dedupe_key: 'code2llm:smell:god_function:urisys-node/packages/python/urisysnode/serve.py:145:God
+  dedupe_key: 'code2llm:smell:god_function:urisys-node/packages/python/urisysnode/serve.py:237:God
     Function: make_handler'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: manifest_paths'
@@ -3588,10 +3920,10 @@ tickets:
     Function: mouse_click'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: mouse_click'
-  description: 'code2llm reports `God Function: mouse_click` in `urikvm-docker/packages/python/urihim/handlers.py:44`.
+  description: 'code2llm reports `God Function: mouse_click` in `urikvm-docker/packages/python/urihim/handlers.py:123`.
 
 
-    Function ''mouse_click'' is oversized: CC=7, fan-out=8, mutations=7.
+    Function ''mouse_click'' is oversized: CC=12, fan-out=12, mutations=9.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -3603,7 +3935,7 @@ tickets:
   - god-function
   files:
   - urikvm-docker/packages/python/urihim/handlers.py
-  dedupe_key: 'code2llm:smell:god_function:urikvm-docker/packages/python/urihim/handlers.py:44:God
+  dedupe_key: 'code2llm:smell:god_function:urikvm-docker/packages/python/urihim/handlers.py:123:God
     Function: mouse_click'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: move_absolute'
@@ -3702,7 +4034,7 @@ tickets:
     Function: parse_meta'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: register_forward_pack'
-  description: 'code2llm reports `God Function: register_forward_pack` in `urisys-node/packages/python/urisysnode/serve.py:106`.
+  description: 'code2llm reports `God Function: register_forward_pack` in `urisys-node/packages/python/urisysnode/serve.py:198`.
 
 
     Function ''register_forward_pack'' is oversized: CC=13, fan-out=7, mutations=12.
@@ -3717,7 +4049,7 @@ tickets:
   - god-function
   files:
   - urisys-node/packages/python/urisysnode/serve.py
-  dedupe_key: 'code2llm:smell:god_function:urisys-node/packages/python/urisysnode/serve.py:106:God
+  dedupe_key: 'code2llm:smell:god_function:urisys-node/packages/python/urisysnode/serve.py:198:God
     Function: register_forward_pack'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: render_run_analysis_markdown'

@@ -197,6 +197,9 @@ Master tłumaczy `screen://slave-01/...` → `screen://local/...` na endpoincie 
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 - [docs/PAIRING.md](docs/PAIRING.md)
 - [docs/SCREEN_BACKENDS.md](docs/SCREEN_BACKENDS.md)
+- [../docs/NODE-SETUP.md](../docs/NODE-SETUP.md) — slave bootstrap, autostart
+- [../docs/PACK-EXTENSIBILITY.md](../docs/PACK-EXTENSIBILITY.md) — nowe schematy URI, hot-load
+- [../docs/DISTRIBUTION.md](../docs/DISTRIBUTION.md) — PyPI · Markpact · GitHub
 
 ## Powiązane
 

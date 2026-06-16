@@ -32,6 +32,13 @@ flowchart TD
         packages__python__urisysedge__env__resolve_env_var("resolve_env_var CC=11")
         packages__python__urisysedge__env__is_secret_env["is_secret_env"]
     end
+    subgraph scripts__deploy_lenovo_node
+        scripts__deploy_lenovo_node__call["call"]
+        scripts__deploy_lenovo_node__health["health"]
+    end
+    subgraph scripts__lenovo_node_session
+        scripts__lenovo_node_session__install_pack["install_pack"]
+    end
     subgraph scripts__paths
         scripts__paths___urisys_root["_urisys_root"]
         scripts__paths__urisys_root["urisys_root"]
@@ -39,6 +46,10 @@ flowchart TD
         scripts__paths__uricore_root["uricore_root"]
         scripts__paths__uricore_pythonpath["uricore_pythonpath"]
         scripts__paths__releases_dir["releases_dir"]
+    end
+    subgraph scripts__remote_node_smoke
+        scripts__remote_node_smoke__http_get["http_get"]
+        scripts__remote_node_smoke__http_post["http_post"]
     end
     subgraph scripts__report
         scripts__report__cli__main["main"]
@@ -145,12 +156,6 @@ flowchart TD
         scripts__test_sessions__util__prepare_urirdp_data["prepare_urirdp_data"]
     end
     subgraph src__urisys
-        src__urisys__cli___json_arg["_json_arg"]
-        src__urisys__cli__print_json["print_json"]
-        src__urisys__cli___add_runtime_flags["_add_runtime_flags"]
-        src__urisys__cli__resolve_markpact_source["resolve_markpact_source"]
-        src__urisys__cli__build_parser["build_parser"]
-        src__urisys__cli__main{{main CC=20}}
         src__urisys__http_server___read_json["_read_json"]
         src__urisys__http_server___send["_send"]
         src__urisys__http_server__create_server["create_server"]
@@ -205,6 +210,12 @@ flowchart TD
         src__urisys__managers__markpact_manager__MarkpactManager___handler_id_from_ref["_handler_id_from_ref"]
         src__urisys__managers__markpact_manager__MarkpactManager___ensure_importable["_ensure_importable"]
         src__urisys__managers__bridge_manager__BridgeManager__call_http["call_http"]
+        src__urisys__managers__pack_manager__PackManager____init__["__init__"]
+        src__urisys__managers__pack_manager__PackManager___is_all("_is_all CC=10")
+        src__urisys__managers__pack_manager__PackManager__parse_packs{{parse_packs CC=15}}
+        src__urisys__managers__pack_manager__PackManager__parse_markpacts("parse_markpacts CC=8")
+        src__urisys__managers__pack_manager__PackManager__resolve_package_name["resolve_package_name"]
+        src__urisys__managers__pack_manager__PackManager___is_markpact_path["_is_markpact_path"]
     end
     subgraph uribrowser_docker__packages
         uribrowser_docker__packages__python__uribrowserdocker__routes__register["register"]
@@ -270,15 +281,6 @@ flowchart TD
         urikvm_docker__packages__python__uriocr__handlers__latest_text["latest_text"]
         urikvm_docker__packages__python__uriocr__handlers__image_text["image_text"]
         urikvm_docker__packages__python__urihim__routes__register["register"]
-        urikvm_docker__packages__python__urihim__handlers___state["_state"]
-        urikvm_docker__packages__python__urihim__handlers___driver["_driver"]
-        urikvm_docker__packages__python__urihim__handlers___real_allowed["_real_allowed"]
-        urikvm_docker__packages__python__urihim__handlers___pyautogui["_pyautogui"]
-        urikvm_docker__packages__python__urihim__handlers__mouse_status["mouse_status"]
-        urikvm_docker__packages__python__urihim__handlers__mouse_move["mouse_move"]
-        urikvm_docker__packages__python__urihim__handlers__mouse_click["mouse_click"]
-        urikvm_docker__packages__python__urihim__handlers__keyboard_type["keyboard_type"]
-        urikvm_docker__packages__python__urihim__handlers__keyboard_hotkey["keyboard_hotkey"]
         urikvm_docker__packages__python__urillm__routes__register["register"]
         urikvm_docker__packages__python__urillm__handlers___llm_cfg["_llm_cfg"]
         urikvm_docker__packages__python__urillm__handlers___driver["_driver"]
@@ -298,6 +300,19 @@ flowchart TD
         urikvm_docker__packages__python__urillm__handlers___analyze_litellm["_analyze_litellm"]
         urikvm_docker__packages__python__urillm__handlers___vision_analyze["_vision_analyze"]
         urikvm_docker__packages__python__urillm__handlers__vision_analyze["vision_analyze"]
+        urikvm_docker__packages__python__urihim__handlers___state["_state"]
+        urikvm_docker__packages__python__urihim__handlers___real_allowed["_real_allowed"]
+        urikvm_docker__packages__python__urihim__handlers___wayland_session["_wayland_session"]
+        urikvm_docker__packages__python__urihim__handlers___ydotool_available["_ydotool_available"]
+        urikvm_docker__packages__python__urihim__handlers___driver["_driver"]
+        urikvm_docker__packages__python__urihim__handlers___pyautogui["_pyautogui"]
+        urikvm_docker__packages__python__urihim__handlers___run_ydotool["_run_ydotool"]
+        urikvm_docker__packages__python__urihim__handlers___ydotool_key_sequence("_ydotool_key_sequence CC=9")
+        urikvm_docker__packages__python__urihim__handlers__mouse_status["mouse_status"]
+        urikvm_docker__packages__python__urihim__handlers__mouse_move["mouse_move"]
+        urikvm_docker__packages__python__urihim__handlers__mouse_click("mouse_click CC=12")
+        urikvm_docker__packages__python__urihim__handlers__keyboard_type["keyboard_type"]
+        urikvm_docker__packages__python__urihim__handlers__keyboard_hotkey("keyboard_hotkey CC=8")
     end
     subgraph urikvm_docker__scripts
         urikvm_docker__scripts__real_pipeline___png_with_labels["_png_with_labels"]
@@ -325,10 +340,7 @@ flowchart TD
         urirdp_docker__packages__python__urirdp_ocr__handlers___tesseract_ocr("_tesseract_ocr CC=9")
         urirdp_docker__packages__python__urirdp_ocr__handlers__latest_text["latest_text"]
         urirdp_docker__packages__python__urirdp_ocr__handlers__image_text["image_text"]
-        urirdp_docker__packages__python__urirdp_shell__routes__register["register"]
         urirdp_docker__packages__python__urirdp_shell__register["register"]
-        urirdp_docker__packages__python__urirdp_shell__handlers___mock["_mock"]
-        urirdp_docker__packages__python__urirdp_shell__handlers__shell_run{{shell_run CC=16}}
         urirdp_docker__packages__python__urirdp_env__routes__register["register"]
         urirdp_docker__packages__python__urirdp_him__routes__register["register"]
         urirdp_docker__packages__python__urirdp_him__handlers___mock["_mock"]
@@ -376,6 +388,9 @@ flowchart TD
         urirdp_docker__packages__python__urirdp_llm__handlers___screenshot_b64["_screenshot_b64"]
         urirdp_docker__packages__python__urirdp_llm__handlers___vision_messages["_vision_messages"]
         urirdp_docker__packages__python__urirdp_llm__handlers___openai_compatible_chat["_openai_compatible_chat"]
+        urirdp_docker__packages__python__urirdp_llm__handlers___litellm_chat["_litellm_chat"]
+        urirdp_docker__packages__python__urirdp_llm__handlers___normalize["_normalize"]
+        urirdp_docker__packages__python__urirdp_llm__handlers__analyze{{analyze CC=18}}
     end
     subgraph urirdp_docker__scripts
         urirdp_docker__scripts__test_real_docker__cleanup["cleanup"]
@@ -507,32 +522,11 @@ flowchart TD
     end
     subgraph urisys_node__packages
         urisys_node__packages__python__uriscreen__routes__register["register"]
-        urisys_node__packages__python__uriscreen__handlers___screen_cfg["_screen_cfg"]
-        urisys_node__packages__python__uriscreen__handlers___backend["_backend"]
-        urisys_node__packages__python__uriscreen__handlers___output_dir["_output_dir"]
-        urisys_node__packages__python__uriscreen__handlers___monitor_index["_monitor_index"]
-        urisys_node__packages__python__uriscreen__handlers___store_latest["_store_latest"]
-        urisys_node__packages__python__uriscreen__handlers___mock_png["_mock_png"]
-        urisys_node__packages__python__uriscreen__handlers__capture["capture"]
-        urisys_node__packages__python__uriscreen__handlers__frame["frame"]
-        urisys_node__packages__python__uriscreen__handlers__capture_loop["capture_loop"]
         urisys_node__packages__python__urisysnode__cli__main{{main CC=16}}
-        urisys_node__packages__python__urisysnode__routes__register["register"]
-        urisys_node__packages__python__urisysnode__serve___extend_pack_paths["_extend_pack_paths"]
-        urisys_node__packages__python__urisysnode__serve___register_pack["_register_pack"]
-        urisys_node__packages__python__urisysnode__serve__build_runtime["build_runtime"]
-        urisys_node__packages__python__urisysnode__serve__load_pack_into_runtime("load_pack_into_runtime CC=9")
-        urisys_node__packages__python__urisysnode__serve__register_forward_pack("register_forward_pack CC=13")
-        urisys_node__packages__python__urisysnode__serve__make_handler["make_handler"]
-        urisys_node__packages__python__urisysnode__serve__serve["serve"]
         urisys_node__packages__python__urisysnode__client__discover_mdns["discover_mdns"]
         urisys_node__packages__python__urisysnode__client__remote_call["remote_call"]
         urisys_node__packages__python__urisysnode__client__call_via_route_map["call_via_route_map"]
         urisys_node__packages__python__urisysnode__forward__forward_call("forward_call CC=9")
-        urisys_node__packages__python__urisysnode__handlers__query_health["query_health"]
-        urisys_node__packages__python__urisysnode__handlers__query_identity["query_identity"]
-        urisys_node__packages__python__urisysnode__handlers__command_indicator_on["command_indicator_on"]
-        urisys_node__packages__python__urisysnode__handlers__command_indicator_off["command_indicator_off"]
         urisys_node__packages__python__urisysnode__router__load_route_map["load_route_map"]
         urisys_node__packages__python__urisysnode__router___match_pattern["_match_pattern"]
         urisys_node__packages__python__urisysnode__router__resolve_remote_route["resolve_remote_route"]
@@ -565,6 +559,28 @@ flowchart TD
         urisys_node__packages__python__urisysnode__artifact_resolver__wait_health["wait_health"]
         urisys_node__packages__python__urisysnode__artifact_resolver__resolve_and_run["resolve_and_run"]
         urisys_node__packages__python__urisysnode__artifact_resolver__resolve_from_release["resolve_from_release"]
+        urisys_node__packages__python__urisysnode__routes__register["register"]
+        urisys_node__packages__python__urisysnode__forward_config___normalize_entry("_normalize_entry CC=11")
+        urisys_node__packages__python__urisysnode__forward_config__load_forward_entries{{load_forward_entries CC=15}}
+        urisys_node__packages__python__urisysnode__forward_config__wire_forward_packs["wire_forward_packs"]
+        urisys_node__packages__python__urishell__routes__register["register"]
+        urisys_node__packages__python__urisysnode__pack_resolver__auto_install_enabled["auto_install_enabled"]
+        urisys_node__packages__python__urisysnode__pack_resolver__pack_install_source["pack_install_source"]
+        urisys_node__packages__python__urisysnode__pack_resolver__github_owner["github_owner"]
+        urisys_node__packages__python__urisysnode__pack_resolver__github_wheel_url["github_wheel_url"]
+        urisys_node__packages__python__urisysnode__pack_resolver__resolve_pack_spec["resolve_pack_spec"]
+        urisys_node__packages__python__urisysnode__pack_resolver__pack_module["pack_module"]
+        urisys_node__packages__python__urisysnode__pack_resolver__scheme_for_uri["scheme_for_uri"]
+        urisys_node__packages__python__urisysnode__pack_resolver__pack_for_scheme["pack_for_scheme"]
+        urisys_node__packages__python__urisysnode__pack_resolver___pip_install["_pip_install"]
+        urisys_node__packages__python__urisysnode__pack_resolver__ensure_pip_specs["ensure_pip_specs"]
+        urisys_node__packages__python__urisysnode__pack_resolver__pack_install_specs["pack_install_specs"]
+        urisys_node__packages__python__urisysnode__pack_resolver__ensure_pack_pypi["ensure_pack_pypi"]
+        urisys_node__packages__python__urisysnode__pack_resolver__ensure_real_deps["ensure_real_deps"]
+        urisys_node__packages__python__urisysnode__pack_resolver__github_wheel_urls["github_wheel_urls"]
+        urisys_node__packages__python__urisysnode__pack_resolver__import_pack_module["import_pack_module"]
+        urisys_node__packages__python__urisysnode__pack_resolver__pack_importable["pack_importable"]
+        urisys_node__packages__python__urisysnode__display_bootstrap___ensure_session_env["_ensure_session_env"]
     end
     packages__python__urisysedge__runtime__Runtime__call --> packages__python__urisysedge__env__load_env_policy
     packages__python__urisysedge__runtime__Runtime__call --> packages__python__urisysedge__runtime___result_ok
@@ -578,11 +594,6 @@ flowchart TD
     packages__python__urisysedge__env__resolve_env_var --> packages__python__urisysedge__env__load_env_policy
     packages__python__urisysedge__env__resolve_env_var --> urienv_docker__packages__python__urienv__src__urienv__handlers__secret_value
     packages__python__urisysedge__env__resolve_env_var --> urienv_docker__packages__python__urienv__src__urienv__handlers__var_value
-    src__urisys__cli__print_json --> scripts__run_nl_log_smoke__print
-    src__urisys__cli__build_parser --> src__urisys__cli___add_runtime_flags
-    src__urisys__cli__main --> src__urisys__cli__build_parser
-    src__urisys__cli__main --> src__urisys__cli__resolve_markpact_source
-    src__urisys__cli__main --> src__urisys__cli__print_json
     src__urisys__http_server__create_server --> src__urisys__http_server___send
     src__urisys__http_server__create_server --> src__urisys__http_server___read_json
     src__urisys__controllers__flow_controller__FlowController__run --> src__urisys__flow__load_flow
@@ -763,10 +774,6 @@ flowchart TD
     urirdp_docker__packages__python__urirdp_ocr__handlers__image_text --> urirdp_docker__packages__python__urirdp_ocr__handlers___tesseract_ocr
     urirdp_docker__packages__python__urirdp_ocr__handlers__image_text --> urirdp_docker__packages__python__urirdp_ocr__handlers___mock_ocr
     urirdp_docker__packages__python__urirdp_ocr__handlers__image_text --> urirdp_docker__packages__python__urirdp_kvm__display__allow_real
-    urirdp_docker__packages__python__urirdp_shell__handlers___mock --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
-    urirdp_docker__packages__python__urirdp_shell__handlers__shell_run --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
-    urirdp_docker__packages__python__urirdp_shell__handlers__shell_run --> urirdp_docker__packages__python__urirdp_shell__handlers___mock
-    urirdp_docker__packages__python__urirdp_shell__handlers__shell_run --> urirdp_docker__packages__python__urirdp_kvm__display__allow_real
     urirdp_docker__packages__python__urirdp_him__handlers___mock --> urirdp_docker__packages__python__urirdp_kvm__display__detect_display
     urirdp_docker__packages__python__urirdp_him__handlers__mouse_move --> scripts__test_sessions__util__run_cmd
     urirdp_docker__packages__python__urirdp_him__handlers__mouse_move --> urirdp_docker__packages__python__urirdp_him__handlers___mock
@@ -870,21 +877,32 @@ flowchart TD
     urikvm_docker__packages__python__uriocr__handlers___extract_text --> urikvm_docker__packages__python__uriocr__handlers___ocr_cfg
     urikvm_docker__packages__python__uriocr__handlers__latest_text --> urikvm_docker__packages__python__uriocr__handlers___extract_text
     urikvm_docker__packages__python__uriocr__handlers__image_text --> urikvm_docker__packages__python__uriocr__handlers___extract_text
-    urikvm_docker__packages__python__urihim__handlers___pyautogui --> urikvm_docker__packages__python__urihim__handlers___real_allowed
-    urikvm_docker__packages__python__urihim__handlers__mouse_status --> urikvm_docker__packages__python__urihim__handlers___state
-    urikvm_docker__packages__python__urihim__handlers__mouse_status --> urikvm_docker__packages__python__urihim__handlers___driver
-    urikvm_docker__packages__python__urihim__handlers__mouse_move --> urikvm_docker__packages__python__urihim__handlers___state
-    urikvm_docker__packages__python__urihim__handlers__mouse_move --> urikvm_docker__packages__python__urihim__handlers___driver
-    urikvm_docker__packages__python__urihim__handlers__mouse_move --> urikvm_docker__packages__python__urihim__handlers___pyautogui
-    urikvm_docker__packages__python__urihim__handlers__mouse_click --> urikvm_docker__packages__python__urihim__handlers___state
-    urikvm_docker__packages__python__urihim__handlers__mouse_click --> urikvm_docker__packages__python__urihim__handlers___driver
-    urikvm_docker__packages__python__urihim__handlers__mouse_click --> urikvm_docker__packages__python__urihim__handlers___pyautogui
-    urikvm_docker__packages__python__urihim__handlers__keyboard_type --> urikvm_docker__packages__python__urihim__handlers___driver
-    urikvm_docker__packages__python__urihim__handlers__keyboard_type --> urikvm_docker__packages__python__urihim__handlers___pyautogui
-    urikvm_docker__packages__python__urihim__handlers__keyboard_type --> urikvm_docker__packages__python__urihim__handlers___state
-    urikvm_docker__packages__python__urihim__handlers__keyboard_hotkey --> urikvm_docker__packages__python__urihim__handlers___driver
-    urikvm_docker__packages__python__urihim__handlers__keyboard_hotkey --> urikvm_docker__packages__python__urihim__handlers___pyautogui
-    urikvm_docker__packages__python__urihim__handlers__keyboard_hotkey --> urikvm_docker__packages__python__urihim__handlers___state
+    urikvm_docker__packages__python__urillm__handlers___driver --> urikvm_docker__packages__python__urillm__handlers___llm_cfg
+    urikvm_docker__packages__python__urillm__handlers___click_box --> urikvm_docker__packages__python__urillm__handlers___box_center
+    urikvm_docker__packages__python__urillm__handlers___heuristic_analyze --> urikvm_docker__packages__python__urillm__handlers___find_goal_box
+    urikvm_docker__packages__python__urillm__handlers___heuristic_analyze --> urikvm_docker__packages__python__urillm__handlers___find_target_box
+    urikvm_docker__packages__python__urillm__handlers___heuristic_analyze --> urikvm_docker__packages__python__urillm__handlers___click_box
+    urikvm_docker__packages__python__urillm__handlers___heuristic_analyze --> urikvm_docker__packages__python__urillm__handlers___goal_text
+    urikvm_docker__packages__python__urillm__handlers___heuristic_analyze --> urikvm_docker__packages__python__urillm__handlers___target_from_goal
+    urikvm_docker__packages__python__urillm__handlers___openai_chat --> urikvm_docker__packages__python__urillm__handlers___parse_json_response
+    urikvm_docker__packages__python__urillm__handlers___litellm_chat --> urikvm_docker__packages__python__urillm__handlers___parse_json_response
+    urikvm_docker__packages__python__urillm__handlers___vision_messages --> urikvm_docker__packages__python__urillm__handlers___target_from_goal
+    urikvm_docker__packages__python__urillm__handlers___analyze_openai --> urikvm_docker__packages__python__urillm__handlers___vision_messages
+    urikvm_docker__packages__python__urillm__handlers___analyze_openai --> packages__python__urisysedge__env__resolve_env_var
+    urikvm_docker__packages__python__urillm__handlers___analyze_openai --> urikvm_docker__packages__python__urillm__handlers___heuristic_analyze
+    urikvm_docker__packages__python__urillm__handlers___analyze_openai --> urikvm_docker__packages__python__urillm__handlers___openai_chat
+    urikvm_docker__packages__python__urillm__handlers___analyze_openai --> urikvm_docker__packages__python__urillm__handlers___normalize_action
+    urikvm_docker__packages__python__urillm__handlers___analyze_litellm --> urikvm_docker__packages__python__urillm__handlers___vision_messages
+    urikvm_docker__packages__python__urillm__handlers___analyze_litellm --> packages__python__urisysedge__env__resolve_env_var
+    urikvm_docker__packages__python__urillm__handlers___analyze_litellm --> urikvm_docker__packages__python__urillm__handlers___litellm_chat
+    urikvm_docker__packages__python__urillm__handlers___analyze_litellm --> urikvm_docker__packages__python__urillm__handlers___normalize_action
+    urikvm_docker__packages__python__urillm__handlers___analyze_litellm --> urikvm_docker__packages__python__urillm__handlers___heuristic_analyze
+    urikvm_docker__packages__python__urillm__handlers___vision_analyze --> urikvm_docker__packages__python__urillm__handlers___driver
+    urikvm_docker__packages__python__urillm__handlers___vision_analyze --> urikvm_docker__packages__python__urillm__handlers___llm_cfg
+    urikvm_docker__packages__python__urillm__handlers___vision_analyze --> urikvm_docker__packages__python__urillm__handlers___goal_text
+    urikvm_docker__packages__python__urillm__handlers___vision_analyze --> urikvm_docker__packages__python__urillm__handlers___heuristic_analyze
+    urikvm_docker__packages__python__urillm__handlers___vision_analyze --> urikvm_docker__packages__python__urillm__handlers___target_from_goal
+    urikvm_docker__packages__python__urillm__handlers__vision_analyze --> urikvm_docker__packages__python__urillm__handlers___vision_analyze
     urikvm_docker__scripts__real_pipeline__build_runtime --> packages__python__urisysedge__runtime__load_json
     urikvm_docker__scripts__real_pipeline__main --> urikvm_docker__scripts__real_pipeline__build_runtime
     urikvm_docker__scripts__real_pipeline__main --> scripts__run_nl_log_smoke__print
@@ -910,6 +928,7 @@ flowchart TD
     urisys_automation_lab__server__automation_lab_server__serve --> urisys_automation_lab__server__automation_lab_server__build_lab_runtime
     urisys_automation_lab__server__automation_lab_server__serve --> scripts__run_nl_log_smoke__print
     urisys_automation_lab__server__lab_uri_adapter__LabCallAdapter__execute --> urisys_automation_lab__server__lab_uri_adapter__step_ok
+    urisys_automation_lab__server__lab_uri_adapter__LabCallAdapter__execute --> urisys_node__packages__python__urisysnode__serve__call_uri
     urienv_docker__packages__python__urienv__src__urienv__handlers___cfg --> urienv_docker__packages__python__urienv__src__urienv__handlers___split_csv
     urienv_docker__packages__python__urienv__src__urienv__handlers___get_value --> urienv_docker__packages__python__urienv__src__urienv__handlers___read_docker_secret
     urienv_docker__packages__python__urienv__src__urienv__handlers___require_visible --> urienv_docker__packages__python__urienv__src__urienv__handlers___is_secret
@@ -950,38 +969,12 @@ flowchart TD
     urienv_docker__packages__python__urisysedge__src__urisysedge__server__serve --> urienv_docker__packages__python__urisysedge__src__urisysedge__runtime__load_env_config
     urienv_docker__packages__python__urisysedge__src__urisysedge__server__serve --> scripts__run_nl_log_smoke__print
     urienv_docker__packages__python__urisysedge__src__urisysedge__flow__run_flow --> urienv_docker__packages__python__urisysedge__src__urisysedge__runtime__result_to_dict
-    urisys_node__packages__python__uriscreen__handlers___backend --> urisys_node__packages__python__uriscreen__handlers___screen_cfg
-    urisys_node__packages__python__uriscreen__handlers___output_dir --> urisys_node__packages__python__uriscreen__handlers___screen_cfg
-    urisys_node__packages__python__uriscreen__handlers___monitor_index --> urisys_node__packages__python__uriscreen__handlers___screen_cfg
-    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___backend
-    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___monitor_index
-    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___output_dir
-    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___store_latest
-    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___mock_png
-    urisys_node__packages__python__uriscreen__handlers__frame --> urisys_node__packages__python__uriscreen__handlers__capture
-    urisys_node__packages__python__uriscreen__handlers__capture_loop --> urisys_node__packages__python__uriscreen__handlers___backend
-    urisys_node__packages__python__uriscreen__handlers__capture_loop --> urisys_node__packages__python__uriscreen__handlers__capture
-    urisys_node__packages__python__urisysnode__serve__build_runtime --> urisys_node__packages__python__urisysnode__serve___extend_pack_paths
-    urisys_node__packages__python__urisysnode__serve__build_runtime --> packages__python__urisysedge__env__load_urisys_env
-    urisys_node__packages__python__urisysnode__serve__build_runtime --> packages__python__urisysedge__runtime__load_json
-    urisys_node__packages__python__urisysnode__serve__build_runtime --> urisys_node__packages__python__urisysnode__serve___register_pack
-    urisys_node__packages__python__urisysnode__serve__load_pack_into_runtime --> urisys_node__packages__python__urisysnode__serve___register_pack
-    urisys_node__packages__python__urisysnode__serve__serve --> urisys_node__packages__python__urisysnode__identity__load_identity
-    urisys_node__packages__python__urisysnode__serve__serve --> scripts__run_nl_log_smoke__print
-    urisys_node__packages__python__urisysnode__serve__serve --> urisys_node__packages__python__urisysnode__serve__make_handler
     urisys_node__packages__python__urisysnode__client__call_via_route_map --> urisys_node__packages__python__urisysnode__router__load_route_map
     urisys_node__packages__python__urisysnode__client__call_via_route_map --> urisys_node__packages__python__urisysnode__router__resolve_remote_route
     urisys_node__packages__python__urisysnode__client__call_via_route_map --> urisys_node__packages__python__urisysnode__router__node_endpoint
     urisys_node__packages__python__urisysnode__client__call_via_route_map --> urisys_node__packages__python__urisysnode__router__rewrite_uri_for_slave
     urisys_node__packages__python__urisysnode__client__call_via_route_map --> urisys_node__packages__python__urisysnode__client__remote_call
     urisys_node__packages__python__urisysnode__forward__forward_call --> scripts__run_urisys_node_docker_e2e__remote_call
-    urisys_node__packages__python__urisysnode__handlers__query_health --> urisys_node__packages__python__urisysnode__identity__health_payload
-    urisys_node__packages__python__urisysnode__handlers__query_identity --> urisys_node__packages__python__urisysnode__identity__load_identity
-    urisys_node__packages__python__urisysnode__handlers__query_identity --> urisys_node__packages__python__urisysnode__identity__load_pairing
-    urisys_node__packages__python__urisysnode__handlers__command_indicator_on --> urisys_node__packages__python__urisysnode__identity__require_paired
-    urisys_node__packages__python__urisysnode__handlers__command_indicator_on --> urisys_node__packages__python__urisysnode__identity__set_remote_control
-    urisys_node__packages__python__urisysnode__handlers__command_indicator_off --> urisys_node__packages__python__urisysnode__identity__require_paired
-    urisys_node__packages__python__urisysnode__handlers__command_indicator_off --> urisys_node__packages__python__urisysnode__identity__set_remote_control
     urisys_node__packages__python__urisysnode__router__resolve_remote_route --> urisys_node__packages__python__urisysnode__router___match_pattern
     urisys_node__packages__python__urisysnode__identity___identity_path --> urisys_node__packages__python__urisysnode__identity___data_dir
     urisys_node__packages__python__urisysnode__identity___pairing_path --> urisys_node__packages__python__urisysnode__identity___data_dir
@@ -1016,34 +1009,131 @@ flowchart TD
     urisys_node__packages__python__urisysnode__artifact_resolver__resolve_from_release --> urisys_node__packages__python__urisysnode__artifact_resolver__docker_pull
     urisys_node__packages__python__urisysnode__artifact_resolver__resolve_from_release --> urisys_node__packages__python__urisysnode__artifact_resolver__docker_run_worker
     urisys_node__packages__python__urisysnode__artifact_resolver__resolve_from_release --> urisys_node__packages__python__urisysnode__artifact_resolver__wait_health
-    urikvm_docker__packages__python__urillm__handlers___driver --> urikvm_docker__packages__python__urillm__handlers___llm_cfg
-    urikvm_docker__packages__python__urillm__handlers___click_box --> urikvm_docker__packages__python__urillm__handlers___box_center
-    urikvm_docker__packages__python__urillm__handlers___heuristic_analyze --> urikvm_docker__packages__python__urillm__handlers___find_goal_box
-    urikvm_docker__packages__python__urillm__handlers___heuristic_analyze --> urikvm_docker__packages__python__urillm__handlers___find_target_box
-    urikvm_docker__packages__python__urillm__handlers___heuristic_analyze --> urikvm_docker__packages__python__urillm__handlers___click_box
-    urikvm_docker__packages__python__urillm__handlers___heuristic_analyze --> urikvm_docker__packages__python__urillm__handlers___goal_text
-    urikvm_docker__packages__python__urillm__handlers___heuristic_analyze --> urikvm_docker__packages__python__urillm__handlers___target_from_goal
-    urikvm_docker__packages__python__urillm__handlers___openai_chat --> urikvm_docker__packages__python__urillm__handlers___parse_json_response
-    urikvm_docker__packages__python__urillm__handlers___litellm_chat --> urikvm_docker__packages__python__urillm__handlers___parse_json_response
-    urikvm_docker__packages__python__urillm__handlers___vision_messages --> urikvm_docker__packages__python__urillm__handlers___target_from_goal
-    urikvm_docker__packages__python__urillm__handlers___analyze_openai --> urikvm_docker__packages__python__urillm__handlers___vision_messages
-    urikvm_docker__packages__python__urillm__handlers___analyze_openai --> packages__python__urisysedge__env__resolve_env_var
-    urikvm_docker__packages__python__urillm__handlers___analyze_openai --> urikvm_docker__packages__python__urillm__handlers___heuristic_analyze
-    urikvm_docker__packages__python__urillm__handlers___analyze_openai --> urikvm_docker__packages__python__urillm__handlers___openai_chat
-    urikvm_docker__packages__python__urillm__handlers___analyze_openai --> urikvm_docker__packages__python__urillm__handlers___normalize_action
-    urikvm_docker__packages__python__urillm__handlers___analyze_litellm --> urikvm_docker__packages__python__urillm__handlers___vision_messages
-    urikvm_docker__packages__python__urillm__handlers___analyze_litellm --> packages__python__urisysedge__env__resolve_env_var
-    urikvm_docker__packages__python__urillm__handlers___analyze_litellm --> urikvm_docker__packages__python__urillm__handlers___litellm_chat
-    urikvm_docker__packages__python__urillm__handlers___analyze_litellm --> urikvm_docker__packages__python__urillm__handlers___normalize_action
-    urikvm_docker__packages__python__urillm__handlers___analyze_litellm --> urikvm_docker__packages__python__urillm__handlers___heuristic_analyze
-    urikvm_docker__packages__python__urillm__handlers___vision_analyze --> urikvm_docker__packages__python__urillm__handlers___driver
-    urikvm_docker__packages__python__urillm__handlers___vision_analyze --> urikvm_docker__packages__python__urillm__handlers___llm_cfg
-    urikvm_docker__packages__python__urillm__handlers___vision_analyze --> urikvm_docker__packages__python__urillm__handlers___goal_text
-    urikvm_docker__packages__python__urillm__handlers___vision_analyze --> urikvm_docker__packages__python__urillm__handlers___heuristic_analyze
-    urikvm_docker__packages__python__urillm__handlers___vision_analyze --> urikvm_docker__packages__python__urillm__handlers___target_from_goal
-    urikvm_docker__packages__python__urillm__handlers__vision_analyze --> urikvm_docker__packages__python__urillm__handlers___vision_analyze
+    urisys_node__packages__python__urisysnode__forward_config__load_forward_entries --> urisys_node__packages__python__urisysnode__forward_config___normalize_entry
+    urisys_node__packages__python__urisysnode__forward_config__wire_forward_packs --> urisys_node__packages__python__urisysnode__serve__register_forward_pack
+    urisys_node__packages__python__urisysnode__pack_resolver__github_wheel_url --> urisys_node__packages__python__urisysnode__pack_resolver__github_owner
+    urisys_node__packages__python__urisysnode__pack_resolver__resolve_pack_spec --> urisys_node__packages__python__urisysnode__pack_resolver__github_wheel_url
+    urisys_node__packages__python__urisysnode__pack_resolver__resolve_pack_spec --> urisys_node__packages__python__urisysnode__pack_resolver__pack_install_source
+    urisys_node__packages__python__urisysnode__pack_resolver__ensure_pip_specs --> urisys_node__packages__python__urisysnode__pack_resolver___pip_install
+    urisys_node__packages__python__urisysnode__pack_resolver__ensure_pip_specs --> urisys_node__packages__python__urisysnode__pack_resolver__auto_install_enabled
+    urisys_node__packages__python__urisysnode__pack_resolver__pack_install_specs --> urisys_node__packages__python__urisysnode__pack_resolver__resolve_pack_spec
+    urisys_node__packages__python__urisysnode__pack_resolver__ensure_pack_pypi --> urisys_node__packages__python__urisysnode__pack_resolver__pack_install_specs
+    urisys_node__packages__python__urisysnode__pack_resolver__ensure_pack_pypi --> urisys_node__packages__python__urisysnode__pack_resolver__ensure_pip_specs
+    urisys_node__packages__python__urisysnode__pack_resolver__ensure_pack_pypi --> urisys_node__packages__python__urisysnode__pack_resolver__pack_install_source
+    urisys_node__packages__python__urisysnode__pack_resolver__ensure_real_deps --> urisys_node__packages__python__urisysnode__pack_resolver__ensure_pip_specs
+    urisys_node__packages__python__urisysnode__pack_resolver__github_wheel_urls --> urisys_node__packages__python__urisysnode__pack_resolver__resolve_pack_spec
+    urisys_node__packages__python__urisysnode__pack_resolver__import_pack_module --> urisys_node__packages__python__urisysnode__pack_resolver__pack_module
+    urisys_node__packages__python__urisysnode__pack_resolver__pack_importable --> urisys_node__packages__python__urisysnode__pack_resolver__import_pack_module
+    urikvm_docker__packages__python__urihim__handlers___driver --> urikvm_docker__packages__python__urihim__handlers___real_allowed
+    urikvm_docker__packages__python__urihim__handlers___driver --> urikvm_docker__packages__python__urihim__handlers___wayland_session
+    urikvm_docker__packages__python__urihim__handlers___driver --> urikvm_docker__packages__python__urihim__handlers___ydotool_available
+    urikvm_docker__packages__python__urihim__handlers___pyautogui --> urikvm_docker__packages__python__urihim__handlers___real_allowed
+    urikvm_docker__packages__python__urihim__handlers___run_ydotool --> urikvm_docker__packages__python__urihim__handlers___real_allowed
+    urikvm_docker__packages__python__urihim__handlers___run_ydotool --> urikvm_docker__packages__python__urihim__handlers___ydotool_available
+    urikvm_docker__packages__python__urihim__handlers__mouse_status --> urikvm_docker__packages__python__urihim__handlers___state
+    urikvm_docker__packages__python__urihim__handlers__mouse_status --> urikvm_docker__packages__python__urihim__handlers___driver
+    urikvm_docker__packages__python__urihim__handlers__mouse_move --> urikvm_docker__packages__python__urihim__handlers___driver
+    urikvm_docker__packages__python__urihim__handlers__mouse_move --> urikvm_docker__packages__python__urihim__handlers___state
+    urikvm_docker__packages__python__urihim__handlers__mouse_move --> urikvm_docker__packages__python__urihim__handlers___run_ydotool
+    urikvm_docker__packages__python__urihim__handlers__mouse_move --> urikvm_docker__packages__python__urihim__handlers___pyautogui
+    urikvm_docker__packages__python__urihim__handlers__mouse_click --> urikvm_docker__packages__python__urihim__handlers___driver
+    urikvm_docker__packages__python__urihim__handlers__mouse_click --> urikvm_docker__packages__python__urihim__handlers___state
+    urikvm_docker__packages__python__urihim__handlers__mouse_click --> urikvm_docker__packages__python__urihim__handlers___pyautogui
+    urikvm_docker__packages__python__urihim__handlers__keyboard_type --> urikvm_docker__packages__python__urihim__handlers___driver
+    urikvm_docker__packages__python__urihim__handlers__keyboard_type --> urikvm_docker__packages__python__urihim__handlers___run_ydotool
+    urikvm_docker__packages__python__urihim__handlers__keyboard_type --> urikvm_docker__packages__python__urihim__handlers___pyautogui
+    urikvm_docker__packages__python__urihim__handlers__keyboard_type --> urikvm_docker__packages__python__urihim__handlers___state
+    urikvm_docker__packages__python__urihim__handlers__keyboard_hotkey --> urikvm_docker__packages__python__urihim__handlers___driver
+    urikvm_docker__packages__python__urihim__handlers__keyboard_hotkey --> urikvm_docker__packages__python__urihim__handlers___ydotool_key_sequence
+    urikvm_docker__packages__python__urihim__handlers__keyboard_hotkey --> urikvm_docker__packages__python__urihim__handlers___run_ydotool
+    urikvm_docker__packages__python__urihim__handlers__keyboard_hotkey --> urikvm_docker__packages__python__urihim__handlers___pyautogui
+    urikvm_docker__packages__python__urihim__handlers__keyboard_hotkey --> urikvm_docker__packages__python__urihim__handlers___state
+    src__urisys__cli__print_json --> scripts__run_nl_log_smoke__print
+    src__urisys__cli__build_parser --> src__urisys__cli___add_runtime_flags
+    src__urisys__cli__main --> src__urisys__cli__build_parser
+    src__urisys__cli__main --> src__urisys__cli__resolve_markpact_source
+    src__urisys__cli__main --> src__urisys__cli__print_json
+    urisys_node__packages__python__urisysnode__display_bootstrap___agent_up --> urisys_node__packages__python__urisysnode__display_bootstrap___agent_url
+    urisys_node__packages__python__urisysnode__display_bootstrap___screencast_ready --> urisys_node__packages__python__urisysnode__display_bootstrap___agent_url
+    urisys_node__packages__python__urisysnode__display_bootstrap___start_agent --> urisys_node__packages__python__urisysnode__display_bootstrap___agent_up
+    urisys_node__packages__python__urisysnode__display_bootstrap___start_screencast --> urisys_node__packages__python__urisysnode__display_bootstrap___screencast_ready
+    urisys_node__packages__python__urisysnode__display_bootstrap___start_screencast --> urisys_node__packages__python__urisysnode__display_bootstrap___agent_url
+    urisys_node__packages__python__urisysnode__display_bootstrap__bootstrap_wayland_capture --> urisys_node__packages__python__urisysnode__display_bootstrap___ensure_session_env
+    urisys_node__packages__python__urisysnode__display_bootstrap__bootstrap_wayland_capture --> urisys_node__packages__python__urisysnode__display_bootstrap___agent_url
+    urisys_node__packages__python__urisysnode__display_bootstrap__bootstrap_wayland_capture --> urisys_node__packages__python__urisysnode__display_bootstrap___agent_up
+    urisys_node__packages__python__urisysnode__display_bootstrap__bootstrap_wayland_capture --> urisys_node__packages__python__urisysnode__display_bootstrap___start_agent
+    urisys_node__packages__python__urisysnode__display_bootstrap__bootstrap_wayland_capture --> urisys_node__packages__python__urisysnode__display_bootstrap___start_screencast
+    urisys_node__packages__python__urishell__handlers___mock --> urisys_node__packages__python__urishell__handlers___detect_display
+    urisys_node__packages__python__urishell__handlers__shell_run --> urisys_node__packages__python__urishell__handlers___detect_display
+    urisys_node__packages__python__urishell__handlers__shell_run --> urisys_node__packages__python__urishell__handlers___mock
+    urisys_node__packages__python__urishell__handlers__shell_run --> urisys_node__packages__python__urishell__handlers___allow_real
+    urisys_node__packages__python__urisysnode__handlers__query_health --> urisys_node__packages__python__urisysnode__identity__health_payload
+    urisys_node__packages__python__urisysnode__handlers__query_identity --> urisys_node__packages__python__urisysnode__identity__load_identity
+    urisys_node__packages__python__urisysnode__handlers__query_identity --> urisys_node__packages__python__urisysnode__identity__load_pairing
+    urisys_node__packages__python__urisysnode__handlers__command_indicator_on --> urisys_node__packages__python__urisysnode__identity__require_paired
+    urisys_node__packages__python__urisysnode__handlers__command_indicator_on --> urisys_node__packages__python__urisysnode__identity__set_remote_control
+    urisys_node__packages__python__urisysnode__handlers__command_indicator_off --> urisys_node__packages__python__urisysnode__identity__require_paired
+    urisys_node__packages__python__urisysnode__handlers__command_indicator_off --> urisys_node__packages__python__urisysnode__identity__set_remote_control
+    urisys_node__packages__python__urisysnode__handlers__query_packs --> urisys_node__packages__python__urisysnode__pack_resolver__auto_install_enabled
+    urisys_node__packages__python__urisysnode__handlers__command_install_pack --> urisys_node__packages__python__urisysnode__serve__load_pack_into_runtime
+    urisys_node__packages__python__urisysnode__handlers__command_register_forward --> urisys_node__packages__python__urisysnode__serve__register_forward_pack
+    urisys_node__packages__python__uriscreen__backends__is_wayland --> urisys_node__packages__python__uriscreen__backends__session_type
+    urisys_node__packages__python__uriscreen__backends__vdisplay_agent_up --> urisys_node__packages__python__uriscreen__backends___http_json
+    urisys_node__packages__python__uriscreen__backends__vdisplay_agent_up --> urisys_node__packages__python__uriscreen__backends__vdisplay_agent_url
+    urisys_node__packages__python__uriscreen__backends__vdisplay_screencast_ready --> urisys_node__packages__python__uriscreen__backends___http_json
+    urisys_node__packages__python__uriscreen__backends__vdisplay_screencast_ready --> urisys_node__packages__python__uriscreen__backends__vdisplay_agent_url
+    urisys_node__packages__python__uriscreen__backends__resolve_backend --> urisys_node__packages__python__uriscreen__backends__is_wayland
+    urisys_node__packages__python__uriscreen__backends__resolve_backend --> urisys_node__packages__python__uriscreen__backends__vdisplay_agent_up
+    urisys_node__packages__python__uriscreen__backends__resolve_backend --> urisys_node__packages__python__uriscreen__backends__vdisplay_screencast_ready
+    urisys_node__packages__python__uriscreen__backends__capture_vdisplay --> urisys_node__packages__python__uriscreen__backends___http_json
+    urisys_node__packages__python__uriscreen__backends__capture_vdisplay --> urisys_node__packages__python__uriscreen__backends__vdisplay_agent_url
+    urisys_node__packages__python__uriscreen__backends__capture_portal --> urisys_node__packages__python__uriscreen__portal_capture__capture_portal_png
+    urisys_node__packages__python__uriscreen__backends__capture_with_fallback --> urisys_node__packages__python__uriscreen__backends__resolve_backend
+    urisys_node__packages__python__uriscreen__backends__capture_with_fallback --> urisys_node__packages__python__uriscreen__backends__is_wayland
+    urisys_node__packages__python__uriscreen__backends__capture_with_fallback --> urisys_node__packages__python__uriscreen__backends__capture_vdisplay
+    urisys_node__packages__python__uriscreen__backends__capture_with_fallback --> urisys_node__packages__python__uriscreen__backends__is_black_png
+    urisys_node__packages__python__uriscreen__backends__capture_with_fallback --> urisys_node__packages__python__uriscreen__backends__capture_portal
+    urisys_node__packages__python__uriscreen__backends__capture_with_fallback --> urisys_node__packages__python__uriscreen__backends___capture_mss
+    urisys_node__packages__python__uriscreen__portal_capture__capture_portal_png --> urisys_node__packages__python__uriscreen__portal_capture___portal_python
+    urisys_node__packages__python__uriscreen__handlers___backend --> urisys_node__packages__python__uriscreen__handlers___screen_cfg
+    urisys_node__packages__python__uriscreen__handlers___output_dir --> urisys_node__packages__python__uriscreen__handlers___screen_cfg
+    urisys_node__packages__python__uriscreen__handlers___monitor_index --> urisys_node__packages__python__uriscreen__handlers___screen_cfg
+    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___monitor_index
+    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___output_dir
+    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__backends__resolve_backend
+    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__backends__capture_with_fallback
+    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___store_latest
+    urisys_node__packages__python__uriscreen__handlers__capture --> urisys_node__packages__python__uriscreen__handlers___mock_png
+    urisys_node__packages__python__uriscreen__handlers__frame --> urisys_node__packages__python__uriscreen__handlers__capture
+    urisys_node__packages__python__uriscreen__handlers__capture_loop --> urisys_node__packages__python__uriscreen__backends__resolve_backend
+    urisys_node__packages__python__uriscreen__handlers__capture_loop --> urisys_node__packages__python__uriscreen__handlers__capture
+    urisys_node__packages__python__urisysnode__serve___register_pack --> urisys_node__packages__python__urisysnode__pack_resolver__auto_install_enabled
+    urisys_node__packages__python__urisysnode__serve___register_pack --> urisys_node__packages__python__urisysnode__pack_resolver__ensure_pack_pypi
+    urisys_node__packages__python__urisysnode__serve__build_runtime --> urisys_node__packages__python__urisysnode__serve___extend_pack_paths
+    urisys_node__packages__python__urisysnode__serve__build_runtime --> packages__python__urisysedge__env__load_urisys_env
+    urisys_node__packages__python__urisysnode__serve__build_runtime --> packages__python__urisysedge__runtime__load_json
+    urisys_node__packages__python__urisysnode__serve__build_runtime --> urisys_node__packages__python__urisysnode__serve___register_pack
+    urisys_node__packages__python__urisysnode__serve__build_runtime --> urisys_node__packages__python__urisysnode__forward_config__load_forward_entries
+    urisys_node__packages__python__urisysnode__serve__load_pack_into_runtime --> urisys_node__packages__python__urisysnode__pack_resolver__ensure_pack_pypi
+    urisys_node__packages__python__urisysnode__serve__load_pack_into_runtime --> urisys_node__packages__python__urisysnode__serve___register_pack
+    urisys_node__packages__python__urisysnode__serve__ensure_pack_for_uri --> urisys_node__packages__python__urisysnode__pack_resolver__scheme_for_uri
+    urisys_node__packages__python__urisysnode__serve__ensure_pack_for_uri --> urisys_node__packages__python__urisysnode__pack_resolver__pack_for_scheme
+    urisys_node__packages__python__urisysnode__serve__ensure_pack_for_uri --> urisys_node__packages__python__urisysnode__serve__load_pack_into_runtime
+    urisys_node__packages__python__urisysnode__serve__ensure_pack_for_uri --> urisys_node__packages__python__urisysnode__pack_resolver__pack_importable
+    urisys_node__packages__python__urisysnode__serve__call_uri --> urisys_node__packages__python__urisysnode__pack_resolver__auto_install_enabled
+    urisys_node__packages__python__urisysnode__serve__call_uri --> urisys_node__packages__python__urisysnode__serve__ensure_pack_for_uri
+    urisys_node__packages__python__urisysnode__serve__call_uri --> urisys_node__packages__python__urisysnode__pack_resolver__scheme_for_uri
+    urisys_node__packages__python__urisysnode__serve__call_uri --> urisys_node__packages__python__urisysnode__pack_resolver__pack_for_scheme
+    urisys_node__packages__python__urisysnode__serve__call_uri --> urisys_node__packages__python__urisysnode__pack_resolver__ensure_real_deps
+    urisys_node__packages__python__urisysnode__serve__make_handler --> urisys_node__packages__python__urisysnode__serve__call_uri
+    urisys_node__packages__python__urisysnode__serve__make_handler --> urisys_node__packages__python__urisysnode__pack_resolver__auto_install_enabled
+    urisys_node__packages__python__urisysnode__serve__serve --> urisys_node__packages__python__urisysnode__identity__load_identity
+    urisys_node__packages__python__urisysnode__serve__serve --> scripts__run_nl_log_smoke__print
+    urisys_node__packages__python__urisysnode__serve__serve --> urisys_node__packages__python__urisysnode__display_bootstrap__bootstrap_wayland_capture
+    urisys_node__packages__python__urisysnode__serve__serve --> urisys_node__packages__python__urisysnode__serve__make_handler
+    urisys_node__packages__python__urisysnode__serve__serve --> urisys_node__packages__python__urisysnode__pack_resolver__auto_install_enabled
 
     classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
     classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
-    class src__urisys__cli__main,src__urisys__managers__markpact_validation__validate_contract,src__urisys__managers__markpact_validation__validate_implementation,src__urisys__managers__markpact_manager__MarkpactManager__compile,src__urisys__managers__markpact_manager__MarkpactManager__run_tests,src__urisys__managers__markpact_manager__MarkpactManager___build_route,src__urisys__managers__pack_manager__PackManager__parse_packs,scripts__run_test_sessions__session_urirdp_real_docker,scripts__run_test_sessions__session_automation_lab,scripts__report__lab_checks__load_flow_outcomes,scripts__report__session__infer_steps,urirdp_docker__packages__python__urirdp_shell__handlers__shell_run,urirdp_docker__packages__python__urirdp_browser__handlers__open_page,urirdp_docker__packages__python__urirdp_llm__handlers__analyze,urirdp_docker__packages__python__urirdp_llm__handlers__decide,urirdp_docker__packages__python__urirdp_llm__handlers__plan,urisys_automation_lab__packages__python__urichat__handlers__uri_execute,urisys_automation_lab__server__automation_lab_server__build_lab_runtime,urisys_automation_lab__server__automation_lab_server__LabHandler__do_POST,urisys_node__packages__python__urisysnode__cli__main,urisys_node__packages__python__urisysnode__artifact_resolver__select_artifact highCC
+    class src__urisys__managers__markpact_validation__validate_contract,src__urisys__managers__markpact_validation__validate_implementation,src__urisys__managers__markpact_manager__MarkpactManager__compile,src__urisys__managers__markpact_manager__MarkpactManager__run_tests,src__urisys__managers__markpact_manager__MarkpactManager___build_route,src__urisys__managers__pack_manager__PackManager__parse_packs,scripts__run_test_sessions__session_urirdp_real_docker,scripts__run_test_sessions__session_automation_lab,scripts__report__lab_checks__load_flow_outcomes,scripts__report__session__infer_steps,urirdp_docker__packages__python__urirdp_browser__handlers__open_page,urirdp_docker__packages__python__urirdp_llm__handlers__analyze,urirdp_docker__packages__python__urirdp_llm__handlers__decide,urirdp_docker__packages__python__urirdp_llm__handlers__plan,urisys_automation_lab__packages__python__urichat__handlers__uri_execute,urisys_automation_lab__server__automation_lab_server__build_lab_runtime,urisys_automation_lab__server__automation_lab_server__LabHandler__do_POST,urisys_node__packages__python__urisysnode__cli__main,urisys_node__packages__python__urisysnode__artifact_resolver__select_artifact,urisys_node__packages__python__urisysnode__forward_config__load_forward_entries,src__urisys__cli__main,urisys_node__packages__python__urishell__handlers__shell_run,urisys_node__packages__python__urisysnode__serve__load_pack_into_runtime,urisys_node__packages__python__urisysnode__serve__call_uri highCC
     class packages__python__urisysedge__runtime__Runtime__call,packages__python__urisysedge__runtime__load_yaml_flow,packages__python__urisysedge__env__load_urisys_env,packages__python__urisysedge__env__resolve_env_var,src__urisys__managers__markpact_validation__validate_bundle,src__urisys__managers__markpact_manager__MarkpactManager__validate,src__urisys__managers__markpact_manager__MarkpactManager___validate_pack,src__urisys__managers__markpact_manager__MarkpactManager___compile_manifest,src__urisys__managers__markpact_manager__MarkpactManager___scheme,src__urisys__managers__pack_manager__PackManager___is_all,src__urisys__managers__pack_manager__PackManager__parse_markpacts,src__urisys__managers__pack_manager__PackManager__manifest_paths,src__urisys__managers__source_manager__SourceManager__fetch,src__urisys__managers__source_manager__SourceManager___fetch_git,src__urisys__managers__source_manager__SourceManager___fetch_zip,uristepper_docker__packages__python__uristepperedge__cli__cmd_flow,uristepper_docker__packages__python__uristepper__handlers___enforce_safety,scripts__run_test_sessions__main,scripts__report__events__summarize_event_records,scripts__report__events__load_event_records,scripts__report__events__summarize_events,scripts__report__events__merge_event_summaries,scripts__report__run_analysis___session_row,scripts__report__run_analysis___findings_for_session,scripts__report__run_analysis___run_recommendations,scripts__report__run_analysis__analyze_run,scripts__report__lab_checks__iter_step_results,scripts__report__lab_checks__check_vision_never_decides,scripts__report__session__session_status,scripts__report__session__generate_report medCC

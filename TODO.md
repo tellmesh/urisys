@@ -8,16 +8,37 @@
 
 ## 🎯 Roadmap — dystrybucja packów kvm
 
-Źródło prawdy: [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md)
+Źródło prawdy: [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md) · rozszerzenia: [`docs/PACK-EXTENSIBILITY.md`](docs/PACK-EXTENSIBILITY.md)
 
 ### PyPI (ścieżka A)
 
 - [x] Layout pyproject + vendored copy w monorepo (`urisysedge`, `urikvm`, `urihim`, `uriocr`, `urillm`)
 - [x] Repo tellmesh/* + publikacja `urisysedge` 0.1.1, `urikvm` 0.1.1
 - [x] `docs/NODE-SETUP.md` — slave bez `.sh` (pip / shell:// / URI)
-- [x] Flow: `bootstrap-kvm-pypi.uri.flow.yaml`, `remote-probe.uri.flow.yaml`
+- [x] Flow: `bootstrap-kvm-pypi.uri.flow.yaml`, `bootstrap-kvm-github.uri.flow.yaml`, `remote-probe.uri.flow.yaml`
+- [x] GitHub Releases dla him/ocr/llm (`scripts/publish-kvm-packs-github.sh`, `URISYS_PACK_SOURCE=auto`)
+- [x] Hot-load fix `import_pack_module` (0.1.24)
 - [ ] `goal -a` → PyPI: `urihim`, `uriocr`, `urillm` (GitHub Releases ✅ jako alternatywa)
-- [ ] Po pełnej publikacji: `pip install "urisys-node[real,kvm]"` bez checkout monorepo
+- [ ] Opublikować `urisys` 0.1.24 na PyPI (wheel zbudowany: `/tmp/urisys-dist/`)
+- [x] GitHub Release `urihim` 0.1.3 (ydotool) — https://github.com/tellmesh/urihim/releases/tag/v0.1.3
+
+### Packi rozszerzone (imgl / vql)
+
+- [x] `docs/PACK-EXTENSIBILITY.md` — in-process vs forward vs shell://pip
+- [ ] `uriimgl` pack lub forward `rest2imgl` (layout → `him://`)
+- [ ] `urivql` / forward `rest2vql` (detect/compare po `screen://`)
+- [ ] Entry points `[urisys.pack]` — discovery bez edycji `pack_resolver.py`
+- [ ] `node://…/command/register-forward` — hot-load workera przez URI — ✅ URI + config autostart
+
+### Wayland slave (lenovo)
+
+- [x] Capture portal + auto backend (`uriscreen`)
+- [x] hot-load him po pip (bez restartu node)
+- [x] systemd user unit template
+- [x] Lazy load — nie downgrade'uje zainstalowanej wersji (fix `ensure_pack_for_uri`)
+- [x] `forward_config` + `register-forward` URI + autostart z config
+- [ ] `urihim` backend `ydotool` — kod ✅, **lenovo: brak ydotool** (sudo apt wymaga hasła)
+- [ ] `URISYS_NODE_CONFIG` w domyślnym systemd lenovo
 
 ### Markpact (ścieżka B — równolegle)
 
@@ -35,9 +56,10 @@
 
 - [x] `register_forward_pack()` + `forward.py` (HTTP do workera)
 - [x] `load_pack_into_runtime()` + `POST /uri/pack` (hot-load PyPI)
+- [x] Lenovo E2E: health, screen portal, shell://pip, install-pack him (2026-06-17)
 - [ ] Auto-wire: `ArtifactResolver` → `register_forward_pack` przy starcie node
 - [ ] Test E2E: OCI worker bez PyPI na lenovo
-- [x] `scripts/remote-node-smoke.sh` — smoke HTTP (`192.168.1.2:8790` tested 2026-06-16)
+- [x] `scripts/remote-node-smoke.sh` — smoke HTTP
 
 ### Konsolidacja / refactor (później)
 

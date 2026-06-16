@@ -86,6 +86,16 @@ def build_runtime(config_path: str | None = None) -> Runtime:
         if _register_pack(rt, pack, try_install=auto_install_enabled()):
             rt._loaded_packs.add(pack)  # type: ignore[attr-defined]
 
+    try:
+        from urisysnode.forward_config import load_forward_entries, wire_forward_packs
+
+        forwards = load_forward_entries(config=config)
+        if forwards:
+            rt.config["forwards"] = forwards
+            wire_forward_packs(rt, forwards)
+    except Exception as exc:
+        warnings.warn(f"forward pack wiring skipped: {exc}", stacklevel=2)
+
     return rt
 
 
@@ -95,6 +105,7 @@ def load_pack_into_runtime(
     *,
     install: bool = False,
     specs: list[str] | None = None,
+    force: bool = False,
 ) -> dict[str, Any]:
     """Hot-load a capability pack. With install=True or auto-install, pip install first."""
     pack = (pack or "").strip()
@@ -104,8 +115,21 @@ def load_pack_into_runtime(
     if loaded is None:
         loaded = set()
         runtime._loaded_packs = loaded  # type: ignore[attr-defined]
+    pack_routes: dict[str, set[str]] = getattr(runtime, "_pack_route_patterns", {})
+    if not hasattr(runtime, "_pack_route_patterns"):
+        runtime._pack_route_patterns = pack_routes  # type: ignore[attr-defined]
     if pack in loaded:
-        return {"ok": True, "pack": pack, "loaded": True, "already_loaded": True, "new_routes": []}
+        if not force:
+            return {"ok": True, "pack": pack, "loaded": True, "already_loaded": True, "new_routes": []}
+        drop = pack_routes.get(pack, set())
+        if drop:
+            runtime.routes = [r for r in runtime.routes if r.pattern not in drop]
+        loaded.discard(pack)
+        pack_routes.pop(pack, None)
+        module_name = PACK_MODULES.get(pack, "").split(".", 1)[0]
+        if module_name and module_name in sys.modules:
+            importlib.reload(sys.modules[module_name])
+        importlib.invalidate_caches()
     before = {r.pattern for r in runtime.routes}
     pip_result = None
     if install or (auto_install_enabled() and not pack_importable(pack)):
@@ -118,6 +142,9 @@ def load_pack_into_runtime(
         return {"ok": False, "pack": pack, "loaded": False, "error": str(exc), "pip": pip_result}
     if ok:
         loaded.add(pack)
+        added = {r.pattern for r in runtime.routes} - before
+        if added:
+            pack_routes[pack] = added
     new_routes = sorted({r.pattern for r in runtime.routes} - before)
     out: dict[str, Any] = {"ok": bool(ok), "pack": pack, "loaded": bool(ok), "new_routes": new_routes}
     if pip_result:
@@ -134,7 +161,7 @@ def ensure_pack_for_uri(runtime: Runtime, uri: str) -> dict[str, Any] | None:
     loaded = getattr(runtime, "_loaded_packs", set())
     if pack in loaded:
         return None
-    return load_pack_into_runtime(runtime, pack, install=True)
+    return load_pack_into_runtime(runtime, pack, install=not pack_importable(pack))
 
 
 def call_uri(runtime: Runtime, uri: str, payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
@@ -246,6 +273,7 @@ def make_handler(runtime: Runtime):
                 length = int(self.headers.get("Content-Length") or "0")
                 req = json.loads(self.rfile.read(length).decode("utf-8") or "{}")
                 install = bool(req.get("install", True))
+                force = bool(req.get("force", False))
                 specs = req.get("specs")
                 override = [str(s) for s in specs] if isinstance(specs, list) else None
                 result = load_pack_into_runtime(
@@ -253,6 +281,7 @@ def make_handler(runtime: Runtime):
                     str(req.get("pack") or ""),
                     install=install,
                     specs=override,
+                    force=force,
                 )
                 return self._json(200 if result.get("ok") else 400, result)
             if self.path != "/uri/call":

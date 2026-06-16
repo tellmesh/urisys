@@ -9,7 +9,8 @@ GET  /uri/routes
 ```
 
 Mapa modułów (243 pliki, 581 funkcji): [`project/map.toon.yaml`](../project/map.toon.yaml).  
-Katalog paczek i duplikatów: [`docs/PACKAGES.md`](PACKAGES.md), [`project/PACKAGES.md`](../project/PACKAGES.md).
+Katalog paczek i duplikatów: [`docs/PACKAGES.md`](PACKAGES.md), [`project/PACKAGES.md`](../project/PACKAGES.md).  
+Slave node i packi: [`docs/NODE-SETUP.md`](NODE-SETUP.md), [`docs/DISTRIBUTION.md`](DISTRIBUTION.md), [`docs/PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md).
 
 ## Warstwy
 
@@ -72,6 +73,21 @@ Każdy obraz Docker rejestruje własne schematy URI (`routes.py` + `handlers.py`
 | `uristepper-docker` | 8799 | stepper |
 | `urisys-automation-lab` | 8099 | stt, chat, webrtc + forward do urirdp |
 | `urisys-node` | 8790 | screen, node identity, routing slave |
+
+Slave (`urisys-node`) ładuje packi **lazy** (PyPI/GitHub) lub **hot-load** (`POST /uri/pack`, `install-pack`) bez restartu procesu. Po restarcie PC: `pip` zostaje, node trzeba uruchomić (systemd user — [`NODE-SETUP.md`](NODE-SETUP.md)). Szczegóły: [`DISTRIBUTION.md`](DISTRIBUTION.md), [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md).
+
+### Pipeline Wayland (lenovo)
+
+```text
+screen://…/query/frame  →  vql://…/compare  →  imgl://…/execute  →  him://…/click
+```
+
+- **screen** — portal capture (GNOME Wayland); mss daje czarny ekran
+- **vql** — weryfikacja UI ([oqlos/vql](https://github.com/oqlos/vql)); forward worker
+- **imgl** — layout + ydotool ([semcod/imgl](https://github.com/semcod/imgl)); forward worker
+- **him** — pyautogui na X11; na Wayland wymaga ydotool/imgl lub CDP/Playwright
+
+Backends capture: [`urisys-node/docs/SCREEN_BACKENDS.md`](../urisys-node/docs/SCREEN_BACKENDS.md).
 
 ## URI flows
 

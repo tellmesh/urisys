@@ -1,5 +1,7 @@
 # URI flows w urisys
 
+Powiązane: [`NODE-SETUP.md`](NODE-SETUP.md) (bootstrap slave), [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md) (hot-load packów), [`DISTRIBUTION.md`](DISTRIBUTION.md).
+
 ## Format compact (`*.uri.flow.yaml`)
 
 ```yaml
@@ -31,7 +33,7 @@ expect:                          # opcjonalny kontrakt efektu (patrz niżej)
 | `uribrowser-docker/flows/` | 1 | Browser demo |
 | `urienv-docker/flows/` | 2 | Env checks |
 | `uristepper-docker/flows/` | 2 | Stepper safety |
-| `urisys-node/flows/` | 4 | Bootstrap PyPI, remote probe, screen, kvm demo |
+| `urisys-node/flows/` | 4 | Bootstrap PyPI/GitHub, remote probe — [`NODE-SETUP.md`](NODE-SETUP.md) |
 | `flows/` | 1 | `device-maintenance` (urisys CLI) |
 
 ## Trzy sposoby wykonania

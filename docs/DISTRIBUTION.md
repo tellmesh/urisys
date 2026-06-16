@@ -2,7 +2,7 @@
 
 Ten dokument opisuje **trzy równoległe ścieżki** dostarczania packów kvm/him/ocr/llm do `urisys-node`, stan publikacji oraz plan domknięcia.
 
-Powiązane: [`PACKAGES.md`](PACKAGES.md) (layout monorepo), [`MARKPACT.md`](MARKPACT.md) (format kontraktu), [`../urisys-node/README.md`](../urisys-node/README.md) (instalacja node), [`MIGRATION-STEP3.md`](MIGRATION-STEP3.md) (dedup `urisysedge`).
+Powiązane: [`PACKAGES.md`](PACKAGES.md) (layout monorepo), [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md) (nowe schematy URI), [`MARKPACT.md`](MARKPACT.md) (format kontraktu), [`../urisys-node/README.md`](../urisys-node/README.md) (instalacja node), [`MIGRATION-STEP3.md`](MIGRATION-STEP3.md) (dedup `urisysedge`).
 
 ## Trzy ścieżki (można robić równolegle)
 
@@ -33,15 +33,16 @@ Powiązane: [`PACKAGES.md`](PACKAGES.md) (layout monorepo), [`MARKPACT.md`](MARK
 
 Ścieżki **B i C** są niezależne od PyPI. Łączą się dopiero przy resolve na node: `artifact-index` wskazuje obraz, kontrakt podaje wzorce URI → `register_forward_pack()`.
 
-## Stan publikacji (2026-06-16)
+## Stan publikacji (2026-06-17)
 
 ### PyPI
 
 | Pakiet | PyPI | Repo tellmesh | W monorepo urisys |
 |--------|------|---------------|-------------------|
+| `urisys` | 🔲 0.1.24 (fix hot-load) | `tellmesh/urisys` | root `pyproject.toml` |
 | `urisysedge` | ✅ [0.1.1](https://pypi.org/project/urisysedge/) | `tellmesh/urisysedge` | `packages/python/urisysedge/` |
 | `urikvm` | ✅ [0.1.1](https://pypi.org/project/urikvm/) | `tellmesh/urikvm` | `urikvm-docker/packages/python/urikvm/` |
-| `urihim` | 🔲 PyPI / ✅ [GitHub v0.1.2](https://github.com/tellmesh/urihim/releases/tag/v0.1.2) | `tellmesh/urihim` | vendored |
+| `urihim` | 🔲 PyPI / ✅ [GitHub v0.1.3](https://github.com/tellmesh/urihim/releases/tag/v0.1.3) | `tellmesh/urihim` | vendored |
 | `uriocr` | 🔲 PyPI / ✅ [GitHub v0.1.0](https://github.com/tellmesh/uriocr/releases/tag/v0.1.0) | `tellmesh/uriocr` | vendored |
 | `urillm` | 🔲 PyPI / ✅ [GitHub v0.1.0](https://github.com/tellmesh/urillm/releases/tag/v0.1.0) | `tellmesh/urillm` | vendored |
 
@@ -65,7 +66,7 @@ bash scripts/publish-kvm-packs-github.sh
 Ręczna instalacja z release:
 
 ```bash
-pip install https://github.com/tellmesh/urihim/releases/download/v0.1.2/urihim-0.1.2-py3-none-any.whl
+pip install https://github.com/tellmesh/urihim/releases/download/v0.1.3/urihim-0.1.3-py3-none-any.whl
 ```
 
 Na node z lazy install — domyślnie `auto` (him/ocr/llm z GitHub, reszta z PyPI). Wymuszenie:
@@ -179,18 +180,18 @@ curl -X POST http://127.0.0.1:8790/uri/pack \
   -H 'Content-Type: application/json' -d '{"pack":"kvm"}'
 ```
 
-### Test zdalnego node (np. lenovo `192.168.1.2:8790`)
+### Test zdalnego node (np. lenovo `192.168.188.201:8790`)
 
 **URI / flow** (preferowane — bez `.sh` na slave):
 
 ```bash
-curl -sS http://192.168.1.2:8790/health
+curl -sS http://192.168.188.201:8790/health
 urisys-node call "node://lenovo/query/identity" \
   --route-map urisys-node/docker/config/route-map.host.yaml --approve
 urisys --packs node,screen flow urisys-node/flows/remote-probe.uri.flow.yaml --approve --allow-real
 ```
 
-Dev/CI only: `URISYS_NODE_BASE=http://192.168.1.2:8790 bash scripts/remote-node-smoke.sh`
+Dev/CI only: `URISYS_NODE_BASE=http://192.168.188.201:8790 bash scripts/remote-node-smoke.sh`
 
 Szczegóły: [`NODE-SETUP.md`](NODE-SETUP.md).
 
@@ -215,8 +216,9 @@ Forward handler: `urisysnode/forward.py` → `remote_call()` do workera.
 
 ## Co zostało (priorytet)
 
-1. 🔲 PyPI: `urihim`, `uriocr`, `urillm` (`goal -a` w repo tellmesh)
-2. 🔲 Kontrakty kvm w `markpact-contracts/packs/`
+1. 🔲 PyPI: `urisys` 0.1.24 (fix `import_pack_module`), potem `urihim`, `uriocr`, `urillm` (`goal -a`)
+2. 🔲 Packi rozszerzone: `uriimgl`, `urivql` — [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md)
+3. 🔲 Kontrakty kvm w `markpact-contracts/packs/`
 3. 🔲 CI: `markpact-release.yml` dla `urikvm-docker` (matrix lub osobne tagi)
 4. 🔲 Spięcie `ArtifactResolver` + auto-forward przy starcie node
 5. 🔲 Refactor CC>15 (REFACTOR[1] w `project/analysis.toon.yaml`)

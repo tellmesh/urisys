@@ -31,3 +31,11 @@ def register(rt):
         approval="required",
         side_effects=True,
     )
+    rt.register(
+        "node://{target}/command/register-forward",
+        "python://urisysnode.handlers:command_register_forward",
+        kind="command",
+        operation="node.register_forward",
+        approval="required",
+        side_effects=True,
+    )

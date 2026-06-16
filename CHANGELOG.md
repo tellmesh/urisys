@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.24] - 2026-06-17
+
+### Added
+- [`docs/PACK-EXTENSIBILITY.md`](docs/PACK-EXTENSIBILITY.md) — dodawanie packów (`imgl://`, forward worker), lifecycle po restarcie PC
+- [`urisys-node/systemd/urisys-node-user.service`](urisys-node/systemd/urisys-node-user.service) — autostart node (systemd user, Wayland)
+- Test regresji `test_pack_importable_uses_import_pack_module`
+- [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md) — autostart, zmienne env, link do extensibility
+
+### Changed
+- `urihim.handlers._driver` — przy `allow_real` domyślnie `pyautogui` (X11); na Wayland auto `ydotool`
+- `urihim` — driver `ydotool` dla mouse/keyboard (GNOME Wayland)
+- [`README.md`](README.md) — pełna tabela docs, wersja 0.1.24
+- [`docs/PACKAGES.md`](docs/PACKAGES.md), [`TODO.md`](TODO.md) — ekosystem imgl/vql, lenovo E2E
+
+### Fixed
+- `pack_resolver.import_pack_module` — orphaned code w `github_wheel_urls` łamało hot-load (`install-pack`, `/uri/pack`)
+- Lazy load packów — nie downgrade'uje już zainstalowanej wersji przy pierwszym URI (`ensure_pack_for_uri`)
+
+### Added (continued)
+- `forward_config.py` — autostart forward packów z `URISYS_NODE_CONFIG.forwards` / env
+- `node://…/command/register-forward` — hot-load workera (imgl/vql)
+- `POST /uri/pack` + `install-pack` — parametr `force` do przeładowania packa po `pip install -U`
+- `urisys-node/config/node-profile.lenovo.json` — profil Wayland + forward imgl/vql
+- `urihim` 0.1.3 — driver `ydotool` (auto na Wayland)
+
+### Published (GitHub Releases)
+- `urihim` [v0.1.3](https://github.com/tellmesh/urihim/releases/tag/v0.1.3) — ydotool driver (Wayland)
+
+### Verified (lenovo 192.168.188.201)
+- hot-load `him` bez restartu node po `shell://pip` + `install-pack`
+- `screen://` capture via Wayland portal
+- `shell://` bootstrap (Chrome, pip, skrypty)
+
 ## [0.1.19] - 2026-06-16
 
 ### Added
@@ -189,6 +222,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix unused-imports issues (ticket-c2e8d82c)
 
 ## [Unreleased]
+
+## [0.1.25] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+- Update docs/ARCHITECTURE.md
+- Update docs/DISTRIBUTION.md
+- Update docs/FLOWS.md
+- Update docs/NODE-SETUP.md
+- Update docs/PACK-EXTENSIBILITY.md
+- Update docs/PACKAGES.md
+- Update project/README.md
+- ... and 2 more files
+
+### Other
+- Update VERSION
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/compact_flow.mmd
+- Update project/compact_flow.png
+- Update project/duplication.toon.yaml
+- Update project/evolution.toon.yaml
+- ... and 25 more files
 
 ## [0.1.23] - 2026-06-17
 

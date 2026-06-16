@@ -1,16 +1,16 @@
 # System Architecture Analysis
-<!-- generated in 0.01s -->
+<!-- generated in 0.00s -->
 
 ## Overview
 
 - **Project**: /home/tom/github/tellmesh/urisys
 - **Primary Language**: python
-- **Languages**: python: 121, shell: 52, yaml: 35, toml: 13, json: 13
+- **Languages**: python: 130, shell: 56, yaml: 39, json: 14, toml: 13
 - **Analysis Mode**: static
-- **Total Functions**: 559
-- **Total Classes**: 33
-- **Modules**: 259
-- **Entry Points**: 298
+- **Total Functions**: 615
+- **Total Classes**: 34
+- **Modules**: 277
+- **Entry Points**: 307
 
 ## Architecture by Module
 
@@ -49,6 +49,10 @@
 - **Classes**: 3
 - **File**: `runtime.py`
 
+### urisys-node.packages.python.urisysnode.pack_resolver
+- **Functions**: 16
+- **File**: `pack_resolver.py`
+
 ### urisys-node.packages.python.urisysnode.artifact_resolver
 - **Functions**: 15
 - **Classes**: 1
@@ -59,9 +63,17 @@
 - **Classes**: 1
 - **File**: `pack_manager.py`
 
+### urikvm-docker.packages.python.urihim.handlers
+- **Functions**: 13
+- **File**: `handlers.py`
+
 ### urisys-node.packages.python.urisysnode.identity
 - **Functions**: 12
 - **File**: `identity.py`
+
+### urisys-node.packages.python.uriscreen.backends
+- **Functions**: 12
+- **File**: `backends.py`
 
 ### src.urisys.managers.source_manager
 - **Functions**: 11
@@ -88,19 +100,6 @@
 ### scripts.report.lab_checks
 - **Functions**: 9
 - **File**: `lab_checks.py`
-
-### scripts.test_sessions.expectations
-- **Functions**: 9
-- **File**: `expectations.py`
-
-### urikvm-docker.packages.python.urihim.handlers
-- **Functions**: 9
-- **File**: `handlers.py`
-
-### urisys-automation-lab.server.automation_lab_server
-- **Functions**: 9
-- **Classes**: 1
-- **File**: `automation_lab_server.py`
 
 ## Key Entry Points
 
@@ -182,6 +181,9 @@ Main execution flows into the system:
 ### urikvm-docker.scripts.real_pipeline.main
 - **Calls**: argparse.ArgumentParser, p.add_argument, p.add_argument, p.add_argument, p.add_argument, p.add_argument, p.parse_args, urikvm-docker.scripts.real_pipeline.build_runtime
 
+### urikvm-docker.packages.python.urihim.handlers.mouse_click
+- **Calls**: payload.get, payload.get, payload.get, int, urikvm-docker.packages.python.urihim.handlers._driver, urikvm-docker.packages.python.urihim.handlers._state, payload.get, context.get
+
 ### src.urisys.managers.markpact_manager.MarkpactManager.validate
 - **Calls**: Path, self.read_blocks, self._yaml_blocks, self._yaml_blocks, self._yaml_blocks, self._yaml_blocks, self.source_hash, MarkpactError
 
@@ -196,9 +198,6 @@ or pytho
 
 ### packages.python.urisysedge.runtime.Runtime.call
 - **Calls**: bool, dict, ctx.update, self.events.append, self.resolve, context.get, packages.python.urisysedge.env.load_env_policy, str
-
-### scripts.report.cli.main
-- **Calls**: argparse.ArgumentParser, parser.add_subparsers, sub.add_parser, gen.add_argument, sub.add_parser, ana.add_argument, ana.add_argument, parser.parse_args
 
 ## Process Flows
 
@@ -372,9 +371,6 @@ Markpact is an authoring/distribution format. Runti
 
 Key functions that process and transform data:
 
-### src.urisys.cli.build_parser
-- **Output to**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_subparsers
-
 ### src.urisys.managers.markpact_validation.validate_contract
 - **Output to**: None.strip, str, None.strip, isinstance, MarkpactError
 
@@ -420,6 +416,9 @@ Key functions that process and transform data:
 ### urikvm-docker.packages.python.urillm.handlers._parse_json_response
 - **Output to**: None.strip, json.loads, re.search, json.loads, match.group
 
+### src.urisys.cli.build_parser
+- **Output to**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_subparsers
+
 ## Behavioral Patterns
 
 ### recursion_register
@@ -449,17 +448,17 @@ Functions exposed as public API (no underscore prefix):
 - `urisys-node.packages.python.urisysnode.cli.main` - 104 calls
 - `scripts.run_test_sessions.session_urirdp_real_docker` - 69 calls
 - `urienv-docker.packages.python.urisysedge.src.urisysedge.cli.main` - 54 calls
-- `src.urisys.cli.main` - 49 calls
+- `src.urisys.cli.main` - 53 calls
+- `urisys-node.packages.python.urisysnode.serve.make_handler` - 50 calls
+- `src.urisys.cli.build_parser` - 47 calls
 - `src.urisys.managers.markpact_manager.MarkpactManager.compile` - 46 calls
 - `uristepper-docker.packages.python.uristepperedge.server.make_handler` - 43 calls
 - `scripts.run_test_sessions.session_automation_lab` - 43 calls
 - `src.urisys.managers.markpact_manager.MarkpactManager.run_tests` - 42 calls
-- `urisys-node.packages.python.urisysnode.serve.make_handler` - 42 calls
 - `urisys-automation-lab.server.automation_lab_server.LabHandler.do_POST` - 41 calls
 - `urirdp-docker.packages.python.urirdpedge.cli.main` - 40 calls
 - `urirdp-docker.packages.python.urirdp_kvm.handlers.click_text` - 40 calls
 - `urisys-automation-lab.server.flow_runner.run_flow_file` - 40 calls
-- `src.urisys.cli.build_parser` - 36 calls
 - `urienv-docker.packages.python.urisysedge.src.urisysedge.server.serve` - 36 calls
 - `src.urisys.managers.markpact_validation.validate_contract` - 35 calls
 - `urikvm-docker.packages.python.urikvmedge.cli.main` - 34 calls
@@ -473,6 +472,7 @@ Functions exposed as public API (no underscore prefix):
 - `scripts.run_test_sessions.session_urirdp_mock_docker` - 31 calls
 - `urirdp-docker.packages.python.urirdp_llm.handlers.analyze` - 31 calls
 - `src.urisys.managers.source_manager.SourceManager.fetch` - 29 calls
+- `urisys-node.packages.python.urisysnode.serve.call_uri` - 29 calls
 - `urirdp-docker.packages.python.urirdp_llm.handlers.plan` - 28 calls
 - `src.urisys.managers.markpact_validation.validate_implementation` - 27 calls
 - `scripts.report.session.generate_report` - 27 calls
@@ -481,11 +481,10 @@ Functions exposed as public API (no underscore prefix):
 - `urikvm-docker.packages.python.urikvm.handlers.click_text` - 26 calls
 - `urikvm-docker.scripts.real_pipeline.main` - 26 calls
 - `scripts.report.session.infer_steps` - 25 calls
-- `urisys-node.packages.python.uriscreen.handlers.capture` - 25 calls
+- `urikvm-docker.packages.python.urihim.handlers.mouse_click` - 25 calls
 - `packages.python.urisysedge.runtime.make_handler` - 24 calls
 - `src.urisys.managers.markpact_manager.MarkpactManager.validate` - 24 calls
 - `urirdp-docker.packages.python.urirdp_llm.handlers.decide` - 24 calls
-- `packages.python.urisysedge.runtime.Runtime.call` - 23 calls
 
 ## System Interactions
 

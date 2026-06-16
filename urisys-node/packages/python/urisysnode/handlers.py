@@ -69,4 +69,21 @@ def command_install_pack(payload: dict[str, Any], context: dict[str, Any]) -> di
         pack,
         install=bool(payload.get("install", True)),
         specs=override,
+        force=bool(payload.get("force", False)),
     )
+
+
+def command_register_forward(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
+    if not context.get("approved"):
+        return {"ok": False, "error": "approval required for register-forward"}
+    runtime = context.get("runtime")
+    if runtime is None:
+        return {"ok": False, "error": "no runtime in context"}
+    scheme = str(payload.get("scheme") or "").strip()
+    endpoint = str(payload.get("endpoint") or "").strip()
+    patterns = payload.get("patterns")
+    if not isinstance(patterns, list):
+        return {"ok": False, "error": "patterns must be a list of URI patterns"}
+    from urisysnode.serve import register_forward_pack
+
+    return register_forward_pack(runtime, scheme, endpoint, [str(p) for p in patterns])

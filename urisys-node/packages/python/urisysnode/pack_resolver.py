@@ -33,7 +33,7 @@ PACK_PYPI: dict[str, str] = {
 PACK_GITHUB_VERSION: dict[str, str] = {
     "urisysedge": "0.1.1",
     "kvm": "0.1.1",
-    "him": "0.1.2",
+    "him": "0.1.3",
     "ocr": "0.1.0",
     "llm": "0.1.0",
 }
@@ -187,6 +187,8 @@ def github_wheel_urls(*packs: str) -> list[str]:
             specs.append(spec)
     return specs
 
+
+def import_pack_module(pack: str):
     module_name = pack_module(pack)
     return importlib.import_module(module_name)
 

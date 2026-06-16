@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.23-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$6.92-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-13.2h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.25-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$6.94-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-13.9h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $6.9178 (34 commits)
-- 👤 **Human dev:** ~$1319 (13.2h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $6.9425 (35 commits)
+- 👤 **Human dev:** ~$1390 (13.9h @ $100/h, 30min dedup)
 
 Generated on 2026-06-17 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -96,14 +96,20 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 | Dokument | Temat |
 |----------|--------|
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Jak działa urisys — warstwy, runtime, testy |
-| [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md) | **Slave bez `.sh`** — pip, `shell://` flow, URI probe (lenovo) |
+| [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md) | **Slave bez `.sh`** — pip, lazy install, hot-load, systemd |
+| [`docs/PACK-EXTENSIBILITY.md`](docs/PACK-EXTENSIBILITY.md) | **Nowe schematy URI** — `imgl://`, forward pack, lifecycle |
 | [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md) | **PyPI · Markpact · GitHub** — packi kvm, publikacja |
 | [`docs/PACKAGES.md`](docs/PACKAGES.md) | Layout monorepo, duplikaty, plan konsolidacji |
 | [`docs/FLOWS.md`](docs/FLOWS.md) | URI flows, zależności, walidacja |
 | [`docs/EXAMPLES.md`](docs/EXAMPLES.md) | Przykłady shell/frontend/Docker |
 | [`docs/CLI.md`](docs/CLI.md) | Komendy CLI |
 | [`docs/MARKPACT.md`](docs/MARKPACT.md) | Markpact validate/compile/test |
+| [`docs/MIGRATION-STEP1.md`](docs/MIGRATION-STEP1.md) | Migracja krok 1 |
+| [`docs/MIGRATION-STEP2.md`](docs/MIGRATION-STEP2.md) | Migracja krok 2 |
+| [`docs/MIGRATION-STEP3.md`](docs/MIGRATION-STEP3.md) | Migracja krok 3 — dedup urisysedge |
 | [`urisys-node/README.md`](urisys-node/README.md) | Slave node, kvm packs, hot-load, forward OCI |
+| [`urisys-node/docs/SCREEN_BACKENDS.md`](urisys-node/docs/SCREEN_BACKENDS.md) | Wayland capture — portal, vdisplay, mss |
+| [`urisys-node/docs/PAIRING.md`](urisys-node/docs/PAIRING.md) | Parowanie master ↔ slave |
 | [`project/MAP.md`](project/MAP.md) | Przewodnik po `map.toon.yaml` (code2llm) |
 | [`project/PACKAGES.md`](project/PACKAGES.md) | Indeks paczek sync z mapą |
 

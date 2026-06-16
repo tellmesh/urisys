@@ -96,7 +96,7 @@ COPY packages/python/urisysedge ./packages/python/urisysedge
 
 ## Paczki PyPI i dystrybucja (stan 2026-06-16)
 
-Pełny opis trzech ścieżek (PyPI · Markpact · GitHub): **[`docs/DISTRIBUTION.md`](DISTRIBUTION.md)**.
+Pełny opis trzech ścieżek (PyPI · Markpact · GitHub): **[`docs/DISTRIBUTION.md`](DISTRIBUTION.md)** · rozszerzenia URI: **[`docs/PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md)**.
 
 | Pakiet | PyPI | Monorepo (vendored) |
 |--------|------|---------------------|
@@ -104,7 +104,7 @@ Pełny opis trzech ścieżek (PyPI · Markpact · GitHub): **[`docs/DISTRIBUTION
 | `uriscreen` | bundled w node | ✅ |
 | `urisysedge` | ✅ 0.1.1 | `packages/python/urisysedge/` |
 | `urikvm` | ✅ 0.1.1 | `urikvm-docker/packages/python/urikvm/` |
-| `urihim`, `uriocr`, `urillm` | 🔲 brak | vendored w monorepo |
+| `urihim`, `uriocr`, `urillm` | 🔲 PyPI / ✅ GitHub Releases | vendored w monorepo |
 | `urikvm-docker-example` | ❌ nie publikować | dev bundle only |
 
 ### Dev — monorepo (gdy PyPI nie ma packa)
@@ -143,7 +143,24 @@ URISYS_NODE_ALLOW_PACK_LOAD=1 URISYS_NODE_PACKS=node,screen,kvm,him urisys-node 
 ### Bez PyPI — Markpact + GitHub OCI
 
 Kontrakty: `urikvm-docker/markpacts/*.markpact.md` → docelowo `markpact-contracts/packs/`.  
-Runtime: `ArtifactResolver` + `register_forward_pack()` — szczegóły w [`DISTRIBUTION.md`](DISTRIBUTION.md).
+Runtime: `ArtifactResolver` + `register_forward_pack()` — szczegóły w [`DISTRIBUTION.md`](DISTRIBUTION.md) i [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md).
+
+## Ekosystem zewnętrzny (imgl / vql)
+
+Packi spoza monorepo — integracja przez **forward worker** lub nowy moduł w `PACK_MODULES`:
+
+| Repo | Schemat docelowy | Rola w pipeline | Integracja |
+|------|------------------|-----------------|------------|
+| [`semcod/imgl`](https://github.com/semcod/imgl) | `imgl://` | layout/OCR/targets, ydotool execute | forward `rest2imgl` lub `uriimgl` pack; **po** `screen://`, nie duplikować capture |
+| [`oqlos/vql`](https://github.com/oqlos/vql) | `vql://` | UI detect, fingerprint, compare | warstwa weryfikacji między `screen://` a `him://` |
+
+Docelowy pipeline na Wayland slave (lenovo):
+
+```text
+screen://…/query/frame  →  vql://…/compare  →  imgl://…/execute  →  him://…/click
+```
+
+Szczegóły implementacji: [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md), stan lenovo: [`NODE-SETUP.md`](NODE-SETUP.md).
 
 
 | Pakiet | Gdzie używany |
@@ -158,9 +175,10 @@ Runtime: `ArtifactResolver` + `register_forward_pack()` — szczegóły w [`DIST
 2. ✅ **`flow_runner`** — uri2flow + uri3 (`LabCallAdapter`)
 3. ✅ **`JsonlEventStore`/`Runtime` dedup** — urisys-node + uristepper → urisysedge ([`MIGRATION-STEP3.md`](MIGRATION-STEP3.md))
 4. ✅ **PyPI layout packów** — vendored w monorepo + osobne repo `tellmesh/{urisysedge,urikvm,urihim,uriocr,urillm}`; [`DISTRIBUTION.md`](DISTRIBUTION.md)
-5. 🔲 **Handlery OCR/LLM/HIM** — wspólny `packages/python/urioperators/` z adapterem display
-6. 🔲 **`FlowController`** — dodać `after`/`depends_on` (parity z uri2flow)
-7. 🔲 **Pełny `uri3 run-workflow`** w lab (schema root w kontenerze)
+5. 🔲 **`uriimgl` / `urivql`** — forward lub in-process pack; [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md)
+6. 🔲 **Handlery OCR/LLM/HIM** — wspólny `packages/python/urioperators/` z adapterem display
+7. 🔲 **`FlowController`** — dodać `after`/`depends_on` (parity z uri2flow)
+8. 🔲 **Pełny `uri3 run-workflow`** w lab (schema root w kontenerze)
 
 ## Zależności importów (z map.toon.yaml)
 

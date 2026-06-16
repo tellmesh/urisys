@@ -16,7 +16,7 @@ from urisysnode.pack_resolver import (  # noqa: E402
 
 def test_github_wheel_url_him():
     url = github_wheel_url("him")
-    assert url == "https://github.com/tellmesh/urihim/releases/download/v0.1.2/urihim-0.1.2-py3-none-any.whl"
+    assert url == "https://github.com/tellmesh/urihim/releases/download/v0.1.3/urihim-0.1.3-py3-none-any.whl"
 
 
 def test_resolve_pack_spec_auto_prefers_github_for_him():

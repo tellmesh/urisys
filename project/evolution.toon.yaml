@@ -1,4 +1,4 @@
-# code2llm/evolution | 448 func | 85f | 2026-06-16
+# code2llm/evolution | 499 func | 90f | 2026-06-17
 # generated in 0.00s
 
 NEXT[10] (ranked by impact):
@@ -6,41 +6,41 @@ NEXT[10] (ranked by impact):
       WHY: CC=21 exceeds 15
       EFFORT: ~1h  IMPACT: 714
 
-  [2] !  SPLIT-FUNC      main  CC=16  fan=41
+  [2] !  SPLIT-FUNC      main  CC=23  fan=31
+      WHY: CC=23 exceeds 15
+      EFFORT: ~1h  IMPACT: 713
+
+  [3] !  SPLIT-FUNC      main  CC=16  fan=41
       WHY: CC=16 exceeds 15
       EFFORT: ~1h  IMPACT: 656
 
-  [3] !  SPLIT-FUNC      main  CC=20  fan=28
-      WHY: CC=20 exceeds 15
-      EFFORT: ~1h  IMPACT: 560
+  [4] !  SPLIT-FUNC      load_pack_into_runtime  CC=23  fan=20
+      WHY: CC=23 exceeds 15
+      EFFORT: ~1h  IMPACT: 460
 
-  [4] !  SPLIT-FUNC      MarkpactManager.run_tests  CC=20  fan=21
+  [5] !  SPLIT-FUNC      MarkpactManager.run_tests  CC=20  fan=21
       WHY: CC=20 exceeds 15
       EFFORT: ~1h  IMPACT: 420
 
-  [5] !  SPLIT-FUNC      plan  CC=20  fan=18
+  [6] !  SPLIT-FUNC      plan  CC=20  fan=18
       WHY: CC=20 exceeds 15
       EFFORT: ~1h  IMPACT: 360
 
-  [6] !  SPLIT-FUNC      analyze  CC=18  fan=19
+  [7] !  SPLIT-FUNC      analyze  CC=18  fan=19
       WHY: CC=18 exceeds 15
       EFFORT: ~1h  IMPACT: 342
 
-  [7] !  SPLIT-FUNC      open_page  CC=15  fan=22
+  [8] !  SPLIT-FUNC      open_page  CC=15  fan=22
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 330
 
-  [8] !  SPLIT-FUNC      build_lab_runtime  CC=17  fan=19
+  [9] !  SPLIT-FUNC      build_lab_runtime  CC=17  fan=19
       WHY: CC=17 exceeds 15
       EFFORT: ~1h  IMPACT: 323
 
-  [9] !  SPLIT-FUNC      LabHandler.do_POST  CC=23  fan=11
-      WHY: CC=23 exceeds 15
-      EFFORT: ~1h  IMPACT: 253
-
-  [10] !  SPLIT-FUNC      validate_contract  CC=23  fan=10
-      WHY: CC=23 exceeds 15
-      EFFORT: ~1h  IMPACT: 230
+  [10] !  SPLIT-FUNC      call_uri  CC=20  fan=15
+      WHY: CC=20 exceeds 15
+      EFFORT: ~1h  IMPACT: 300
 
 
 RISKS[2]:
@@ -48,10 +48,10 @@ RISKS[2]:
   ⚠ Splitting goal.yaml may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          3.8 → ≤2.7
+  CC̄:          3.9 → ≤2.7
   max-CC:      23 → ≤11
   god-modules: 2 → 0
-  high-CC(≥15): 17 → ≤8
+  high-CC(≥15): 20 → ≤10
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -79,4 +79,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=3.7 → now CC̄=3.8
+  prev CC̄=3.8 → now CC̄=3.9

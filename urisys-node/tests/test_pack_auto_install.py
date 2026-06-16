@@ -76,3 +76,37 @@ def test_load_pack_with_mock_pip(tmp_path):
             result = load_pack_into_runtime(rt, "kvm", install=True)
     assert result["ok"] is True
     assert "pip" in result
+
+
+def test_ensure_pack_for_uri_skips_pip_when_importable(tmp_path):
+    from urisysnode.serve import ensure_pack_for_uri
+
+    rt = _node_only_runtime(tmp_path)
+    with patch("urisysnode.pack_resolver._pip_install") as pip:
+        with patch("urisysnode.serve._register_pack", return_value=True):
+            with patch("urisysnode.serve.pack_importable", return_value=True):
+                ensure_pack_for_uri(rt, "him://local/mouse/query/status")
+    pip.assert_not_called()
+    assert "him" in rt._loaded_packs
+
+
+def test_force_reload_reregister_pack(tmp_path):
+    rt = _node_only_runtime(tmp_path)
+    import urihim
+
+    urihim.register(rt)
+    rt._loaded_packs.add("him")
+    rt._pack_route_patterns = {"him": {r.pattern for r in rt.routes if r.pattern.startswith("him://")}}
+    with patch("urisysnode.serve._register_pack", return_value=True) as reg:
+        result = load_pack_into_runtime(rt, "him", force=True)
+    assert result["ok"] is True
+    assert reg.called
+    assert "him" in rt._loaded_packs
+
+
+def test_pack_importable_uses_import_pack_module():
+    from urisysnode.pack_resolver import import_pack_module, pack_importable
+
+    import_pack_module("node")
+    assert pack_importable("node") is True
+    assert pack_importable("no-such-pack-xyz") is False

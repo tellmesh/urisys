@@ -9,7 +9,44 @@ urisys node serve --host 0.0.0.0 --port 8790
 Node startuje z **`node` + `screen` + `shell`** (wbudowane w wheel). Packi **kvm/him/ocr/llm** instalujesz przez:
 
 1. **lazy install** przy pierwszym URI (`him://`, …), albo
-2. **`shell://pip`** z GitHub Releases (gdy PyPI niedostępne)
+2. **`shell://pip`** z GitHub Releases (gdy PyPI niedostępne), albo
+3. **`node://…/command/install-pack`** / **`POST /uri/pack`** (hot-load)
+
+Pełny opis rozszerzeń (np. `imgl://`, `vql://`): [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md).
+
+**Wayland (GNOME):** `him://` z pyautogui nie działa — ustaw driver ydotool:
+
+```bash
+sudo apt install ydotool   # + ydotoold (uinput)
+export URISYS_HIM_DRIVER=ydotool
+# lub w profile JSON: {"him": {"driver": "ydotool"}}
+```
+
+Na Wayland z zainstalowanym `ydotool` driver wybiera się **automatycznie** (`WAYLAND_DISPLAY`).
+
+## Autostart po restarcie komputera
+
+Wheels z `pip install` **zostają** w venv. Proces node **nie** — uruchom ponownie lub użyj systemd.
+
+**Ręcznie:**
+
+```bash
+export URISYS_ALLOW_REAL=1
+export URISYS_NODE_CONFIG=/home/tom/urisys-node-profile.json   # opcjonalnie
+~/venv/bin/urisys-node serve --host 0.0.0.0 --port 8790
+```
+
+**systemd (user):** [`urisys-node/systemd/urisys-node-user.service`](../urisys-node/systemd/urisys-node-user.service)
+
+```bash
+cp urisys-node/systemd/urisys-node-user.service ~/.config/systemd/user/urisys-node.service
+systemctl --user daemon-reload && systemctl --user enable --now urisys-node.service
+loginctl enable-linger "$USER"
+```
+
+Po starcie node packi opcjonalne wracają przy **pierwszym URI** (lazy) lub jednym `install-pack` — restart node **nie** jest potrzebny, chyba że zrobiłeś `pip install -U urisys`.
+
+**Upgrade z dev maszyny (urisys 0.1.24 + urihim 0.1.3):** [`scripts/deploy-lenovo-node.sh`](../scripts/deploy-lenovo-node.sh)
 
 ## Bootstrap packów przez shell:// (bez PyPI)
 
@@ -18,7 +55,7 @@ Z hosta (route-map → lenovo):
 ```bash
 curl -sS -X POST http://192.168.188.201:8790/uri/call \
   -H 'Content-Type: application/json' \
-  -d '{"uri":"shell://pip","payload":{"args":["install","-U","https://github.com/tellmesh/urihim/releases/download/v0.1.2/urihim-0.1.2-py3-none-any.whl"]},"context":{"approved":true,"allow_real":true}}'
+  -d '{"uri":"shell://pip","payload":{"args":["install","-U","https://github.com/tellmesh/urihim/releases/download/v0.1.3/urihim-0.1.3-py3-none-any.whl"]},"context":{"approved":true,"allow_real":true}}'
 ```
 
 Flow (wszystkie packi z GitHub):
@@ -32,7 +69,7 @@ Z mastera przez route-map:
 
 ```bash
 urisys-node call "shell://pip" \
-  --payload '{"args":["install","-U","https://github.com/tellmesh/urihim/releases/download/v0.1.2/urihim-0.1.2-py3-none-any.whl"]}' \
+  --payload '{"args":["install","-U","https://github.com/tellmesh/urihim/releases/download/v0.1.3/urihim-0.1.3-py3-none-any.whl"]}' \
   --approve --allow-real \
   --route-map urisys-node/config/route-map.lenovo.yaml \
   --nodes-registry urisys-node/config/nodes.registry.json
@@ -88,6 +125,17 @@ Pierwsze `screen://…/capture` z `allow_real: true` doinstaluje `mss` i `Pillow
 | urillm | 🔲 | ✅ [v0.1.0](https://github.com/tellmesh/urillm/releases/tag/v0.1.0) |
 
 Lazy install (`URISYS_PACK_SOURCE=auto`, domyślnie) pobiera **him/ocr/llm z GitHub Releases**.
+
+## Zmienne środowiska (slave)
+
+| Zmienna | Domyślnie | Opis |
+|---------|-----------|------|
+| `URISYS_NODE_PACKS` | `node,screen,shell` | Packi ładowane przy starcie node |
+| `URISYS_NODE_AUTO_INSTALL` | `1` | Lazy pip przy pierwszym URI |
+| `URISYS_NODE_ALLOW_PACK_LOAD` | `1` (gdy auto-install) | `POST /uri/pack` |
+| `URISYS_ALLOW_REAL` | `0` | `pyautogui`, portal capture, `shell` subprocess |
+| `URISYS_PACK_SOURCE` | `auto` | `pypi` \| `github` \| `auto` |
+| `URISYS_NODE_CONFIG` | `config/node-profile.json` | Profil `him`, `screen`, policy |
 
 ## Stary sposób (dev monorepo)
 
