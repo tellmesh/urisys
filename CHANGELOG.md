@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-06-16
+
+### Docs
+- Update README.md
+- Update uristepper-docker/README.md
+- Update uristepper-docker/docs/ESP32P4_NOTES.md
+- Update uristepper-docker/docs/ROUTING.md
+- Update uristepper-docker/markpacts/uristepper-docker.bundle.markpact.md
+- Update uristepper-docker/markpacts/uristepper-python-mock.markpact.md
+- Update uristepper-docker/markpacts/uristepper-rpi-gpio-python.markpact.md
+- Update uristepper-docker/markpacts/uristepper.contract.markpact.md
+
+### Other
+- Update scripts/test-goal.sh
+- Update uristepper-docker/.dockerignore
+- Update uristepper-docker/.gitignore
+- Update uristepper-docker/Dockerfile
+- Update uristepper-docker/Makefile
+- Update uristepper-docker/config/device-profile.json
+- Update uristepper-docker/config/device-profile.rpi3.example.json
+- Update uristepper-docker/docker-compose.rpi3.example.yml
+- Update uristepper-docker/docker-compose.yml
+- Update uristepper-docker/flows/move-test.uri.flow.yaml
+- ... and 15 more files
+
 ## [0.1.1] - 2026-06-16
 
 ### Docs

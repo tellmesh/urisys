@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-"$ROOT/../uri-packs/scripts/install-editable.sh"
 cd "$ROOT"
-python -m pytest tests/ -q
+if command -v uv >/dev/null 2>&1; then
+  uv sync --group dev
+  uv run pytest tests/ -q
+else
+  "$ROOT/../uri-packs/scripts/install-editable.sh"
+  python -m pytest tests/ -q
+fi

@@ -4,13 +4,29 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "urisys"
-version = "0.1.1"
+version = "0.1.2"
 description = "URI control system managers/controllers over separate uri* capability packs."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
 dependencies = ["uricore>=0.1.0", "PyYAML>=6.0"]
 keywords = ["uri", "control-plane", "controllers", "managers", "devices", "services"]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.0",
+  "uricore",
+  "uribrowser",
+  "uridocker",
+]
+
+[tool.uv.sources]
+uricore = { path = "../uricore", editable = true }
+uribrowser = { path = "../uri-packs/packages/python/uribrowser", editable = true }
+uridocker = { path = "../uri-packs/packages/python/uridocker", editable = true }
+
+[tool.uv]
+default-groups = ["dev"]
 
 [project.scripts]
 urisys = "urisys.cli:main"
