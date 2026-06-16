@@ -35,3 +35,8 @@ do:
   - id: rdp_status
     uri: rdp://local/display/query/status
     after: ocr_report
+
+# Effect-level contract asserted by scripts/run_test_sessions.py (uri2flow ignores it).
+# Maintenance opens a browser + captures the desktop, which must differ from baseline.
+expect:
+  screen_changed: true

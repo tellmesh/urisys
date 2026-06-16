@@ -10,3 +10,11 @@ def register(rt):
         approval='required',
         side_effects=True,
     )
+    rt.register(
+        'rdp://{target}/session/command/dismiss-target',
+        'python://urirdp.handlers:dismiss_target',
+        kind='command',
+        operation='rdp.dismiss_target',
+        approval='required',
+        side_effects=True,
+    )

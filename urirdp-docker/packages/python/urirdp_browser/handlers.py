@@ -10,6 +10,12 @@ from typing import Any
 
 from uribrowserdocker import handlers as browser_handlers
 
+try:
+    from urirdp.handlers import _dismiss_stale_targets
+except ImportError:  # pragma: no cover
+    def _dismiss_stale_targets(context):  # type: ignore[misc]
+        return 0
+
 
 def _profile(context: dict[str, Any]) -> dict[str, Any]:
     return context.get("config", {}).get("browser", {})
@@ -58,6 +64,7 @@ def open_page(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any
     if not binary:
         raise RuntimeError("display-chromium driver requires chromium in PATH")
 
+    _dismiss_stale_targets(context)
     env = os.environ.copy()
     display = context.get("display") or env.get("DISPLAY")
     if display:

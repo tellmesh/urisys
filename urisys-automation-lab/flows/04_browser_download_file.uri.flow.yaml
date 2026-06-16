@@ -7,6 +7,7 @@ defaults:
   dry_run: false
 
 do:
+  - rdp://local/session/command/dismiss-target: {}
   - browser://chrome/page/open:
       url: https://raw.githubusercontent.com/github/markup/master/README.md
   - browser://chrome/page/active/dom

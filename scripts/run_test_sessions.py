@@ -718,14 +718,16 @@ def _vision_confidences(step_results: list[dict[str, Any]]) -> list[float]:
 def evaluate_expectations(
     expect: dict[str, Any],
     *,
-    duplicate_of: str | None,
-    step_results: list[dict[str, Any]],
+    screenshot_md5: str | None = None,
+    baseline_md5: str | None = None,
+    duplicate_of: str | None = None,
+    step_results: list[dict[str, Any]] | None = None,
 ) -> list[str]:
     """Assert a flow's declared `expect:` contract against its actual outcome.
     Returns a list of human-readable failures (empty == contract satisfied).
 
     Supported keys:
-      screen_changed: bool          screenshot differs from / equals baseline
+      screen_changed: bool          post-flow screenshot differs from 00-baseline
       ocr_contains: [str, ...]      each substring must appear in some OCR text
       min_vision_confidence: float  at least one vision call must reach this
     """
@@ -733,12 +735,18 @@ def evaluate_expectations(
     if not expect:
         return failures
 
+    step_results = step_results or []
+
     if "screen_changed" in expect:
-        changed = duplicate_of is None
         want = bool(expect["screen_changed"])
+        if baseline_md5 and screenshot_md5:
+            changed = screenshot_md5 != baseline_md5
+        else:
+            changed = duplicate_of is None
         if changed != want:
             failures.append(
-                f"screen_changed: expected {want}, got {changed} (duplicate_of={duplicate_of})"
+                f"screen_changed: expected {want}, got {changed} "
+                f"(baseline={baseline_md5}, md5={screenshot_md5}, duplicate_of={duplicate_of})"
             )
 
     wanted = expect.get("ocr_contains") or []
@@ -859,6 +867,39 @@ def _capture_rdp_screenshot(
         return False, None
 
 
+def _capture_rdp_screenshot_wait(
+    session_dir: Path,
+    *,
+    rdp_port: int,
+    display: str,
+    xauth: str,
+    container: str,
+    filename: str,
+    avoid_md5s: set[str] | None = None,
+    timeout_s: float = 12.0,
+) -> tuple[bool, str | None]:
+    """Capture screenshot; when avoid_md5s is set, poll until digest differs or timeout."""
+    avoid = {digest for digest in (avoid_md5s or set()) if digest}
+    deadline = time.time() + timeout_s
+    last: tuple[bool, str | None] = (False, None)
+    while time.time() < deadline:
+        captured, rel = _capture_rdp_screenshot(
+            session_dir,
+            rdp_port=rdp_port,
+            display=display,
+            xauth=xauth,
+            container=container,
+            filename=filename,
+        )
+        last = (captured, rel)
+        if rel:
+            md5 = _file_md5(session_dir / rel)
+            if not avoid or (md5 and md5 not in avoid):
+                return captured, rel
+        time.sleep(0.6)
+    return last
+
+
 def session_lab_10_flows(session_dir: Path) -> int:
     """Run all 10 automation-lab flows; capture one RDP screenshot per flow."""
     started = _now_iso()
@@ -963,15 +1004,31 @@ def session_lab_10_flows(session_dir: Path) -> int:
             steps_ok = sum(1 for s in step_results if s.get("ok"))
             steps_total = len(step_results)
 
+            expect = _flow_expectations(flow_path)
+            if expect.get("screen_changed") or "browser" in flow_id or "gui" in flow_id:
+                time.sleep(3.0)
+
             png_name = f"{idx:02d}-{flow_id}.png"
-            captured, shot_rel = _capture_rdp_screenshot(
-                session_dir,
-                rdp_port=rdp_port,
-                display=display,
-                xauth=xauth,
-                container=container,
-                filename=png_name,
-            )
+            avoid = {digest for digest in screenshot_hashes.values() if digest}
+            if expect.get("screen_changed") and avoid:
+                captured, shot_rel = _capture_rdp_screenshot_wait(
+                    session_dir,
+                    rdp_port=rdp_port,
+                    display=display,
+                    xauth=xauth,
+                    container=container,
+                    filename=png_name,
+                    avoid_md5s=avoid,
+                )
+            else:
+                captured, shot_rel = _capture_rdp_screenshot(
+                    session_dir,
+                    rdp_port=rdp_port,
+                    display=display,
+                    xauth=xauth,
+                    container=container,
+                    filename=png_name,
+                )
             png_md5 = _file_md5(session_dir / shot_rel) if shot_rel else None
             duplicate_of: str | None = None
             if png_md5:
@@ -983,9 +1040,12 @@ def session_lab_10_flows(session_dir: Path) -> int:
 
             # Opt-in effect-level contract: flows without `expect:` keep the old
             # transport-only behavior; declared expectations gate pass/fail.
-            expect = _flow_expectations(flow_path)
             expect_failures = evaluate_expectations(
-                expect, duplicate_of=duplicate_of, step_results=step_results
+                expect,
+                screenshot_md5=png_md5,
+                baseline_md5=screenshot_hashes.get("00-baseline"),
+                duplicate_of=duplicate_of,
+                step_results=step_results,
             )
 
             _save_json(

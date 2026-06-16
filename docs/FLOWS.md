@@ -17,6 +17,8 @@ do:
     uri: other://path
     after: step_a                # jawna zależność
     if: step_a.ok == false       # warunek (uri3; lab: TODO)
+expect:                          # opcjonalny kontrakt efektu (patrz niżej)
+  screen_changed: true
 ```
 
 ## Gdzie są flow w repo
@@ -87,7 +89,42 @@ uri3 run-workflow /tmp/graph.yaml --approve
 | Handler | `result.ok`, `exit_code == 0` |
 | Edge `_result_ok` | Propagacja z handler result |
 | flow_runner `_step_ok` | + brak dry_run w real mode |
-| lab-10 test | `flow_ok && steps_ok == steps_total > 0` |
+| lab-10 test (transport) | `flow_ok && steps_ok == steps_total > 0` |
+| lab-10 test (**efekt**) | + spełniony kontrakt `expect:` (jeśli zadeklarowany) |
+
+Poziomy 1–4 sprawdzają tylko, że każde URI zwróciło `ok:true` (sukces *transportowy*).
+To nie wykrywa flow, które „przeszło", ale nie osiągnęło zamierzonego **efektu**
+(np. GUI bez zmiany ekranu, ślepy klik fallback). Od tego jest `expect:`.
+
+## Kontrakt efektu — `expect:`
+
+Opcjonalny blok top-level, w którym flow deklaruje *weryfikowalny* skutek swojego
+działania. Asercjonuje go `scripts/run_test_sessions.py` (sesja `lab-10-flows`);
+executor flow (`uri2flow`) ten klucz **ignoruje**, więc nie wpływa na wykonanie.
+
+**Opt-in:** flow bez `expect:` zachowuje dotychczasowe zachowanie (tylko transport).
+Gdy `expect:` jest obecny, jego złamanie ustawia flow na `fail` z czytelnym `detail`.
+
+| Klucz | Typ | Znaczenie |
+|-------|-----|-----------|
+| `screen_changed` | bool | Screenshot po flow różni się od baseline (`true`) / pozostaje bez zmian (`false`) |
+| `ocr_contains` | list[str] | Każdy podciąg musi wystąpić w tekście OCR któregoś kroku |
+| `min_vision_confidence` | float | Przynajmniej jedno wywołanie LLM-vision musi osiągnąć ≥ próg (inaczej klik jest „na ślepo") |
+
+```yaml
+# flow GUI musi widocznie zmienić pulpit
+expect:
+  screen_changed: true
+
+# realne wypełnienie formularza — musi trafić w cel, nie kliknąć fallback
+expect:
+  ocr_contains: ["Name", "TellMesh"]
+  min_vision_confidence: 0.3
+```
+
+Złamane kontrakty trafiają też do analizy zbiorczej (`analysis.md`) przez
+`session_report.py::check_declared_expectations`. Dla flow **bez** `expect:`
+analizator stosuje heurystyki fallback (GUI==baseline, martwy vision).
 
 ## Walidacja statyczna
 

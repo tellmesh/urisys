@@ -64,6 +64,40 @@ def display_status(payload: dict[str, Any], context: dict[str, Any]) -> dict[str
     }
 
 
+def _dismiss_stale_targets(context: dict[str, Any]) -> int:
+    """Close bootstrap or stale zenity dialogs blocking the RDP desktop."""
+    if context.get('dry_run') or not allow_real(context):
+        return 0
+    closed = 0
+    for title in ('Automation Target', 'TellMesh Demo'):
+        res = run_cmd(['xdotool', 'search', '--name', title], context, timeout=5)
+        for wid in res.stdout.splitlines():
+            wid = wid.strip()
+            if not wid:
+                continue
+            run_cmd(['xdotool', 'windowclose', wid], context, timeout=3)
+            closed += 1
+    if closed == 0:
+        res = run_cmd(['xdotool', 'search', '--class', 'Zenity'], context, timeout=5)
+        for wid in res.stdout.splitlines()[:4]:
+            wid = wid.strip()
+            if not wid:
+                continue
+            run_cmd(['xdotool', 'windowclose', wid], context, timeout=3)
+            closed += 1
+    if closed:
+        time.sleep(0.5)
+    return closed
+
+
+def dismiss_target(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
+    display_name = detect_display(context)
+    if context.get('dry_run') or not allow_real(context):
+        return {'dismissed': True, 'driver': 'mock', 'display': display_name, 'closed': 0}
+    closed = _dismiss_stale_targets(context)
+    return {'dismissed': True, 'display': display_name, 'closed': closed}
+
+
 def prepare_target(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
     display_name = detect_display(context)
     kind = str(payload.get('kind') or 'info')
@@ -71,6 +105,7 @@ def prepare_target(payload: dict[str, Any], context: dict[str, Any]) -> dict[str
     if context.get('dry_run') or not allow_real(context):
         return {'prepared': True, 'driver': 'mock', 'display': display_name, 'text': text, 'kind': kind}
 
+    _dismiss_stale_targets(context)
     env = base_env(context)
     if kind == 'form':
         subprocess.Popen(

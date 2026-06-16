@@ -7,6 +7,7 @@ defaults:
   dry_run: false
 
 do:
+  - rdp://local/session/command/dismiss-target: {}
   - browser://chrome/page/open:
       url: http://automation-lab:8099/health
   - browser://chrome/page/active/dom

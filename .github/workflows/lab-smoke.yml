@@ -1,0 +1,61 @@
+name: lab-smoke
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "urisys-automation-lab/**"
+      - "urirdp-docker/packages/python/**"
+      - "scripts/run-smoke-all.sh"
+      - "scripts/run-lab-unit-ci.sh"
+      - "scripts/run-nl-log-smoke.sh"
+      - "scripts/run_test_sessions.py"
+      - "scripts/session_report.py"
+      - ".github/workflows/lab-smoke.yml"
+
+jobs:
+  lab-unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Lab unit tests
+        run: bash scripts/run-lab-unit-ci.sh
+
+  monorepo-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    if: github.event_name == 'workflow_dispatch'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: urisys
+
+      - name: Checkout tellmesh monorepo siblings (optional)
+        continue-on-error: true
+        run: |
+          # Full nl-log smoke needs uri3 + tellmesh/output at repo root.
+          if [ -d "../uri3" ]; then
+            echo "uri3 found beside urisys"
+          else
+            echo "skip monorepo smoke — uri3 not available in CI checkout"
+            exit 0
+          fi
+
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Full smoke (when monorepo layout present)
+        working-directory: urisys
+        run: |
+          if [ -d "../uri3" ] && [ -d "../tellmesh" ]; then
+            bash scripts/run-smoke-all.sh
+          else
+            echo "Skipped run-smoke-all — run locally from tellmesh workspace"
+          fi

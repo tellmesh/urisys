@@ -24,3 +24,7 @@ do:
     uri: kvm://local/monitor/primary/query/screenshot
     after: webrtc_send
     payload: {}
+
+# Effect-level contract asserted by scripts/run_test_sessions.py (uri2flow ignores it).
+expect:
+  screen_changed: true
