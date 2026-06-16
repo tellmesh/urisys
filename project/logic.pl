@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.5', 'python').
+project_metadata('urisys', '0.1.6', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 40, 'less').
@@ -7,6 +7,13 @@ project_file('examples/frontend/app.js', 22, 'javascript').
 project_file('examples/markpact/browser-call.sh', 9, 'shell').
 project_file('examples/shell/call-uri.sh', 7, 'shell').
 project_file('examples/shell/server-curl.sh', 9, 'shell').
+project_file('local-lab/scripts/00-init-nexus.sh', 90, 'shell').
+project_file('local-lab/scripts/01-validate-markpact.sh', 23, 'shell').
+project_file('local-lab/scripts/02-build-publish.sh', 95, 'shell').
+project_file('local-lab/scripts/03-resolve-run.sh', 17, 'shell').
+project_file('local-lab/scripts/04-smoke.sh', 36, 'shell').
+project_file('local-lab/scripts/install-urisys.sh', 18, 'shell').
+project_file('local-lab/scripts/run-all.sh', 29, 'shell').
 project_file('project.sh', 59, 'shell').
 project_file('scripts/run_test_sessions.py', 1003, 'python').
 project_file('scripts/session_report.py', 510, 'python').
@@ -172,7 +179,8 @@ project_file('urisys-node/packages/python/uriscreen/__init__.py', 1, 'python').
 project_file('urisys-node/packages/python/uriscreen/handlers.py', 103, 'python').
 project_file('urisys-node/packages/python/uriscreen/routes.py', 24, 'python').
 project_file('urisys-node/packages/python/urisysnode/__init__.py', 1, 'python').
-project_file('urisys-node/packages/python/urisysnode/cli.py', 110, 'python').
+project_file('urisys-node/packages/python/urisysnode/artifact_resolver.py', 121, 'python').
+project_file('urisys-node/packages/python/urisysnode/cli.py', 137, 'python').
 project_file('urisys-node/packages/python/urisysnode/client.py', 93, 'python').
 project_file('urisys-node/packages/python/urisysnode/env.py', 23, 'python').
 project_file('urisys-node/packages/python/urisysnode/handlers.py', 42, 'python').
@@ -182,6 +190,7 @@ project_file('urisys-node/packages/python/urisysnode/routes.py', 20, 'python').
 project_file('urisys-node/packages/python/urisysnode/runtime.py', 166, 'python').
 project_file('urisys-node/packages/python/urisysnode/serve.py', 108, 'python').
 project_file('urisys-node/scripts/install-linux.sh', 17, 'shell').
+project_file('urisys-node/tests/test_artifact_resolver.py', 31, 'python').
 project_file('urisys-node/tests/test_urisys_node.py', 51, 'python').
 
 % ── Python Functions ─────────────────────────────────────
@@ -543,7 +552,14 @@ python_function('urisys-node/packages/python/uriscreen/handlers.py', 'capture', 
 python_function('urisys-node/packages/python/uriscreen/handlers.py', 'frame', 2, 1, 5).
 python_function('urisys-node/packages/python/uriscreen/handlers.py', 'capture_loop', 2, 4, 9).
 python_function('urisys-node/packages/python/uriscreen/routes.py', 'register', 1, 1, 1).
-python_function('urisys-node/packages/python/urisysnode/cli.py', 'main', 1, 11, 22).
+python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'load_node_profile', 1, 3, 4).
+python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'load_artifact_index', 1, 1, 3).
+python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'select_artifact', 2, 15, 6).
+python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'docker_pull', 1, 4, 3).
+python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'docker_run_worker', 1, 3, 3).
+python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'wait_health', 2, 4, 6).
+python_function('urisys-node/packages/python/urisysnode/artifact_resolver.py', 'resolve_and_run', 2, 4, 9).
+python_function('urisys-node/packages/python/urisysnode/cli.py', 'main', 1, 14, 26).
 python_function('urisys-node/packages/python/urisysnode/client.py', 'discover_mdns', 1, 2, 12).
 python_function('urisys-node/packages/python/urisysnode/client.py', 'remote_call', 4, 3, 8).
 python_function('urisys-node/packages/python/urisysnode/client.py', 'call_via_route_map', 1, 6, 12).
@@ -575,6 +591,8 @@ python_function('urisys-node/packages/python/urisysnode/serve.py', '_extend_pack
 python_function('urisys-node/packages/python/urisysnode/serve.py', 'build_runtime', 1, 11, 10).
 python_function('urisys-node/packages/python/urisysnode/serve.py', 'make_handler', 1, 1, 19).
 python_function('urisys-node/packages/python/urisysnode/serve.py', 'serve', 3, 2, 6).
+python_function('urisys-node/tests/test_artifact_resolver.py', 'test_select_artifact_by_platform', 1, 2, 4).
+python_function('urisys-node/tests/test_artifact_resolver.py', 'test_load_artifact_index', 1, 2, 3).
 python_function('urisys-node/tests/test_urisys_node.py', 'test_identity_and_enroll', 0, 5, 3).
 python_function('urisys-node/tests/test_urisys_node.py', 'test_screen_capture_mock', 0, 4, 4).
 python_function('urisys-node/tests/test_urisys_node.py', 'test_rewrite_uri_for_slave', 0, 2, 1).

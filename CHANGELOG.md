@@ -115,6 +115,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.7] - 2026-06-16
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+
+### Other
+- Update app.doql.less
+- Update project/logic.pl
+- Update project/map.toon.yaml
+- Update releases/uristepper-pack/0.1.0/artifact-index.json
+- Update urisys-automation-lab/data/events.jsonl
+
 ## [0.1.6] - 2026-06-16
 
 ### Docs
