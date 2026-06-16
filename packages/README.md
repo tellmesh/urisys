@@ -13,6 +13,9 @@ Canonical **edge runtime** for Docker-based URI servers.
 
 - `urirdp-docker/packages/python/urirdpedge/`
 - `urisys-automation-lab/packages/python/labedge/`
+- `urikvm-docker/packages/python/urikvmedge/`
+- `uribrowser-docker/packages/python/uribrowseredge/`
+- `urisys-node/packages/python/urisysnode/` (`runtime.py`, `env.py`)
 
 ### Local dev
 

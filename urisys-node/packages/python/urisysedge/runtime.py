@@ -180,7 +180,6 @@ def load_yaml_flow(path: str | Path) -> dict[str, Any]:
         import yaml  # type: ignore
         return yaml.safe_load(text)
     except Exception:
-        # tiny fallback for simple examples
         data: dict[str, Any] = {"do": [], "defaults": {}}
         current = None
         active_item: dict[str, Any] | None = None

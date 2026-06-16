@@ -80,7 +80,7 @@ def cmd_serve(args):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(prog="urisys-edge", description="Minimal urisys edge runtime for stepper://")
+    parser = argparse.ArgumentParser(prog="uristepper-edge", description="Stepper edge runtime for stepper://")
     parser.add_argument("--device-config", default=None, help="Path to device profile JSON")
     parser.add_argument("--events", default=None, help="Path to events JSONL")
     sub = parser.add_subparsers(dest="cmd", required=True)

@@ -5,12 +5,12 @@
 
 - **Project**: /home/tom/github/tellmesh/urisys
 - **Primary Language**: python
-- **Languages**: python: 112, shell: 41, yaml: 36, json: 16, yml: 9
+- **Languages**: python: 103, shell: 43, yaml: 34, json: 11, yml: 9
 - **Analysis Mode**: static
-- **Total Functions**: 581
-- **Total Classes**: 65
-- **Modules**: 243
-- **Entry Points**: 358
+- **Total Functions**: 493
+- **Total Classes**: 35
+- **Modules**: 222
+- **Entry Points**: 288
 
 ## Architecture by Module
 
@@ -36,23 +36,13 @@
 - **Functions**: 19
 - **File**: `handlers.py`
 
-### urirdp-docker.packages.python.urirdpedge.runtime
-- **Functions**: 15
-- **Classes**: 3
-- **File**: `runtime.py`
-
 ### urisys-node.packages.python.urisysnode.artifact_resolver
 - **Functions**: 15
 - **Classes**: 1
 - **File**: `artifact_resolver.py`
 
-### uribrowser-docker.packages.python.uribrowseredge.runtime
-- **Functions**: 14
-- **Classes**: 3
-- **File**: `runtime.py`
-
-### urikvm-docker.packages.python.urikvmedge.runtime
-- **Functions**: 14
+### packages.python.urisysedge.runtime
+- **Functions**: 15
 - **Classes**: 3
 - **File**: `runtime.py`
 
@@ -97,14 +87,22 @@
 - **Classes**: 3
 - **File**: `runtime.py`
 
-### urisys-automation-lab.packages.python.labedge.runtime
-- **Functions**: 11
-- **Classes**: 3
-- **File**: `runtime.py`
-
 ### urikvm-docker.packages.python.uriocr.handlers
 - **Functions**: 10
 - **File**: `handlers.py`
+
+### urikvm-docker.packages.python.urihim.handlers
+- **Functions**: 9
+- **File**: `handlers.py`
+
+### urisys-node.packages.python.uriscreen.handlers
+- **Functions**: 9
+- **File**: `handlers.py`
+
+### urisys-automation-lab.server.automation_lab_server
+- **Functions**: 9
+- **Classes**: 1
+- **File**: `automation_lab_server.py`
 
 ## Key Entry Points
 
@@ -135,20 +133,17 @@ Main execution flows into the system:
 ### urisys-automation-lab.server.automation_lab_server.LabHandler.do_POST
 - **Calls**: self._json, self._read_json, req.get, context.setdefault, self.runtime.call, self._json, self._read_json, self.runtime.call
 
-### urirdp-docker.packages.python.urirdp_kvm.handlers.click_text
-- **Calls**: str, None.get, runtime.call, runtime.call, runtime.call, runtime.call, bool, payload.get
-
 ### urirdp-docker.packages.python.urirdpedge.cli.main
 - **Calls**: argparse.ArgumentParser, p.add_argument, p.add_argument, p.add_argument, p.add_subparsers, sub.add_parser, c.add_argument, c.add_argument
 
-### urienv-docker.vendor.uricore.core.python.uri_control.registry.CapabilityRegistry.load_manifest
-- **Calls**: str, data.get, str, CapabilityManifest, self._manifests.append, RegistryError, RegistryError, data.get
-
-### urienv-docker.packages.python.urisysedge.src.urisysedge.server.serve
-- **Calls**: uristepper-docker.packages.python.urisysedge.runtime.build_runtime, urienv-docker.packages.python.urisysedge.src.urisysedge.runtime.load_device_config, urienv-docker.packages.python.urisysedge.src.urisysedge.runtime.load_env_config, ThreadingHTTPServer, print, httpd.serve_forever, None.encode, self.send_response
+### urirdp-docker.packages.python.urirdp_kvm.handlers.click_text
+- **Calls**: str, None.get, runtime.call, runtime.call, runtime.call, runtime.call, bool, payload.get
 
 ### src.urisys.managers.markpact_manager.MarkpactManager._validate_contract
 - **Calls**: None.strip, str, None.strip, isinstance, MarkpactError, data.get, MarkpactError, MarkpactError
+
+### urienv-docker.packages.python.urisysedge.src.urisysedge.server.serve
+- **Calls**: uristepper-docker.packages.python.urisysedge.runtime.build_runtime, urienv-docker.packages.python.urisysedge.src.urisysedge.runtime.load_device_config, urienv-docker.packages.python.urisysedge.src.urisysedge.runtime.load_env_config, ThreadingHTTPServer, print, httpd.serve_forever, None.encode, self.send_response
 
 ### src.urisys.managers.markpact_manager.MarkpactManager._compile_manifest
 - **Calls**: self._capabilities, self._scheme, pack.get, None.get, str, src.urisys.managers.markpact_manager._scheme_from_uri, None.replace, str
@@ -156,23 +151,20 @@ Main execution flows into the system:
 ### urikvm-docker.packages.python.urikvmedge.cli.main
 - **Calls**: argparse.ArgumentParser, p.add_argument, p.add_argument, p.add_argument, p.add_subparsers, sub.add_parser, c.add_argument, c.add_argument
 
-### uribrowser-docker.packages.python.uribrowseredge.cli.main
-- **Calls**: argparse.ArgumentParser, p.add_argument, p.add_argument, p.add_argument, p.add_subparsers, sub.add_parser, c.add_argument, c.add_argument
-
 ### scripts.run_test_sessions.main
 - **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, run_dir.mkdir, scripts.run_test_sessions._save_json
+
+### uribrowser-docker.packages.python.uribrowseredge.cli.main
+- **Calls**: argparse.ArgumentParser, p.add_argument, p.add_argument, p.add_argument, p.add_subparsers, sub.add_parser, c.add_argument, c.add_argument
 
 ### uristepper-docker.packages.python.urisysedge.cli.main
 - **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_subparsers, sub.add_parser, p.add_argument, p.add_argument, p.add_argument
 
-### urirdp-docker.packages.python.urirdp_llm.handlers.analyze
-- **Calls**: urirdp-docker.packages.python.urirdp_llm.handlers._llm_cfg, cfg.get, urirdp-docker.packages.python.urirdp_llm.handlers._target, urirdp-docker.packages.python.urirdp_llm.handlers._env, urirdp-docker.packages.python.urirdp_llm.handlers._env, float, int, urirdp-docker.packages.python.urirdp_llm.handlers._screenshot_b64
-
-### urienv-docker.vendor.uricore.core.python.uri_control.dispatcher.UriControlRuntime.call
-- **Calls**: self.registry.match, self.policy_engine.decide, urienv-docker.vendor.uricore.core.python.uri_control.dispatcher._new_id, EventEnvelope, self.event_store.append, EventEnvelope, self.event_store.append, DispatchResult
-
 ### scripts.run_test_sessions.session_urirdp_mock_docker
 - **Calls**: scripts.run_test_sessions._now_iso, scripts.run_test_sessions._write_meta, scripts.run_test_sessions._prepare_urirdp_data, scripts.run_test_sessions._sleep_ports, scripts.run_test_sessions._run_cmd, scripts.run_test_sessions._run_cmd, scripts.run_test_sessions._finalize_session, scripts.run_test_sessions._compose_cmd
+
+### urirdp-docker.packages.python.urirdp_llm.handlers.analyze
+- **Calls**: urirdp-docker.packages.python.urirdp_llm.handlers._llm_cfg, cfg.get, urirdp-docker.packages.python.urirdp_llm.handlers._target, urirdp-docker.packages.python.urirdp_llm.handlers._env, urirdp-docker.packages.python.urirdp_llm.handlers._env, float, int, urirdp-docker.packages.python.urirdp_llm.handlers._screenshot_b64
 
 ### urirdp-docker.packages.python.urirdp_browser.handlers.open_page
 - **Calls**: urirdp-docker.packages.python.urirdp_browser.handlers._profile, payload.get, urirdp-docker.packages.python.urirdp_browser.handlers._session_state, urirdp-docker.packages.python.urirdp_browser.handlers._chromium_binary, os.environ.copy, context.get, profile.get, subprocess.Popen
@@ -198,8 +190,14 @@ Main execution flows into the system:
 ### urikvm-docker.scripts.real_pipeline.main
 - **Calls**: argparse.ArgumentParser, p.add_argument, p.add_argument, p.add_argument, p.add_argument, p.add_argument, p.parse_args, urikvm-docker.scripts.real_pipeline.build_runtime
 
+### src.urisys.managers.markpact_manager.MarkpactManager.validate
+- **Calls**: Path, self.read_blocks, self._yaml_blocks, self._yaml_blocks, self._yaml_blocks, self._yaml_blocks, MarkpactError, len
+
 ### scripts.session_report.main
 - **Calls**: argparse.ArgumentParser, parser.add_subparsers, sub.add_parser, gen.add_argument, sub.add_parser, ana.add_argument, ana.add_argument, parser.parse_args
+
+### urirdp-docker.packages.python.urirdp_kvm.handlers.screenshot
+- **Calls**: urirdp-docker.packages.python.urirdp_kvm.display.ensure_screenshot_dir, Path, urirdp-docker.packages.python.urirdp_kvm.display.run_cmd, shutil.copy2, tmp.unlink, context.get, latest.write_bytes, urirdp-docker.packages.python.urirdp_kvm.display.run_cmd
 
 ## Process Flows
 
@@ -248,9 +246,9 @@ do_POST [urisys-automation-lab.server.automation_lab_server.LabHandler]
 click_text [urirdp-docker.packages.python.urirdp_kvm.handlers]
 ```
 
-### Flow 8: load_manifest
+### Flow 8: _validate_contract
 ```
-load_manifest [urienv-docker.vendor.uricore.core.python.uri_control.registry.CapabilityRegistry]
+_validate_contract [src.urisys.managers.markpact_manager.MarkpactManager]
 ```
 
 ### Flow 9: serve
@@ -262,9 +260,9 @@ serve [urienv-docker.packages.python.urisysedge.src.urisysedge.server]
   └─ →> load_env_config
 ```
 
-### Flow 10: _validate_contract
+### Flow 10: _compile_manifest
 ```
-_validate_contract [src.urisys.managers.markpact_manager.MarkpactManager]
+_compile_manifest [src.urisys.managers.markpact_manager.MarkpactManager]
 ```
 
 ## Key Classes
@@ -296,11 +294,6 @@ Markpact is an authoring/distribution format. Runti
 - **Key Methods**: uristepper-docker.packages.python.uristepper.drivers.RpiGpioStepDirDriver.__init__, uristepper-docker.packages.python.uristepper.drivers.RpiGpioStepDirDriver._pins, uristepper-docker.packages.python.uristepper.drivers.RpiGpioStepDirDriver._enable_value, uristepper-docker.packages.python.uristepper.drivers.RpiGpioStepDirDriver.status, uristepper-docker.packages.python.uristepper.drivers.RpiGpioStepDirDriver.enable, uristepper-docker.packages.python.uristepper.drivers.RpiGpioStepDirDriver.disable, uristepper-docker.packages.python.uristepper.drivers.RpiGpioStepDirDriver.stop, uristepper-docker.packages.python.uristepper.drivers.RpiGpioStepDirDriver.move_relative, uristepper-docker.packages.python.uristepper.drivers.RpiGpioStepDirDriver.home
 - **Inherits**: StepperDriver
 
-### urienv-docker.vendor.uricore.core.python.uri_control.registry.CapabilityRegistry
-> In-memory registry of capability manifests and URI patterns.
-- **Methods**: 8
-- **Key Methods**: urienv-docker.vendor.uricore.core.python.uri_control.registry.CapabilityRegistry.__init__, urienv-docker.vendor.uricore.core.python.uri_control.registry.CapabilityRegistry.from_manifest_files, urienv-docker.vendor.uricore.core.python.uri_control.registry.CapabilityRegistry.manifests, urienv-docker.vendor.uricore.core.python.uri_control.registry.CapabilityRegistry.routes, urienv-docker.vendor.uricore.core.python.uri_control.registry.CapabilityRegistry.load_manifest_file, urienv-docker.vendor.uricore.core.python.uri_control.registry.CapabilityRegistry.load_manifest, urienv-docker.vendor.uricore.core.python.uri_control.registry.CapabilityRegistry.match, urienv-docker.vendor.uricore.core.python.uri_control.registry.CapabilityRegistry.explain
-
 ### uristepper-docker.packages.python.uristepper.drivers.StepperDriver
 - **Methods**: 7
 - **Key Methods**: uristepper-docker.packages.python.uristepper.drivers.StepperDriver.status, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.enable, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.disable, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.stop, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.move_relative, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.move_absolute, uristepper-docker.packages.python.uristepper.drivers.StepperDriver.home
@@ -322,32 +315,13 @@ Markpact is an authoring/distribution format. Runti
 - **Methods**: 5
 - **Key Methods**: uristepper-docker.packages.python.urisysedge.runtime.StepperRuntime.__init__, uristepper-docker.packages.python.urisysedge.runtime.StepperRuntime.explain, uristepper-docker.packages.python.urisysedge.runtime.StepperRuntime.list_routes, uristepper-docker.packages.python.urisysedge.runtime.StepperRuntime.call, uristepper-docker.packages.python.urisysedge.runtime.StepperRuntime._match
 
-### uribrowser-docker.packages.python.uribrowseredge.runtime.Runtime
-- **Methods**: 5
-- **Key Methods**: uribrowser-docker.packages.python.uribrowseredge.runtime.Runtime.__init__, uribrowser-docker.packages.python.uribrowseredge.runtime.Runtime.register, uribrowser-docker.packages.python.uribrowseredge.runtime.Runtime.resolve, uribrowser-docker.packages.python.uribrowseredge.runtime.Runtime._load_handler, uribrowser-docker.packages.python.uribrowseredge.runtime.Runtime.call
-
-### urikvm-docker.packages.python.urikvmedge.runtime.Runtime
-- **Methods**: 5
-- **Key Methods**: urikvm-docker.packages.python.urikvmedge.runtime.Runtime.__init__, urikvm-docker.packages.python.urikvmedge.runtime.Runtime.register, urikvm-docker.packages.python.urikvmedge.runtime.Runtime.resolve, urikvm-docker.packages.python.urikvmedge.runtime.Runtime._load_handler, urikvm-docker.packages.python.urikvmedge.runtime.Runtime.call
-
-### urienv-docker.vendor.uricore.core.python.uri_control.projection.ProjectionBuilder
-> Build read models from events.
-
-This is intentionally generic. Domain-specific projections should li
-- **Methods**: 5
-- **Key Methods**: urienv-docker.vendor.uricore.core.python.uri_control.projection.ProjectionBuilder.__init__, urienv-docker.vendor.uricore.core.python.uri_control.projection.ProjectionBuilder.latest_by_source_uri, urienv-docker.vendor.uricore.core.python.uri_control.projection.ProjectionBuilder.status_by_source_uri, urienv-docker.vendor.uricore.core.python.uri_control.projection.ProjectionBuilder.events_by_type, urienv-docker.vendor.uricore.core.python.uri_control.projection.ProjectionBuilder.from_events
-
 ### urisys-node.packages.python.urisysnode.runtime.Runtime
 - **Methods**: 5
 - **Key Methods**: urisys-node.packages.python.urisysnode.runtime.Runtime.__init__, urisys-node.packages.python.urisysnode.runtime.Runtime.register, urisys-node.packages.python.urisysnode.runtime.Runtime.resolve, urisys-node.packages.python.urisysnode.runtime.Runtime._load_handler, urisys-node.packages.python.urisysnode.runtime.Runtime.call
 
-### urisys-automation-lab.packages.python.labedge.runtime.Runtime
+### packages.python.urisysedge.runtime.Runtime
 - **Methods**: 5
-- **Key Methods**: urisys-automation-lab.packages.python.labedge.runtime.Runtime.__init__, urisys-automation-lab.packages.python.labedge.runtime.Runtime.register, urisys-automation-lab.packages.python.labedge.runtime.Runtime.resolve, urisys-automation-lab.packages.python.labedge.runtime.Runtime._load_handler, urisys-automation-lab.packages.python.labedge.runtime.Runtime.call
-
-### urirdp-docker.packages.python.urirdpedge.runtime.Runtime
-- **Methods**: 5
-- **Key Methods**: urirdp-docker.packages.python.urirdpedge.runtime.Runtime.__init__, urirdp-docker.packages.python.urirdpedge.runtime.Runtime.register, urirdp-docker.packages.python.urirdpedge.runtime.Runtime.resolve, urirdp-docker.packages.python.urirdpedge.runtime.Runtime._load_handler, urirdp-docker.packages.python.urirdpedge.runtime.Runtime.call
+- **Key Methods**: packages.python.urisysedge.runtime.Runtime.__init__, packages.python.urisysedge.runtime.Runtime.register, packages.python.urisysedge.runtime.Runtime.resolve, packages.python.urisysedge.runtime.Runtime._load_handler, packages.python.urisysedge.runtime.Runtime.call
 
 ### src.urisys.controllers.flow_controller.FlowController
 - **Methods**: 3
@@ -361,45 +335,32 @@ This is intentionally generic. Domain-specific projections should li
 - **Methods**: 3
 - **Key Methods**: uristepper-docker.packages.python.urisysedge.runtime.JsonlEventStore.__init__, uristepper-docker.packages.python.urisysedge.runtime.JsonlEventStore.append, uristepper-docker.packages.python.urisysedge.runtime.JsonlEventStore.tail
 
+### urisys-node.packages.python.urisysnode.runtime.JsonlEventStore
+- **Methods**: 3
+- **Key Methods**: urisys-node.packages.python.urisysnode.runtime.JsonlEventStore.__init__, urisys-node.packages.python.urisysnode.runtime.JsonlEventStore.append, urisys-node.packages.python.urisysnode.runtime.JsonlEventStore.tail
+
+### src.urisys.controllers.server_controller.ServerController
+- **Methods**: 2
+- **Key Methods**: src.urisys.controllers.server_controller.ServerController.__init__, src.urisys.controllers.server_controller.ServerController.serve_forever
+
+### src.urisys.managers.event_manager.EventManager
+- **Methods**: 2
+- **Key Methods**: src.urisys.managers.event_manager.EventManager.__init__, src.urisys.managers.event_manager.EventManager.list_events
+
+### uristepper-docker.packages.python.urisysedge.runtime.Route
+- **Methods**: 2
+- **Key Methods**: uristepper-docker.packages.python.urisysedge.runtime.Route.compile, uristepper-docker.packages.python.urisysedge.runtime.Route.match
+
+### scripts.session_report.SessionReport
+- **Methods**: 2
+- **Key Methods**: scripts.session_report.SessionReport.passed, scripts.session_report.SessionReport.failed
+
 ## Data Transformation Functions
 
 Key functions that process and transform data:
 
 ### src.urisys.cli.build_parser
 - **Output to**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_subparsers
-
-### src.urisys.managers.pack_manager.PackManager.parse_packs
-- **Output to**: isinstance, any, any, list, list
-
-### src.urisys.managers.pack_manager.PackManager.parse_markpacts
-- **Output to**: isinstance, None.strip, p.strip, None.strip, markpacts.split
-
-### urirdp-docker.packages.python.urirdp_ocr.handlers._parse_tesseract_tsv
-- **Output to**: csv.DictReader, io.StringIO, None.strip, tokens.append, float
-
-### urirdp-docker.packages.python.urirdp_llm.handlers._parse_json_response
-- **Output to**: None.strip, json.loads, re.search, json.loads, match.group
-
-### urikvm-docker.packages.python.urillm.handlers._parse_json_response
-- **Output to**: None.strip, json.loads, re.search, json.loads, match.group
-
-### urienv-docker.vendor.uricore.core.python.uri_control.cli.build_parser
-- **Output to**: argparse.ArgumentParser, parser.add_subparsers, sub.add_parser, explain.add_argument, explain.add_argument
-
-### urienv-docker.vendor.uricore.core.python.uri_control.parser.parse_uri
-> Parse a URI into a stable internal structure.
-
-The parser intentionally keeps the model simple. For 
-- **Output to**: uri.strip, urlsplit, dict, tuple, ParsedUri
-
-### urisys-automation-lab.server.flow_runner._parse_step
-- **Output to**: isinstance, isinstance, ValueError, next, ValueError
-
-### scripts.run_test_sessions._parse_lab_flow
-- **Output to**: dict, yaml.safe_load, data.get, isinstance, path.read_text
-
-### scripts.run_test_sessions._parse_docker_log_errors
-- **Output to**: path.read_text, text.count, text.count, text.splitlines, path.is_file
 
 ### src.urisys.managers.markpact_manager._parse_meta
 - **Output to**: shlex.split, raw.strip, raw.strip, token.split, None.strip
@@ -418,6 +379,27 @@ The parser intentionally keeps the model simple. For
 
 ### src.urisys.managers.markpact_manager.MarkpactManager._validate_implementation
 - **Output to**: None.strip, str, isinstance, isinstance, MarkpactError
+
+### src.urisys.managers.pack_manager.PackManager.parse_packs
+- **Output to**: isinstance, any, any, list, list
+
+### src.urisys.managers.pack_manager.PackManager.parse_markpacts
+- **Output to**: isinstance, None.strip, p.strip, None.strip, markpacts.split
+
+### scripts.run_test_sessions._parse_lab_flow
+- **Output to**: dict, yaml.safe_load, data.get, isinstance, path.read_text
+
+### scripts.run_test_sessions._parse_docker_log_errors
+- **Output to**: path.read_text, text.count, text.count, text.splitlines, path.is_file
+
+### urirdp-docker.packages.python.urirdp_ocr.handlers._parse_tesseract_tsv
+- **Output to**: csv.DictReader, io.StringIO, None.strip, tokens.append, float
+
+### urirdp-docker.packages.python.urirdp_llm.handlers._parse_json_response
+- **Output to**: None.strip, json.loads, re.search, json.loads, match.group
+
+### urikvm-docker.packages.python.urillm.handlers._parse_json_response
+- **Output to**: None.strip, json.loads, re.search, json.loads, match.group
 
 ## Behavioral Patterns
 
@@ -457,34 +439,34 @@ Functions exposed as public API (no underscore prefix):
 - `scripts.run_test_sessions.session_automation_lab` - 43 calls
 - `src.urisys.managers.markpact_manager.MarkpactManager.run_tests` - 42 calls
 - `urisys-automation-lab.server.automation_lab_server.LabHandler.do_POST` - 41 calls
-- `urirdp-docker.packages.python.urirdp_kvm.handlers.click_text` - 40 calls
 - `urirdp-docker.packages.python.urirdpedge.cli.main` - 40 calls
-- `urienv-docker.vendor.uricore.core.python.uri_control.registry.CapabilityRegistry.load_manifest` - 37 calls
+- `urirdp-docker.packages.python.urirdp_kvm.handlers.click_text` - 40 calls
+- `urisys-automation-lab.server.flow_runner.run_flow_file` - 39 calls
 - `src.urisys.cli.build_parser` - 36 calls
 - `urienv-docker.packages.python.urisysedge.src.urisysedge.server.serve` - 36 calls
 - `scripts.session_report.generate_report` - 35 calls
 - `urikvm-docker.packages.python.urikvmedge.cli.main` - 34 calls
-- `uribrowser-docker.packages.python.uribrowseredge.cli.main` - 32 calls
 - `scripts.run_test_sessions.main` - 32 calls
+- `uribrowser-docker.packages.python.uribrowseredge.cli.main` - 32 calls
 - `src.urisys.http_server.create_server` - 31 calls
 - `uristepper-docker.packages.python.urisysedge.cli.main` - 31 calls
-- `urirdp-docker.packages.python.urirdp_llm.handlers.analyze` - 31 calls
-- `urienv-docker.vendor.uricore.core.python.uri_control.dispatcher.UriControlRuntime.call` - 31 calls
 - `scripts.run_test_sessions.session_urirdp_mock_docker` - 31 calls
-- `urisys-node.packages.python.urisysnode.serve.make_handler` - 30 calls
+- `urirdp-docker.packages.python.urirdp_llm.handlers.analyze` - 31 calls
 - `urirdp-docker.packages.python.urirdp_browser.handlers.open_page` - 30 calls
+- `urisys-node.packages.python.urisysnode.serve.make_handler` - 30 calls
 - `src.urisys.managers.source_manager.SourceManager.fetch` - 29 calls
-- `urisys-automation-lab.server.flow_runner.run_flow_file` - 29 calls
 - `uribrowser-docker.packages.python.uribrowserdocker.handlers.open_page` - 27 calls
 - `urisys-automation-lab.packages.python.urichat.handlers.uri_execute` - 27 calls
 - `urikvm-docker.packages.python.urikvm.handlers.click_text` - 26 calls
 - `urikvm-docker.scripts.real_pipeline.main` - 26 calls
-- `urienv-docker.vendor.uricore.core.python.uri_control.cli.build_parser` - 25 calls
 - `urisys-node.packages.python.uriscreen.handlers.capture` - 25 calls
-- `uribrowser-docker.packages.python.uribrowseredge.runtime.make_handler` - 24 calls
-- `urikvm-docker.packages.python.urikvmedge.runtime.make_handler` - 24 calls
-- `urirdp-docker.packages.python.urirdpedge.runtime.make_handler` - 24 calls
+- `packages.python.urisysedge.runtime.make_handler` - 24 calls
+- `src.urisys.managers.markpact_manager.MarkpactManager.validate` - 23 calls
 - `scripts.session_report.write_run_analysis` - 23 calls
+- `scripts.session_report.main` - 23 calls
+- `urirdp-docker.packages.python.urirdp_kvm.handlers.screenshot` - 23 calls
+- `packages.python.urisysedge.runtime.Runtime.call` - 23 calls
+- `uristepper-docker.packages.python.urisysedge.cli.cmd_flow` - 22 calls
 
 ## System Interactions
 

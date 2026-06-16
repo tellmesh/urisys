@@ -1,6 +1,8 @@
 services:
   uristepper:
-    build: .
+    build:
+      context: ..
+      dockerfile: uristepper-docker/Dockerfile
     container_name: uristepper-docker
     ports:
       - "8791:8790"
@@ -18,7 +20,9 @@ services:
       retries: 20
 
   e2e:
-    build: .
+    build:
+      context: ..
+      dockerfile: uristepper-docker/Dockerfile
     profiles: ["test"]
     depends_on:
       uristepper:

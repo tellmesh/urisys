@@ -1,31 +1,33 @@
-# urisys | 202f 12598L | python:155,shell:42,javascript:2,less:1,go:1,typescript:1 | 2026-06-16
-# stats: 450 func | 69 cls | 202 mod | CC̄=4.2 | critical:43 | cycles:0
+# urisys | 182f 10368L | python:135,shell:44,javascript:2,less:1 | 2026-06-16
+# stats: 388 func | 34 cls | 182 mod | CC̄=4.1 | critical:36 | cycles:0
 # alerts[5]: CC analyze_run=34; CC session_urirdp_real_docker=30; CC write_session_report=28; CC session_lab_10_flows=26; CC _vision_analyze=22
 # hotspots[5]: main fan=29; main fan=27; session_lab_10_flows fan=26; session_urirdp_real_docker fan=25; serve fan=24
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[202]:
-  app.doql.less,40
+M[182]:
+  app.doql.less,42
   examples/frontend/app.js,22
-  examples/markpact/browser-call.sh,9
+  examples/markpact/browser-call.sh,13
   examples/shell/call-uri.sh,7
   examples/shell/server-curl.sh,9
-  local-lab/scripts/01-validate-markpact.sh,23
-  local-lab/scripts/02-build-publish.sh,130
+  local-lab/scripts/01-validate-markpact.sh,25
+  local-lab/scripts/02-build-publish.sh,133
   local-lab/scripts/03-resolve-run.sh,17
   local-lab/scripts/04-smoke.sh,36
   local-lab/scripts/05-resolve-from-url.sh,24
   local-lab/scripts/06-register-release.sh,63
-  local-lab/scripts/install-urisys.sh,18
+  local-lab/scripts/install-urisys.sh,21
   local-lab/scripts/run-all.sh,26
   packages/python/urisysedge/__init__.py,13
   packages/python/urisysedge/env.py,130
-  packages/python/urisysedge/runtime.py,256
-  project.sh,59
+  packages/python/urisysedge/runtime.py,271
+  project.sh,63
+  scripts/paths.sh,55
+  scripts/run-lab-e2e.sh,15
   scripts/run_test_sessions.py,1032
   scripts/session_report.py,510
   scripts/test-goal.sh,12
-  scripts/validate-all-markpacts.sh,41
+  scripts/validate-all-markpacts.sh,54
   src/urisys/__init__.py,4
   src/urisys/cli.py,177
   src/urisys/controllers/__init__.py,1
@@ -53,7 +55,7 @@ M[202]:
   uribrowser-docker/packages/python/uribrowserdocker/routes.py,6
   uribrowser-docker/packages/python/uribrowseredge/__init__.py,2
   uribrowser-docker/packages/python/uribrowseredge/cli.py,50
-  uribrowser-docker/packages/python/uribrowseredge/runtime.py,223
+  uribrowser-docker/packages/python/uribrowseredge/runtime.py,24
   uribrowser-docker/scripts/test-local.sh,9
   uribrowser-docker/scripts/test-real.sh,29
   uribrowser-docker/tests/test_browser.py,24
@@ -65,33 +67,10 @@ M[202]:
   urienv-docker/packages/python/urisysedge/src/urisysedge/pack_loader.py,16
   urienv-docker/packages/python/urisysedge/src/urisysedge/runtime.py,22
   urienv-docker/packages/python/urisysedge/src/urisysedge/server.py,27
-  urienv-docker/scripts/local-test.sh,5
+  urienv-docker/scripts/local-test.sh,11
   urienv-docker/scripts/test-docker.sh,5
   urienv-docker/tests/e2e_env.py,64
   urienv-docker/tests/test_urienv.py,70
-  urienv-docker/vendor/uricore/core/go/uricontrol/uricontrol.go,12
-  urienv-docker/vendor/uricore/core/node/uri-control/src/index.ts,10
-  urienv-docker/vendor/uricore/core/python/uri_control/__init__.py,38
-  urienv-docker/vendor/uricore/core/python/uri_control/cli.py,124
-  urienv-docker/vendor/uricore/core/python/uri_control/dispatcher.py,168
-  urienv-docker/vendor/uricore/core/python/uri_control/errors.py,23
-  urienv-docker/vendor/uricore/core/python/uri_control/event_store.py,66
-  urienv-docker/vendor/uricore/core/python/uri_control/models.py,128
-  urienv-docker/vendor/uricore/core/python/uri_control/parser.py,46
-  urienv-docker/vendor/uricore/core/python/uri_control/policy.py,72
-  urienv-docker/vendor/uricore/core/python/uri_control/projection.py,71
-  urienv-docker/vendor/uricore/core/python/uri_control/registry.py,203
-  urienv-docker/vendor/uricore/examples/__init__.py,1
-  urienv-docker/vendor/uricore/examples/call_browser_mock.py,31
-  urienv-docker/vendor/uricore/examples/call_systemd_mock.py,23
-  urienv-docker/vendor/uricore/examples/packs/__init__.py,1
-  urienv-docker/vendor/uricore/examples/packs/browser_mock/__init__.py,1
-  urienv-docker/vendor/uricore/examples/packs/browser_mock/handlers.py,46
-  urienv-docker/vendor/uricore/examples/packs/systemd_mock/__init__.py,1
-  urienv-docker/vendor/uricore/examples/packs/systemd_mock/handlers.py,29
-  urienv-docker/vendor/uricore/tests/test_dispatcher.py,50
-  urienv-docker/vendor/uricore/tests/test_parser.py,12
-  urienv-docker/vendor/uricore/tests/test_registry.py,29
   urikvm-docker/packages/python/urihim/__init__.py,2
   urikvm-docker/packages/python/urihim/handlers.py,82
   urikvm-docker/packages/python/urihim/routes.py,7
@@ -100,8 +79,8 @@ M[202]:
   urikvm-docker/packages/python/urikvm/routes.py,6
   urikvm-docker/packages/python/urikvmedge/__init__.py,2
   urikvm-docker/packages/python/urikvmedge/cli.py,57
-  urikvm-docker/packages/python/urikvmedge/env.py,116
-  urikvm-docker/packages/python/urikvmedge/runtime.py,229
+  urikvm-docker/packages/python/urikvmedge/env.py,20
+  urikvm-docker/packages/python/urikvmedge/runtime.py,24
   urikvm-docker/packages/python/urillm/__init__.py,2
   urikvm-docker/packages/python/urillm/handlers.py,202
   urikvm-docker/packages/python/urillm/routes.py,3
@@ -143,8 +122,8 @@ M[202]:
   urirdp-docker/packages/python/urirdp_shell/routes.py,10
   urirdp-docker/packages/python/urirdpedge/__init__.py,1
   urirdp-docker/packages/python/urirdpedge/cli.py,99
-  urirdp-docker/packages/python/urirdpedge/env.py,126
-  urirdp-docker/packages/python/urirdpedge/runtime.py,256
+  urirdp-docker/packages/python/urirdpedge/env.py,20
+  urirdp-docker/packages/python/urirdpedge/runtime.py,24
   urirdp-docker/scripts/call-http.sh,11
   urirdp-docker/scripts/test-docker.sh,18
   urirdp-docker/scripts/test-local.sh,9
@@ -157,19 +136,19 @@ M[202]:
   uristepper-docker/packages/python/uristepper/__init__.py,2
   uristepper-docker/packages/python/uristepper/drivers.py,170
   uristepper-docker/packages/python/uristepper/handlers.py,113
-  uristepper-docker/packages/python/urisysedge/__init__.py,2
-  uristepper-docker/packages/python/urisysedge/__main__.py,3
-  uristepper-docker/packages/python/urisysedge/cli.py,125
-  uristepper-docker/packages/python/urisysedge/runtime.py,194
-  uristepper-docker/packages/python/urisysedge/server.py,72
+  uristepper-docker/packages/python/uristepperedge/__init__.py,2
+  uristepper-docker/packages/python/uristepperedge/__main__.py,4
+  uristepper-docker/packages/python/uristepperedge/cli.py,125
+  uristepper-docker/packages/python/uristepperedge/runtime.py,170
+  uristepper-docker/packages/python/uristepperedge/server.py,75
   uristepper-docker/scripts/call-http.sh,11
   uristepper-docker/scripts/test-docker.sh,8
   uristepper-docker/scripts/test-local.sh,10
   uristepper-docker/tests/e2e.py,71
   uristepper-docker/tests/test_runtime.py,53
   urisys-automation-lab/docker/entrypoint.sh,19
-  urisys-automation-lab/packages/python/labedge/__init__.py,1
-  urisys-automation-lab/packages/python/labedge/runtime.py,165
+  urisys-automation-lab/packages/python/labedge/__init__.py,6
+  urisys-automation-lab/packages/python/labedge/runtime.py,6
   urisys-automation-lab/packages/python/urichat/__init__.py,1
   urisys-automation-lab/packages/python/urichat/handlers.py,82
   urisys-automation-lab/packages/python/urichat/routes.py,18
@@ -186,7 +165,8 @@ M[202]:
   urisys-automation-lab/scripts/run-lab.sh,14
   urisys-automation-lab/scripts/validate-flows.sh,29
   urisys-automation-lab/server/automation_lab_server.py,244
-  urisys-automation-lab/server/flow_runner.py,222
+  urisys-automation-lab/server/flow_runner.py,157
+  urisys-automation-lab/server/lab_uri_adapter.py,87
   urisys-automation-lab/server/static_server.py,7
   urisys-automation-lab/tests/test_lab_handlers.py,62
   urisys-automation-lab/web/app.js,132
@@ -197,12 +177,12 @@ M[202]:
   urisys-node/packages/python/urisysnode/artifact_resolver.py,226
   urisys-node/packages/python/urisysnode/cli.py,171
   urisys-node/packages/python/urisysnode/client.py,93
-  urisys-node/packages/python/urisysnode/env.py,23
+  urisys-node/packages/python/urisysnode/env.py,6
   urisys-node/packages/python/urisysnode/handlers.py,42
   urisys-node/packages/python/urisysnode/identity.py,111
   urisys-node/packages/python/urisysnode/router.py,48
   urisys-node/packages/python/urisysnode/routes.py,20
-  urisys-node/packages/python/urisysnode/runtime.py,166
+  urisys-node/packages/python/urisysnode/runtime.py,6
   urisys-node/packages/python/urisysnode/serve.py,108
   urisys-node/scripts/install-linux.sh,17
   urisys-node/tests/test_artifact_resolver.py,70
@@ -221,7 +201,7 @@ D:
   packages/python/urisysedge/runtime.py:
     e: _result_ok,load_json,load_yaml_flow,run_flow,make_handler,serve,Route,JsonlEventStore,Runtime
     Route: compile(0),match(1)
-    JsonlEventStore: __init__(1),append(1)
+    JsonlEventStore: __init__(1),append(1),tail(1)
     Runtime: __init__(2),register(2),resolve(1),_load_handler(1),call(3)
     _result_ok(result)
     load_json(path)
@@ -378,15 +358,6 @@ D:
     build_runtime(args)
     main(argv)
   uribrowser-docker/packages/python/uribrowseredge/runtime.py:
-    e: load_json,load_yaml_flow,run_flow,make_handler,serve,Route,JsonlEventStore,Runtime
-    Route: compile(0),match(1)
-    JsonlEventStore: __init__(1),append(1)
-    Runtime: __init__(2),register(2),resolve(1),_load_handler(1),call(3)
-    load_json(path)
-    load_yaml_flow(path)
-    run_flow(runtime;path;context)
-    make_handler(runtime)
-    serve(runtime;host;port)
   uribrowser-docker/tests/test_browser.py:
     e: runtime,test_open_requires_approval,test_open_and_dom
     runtime()
@@ -449,89 +420,6 @@ D:
     test_secret_is_masked_but_not_revealed_without_gate(monkeypatch)
     test_secret_can_be_revealed_with_explicit_gate(monkeypatch)
     test_mutable_var_is_process_local(monkeypatch)
-  urienv-docker/vendor/uricore/core/python/uri_control/__init__.py:
-  urienv-docker/vendor/uricore/core/python/uri_control/cli.py:
-    e: _load_payload,_registry_from_args,cmd_explain,cmd_call,cmd_list,cmd_projection_latest,cmd_projection_status,build_parser,main
-    _load_payload(value)
-    _registry_from_args(args)
-    cmd_explain(args)
-    cmd_call(args)
-    cmd_list(args)
-    cmd_projection_latest(args)
-    cmd_projection_status(args)
-    build_parser()
-    main(argv)
-  urienv-docker/vendor/uricore/core/python/uri_control/dispatcher.py:
-    e: _now_ms,_new_id,UriControlRuntime
-    UriControlRuntime: __init__(0),call(3)  # URI → manifest route → policy → handler → event.
-    _now_ms()
-    _new_id(prefix)
-  urienv-docker/vendor/uricore/core/python/uri_control/errors.py:
-    e: UriControlError,UriParseError,RegistryError,RouteNotFoundError,HandlerLoadError,PolicyDeniedError
-    UriControlError:  # Base exception for uri_control.
-    UriParseError:  # Raised when a URI cannot be parsed.
-    RegistryError:  # Raised for invalid manifests or registry state.
-    RouteNotFoundError:  # Raised when no route matches a URI.
-    HandlerLoadError:  # Raised when a handler reference cannot be loaded.
-    PolicyDeniedError:  # Raised when policy denies a command or query.
-  urienv-docker/vendor/uricore/core/python/uri_control/event_store.py:
-    e: dump_events,EventStore,InMemoryEventStore,JsonlEventStore
-    EventStore: append(1),read_all(0)
-    InMemoryEventStore: __init__(0),append(1),read_all(0)
-    JsonlEventStore: __init__(1),append(1),read_all(0)
-    dump_events(events)
-  urienv-docker/vendor/uricore/core/python/uri_control/models.py:
-    e: ParsedUri,Route,MatchedRoute,CapabilityManifest,PolicyDecision,EventEnvelope,DispatchResult
-    ParsedUri: body(0)
-    Route:
-    MatchedRoute:
-    CapabilityManifest:
-    PolicyDecision:
-    EventEnvelope: to_dict(0)
-    DispatchResult: to_dict(0)
-  urienv-docker/vendor/uricore/core/python/uri_control/parser.py:
-    e: parse_uri,canonicalize_uri
-    parse_uri(uri)
-    canonicalize_uri(uri)
-  urienv-docker/vendor/uricore/core/python/uri_control/policy.py:
-    e: PolicyEngine
-    PolicyEngine: __init__(0),decide(2)  # Small deterministic policy gate.
-  urienv-docker/vendor/uricore/core/python/uri_control/projection.py:
-    e: ProjectionBuilder
-    ProjectionBuilder: __init__(1),latest_by_source_uri(0),status_by_source_uri(0),events_by_type(0),from_events(1)  # Build read models from events.
-  urienv-docker/vendor/uricore/core/python/uri_control/registry.py:
-    e: _pattern_body,_compile_pattern,_load_python_handler,CapabilityRegistry
-    CapabilityRegistry: __init__(0),from_manifest_files(2),manifests(0),routes(0),load_manifest_file(1),load_manifest(1),match(1),explain(1)  # In-memory registry of capability manifests and URI patterns.
-    _pattern_body(pattern;scheme)
-    _compile_pattern(pattern;scheme)
-    _load_python_handler(handler_ref)
-  urienv-docker/vendor/uricore/examples/__init__.py:
-  urienv-docker/vendor/uricore/examples/call_browser_mock.py:
-  urienv-docker/vendor/uricore/examples/call_systemd_mock.py:
-  urienv-docker/vendor/uricore/examples/packs/__init__.py:
-  urienv-docker/vendor/uricore/examples/packs/browser_mock/__init__.py:
-  urienv-docker/vendor/uricore/examples/packs/browser_mock/handlers.py:
-    e: open_page,get_dom
-    open_page(payload;context)
-    get_dom(payload;context)
-  urienv-docker/vendor/uricore/examples/packs/systemd_mock/__init__.py:
-  urienv-docker/vendor/uricore/examples/packs/systemd_mock/handlers.py:
-    e: unit_status,unit_restart
-    unit_status(payload;context)
-    unit_restart(payload;context)
-  urienv-docker/vendor/uricore/tests/test_dispatcher.py:
-    e: _runtime,test_command_requires_approval,test_command_executes_when_approved,test_query_does_not_require_approval
-    _runtime()
-    test_command_requires_approval()
-    test_command_executes_when_approved()
-    test_query_does_not_require_approval()
-  urienv-docker/vendor/uricore/tests/test_parser.py:
-    e: test_parse_custom_uri
-    test_parse_custom_uri()
-  urienv-docker/vendor/uricore/tests/test_registry.py:
-    e: test_registry_matches_browser_route,test_registry_explain
-    test_registry_matches_browser_route()
-    test_registry_explain()
   urikvm-docker/packages/python/urihim/__init__.py:
   urikvm-docker/packages/python/urihim/handlers.py:
     e: _state,_driver,_real_allowed,_pyautogui,mouse_status,mouse_move,mouse_click,keyboard_type,keyboard_hotkey
@@ -565,23 +453,7 @@ D:
     build_runtime(args)
     main(argv)
   urikvm-docker/packages/python/urikvmedge/env.py:
-    e: load_urisys_env,_env_policy_candidates,load_env_policy,_env_config,resolve_env_var,is_secret_env
-    load_urisys_env()
-    _env_policy_candidates()
-    load_env_policy()
-    _env_config(context)
-    resolve_env_var(name;context)
-    is_secret_env(name)
   urikvm-docker/packages/python/urikvmedge/runtime.py:
-    e: load_json,load_yaml_flow,run_flow,make_handler,serve,Route,JsonlEventStore,Runtime
-    Route: compile(0),match(1)
-    JsonlEventStore: __init__(1),append(1)
-    Runtime: __init__(2),register(2),resolve(1),_load_handler(1),call(3)
-    load_json(path)
-    load_yaml_flow(path)
-    run_flow(runtime;path;context)
-    make_handler(runtime)
-    serve(runtime;host;port)
   urikvm-docker/packages/python/urillm/__init__.py:
   urikvm-docker/packages/python/urillm/handlers.py:
     e: _llm_cfg,_driver,_goal_text,_target_from_goal,_box_center,_heuristic_analyze,_parse_json_response,_openai_chat,_litellm_chat,_vision_messages,_normalize_action,_vision_analyze,vision_analyze
@@ -751,24 +623,7 @@ D:
     build_runtime(args)
     main(argv)
   urirdp-docker/packages/python/urirdpedge/env.py:
-    e: load_urisys_env,_env_policy_candidates,load_env_policy,_env_config,resolve_env_var,is_secret_env
-    load_urisys_env()
-    _env_policy_candidates()
-    load_env_policy()
-    _env_config(context)
-    resolve_env_var(name;context)
-    is_secret_env(name)
   urirdp-docker/packages/python/urirdpedge/runtime.py:
-    e: _result_ok,load_json,load_yaml_flow,run_flow,make_handler,serve,Route,JsonlEventStore,Runtime
-    Route: compile(0),match(1)
-    JsonlEventStore: __init__(1),append(1)
-    Runtime: __init__(2),register(2),resolve(1),_load_handler(1),call(3)
-    _result_ok(result)
-    load_json(path)
-    load_yaml_flow(path)
-    run_flow(runtime;path;context)
-    make_handler(runtime)
-    serve(runtime;host;port)
   urirdp-docker/tests/test_env_browser_routes.py:
     e: test_env_and_browser_routes_registered,test_env_health_call,test_browser_lab_alias_open_and_dom,_Args
     _Args:
@@ -810,9 +665,9 @@ D:
     move_relative(payload;context)
     move_absolute(payload;context)
     home(payload;context)
-  uristepper-docker/packages/python/urisysedge/__init__.py:
-  uristepper-docker/packages/python/urisysedge/__main__.py:
-  uristepper-docker/packages/python/urisysedge/cli.py:
+  uristepper-docker/packages/python/uristepperedge/__init__.py:
+  uristepper-docker/packages/python/uristepperedge/__main__.py:
+  uristepper-docker/packages/python/uristepperedge/cli.py:
     e: _json_arg,cmd_call,cmd_explain,cmd_routes,cmd_events,cmd_flow,cmd_serve,main
     _json_arg(value)
     cmd_call(args)
@@ -822,16 +677,15 @@ D:
     cmd_flow(args)
     cmd_serve(args)
     main(argv)
-  uristepper-docker/packages/python/urisysedge/runtime.py:
-    e: load_json,build_runtime,UriError,PolicyDenied,Route,JsonlEventStore,StepperRuntime
+  uristepper-docker/packages/python/uristepperedge/runtime.py:
+    e: load_json,build_runtime,UriError,PolicyDenied,Route,StepperRuntime
     UriError:
     PolicyDenied:
     Route: compile(0),match(1)
-    JsonlEventStore: __init__(1),append(1),tail(1)
     StepperRuntime: __init__(3),explain(1),list_routes(0),call(3),_match(1)
     load_json(path)
     build_runtime(device_profile_path;events_path)
-  uristepper-docker/packages/python/urisysedge/server.py:
+  uristepper-docker/packages/python/uristepperedge/server.py:
     e: make_handler,serve
     make_handler(runtime)
     serve(host;port;device_profile;events_path)
@@ -846,12 +700,6 @@ D:
     RuntimeTest: setUp(0),test_status(0),test_policy_requires_approval(0),test_move_relative(0),test_safety_limit(0)
   urisys-automation-lab/packages/python/labedge/__init__.py:
   urisys-automation-lab/packages/python/labedge/runtime.py:
-    e: _result_ok,load_json,Route,JsonlEventStore,Runtime
-    Route: compile(0),match(1)
-    JsonlEventStore: __init__(1),append(1)
-    Runtime: __init__(2),register(2),resolve(1),_load_handler(1),call(3)
-    _result_ok(result)
-    load_json(path)
   urisys-automation-lab/packages/python/urichat/__init__.py:
   urisys-automation-lab/packages/python/urichat/handlers.py:
     e: _match_transcript,_forward_uri,message_send,uri_execute
@@ -888,16 +736,17 @@ D:
     forward_uri_call(base_url;uri;payload;context)
     serve(host;port)
   urisys-automation-lab/server/flow_runner.py:
-    e: _as_list,_parse_step,_load_flow_document,_node_id,_expand_graph,_topo_sort,plan_flow,_step_ok,run_flow_file
-    _as_list(value)
-    _parse_step(raw)
-    _load_flow_document(path)
-    _node_id(step;used)
-    _expand_graph(doc)
-    _topo_sort(nodes)
+    e: _require_uri_stack,_load_defaults,_lab_adapter_session,plan_flow,_legacy_step,run_flow_file
+    _require_uri_stack()
+    _load_defaults(flow_path)
+    _lab_adapter_session()
     plan_flow(flow_path)
-    _step_ok(response)
+    _legacy_step(node;step;payload;step_ctx)
     run_flow_file(flow_path)
+  urisys-automation-lab/server/lab_uri_adapter.py:
+    e: step_ok,LabCallAdapter
+    LabCallAdapter: execute(2)
+    step_ok(response)
   urisys-automation-lab/server/static_server.py:
   urisys-automation-lab/tests/test_lab_handlers.py:
     e: _rt,test_stt_session_and_transcript,test_chat_uri_execute_dry_run,test_webrtc_data_send
@@ -946,8 +795,6 @@ D:
     remote_call(endpoint;uri;payload;context)
     call_via_route_map(uri)
   urisys-node/packages/python/urisysnode/env.py:
-    e: load_urisys_env
-    load_urisys_env()
   urisys-node/packages/python/urisysnode/handlers.py:
     e: query_health,query_identity,command_indicator_on,command_indicator_off
     query_health(payload;context)
@@ -979,11 +826,6 @@ D:
     e: register
     register(rt)
   urisys-node/packages/python/urisysnode/runtime.py:
-    e: load_json,Route,JsonlEventStore,Runtime
-    Route: compile(0),match(1)
-    JsonlEventStore: __init__(1),append(1),tail(1)
-    Runtime: __init__(2),register(2),resolve(1),_load_handler(1),call(3)
-    load_json(path)
   urisys-node/packages/python/urisysnode/serve.py:
     e: _extend_pack_paths,build_runtime,make_handler,serve
     _extend_pack_paths()

@@ -49,6 +49,11 @@ Shimy (tylko re-export):
 - `urisys-automation-lab/packages/python/labedge/runtime.py`
 - `urikvm-docker/packages/python/urikvmedge/{runtime,env}.py`
 - `uribrowser-docker/packages/python/uribrowseredge/runtime.py`
+- `urisys-node/packages/python/urisysnode/{runtime,env}.py`
+
+Stepper (osobny pakiet, współdzieli tylko `JsonlEventStore`):
+
+- `uristepper-docker/packages/python/uristepperedge/` — `StepperRuntime`, nie duplikuje `Runtime`
 
 Docker COPY (build context = katalog `urisys/`):
 
@@ -65,8 +70,8 @@ COPY packages/python/urisysedge ./packages/python/urisysedge
 | labedge | `urisys-automation-lab/.../labedge/` | shim | ✅ migrowany |
 | urikvmedge | `urikvm-docker/.../urikvmedge/` | shim | ✅ migrowany |
 | uribrowseredge | `uribrowser-docker/.../` | shim | ✅ migrowany |
-| urisysnode | `urisys-node/.../urisysnode/runtime.py` | ~165 | 🔶 node-specific (tail events) |
-| uristepper StepperRuntime | `uristepper-docker/.../` | ~193 | 🔶 osobna polityka stepper |
+| urisysnode | `urisys-node/.../urisysnode/runtime.py` | shim | ✅ migrowany |
+| uristepperedge | `uristepper-docker/.../uristepperedge/` | ~170 | ✅ StepperRuntime; `JsonlEventStore` → urisysedge |
 
 ## Duplikaty — handlery (fork lineage urikvm → urirdp)
 
@@ -99,11 +104,12 @@ COPY packages/python/urisysedge ./packages/python/urisysedge
 
 ## Plan konsolidacji (kolejność)
 
-1. ✅ **`urisysedge`** — runtime + env; shimy urirdpedge/labedge/urikvmedge/uribrowseredge
+1. ✅ **`urisysedge`** — runtime + env; shimy urirdpedge/labedge/urikvmedge/uribrowseredge/**urisysnode**
 2. ✅ **`flow_runner`** — uri2flow + uri3 (`LabCallAdapter`)
-3. 🔲 **Handlery OCR/LLM/HIM** — wspólny `packages/python/urioperators/` z adapterem display
-4. 🔲 **`FlowController`** — dodać `after`/`depends_on` (parity z uri2flow)
-5. 🔲 **Pełny `uri3 run-workflow`** w lab (schema root w kontenerze)
+3. ✅ **`JsonlEventStore`/`Runtime` dedup** — urisys-node + uristepper → urisysedge ([`MIGRATION-STEP3.md`](MIGRATION-STEP3.md))
+4. 🔲 **Handlery OCR/LLM/HIM** — wspólny `packages/python/urioperators/` z adapterem display
+5. 🔲 **`FlowController`** — dodać `after`/`depends_on` (parity z uri2flow)
+6. 🔲 **Pełny `uri3 run-workflow`** w lab (schema root w kontenerze)
 
 ## Zależności importów (z map.toon.yaml)
 

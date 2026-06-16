@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from urisysedge.runtime import build_runtime
+from uristepperedge.runtime import build_runtime
 
 
 class RuntimeTest(unittest.TestCase):

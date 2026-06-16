@@ -56,6 +56,10 @@ RELEASES_DIR=releases releases_dir   # → releases (CI)
 ## Krok 3 (zrobione)
 
 - `labedge` / `urirdpedge` → shim do `urisysedge` ✅
+- `urisys-node/runtime.py` + `env.py` → shim do `urisysedge` ✅
+- `uristepper` `JsonlEventStore` → `urisysedge` ✅
+
+Zobacz [`docs/MIGRATION-STEP3.md`](MIGRATION-STEP3.md).
 
 ## Krok 4 (planowany)
 

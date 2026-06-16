@@ -3,12 +3,13 @@ from __future__ import annotations
 import json
 import os
 import re
-import time
 import uuid
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Callable, Dict, Optional
+from typing import Callable, Optional
 from urllib.parse import urlparse
+
+from urisysedge.runtime import JsonlEventStore
 
 
 class UriError(Exception):
@@ -30,7 +31,6 @@ class Route:
     regex: Optional[re.Pattern] = None
 
     def compile(self) -> "Route":
-        # Convert stepper://{device}/axis/{axis}/command/move-relative to regex.
         escaped = re.escape(self.pattern)
         escaped = escaped.replace(re.escape("{device}"), r"(?P<device>[^/]+)")
         escaped = escaped.replace(re.escape("{axis}"), r"(?P<axis>[^/]+)")
@@ -42,31 +42,6 @@ class Route:
             self.compile()
         m = self.regex.match(uri)
         return m.groupdict() if m else None
-
-
-class JsonlEventStore:
-    def __init__(self, path: str | os.PathLike[str]):
-        self.path = Path(path)
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-
-    def append(self, event: dict) -> None:
-        event = dict(event)
-        event.setdefault("event_id", str(uuid.uuid4()))
-        event.setdefault("occurred_at_unix_ms", int(time.time() * 1000))
-        with self.path.open("a", encoding="utf-8") as f:
-            f.write(json.dumps(event, ensure_ascii=False, sort_keys=True) + "\n")
-
-    def tail(self, limit: int = 100) -> list[dict]:
-        if not self.path.exists():
-            return []
-        lines = self.path.read_text(encoding="utf-8").splitlines()[-limit:]
-        out = []
-        for line in lines:
-            try:
-                out.append(json.loads(line))
-            except Exception:
-                pass
-        return out
 
 
 class StepperRuntime:
@@ -117,22 +92,23 @@ class StepperRuntime:
             self.event_store.append(event)
             return {"ok": False, "type": "policy_denied", "reason": "approval_required", "uri": uri, "event": event}
 
-        # Attach route params and device config to handler context.
         effective_context = dict(context)
         effective_context["params"] = params
         effective_context["device_profile"] = self.device_profile
         effective_context["command_id"] = command_id
         effective_context["uri"] = uri
 
-        self.event_store.append({
-            "event_type": "command.accepted",
-            "source_uri": uri,
-            "operation": route.operation,
-            "command_id": command_id,
-            "payload": payload,
-            "params": params,
-            "device_profile_id": self.device_profile.get("metadata", {}).get("id"),
-        })
+        self.event_store.append(
+            {
+                "event_type": "command.accepted",
+                "source_uri": uri,
+                "operation": route.operation,
+                "command_id": command_id,
+                "payload": payload,
+                "params": params,
+                "device_profile_id": self.device_profile.get("metadata", {}).get("id"),
+            }
+        )
 
         try:
             result = route.handler(payload, effective_context)

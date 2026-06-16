@@ -1,28 +1,30 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.8', 'python').
+project_metadata('urisys', '0.1.12', 'python').
 
 % ── Project Files ────────────────────────────────────────
-project_file('app.doql.less', 40, 'less').
+project_file('app.doql.less', 42, 'less').
 project_file('examples/frontend/app.js', 22, 'javascript').
-project_file('examples/markpact/browser-call.sh', 9, 'shell').
+project_file('examples/markpact/browser-call.sh', 13, 'shell').
 project_file('examples/shell/call-uri.sh', 7, 'shell').
 project_file('examples/shell/server-curl.sh', 9, 'shell').
-project_file('local-lab/scripts/01-validate-markpact.sh', 23, 'shell').
-project_file('local-lab/scripts/02-build-publish.sh', 130, 'shell').
+project_file('local-lab/scripts/01-validate-markpact.sh', 25, 'shell').
+project_file('local-lab/scripts/02-build-publish.sh', 133, 'shell').
 project_file('local-lab/scripts/03-resolve-run.sh', 17, 'shell').
 project_file('local-lab/scripts/04-smoke.sh', 36, 'shell').
 project_file('local-lab/scripts/05-resolve-from-url.sh', 24, 'shell').
 project_file('local-lab/scripts/06-register-release.sh', 63, 'shell').
-project_file('local-lab/scripts/install-urisys.sh', 18, 'shell').
+project_file('local-lab/scripts/install-urisys.sh', 21, 'shell').
 project_file('local-lab/scripts/run-all.sh', 26, 'shell').
 project_file('packages/python/urisysedge/__init__.py', 13, 'python').
 project_file('packages/python/urisysedge/env.py', 130, 'python').
-project_file('packages/python/urisysedge/runtime.py', 256, 'python').
-project_file('project.sh', 59, 'shell').
+project_file('packages/python/urisysedge/runtime.py', 271, 'python').
+project_file('project.sh', 63, 'shell').
+project_file('scripts/paths.sh', 55, 'shell').
+project_file('scripts/run-lab-e2e.sh', 15, 'shell').
 project_file('scripts/run_test_sessions.py', 1032, 'python').
 project_file('scripts/session_report.py', 510, 'python').
 project_file('scripts/test-goal.sh', 12, 'shell').
-project_file('scripts/validate-all-markpacts.sh', 41, 'shell').
+project_file('scripts/validate-all-markpacts.sh', 54, 'shell').
 project_file('src/urisys/__init__.py', 4, 'python').
 project_file('src/urisys/cli.py', 177, 'python').
 project_file('src/urisys/controllers/__init__.py', 1, 'python').
@@ -50,7 +52,7 @@ project_file('uribrowser-docker/packages/python/uribrowserdocker/handlers.py', 8
 project_file('uribrowser-docker/packages/python/uribrowserdocker/routes.py', 6, 'python').
 project_file('uribrowser-docker/packages/python/uribrowseredge/__init__.py', 2, 'python').
 project_file('uribrowser-docker/packages/python/uribrowseredge/cli.py', 50, 'python').
-project_file('uribrowser-docker/packages/python/uribrowseredge/runtime.py', 223, 'python').
+project_file('uribrowser-docker/packages/python/uribrowseredge/runtime.py', 24, 'python').
 project_file('uribrowser-docker/scripts/test-local.sh', 9, 'shell').
 project_file('uribrowser-docker/scripts/test-real.sh', 29, 'shell').
 project_file('uribrowser-docker/tests/test_browser.py', 24, 'python').
@@ -62,33 +64,10 @@ project_file('urienv-docker/packages/python/urisysedge/src/urisysedge/flow.py', 
 project_file('urienv-docker/packages/python/urisysedge/src/urisysedge/pack_loader.py', 16, 'python').
 project_file('urienv-docker/packages/python/urisysedge/src/urisysedge/runtime.py', 22, 'python').
 project_file('urienv-docker/packages/python/urisysedge/src/urisysedge/server.py', 27, 'python').
-project_file('urienv-docker/scripts/local-test.sh', 5, 'shell').
+project_file('urienv-docker/scripts/local-test.sh', 11, 'shell').
 project_file('urienv-docker/scripts/test-docker.sh', 5, 'shell').
 project_file('urienv-docker/tests/e2e_env.py', 64, 'python').
 project_file('urienv-docker/tests/test_urienv.py', 70, 'python').
-project_file('urienv-docker/vendor/uricore/core/go/uricontrol/uricontrol.go', 12, 'go').
-project_file('urienv-docker/vendor/uricore/core/node/uri-control/src/index.ts', 10, 'typescript').
-project_file('urienv-docker/vendor/uricore/core/python/uri_control/__init__.py', 38, 'python').
-project_file('urienv-docker/vendor/uricore/core/python/uri_control/cli.py', 124, 'python').
-project_file('urienv-docker/vendor/uricore/core/python/uri_control/dispatcher.py', 168, 'python').
-project_file('urienv-docker/vendor/uricore/core/python/uri_control/errors.py', 23, 'python').
-project_file('urienv-docker/vendor/uricore/core/python/uri_control/event_store.py', 66, 'python').
-project_file('urienv-docker/vendor/uricore/core/python/uri_control/models.py', 128, 'python').
-project_file('urienv-docker/vendor/uricore/core/python/uri_control/parser.py', 46, 'python').
-project_file('urienv-docker/vendor/uricore/core/python/uri_control/policy.py', 72, 'python').
-project_file('urienv-docker/vendor/uricore/core/python/uri_control/projection.py', 71, 'python').
-project_file('urienv-docker/vendor/uricore/core/python/uri_control/registry.py', 203, 'python').
-project_file('urienv-docker/vendor/uricore/examples/__init__.py', 1, 'python').
-project_file('urienv-docker/vendor/uricore/examples/call_browser_mock.py', 31, 'python').
-project_file('urienv-docker/vendor/uricore/examples/call_systemd_mock.py', 23, 'python').
-project_file('urienv-docker/vendor/uricore/examples/packs/__init__.py', 1, 'python').
-project_file('urienv-docker/vendor/uricore/examples/packs/browser_mock/__init__.py', 1, 'python').
-project_file('urienv-docker/vendor/uricore/examples/packs/browser_mock/handlers.py', 46, 'python').
-project_file('urienv-docker/vendor/uricore/examples/packs/systemd_mock/__init__.py', 1, 'python').
-project_file('urienv-docker/vendor/uricore/examples/packs/systemd_mock/handlers.py', 29, 'python').
-project_file('urienv-docker/vendor/uricore/tests/test_dispatcher.py', 50, 'python').
-project_file('urienv-docker/vendor/uricore/tests/test_parser.py', 12, 'python').
-project_file('urienv-docker/vendor/uricore/tests/test_registry.py', 29, 'python').
 project_file('urikvm-docker/packages/python/urihim/__init__.py', 2, 'python').
 project_file('urikvm-docker/packages/python/urihim/handlers.py', 82, 'python').
 project_file('urikvm-docker/packages/python/urihim/routes.py', 7, 'python').
@@ -97,8 +76,8 @@ project_file('urikvm-docker/packages/python/urikvm/handlers.py', 104, 'python').
 project_file('urikvm-docker/packages/python/urikvm/routes.py', 6, 'python').
 project_file('urikvm-docker/packages/python/urikvmedge/__init__.py', 2, 'python').
 project_file('urikvm-docker/packages/python/urikvmedge/cli.py', 57, 'python').
-project_file('urikvm-docker/packages/python/urikvmedge/env.py', 116, 'python').
-project_file('urikvm-docker/packages/python/urikvmedge/runtime.py', 229, 'python').
+project_file('urikvm-docker/packages/python/urikvmedge/env.py', 20, 'python').
+project_file('urikvm-docker/packages/python/urikvmedge/runtime.py', 24, 'python').
 project_file('urikvm-docker/packages/python/urillm/__init__.py', 2, 'python').
 project_file('urikvm-docker/packages/python/urillm/handlers.py', 202, 'python').
 project_file('urikvm-docker/packages/python/urillm/routes.py', 3, 'python').
@@ -140,8 +119,8 @@ project_file('urirdp-docker/packages/python/urirdp_shell/handlers.py', 58, 'pyth
 project_file('urirdp-docker/packages/python/urirdp_shell/routes.py', 10, 'python').
 project_file('urirdp-docker/packages/python/urirdpedge/__init__.py', 1, 'python').
 project_file('urirdp-docker/packages/python/urirdpedge/cli.py', 99, 'python').
-project_file('urirdp-docker/packages/python/urirdpedge/env.py', 126, 'python').
-project_file('urirdp-docker/packages/python/urirdpedge/runtime.py', 256, 'python').
+project_file('urirdp-docker/packages/python/urirdpedge/env.py', 20, 'python').
+project_file('urirdp-docker/packages/python/urirdpedge/runtime.py', 24, 'python').
 project_file('urirdp-docker/scripts/call-http.sh', 11, 'shell').
 project_file('urirdp-docker/scripts/test-docker.sh', 18, 'shell').
 project_file('urirdp-docker/scripts/test-local.sh', 9, 'shell').
@@ -154,19 +133,19 @@ project_file('urirdp-docker/tests/test_rdp_kvm.py', 76, 'python').
 project_file('uristepper-docker/packages/python/uristepper/__init__.py', 2, 'python').
 project_file('uristepper-docker/packages/python/uristepper/drivers.py', 170, 'python').
 project_file('uristepper-docker/packages/python/uristepper/handlers.py', 113, 'python').
-project_file('uristepper-docker/packages/python/urisysedge/__init__.py', 2, 'python').
-project_file('uristepper-docker/packages/python/urisysedge/__main__.py', 3, 'python').
-project_file('uristepper-docker/packages/python/urisysedge/cli.py', 125, 'python').
-project_file('uristepper-docker/packages/python/urisysedge/runtime.py', 194, 'python').
-project_file('uristepper-docker/packages/python/urisysedge/server.py', 72, 'python').
+project_file('uristepper-docker/packages/python/uristepperedge/__init__.py', 2, 'python').
+project_file('uristepper-docker/packages/python/uristepperedge/__main__.py', 4, 'python').
+project_file('uristepper-docker/packages/python/uristepperedge/cli.py', 125, 'python').
+project_file('uristepper-docker/packages/python/uristepperedge/runtime.py', 170, 'python').
+project_file('uristepper-docker/packages/python/uristepperedge/server.py', 75, 'python').
 project_file('uristepper-docker/scripts/call-http.sh', 11, 'shell').
 project_file('uristepper-docker/scripts/test-docker.sh', 8, 'shell').
-project_file('uristepper-docker/scripts/test-local.sh', 10, 'shell').
+project_file('uristepper-docker/scripts/test-local.sh', 11, 'shell').
 project_file('uristepper-docker/tests/e2e.py', 71, 'python').
 project_file('uristepper-docker/tests/test_runtime.py', 53, 'python').
 project_file('urisys-automation-lab/docker/entrypoint.sh', 19, 'shell').
-project_file('urisys-automation-lab/packages/python/labedge/__init__.py', 1, 'python').
-project_file('urisys-automation-lab/packages/python/labedge/runtime.py', 165, 'python').
+project_file('urisys-automation-lab/packages/python/labedge/__init__.py', 6, 'python').
+project_file('urisys-automation-lab/packages/python/labedge/runtime.py', 6, 'python').
 project_file('urisys-automation-lab/packages/python/urichat/__init__.py', 1, 'python').
 project_file('urisys-automation-lab/packages/python/urichat/handlers.py', 82, 'python').
 project_file('urisys-automation-lab/packages/python/urichat/routes.py', 18, 'python').
@@ -183,7 +162,8 @@ project_file('urisys-automation-lab/scripts/docker-up.sh', 22, 'shell').
 project_file('urisys-automation-lab/scripts/run-lab.sh', 14, 'shell').
 project_file('urisys-automation-lab/scripts/validate-flows.sh', 29, 'shell').
 project_file('urisys-automation-lab/server/automation_lab_server.py', 244, 'python').
-project_file('urisys-automation-lab/server/flow_runner.py', 222, 'python').
+project_file('urisys-automation-lab/server/flow_runner.py', 157, 'python').
+project_file('urisys-automation-lab/server/lab_uri_adapter.py', 87, 'python').
 project_file('urisys-automation-lab/server/static_server.py', 7, 'python').
 project_file('urisys-automation-lab/tests/test_lab_handlers.py', 62, 'python').
 project_file('urisys-automation-lab/web/app.js', 132, 'javascript').
@@ -194,12 +174,12 @@ project_file('urisys-node/packages/python/urisysnode/__init__.py', 1, 'python').
 project_file('urisys-node/packages/python/urisysnode/artifact_resolver.py', 226, 'python').
 project_file('urisys-node/packages/python/urisysnode/cli.py', 171, 'python').
 project_file('urisys-node/packages/python/urisysnode/client.py', 93, 'python').
-project_file('urisys-node/packages/python/urisysnode/env.py', 23, 'python').
+project_file('urisys-node/packages/python/urisysnode/env.py', 6, 'python').
 project_file('urisys-node/packages/python/urisysnode/handlers.py', 42, 'python').
 project_file('urisys-node/packages/python/urisysnode/identity.py', 111, 'python').
 project_file('urisys-node/packages/python/urisysnode/router.py', 48, 'python').
 project_file('urisys-node/packages/python/urisysnode/routes.py', 20, 'python').
-project_file('urisys-node/packages/python/urisysnode/runtime.py', 166, 'python').
+project_file('urisys-node/packages/python/urisysnode/runtime.py', 6, 'python').
 project_file('urisys-node/packages/python/urisysnode/serve.py', 108, 'python').
 project_file('urisys-node/scripts/install-linux.sh', 17, 'shell').
 project_file('urisys-node/tests/test_artifact_resolver.py', 70, 'python').
@@ -299,11 +279,6 @@ python_function('uribrowser-docker/packages/python/uribrowserdocker/handlers.py'
 python_function('uribrowser-docker/packages/python/uribrowserdocker/routes.py', 'register', 1, 1, 1).
 python_function('uribrowser-docker/packages/python/uribrowseredge/cli.py', 'build_runtime', 1, 2, 5).
 python_function('uribrowser-docker/packages/python/uribrowseredge/cli.py', 'main', 1, 7, 14).
-python_function('uribrowser-docker/packages/python/uribrowseredge/runtime.py', 'load_json', 1, 3, 5).
-python_function('uribrowser-docker/packages/python/uribrowseredge/runtime.py', 'load_yaml_flow', 1, 10, 9).
-python_function('uribrowser-docker/packages/python/uribrowseredge/runtime.py', 'run_flow', 3, 7, 11).
-python_function('uribrowser-docker/packages/python/uribrowseredge/runtime.py', 'make_handler', 1, 1, 15).
-python_function('uribrowser-docker/packages/python/uribrowseredge/runtime.py', 'serve', 3, 2, 4).
 python_function('uribrowser-docker/tests/test_browser.py', 'runtime', 0, 1, 2).
 python_function('uribrowser-docker/tests/test_browser.py', 'test_open_requires_approval', 0, 3, 2).
 python_function('uribrowser-docker/tests/test_browser.py', 'test_open_and_dom', 0, 4, 2).
@@ -346,34 +321,6 @@ python_function('urienv-docker/tests/test_urienv.py', 'test_non_allowlisted_var_
 python_function('urienv-docker/tests/test_urienv.py', 'test_secret_is_masked_but_not_revealed_without_gate', 1, 5, 4).
 python_function('urienv-docker/tests/test_urienv.py', 'test_secret_can_be_revealed_with_explicit_gate', 1, 3, 4).
 python_function('urienv-docker/tests/test_urienv.py', 'test_mutable_var_is_process_local', 1, 3, 4).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/cli.py', '_load_payload', 1, 3, 4).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/cli.py', '_registry_from_args', 1, 2, 2).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/cli.py', 'cmd_explain', 1, 1, 4).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/cli.py', 'cmd_call', 1, 2, 8).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/cli.py', 'cmd_list', 1, 2, 3).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/cli.py', 'cmd_projection_latest', 1, 1, 5).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/cli.py', 'cmd_projection_status', 1, 1, 5).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/cli.py', 'build_parser', 0, 1, 5).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/cli.py', 'main', 1, 1, 4).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/dispatcher.py', '_now_ms', 0, 1, 2).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/dispatcher.py', '_new_id', 1, 1, 1).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/event_store.py', 'dump_events', 1, 2, 1).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/parser.py', 'parse_uri', 1, 7, 9).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/parser.py', 'canonicalize_uri', 1, 1, 1).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/registry.py', '_pattern_body', 2, 2, 4).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/registry.py', '_compile_pattern', 2, 6, 10).
-python_function('urienv-docker/vendor/uricore/core/python/uri_control/registry.py', '_load_python_handler', 1, 6, 7).
-python_function('urienv-docker/vendor/uricore/examples/packs/browser_mock/handlers.py', 'open_page', 2, 6, 1).
-python_function('urienv-docker/vendor/uricore/examples/packs/browser_mock/handlers.py', 'get_dom', 2, 5, 1).
-python_function('urienv-docker/vendor/uricore/examples/packs/systemd_mock/handlers.py', 'unit_status', 2, 3, 1).
-python_function('urienv-docker/vendor/uricore/examples/packs/systemd_mock/handlers.py', 'unit_restart', 2, 2, 1).
-python_function('urienv-docker/vendor/uricore/tests/test_dispatcher.py', '_runtime', 0, 1, 3).
-python_function('urienv-docker/vendor/uricore/tests/test_dispatcher.py', 'test_command_requires_approval', 0, 4, 3).
-python_function('urienv-docker/vendor/uricore/tests/test_dispatcher.py', 'test_command_executes_when_approved', 0, 4, 3).
-python_function('urienv-docker/vendor/uricore/tests/test_dispatcher.py', 'test_query_does_not_require_approval', 0, 3, 2).
-python_function('urienv-docker/vendor/uricore/tests/test_parser.py', 'test_parse_custom_uri', 0, 7, 1).
-python_function('urienv-docker/vendor/uricore/tests/test_registry.py', 'test_registry_matches_browser_route', 0, 4, 2).
-python_function('urienv-docker/vendor/uricore/tests/test_registry.py', 'test_registry_explain', 0, 4, 2).
 python_function('urikvm-docker/packages/python/urihim/handlers.py', '_state', 1, 1, 1).
 python_function('urikvm-docker/packages/python/urihim/handlers.py', '_driver', 1, 1, 1).
 python_function('urikvm-docker/packages/python/urihim/handlers.py', '_real_allowed', 1, 2, 2).
@@ -393,17 +340,6 @@ python_function('urikvm-docker/packages/python/urikvm/handlers.py', 'type_text',
 python_function('urikvm-docker/packages/python/urikvm/routes.py', 'register', 1, 1, 1).
 python_function('urikvm-docker/packages/python/urikvmedge/cli.py', 'build_runtime', 1, 6, 6).
 python_function('urikvm-docker/packages/python/urikvmedge/cli.py', 'main', 1, 7, 15).
-python_function('urikvm-docker/packages/python/urikvmedge/env.py', 'load_urisys_env', 0, 7, 11).
-python_function('urikvm-docker/packages/python/urikvmedge/env.py', '_env_policy_candidates', 0, 2, 5).
-python_function('urikvm-docker/packages/python/urikvmedge/env.py', 'load_env_policy', 0, 6, 5).
-python_function('urikvm-docker/packages/python/urikvmedge/env.py', '_env_config', 1, 7, 2).
-python_function('urikvm-docker/packages/python/urikvmedge/env.py', 'resolve_env_var', 2, 11, 8).
-python_function('urikvm-docker/packages/python/urikvmedge/env.py', 'is_secret_env', 1, 1, 1).
-python_function('urikvm-docker/packages/python/urikvmedge/runtime.py', 'load_json', 1, 3, 5).
-python_function('urikvm-docker/packages/python/urikvmedge/runtime.py', 'load_yaml_flow', 1, 10, 9).
-python_function('urikvm-docker/packages/python/urikvmedge/runtime.py', 'run_flow', 3, 7, 11).
-python_function('urikvm-docker/packages/python/urikvmedge/runtime.py', 'make_handler', 1, 1, 15).
-python_function('urikvm-docker/packages/python/urikvmedge/runtime.py', 'serve', 3, 2, 4).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_llm_cfg', 1, 1, 1).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_driver', 1, 1, 2).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_goal_text', 1, 4, 2).
@@ -507,18 +443,6 @@ python_function('urirdp-docker/packages/python/urirdp_shell/handlers.py', 'shell
 python_function('urirdp-docker/packages/python/urirdp_shell/routes.py', 'register', 1, 1, 1).
 python_function('urirdp-docker/packages/python/urirdpedge/cli.py', 'build_runtime', 1, 10, 7).
 python_function('urirdp-docker/packages/python/urirdpedge/cli.py', 'main', 1, 8, 16).
-python_function('urirdp-docker/packages/python/urirdpedge/env.py', 'load_urisys_env', 0, 8, 12).
-python_function('urirdp-docker/packages/python/urirdpedge/env.py', '_env_policy_candidates', 0, 2, 5).
-python_function('urirdp-docker/packages/python/urirdpedge/env.py', 'load_env_policy', 0, 6, 5).
-python_function('urirdp-docker/packages/python/urirdpedge/env.py', '_env_config', 1, 7, 2).
-python_function('urirdp-docker/packages/python/urirdpedge/env.py', 'resolve_env_var', 2, 11, 8).
-python_function('urirdp-docker/packages/python/urirdpedge/env.py', 'is_secret_env', 1, 1, 1).
-python_function('urirdp-docker/packages/python/urirdpedge/runtime.py', '_result_ok', 1, 5, 2).
-python_function('urirdp-docker/packages/python/urirdpedge/runtime.py', 'load_json', 1, 3, 5).
-python_function('urirdp-docker/packages/python/urirdpedge/runtime.py', 'load_yaml_flow', 1, 14, 16).
-python_function('urirdp-docker/packages/python/urirdpedge/runtime.py', 'run_flow', 3, 7, 11).
-python_function('urirdp-docker/packages/python/urirdpedge/runtime.py', 'make_handler', 1, 1, 15).
-python_function('urirdp-docker/packages/python/urirdpedge/runtime.py', 'serve', 3, 2, 4).
 python_function('urirdp-docker/tests/test_env_browser_routes.py', 'test_env_and_browser_routes_registered', 0, 5, 2).
 python_function('urirdp-docker/tests/test_env_browser_routes.py', 'test_env_health_call', 0, 3, 3).
 python_function('urirdp-docker/tests/test_env_browser_routes.py', 'test_browser_lab_alias_open_and_dom', 0, 6, 4).
@@ -544,24 +468,22 @@ python_function('uristepper-docker/packages/python/uristepper/handlers.py', 'sto
 python_function('uristepper-docker/packages/python/uristepper/handlers.py', 'move_relative', 2, 3, 8).
 python_function('uristepper-docker/packages/python/uristepper/handlers.py', 'move_absolute', 2, 2, 7).
 python_function('uristepper-docker/packages/python/uristepper/handlers.py', 'home', 2, 2, 5).
-python_function('uristepper-docker/packages/python/urisysedge/cli.py', '_json_arg', 1, 3, 4).
-python_function('uristepper-docker/packages/python/urisysedge/cli.py', 'cmd_call', 1, 4, 6).
-python_function('uristepper-docker/packages/python/urisysedge/cli.py', 'cmd_explain', 1, 1, 4).
-python_function('uristepper-docker/packages/python/urisysedge/cli.py', 'cmd_routes', 1, 1, 4).
-python_function('uristepper-docker/packages/python/urisysedge/cli.py', 'cmd_events', 1, 1, 4).
-python_function('uristepper-docker/packages/python/urisysedge/cli.py', 'cmd_flow', 1, 12, 17).
-python_function('uristepper-docker/packages/python/urisysedge/cli.py', 'cmd_serve', 1, 1, 1).
-python_function('uristepper-docker/packages/python/urisysedge/cli.py', 'main', 1, 1, 7).
-python_function('uristepper-docker/packages/python/urisysedge/runtime.py', 'load_json', 1, 1, 3).
-python_function('uristepper-docker/packages/python/urisysedge/runtime.py', 'build_runtime', 2, 6, 7).
-python_function('uristepper-docker/packages/python/urisysedge/server.py', 'make_handler', 1, 1, 20).
-python_function('uristepper-docker/packages/python/urisysedge/server.py', 'serve', 4, 1, 5).
+python_function('uristepper-docker/packages/python/uristepperedge/cli.py', '_json_arg', 1, 3, 4).
+python_function('uristepper-docker/packages/python/uristepperedge/cli.py', 'cmd_call', 1, 4, 6).
+python_function('uristepper-docker/packages/python/uristepperedge/cli.py', 'cmd_explain', 1, 1, 4).
+python_function('uristepper-docker/packages/python/uristepperedge/cli.py', 'cmd_routes', 1, 1, 4).
+python_function('uristepper-docker/packages/python/uristepperedge/cli.py', 'cmd_events', 1, 1, 4).
+python_function('uristepper-docker/packages/python/uristepperedge/cli.py', 'cmd_flow', 1, 12, 17).
+python_function('uristepper-docker/packages/python/uristepperedge/cli.py', 'cmd_serve', 1, 1, 1).
+python_function('uristepper-docker/packages/python/uristepperedge/cli.py', 'main', 1, 1, 7).
+python_function('uristepper-docker/packages/python/uristepperedge/runtime.py', 'load_json', 1, 1, 3).
+python_function('uristepper-docker/packages/python/uristepperedge/runtime.py', 'build_runtime', 2, 6, 7).
+python_function('uristepper-docker/packages/python/uristepperedge/server.py', 'make_handler', 1, 1, 20).
+python_function('uristepper-docker/packages/python/uristepperedge/server.py', 'serve', 4, 1, 5).
 python_function('uristepper-docker/tests/e2e.py', 'post', 2, 1, 7).
 python_function('uristepper-docker/tests/e2e.py', 'get', 1, 1, 4).
 python_function('uristepper-docker/tests/e2e.py', 'assert_ok', 2, 2, 4).
 python_function('uristepper-docker/tests/e2e.py', 'main', 0, 3, 7).
-python_function('urisys-automation-lab/packages/python/labedge/runtime.py', '_result_ok', 1, 5, 2).
-python_function('urisys-automation-lab/packages/python/labedge/runtime.py', 'load_json', 1, 3, 4).
 python_function('urisys-automation-lab/packages/python/urichat/handlers.py', '_match_transcript', 1, 4, 3).
 python_function('urisys-automation-lab/packages/python/urichat/handlers.py', '_forward_uri', 4, 2, 9).
 python_function('urisys-automation-lab/packages/python/urichat/handlers.py', 'message_send', 2, 2, 2).
@@ -579,15 +501,13 @@ python_function('urisys-automation-lab/packages/python/uriwebrtc/routes.py', 're
 python_function('urisys-automation-lab/server/automation_lab_server.py', 'build_lab_runtime', 1, 16, 11).
 python_function('urisys-automation-lab/server/automation_lab_server.py', 'forward_uri_call', 4, 4, 9).
 python_function('urisys-automation-lab/server/automation_lab_server.py', 'serve', 2, 4, 8).
-python_function('urisys-automation-lab/server/flow_runner.py', '_as_list', 1, 5, 4).
-python_function('urisys-automation-lab/server/flow_runner.py', '_parse_step', 1, 9, 11).
-python_function('urisys-automation-lab/server/flow_runner.py', '_load_flow_document', 1, 11, 10).
-python_function('urisys-automation-lab/server/flow_runner.py', '_node_id', 2, 4, 5).
-python_function('urisys-automation-lab/server/flow_runner.py', '_expand_graph', 1, 8, 4).
-python_function('urisys-automation-lab/server/flow_runner.py', '_topo_sort', 1, 15, 5).
-python_function('urisys-automation-lab/server/flow_runner.py', 'plan_flow', 1, 2, 5).
-python_function('urisys-automation-lab/server/flow_runner.py', '_step_ok', 1, 9, 3).
-python_function('urisys-automation-lab/server/flow_runner.py', 'run_flow_file', 1, 17, 11).
+python_function('urisys-automation-lab/server/flow_runner.py', '_require_uri_stack', 0, 2, 1).
+python_function('urisys-automation-lab/server/flow_runner.py', '_load_defaults', 1, 5, 6).
+python_function('urisys-automation-lab/server/flow_runner.py', '_lab_adapter_session', 0, 1, 3).
+python_function('urisys-automation-lab/server/flow_runner.py', 'plan_flow', 1, 2, 7).
+python_function('urisys-automation-lab/server/flow_runner.py', '_legacy_step', 4, 7, 3).
+python_function('urisys-automation-lab/server/flow_runner.py', 'run_flow_file', 1, 13, 17).
+python_function('urisys-automation-lab/server/lab_uri_adapter.py', 'step_ok', 1, 9, 3).
 python_function('urisys-automation-lab/tests/test_lab_handlers.py', '_rt', 0, 1, 2).
 python_function('urisys-automation-lab/tests/test_lab_handlers.py', 'test_stt_session_and_transcript', 0, 4, 3).
 python_function('urisys-automation-lab/tests/test_lab_handlers.py', 'test_chat_uri_execute_dry_run', 0, 4, 2).
@@ -619,7 +539,6 @@ python_function('urisys-node/packages/python/urisysnode/cli.py', 'main', 1, 16, 
 python_function('urisys-node/packages/python/urisysnode/client.py', 'discover_mdns', 1, 2, 12).
 python_function('urisys-node/packages/python/urisysnode/client.py', 'remote_call', 4, 3, 8).
 python_function('urisys-node/packages/python/urisysnode/client.py', 'call_via_route_map', 1, 6, 12).
-python_function('urisys-node/packages/python/urisysnode/env.py', 'load_urisys_env', 0, 8, 12).
 python_function('urisys-node/packages/python/urisysnode/handlers.py', 'query_health', 2, 1, 1).
 python_function('urisys-node/packages/python/urisysnode/handlers.py', 'query_identity', 2, 2, 4).
 python_function('urisys-node/packages/python/urisysnode/handlers.py', 'command_indicator_on', 2, 1, 3).
@@ -642,7 +561,6 @@ python_function('urisys-node/packages/python/urisysnode/router.py', 'resolve_rem
 python_function('urisys-node/packages/python/urisysnode/router.py', 'rewrite_uri_for_slave', 3, 6, 4).
 python_function('urisys-node/packages/python/urisysnode/router.py', 'node_endpoint', 2, 5, 1).
 python_function('urisys-node/packages/python/urisysnode/routes.py', 'register', 1, 1, 1).
-python_function('urisys-node/packages/python/urisysnode/runtime.py', 'load_json', 1, 3, 4).
 python_function('urisys-node/packages/python/urisysnode/serve.py', '_extend_pack_paths', 0, 4, 5).
 python_function('urisys-node/packages/python/urisysnode/serve.py', 'build_runtime', 1, 11, 10).
 python_function('urisys-node/packages/python/urisysnode/serve.py', 'make_handler', 1, 1, 19).
@@ -663,7 +581,8 @@ python_method('Route', 'compile', 0, 3, 6).
 python_method('Route', 'match', 1, 5, 5).
 python_class('packages/python/urisysedge/runtime.py', 'JsonlEventStore').
 python_method('JsonlEventStore', '__init__', 1, 2, 2).
-python_method('JsonlEventStore', 'append', 1, 1, 3).
+python_method('JsonlEventStore', 'append', 1, 1, 9).
+python_method('JsonlEventStore', 'tail', 1, 4, 5).
 python_class('packages/python/urisysedge/runtime.py', 'Runtime').
 python_method('Runtime', '__init__', 2, 2, 1).
 python_method('Runtime', 'register', 2, 2, 4).
@@ -759,90 +678,6 @@ python_method('SourceManager', '_fetch_github_uri', 1, 4, 6).
 python_method('SourceManager', '_fetch_github_raw', 4, 6, 13).
 python_method('SourceManager', '_fetch_git', 1, 11, 18).
 python_method('SourceManager', '_fetch_zip', 1, 10, 17).
-python_class('uribrowser-docker/packages/python/uribrowseredge/runtime.py', 'Route').
-python_method('Route', 'compile', 0, 3, 6).
-python_method('Route', 'match', 1, 4, 5).
-python_class('uribrowser-docker/packages/python/uribrowseredge/runtime.py', 'JsonlEventStore').
-python_method('JsonlEventStore', '__init__', 1, 2, 2).
-python_method('JsonlEventStore', 'append', 1, 1, 3).
-python_class('uribrowser-docker/packages/python/uribrowseredge/runtime.py', 'Runtime').
-python_method('Runtime', '__init__', 2, 2, 1).
-python_method('Runtime', 'register', 2, 2, 4).
-python_method('Runtime', 'resolve', 1, 3, 2).
-python_method('Runtime', '_load_handler', 1, 2, 5).
-python_method('Runtime', 'call', 3, 8, 12).
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/dispatcher.py', 'UriControlRuntime').
-python_method('UriControlRuntime', '__init__', 0, 3, 2).
-python_method('UriControlRuntime', 'call', 3, 10, 10).
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/errors.py', 'UriControlError').
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/errors.py', 'UriParseError').
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/errors.py', 'RegistryError').
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/errors.py', 'RouteNotFoundError').
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/errors.py', 'HandlerLoadError').
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/errors.py', 'PolicyDeniedError').
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/event_store.py', 'EventStore').
-python_method('EventStore', 'append', 1, 1, 0).
-python_method('EventStore', 'read_all', 0, 6, 0).
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/event_store.py', 'InMemoryEventStore').
-python_method('InMemoryEventStore', '__init__', 0, 1, 0).
-python_method('InMemoryEventStore', 'append', 1, 1, 1).
-python_method('InMemoryEventStore', 'read_all', 0, 6, 1).
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/event_store.py', 'JsonlEventStore').
-python_method('JsonlEventStore', '__init__', 1, 1, 2).
-python_method('JsonlEventStore', 'append', 1, 1, 4).
-python_method('JsonlEventStore', 'read_all', 0, 6, 8).
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/models.py', 'ParsedUri').
-python_method('ParsedUri', 'body', 0, 4, 1).
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/models.py', 'Route').
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/models.py', 'MatchedRoute').
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/models.py', 'CapabilityManifest').
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/models.py', 'PolicyDecision').
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/models.py', 'EventEnvelope').
-python_method('EventEnvelope', 'to_dict', 0, 3, 0).
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/models.py', 'DispatchResult').
-python_method('DispatchResult', 'to_dict', 0, 3, 1).
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/policy.py', 'PolicyEngine').
-python_method('PolicyEngine', '__init__', 0, 2, 1).
-python_method('PolicyEngine', 'decide', 2, 9, 3).
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/projection.py', 'ProjectionBuilder').
-python_method('ProjectionBuilder', '__init__', 1, 1, 0).
-python_method('ProjectionBuilder', 'latest_by_source_uri', 0, 2, 2).
-python_method('ProjectionBuilder', 'status_by_source_uri', 0, 6, 4).
-python_method('ProjectionBuilder', 'events_by_type', 0, 2, 5).
-python_method('ProjectionBuilder', 'from_events', 1, 2, 3).
-python_class('urienv-docker/vendor/uricore/core/python/uri_control/registry.py', 'CapabilityRegistry').
-python_method('CapabilityRegistry', '__init__', 0, 1, 0).
-python_method('CapabilityRegistry', 'from_manifest_files', 2, 2, 2).
-python_method('CapabilityRegistry', 'manifests', 0, 1, 1).
-python_method('CapabilityRegistry', 'routes', 0, 2, 1).
-python_method('CapabilityRegistry', 'load_manifest_file', 1, 3, 6).
-python_method('CapabilityRegistry', 'load_manifest', 1, 21, 11).
-python_method('CapabilityRegistry', 'match', 1, 6, 8).
-python_method('CapabilityRegistry', 'explain', 1, 1, 1).
-python_class('urikvm-docker/packages/python/urikvmedge/runtime.py', 'Route').
-python_method('Route', 'compile', 0, 3, 6).
-python_method('Route', 'match', 1, 4, 5).
-python_class('urikvm-docker/packages/python/urikvmedge/runtime.py', 'JsonlEventStore').
-python_method('JsonlEventStore', '__init__', 1, 2, 2).
-python_method('JsonlEventStore', 'append', 1, 1, 3).
-python_class('urikvm-docker/packages/python/urikvmedge/runtime.py', 'Runtime').
-python_method('Runtime', '__init__', 2, 2, 1).
-python_method('Runtime', 'register', 2, 2, 4).
-python_method('Runtime', 'resolve', 1, 3, 2).
-python_method('Runtime', '_load_handler', 1, 2, 5).
-python_method('Runtime', 'call', 3, 10, 13).
-python_class('urirdp-docker/packages/python/urirdpedge/runtime.py', 'Route').
-python_method('Route', 'compile', 0, 3, 6).
-python_method('Route', 'match', 1, 5, 5).
-python_class('urirdp-docker/packages/python/urirdpedge/runtime.py', 'JsonlEventStore').
-python_method('JsonlEventStore', '__init__', 1, 2, 2).
-python_method('JsonlEventStore', 'append', 1, 1, 3).
-python_class('urirdp-docker/packages/python/urirdpedge/runtime.py', 'Runtime').
-python_method('Runtime', '__init__', 2, 2, 1).
-python_method('Runtime', 'register', 2, 2, 4).
-python_method('Runtime', 'resolve', 1, 3, 2).
-python_method('Runtime', '_load_handler', 1, 2, 5).
-python_method('Runtime', 'call', 3, 10, 14).
 python_class('urirdp-docker/tests/test_env_browser_routes.py', '_Args').
 python_class('urirdp-docker/tests/test_rdp_kvm.py', 'Args').
 python_class('uristepper-docker/packages/python/uristepper/drivers.py', 'StepperDriver').
@@ -877,16 +712,12 @@ python_method('RpiGpioStepDirDriver', 'disable', 3, 2, 2).
 python_method('RpiGpioStepDirDriver', 'stop', 3, 1, 0).
 python_method('RpiGpioStepDirDriver', 'move_relative', 6, 4, 9).
 python_method('RpiGpioStepDirDriver', 'home', 5, 1, 1).
-python_class('uristepper-docker/packages/python/urisysedge/runtime.py', 'UriError').
-python_class('uristepper-docker/packages/python/urisysedge/runtime.py', 'PolicyDenied').
-python_class('uristepper-docker/packages/python/urisysedge/runtime.py', 'Route').
+python_class('uristepper-docker/packages/python/uristepperedge/runtime.py', 'UriError').
+python_class('uristepper-docker/packages/python/uristepperedge/runtime.py', 'PolicyDenied').
+python_class('uristepper-docker/packages/python/uristepperedge/runtime.py', 'Route').
 python_method('Route', 'compile', 0, 1, 3).
 python_method('Route', 'match', 1, 3, 3).
-python_class('uristepper-docker/packages/python/urisysedge/runtime.py', 'JsonlEventStore').
-python_method('JsonlEventStore', '__init__', 1, 4, 2).
-python_method('JsonlEventStore', 'append', 1, 1, 9).
-python_method('JsonlEventStore', 'tail', 1, 4, 5).
-python_class('uristepper-docker/packages/python/urisysedge/runtime.py', 'StepperRuntime').
+python_class('uristepper-docker/packages/python/uristepperedge/runtime.py', 'StepperRuntime').
 python_method('StepperRuntime', '__init__', 3, 4, 3).
 python_method('StepperRuntime', 'explain', 1, 1, 2).
 python_method('StepperRuntime', 'list_routes', 0, 2, 0).
@@ -898,18 +729,6 @@ python_method('RuntimeTest', 'test_status', 0, 1, 3).
 python_method('RuntimeTest', 'test_policy_requires_approval', 0, 1, 3).
 python_method('RuntimeTest', 'test_move_relative', 0, 1, 3).
 python_method('RuntimeTest', 'test_safety_limit', 0, 1, 3).
-python_class('urisys-automation-lab/packages/python/labedge/runtime.py', 'Route').
-python_method('Route', 'compile', 0, 3, 6).
-python_method('Route', 'match', 1, 5, 5).
-python_class('urisys-automation-lab/packages/python/labedge/runtime.py', 'JsonlEventStore').
-python_method('JsonlEventStore', '__init__', 1, 2, 2).
-python_method('JsonlEventStore', 'append', 1, 1, 3).
-python_class('urisys-automation-lab/packages/python/labedge/runtime.py', 'Runtime').
-python_method('Runtime', '__init__', 2, 2, 1).
-python_method('Runtime', 'register', 2, 2, 4).
-python_method('Runtime', 'resolve', 1, 3, 2).
-python_method('Runtime', '_load_handler', 1, 2, 5).
-python_method('Runtime', 'call', 3, 8, 13).
 python_class('urisys-automation-lab/server/automation_lab_server.py', 'LabHandler').
 python_method('LabHandler', 'log_message', 1, 1, 2).
 python_method('LabHandler', '_json', 2, 1, 8).
@@ -917,22 +736,11 @@ python_method('LabHandler', '_read_json', 0, 4, 5).
 python_method('LabHandler', 'do_OPTIONS', 0, 1, 3).
 python_method('LabHandler', 'do_GET', 0, 9, 12).
 python_method('LabHandler', 'do_POST', 0, 23, 9).
+python_class('urisys-automation-lab/server/lab_uri_adapter.py', 'LabCallAdapter').
+python_method('LabCallAdapter', 'execute', 2, 8, 8).
 python_class('urisys-node/packages/python/urisysnode/artifact_resolver.py', '_GitHubHeaderAuth').
 python_method('_GitHubHeaderAuth', '__init__', 1, 1, 0).
 python_method('_GitHubHeaderAuth', 'https_request', 1, 1, 1).
-python_class('urisys-node/packages/python/urisysnode/runtime.py', 'Route').
-python_method('Route', 'compile', 0, 3, 6).
-python_method('Route', 'match', 1, 5, 5).
-python_class('urisys-node/packages/python/urisysnode/runtime.py', 'JsonlEventStore').
-python_method('JsonlEventStore', '__init__', 1, 2, 2).
-python_method('JsonlEventStore', 'append', 1, 1, 3).
-python_method('JsonlEventStore', 'tail', 1, 4, 5).
-python_class('urisys-node/packages/python/urisysnode/runtime.py', 'Runtime').
-python_method('Runtime', '__init__', 2, 2, 1).
-python_method('Runtime', 'register', 2, 2, 4).
-python_method('Runtime', 'resolve', 1, 3, 2).
-python_method('Runtime', '_load_handler', 1, 2, 5).
-python_method('Runtime', 'call', 3, 8, 12).
 
 % ── Dependencies ─────────────────────────────────────────
 
@@ -949,6 +757,7 @@ env_variable('PFIX_AUTO_RESTART', 'false', 'true = os.execv restart after fix').
 env_variable('PFIX_MAX_RETRIES', '3', '').
 env_variable('PFIX_DRY_RUN', 'false', '').
 env_variable('PFIX_ENABLED', 'true', '').
+env_variable('PIP_DISABLE_PIP_VERSION_CHECK', '1', 'Quiet pip in venv/scripts (suppress "new release of pip" notices)').
 env_variable('PFIX_GIT_COMMIT', 'false', 'true = auto-commit fixes').
 env_variable('PFIX_GIT_PREFIX', 'pfix:', 'commit message prefix').
 env_variable('PFIX_CREATE_BACKUPS', 'false', 'false = disable .pfix_backups/ directory').

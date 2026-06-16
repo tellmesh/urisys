@@ -10,7 +10,7 @@ from .runtime import UriError, build_runtime
 
 def make_handler(runtime):
     class Handler(BaseHTTPRequestHandler):
-        server_version = "urisys-edge-stepper/0.1"
+        server_version = "uristepper-edge/0.1"
 
         def _json(self, status: int, data: dict):
             body = json.dumps(data, ensure_ascii=False, indent=2).encode("utf-8")
@@ -29,7 +29,10 @@ def make_handler(runtime):
         def do_GET(self):
             path = urlparse(self.path).path
             if path == "/health":
-                return self._json(200, {"ok": True, "service": "uristepper-docker", "node": os.environ.get("URISYS_NODE_ID", "stepper-node")})
+                return self._json(
+                    200,
+                    {"ok": True, "service": "uristepper-docker", "node": os.environ.get("URISYS_NODE_ID", "stepper-node")},
+                )
             if path == "/routes":
                 return self._json(200, {"ok": True, "routes": runtime.list_routes()})
             if path == "/events":
@@ -58,7 +61,7 @@ def make_handler(runtime):
 
             return self._json(404, {"ok": False, "error": "not_found"})
 
-        def log_message(self, fmt, *args):  # keep docker logs readable
+        def log_message(self, fmt, *args):
             print("[http] " + fmt % args)
 
     return Handler
@@ -67,5 +70,5 @@ def make_handler(runtime):
 def serve(host: str = "0.0.0.0", port: int = 8790, device_profile: str | None = None, events_path: str | None = None):
     runtime = build_runtime(device_profile, events_path)
     httpd = ThreadingHTTPServer((host, port), make_handler(runtime))
-    print(f"urisys-edge stepper listening on http://{host}:{port}")
+    print(f"uristepper-edge listening on http://{host}:{port}")
     httpd.serve_forever()

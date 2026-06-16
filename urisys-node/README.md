@@ -91,3 +91,8 @@ Master tłumaczy `screen://slave-01/...` → `screen://local/...` na endpoincie 
 - [`urisys-automation-lab`](../urisys-automation-lab/) — demo UI + docker stack
 - [`urirdp-docker`](../urirdp-docker/) — RDP container (inny use case — izolowany pulpit)
 - [`urienv-docker`](../urienv-docker/) — `env://` secrets (może być pack w node)
+
+
+## License
+
+Licensed under Apache-2.0.

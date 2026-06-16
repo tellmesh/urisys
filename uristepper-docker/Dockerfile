@@ -9,7 +9,8 @@ ENV PYTHONUNBUFFERED=1 \
     URISYS_NODE_ID=uristepper-docker
 
 WORKDIR /app
-COPY . /app
+COPY packages/python/urisysedge ./packages/python/urisysedge
+COPY uristepper-docker/ .
 RUN mkdir -p /data
 EXPOSE 8790
-CMD ["python", "-m", "urisysedge", "serve", "--host", "0.0.0.0", "--port", "8790"]
+CMD ["python", "-m", "uristepperedge", "serve", "--host", "0.0.0.0", "--port", "8790"]
