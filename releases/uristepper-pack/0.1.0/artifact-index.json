@@ -16,8 +16,8 @@
         "mock-stepper",
         "uri-process"
       ],
-      "ref": "localhost:5000/stepper-axis-control@sha256:c3ebe49f51544a3200e3f2f530ff20816bec62c8608954161c25a18e51f202b1",
-      "tag": "localhost:5000/stepper-axis-control:0.1.0-linux-amd64-mock"
+      "ref": "ghcr.io/tellmesh/stepper-axis-control@sha256:8d8b3630fe74693b6f38b08b3b93c5acb20bbff88f79647fbe01a405c73ce437",
+      "tag": "ghcr.io/tellmesh/stepper-axis-control:0.1.0-linux-amd64-mock"
     }
   ]
 }
