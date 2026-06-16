@@ -5,9 +5,9 @@ from pathlib import Path
 from urisys.controllers.uri_controller import UriController
 from urisys.managers.markpact_manager import MarkpactManager
 
-ROOT = Path(__file__).resolve().parents[2]
-BROWSER_MARKPACT = ROOT / "urisys" / "markpacts" / "packs" / "uribrowser.markpact.md"
-SYSTEMD_MARKPACT = ROOT / "urisys" / "markpacts" / "packs" / "urisystemd.markpact.md"
+ROOT = Path(__file__).resolve().parents[1]
+BROWSER_MARKPACT = ROOT / "markpacts" / "packs" / "uribrowser.markpact.md"
+SYSTEMD_MARKPACT = ROOT / "markpacts" / "packs" / "urisystemd.markpact.md"
 
 
 def test_markpact_validate():

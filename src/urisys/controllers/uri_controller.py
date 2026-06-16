@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from ..defaults import DEFAULT_ENVIRONMENT
 from ..managers.policy_manager import PolicyManager
 from ..managers.route_manager import RouteManager
 from ..managers.runtime_manager import RuntimeManager
@@ -12,7 +13,7 @@ class UriController:
         self.policy_manager = PolicyManager()
         self.route_manager = RouteManager(self.runtime)
 
-    def call(self, uri: str, payload=None, *, approved=False, dry_run=False, allow_real=False, environment="mock", context=None) -> dict:
+    def call(self, uri: str, payload=None, *, approved=False, dry_run=False, allow_real=False, environment=DEFAULT_ENVIRONMENT, context=None) -> dict:
         ctx = self.policy_manager.build_context(
             approved=approved,
             dry_run=dry_run,

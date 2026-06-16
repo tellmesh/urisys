@@ -6,11 +6,13 @@ from pathlib import Path
 
 from uri_control import CapabilityRegistry
 
+from .defaults import DEFAULT_ENVIRONMENT
 from .controllers.flow_controller import FlowController
 from .controllers.server_controller import ServerController
 from .controllers.uri_controller import UriController
 from .managers.event_manager import EventManager
 from .managers.markpact_manager import MarkpactManager, MarkpactError
+from .managers.source_manager import SourceManager, SourceError
 
 
 def _json_arg(value: str | None) -> dict:
@@ -29,7 +31,12 @@ def _add_runtime_flags(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--approve", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--allow-real", action="store_true")
-    parser.add_argument("--environment", default="mock")
+    parser.add_argument("--environment", default=DEFAULT_ENVIRONMENT)
+
+
+def resolve_markpact_source(source: str, *, source_manager: SourceManager | None = None) -> str:
+    manager = source_manager or SourceManager()
+    return str(manager.resolve(source))
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -58,10 +65,14 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--host", default="127.0.0.1")
     p.add_argument("--port", type=int, default=8789)
 
-    p = sub.add_parser("markpact", help="Validate, compile and test one-file UriPack Markpacts.")
+    p = sub.add_parser("markpact", help="Validate, compile, fetch and test one-file UriPack Markpacts.")
     msub = p.add_subparsers(dest="markpact_command", required=True)
 
-    p_validate = msub.add_parser("validate", help="Validate a Markpact file.")
+    p_fetch = msub.add_parser("fetch", help="Fetch a Markpact from file/HTTP/GitHub/git/ZIP and cache it locally.")
+    p_fetch.add_argument("source")
+    p_fetch.add_argument("--force", action="store_true")
+
+    p_validate = msub.add_parser("validate", help="Validate a Markpact file or remote source.")
     p_validate.add_argument("path")
 
     p_compile = msub.add_parser("compile", help="Compile Markpact to cached runtime manifest and handlers.")
@@ -85,16 +96,21 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         if args.command == "markpact":
+            source_manager = SourceManager(cache_root=(Path(args.out) / "sources") if getattr(args, "out", None) else ".urisys/cache/sources")
             manager = MarkpactManager(cache_root=args.out) if getattr(args, "out", None) else MarkpactManager()
+            if args.markpact_command == "fetch":
+                print_json(source_manager.fetch(args.source, force=args.force))
+                return 0
+            local_path = resolve_markpact_source(args.path, source_manager=source_manager)
             if args.markpact_command == "validate":
-                print_json(manager.validate(args.path))
+                print_json(manager.validate(local_path))
                 return 0
             if args.markpact_command == "compile":
-                compiled = manager.compile(args.path, out_dir=args.out, force=args.force)
+                compiled = manager.compile(local_path, out_dir=args.out, force=args.force)
                 print_json({"ok": True, "compiled": compiled.to_dict()})
                 return 0
             if args.markpact_command == "routes":
-                compiled = manager.compile(args.path, out_dir=args.out)
+                compiled = manager.compile(local_path, out_dir=args.out)
                 registry = CapabilityRegistry.from_manifest_files([compiled.manifest_path])
                 print_json({
                     "ok": True,
@@ -115,7 +131,7 @@ def main(argv: list[str] | None = None) -> int:
                 })
                 return 0
             if args.markpact_command == "test":
-                print_json(manager.run_tests(args.path, events_path=args.events))
+                print_json(manager.run_tests(local_path, events_path=args.events))
                 return 0
 
         if args.command == "serve":
@@ -150,6 +166,9 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     except MarkpactError as exc:
         print_json({"ok": False, "error": str(exc), "type": "markpact_error"})
+        return 2
+    except SourceError as exc:
+        print_json({"ok": False, "error": str(exc), "type": "source_error"})
         return 2
 
 

@@ -5,6 +5,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse
 
 from .controllers.uri_controller import UriController
+from .defaults import DEFAULT_ENVIRONMENT
 from .managers.event_manager import EventManager
 
 
@@ -59,7 +60,7 @@ def create_server(host: str, port: int, *, packs="all", markpacts=None, events_p
                         approved=bool(context.get("approved")),
                         dry_run=bool(context.get("dry_run")),
                         allow_real=bool(context.get("allow_real")),
-                        environment=str(context.get("environment", "mock")),
+                        environment=str(context.get("environment", DEFAULT_ENVIRONMENT)),
                         context=context,
                     )
                     _send(self, 200 if result.get("ok") else 400, result)

@@ -15,3 +15,4 @@ DEFAULT_PACKAGES = {
 }
 
 DEFAULT_EVENTS_PATH = "output/urisys-events.jsonl"
+DEFAULT_ENVIRONMENT = "real"

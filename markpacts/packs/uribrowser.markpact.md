@@ -40,7 +40,7 @@ policy:
   default: deny_mutations_without_approval
 
 runtime:
-  default_environment: mock
+  default_environment: real
   supports: [mock, local, docker]
 ```
 
@@ -90,7 +90,7 @@ tests:
     context:
       approved: true
       dry_run: true
-      environment: mock
+      environment: real
     expect:
       ok: true
       operation: open_page
@@ -101,7 +101,7 @@ tests:
   - id: browser_dom_query_success
     uri: browser://default/page/dom
     context:
-      environment: mock
+      environment: real
     expect:
       ok: true
       operation: get_dom

@@ -106,7 +106,7 @@ curl -X POST http://127.0.0.1:8789/uri/call \
   -d '{
     "uri": "systemd://unit/docker.service/query/status",
     "payload": {},
-    "context": {"environment": "mock"}
+    "context": {"environment": "real"}
   }'
 ```
 
@@ -129,7 +129,7 @@ Markpact z handlerem Python jest kodem wykonywalnym. Dlatego:
 
 1. Ładuj tylko pliki zaufane albo uruchamiaj je w sandboxie/kontenerze.
 2. Działania mutujące oznaczaj `side_effects: true` i `approval: required`.
-3. Realne operacje systemowe wykonuj dopiero z `--allow-real` lub własną polityką.
+3. Realne operacje systemowe są domyślne. Symulację włącz przez `--dry-run` lub `--environment mock`.
 4. Nie rób automatycznego `pip install` zależności z Markpact bez zgody.
 5. W produkcji używaj `urisys markpact compile` i uruchamiaj wygenerowany cache/artefakt.
 

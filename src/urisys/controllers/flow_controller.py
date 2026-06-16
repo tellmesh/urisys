@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from ..defaults import DEFAULT_ENVIRONMENT
 from ..flow import iter_steps, load_flow
 from .uri_controller import UriController
 
@@ -10,7 +11,7 @@ class FlowController:
     def __init__(self, packs="all", *, markpacts=None, events_path: str | None = None) -> None:
         self.uri_controller = UriController(packs=packs, markpacts=markpacts, events_path=events_path)
 
-    def run(self, path: str | Path, *, approved=False, dry_run=False, allow_real=False, environment="mock") -> dict:
+    def run(self, path: str | Path, *, approved=False, dry_run=False, allow_real=False, environment=DEFAULT_ENVIRONMENT) -> dict:
         flow = load_flow(path)
         defaults = flow.get("defaults") or {}
         results = []

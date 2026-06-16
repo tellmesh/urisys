@@ -55,7 +55,7 @@ flow:
 defaults:
   approved: true
   dry_run: true
-  environment: mock
+  environment: real
 
 do:
   - systemd://unit/docker.service/query/status

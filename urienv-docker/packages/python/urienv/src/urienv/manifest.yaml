@@ -1,0 +1,67 @@
+id: urienv
+version: 0.1.0
+scheme: env
+
+uri_patterns:
+  - pattern: env://runtime/query/health
+    kind: query
+    operation: health
+    handler: python://urienv.handlers:health
+    side_effects: false
+    approval: not_required
+
+  - pattern: env://runtime/query/list
+    kind: query
+    operation: list_vars
+    handler: python://urienv.handlers:list_vars
+    side_effects: false
+    approval: not_required
+
+  - pattern: env://runtime/config/query/startup
+    kind: query
+    operation: startup_config
+    handler: python://urienv.handlers:startup_config
+    side_effects: false
+    approval: not_required
+
+  - pattern: env://runtime/var/{name}/query/exists
+    kind: query
+    operation: var_exists
+    handler: python://urienv.handlers:var_exists
+    side_effects: false
+    approval: not_required
+
+  - pattern: env://runtime/var/{name}/query/value
+    kind: query
+    operation: var_value
+    handler: python://urienv.handlers:var_value
+    side_effects: false
+    approval: not_required
+
+  - pattern: env://runtime/secret/{name}/query/masked
+    kind: query
+    operation: secret_masked
+    handler: python://urienv.handlers:secret_masked
+    side_effects: false
+    approval: not_required
+
+  - pattern: env://runtime/secret/{name}/query/value
+    kind: query
+    operation: secret_value
+    handler: python://urienv.handlers:secret_value
+    side_effects: true
+    approval: required
+
+  - pattern: env://runtime/var/{name}/command/set
+    kind: command
+    operation: var_set
+    handler: python://urienv.handlers:var_set
+    side_effects: true
+    approval: required
+
+  - pattern: env://runtime/var/{name}/command/unset
+    kind: command
+    operation: var_unset
+    handler: python://urienv.handlers:var_unset
+    side_effects: true
+    approval: required

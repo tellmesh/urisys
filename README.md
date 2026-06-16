@@ -1,5 +1,18 @@
 # urisys
 
+
+## AI Cost Tracking
+
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.1-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$0.05-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-1.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+
+- 🤖 **LLM usage:** $0.0481 (2 commits)
+- 👤 **Human dev:** ~$100 (1.0h @ $100/h, 30min dedup)
+
+Generated on 2026-06-16 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
+
+---
+
 `urisys` jest centralnym runtime/controllerem dla URI control plane. Osobne paczki `uribrowser`, `uridocker`, `urisystemd` itd. (repo [`uri-packs`](../uri-packs)) dostarczają tylko `manifest.yaml` i handlery. Alternatywnie można używać jednoplikowych `UriPack Markpact`.
 
 Nie używamy już `uripacks-serve` ani `uripacks call`. CLI to:
@@ -71,6 +84,11 @@ POST /uri/explain
 
 ## Safe execution
 
-Handlery są mock/safe domyślnie. `--approve` jest wymagane dla mutacji. `--allow-real` lub `URISYS_ALLOW_REAL=1` jest wymagane, zanim handler wykona realne komendy OS/urządzenia.
+Domyślnie handlery działają w trybie **real** (`--environment real`). `--approve` jest wymagane dla mutacji. Aby wymusić symulację, użyj `--dry-run` lub `--environment mock`.
 
 Więcej: `docs/MARKPACT.md` i `docs/CLI.md`.
+
+
+## License
+
+Licensed under Apache-2.0.

@@ -26,7 +26,7 @@ capabilities:
     side_effects: true
     approval: required
 runtime:
-  default_environment: mock
+  default_environment: real
 ```
 
 ```python markpact:handler id=status
@@ -35,7 +35,7 @@ from __future__ import annotations
 
 def handle(payload, context):
     unit = (context.get("variables") or {}).get("unit", "unknown.service")
-    return {"ok": True, "unit": unit, "active_state": "active", "mode": "mock"}
+    return {"ok": True, "unit": unit, "active_state": "active", "mode": "mock" if context.get("environment") == "mock" else "real"}
 ```
 
 ```python markpact:handler id=restart
@@ -57,7 +57,7 @@ tests:
   - id: systemd_status
     uri: systemd://unit/docker.service/query/status
     context:
-      environment: mock
+      environment: real
     expect:
       ok: true
       operation: status
@@ -68,7 +68,7 @@ tests:
     context:
       approved: true
       dry_run: true
-      environment: mock
+      environment: real
     expect:
       ok: true
       operation: restart

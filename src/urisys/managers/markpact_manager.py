@@ -255,6 +255,7 @@ class MarkpactManager:
             return {"ok": True, "compiled": compiled.to_dict(), "tests": [], "message": "No markpact:tests block."}
 
         from ..controllers.uri_controller import UriController
+        from ..defaults import DEFAULT_ENVIRONMENT
 
         test_data = yaml.safe_load(compiled.tests_path.read_text(encoding="utf-8")) or {}
         tests = test_data.get("tests") or [] if isinstance(test_data, dict) else []
@@ -272,7 +273,7 @@ class MarkpactManager:
                     approved=bool(context.get("approved")),
                     dry_run=bool(context.get("dry_run")),
                     allow_real=bool(context.get("allow_real")),
-                    environment=str(context.get("environment", "mock")),
+                    environment=str(context.get("environment", DEFAULT_ENVIRONMENT)),
                     context=context,
                 )
                 ok = True

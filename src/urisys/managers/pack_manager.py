@@ -10,6 +10,7 @@ from uri_control import CapabilityRegistry
 
 from ..defaults import DEFAULT_PACKAGES
 from .markpact_manager import MarkpactManager
+from .source_manager import SourceManager
 
 
 class PackManager:
@@ -21,6 +22,7 @@ class PackManager:
         self._stack = ExitStack()
         self._manifest_paths: list[Path] = []
         self.markpact_manager = MarkpactManager()
+        self.source_manager = SourceManager()
 
     @staticmethod
     def parse_packs(packs: Iterable[str] | str | None) -> list[str]:
@@ -48,7 +50,9 @@ class PackManager:
         return DEFAULT_PACKAGES.get(spec, spec)
 
     def _is_markpact_path(self, spec: str) -> bool:
-        return spec.endswith(".markpact.md") or spec.endswith(".markpact")
+        if spec.endswith(".markpact.md") or spec.endswith(".markpact"):
+            return True
+        return self.source_manager.is_remote_source(spec)
 
     def _is_manifest_path(self, spec: str) -> bool:
         return spec.endswith(".yaml") or spec.endswith(".yml") or "/" in spec or "\\" in spec
@@ -59,7 +63,8 @@ class PackManager:
         paths: list[Path] = []
         for spec in self.pack_specs:
             if self._is_markpact_path(spec):
-                paths.append(self.markpact_manager.manifest_path_for(spec))
+                local = self.source_manager.resolve(spec)
+                paths.append(self.markpact_manager.manifest_path_for(local))
                 continue
             if self._is_manifest_path(spec):
                 paths.append(Path(spec))
@@ -70,7 +75,8 @@ class PackManager:
             path = self._stack.enter_context(as_file(manifest))
             paths.append(Path(path))
         for spec in self.markpact_specs:
-            paths.append(self.markpact_manager.manifest_path_for(spec))
+            local = self.source_manager.resolve(spec)
+            paths.append(self.markpact_manager.manifest_path_for(local))
         self._manifest_paths = paths
         return paths
 
