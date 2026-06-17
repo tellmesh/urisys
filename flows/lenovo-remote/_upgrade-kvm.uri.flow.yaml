@@ -1,0 +1,71 @@
+flow:
+  id: lenovo-upgrade-kvm
+  description: Pre-flow-08 — hot-load kvm/him/ocr/llm/img2nl packs for human-like KVM-URI control.
+  target: lenovo
+
+defaults:
+  approved: true
+  allow_real: true
+
+do:
+  - id: install_kvm
+    uri: node://lenovo/command/install-pack
+    payload:
+      pack: kvm
+      install: true
+      force: true
+
+  - id: install_him
+    uri: node://lenovo/command/install-pack
+    payload:
+      pack: him
+      install: true
+      force: true
+
+  - id: install_ocr
+    uri: node://lenovo/command/install-pack
+    payload:
+      pack: ocr
+      install: true
+      force: true
+
+  - id: install_llm
+    uri: node://lenovo/command/install-pack
+    payload:
+      pack: llm
+      install: true
+      force: true
+
+  - id: pip_uriimg2nl
+    uri: shell://pip
+    payload:
+      args:
+        - install
+        - -U
+        - "{wheel:uriimg2nl}"
+
+  - id: install_img2nl
+    uri: node://lenovo/command/install-pack
+    payload:
+      pack: img2nl
+      install: true
+      force: true
+    note: Optional eyes pack — requires img2nl[analyze] on lenovo venv
+
+  - id: pip_img2nl_lib
+    uri: shell://pip
+    payload:
+      args:
+        - install
+        - -U
+        - "img2nl[analyze]>=0.1.0"
+    note: img2nl library (PyPI); uriimg2nl pack wraps it
+
+  - id: him_status
+    uri: him://lenovo/mouse/query/status
+
+  - id: kvm_monitors
+    uri: kvm://lenovo/monitor/query/list
+
+  - id: packs_after
+    uri: node://lenovo/query/packs

@@ -28,6 +28,9 @@ python3 scripts/lenovo_remote_session.py --extract-images output/test-sessions/l
 | `05-browser-linkedin-real.uri.flow.yaml` | system-open LinkedIn compose + screen + kv |
 | `06-browser-auth-probe.uri.flow.yaml` | Chrome LinkedIn cookie probe + kv + screen |
 | `07-playwright-linkedin.uri.flow.yaml` | Playwright + Chrome profile via out-of-process browser worker |
+| `08-kvm-linkedin.uri.flow.yaml` | **KVM-URI** — screen + kvm click-text + him keyboard + img2nl (no Playwright) |
+
+**Flow 08** is the human-like path: native browser (`system-open`), eyes (`screen://`, `kvm://` screenshot, optional `img2nl://`), hands (`him://`). Playwright (flow 07) remains a fallback for DOM-heavy pages.
 
 **Flow 07** no longer restarts the node. The `_upgrade-playwright` pre-flow pip-installs playwright/uribrowser and spawns the `browser` pack as an out-of-process **worker** (`node://lenovo/command/spawn-worker`); the router forwards `browser://` to it. Flow 07 likewise spawns a `kv` worker. Workers can be inspected/restarted/stopped independently:
 

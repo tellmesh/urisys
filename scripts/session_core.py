@@ -22,6 +22,8 @@ PACK_TO_WHEEL: dict[str, str] = {
     "browser": "uribrowser",
     "office": "urioffice",
     "mail": "urimail",
+    "uriimg2nl": "uriimg2nl",
+    "urisys_node": "urisys_node",
 }
 
 

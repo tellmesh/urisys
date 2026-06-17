@@ -38,8 +38,9 @@ Mapowanie w `urisysnode/pack_resolver.py`:
 | `him` | `him://` | `urihim` | GitHub (auto) |
 | `ocr` | `ocr://` | `uriocr` | GitHub (auto) |
 | `llm` | `llm://` | `urillm` | GitHub (auto) |
-
-**Nowy schemat (np. `imgl://`) nie działa out-of-the-box** — trzeba dodać wpis w `PACK_MODULES` i `SCHEME_TO_PACK` (lub użyć forward workera).
+| `img2nl` | `img2nl://` | `uriimg2nl` | tellmesh + `pip install img2nl[analyze]` |
+| `vql` | `vql://` | `urivql` | GitHub (auto) |
+| `browser` | `browser://` | `uribrowserdocker` | GitHub (auto) | — trzeba dodać wpis w `PACK_MODULES` i `SCHEME_TO_PACK` (lub użyć forward workera).
 
 ## Kontrakt packa in-process
 
@@ -174,12 +175,13 @@ loginctl enable-linger "$USER"   # node bez aktywnej sesji GUI
 | Repo | Schemat | Rola w pipeline | Integracja |
 |------|---------|-------------------|------------|
 | [semcod/imgl](https://github.com/semcod/imgl) | `imgl://` | layout + OCR + click targets | forward `rest2imgl` lub `uriimgl` in-process |
+| [wronai/img2nl](https://github.com/wronai/img2nl) | `img2nl://` | screenshot → UI targets + click (`uriimg2nl` pack) | `pip install uriimg2nl[real]` + hot-load |
 | [oqlos/vql](https://github.com/oqlos/vql) | `vql://` | UI detect, fingerprint, compare | forward `rest2vql` lub pack po `screen://` |
 
 Rekomendowany pipeline:
 
 ```text
-screen://  →  imgl:// (layout)  →  him:// (click/type)
+screen://  →  img2nl:// / imgl:// (layout)  →  him:// (click/type)
               vql:// (compare)     opcjonalna weryfikacja UI
 ```
 

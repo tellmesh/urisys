@@ -1,0 +1,75 @@
+flow:
+  id: lenovo-08-kvm-linkedin
+  description: >-
+    KVM-URI LinkedIn compose — eyes (screen/img2nl/kvm), hands (him), no Playwright.
+    Opens native browser, clicks compose via kvm://click-text, types via him://keyboard.
+  target: lenovo
+  requires:
+    - upgrade: flows/lenovo-remote/_upgrade-kvm.uri.flow.yaml
+
+defaults:
+  approved: true
+  dry_run: false
+  allow_real: true
+
+do:
+  - id: ensure_kv_worker
+    uri: node://lenovo/command/spawn-worker
+    payload:
+      pack: kv
+      install: true
+    note: kv:// for session record (idempotent)
+
+  - id: browser_open_feed
+    uri: browser://linkedin/social/command/publish-post
+    payload:
+      platform: linkedin
+      driver: system-open
+      text: ""
+    note: Native browser on lenovo desktop — human-visible window
+
+  - id: screen_feed
+    uri: screen://lenovo/monitor/1/query/frame
+    note: Eyes — capture desktop after browser open
+
+  - id: kvm_screenshot
+    uri: kvm://lenovo/monitor/primary/query/screenshot
+    note: Store PNG in runtime state for ocr/img2nl chain
+
+  - id: kvm_click_start_post
+    uri: kvm://lenovo/task/command/click-text
+    payload:
+      text: "Start a post"
+      skip_screenshot: true
+    note: kvm → ocr → llm → him click (human-like)
+
+  - id: screen_compose
+    uri: screen://lenovo/monitor/1/query/frame
+
+  - id: him_type_draft
+    uri: him://lenovo/keyboard/command/type
+    payload:
+      text: "urisys lenovo flow-08 — KVM-URI draft (screen + him, manual Post click)"
+    note: Hands — keyboard typing into compose editor
+
+  - id: screen_after_type
+    uri: screen://lenovo/monitor/1/query/frame
+
+  - id: img2nl_find_post
+    uri: img2nl://lenovo/image/latest/command/click
+    payload:
+      label: Post
+      execute_click: false
+    note: Eyes — locate Post button (dry-run click); submit manually on lenovo
+
+  - id: kv_record_kvm
+    uri: kv://session/key/linkedin-kvm/command/set
+    payload:
+      value:
+        flow: lenovo-08-kvm-linkedin
+        mode: kvm-uri
+        driver: screen+him+kvm
+      ttl: 86400
+
+  - id: workers_status
+    uri: node://lenovo/query/workers

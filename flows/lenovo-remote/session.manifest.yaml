@@ -13,6 +13,7 @@ wheels:
   urioffice: urioffice
   urimail: urimail
   urisys_node: urisys_node
+  uriimg2nl: uriimg2nl
 
 flows:
   - flows/lenovo-remote/01-health-probe.uri.flow.yaml
@@ -22,6 +23,7 @@ flows:
   - flows/lenovo-remote/05-browser-linkedin-real.uri.flow.yaml
   - flows/lenovo-remote/06-browser-auth-probe.uri.flow.yaml
   - flows/lenovo-remote/07-playwright-linkedin.uri.flow.yaml
+  - flows/lenovo-remote/08-kvm-linkedin.uri.flow.yaml
 
 replay:
   runner: python3 scripts/lenovo_remote_session.py

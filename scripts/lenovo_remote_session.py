@@ -205,7 +205,7 @@ def append_log(path: Path, line: str) -> None:
 def build_wheels(deploy_dir: Path) -> None:
     deploy_dir.mkdir(parents=True, exist_ok=True)
     tellmesh = ROOT.parent
-    for pkg in ("urikv", "uribrowser", "urioffice", "urimail", "urisys-node"):
+    for pkg in ("urikv", "uribrowser", "urioffice", "urimail", "uriimg2nl", "urisys-node"):
         pkg_dir = tellmesh / pkg
         if pkg_dir.is_dir():
             subprocess.run(
@@ -320,6 +320,7 @@ def load_manifest_session(manifest_path: Path) -> dict[str, Any]:
 
 
 UPGRADE_PLAYWRIGHT_FLOW = ROOT / "flows/lenovo-remote/_upgrade-playwright.uri.flow.yaml"
+UPGRADE_KVM_FLOW = ROOT / "flows/lenovo-remote/_upgrade-kvm.uri.flow.yaml"
 UPGRADE_NODE_FLOW = ROOT / "flows/lenovo-remote/_upgrade-node.uri.flow.yaml"
 
 
@@ -420,6 +421,7 @@ def main(argv: list[str] | None = None) -> int:
 
     flow_records: list[dict[str, Any]] = []
     upgrade_ran = False
+    kvm_upgrade_ran = False
     node_upgrade_ran = False
 
     def _needs_node_upgrade(flow_paths: list[Path]) -> bool:
@@ -484,6 +486,19 @@ def main(argv: list[str] | None = None) -> int:
                 continue
             node_reachable = True
             meta["node_reachable"] = True
+        if (
+            fp.name == "08-kvm-linkedin.uri.flow.yaml"
+            and UPGRADE_KVM_FLOW.exists()
+            and not kvm_upgrade_ran
+        ):
+            append_log(log_path, f"flow {UPGRADE_KVM_FLOW.name} start (pre-08 kvm upgrade)")
+            kvm_rec = _run_one(UPGRADE_KVM_FLOW)
+            flow_records.append(kvm_rec)
+            kvm_upgrade_ran = True
+            append_log(log_path, f"flow {UPGRADE_KVM_FLOW.name} ok={kvm_rec.get('ok')}")
+            if not kvm_rec.get("ok"):
+                append_log(log_path, f"flow {fp.name} skipped (kvm upgrade failed)")
+                continue
         if (
             fp.name == "07-playwright-linkedin.uri.flow.yaml"
             and UPGRADE_PLAYWRIGHT_FLOW.exists()
