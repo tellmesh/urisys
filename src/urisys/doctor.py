@@ -252,7 +252,7 @@ def run_doctor(*, min_version: str | None = "0.1.25") -> dict[str, Any]:
             _check_import(
                 "urisysnode",
                 "urisysnode",
-                pip_hint='pip install "urisys-node"  # or: urisys init',
+                pip_hint=f"pip install -U {__import__('urisys.node_install', fromlist=['pip_spec']).pip_spec()}",
             ),
         ]
     )

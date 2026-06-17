@@ -2,11 +2,11 @@
 
 app {
   name: urisys;
-  version: 0.1.34;
+  version: 0.1.38;
 }
 
 dependencies {
-  runtime: "uricore @ https://github.com/tellmesh/uricore/releases/download/v0.1.8/uricore-0.1.8-py3-none-any.whl, PyYAML>=6.0, urisysedge>=0.1.0";
+  runtime: "PyYAML>=6.0, urisysedge>=0.1.0";
   dev: "pytest>=8.0, uricore, uribrowser, uridocker, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60";
   lab: uri2flow>=0.1.2;
   real: "mss>=9.0, Pillow>=10.0, pyautogui>=0.9.54, pytesseract>=0.3.10, litellm>=1.40";
@@ -19,9 +19,6 @@ interface[type="cli"] {
 }
 interface[type="cli"] page[name="urisys"] {
   entry: urisys.bootstrap:main;
-}
-interface[type="cli"] page[name="urisys-node"] {
-  entry: urisysnode.cli:main;
 }
 
 integration[name="github"] {

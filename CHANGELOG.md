@@ -5,6 +5,59 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.10] - 2026-06-17
+
+### Fixed
+- Fix magic-numbers issues (ticket-58d889e9)
+- Fix magic-numbers issues (ticket-f81ec0b9)
+- Fix smart-return-type issues (ticket-03573fd4)
+- Fix unused-imports issues (ticket-a13f62f5)
+- Fix magic-numbers issues (ticket-c1c93d8b)
+- Fix magic-numbers issues (ticket-da95d0ef)
+- Fix duplicate-imports issues (ticket-7d2bd2f4)
+- Fix unused-imports issues (ticket-f780fae2)
+- Fix magic-numbers issues (ticket-164db83c)
+- Fix ai-boilerplate issues (ticket-f5b58ecc)
+- Fix unused-imports issues (ticket-9d0c6bee)
+- Fix string-concat issues (ticket-792d4614)
+- Fix unused-imports issues (ticket-bfa7a120)
+- Fix ai-boilerplate issues (ticket-ade9f7fd)
+- Fix unused-imports issues (ticket-7940e721)
+- Fix relative-imports issues (ticket-980c1127)
+- Fix string-concat issues (ticket-d4c2297e)
+- Fix unused-imports issues (ticket-eb5997d0)
+- Fix magic-numbers issues (ticket-1c49b283)
+- Fix relative-imports issues (ticket-eef75004)
+- Fix string-concat issues (ticket-11251076)
+- Fix unused-imports issues (ticket-d5db6978)
+- Fix magic-numbers issues (ticket-a358cac2)
+- Fix unused-imports issues (ticket-3a630c1d)
+- Fix relative-imports issues (ticket-0cb1c550)
+- Fix smart-return-type issues (ticket-de570312)
+- Fix unused-imports issues (ticket-915607a6)
+- Fix relative-imports issues (ticket-abbaba0f)
+- Fix string-concat issues (ticket-f3f0f7a9)
+- Fix unused-imports issues (ticket-c6cc1e61)
+- Fix relative-imports issues (ticket-ef645039)
+- Fix unused-imports issues (ticket-fee16f7a)
+- Fix magic-numbers issues (ticket-666babb8)
+- Fix relative-imports issues (ticket-d7a55e27)
+- Fix string-concat issues (ticket-a8453fb3)
+- Fix unused-imports issues (ticket-d14be326)
+- Fix relative-imports issues (ticket-392d98bf)
+- Fix string-concat issues (ticket-b15ef75b)
+- Fix unused-imports issues (ticket-c6054862)
+- Fix magic-numbers issues (ticket-5f6752ac)
+- Fix unused-imports issues (ticket-9610b8d9)
+- Fix magic-numbers issues (ticket-64380a80)
+- Fix relative-imports issues (ticket-eb858e59)
+- Fix unused-imports issues (ticket-142f6917)
+- Fix unused-imports issues (ticket-5562015f)
+- Fix relative-imports issues (ticket-04abc7d9)
+- Fix unused-imports issues (ticket-1d8883f8)
+- Fix magic-numbers issues (ticket-e22cc686)
+- Fix relative-imports issues (ticket-1fa4740c)
+
 ## [Unreleased] - 2026-06-17 — refactor & hardening
 
 ### Refactored (god-modules → focused units, behaviour byte-identical)
@@ -36,6 +89,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Vendored `urisysedge` drift guard (AST-compare vs canonical), node pack hot-load + forward, vision/decide dispatch — new CI lanes `node-unit`, `pack-handlers-unit`
 - `test_uriscreen_auto`/`test_ocr_llm` skip gracefully when Pillow/tesseract absent
 - Host→Docker desktop and host→LAN node (`192.168.188.201:8790`) control verified live (capture + OCR)
+
+## [0.1.39] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+
+### Test
+- Update tests/test_node_install.py
+
+### Other
+- Update app.doql.less
+- Update planfile.yaml
+- Update project/logic.pl
+- Update project/map.toon.yaml
+- Update uv.lock
 
 ## [0.1.38] - 2026-06-17
 

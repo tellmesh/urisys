@@ -1,232 +1,277 @@
-# urisys | 203f 13609L | yaml:42,shell:65,json:14,yml:11,javascript:2,python:49,conf:1,txt:2,toml:7,gui:1 | 2026-06-17
-# generated in 0.02s
-# stats: 334 func | 0 cls | 203 mod | CC̄=4.4 | critical:16 | cycles:0
-# alerts[5]: CC main=36; fan-out main=36; CC run_init=34; fan-out MarkpactManager.compile=34; fan-out session_urirdp_real_docker=31
-# hotspots[5]: main fan=36; MarkpactManager.compile fan=34; session_urirdp_real_docker fan=31; analyze_run fan=29; SourceManager._fetch_git fan=22
-# evolution: CC̄ 4.3→4.4 (regressed +0.1)
+# urisys | 167f 12527L | python:98,shell:66,javascript:2,less:1 | 2026-06-17
+# stats: 414 func | 28 cls | 167 mod | CC̄=4.5 | critical:38 | cycles:0
+# alerts[5]: CC main=36; CC run_init=34; CC session_urirdp_real_docker=30; CC main=28; CC validate_contract=23
+# hotspots[5]: main fan=36; session_urirdp_real_docker fan=25; analyze_run fan=23; session_lab_10_flows fan=22; main fan=19
+# evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[203]:
-  examples/frontend/app.js,21
-  examples/markpact/browser-call.sh,12
-  examples/shell/call-uri.sh,6
-  examples/shell/server-curl.sh,8
-  flows/browser-form-vql.uri.flow.yaml,33
-  flows/device-maintenance.uri.flow.yaml,17
-  flows/email-mailpit.uri.flow.yaml,36
-  flows/office-simulate-tick.uri.flow.yaml,27
-  flows/office-writer.uri.flow.yaml,31
-  goal.yaml,514
-  local-lab/builder/Dockerfile,11
-  local-lab/docker-compose.yml,72
-  local-lab/node-profile.local.yaml,11
-  local-lab/scripts/01-validate-markpact.sh,24
-  local-lab/scripts/02-build-publish.sh,132
-  local-lab/scripts/03-resolve-run.sh,16
-  local-lab/scripts/04-smoke.sh,35
-  local-lab/scripts/05-resolve-from-url.sh,23
-  local-lab/scripts/06-register-release.sh,62
-  local-lab/scripts/install-urisys.sh,20
-  local-lab/scripts/run-all.sh,25
-  planfile.yaml,1319
-  prefact.yaml,94
+M[167]:
+  app.doql.less,49
+  examples/frontend/app.js,22
+  examples/markpact/browser-call.sh,13
+  examples/shell/call-uri.sh,7
+  examples/shell/server-curl.sh,9
+  local-lab/scripts/01-validate-markpact.sh,25
+  local-lab/scripts/02-build-publish.sh,133
+  local-lab/scripts/03-resolve-run.sh,17
+  local-lab/scripts/04-smoke.sh,36
+  local-lab/scripts/05-resolve-from-url.sh,24
+  local-lab/scripts/06-register-release.sh,63
+  local-lab/scripts/install-urisys.sh,21
+  local-lab/scripts/run-all.sh,26
   project.sh,63
-  pyproject.toml,126
-  schemas/uripack-markpact.schema.json,47
-  scripts/ci-checkout-siblings.sh,51
-  scripts/ci-install-siblings.sh,28
-  scripts/deploy-lenovo-node.sh,71
-  scripts/install-kvm-packs-editable.sh,13
-  scripts/lenovo-node-session.sh,72
-  scripts/office-simulate-loop.py,146
-  scripts/pack_registry.py,260
-  scripts/pack_sync.py,347
-  scripts/paths.sh,54
-  scripts/publish-pypi-packs.sh,53
-  scripts/remote-node-smoke.sh,99
-  scripts/report/__init__.py,61
-  scripts/report/cli.py,41
-  scripts/report/events.py,138
-  scripts/report/lab_checks.py,188
-  scripts/report/models.py,86
-  scripts/report/run_analysis.py,129
-  scripts/report/run_markdown.py,42
-  scripts/report/session.py,105
-  scripts/report/session_io.py,19
-  scripts/report/session_markdown.py,120
-  scripts/report/util.py,29
-  scripts/run-email-mailpit-e2e.sh,133
-  scripts/run-lab-e2e.sh,14
-  scripts/run-lab-nightly.sh,16
-  scripts/run-lab-unit-ci.sh,20
-  scripts/run-nl-log-smoke.sh,43
-  scripts/run-office-simulate-e2e.sh,129
-  scripts/run-office-simulate-lenovo.sh,182
-  scripts/run-office-writer-e2e.sh,112
-  scripts/run-smoke-all.sh,24
-  scripts/run-urisys-node-docker-e2e.sh,162
-  scripts/run-urisys-node-docker-session.sh,6
-  scripts/run_test_sessions.py,782
-  scripts/session_report.py,49
-  scripts/sync-vendored-pack.sh,38
-  scripts/sync-vendored-urisysedge.sh,16
-  scripts/test-goal.sh,11
-  scripts/test-python-matrix.sh,58
-  scripts/test_sessions/__init__.py,98
-  scripts/test_sessions/expectations.py,153
-  scripts/test_sessions/lab_flows.py,319
-  scripts/test_sessions/lab_rdp.py,180
-  scripts/test_sessions/util.py,209
-  scripts/validate-all-markpacts.sh,53
-  scripts/validate-pypi-metadata.sh,62
-  src/urisys/__init__.py,3
-  src/urisys/bootstrap.py,111
-  src/urisys/cli.py,282
-  src/urisys/controllers/__init__.py,0
-  src/urisys/controllers/flow_controller.py,33
-  src/urisys/controllers/server_controller.py,18
-  src/urisys/controllers/uri_controller.py,33
-  src/urisys/defaults.py,20
-  src/urisys/doctor.py,286
-  src/urisys/flow.py,25
-  src/urisys/http_server.py,78
-  src/urisys/init_setup.py,208
-  src/urisys/managers/bridge_manager.py,14
-  src/urisys/managers/event_manager.py,13
-  src/urisys/managers/markpact_manager.py,401
-  src/urisys/managers/markpact_models.py,92
-  src/urisys/managers/markpact_validation.py,140
-  src/urisys/managers/pack_manager.py,128
-  src/urisys/managers/policy_manager.py,18
-  src/urisys/managers/route_manager.py,23
-  src/urisys/managers/runtime_manager.py,30
-  src/urisys/managers/source_manager.py,224
-  src/urisys/uricore_install.py,130
-  testql-scenarios/generated-api-smoke.testql.toon.yaml,39
-  testql-scenarios/generated-cli-tests.testql.toon.yaml,20
-  testql-scenarios/generated-from-pytests.testql.toon.yaml,24
-  tree.sh,1
-  uribrowser-docker/Dockerfile,17
-  uribrowser-docker/config/browser-profile.json,10
-  uribrowser-docker/config/browser-profile.real.json,9
-  uribrowser-docker/docker-compose.yml,10
-  uribrowser-docker/flows/browser-demo.uri.flow.yaml,14
-  uribrowser-docker/pyproject.toml,46
-  uribrowser-docker/scripts/test-local.sh,8
-  uribrowser-docker/scripts/test-real.sh,28
-  urienv-docker/Dockerfile,36
-  urienv-docker/docker-compose.yml,52
-  urienv-docker/docker/config/env-policy.yaml,36
-  urienv-docker/docker/secrets/markpact_token.txt,1
-  urienv-docker/docker/secrets/smtp_password.txt,1
-  urienv-docker/flows/mutate-process-env.uri.flow.yaml,16
-  urienv-docker/flows/startup-env-check.uri.flow.yaml,15
-  urienv-docker/pyproject.toml,22
-  urienv-docker/scripts/local-test.sh,10
-  urienv-docker/scripts/test-docker.sh,4
-  urikvm-docker/Dockerfile,27
-  urikvm-docker/config/kvm-profile.json,26
-  urikvm-docker/config/kvm-profile.real.json,24
-  urikvm-docker/docker-compose.yml,10
-  urikvm-docker/flows/kvm-click-ok.uri.flow.yaml,20
-  urikvm-docker/pyproject.toml,66
-  urikvm-docker/scripts/call-http.sh,5
-  urikvm-docker/scripts/real_pipeline.py,95
-  urikvm-docker/scripts/test-local.sh,8
-  urikvm-docker/scripts/test-real.sh,47
-  urimail-docker/docker-compose.yml,10
-  urirdp-docker/Dockerfile,51
-  urirdp-docker/Makefile,20
-  urirdp-docker/config/env-policy.yaml,31
-  urirdp-docker/config/rdp-kvm-profile.json,30
-  urirdp-docker/config/rdp-kvm-profile.real.json,39
-  urirdp-docker/docker-compose.yml,24
-  urirdp-docker/docker-compose.rdp-e2e.yml,41
-  urirdp-docker/docker/bootstrap-rdp-session.sh,111
-  urirdp-docker/docker/entrypoint.sh,25
-  urirdp-docker/docker/startwm.sh,6
-  urirdp-docker/docker/supervisord.conf,35
-  urirdp-docker/flows/rdp-kvm-smoke.uri.flow.yaml,17
-  urirdp-docker/flows/real-rdp-click-text.uri.flow.yaml,14
-  urirdp-docker/pyproject.toml,54
-  urirdp-docker/scripts/call-http.sh,10
-  urirdp-docker/scripts/test-docker.sh,17
-  urirdp-docker/scripts/test-local.sh,8
-  urirdp-docker/scripts/test-rdp-real.sh,12
-  urirdp-docker/scripts/test-real-docker.sh,63
-  uristepper-docker/Dockerfile,26
-  uristepper-docker/Makefile,25
-  uristepper-docker/config/device-profile.json,61
-  uristepper-docker/config/device-profile.rpi3.example.json,33
-  uristepper-docker/docker-compose.yml,35
-  uristepper-docker/docker-compose.rpi3.example.yml,21
-  uristepper-docker/flows/move-test.uri.flow.yaml,35
-  uristepper-docker/flows/safety-denied.uri.flow.yaml,17
-  uristepper-docker/pyproject.toml,43
-  uristepper-docker/scripts/call-http.sh,10
-  uristepper-docker/scripts/test-docker.sh,7
-  uristepper-docker/scripts/test-local.sh,10
-  urisys-automation-lab/Dockerfile,43
-  urisys-automation-lab/docker-compose.lab.yml,66
-  urisys-automation-lab/docker/entrypoint.sh,18
-  urisys-automation-lab/flows/01_install_browser.uri.flow.yaml,13
-  urisys-automation-lab/flows/02_update_system_tui.uri.flow.yaml,15
-  urisys-automation-lab/flows/03_open_browser_gui.uri.flow.yaml,19
-  urisys-automation-lab/flows/04_browser_download_file.uri.flow.yaml,22
-  urisys-automation-lab/flows/05_fill_form_gui.uri.flow.yaml,27
-  urisys-automation-lab/flows/06_terminal_htop_tui.uri.flow.yaml,23
-  urisys-automation-lab/flows/07_edit_config_nano_tui.uri.flow.yaml,27
-  urisys-automation-lab/flows/08_voice_command_to_kvm.uri.flow.yaml,40
-  urisys-automation-lab/flows/09_webrtc_video_chat_rdp.uri.flow.yaml,29
-  urisys-automation-lab/flows/10_full_maintenance_rdp.uri.flow.yaml,42
-  urisys-automation-lab/routes/local-rdp.routes.yaml,32
-  urisys-automation-lab/scripts/docker-down.sh,6
-  urisys-automation-lab/scripts/docker-logs.sh,6
-  urisys-automation-lab/scripts/docker-smoke.sh,20
-  urisys-automation-lab/scripts/docker-up.sh,21
-  urisys-automation-lab/scripts/run-lab.sh,13
-  urisys-automation-lab/scripts/validate-flows.sh,28
-  urisys-automation-lab/server/automation_lab_server.py,247
-  urisys-automation-lab/server/flow_runner.py,169
-  urisys-automation-lab/server/lab_uri_adapter.py,129
-  urisys-automation-lab/server/static_server.py,6
-  urisys-automation-lab/web/app.js,131
-  urisys-node/config/node-profile.json,32
-  urisys-node/config/node-profile.lenovo.json,63
-  urisys-node/config/nodes.registry.json,18
-  urisys-node/config/route-map.lenovo.yaml,36
-  urisys-node/config/route-map.master.yaml,19
-  urisys-node/config/route-map.slave.yaml,14
-  urisys-node/docker/Dockerfile.gui,58
-  urisys-node/docker/config/node-profile.docker.json,33
-  urisys-node/docker/config/nodes.registry.host.json,9
-  urisys-node/docker/config/route-map.host.yaml,23
-  urisys-node/docker/docker-compose.gui.yml,33
-  urisys-node/docker/entrypoint.sh,63
-  urisys-node/flows/bootstrap-kvm-github.uri.flow.yaml,28
-  urisys-node/flows/bootstrap-kvm-pypi.uri.flow.yaml,18
-  urisys-node/flows/remote-probe.uri.flow.yaml,17
-  urisys-node/flows/screen-capture-mss.uri.flow.yaml,12
-  urisys-node/flows/slave-kvm-demo.uri.flow.yaml,13
-  urisys-node/pyproject.toml,108
-  urisys-node/scripts/install-linux.sh,16
+  scripts/ci-checkout-siblings.sh,52
+  scripts/ci-install-siblings.sh,29
+  scripts/deploy-lenovo-node.sh,72
+  scripts/install-kvm-packs-editable.sh,14
+  scripts/lenovo-node-session.sh,73
+  scripts/office-simulate-loop.py,147
+  scripts/pack_registry.py,261
+  scripts/pack_sync.py,348
+  scripts/paths.sh,55
+  scripts/publish-pypi-packs.sh,54
+  scripts/remote-node-smoke.sh,100
+  scripts/report/__init__.py,62
+  scripts/report/cli.py,42
+  scripts/report/events.py,139
+  scripts/report/lab_checks.py,189
+  scripts/report/models.py,87
+  scripts/report/run_analysis.py,130
+  scripts/report/run_markdown.py,43
+  scripts/report/session.py,106
+  scripts/report/session_io.py,20
+  scripts/report/session_markdown.py,121
+  scripts/report/util.py,30
+  scripts/run-email-mailpit-e2e.sh,134
+  scripts/run-lab-e2e.sh,15
+  scripts/run-lab-nightly.sh,17
+  scripts/run-lab-unit-ci.sh,21
+  scripts/run-nl-log-smoke.sh,44
+  scripts/run-office-simulate-e2e.sh,130
+  scripts/run-office-simulate-lenovo.sh,183
+  scripts/run-office-writer-e2e.sh,113
+  scripts/run-smoke-all.sh,25
+  scripts/run-urisys-node-docker-e2e.sh,163
+  scripts/run-urisys-node-docker-session.sh,7
+  scripts/run_test_sessions.py,783
+  scripts/session_report.py,50
+  scripts/sync-vendored-pack.sh,39
+  scripts/sync-vendored-urisysedge.sh,17
+  scripts/test-goal.sh,12
+  scripts/test-python-matrix.sh,59
+  scripts/test_sessions/__init__.py,99
+  scripts/test_sessions/expectations.py,154
+  scripts/test_sessions/lab_flows.py,320
+  scripts/test_sessions/lab_rdp.py,181
+  scripts/test_sessions/util.py,210
+  scripts/validate-all-markpacts.sh,54
+  scripts/validate-pypi-metadata.sh,63
+  src/urisys/__init__.py,4
+  src/urisys/bootstrap.py,112
+  src/urisys/cli.py,283
+  src/urisys/controllers/__init__.py,1
+  src/urisys/controllers/flow_controller.py,34
+  src/urisys/controllers/server_controller.py,19
+  src/urisys/controllers/uri_controller.py,34
+  src/urisys/defaults.py,21
+  src/urisys/doctor.py,287
+  src/urisys/flow.py,26
+  src/urisys/http_server.py,79
+  src/urisys/init_setup.py,209
+  src/urisys/managers/__init__.py,1
+  src/urisys/managers/bridge_manager.py,15
+  src/urisys/managers/event_manager.py,14
+  src/urisys/managers/markpact_manager.py,402
+  src/urisys/managers/markpact_models.py,93
+  src/urisys/managers/markpact_validation.py,141
+  src/urisys/managers/pack_manager.py,129
+  src/urisys/managers/policy_manager.py,19
+  src/urisys/managers/route_manager.py,24
+  src/urisys/managers/runtime_manager.py,31
+  src/urisys/managers/source_manager.py,225
+  src/urisys/uricore_install.py,131
+  tests/test_bootstrap.py,61
+  tests/test_doctor.py,29
+  tests/test_doctor_uricore.py,27
+  tests/test_init.py,61
+  tests/test_kvm_pack_pyprojects.py,69
+  tests/test_markpact.py,99
+  tests/test_pypi_metadata.py,35
+  tests/test_python_compat.py,53
+  tests/test_run_expectations.py,56
+  tests/test_session_report_events.py,59
+  tests/test_source_manager.py,36
+  tests/test_uricore_install.py,38
+  tests/test_urisys.py,46
+  tests/test_vendored_sync.py,58
+  tree.sh,2
+  uribrowser-docker/scripts/test-local.sh,9
+  uribrowser-docker/scripts/test-real.sh,29
+  uribrowser-docker/tests/test_browser.py,24
+  urienv-docker/scripts/local-test.sh,11
+  urienv-docker/scripts/test-docker.sh,5
+  urienv-docker/tests/e2e_env.py,64
+  urienv-docker/tests/test_urienv.py,70
+  urikvm-docker/scripts/call-http.sh,6
+  urikvm-docker/scripts/real_pipeline.py,96
+  urikvm-docker/scripts/test-local.sh,9
+  urikvm-docker/scripts/test-real.sh,48
+  urikvm-docker/tests/test_him_driver.py,48
+  urikvm-docker/tests/test_him_scroll.py,15
+  urikvm-docker/tests/test_kvm.py,35
+  urikvm-docker/tests/test_llm_plan.py,32
+  urikvm-docker/tests/test_ocr_llm.py,87
+  urikvm-docker/tests/test_office_mail.py,84
+  urikvm-docker/tests/test_vision_dispatch.py,75
+  urirdp-docker/docker/bootstrap-rdp-session.sh,112
+  urirdp-docker/docker/entrypoint.sh,26
+  urirdp-docker/docker/startwm.sh,7
+  urirdp-docker/scripts/call-http.sh,11
+  urirdp-docker/scripts/test-docker.sh,18
+  urirdp-docker/scripts/test-local.sh,9
+  urirdp-docker/scripts/test-rdp-real.sh,13
+  urirdp-docker/scripts/test-real-docker.sh,64
+  urirdp-docker/tests/e2e_rdp_real.sh,101
+  urirdp-docker/tests/test_decide_dispatch.py,58
+  urirdp-docker/tests/test_env_browser_routes.py,50
+  urirdp-docker/tests/test_env_resolve.py,29
+  urirdp-docker/tests/test_rdp_kvm.py,76
+  uristepper-docker/scripts/call-http.sh,11
+  uristepper-docker/scripts/test-docker.sh,8
+  uristepper-docker/scripts/test-local.sh,11
+  uristepper-docker/tests/e2e.py,71
+  uristepper-docker/tests/test_runtime.py,53
+  urisys-automation-lab/docker/entrypoint.sh,19
+  urisys-automation-lab/scripts/docker-down.sh,7
+  urisys-automation-lab/scripts/docker-logs.sh,7
+  urisys-automation-lab/scripts/docker-smoke.sh,21
+  urisys-automation-lab/scripts/docker-up.sh,22
+  urisys-automation-lab/scripts/run-lab.sh,14
+  urisys-automation-lab/scripts/validate-flows.sh,29
+  urisys-automation-lab/server/automation_lab_server.py,248
+  urisys-automation-lab/server/flow_runner.py,170
+  urisys-automation-lab/server/lab_uri_adapter.py,130
+  urisys-automation-lab/server/static_server.py,7
+  urisys-automation-lab/tests/test_flow_08_plan.py,69
+  urisys-automation-lab/tests/test_flow_09_plan.py,28
+  urisys-automation-lab/tests/test_flow_expectations.py,167
+  urisys-automation-lab/tests/test_lab_handlers.py,64
+  urisys-automation-lab/tests/test_llm_plan_handlers.py,44
+  urisys-automation-lab/web/app.js,132
+  urisys-node/docker/entrypoint.sh,64
+  urisys-node/scripts/install-linux.sh,17
+  urisys-node/tests/test_artifact_resolver.py,96
+  urisys-node/tests/test_docker_host_e2e.py,157
+  urisys-node/tests/test_forward_config.py,150
+  urisys-node/tests/test_forward_pack.py,75
+  urisys-node/tests/test_pack_auto_install.py,108
+  urisys-node/tests/test_pack_github.py,28
+  urisys-node/tests/test_pack_hotload.py,65
+  urisys-node/tests/test_pack_office_mail.py,30
+  urisys-node/tests/test_release_hotload.py,259
+  urisys-node/tests/test_uriscreen_auto.py,37
+  urisys-node/tests/test_urishell.py,49
+  urisys-node/tests/test_urisys_node.py,65
+  urisys-node/tests/test_urisysedge_single_source.py,36
 D:
-  src/urisys/cli.py:
-    e: _json_arg,print_json,_add_runtime_flags,resolve_markpact_source,build_parser,main
-    _json_arg(value)
-    print_json(data)
-    _add_runtime_flags(parser)
-    resolve_markpact_source(source)
-    build_parser()
+  scripts/office-simulate-loop.py:
+    e: call_uri,rules_tick,llm_tick,parse_args,main
+    call_uri(base;uri;payload;context)
+    rules_tick(base;ctx;letter)
+    llm_tick(base;ctx;letter)
+    parse_args(argv)
     main(argv)
-  src/urisys/init_setup.py:
-    e: default_pip_specs,pip_install_specs,verify_uri_control,profile_env,render_env_shell,write_env_file,run_init
-    default_pip_specs()
-    pip_install_specs(specs)
-    verify_uri_control()
-    profile_env(profile)
-    render_env_shell(env)
-    write_env_file(path;env)
-    run_init()
+  scripts/pack_registry.py:
+    e: _repo,_vendored_kvm,_vendored_rdp,_vendored_node,sibling_uv_path,sibling_repo,pack_specs,sibling_repo_names,all_promoted_packs,PackSpec
+    PackSpec:
+    _repo(name)
+    _vendored_kvm(name)
+    _vendored_rdp(name)
+    _vendored_node(name)
+    sibling_uv_path(name)
+    sibling_repo(name)
+    pack_specs()
+    sibling_repo_names()
+    all_promoted_packs()
+  scripts/pack_sync.py:
+    e: repo_module_dir,vendored_module_dir,read_version,file_hash,sync_file,sync_to_repo,check_drift,_check_promoted,remove_vendored,_repo_pyproject,init_repo,promote,main
+    repo_module_dir(spec)
+    vendored_module_dir(spec)
+    read_version(path)
+    file_hash(path)
+    sync_file(src;dst)
+    sync_to_repo(spec)
+    check_drift(spec)
+    _check_promoted(spec)
+    remove_vendored(spec)
+    _repo_pyproject(spec)
+    init_repo(spec)
+    promote(spec)
+    main(argv)
+  scripts/report/__init__.py:
+  scripts/report/cli.py:
+    e: main
+    main()
+  scripts/report/events.py:
+    e: summarize_event_records,load_event_records,summarize_events,resolve_events_paths,merge_event_summaries
+    summarize_event_records(records)
+    load_event_records(events_path)
+    summarize_events(events_path)
+    resolve_events_paths(session_dir)
+    merge_event_summaries(paths)
+  scripts/report/lab_checks.py:
+    e: iter_step_results,load_flow_outcomes,check_declared_expectations,check_gui_no_effect,check_vision_never_decides,_duplicate_recommendation,check_duplicate_screenshots,check_shell_baseline_duplicate,analyze_lab_flows
+    iter_step_results(steps)
+    load_flow_outcomes(session_dir)
+    check_declared_expectations(outcomes)
+    check_gui_no_effect(outcomes)
+    check_vision_never_decides(outcomes)
+    _duplicate_recommendation(outcome)
+    check_duplicate_screenshots(outcomes)
+    check_shell_baseline_duplicate(outcomes)
+    analyze_lab_flows(session_dir)
+  scripts/report/models.py:
+    e: StepResult,SessionReport,RunAnalysis,Finding,FlowOutcome
+    StepResult:
+    SessionReport: passed(0),failed(0)
+    RunAnalysis: all_passed(0)
+    Finding:
+    FlowOutcome: no_visible_effect(0),vision_decided(0)
+  scripts/report/run_analysis.py:
+    e: _session_row,_findings_for_session,_run_recommendations,analyze_run,write_run_analysis
+    _session_row(data;report_path;run_dir)
+    _findings_for_session(data)
+    _run_recommendations(findings;summary)
+    analyze_run(run_dir)
+    write_run_analysis(run_dir;analysis)
+  scripts/report/run_markdown.py:
+    e: render_run_analysis_markdown
+    render_run_analysis_markdown(analysis)
+  scripts/report/session.py:
+    e: infer_steps,collect_artifacts,session_status,session_duration,generate_report
+    infer_steps(session_dir;meta)
+    collect_artifacts(session_dir)
+    session_status(steps;meta)
+    session_duration(meta)
+    generate_report(session_dir)
+  scripts/report/session_io.py:
+    e: write_session_report
+    write_session_report(session_dir;report)
+  scripts/report/session_markdown.py:
+    e: render_session_markdown,_environment_section,_steps_section,_screenshots_section,_events_section,_log_errors_section,_duplicate_screenshots_section,_log_tail_section
+    render_session_markdown(report)
+    _environment_section(report)
+    _steps_section(report)
+    _screenshots_section(report)
+    _events_section(report)
+    _log_errors_section(report)
+    _duplicate_screenshots_section(report)
+    _log_tail_section(report)
+  scripts/report/util.py:
+    e: now_iso,host_id,read_json,tail
+    now_iso()
+    host_id()
+    read_json(path)
+    tail(text;limit)
   scripts/run_test_sessions.py:
     e: session_pytest_urirdp,session_pytest_urisys,session_pytest_urisys_node,session_urirdp_mock_docker,session_urirdp_real_docker,session_urirdp_rdp_e2e,session_automation_lab,_monorepo_root,session_urisys_node_docker_gui,session_office_simulate,session_office_simulate_lenovo,session_office_writer,session_email_mailpit,main
     session_pytest_urirdp(session_dir)
@@ -243,114 +288,8 @@ D:
     session_office_writer(session_dir)
     session_email_mailpit(session_dir)
     main()
-  scripts/pack_sync.py:
-    e: repo_module_dir,vendored_module_dir,read_version,file_hash,sync_file,sync_to_repo,check_drift,_check_promoted,remove_vendored,_repo_pyproject,init_repo,promote,main
-    repo_module_dir(spec)
-    vendored_module_dir(spec)
-    read_version(path)
-    file_hash(path)
-    sync_file(src;dst)
-    sync_to_repo(spec)
-    check_drift(spec)
-    _check_promoted(spec)
-    remove_vendored(spec)
-    _repo_pyproject(spec)
-    init_repo(spec)
-    promote(spec)
-    main(argv)
-  src/urisys/managers/markpact_validation.py:
-    e: validate_contract,validate_bundle,validate_implementation
-    validate_contract(source_path;data;source_hash)
-    validate_bundle(source_path;data;source_hash)
-    validate_implementation(source_path;data;source_hash)
-  urisys-automation-lab/server/automation_lab_server.py:
-    e: LabHandler,build_lab_runtime,forward_uri_call,serve
-    LabHandler(BaseHTTPRequestHandler): log_message(1),_json(2),_read_json(0),do_OPTIONS(0),do_GET(0),do_POST(0)
-    build_lab_runtime(config_path)
-    forward_uri_call(base_url;uri;payload;context)
-    serve(host;port)
-  src/urisys/managers/markpact_manager.py:
-    e: MarkpactManager
-    MarkpactManager: __init__(1),read_blocks(1),source_hash(1),load_pack_block(1),validate(1),_validate_pack(3),_yaml_blocks(2),compile(1),manifest_path_for(1),run_tests(1),_build_route(1),_compile_manifest(1),_package_id(2),_capabilities(1),_scheme(2),_handler_blocks(1),_load_yaml_blocks(2),_handler_id_from_ref(1),_ensure_importable(1)  # Parses and compiles one-file UriPack Markpacts.
-
-Markpact is...
-  scripts/report/session.py:
-    e: infer_steps,collect_artifacts,session_status,session_duration,generate_report
-    infer_steps(session_dir;meta)
-    collect_artifacts(session_dir)
-    session_status(steps;meta)
-    session_duration(meta)
-    generate_report(session_dir)
-  scripts/pack_registry.py:
-    e: PackSpec,_repo,_vendored_kvm,_vendored_rdp,_vendored_node,sibling_uv_path,sibling_repo,pack_specs,sibling_repo_names,all_promoted_packs
-    PackSpec:
-    _repo(name)
-    _vendored_kvm(name)
-    _vendored_rdp(name)
-    _vendored_node(name)
-    sibling_uv_path(name)
-    sibling_repo(name)
-    pack_specs()
-    sibling_repo_names()
-    all_promoted_packs()
-  src/urisys/managers/pack_manager.py:
-    e: PackManager
-    PackManager: __init__(1),_is_all(0),parse_packs(0),parse_markpacts(0),resolve_package_name(1),_is_markpact_path(1),_is_manifest_path(1),manifest_paths(0),create_registry(0),capabilities(0),close(0),__enter__(0),__exit__(3)  # Loads separate uri* packages, plain manifest.yaml files and ...
-  scripts/report/lab_checks.py:
-    e: iter_step_results,load_flow_outcomes,check_declared_expectations,check_gui_no_effect,check_vision_never_decides,_duplicate_recommendation,check_duplicate_screenshots,check_shell_baseline_duplicate,analyze_lab_flows
-    iter_step_results(steps)
-    load_flow_outcomes(session_dir)
-    check_declared_expectations(outcomes)
-    check_gui_no_effect(outcomes)
-    check_vision_never_decides(outcomes)
-    _duplicate_recommendation(outcome)
-    check_duplicate_screenshots(outcomes)
-    check_shell_baseline_duplicate(outcomes)
-    analyze_lab_flows(session_dir)
-  scripts/report/events.py:
-    e: summarize_event_records,load_event_records,summarize_events,resolve_events_paths,merge_event_summaries
-    summarize_event_records(records)
-    load_event_records(events_path)
-    summarize_events(events_path)
-    resolve_events_paths(session_dir)
-    merge_event_summaries(paths)
-  urikvm-docker/scripts/real_pipeline.py:
-    e: _png_with_labels,_inject_png,build_runtime,main
-    _png_with_labels(labels)
-    _inject_png(rt;png_bytes)
-    build_runtime(config_path)
-    main()
-  scripts/report/run_analysis.py:
-    e: _session_row,_findings_for_session,_run_recommendations,analyze_run,write_run_analysis
-    _session_row(data;report_path;run_dir)
-    _findings_for_session(data)
-    _run_recommendations(findings;summary)
-    analyze_run(run_dir)
-    write_run_analysis(run_dir;analysis)
-  scripts/test_sessions/lab_flows.py:
-    e: _lab_bootstrap,_capture_flow_screenshot,_flow_step_detail,_run_single_lab_flow,session_lab_10_flows
-    _lab_bootstrap(session_dir)
-    _capture_flow_screenshot(session_dir)
-    _flow_step_detail()
-    _run_single_lab_flow(session_dir)
-    session_lab_10_flows(session_dir)
-  urisys-automation-lab/server/flow_runner.py:
-    e: _require_uri_stack,_execution_root,_load_defaults,_lab_adapter_session,plan_flow,_legacy_step,run_flow_file
-    _require_uri_stack()
-    _execution_root(flow_path;ctx)
-    _load_defaults(flow_path)
-    _lab_adapter_session()
-    plan_flow(flow_path)
-    _legacy_step(node;step;payload;step_ctx)
-    run_flow_file(flow_path)
-  urisys-automation-lab/server/lab_uri_adapter.py:
-    e: LabCallAdapter,step_ok
-    LabCallAdapter: execute(2),_execute_log(4)
-    step_ok(response)
-  src/urisys/managers/source_manager.py:
-    e: SourceError,SourceManager
-    SourceError(ValueError):  # Raised when a Markpact source cannot be resolved...
-    SourceManager: __init__(1),is_remote_source(1),resolve(1),fetch(1),_result(2),_cache_dir(1),_fetch_http(1),_fetch_github_uri(1),_fetch_github_raw(4),_fetch_git(1),_fetch_zip(1)  # Resolve Markpact sources from local paths, HTTP(S), GitHub, ...
+  scripts/session_report.py:
+  scripts/test_sessions/__init__.py:
   scripts/test_sessions/expectations.py:
     e: flow_expectations,ocr_texts,vision_confidences,_screen_changed,_screen_changed_since_previous,_opened_url_contains,_ocr_contains,_min_vision_confidence,evaluate_expectations
     flow_expectations(flow_path)
@@ -362,6 +301,13 @@ Markpact is...
     _ocr_contains(expect;step_results)
     _min_vision_confidence(expect;step_results)
     evaluate_expectations(expect)
+  scripts/test_sessions/lab_flows.py:
+    e: _lab_bootstrap,_capture_flow_screenshot,_flow_step_detail,_run_single_lab_flow,session_lab_10_flows
+    _lab_bootstrap(session_dir)
+    _capture_flow_screenshot(session_dir)
+    _flow_step_detail()
+    _run_single_lab_flow(session_dir)
+    session_lab_10_flows(session_dir)
   scripts/test_sessions/lab_rdp.py:
     e: parse_lab_flow,flow_step_context,step_pause,summarize_uri_response,parse_docker_log_errors,prepare_ok_target,capture_rdp_screenshot,capture_rdp_screenshot_wait
     parse_lab_flow(path)
@@ -372,27 +318,6 @@ Markpact is...
     prepare_ok_target(rdp_port;display;xauth)
     capture_rdp_screenshot(session_dir)
     capture_rdp_screenshot_wait(session_dir)
-  src/urisys/doctor.py:
-    e: Check,_pkg_version,_parse_version,_version_lt,_check_import,_check_python,_check_cli_path,_check_min_version,_check_wayland_him,_check_uricore_authentic,_check_uricore_dist,run_doctor
-    Check:
-    _pkg_version(dist_name)
-    _parse_version(text)
-    _version_lt(left;right)
-    _check_import(name;module)
-    _check_python()
-    _check_cli_path()
-    _check_min_version(min_version)
-    _check_wayland_him()
-    _check_uricore_authentic()
-    _check_uricore_dist()
-    run_doctor()
-  scripts/office-simulate-loop.py:
-    e: call_uri,rules_tick,llm_tick,parse_args,main
-    call_uri(base;uri;payload;context)
-    rules_tick(base;ctx;letter)
-    llm_tick(base;ctx;letter)
-    parse_args(argv)
-    main(argv)
   scripts/test_sessions/util.py:
     e: now_iso,run_id,host_id,http_json,wait_health,compose_cmd,save_json,run_cmd,write_meta,read_meta,finalize_session,docker_logs,copy_container_file,copy_host_screenshot,file_md5,sleep_ports,prepare_urirdp_data
     now_iso()
@@ -412,6 +337,7 @@ Markpact is...
     file_md5(path)
     sleep_ports()
     prepare_urirdp_data(pkg)
+  src/urisys/__init__.py:
   src/urisys/bootstrap.py:
     e: _print_json,_missing_uricore_payload,_doctor_main,_init_main,main
     _print_json(data)
@@ -419,23 +345,97 @@ Markpact is...
     _doctor_main(argv)
     _init_main(argv)
     main(argv)
+  src/urisys/cli.py:
+    e: _json_arg,print_json,_add_runtime_flags,resolve_markpact_source,build_parser,main
+    _json_arg(value)
+    print_json(data)
+    _add_runtime_flags(parser)
+    resolve_markpact_source(source)
+    build_parser()
+    main(argv)
+  src/urisys/controllers/__init__.py:
+  src/urisys/controllers/flow_controller.py:
+    e: FlowController
+    FlowController: __init__(1),run(1),close(0)
+  src/urisys/controllers/server_controller.py:
+    e: ServerController
+    ServerController: __init__(0),serve_forever(0)
+  src/urisys/controllers/uri_controller.py:
+    e: UriController
+    UriController: __init__(1),call(2),explain(1),routes(0),close(0)
+  src/urisys/defaults.py:
+  src/urisys/doctor.py:
+    e: _pkg_version,_parse_version,_version_lt,_check_import,_check_python,_check_cli_path,_check_min_version,_check_wayland_him,_check_uricore_authentic,_check_uricore_dist,run_doctor,Check
+    Check:
+    _pkg_version(dist_name)
+    _parse_version(text)
+    _version_lt(left;right)
+    _check_import(name;module)
+    _check_python()
+    _check_cli_path()
+    _check_min_version(min_version)
+    _check_wayland_him()
+    _check_uricore_authentic()
+    _check_uricore_dist()
+    run_doctor()
   src/urisys/flow.py:
     e: load_flow,iter_steps
     load_flow(path)
     iter_steps(flow)
-  scripts/report/run_markdown.py:
-    e: render_run_analysis_markdown
-    render_run_analysis_markdown(analysis)
-  scripts/report/session_markdown.py:
-    e: render_session_markdown,_environment_section,_steps_section,_screenshots_section,_events_section,_log_errors_section,_duplicate_screenshots_section,_log_tail_section
-    render_session_markdown(report)
-    _environment_section(report)
-    _steps_section(report)
-    _screenshots_section(report)
-    _events_section(report)
-    _log_errors_section(report)
-    _duplicate_screenshots_section(report)
-    _log_tail_section(report)
+  src/urisys/http_server.py:
+    e: _read_json,_send,create_server
+    _read_json(handler)
+    _send(handler;status;data)
+    create_server(host;port)
+  src/urisys/init_setup.py:
+    e: default_pip_specs,pip_install_specs,verify_uri_control,profile_env,render_env_shell,write_env_file,run_init
+    default_pip_specs()
+    pip_install_specs(specs)
+    verify_uri_control()
+    profile_env(profile)
+    render_env_shell(env)
+    write_env_file(path;env)
+    run_init()
+  src/urisys/managers/__init__.py:
+  src/urisys/managers/bridge_manager.py:
+    e: BridgeManager
+    BridgeManager: call_http(5)  # Forwards URI envelopes to another URI server.
+  src/urisys/managers/event_manager.py:
+    e: EventManager
+    EventManager: __init__(1),list_events(0)
+  src/urisys/managers/markpact_manager.py:
+    e: MarkpactManager
+    MarkpactManager: __init__(1),read_blocks(1),source_hash(1),load_pack_block(1),validate(1),_validate_pack(3),_yaml_blocks(2),compile(1),manifest_path_for(1),run_tests(1),_build_route(1),_compile_manifest(1),_package_id(2),_capabilities(1),_scheme(2),_handler_blocks(1),_load_yaml_blocks(2),_handler_id_from_ref(1),_ensure_importable(1)  # Parses and compiles one-file UriPack Markpacts.
+  src/urisys/managers/markpact_models.py:
+    e: safe_identifier,parse_meta,scheme_from_uri,source_hash,MarkpactBlock,CompiledMarkpact,MarkpactError
+    MarkpactBlock:
+    CompiledMarkpact: to_dict(0)
+    MarkpactError:  # Raised when a Markpact cannot be parsed, validated or compil
+    safe_identifier(value)
+    parse_meta(raw)
+    scheme_from_uri(uri)
+    source_hash(path)
+  src/urisys/managers/markpact_validation.py:
+    e: validate_contract,validate_bundle,validate_implementation
+    validate_contract(source_path;data;source_hash)
+    validate_bundle(source_path;data;source_hash)
+    validate_implementation(source_path;data;source_hash)
+  src/urisys/managers/pack_manager.py:
+    e: PackManager
+    PackManager: __init__(1),_is_all(1),parse_packs(1),parse_markpacts(1),resolve_package_name(1),_is_markpact_path(1),_is_manifest_path(1),manifest_paths(0),create_registry(0),capabilities(0),close(0),__enter__(0),__exit__(3)  # Loads separate uri* packages, plain manifest.yaml files and 
+  src/urisys/managers/policy_manager.py:
+    e: PolicyManager
+    PolicyManager: build_context(0)  # Placeholder for stronger policies: RBAC, signed approvals, O
+  src/urisys/managers/route_manager.py:
+    e: RouteManager
+    RouteManager: __init__(1),explain(1),list_routes(0)
+  src/urisys/managers/runtime_manager.py:
+    e: RuntimeManager
+    RuntimeManager: __init__(1),create_runtime(0),close(0),__enter__(0),__exit__(3)
+  src/urisys/managers/source_manager.py:
+    e: SourceError,SourceManager
+    SourceError:  # Raised when a Markpact source cannot be resolved.
+    SourceManager: __init__(1),is_remote_source(1),resolve(1),fetch(1),_result(2),_cache_dir(1),_fetch_http(1),_fetch_github_uri(1),_fetch_github_raw(4),_fetch_git(1),_fetch_zip(1)  # Resolve Markpact sources from local paths, HTTP(S), GitHub, 
   src/urisys/uricore_install.py:
     e: github_owner,github_version,wheel_url,pip_spec,_pkg_version,_module_exists,_dist_top_levels,is_wrong_uricore_installed,diagnose_uricore,pip_run,repair_uricore
     github_owner()
@@ -449,321 +449,357 @@ Markpact is...
     diagnose_uricore()
     pip_run(args)
     repair_uricore()
-  src/urisys/controllers/flow_controller.py:
-    e: FlowController
-    FlowController: __init__(1),run(1),close(0)
-  src/urisys/managers/markpact_models.py:
-    e: MarkpactBlock,CompiledMarkpact,MarkpactError,safe_identifier,parse_meta,scheme_from_uri,source_hash
-    MarkpactBlock:
-    CompiledMarkpact: to_dict(0)
-    MarkpactError(ValueError):  # Raised when a Markpact cannot be parsed, validated or compil...
-    safe_identifier(value)
-    parse_meta(raw)
-    scheme_from_uri(uri)
-    source_hash(path)
-  scripts/report/cli.py:
-    e: main
-    main()
-  src/urisys/http_server.py:
-    e: _read_json,_send,create_server
-    _read_json(handler)
-    _send(handler;status;data)
-    create_server(host;port)
-  src/urisys/controllers/uri_controller.py:
-    e: UriController
-    UriController: __init__(1),call(2),explain(1),routes(0),close(0)
-  src/urisys/managers/bridge_manager.py:
-    e: BridgeManager
-    BridgeManager: call_http(5)  # Forwards URI envelopes to another URI server...
-  scripts/report/util.py:
-    e: now_iso,host_id,read_json,tail
-    now_iso()
-    host_id()
-    read_json(path)
-    tail(text;limit)
-  src/urisys/managers/policy_manager.py:
-    e: PolicyManager
-    PolicyManager: build_context(0)  # Placeholder for stronger policies: RBAC, signed approvals, O...
-  src/urisys/managers/route_manager.py:
-    e: RouteManager
-    RouteManager: __init__(1),explain(1),list_routes(0)
-  src/urisys/managers/runtime_manager.py:
-    e: RuntimeManager
-    RuntimeManager: __init__(1),create_runtime(0),close(0),__enter__(0),__exit__(3)
-  scripts/report/session_io.py:
-    e: write_session_report
-    write_session_report(session_dir;report)
-  urisys-automation-lab/web/app.js:
-    e: logEl,transcriptEl,uriEl,payloadEl,localStream,pc,dataChannel,log,line,uriCall,res,data,offer,answer,SR,rec,text,text,text
-    logEl()
-    transcriptEl()
-    uriEl()
-    payloadEl()
-    localStream()
-    pc()
-    dataChannel()
-    log()
-    line()
-    uriCall()
-    res()
-    data()
-    offer()
-    answer()
-    SR()
-    rec()
-    text()
-    text()
-    text()
-  examples/frontend/app.js:
-    i: ../../../uri-packs/packages/js/uridom-js/src/index.js,../../../uri-packs/packages/js/uripage-js/src/index.js,../../../uricore-js/src/index.js,../../../uricore-js/src/transports/http-client.js
-    e: registry,runtime,out,result,client,result
-    registry()
+  tests/test_bootstrap.py:
+    e: _load_module,test_bootstrap_import_does_not_require_uri_control,test_cli_import_does_not_require_uri_control,test_missing_uricore_payload,test_doctor_subcommand_via_bootstrap
+    _load_module(name;path)
+    test_bootstrap_import_does_not_require_uri_control()
+    test_cli_import_does_not_require_uri_control()
+    test_missing_uricore_payload()
+    test_doctor_subcommand_via_bootstrap()
+  tests/test_doctor.py:
+    e: test_doctor_ok_in_dev_env,test_doctor_fails_high_min_version,test_doctor_hints_include_node_serve
+    test_doctor_ok_in_dev_env()
+    test_doctor_fails_high_min_version()
+    test_doctor_hints_include_node_serve()
+  tests/test_doctor_uricore.py:
+    e: test_check_uricore_authentic_fails_on_squatter
+    test_check_uricore_authentic_fails_on_squatter()
+  tests/test_init.py:
+    e: test_init_dry_run_via_bootstrap,test_run_init_skip_pip_writes_env,test_pip_install_failure
+    test_init_dry_run_via_bootstrap()
+    test_run_init_skip_pip_writes_env(tmp_path)
+    test_pip_install_failure()
+  tests/test_kvm_pack_pyprojects.py:
+    e: _name,test_urisysedge_sibling_pyproject,test_each_kvm_pack_has_sibling_pyproject,test_sibling_pack_pyprojects_depend_on_urisysedge,test_urillm_imports_urisysedge_not_urikvmedge,test_urisys_root_uv_sources_point_to_siblings,test_vendored_kvm_pack_dirs_removed,test_urikvmedge_promoted_to_sibling
+    _name(path)
+    test_urisysedge_sibling_pyproject()
+    test_each_kvm_pack_has_sibling_pyproject()
+    test_sibling_pack_pyprojects_depend_on_urisysedge()
+    test_urillm_imports_urisysedge_not_urikvmedge()
+    test_urisys_root_uv_sources_point_to_siblings()
+    test_vendored_kvm_pack_dirs_removed()
+    test_urikvmedge_promoted_to_sibling()
+  tests/test_markpact.py:
+    e: test_markpact_validate,test_markpact_validate_contract,test_markpact_validate_implementation,test_markpact_validate_bundle,test_markpact_compile_and_call,test_uri_controller_loads_markpact_directly,test_markpact_embedded_tests,test_build_route_shape
+    test_markpact_validate()
+    test_markpact_validate_contract()
+    test_markpact_validate_implementation()
+    test_markpact_validate_bundle()
+    test_markpact_compile_and_call(tmp_path)
+    test_uri_controller_loads_markpact_directly(tmp_path)
+    test_markpact_embedded_tests(tmp_path)
+    test_build_route_shape()
+  tests/test_pypi_metadata.py:
+    e: test_validate_pypi_metadata_script_exists,test_built_wheel_has_no_direct_url_requires_dist,test_pyproject_runtime_deps_have_no_direct_urls
+    test_validate_pypi_metadata_script_exists()
+    test_built_wheel_has_no_direct_url_requires_dist()
+    test_pyproject_runtime_deps_have_no_direct_urls()
+  tests/test_python_compat.py:
+    e: test_python_version_gate,test_current_python_supported,_FakeVersionInfo
+    _FakeVersionInfo: __init__(3),__getitem__(1),__ge__(1),__lt__(1)  # Minimal sys.version_info stand-in for tests.
+    test_python_version_gate(monkeypatch;major;minor;expected)
+    test_current_python_supported()
+  tests/test_run_expectations.py:
+    e: test_screen_changed_uses_baseline_not_previous_flow,test_screen_changed_fails_when_equal_baseline,test_ocr_contains_from_pipeline
+    test_screen_changed_uses_baseline_not_previous_flow()
+    test_screen_changed_fails_when_equal_baseline()
+    test_ocr_contains_from_pipeline()
+  tests/test_session_report_events.py:
+    e: test_summarize_events_api_json,test_summarize_events_jsonl
+    test_summarize_events_api_json(tmp_path)
+    test_summarize_events_jsonl(tmp_path)
+  tests/test_source_manager.py:
+    e: test_fetch_local_file,test_fetch_github_raw
+    test_fetch_local_file(tmp_path)
+    test_fetch_github_raw(monkeypatch;tmp_path)
+  tests/test_uricore_install.py:
+    e: test_wheel_url_default,test_wrong_uricore_detected_when_squatter_present,test_not_wrong_when_uri_control_present,test_diagnose_includes_wheel_url
+    test_wheel_url_default()
+    test_wrong_uricore_detected_when_squatter_present()
+    test_not_wrong_when_uri_control_present()
+    test_diagnose_includes_wheel_url()
+  tests/test_urisys.py:
+    e: test_call_browser_open,test_routes_load,test_all_skips_uninstalled_packs,test_explicit_missing_pack_raises_helpful_error
+    test_call_browser_open(tmp_path)
+    test_routes_load(tmp_path)
+    test_all_skips_uninstalled_packs(tmp_path)
+    test_explicit_missing_pack_raises_helpful_error()
+  tests/test_vendored_sync.py:
+    e: _run_check,test_pack_sync_script_exists,test_sibling_repos_exist,test_promoted_packs_not_vendored_in_monorepo,test_sibling_repos_have_pyproject,test_no_drift_promoted_packs
+    _run_check(packs)
+    test_pack_sync_script_exists()
+    test_sibling_repos_exist()
+    test_promoted_packs_not_vendored_in_monorepo()
+    test_sibling_repos_have_pyproject()
+    test_no_drift_promoted_packs()
+  uribrowser-docker/tests/test_browser.py:
+    e: runtime,test_open_requires_approval,test_open_and_dom
     runtime()
-    out()
-    result()
-    client()
-    result()
-  src/urisys/controllers/server_controller.py:
-    e: ServerController
-    ServerController: __init__(0),serve_forever(0)
-  src/urisys/managers/event_manager.py:
-    e: EventManager
-    EventManager: __init__(1),list_events(0)
-  planfile.yaml:
-  tree.sh:
-  prefact.yaml:
-  project.sh:
-  schemas/uripack-markpact.schema.json:
-  local-lab/node-profile.local.yaml:
-  local-lab/docker-compose.yml:
-  local-lab/builder/Dockerfile:
-  local-lab/scripts/03-resolve-run.sh:
-  local-lab/scripts/05-resolve-from-url.sh:
-  local-lab/scripts/run-all.sh:
-  local-lab/scripts/02-build-publish.sh:
-  local-lab/scripts/01-validate-markpact.sh:
-  local-lab/scripts/install-urisys.sh:
-  local-lab/scripts/06-register-release.sh:
-  local-lab/scripts/04-smoke.sh:
-  examples/markpact/browser-call.sh:
-  examples/shell/call-uri.sh:
-  examples/shell/server-curl.sh:
-  src/urisys/defaults.py:
-  src/urisys/controllers/__init__.py:
-  urimail-docker/docker-compose.yml:
-  uristepper-docker/docker-compose.rpi3.example.yml:
-  uristepper-docker/Makefile:
-  uristepper-docker/docker-compose.yml:
-  uristepper-docker/scripts/test-docker.sh:
-  uristepper-docker/scripts/call-http.sh:
-  uristepper-docker/scripts/test-local.sh:
-  uristepper-docker/config/device-profile.json:
-  uristepper-docker/config/device-profile.rpi3.example.json:
-  uristepper-docker/flows/move-test.uri.flow.yaml:
-  uristepper-docker/flows/safety-denied.uri.flow.yaml:
-  scripts/lenovo-node-session.sh:
-    e: install_pack
-    install_pack()
-  scripts/run-office-writer-e2e.sh:
-    e: cleanup,uri_call,wait_health,save_json
-    cleanup()
-    uri_call()
+    test_open_requires_approval()
+    test_open_and_dom()
+  urienv-docker/tests/e2e_env.py:
+    e: post,wait_health,main
+    post(uri;payload;context;expect_ok)
     wait_health()
-    save_json()
-  scripts/test-goal.sh:
-  scripts/run-lab-nightly.sh:
-  scripts/run-lab-e2e.sh:
-  scripts/run-nl-log-smoke.sh:
-    e: print,print,print
-    print()
-    print()
-    print()
-  scripts/validate-all-markpacts.sh:
-  scripts/run-urisys-node-docker-session.sh:
-  scripts/run-office-simulate-e2e.sh:
-    e: cleanup,uri_call,wait_health,save_json
-    cleanup()
-    uri_call()
-    wait_health()
-    save_json()
-  scripts/run-urisys-node-docker-e2e.sh:
-    e: save_json,cleanup,http_json,remote_call,wait_health
-    save_json()
-    cleanup()
-    http_json()
-    remote_call()
-    wait_health()
-  scripts/run-email-mailpit-e2e.sh:
-    e: cleanup,uri_call,wait_health,save_json
-    cleanup()
-    uri_call()
-    wait_health()
-    save_json()
-  scripts/paths.sh:
-    e: _urisys_root,urisys_root,markpact_contracts_packs,uricore_root,uricore_pythonpath,releases_dir
-    _urisys_root()
-    urisys_root()
-    markpact_contracts_packs()
-    uricore_root()
-    uricore_pythonpath()
-    releases_dir()
-  scripts/remote-node-smoke.sh:
-    e: http_get,http_post
-    http_get()
-    http_post()
-  scripts/test-python-matrix.sh:
-    e: run_one
-    run_one()
-  scripts/run-lab-unit-ci.sh:
-  scripts/session_report.py:
-  scripts/sync-vendored-urisysedge.sh:
-  scripts/run-smoke-all.sh:
-  scripts/report/__init__.py:
-  scripts/report/models.py:
-    e: StepResult,SessionReport,RunAnalysis,Finding,FlowOutcome
-    StepResult:
-    SessionReport:
-    RunAnalysis:
-    Finding:
-    FlowOutcome:
-  scripts/test_sessions/__init__.py:
-  urirdp-docker/Makefile:
-  urirdp-docker/docker-compose.yml:
-  urirdp-docker/docker-compose.rdp-e2e.yml:
-  urirdp-docker/docker/entrypoint.sh:
-  urirdp-docker/docker/startwm.sh:
-  urirdp-docker/docker/bootstrap-rdp-session.sh:
-    e: wait_xrdp,start_client_display,detect_session_display,start_rdp_client,wait_session_display,show_ok_target,main
-    wait_xrdp()
-    start_client_display()
-    detect_session_display()
-    start_rdp_client()
-    wait_session_display()
-    show_ok_target()
     main()
-  urirdp-docker/docker/supervisord.conf:
-  urirdp-docker/scripts/test-docker.sh:
-  urirdp-docker/scripts/call-http.sh:
-  urirdp-docker/scripts/test-rdp-real.sh:
-  urirdp-docker/scripts/test-real-docker.sh:
-    e: cleanup
-    cleanup()
-  urirdp-docker/scripts/test-local.sh:
-  urirdp-docker/config/rdp-kvm-profile.real.json:
-  urirdp-docker/config/rdp-kvm-profile.json:
-  urirdp-docker/config/env-policy.yaml:
-  urirdp-docker/flows/rdp-kvm-smoke.uri.flow.yaml:
-  urirdp-docker/flows/real-rdp-click-text.uri.flow.yaml:
-  testql-scenarios/generated-from-pytests.testql.toon.yaml:
-  testql-scenarios/generated-cli-tests.testql.toon.yaml:
-  testql-scenarios/generated-api-smoke.testql.toon.yaml:
-  uribrowser-docker/docker-compose.yml:
-  uribrowser-docker/scripts/test-local.sh:
-  uribrowser-docker/scripts/test-real.sh:
-  uribrowser-docker/config/browser-profile.real.json:
-  uribrowser-docker/config/browser-profile.json:
-  uribrowser-docker/flows/browser-demo.uri.flow.yaml:
-  urikvm-docker/docker-compose.yml:
-  urikvm-docker/scripts/call-http.sh:
-  urikvm-docker/scripts/test-local.sh:
-  urikvm-docker/scripts/test-real.sh:
-    e: run_kvm
-    run_kvm()
-  urikvm-docker/config/kvm-profile.real.json:
-  urikvm-docker/config/kvm-profile.json:
-  urikvm-docker/flows/kvm-click-ok.uri.flow.yaml:
-  urisys-automation-lab/docker-compose.lab.yml:
-  urisys-automation-lab/docker/entrypoint.sh:
-  urisys-automation-lab/routes/local-rdp.routes.yaml:
-  urisys-automation-lab/scripts/docker-logs.sh:
-  urisys-automation-lab/scripts/validate-flows.sh:
-  urisys-automation-lab/scripts/run-lab.sh:
-  urisys-automation-lab/scripts/docker-down.sh:
-  urisys-automation-lab/scripts/docker-smoke.sh:
-  urisys-automation-lab/scripts/docker-up.sh:
+  urienv-docker/tests/test_urienv.py:
+    e: runtime,base_context,test_public_var_can_be_read,test_non_allowlisted_var_is_blocked,test_secret_is_masked_but_not_revealed_without_gate,test_secret_can_be_revealed_with_explicit_gate,test_mutable_var_is_process_local
+    runtime()
+    base_context()
+    test_public_var_can_be_read(monkeypatch)
+    test_non_allowlisted_var_is_blocked(monkeypatch)
+    test_secret_is_masked_but_not_revealed_without_gate(monkeypatch)
+    test_secret_can_be_revealed_with_explicit_gate(monkeypatch)
+    test_mutable_var_is_process_local(monkeypatch)
+  urikvm-docker/scripts/real_pipeline.py:
+    e: _png_with_labels,_inject_png,build_runtime,main
+    _png_with_labels(labels)
+    _inject_png(rt;png_bytes)
+    build_runtime(config_path)
+    main()
+  urikvm-docker/tests/test_him_driver.py:
+    e: test_driver_mock_without_allow_real,test_driver_configured,test_driver_env_override,test_driver_wayland_prefers_ydotool,test_driver_x11_defaults_pyautogui,test_driver_x11_prefers_xdotool,test_ydotool_key_sequence_ctrl_enter
+    test_driver_mock_without_allow_real()
+    test_driver_configured()
+    test_driver_env_override()
+    test_driver_wayland_prefers_ydotool()
+    test_driver_x11_defaults_pyautogui()
+    test_driver_x11_prefers_xdotool()
+    test_ydotool_key_sequence_ctrl_enter()
+  urikvm-docker/tests/test_him_scroll.py:
+    e: test_mouse_scroll_dry_run_mock,test_mouse_scroll_dry_run_ydotool
+    test_mouse_scroll_dry_run_mock()
+    test_mouse_scroll_dry_run_ydotool()
+  urikvm-docker/tests/test_kvm.py:
+    e: runtime,test_him_requires_approval,test_kvm_click_text_uses_him_ocr_llm,test_type_text
+    runtime()
+    test_him_requires_approval()
+    test_kvm_click_text_uses_him_ocr_llm()
+    test_type_text()
+  urikvm-docker/tests/test_llm_plan.py:
+    e: test_plan_scroll_phrase_map,test_plan_type_letter,test_plan_rejects_disallowed_scheme
+    test_plan_scroll_phrase_map()
+    test_plan_type_letter()
+    test_plan_rejects_disallowed_scheme()
+  urikvm-docker/tests/test_ocr_llm.py:
+    e: _png_with_labels,_runtime,_inject_png,test_tesseract_finds_ok,test_heuristic_llm_clicks_ok_from_ocr,test_openai_vision_clicks_ok_from_image
+    _png_with_labels(labels)
+    _runtime(ocr_driver;llm_driver)
+    _inject_png(rt;png_bytes)
+    test_tesseract_finds_ok()
+    test_heuristic_llm_clicks_ok_from_ocr()
+    test_openai_vision_clicks_ok_from_image()
+  urikvm-docker/tests/test_office_mail.py:
+    e: _ctx,test_office_status_and_writer_render,test_office_writer_real_export_pdf,test_mail_unread_compose_send_dry_run,test_vql_detect_compare_mock,test_plan_mail_scheme,test_plan_office_scheme
+    _ctx()
+    test_office_status_and_writer_render()
+    test_office_writer_real_export_pdf(tmp_path)
+    test_mail_unread_compose_send_dry_run()
+    test_vql_detect_compare_mock()
+    test_plan_mail_scheme()
+    test_plan_office_scheme()
+  urikvm-docker/tests/test_vision_dispatch.py:
+    e: _ctx,test_mock_matches_target_box,test_heuristic_goal_substring_match,test_no_target_match_falls_back_to_first_box,test_empty_boxes_yields_no_action,test_unknown_driver_uses_heuristic,test_openai_without_key_falls_back_to_heuristic
+    _ctx(driver)
+    test_mock_matches_target_box()
+    test_heuristic_goal_substring_match()
+    test_no_target_match_falls_back_to_first_box()
+    test_empty_boxes_yields_no_action()
+    test_unknown_driver_uses_heuristic()
+    test_openai_without_key_falls_back_to_heuristic(monkeypatch)
+  urirdp-docker/tests/test_decide_dispatch.py:
+    e: _cfg,test_missing_question_errors,test_mock_retry_on_critical_pattern,test_mock_abort_on_clean_context,test_dry_run_forces_mock,test_real_driver_without_credentials_falls_back,test_unknown_driver_falls_back_to_mock
+    _cfg(driver)
+    test_missing_question_errors()
+    test_mock_retry_on_critical_pattern()
+    test_mock_abort_on_clean_context()
+    test_dry_run_forces_mock()
+    test_real_driver_without_credentials_falls_back(monkeypatch)
+    test_unknown_driver_falls_back_to_mock()
+  urirdp-docker/tests/test_env_browser_routes.py:
+    e: test_env_and_browser_routes_registered,test_env_health_call,test_browser_lab_alias_open_and_dom,_Args
+    _Args:
+    test_env_and_browser_routes_registered()
+    test_env_health_call()
+    test_browser_lab_alias_open_and_dom()
+  urirdp-docker/tests/test_env_resolve.py:
+    e: test_load_env_policy_includes_llm_vars,test_resolve_env_var_falls_back_to_process_env,test_resolve_env_var_secret_via_env_policy
+    test_load_env_policy_includes_llm_vars()
+    test_resolve_env_var_falls_back_to_process_env()
+    test_resolve_env_var_secret_via_env_policy(monkeypatch)
+  urirdp-docker/tests/test_rdp_kvm.py:
+    e: test_routes_registered,test_rdp_display_status_mock,test_kvm_click_text_dry_run_pipeline,test_rdp_status,test_kvm_click_text_dry_run,test_kvm_click_text_real_without_display,test_him_requires_approval,Args
+    Args:
+    test_routes_registered()
+    test_rdp_display_status_mock()
+    test_kvm_click_text_dry_run_pipeline()
+    test_rdp_status()
+    test_kvm_click_text_dry_run()
+    test_kvm_click_text_real_without_display()
+    test_him_requires_approval()
+  uristepper-docker/tests/e2e.py:
+    e: post,get,assert_ok,main
+    post(path;data)
+    get(path)
+    assert_ok(result;label)
+    main()
+  uristepper-docker/tests/test_runtime.py:
+    e: RuntimeTest
+    RuntimeTest: setUp(0),test_status(0),test_policy_requires_approval(0),test_move_relative(0),test_safety_limit(0)
+  urisys-automation-lab/server/automation_lab_server.py:
+    e: build_lab_runtime,forward_uri_call,serve,LabHandler
+    LabHandler: log_message(1),_json(2),_read_json(0),do_OPTIONS(0),do_GET(0),do_POST(0)
+    build_lab_runtime(config_path)
+    forward_uri_call(base_url;uri;payload;context)
+    serve(host;port)
+  urisys-automation-lab/server/flow_runner.py:
+    e: _require_uri_stack,_execution_root,_load_defaults,_lab_adapter_session,plan_flow,_legacy_step,run_flow_file
+    _require_uri_stack()
+    _execution_root(flow_path;ctx)
+    _load_defaults(flow_path)
+    _lab_adapter_session()
+    plan_flow(flow_path)
+    _legacy_step(node;step;payload;step_ctx)
+    run_flow_file(flow_path)
+  urisys-automation-lab/server/lab_uri_adapter.py:
+    e: step_ok,LabCallAdapter
+    LabCallAdapter: execute(2),_execute_log(4)
+    step_ok(response)
   urisys-automation-lab/server/static_server.py:
-  urisys-automation-lab/flows/04_browser_download_file.uri.flow.yaml:
-  urisys-automation-lab/flows/02_update_system_tui.uri.flow.yaml:
-  urisys-automation-lab/flows/01_install_browser.uri.flow.yaml:
-  urisys-automation-lab/flows/05_fill_form_gui.uri.flow.yaml:
-  urisys-automation-lab/flows/03_open_browser_gui.uri.flow.yaml:
-  urisys-automation-lab/flows/08_voice_command_to_kvm.uri.flow.yaml:
-  urisys-automation-lab/flows/09_webrtc_video_chat_rdp.uri.flow.yaml:
-  urisys-automation-lab/flows/10_full_maintenance_rdp.uri.flow.yaml:
-  urisys-automation-lab/flows/06_terminal_htop_tui.uri.flow.yaml:
-  urisys-automation-lab/flows/07_edit_config_nano_tui.uri.flow.yaml:
-  urienv-docker/docker-compose.yml:
-  urienv-docker/docker/secrets/smtp_password.txt:
-  urienv-docker/docker/secrets/markpact_token.txt:
-  urienv-docker/docker/config/env-policy.yaml:
-  urienv-docker/scripts/test-docker.sh:
-  urienv-docker/scripts/local-test.sh:
-  urienv-docker/flows/startup-env-check.uri.flow.yaml:
-  urienv-docker/flows/mutate-process-env.uri.flow.yaml:
-  flows/office-writer.uri.flow.yaml:
-  flows/browser-form-vql.uri.flow.yaml:
-  flows/email-mailpit.uri.flow.yaml:
-  flows/office-simulate-tick.uri.flow.yaml:
-  flows/device-maintenance.uri.flow.yaml:
-  urisys-node/docker/entrypoint.sh:
-    e: start_xvfb,show_gui_target,verify_cli
-    start_xvfb()
-    show_gui_target()
-    verify_cli()
-  urisys-node/docker/docker-compose.gui.yml:
-  urisys-node/docker/config/nodes.registry.host.json:
-  urisys-node/docker/config/route-map.host.yaml:
-  urisys-node/docker/config/node-profile.docker.json:
-  urisys-node/scripts/install-linux.sh:
-  urisys-node/config/nodes.registry.json:
-  urisys-node/config/node-profile.json:
-  urisys-node/config/node-profile.lenovo.json:
-  urisys-node/config/route-map.lenovo.yaml:
-  urisys-node/config/route-map.master.yaml:
-  urisys-node/config/route-map.slave.yaml:
-  urisys-node/flows/remote-probe.uri.flow.yaml:
-  urisys-node/flows/bootstrap-kvm-github.uri.flow.yaml:
-  urisys-node/flows/slave-kvm-demo.uri.flow.yaml:
-  urisys-node/flows/bootstrap-kvm-pypi.uri.flow.yaml:
-  urisys-node/flows/screen-capture-mss.uri.flow.yaml:
-  goal.yaml:
-  pyproject.toml:
-  src/urisys/__init__.py:
-  uristepper-docker/pyproject.toml:
-  uristepper-docker/Dockerfile:
-  scripts/install-kvm-packs-editable.sh:
-  scripts/run-office-simulate-lenovo.sh:
-    e: save_json,uri_call,wait_node,serve_wheels,upgrade_him,upgrade_llm
-    save_json()
-    uri_call()
-    wait_node()
-    serve_wheels()
-    upgrade_him()
-    upgrade_llm()
-  scripts/sync-vendored-pack.sh:
-  scripts/ci-install-siblings.sh:
-    e: install_editable
-    install_editable()
-  scripts/ci-checkout-siblings.sh:
-    e: clone_repo
-    clone_repo()
-  scripts/publish-pypi-packs.sh:
-  scripts/validate-pypi-metadata.sh:
-    e: check_metadata,print
-    check_metadata()
-    print()
-  scripts/deploy-lenovo-node.sh:
-    e: call,health
-    call()
-    health()
-  urirdp-docker/pyproject.toml:
-  urirdp-docker/Dockerfile:
-  uribrowser-docker/pyproject.toml:
-  uribrowser-docker/Dockerfile:
-  urikvm-docker/pyproject.toml:
-  urikvm-docker/Dockerfile:
-  urisys-automation-lab/Dockerfile:
-  urienv-docker/pyproject.toml:
-  urienv-docker/Dockerfile:
-  urisys-node/pyproject.toml:
-  urisys-node/docker/Dockerfile.gui:
+  urisys-automation-lab/tests/test_flow_08_plan.py:
+    e: _rt,test_message_alert_send,test_llm_plan_from_transcript,test_flow_08_plan_expand
+    _rt()
+    test_message_alert_send()
+    test_llm_plan_from_transcript()
+    test_flow_08_plan_expand()
+  urisys-automation-lab/tests/test_flow_09_plan.py:
+    e: test_flow_09_no_chat_bridge
+    test_flow_09_no_chat_bridge()
+  urisys-automation-lab/tests/test_flow_expectations.py:
+    e: test_flow_files_exist,test_expect_block_is_well_formed,test_flow_still_parses_with_expect,test_evaluate_screen_changed,test_evaluate_screen_changed_since_previous,test_evaluate_ocr_contains,test_evaluate_min_vision_confidence,test_no_expect_is_transport_only,test_evaluate_opened_url_contains,test_analyzer_reports_duplicate_screenshots,test_analyzer_contract_overrides_heuristic
+    test_flow_files_exist()
+    test_expect_block_is_well_formed(flow_path)
+    test_flow_still_parses_with_expect(flow_path)
+    test_evaluate_screen_changed()
+    test_evaluate_screen_changed_since_previous()
+    test_evaluate_ocr_contains()
+    test_evaluate_min_vision_confidence()
+    test_no_expect_is_transport_only()
+    test_evaluate_opened_url_contains()
+    test_analyzer_reports_duplicate_screenshots()
+    test_analyzer_contract_overrides_heuristic()
+  urisys-automation-lab/tests/test_lab_handlers.py:
+    e: _rt,test_stt_session_and_transcript,test_chat_uri_execute_dry_run,test_webrtc_data_send
+    _rt()
+    test_stt_session_and_transcript()
+    test_chat_uri_execute_dry_run()
+    test_webrtc_data_send()
+  urisys-automation-lab/tests/test_llm_plan_handlers.py:
+    e: test_plan_phrase_map_default,test_plan_rejects_disallowed_scheme,test_plan_litellm_fallback_on_error
+    test_plan_phrase_map_default()
+    test_plan_rejects_disallowed_scheme()
+    test_plan_litellm_fallback_on_error()
+  urisys-node/tests/test_artifact_resolver.py:
+    e: test_select_artifact_by_platform,test_load_artifact_index_from_file,test_load_artifact_index_from_url,test_fetch_release,test_release_api_url,test_run_release_honors_artifact_container_port
+    test_select_artifact_by_platform(tmp_path)
+    test_load_artifact_index_from_file(tmp_path)
+    test_load_artifact_index_from_url()
+    test_fetch_release()
+    test_release_api_url()
+    test_run_release_honors_artifact_container_port(monkeypatch;tmp_path)
+  urisys-node/tests/test_docker_host_e2e.py:
+    e: _http_get,_remote_call,docker_stack,test_container_urisys_cli,test_host_health_and_routes,test_host_remote_identity,test_host_screen_capture,test_host_indicator_control
+    _http_get(path)
+    _remote_call(uri;payload;context)
+    docker_stack()
+    test_container_urisys_cli(docker_stack)
+    test_host_health_and_routes(docker_stack)
+    test_host_remote_identity(docker_stack)
+    test_host_screen_capture(docker_stack)
+    test_host_indicator_control()
+  urisys-node/tests/test_forward_config.py:
+    e: _runtime,test_load_forward_entries_from_config,test_load_forward_entries_env_inline,test_wire_forward_packs_registers_routes,test_command_register_forward,test_load_release_forward_entries_from_config,test_load_release_forward_entries_env_inline,test_wire_release_forward_packs_calls_hotload,test_wire_release_forward_packs_is_best_effort,test_build_runtime_wires_config_forwards
+    _runtime(tmp_path)
+    test_load_forward_entries_from_config()
+    test_load_forward_entries_env_inline()
+    test_wire_forward_packs_registers_routes(tmp_path)
+    test_command_register_forward(tmp_path)
+    test_load_release_forward_entries_from_config()
+    test_load_release_forward_entries_env_inline()
+    test_wire_release_forward_packs_calls_hotload(tmp_path;monkeypatch)
+    test_wire_release_forward_packs_is_best_effort(tmp_path;monkeypatch)
+    test_build_runtime_wires_config_forwards(tmp_path;monkeypatch)
+  urisys-node/tests/test_forward_pack.py:
+    e: _runtime,test_register_forward_adds_routes_and_target,test_call_forwards_to_worker,test_forward_without_target_fails_cleanly
+    _runtime(tmp_path)
+    test_register_forward_adds_routes_and_target(tmp_path)
+    test_call_forwards_to_worker(tmp_path;monkeypatch)
+    test_forward_without_target_fails_cleanly(tmp_path)
+  urisys-node/tests/test_pack_auto_install.py:
+    e: _node_only_runtime,test_install_pack_uri,test_install_pack_requires_approval,test_query_packs,test_call_uri_lazy_pack_route_not_found,test_load_pack_with_mock_pip,test_ensure_pack_for_uri_skips_pip_when_importable,test_force_reload_reregister_pack,test_pack_importable_uses_import_pack_module
+    _node_only_runtime(tmp_path)
+    test_install_pack_uri(tmp_path)
+    test_install_pack_requires_approval(tmp_path)
+    test_query_packs(tmp_path)
+    test_call_uri_lazy_pack_route_not_found(tmp_path)
+    test_load_pack_with_mock_pip(tmp_path)
+    test_ensure_pack_for_uri_skips_pip_when_importable(tmp_path)
+    test_force_reload_reregister_pack(tmp_path)
+    test_pack_importable_uses_import_pack_module()
+  urisys-node/tests/test_pack_github.py:
+    e: test_github_wheel_url_him,test_resolve_pack_spec_auto_prefers_github_for_him,test_resolve_pack_spec_kvm_stays_pypi
+    test_github_wheel_url_him()
+    test_resolve_pack_spec_auto_prefers_github_for_him()
+    test_resolve_pack_spec_kvm_stays_pypi()
+  urisys-node/tests/test_pack_hotload.py:
+    e: _node_only_runtime,test_hotload_adds_routes,test_hotload_is_idempotent,test_hotload_empty_pack_name_rejected,test_hotload_unknown_pack_reports_failure
+    _node_only_runtime(tmp_path)
+    test_hotload_adds_routes(tmp_path)
+    test_hotload_is_idempotent(tmp_path)
+    test_hotload_empty_pack_name_rejected(tmp_path)
+    test_hotload_unknown_pack_reports_failure(tmp_path)
+  urisys-node/tests/test_pack_office_mail.py:
+    e: test_scheme_to_pack_office_mail_vql,test_pack_modules_office_mail_vql
+    test_scheme_to_pack_office_mail_vql()
+    test_pack_modules_office_mail_vql()
+  urisys-node/tests/test_release_hotload.py:
+    e: _runtime,_release,test_canonical_digest_ignores_signature_block,test_disabled_policy_passes_through,test_required_but_unsigned_fails,test_required_untrusted_key_fails,test_required_no_crypto_backend_fails_closed,test_required_good_signature_verifies,test_required_mismatched_signature_fails,test_hotload_requires_pairing,test_hotload_happy_path_wires_forward,test_hotload_bad_signature_skips_run,test_hotload_missing_scheme_patterns,test_parse_contract_spec_extracts_scheme_and_patterns,test_parse_contract_spec_rejects_block_without_scheme,test_contract_url_from_release_variants,test_hotload_derives_spec_from_contract
+    _runtime(tmp_path)
+    _release()
+    test_canonical_digest_ignores_signature_block()
+    test_disabled_policy_passes_through(monkeypatch)
+    test_required_but_unsigned_fails(monkeypatch)
+    test_required_untrusted_key_fails(monkeypatch)
+    test_required_no_crypto_backend_fails_closed(monkeypatch)
+    test_required_good_signature_verifies(monkeypatch)
+    test_required_mismatched_signature_fails(monkeypatch)
+    test_hotload_requires_pairing(tmp_path;monkeypatch)
+    test_hotload_happy_path_wires_forward(tmp_path;monkeypatch)
+    test_hotload_bad_signature_skips_run(tmp_path;monkeypatch)
+    test_hotload_missing_scheme_patterns(tmp_path;monkeypatch)
+    test_parse_contract_spec_extracts_scheme_and_patterns()
+    test_parse_contract_spec_rejects_block_without_scheme()
+    test_contract_url_from_release_variants()
+    test_hotload_derives_spec_from_contract(tmp_path;monkeypatch)
+  urisys-node/tests/test_uriscreen_auto.py:
+    e: test_resolve_backend_auto_x11,test_resolve_backend_auto_wayland,test_is_black_png
+    test_resolve_backend_auto_x11(monkeypatch)
+    test_resolve_backend_auto_wayland(monkeypatch)
+    test_is_black_png(tmp_path)
+  urisys-node/tests/test_urishell.py:
+    e: test_shell_route_registered,test_shell_pip_dry_run,test_shell_requires_allow_real
+    test_shell_route_registered()
+    test_shell_pip_dry_run()
+    test_shell_requires_allow_real()
+  urisys-node/tests/test_urisys_node.py:
+    e: test_identity_and_enroll,test_screen_capture_mock,test_rewrite_uri_for_slave,test_health_payload,test_health_payload_with_runtime
+    test_identity_and_enroll()
+    test_screen_capture_mock()
+    test_rewrite_uri_for_slave()
+    test_health_payload()
+    test_health_payload_with_runtime()
+  urisys-node/tests/test_urisysedge_single_source.py:
+    e: test_canonical_urisysedge_present,test_urisysedge_imports_from_canonical,test_no_vendored_duplicate_module
+    test_canonical_urisysedge_present()
+    test_urisysedge_imports_from_canonical()
+    test_no_vendored_duplicate_module(module)

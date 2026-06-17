@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any, Literal
 
 from .doctor import run_doctor
+from .node_install import diagnose_urisys_node, pip_spec as node_pip_spec
 from .uricore_install import diagnose_uricore, is_wrong_uricore_installed, pip_spec, repair_uricore, wheel_url
 
 Profile = Literal["slave", "dev"]
@@ -33,8 +34,12 @@ def default_pip_specs(*, profile: Profile = "slave") -> list[str]:
         pip_spec(),
         "urisysedge>=0.1.0",
         'urisys[real]>=0.1.25',
-        "urisys-node @ git+https://github.com/tellmesh/urisys-node.git",
     ]
+
+
+def default_node_pip_spec() -> str:
+    """Public GitHub Release wheel — never git+https (avoids credential prompts)."""
+    return node_pip_spec()
 
 
 def pip_install_specs(
@@ -132,9 +137,22 @@ def run_init(
                 "dry_run": True,
                 "command": f"{sys.executable} -m pip install -U {' '.join(specs)}",
                 "specs": specs,
+                "node_spec": default_node_pip_spec(),
             }
         else:
             pip_result = pip_install_specs(specs)
+            node_spec = default_node_pip_spec()
+            node_result = pip_install_specs([node_spec])
+            pip_result = {
+                **pip_result,
+                "node_spec": node_spec,
+                "node_install": node_result,
+            }
+            if not node_result.get("ok"):
+                pip_result["node_warning"] = (
+                    "urisys-node wheel install failed — publish a GitHub Release or set "
+                    "URISYS_NODE_WHEEL_URL. Node serve requires urisysnode."
+                )
         steps.append({"name": "pip_install", "status": "pass" if pip_result.get("ok") else "fail", "detail": pip_result})
         if not pip_result.get("ok"):
             return {
@@ -178,6 +196,16 @@ def run_init(
     ok = all(step["status"] == "pass" for step in steps)
     error = None
     hint = None
+    node_diag = diagnose_urisys_node() if not dry_run else {}
+    if not dry_run and install and not node_diag.get("urisysnode_importable"):
+        node_detail = (pip_result or {}).get("node_install") if pip_result else None
+        steps.append(
+            {
+                "name": "verify_urisysnode",
+                "status": "warn",
+                "detail": {**node_diag, "pip": node_detail},
+            }
+        )
     if not ok:
         if not verify.get("ok"):
             error = "uri_control not importable after init"
