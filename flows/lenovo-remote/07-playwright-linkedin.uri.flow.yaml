@@ -11,12 +11,20 @@ defaults:
   allow_real: true
 
 do:
-  - id: load_browser_pack
+  - id: reload_browser
     uri: node://lenovo/command/install-pack
     payload:
       pack: browser
       install: false
-      force: false
+      force: true
+    note: Re-register browser routes after node restart (wheel already pip-installed)
+
+  - id: reload_kv
+    uri: node://lenovo/command/install-pack
+    payload:
+      pack: kv
+      install: false
+      force: true
 
   - id: playwright_compose
     uri: browser://linkedin/social/command/publish-post

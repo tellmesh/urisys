@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `src/urisys/managers/markpact_manager.py` — obniżona złożoność trzech najcięższych metod: `run_tests` (CC 19→11, wydzielone `_check_expectations`), `compile` (CC 14→10, wydzielone `_write_handler_modules`), `_build_route` (CC 16→12, wydzielone `_resolve_handler_ref`); byte-identyczne (`urisys markpact test`/`routes` ok, `tests/` 62 passed)
 - `src/urisys/init_setup.py` — rozbicie god-funkcji `run_init` (CC 29→19, 141→95L): wydzielone `_pre_repair_uricore`, `_build_pip_result`, `_resolve_error_hint`; byte-identyczne (`urisys init --dry-run` ok, `tests/` 62 passed)
 - `src/urisys/managers/markpact_validation.py` — wydzielone pętle walidacji z trzech walidatorów: `_validate_contract_routes` (contract CC 22→12), `_missing_bundle_imports` (bundle CC 14→9), `_validate_implementation_capabilities` (implementation CC 18→14); byte-identyczne (`tests/test_markpact` + 62 passed)
+- `src/urisys/managers/pack_manager.py` — usunięty 3× zduplikowany split string/iterable → jeden `_split_specs`; `parse_packs` CC 12→7, `parse_markpacts` → 1-liner; byte-identyczne, +4 testy charakteryzacyjne (`tests/test_pack_manager_parse.py`, 73 passed)
 - Migracja 32 packów z `urisys/**/packages/python/*` → `tellmesh/{repo}/` (canonical source)
 - `urisys init` — uricore + urisys-node tylko jako publiczne wheels; core pip bez git credentials
 - Skrypty lenovo/deploy i `publish-pypi-packs.sh` — ścieżki sibling zamiast vendored
@@ -33,6 +34,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `urisys doctor` — `NameError: node_pip_spec` przy sprawdzaniu importu urisysnode
 - PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
 - Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
+
+## [0.1.53] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+
+### Test
+- Update tests/test_pack_manager_parse.py
+
+### Other
+- Update flows/lenovo-remote/07-playwright-linkedin.uri.flow.yaml
+- Update flows/lenovo-remote/_upgrade-playwright.uri.flow.yaml
+- Update scripts/lenovo_remote_session.py
+- Update scripts/session_core.py
+- Update uv.lock
 
 ## [0.1.52] - 2026-06-17
 

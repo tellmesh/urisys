@@ -38,6 +38,8 @@ def step_ok(result: dict[str, Any]) -> bool:
         return False
     if result.get("kind") == "http_get":
         return bool(result.get("response", {}).get("ok"))
+    if result.get("kind") == "host_wait_health":
+        return bool(result.get("response", {}).get("ok"))
     resp = result.get("response")
     if isinstance(resp, dict):
         if resp.get("ok") is False:
@@ -176,7 +178,12 @@ def expand_step_wheels(
 
     if not wheel_name:
         pack = payload.get("pack")
-        if isinstance(pack, str) and pack in PACK_TO_WHEEL and not payload.get("specs"):
+        if (
+            isinstance(pack, str)
+            and pack in PACK_TO_WHEEL
+            and not payload.get("specs")
+            and payload.get("install")
+        ):
             wheel_name = PACK_TO_WHEEL[pack]
 
     if wheel_name:

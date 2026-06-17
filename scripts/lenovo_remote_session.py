@@ -104,6 +104,15 @@ def run_step(
             out["seconds"] = seconds
             time.sleep(seconds)
             out["response"] = {"ok": True, "slept": seconds}
+        elif kind == "host_wait_health":
+            timeout = float(step.get("timeout") or step.get("seconds") or 60)
+            out["kind"] = "host_wait_health"
+            out["timeout"] = timeout
+            try:
+                out["response"] = wait_health(endpoint=endpoint, timeout_s=timeout)
+            except TimeoutError as exc:
+                out["error"] = str(exc)
+                out["response"] = {"ok": False, "error": str(exc)}
         else:
             uri = str(step.get("uri") or "")
             if not uri:

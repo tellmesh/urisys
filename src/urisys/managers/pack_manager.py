@@ -27,38 +27,35 @@ class PackManager:
         self.source_manager = SourceManager()
 
     @staticmethod
+    def _split_specs(value: Iterable[str] | str | None) -> list[str]:
+        """Normalize a comma string or iterable into a clean list of specs."""
+        if value is None or value == "":
+            return []
+        items = value.split(",") if isinstance(value, str) else value
+        return [str(p).strip() for p in items if str(p).strip()]
+
+    @staticmethod
     def _is_all(packs: Iterable[str] | str | None) -> bool:
         """True when the default ('all') package set is requested, so missing
         optional uri* packages are skipped with a warning instead of crashing."""
         if packs is None or packs == "" or packs == "all":
             return True
-        if isinstance(packs, str):
-            parts = [p.strip() for p in packs.split(",") if p.strip()]
-        else:
-            parts = [str(p).strip() for p in packs if str(p).strip()]
-        return any(p == "all" for p in parts)
+        return "all" in PackManager._split_specs(packs)
 
     @staticmethod
     def parse_packs(packs: Iterable[str] | str | None) -> list[str]:
         if packs is None or packs == "" or packs == "all":
             return list(DEFAULT_PACKAGES)
-        if isinstance(packs, str):
-            parts = [p.strip() for p in packs.split(",") if p.strip()]
-        else:
-            parts = [str(p).strip() for p in packs if str(p).strip()]
-        if any(p == "all" for p in parts):
+        parts = PackManager._split_specs(packs)
+        if "all" in parts:
             return list(DEFAULT_PACKAGES)
-        if any(p == "none" for p in parts):
+        if "none" in parts:
             return [p for p in parts if p != "none"]
         return parts
 
     @staticmethod
     def parse_markpacts(markpacts: Iterable[str] | str | None) -> list[str]:
-        if markpacts is None or markpacts == "":
-            return []
-        if isinstance(markpacts, str):
-            return [p.strip() for p in markpacts.split(",") if p.strip()]
-        return [str(p).strip() for p in markpacts if str(p).strip()]
+        return PackManager._split_specs(markpacts)
 
     def resolve_package_name(self, spec: str) -> str:
         return DEFAULT_PACKAGES.get(spec, spec)
