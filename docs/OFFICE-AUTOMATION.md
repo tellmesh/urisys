@@ -42,10 +42,11 @@ Stack lab: `urisys-automation-lab/docker-compose.lab.yml` — porty **8099**, **
 - [x] Flow 03 — Chromium w RDP + zrzut
 - [x] Flow 04 — download (kroki OK; doprecyzować `expect` zrzutu)
 - [ ] SSO (Google/Microsoft) — profil persistent / CDP
-- [ ] LinkedIn — post, komentarz, InMail (`vql://` verify modal)
+- [ ] LinkedIn — pełny auto-post (wymaga zalogowanej sesji / CDP)
 - [ ] Formularze web — Typeform, Google Forms
-- [x] Forward `browser://` na slave node → `uribrowser-docker` :8792 (`node-profile.lenovo.json`)
+- [x] Forward `browser://` na slave node → `uribrowser-docker` :8792 (opcjonalnie; lenovo: lokalny pack)
 - [x] `browser://…/form/command/submit` (mock + policy approval)
+- [x] `browser://…/social/command/publish-post` (mock + system-open + playwright draft)
 - [ ] CDP bridge: Chrome na hoście bez RDP
 
 ## Office (`urioffice://` — pack vendored w `urikvm-docker`)

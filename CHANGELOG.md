@@ -26,6 +26,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
 - Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
 
+## [0.1.47] - 2026-06-17
+
+### Docs
+- Update README.md
+- Update docs/OFFICE-AUTOMATION.md
+
+### Other
+- Update scripts/deploy-lenovo-node.sh
+- Update scripts/run-lenovo-office-linkedin.sh
+- Update uribrowser-docker/uv.lock
+- Update urisys-node/config/node-profile.lenovo.json
+- Update urisys-node/uv.lock
+- Update uv.lock
+
 ## [0.1.46] - 2026-06-17
 
 ### Docs

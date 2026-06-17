@@ -10,17 +10,6 @@
   },
   "forwards": [
     {
-      "scheme": "browser",
-      "endpoint": "http://127.0.0.1:8792",
-      "patterns": [
-        "browser://{session}/query/status",
-        "browser://{session}/page/command/open",
-        "browser://{session}/page/query/dom",
-        "browser://{session}/page/command/screenshot",
-        "browser://{session}/form/command/submit"
-      ]
-    },
-    {
       "scheme": "imgl",
       "endpoint": "http://127.0.0.1:8219",
       "patterns": [
@@ -47,8 +36,12 @@
       "mail.message.publish_post",
       "office.document.export_pdf",
       "browser.form.submit",
-      "browser.page.open"
+      "browser.page.open",
+      "browser.social.publish_post"
     ]
+  },
+  "browser": {
+    "driver": "system-open"
   },
   "office": {
     "driver": "mock",

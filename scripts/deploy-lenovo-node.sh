@@ -58,22 +58,25 @@ fi
 URISYS_VER="$(pkg_version "$ROOT")"
 URIHIM_VER="$(pkg_version "$TELLMESH/urihim")"
 URILLM_VER="$(pkg_version "$TELLMESH/urillm")"
+URIBROWSER_VER="$(pkg_version "$TELLMESH/uribrowser")"
 NODE_VER="$(pkg_version "$TELLMESH/urisys-node")"
 
 echo ""
-echo "== build wheels (urisys ${URISYS_VER}, urisys-node ${NODE_VER}, urihim ${URIHIM_VER}, urillm ${URILLM_VER}) =="
+echo "== build wheels (urisys ${URISYS_VER}, urisys-node ${NODE_VER}, urihim ${URIHIM_VER}, urillm ${URILLM_VER}, uribrowser ${URIBROWSER_VER}) =="
 mkdir -p "$DEPLOY_DIR"
 build_wheel "$ROOT"
 build_wheel "$TELLMESH/urisys-node"
 build_wheel "$TELLMESH/urihim"
 build_wheel "$TELLMESH/urillm"
+build_wheel "$TELLMESH/uribrowser"
 
 URISYS_WHL="$(wheel_name urisys "$URISYS_VER")"
 NODE_WHL="$(wheel_name urisys-node "$NODE_VER")"
 URIHIM_WHL="$(wheel_name urihim "$URIHIM_VER")"
 URILLM_WHL="$(wheel_name urillm "$URILLM_VER")"
+URIBROWSER_WHL="$(wheel_name uribrowser "$URIBROWSER_VER")"
 
-for whl in "$URISYS_WHL" "$NODE_WHL" "$URIHIM_WHL" "$URILLM_WHL"; do
+for whl in "$URISYS_WHL" "$NODE_WHL" "$URIHIM_WHL" "$URILLM_WHL" "$URIBROWSER_WHL"; do
   test -f "${DEPLOY_DIR}/${whl}" || { echo "missing ${DEPLOY_DIR}/${whl}" >&2; exit 1; }
 done
 
@@ -92,6 +95,20 @@ echo "== pip install urisys + urisys-node on lenovo =="
 call shell://pip "{\"args\":[\"install\",\"-U\",\"urisysedge>=0.1.0\",\"$DEV/$URISYS_WHL\",\"$DEV/$NODE_WHL\"]}" | python3 -m json.tool
 
 echo ""
+echo "== schedule urisys node restart (venv; delayed so this URI returns first) =="
+call shell://bash '{"args":["-lc","( sleep 1; pkill -f \"urisys node serve\" || pkill -f \"urisys-node serve\" || true; sleep 2; source ~/venv/bin/activate && nohup urisys node serve --host 0.0.0.0 --port 8790 >> /tmp/urisys-node.log 2>&1 & ) & echo scheduled"]}' | python3 -m json.tool
+
+echo ""
+echo "== wait for node health =="
+for i in $(seq 1 30); do
+  if health | python3 -c 'import json,sys; d=json.load(sys.stdin); sys.exit(0 if d.get("ok") else 1)' 2>/dev/null; then
+    break
+  fi
+  sleep 2
+done
+health | python3 -m json.tool
+
+echo ""
 echo "== install-pack urihim ${URIHIM_VER} =="
 call node://local/command/install-pack "{\"pack\":\"him\",\"install\":true,\"force\":true,\"specs\":[\"urisysedge>=0.1.0\",\"$DEV/$URIHIM_WHL\"]}" | python3 -m json.tool
 
@@ -100,14 +117,14 @@ echo "== install-pack urillm ${URILLM_VER} =="
 call node://local/command/install-pack "{\"pack\":\"llm\",\"install\":true,\"force\":true,\"specs\":[\"urisysedge>=0.1.0\",\"$DEV/$URILLM_WHL\"]}" | python3 -m json.tool
 
 echo ""
-echo "== restart urisys node =="
-call shell://bash '{"args":["-lc","pkill -f \"urisys node serve\" || pkill -f \"urisys-node serve\" || true; sleep 2; nohup urisys node serve --host 0.0.0.0 --port 8790 >> /tmp/urisys-node.log 2>&1 & sleep 3; curl -sS http://127.0.0.1:8790/health"]}' | python3 -m json.tool
+echo "== install-pack uribrowser ${URIBROWSER_VER} =="
+call node://local/command/install-pack "{\"pack\":\"browser\",\"install\":true,\"force\":true,\"specs\":[\"urisysedge>=0.1.0\",\"$DEV/$URIBROWSER_WHL\"]}" | python3 -m json.tool
 
 echo ""
 echo "== probe him driver + routes =="
 sleep 2
 call him://lenovo/mouse/query/status '{}' | python3 -m json.tool || true
-curl -sS "$LENOVO/uri/routes" | grep -E 'scroll|text/query/plan|him://' || true
+curl -sS "$LENOVO/uri/routes" | grep -E 'scroll|text/query/plan|browser://|him://' || true
 
 echo ""
-echo "Done. Test: bash scripts/run-office-simulate-lenovo.sh"
+echo "Done. Test: bash scripts/run-lenovo-office-linkedin.sh"
