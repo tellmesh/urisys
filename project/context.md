@@ -5,7 +5,7 @@
 
 - **Project**: /home/tom/github/tellmesh/urisys
 - **Primary Language**: python
-- **Languages**: python: 49, shell: 41, yaml: 7, toml: 1, json: 1
+- **Languages**: python: 49, shell: 41, yaml: 7, json: 1, yml: 1
 - **Analysis Mode**: static
 - **Total Functions**: 366
 - **Total Classes**: 22
@@ -434,9 +434,9 @@ Functions exposed as public API (no underscore prefix):
 - `scripts.pack_sync.main` - 39 calls
 - `scripts.report.session.infer_steps` - 37 calls
 - `scripts.scan-browser-sessions.main` - 34 calls
+- `scripts.lenovo_remote_session.run_flow` - 33 calls
 - `scripts.report.run_analysis.analyze_run` - 33 calls
 - `scripts.test_sessions.lab_flows.session_lab_10_flows` - 33 calls
-- `scripts.lenovo_remote_session.run_flow` - 33 calls
 - `scripts.run_test_sessions.main` - 32 calls
 - `src.urisys.http_server.create_server` - 31 calls
 - `scripts.run_test_sessions.session_urirdp_mock_docker` - 31 calls
@@ -459,8 +459,8 @@ Functions exposed as public API (no underscore prefix):
 - `src.urisys.cli.main` - 20 calls
 - `src.urisys.controllers.flow_controller.FlowController.run` - 19 calls
 - `scripts.run_test_sessions.session_urirdp_rdp_e2e` - 19 calls
-- `scripts.pack_sync.check_drift` - 19 calls
 - `scripts.lenovo_remote_session.write_session_md` - 19 calls
+- `scripts.pack_sync.check_drift` - 19 calls
 - `scripts.office-simulate-loop.llm_tick` - 18 calls
 - `scripts.test_sessions.lab_rdp.parse_lab_flow` - 18 calls
 - `scripts.test_sessions.util.http_json` - 18 calls

@@ -15,7 +15,7 @@ SUMD - Structured Unified Markdown Descriptor for AI-aware project refactorizati
 ## Metadata
 
 - **name**: `urisys`
-- **version**: `0.1.64`
+- **version**: `0.1.65`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -35,7 +35,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: urisys;
-  version: 0.1.64;
+  version: 0.1.65;
 }
 
 dependencies {
@@ -103,7 +103,7 @@ costs>=0.1.20
 
 ## Call Graph
 
-*205 nodes · 293 edges · 36 modules · CC̄=4.6*
+*206 nodes · 295 edges · 36 modules · CC̄=4.7*
 
 ### Hubs (by degree)
 
@@ -115,14 +115,14 @@ costs>=0.1.20
 | `run_cmd` *(in scripts.test_sessions.util)* | 6 | 30 | 12 | **42** |
 | `main` *(in scripts.pack_sync)* | 28 ⚠ | 0 | 39 | **39** |
 | `infer_steps` *(in scripts.report.session)* | 28 ⚠ | 1 | 37 | **38** |
+| `_run_flows` *(in scripts.lenovo_remote_session)* | 22 ⚠ | 1 | 34 | **35** |
 | `analyze_run` *(in scripts.report.run_analysis)* | 13 ⚠ | 2 | 33 | **35** |
-| `run_flow` *(in scripts.lenovo_remote_session)* | 14 ⚠ | 1 | 33 | **34** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
-# generated in 0.11s
-# nodes: 205 | edges: 293 | modules: 36
-# CC̄=4.6
+# generated in 0.09s
+# nodes: 206 | edges: 295 | modules: 36
+# CC̄=4.7
 
 HUBS[20]:
   src.urisys.cli.build_parser
@@ -137,38 +137,39 @@ HUBS[20]:
     CC=28  in:0  out:39  total:39
   scripts.report.session.infer_steps
     CC=28  in:1  out:37  total:38
+  scripts.lenovo_remote_session._run_flows
+    CC=22  in:1  out:34  total:35
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
   scripts.lenovo_remote_session.run_flow
     CC=14  in:1  out:33  total:34
-  scripts.scan-browser-sessions.main
-    CC=23  in:0  out:34  total:34
   scripts.test_sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
+  scripts.scan-browser-sessions.main
+    CC=23  in:0  out:34  total:34
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  scripts.pack_registry.pack_specs
-    CC=17  in:2  out:30  total:32
   src.urisys.init_setup.run_init
     CC=31  in:2  out:30  total:32
+  scripts.run_test_sessions.session_automation_lab
+    CC=13  in:1  out:31  total:32
   src.urisys.http_server.create_server
     CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
-  scripts.run_test_sessions.session_automation_lab
-    CC=13  in:1  out:31  total:32
+  scripts.pack_registry.pack_specs
+    CC=17  in:2  out:30  total:32
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
   scripts.session_core.now_iso
     CC=1  in:29  out:2  total:31
   scripts.report.session.generate_report
     CC=9  in:2  out:27  total:29
-  scripts.session_core.step_ok
-    CC=16  in:1  out:27  total:28
 
 MODULES:
-  scripts.lenovo_remote_session  [14 funcs]
+  scripts.lenovo_remote_session  [15 funcs]
     _md_lessons  CC=6  out:8
+    _run_flows  CC=22  out:34
     _run_host_sleep_step  CC=3  out:4
     _run_http_get_step  CC=2  out:3
     _run_upgrade_flow  CC=1  out:5
@@ -177,7 +178,6 @@ MODULES:
     http_get  CC=4  out:7
     load_manifest_session  CC=2  out:4
     load_yaml  CC=3  out:4
-    resolve_flow_paths  CC=5  out:5
   scripts.office-simulate-loop  [5 funcs]
     call_uri  CC=4  out:11
     llm_tick  CC=7  out:18
@@ -466,9 +466,9 @@ EDGES:
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
-# generated in 0.11s
-# nodes: 205 | edges: 293 | modules: 36
-# CC̄=4.6
+# generated in 0.09s
+# nodes: 206 | edges: 295 | modules: 36
+# CC̄=4.7
 
 HUBS[20]:
   src.urisys.cli.build_parser
@@ -483,38 +483,39 @@ HUBS[20]:
     CC=28  in:0  out:39  total:39
   scripts.report.session.infer_steps
     CC=28  in:1  out:37  total:38
+  scripts.lenovo_remote_session._run_flows
+    CC=22  in:1  out:34  total:35
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
   scripts.lenovo_remote_session.run_flow
     CC=14  in:1  out:33  total:34
-  scripts.scan-browser-sessions.main
-    CC=23  in:0  out:34  total:34
   scripts.test_sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
+  scripts.scan-browser-sessions.main
+    CC=23  in:0  out:34  total:34
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  scripts.pack_registry.pack_specs
-    CC=17  in:2  out:30  total:32
   src.urisys.init_setup.run_init
     CC=31  in:2  out:30  total:32
+  scripts.run_test_sessions.session_automation_lab
+    CC=13  in:1  out:31  total:32
   src.urisys.http_server.create_server
     CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
-  scripts.run_test_sessions.session_automation_lab
-    CC=13  in:1  out:31  total:32
+  scripts.pack_registry.pack_specs
+    CC=17  in:2  out:30  total:32
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
   scripts.session_core.now_iso
     CC=1  in:29  out:2  total:31
   scripts.report.session.generate_report
     CC=9  in:2  out:27  total:29
-  scripts.session_core.step_ok
-    CC=16  in:1  out:27  total:28
 
 MODULES:
-  scripts.lenovo_remote_session  [14 funcs]
+  scripts.lenovo_remote_session  [15 funcs]
     _md_lessons  CC=6  out:8
+    _run_flows  CC=22  out:34
     _run_host_sleep_step  CC=3  out:4
     _run_http_get_step  CC=2  out:3
     _run_upgrade_flow  CC=1  out:5
@@ -523,7 +524,6 @@ MODULES:
     http_get  CC=4  out:7
     load_manifest_session  CC=2  out:4
     load_yaml  CC=3  out:4
-    resolve_flow_paths  CC=5  out:5
   scripts.office-simulate-loop  [5 funcs]
     call_uri  CC=4  out:11
     llm_tick  CC=7  out:18
@@ -788,29 +788,29 @@ EDGES:
 ### Code Analysis (`project/analysis.toon.yaml`)
 
 ```toon markpact:analysis path=project/analysis.toon.yaml
-# code2llm | 102f 11817L | python:49,shell:41,yaml:7,json:1,yml:1,javascript:1,toml:1 | 2026-06-17
+# code2llm | 102f 11916L | python:49,shell:41,yaml:7,json:1,yml:1,javascript:1,toml:1 | 2026-06-17
 # generated in 0.02s
-# CC̅=4.6 | critical:12/365 | dups:0 | cycles:1
+# CC̅=4.7 | critical:13/366 | dups:0 | cycles:0
 
-HEALTH[12]:
+HEALTH[13]:
   🟡 CC    run_init CC=31 (limit:15)
   🟡 CC    compile CC=17 (limit:15)
   🟡 CC    main CC=23 (limit:15)
+  🟡 CC    session_urirdp_real_docker CC=25 (limit:15)
+  🟡 CC    _run_host_restart_and_wait_step CC=19 (limit:15)
+  🟡 CC    _run_flows CC=22 (limit:15)
+  🟡 CC    main CC=37 (limit:15)
   🟡 CC    step_ok CC=16 (limit:15)
   🟡 CC    expand_step_wheels CC=18 (limit:15)
   🟡 CC    main CC=28 (limit:15)
   🟡 CC    pack_specs CC=17 (limit:15)
   🟡 CC    load_flow_outcomes CC=15 (limit:15)
   🟡 CC    infer_steps CC=28 (limit:15)
-  🟡 CC    session_urirdp_real_docker CC=25 (limit:15)
-  🟡 CC    _run_host_restart_and_wait_step CC=19 (limit:15)
-  🟡 CC    main CC=37 (limit:15)
 
-REFACTOR[2]:
-  1. split 12 high-CC methods  (CC>15)
-  2. break 1 circular dependencies
+REFACTOR[1]:
+  1. split 13 high-CC methods  (CC>15)
 
-PIPELINES[113]:
+PIPELINES[111]:
   [1] Src [registry]: registry
       PURITY: 100% pure
   [2] Src [runtime]: runtime
@@ -913,9 +913,9 @@ PIPELINES[113]:
       PURITY: 100% pure
 
 LAYERS:
-  scripts/                        CC̄=5.0    ←in:32  →out:88  !! split
+  scripts/                        CC̄=5.1    ←in:32  →out:88  !! split
+  │ !! lenovo_remote_session      795L  0C   25m  CC=37     ←0
   │ !! run_test_sessions          761L  0C   18m  CC=25     ←0
-  │ !! lenovo_remote_session      696L  0C   24m  CC=37     ←0
   │ !! pack_sync                  347L  0C   13m  CC=28     ←0
   │ lab_flows                  320L  0C    5m  CC=13     ←0
   │ !! session_core               276L  0C   16m  CC=18     ←6
@@ -1038,13 +1038,13 @@ COUPLING:
   scripts.test_sessions                     11                     ──                                                hub
          scripts.report                     13                                            ──                         !! fan-out
              src.urisys                      8                                                                   ──  !! fan-out
-  CYCLES: 1
+  CYCLES: none
   HUB: scripts/ (fan-in=32)
   HUB: scripts.test_sessions/ (fan-in=88)
   SMELL: scripts/ fan-out=88 → split needed
+  SMELL: scripts.test_sessions/ fan-out=11 → split needed
   SMELL: scripts.report/ fan-out=13 → split needed
   SMELL: src.urisys/ fan-out=8 → split needed
-  SMELL: scripts.test_sessions/ fan-out=11 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon
@@ -1054,15 +1054,15 @@ EXTERNAL:
 ### Duplication (`project/duplication.toon.yaml`)
 
 ```toon markpact:analysis path=project/duplication.toon.yaml
-# redup/duplication | 3 groups | 44f 5598L | 2026-06-17
+# redup/duplication | 3 groups | 44f 5697L | 2026-06-17
 
 SUMMARY:
   files_scanned: 44
-  total_lines:   5598
+  total_lines:   5697
   dup_groups:    3
   dup_fragments: 7
   saved_lines:   37
-  scan_ms:       2485
+  scan_ms:       2230
 
 HOTSPOTS[6] (files with most duplication):
   src/urisys/uricore_install.py  dup=18L  groups=2  frags=2  (0.3%)

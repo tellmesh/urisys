@@ -16,6 +16,6 @@ document.querySelector('#local').addEventListener('click', async () => {
 
 document.querySelector('#node').addEventListener('click', async () => {
   const client = new HttpUriClient('http://127.0.0.1:8789');
-  const result = await client.call('llm://mock/chat/complete', { prompt: 'Hello from browser' }, { approved: true, environment: 'mock' });
+  const result = await client.call('llm://mock/chat/query/completion', { messages: [{ role: 'user', content: 'Hello from browser' }] }, { approved: true, environment: 'mock' });
   out.textContent = JSON.stringify(result, null, 2);
 });

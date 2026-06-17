@@ -44,9 +44,9 @@ HOTSPOTS[10]:
 REFACTOR[15]:
   [1] H/L Split run_init (CC=31)
   [2] H/L Split session_urirdp_real_docker (CC=25)
-  [3] H/L Split main (CC=28)
-  [4] H/L Split infer_steps (CC=28)
-  [5] H/L Split main (CC=37)
+  [3] H/L Split main (CC=37)
+  [4] H/L Split main (CC=28)
+  [5] H/L Split infer_steps (CC=28)
 
 EVOLUTION:
   2026-06-17 CC̄=4.7 crit=52 11916L // Automated analysis

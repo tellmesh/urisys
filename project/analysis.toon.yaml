@@ -1,4 +1,4 @@
-# code2llm | 102f 11916L | python:49,shell:41,yaml:7,toml:1,json:1,yml:1,javascript:1 | 2026-06-17
+# code2llm | 102f 11916L | python:49,shell:41,yaml:7,json:1,yml:1,javascript:1,toml:1 | 2026-06-17
 # generated in 0.02s
 # CC̅=4.7 | critical:13/366 | dups:0 | cycles:0
 
@@ -7,15 +7,15 @@ HEALTH[13]:
   🟡 CC    compile CC=17 (limit:15)
   🟡 CC    main CC=23 (limit:15)
   🟡 CC    session_urirdp_real_docker CC=25 (limit:15)
+  🟡 CC    _run_host_restart_and_wait_step CC=19 (limit:15)
+  🟡 CC    _run_flows CC=22 (limit:15)
+  🟡 CC    main CC=37 (limit:15)
   🟡 CC    step_ok CC=16 (limit:15)
   🟡 CC    expand_step_wheels CC=18 (limit:15)
   🟡 CC    main CC=28 (limit:15)
   🟡 CC    pack_specs CC=17 (limit:15)
   🟡 CC    load_flow_outcomes CC=15 (limit:15)
   🟡 CC    infer_steps CC=28 (limit:15)
-  🟡 CC    _run_host_restart_and_wait_step CC=19 (limit:15)
-  🟡 CC    _run_flows CC=22 (limit:15)
-  🟡 CC    main CC=37 (limit:15)
 
 REFACTOR[1]:
   1. split 13 high-CC methods  (CC>15)
@@ -252,8 +252,8 @@ COUPLING:
   HUB: scripts/ (fan-in=32)
   HUB: scripts.test_sessions/ (fan-in=88)
   SMELL: scripts/ fan-out=88 → split needed
-  SMELL: scripts.report/ fan-out=13 → split needed
   SMELL: scripts.test_sessions/ fan-out=11 → split needed
+  SMELL: scripts.report/ fan-out=13 → split needed
   SMELL: src.urisys/ fan-out=8 → split needed
 
 EXTERNAL:

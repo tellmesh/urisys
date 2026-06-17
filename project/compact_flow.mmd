@@ -25,8 +25,8 @@ flowchart TD
     scripts__report ==>|7| scripts__session_core
     scripts__report ==>|6| scripts__run_nl_log_smoke
     scripts__run_test_sessions ==>|5| scripts__run_nl_log_smoke
-    scripts__test_sessions ==>|5| scripts__run_office_writer_e2e
     scripts__lenovo_remote_session ==>|5| scripts__run_nl_log_smoke
+    scripts__test_sessions ==>|5| scripts__run_office_writer_e2e
     scripts__run_test_sessions -->|3| scripts__run_urisys_node_docker_e2e
     scripts__test_sessions -->|3| scripts__run_urisys_node_docker_e2e
     scripts__test_sessions -->|3| scripts__session_core
