@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import base64
 import json
+import os
 import platform
 import socket
 from datetime import datetime, timezone
@@ -23,8 +24,31 @@ PACK_TO_WHEEL: dict[str, str] = {
     "office": "urioffice",
     "mail": "urimail",
     "uriimg2nl": "uriimg2nl",
+    "urivql": "urivql",
     "urisys_node": "urisys_node",
 }
+
+
+def default_examples_root(*, urisys_root: Path | None = None) -> Path:
+    """Root of the urisys-examples repo (flow YAML suites)."""
+    env = os.environ.get("URISYS_EXAMPLES_ROOT")
+    if env:
+        return Path(env).expanduser().resolve()
+    base = urisys_root or Path(__file__).resolve().parents[1]
+    return (base.parent / "urisys-examples").resolve()
+
+
+def resolve_flow_ref(ref: str | Path, *, suite_dir: Path, examples_root: Path) -> Path:
+    """Resolve a flow path from manifest, CLI, or ``requires.upgrade``."""
+    p = Path(ref)
+    if p.is_absolute():
+        return p
+    if p.exists():
+        return p.resolve()
+    for candidate in (suite_dir / p, examples_root / p, suite_dir.parent / p):
+        if candidate.is_file():
+            return candidate.resolve()
+    return (suite_dir / p).resolve()
 
 
 def now_iso() -> str:

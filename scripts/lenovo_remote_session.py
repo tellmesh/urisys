@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Run lenovo remote test flows, save responses, write session report.
+"""Run remote URI flow suites from urisys-examples, save responses, write session report.
 
-All tasks are defined as *.uri.flow.yaml under flows/lenovo-remote/ — replay with:
+Flows live in ``../urisys-examples/`` (override with ``URISYS_EXAMPLES_ROOT`` or ``--examples-root``).
 
   python3 scripts/lenovo_remote_session.py
-  python3 scripts/lenovo_remote_session.py --wait 120
-  python3 scripts/lenovo_remote_session.py --flows flows/lenovo-remote/01-health-probe.uri.flow.yaml
+  python3 scripts/lenovo_remote_session.py --wait 120 --build-wheels
+  python3 scripts/lenovo_remote_session.py --flows lenovo-remote/08-kvm-linkedin.uri.flow.yaml
 
 Single step via Python CLI (no bash scripts):
 
@@ -37,12 +37,17 @@ for _p in (str(NODE_ROOT), str(SCRIPTS_DIR)):
 
 from session_core import (  # noqa: E402
     backfill_session_images,
+    default_examples_root,
     expand_step_wheels,
     extract_step_screenshots,
     now_iso,
+    resolve_flow_ref,
     save_json,
     step_ok,
 )
+
+EXAMPLES_ROOT = default_examples_root(urisys_root=ROOT)
+DEFAULT_MANIFEST = EXAMPLES_ROOT / "lenovo-remote" / "session.manifest.yaml"
 from urisysnode.remote import (  # noqa: E402
     call_uri,
     default_endpoint,
@@ -246,6 +251,7 @@ def run_flow(
     session_dir: Path,
     wheel_server: str,
     wheel_deploy_dir: Path,
+    examples_root: Path,
 ) -> dict[str, Any]:
     data = load_yaml(flow_path)
     flow = data.get("flow") or {}
@@ -255,7 +261,7 @@ def run_flow(
 
     record: dict[str, Any] = {
         "flow_id": flow_id,
-        "flow_path": str(flow_path.relative_to(ROOT)),
+        "flow_path": str(flow_path.relative_to(examples_root) if flow_path.is_relative_to(examples_root) else flow_path),
         "description": flow.get("description"),
         "started_at": now_iso(),
         "steps": [],
@@ -292,7 +298,7 @@ def append_log(path: Path, line: str) -> None:
 def build_wheels(deploy_dir: Path) -> None:
     deploy_dir.mkdir(parents=True, exist_ok=True)
     tellmesh = ROOT.parent
-    for pkg in ("urikv", "uribrowser", "urioffice", "urimail", "uriimg2nl", "urisys-node"):
+    for pkg in ("urikv", "uribrowser", "urioffice", "urimail", "uriimg2nl", "urivql", "urisys-node"):
         pkg_dir = tellmesh / pkg
         if pkg_dir.is_dir():
             subprocess.run(
@@ -390,18 +396,37 @@ def write_session_md(session_dir: Path, meta: dict[str, Any], flow_records: list
     lines.append(f"- Flow copies: `{session_dir.relative_to(ROOT)}/flows/`")
     lines.append(f"- Responses: `{session_dir.relative_to(ROOT)}/responses/`")
     lines.append(f"- Screenshots: `{session_dir.relative_to(ROOT)}/screenshots/` (extracted from base64)")
-    lines.append(f"- Manifest: `flows/lenovo-remote/session.manifest.yaml`")
+    lines.append(f"- Manifest: `{meta.get('manifest_path', 'session.manifest.yaml')}`")
     lines.append("")
 
     (session_dir / "SESSION.md").write_text("\n".join(lines), encoding="utf-8")
 
 
-def resolve_flow_paths(manifest_path: Path, explicit: list[str] | None) -> list[Path]:
+def resolve_flow_paths(
+    manifest_path: Path,
+    explicit: list[str] | None,
+    *,
+    examples_root: Path,
+) -> list[Path]:
+    suite_dir = manifest_path.parent.resolve()
     if explicit:
-        return [ROOT / p if not Path(p).is_absolute() else Path(p) for p in explicit]
+        return [resolve_flow_ref(p, suite_dir=suite_dir, examples_root=examples_root) for p in explicit]
     data = load_yaml(manifest_path)
     flows = data.get("flows") or []
-    return [ROOT / f for f in flows]
+    return [resolve_flow_ref(f, suite_dir=suite_dir, examples_root=examples_root) for f in flows]
+
+
+def resolve_route_map(manifest_path: Path, cli_route_map: str | None) -> str:
+    if cli_route_map and cli_route_map != default_route_map():
+        return cli_route_map
+    data = load_yaml(manifest_path)
+    session = data.get("session") if isinstance(data.get("session"), dict) else {}
+    rel = session.get("route_map")
+    if isinstance(rel, str) and rel.strip():
+        candidate = (manifest_path.parent / rel).resolve()
+        if candidate.is_file():
+            return str(candidate)
+    return cli_route_map or default_route_map()
 
 
 def load_manifest_session(manifest_path: Path) -> dict[str, Any]:
@@ -409,17 +434,26 @@ def load_manifest_session(manifest_path: Path) -> dict[str, Any]:
     return data.get("session") if isinstance(data.get("session"), dict) else {}
 
 
-UPGRADE_PLAYWRIGHT_FLOW = ROOT / "flows/lenovo-remote/_upgrade-playwright.uri.flow.yaml"
-UPGRADE_KVM_FLOW = ROOT / "flows/lenovo-remote/_upgrade-kvm.uri.flow.yaml"
-UPGRADE_NODE_FLOW = ROOT / "flows/lenovo-remote/_upgrade-node.uri.flow.yaml"
+UPGRADE_PLAYWRIGHT_FLOW = EXAMPLES_ROOT / "lenovo-remote/_upgrade-playwright.uri.flow.yaml"
+UPGRADE_KVM_FLOW = EXAMPLES_ROOT / "lenovo-remote/_upgrade-kvm.uri.flow.yaml"
+UPGRADE_NODE_FLOW = EXAMPLES_ROOT / "lenovo-remote/_upgrade-node.uri.flow.yaml"
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Lenovo remote session runner (flow-based, Python only).")
     parser.add_argument("--endpoint", default=os.environ.get("URISYS_LENOVO_ENDPOINT", default_endpoint()))
-    parser.add_argument("--route-map", default=os.environ.get("URISYS_ROUTE_MAP", default_route_map()))
-    parser.add_argument("--manifest", default=str(ROOT / "flows/lenovo-remote/session.manifest.yaml"))
-    parser.add_argument("--flows", nargs="*", help="Specific flow files (default: all from manifest)")
+    parser.add_argument("--route-map", default=None, help="Route map YAML (default: manifest session.route_map)")
+    parser.add_argument(
+        "--examples-root",
+        default=str(EXAMPLES_ROOT),
+        help="Root of urisys-examples (or URISYS_EXAMPLES_ROOT)",
+    )
+    parser.add_argument("--manifest", default=str(DEFAULT_MANIFEST), help="Session manifest YAML")
+    parser.add_argument(
+        "--flows",
+        nargs="*",
+        help="Flow files relative to examples root or suite dir (default: all from manifest)",
+    )
     parser.add_argument("--wait", type=float, default=0, help="Wait up to N seconds for node /health")
     parser.add_argument("--build-wheels", action="store_true", help="Build pack wheels to /tmp/urisys-deploy")
     parser.add_argument("--serve-wheels", action="store_true", help="Start python -m http.server for wheels")
@@ -452,7 +486,13 @@ def main(argv: list[str] | None = None) -> int:
     (session_dir / "flows").mkdir(exist_ok=True)
     log_path = session_dir / "session.log"
 
-    manifest_path = Path(args.manifest)
+    manifest_path = Path(args.manifest).resolve()
+    examples_root = Path(args.examples_root).expanduser().resolve()
+    if not manifest_path.is_file():
+        print(json.dumps({"ok": False, "error": f"manifest not found: {manifest_path}"}), file=sys.stderr)
+        return 2
+
+    route_map = resolve_route_map(manifest_path, args.route_map or os.environ.get("URISYS_ROUTE_MAP"))
     session_cfg = load_manifest_session(manifest_path)
     wheel_server = str(session_cfg.get("wheel_server") or DEFAULT_WHEEL_SERVER)
     wheel_deploy_dir = Path(str(session_cfg.get("wheel_deploy_dir") or "/tmp/urisys-deploy"))
@@ -488,7 +528,7 @@ def main(argv: list[str] | None = None) -> int:
 
     save_json(session_dir / "responses" / "_00_preflight_health.json", health_data)
 
-    flow_paths = resolve_flow_paths(manifest_path, args.flows)
+    flow_paths = resolve_flow_paths(manifest_path, args.flows, examples_root=examples_root)
     flows_copy = session_dir / "flow-sources"
     flows_copy.mkdir(exist_ok=True)
     for fp in flow_paths:
@@ -498,14 +538,18 @@ def main(argv: list[str] | None = None) -> int:
 
     meta = {
         "session_id": run_id,
-        "session_name": "lenovo-remote",
+        "session_name": session_cfg.get("id") or "lenovo-remote",
         "suite": "remote-node-flows",
         "started_at": now_iso(),
         "host": os.uname().nodename,
         "endpoint": args.endpoint,
-        "route_map": args.route_map,
+        "route_map": route_map,
+        "examples_root": str(examples_root),
+        "manifest_path": str(manifest_path),
         "node_reachable": node_reachable,
-        "flow_files": [str(p.relative_to(ROOT)) for p in flow_paths],
+        "flow_files": [
+            str(p.relative_to(examples_root) if p.is_relative_to(examples_root) else p) for p in flow_paths
+        ],
     }
     save_json(session_dir / "meta.json", meta)
 
@@ -529,10 +573,11 @@ def main(argv: list[str] | None = None) -> int:
         return run_flow(
             fp,
             endpoint=args.endpoint,
-            route_map=args.route_map,
+            route_map=route_map,
             session_dir=session_dir,
             wheel_server=wheel_server,
             wheel_deploy_dir=wheel_deploy_dir,
+            examples_root=examples_root,
         )
 
     for fp in flow_paths:
@@ -554,7 +599,9 @@ def main(argv: list[str] | None = None) -> int:
         if not node_reachable and fp.name != "01-health-probe.uri.flow.yaml":
             rec = {
                 "flow_id": load_yaml(fp).get("flow", {}).get("id", fp.stem),
-                "flow_path": str(fp.relative_to(ROOT)),
+                "flow_path": str(
+                    fp.relative_to(examples_root) if fp.is_relative_to(examples_root) else fp
+                ),
                 "ok": False,
                 "skipped": True,
                 "reason": "node unreachable (see 01-health-probe)",

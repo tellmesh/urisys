@@ -73,11 +73,14 @@ curl -X POST http://127.0.0.1:8099/uri/flow \
 ### 2b. Zdalna sesja (master→slave)
 
 Master (dev) steruje slave'em (lenovo `:8790`) — flow'y `*.uri.flow.yaml` z
-`flows/lenovo-remote/`, route-map forwarduje URI do node'a, raport w
+repo **`urisys-examples/lenovo-remote/`** (runner w `urisys/scripts/lenovo_remote_session.py`),
+route-map forwarduje URI do node'a, raport w
 `output/test-sessions/<id>/` (SESSION.md + screenshoty z base64).
 
 ```bash
-python3 scripts/lenovo_remote_session.py                 # cała sesja (6 flow)
+cd urisys
+python3 scripts/lenovo_remote_session.py --build-wheels --wait 90
+python3 scripts/lenovo_remote_session.py --flows lenovo-remote/08-kvm-linkedin.uri.flow.yaml
 python3 -m urisysnode.remote call "kv://lenovo/runtime/query/discover"   # 1 URI
 ```
 

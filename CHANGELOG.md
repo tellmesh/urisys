@@ -38,6 +38,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
 - Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
 
+## [0.1.63] - 2026-06-17
+
+### Docs
+- Update README.md
+- Update docs/FLOWS.md
+- Update flows/README.md
+- Update flows/lenovo-remote/README.md
+
+### Other
+- Update flows/browser-form-vql.uri.flow.yaml
+- Update flows/device-maintenance.uri.flow.yaml
+- Update flows/email-mailpit.uri.flow.yaml
+- Update flows/lenovo-remote/01-health-probe.uri.flow.yaml
+- Update flows/lenovo-remote/02-install-packs.uri.flow.yaml
+- Update flows/lenovo-remote/03-system-introspect.uri.flow.yaml
+- Update flows/lenovo-remote/04-office-linkedin-dry.uri.flow.yaml
+- Update flows/lenovo-remote/05-browser-linkedin-real.uri.flow.yaml
+- Update flows/lenovo-remote/06-browser-auth-probe.uri.flow.yaml
+- Update flows/lenovo-remote/07-playwright-linkedin.uri.flow.yaml
+- ... and 10 more files
+
 ## [0.1.62] - 2026-06-17
 
 ### Docs
