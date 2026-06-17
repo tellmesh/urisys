@@ -178,14 +178,24 @@ jobs:
           curl -fsSL -o /tmp/idx.json "$INDEX_URL"  # also asserts the asset is published
           CONTRACT_SHA="$(python3 -c "import json; print(json.load(open('/tmp/idx.json'))['contract']['digest'])")"
           ARTIFACTS="$(python3 -c "import json; print(json.dumps(json.load(open('/tmp/idx.json'))['artifacts']))")"
+          echo "assets published for ${CONTRACT_ID}:"
+          echo "  index:    ${INDEX_URL}"
+          echo "  contract: ${CONTRACT_URL}"
           if [ -z "${MARKPACT_API_TOKEN:-}" ]; then
-            echo "MARKPACT_API_TOKEN not set; assets published, skipping markpact.com register for ${CONTRACT_ID}"
-            echo "  index:    ${INDEX_URL}"
-            echo "  contract: ${CONTRACT_URL}"
+            echo "MARKPACT_API_TOKEN not set; skipping markpact.com catalog register."
             exit 0
           fi
+          # Catalog registration is best-effort: the OCI image + release assets
+          # above are the real deliverable. A failed POST (e.g. the contract is
+          # not yet published on the portal) warns but does not fail the release.
           MARKPACT_URL="${MARKPACT_URL:-https://markpact.com}"
-          curl -fsS -X POST "${MARKPACT_URL}/api/releases" \
+          HTTP=$(curl -sS -o /tmp/resp.txt -w "%{http_code}" -X POST "${MARKPACT_URL}/api/releases" \
             -H "Authorization: Bearer ${MARKPACT_API_TOKEN}" \
             -H "Content-Type: application/json" \
-            -d "{\"contract_id\":\"${CONTRACT_ID}\",\"version\":\"${VERSION}\",\"contract_digest\":\"${CONTRACT_SHA}\",\"contract_url\":\"${CONTRACT_URL}\",\"artifact_index_url\":\"${INDEX_URL}\",\"artifacts\":${ARTIFACTS},\"source_git_commit\":\"${GITHUB_SHA}\"}"
+            -d "{\"contract_id\":\"${CONTRACT_ID}\",\"version\":\"${VERSION}\",\"contract_digest\":\"${CONTRACT_SHA}\",\"contract_url\":\"${CONTRACT_URL}\",\"artifact_index_url\":\"${INDEX_URL}\",\"artifacts\":${ARTIFACTS},\"source_git_commit\":\"${GITHUB_SHA}\"}" || echo "000")
+          if [ "$HTTP" -ge 200 ] && [ "$HTTP" -lt 300 ]; then
+            echo "registered ${CONTRACT_ID} on markpact.com (HTTP $HTTP)"
+          else
+            echo "::warning::markpact.com register ${CONTRACT_ID} failed (HTTP $HTTP) — publish the contract to the portal first (scripts/publish-all.sh)"
+            head -c 600 /tmp/resp.txt || true
+          fi
