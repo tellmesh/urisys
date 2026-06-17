@@ -20,9 +20,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dokumentacja: `PACKAGES.md`, `DISTRIBUTION.md`, `NODE-SETUP.md`, `docs/README.md`
 
 ### Fixed
+- `urisys init` — wheel URL `urisys_node-*.whl` (PEP 427); pip odrzucał `urisys-node-*.whl`
+- `urisys init` — fallback PyPI `urisys-node` gdy brak GitHub Release; retry `urisysedge` po pip
 - `urisys doctor` — `NameError: node_pip_spec` przy sprawdzaniu importu urisysnode
 - PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
 - Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
+
+## [0.1.42] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update docs/NODE-SETUP.md
+- Update docs/REPOS.md
+
+### Test
+- Update tests/test_node_install.py
+
+### Other
+- Update app.doql.less
+- Update project/logic.pl
+- Update project/map.toon.yaml
+- Update scripts/publish-urisys-node-release.sh
+- Update uv.lock
 
 ## [0.1.41] - 2026-06-17
 

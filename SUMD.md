@@ -20,7 +20,7 @@ URI control system managers/controllers over separate uri* capability packs.
 ## Metadata
 
 - **name**: `urisys`
-- **version**: `0.1.39`
+- **version**: `0.1.41`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -40,7 +40,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: urisys;
-  version: 0.1.39;
+  version: 0.1.41;
 }
 
 dependencies {
@@ -197,7 +197,7 @@ ASSERT[14]{field, operator, expected}:
 ```yaml
 project:
   name: urisys
-  version: 0.1.39
+  version: 0.1.41
   env: local
 ```
 
@@ -261,7 +261,7 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# urisys | 169f 12640L | python:100,shell:66,javascript:2,less:1 | 2026-06-17
+# urisys | 169f 12641L | python:100,shell:66,javascript:2,less:1 | 2026-06-17
 # stats: 424 func | 28 cls | 169 mod | CC̄=4.5 | critical:38 | cycles:0
 # alerts[5]: CC run_init=41; CC main=36; CC session_urirdp_real_docker=30; CC main=28; CC validate_contract=23
 # hotspots[5]: main fan=36; session_urirdp_real_docker fan=25; analyze_run fan=23; session_lab_10_flows fan=22; main fan=19
@@ -336,7 +336,7 @@ M[169]:
   src/urisys/controllers/server_controller.py,19
   src/urisys/controllers/uri_controller.py,34
   src/urisys/defaults.py,21
-  src/urisys/doctor.py,288
+  src/urisys/doctor.py,289
   src/urisys/flow.py,26
   src/urisys/http_server.py,79
   src/urisys/init_setup.py,237
@@ -1088,7 +1088,7 @@ D:
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.39', 'python').
+project_metadata('urisys', '0.1.41', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 49, 'less').
@@ -1159,7 +1159,7 @@ project_file('src/urisys/controllers/flow_controller.py', 34, 'python').
 project_file('src/urisys/controllers/server_controller.py', 19, 'python').
 project_file('src/urisys/controllers/uri_controller.py', 34, 'python').
 project_file('src/urisys/defaults.py', 21, 'python').
-project_file('src/urisys/doctor.py', 288, 'python').
+project_file('src/urisys/doctor.py', 289, 'python').
 project_file('src/urisys/flow.py', 26, 'python').
 project_file('src/urisys/http_server.py', 79, 'python').
 project_file('src/urisys/init_setup.py', 237, 'python').
@@ -1890,10 +1890,10 @@ HUBS[20]:
     CC=5  in:21  out:13  total:34
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  src.urisys.http_server.create_server
-    CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
+  src.urisys.http_server.create_server
+    CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
   scripts.pack_registry.pack_specs
@@ -2131,23 +2131,23 @@ EDGES:
   src.urisys.cli.main → src.urisys.cli.print_json
   src.urisys.cli.main → src.urisys.init_setup.run_init
   src.urisys.cli.main → scripts.run-nl-log-smoke.print
+  src.urisys.init_setup.default_pip_specs → src.urisys.uricore_install.pip_spec
+  src.urisys.init_setup.verify_uri_control → src.urisys.uricore_install.diagnose_uricore
+  src.urisys.init_setup.verify_uri_control → src.urisys.uricore_install.wheel_url
+  src.urisys.init_setup.write_env_file → src.urisys.init_setup.render_env_shell
+  src.urisys.init_setup.run_init → src.urisys.init_setup.default_pip_specs
+  src.urisys.init_setup.run_init → src.urisys.init_setup.profile_env
+  src.urisys.init_setup.run_init → src.urisys.uricore_install.is_wrong_uricore_installed
+  src.urisys.init_setup.run_init → src.urisys.uricore_install.repair_uricore
+  src.urisys.node_install.wheel_url → src.urisys.node_install.github_owner
+  src.urisys.node_install.wheel_url → src.urisys.node_install.github_version
+  src.urisys.node_install.pip_spec → src.urisys.node_install.wheel_url
+  src.urisys.node_install.diagnose_urisys_node → src.urisys.node_install.is_importable
+  src.urisys.node_install.diagnose_urisys_node → src.urisys.node_install.pip_spec
   src.urisys.http_server.create_server → src.urisys.http_server._send
   src.urisys.http_server.create_server → src.urisys.http_server._read_json
   src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.load_flow
   src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.iter_steps
-  src.urisys.controllers.server_controller.ServerController.__init__ → src.urisys.http_server.create_server
-  src.urisys.controllers.server_controller.ServerController.serve_forever → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.rules_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.rules_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.llm_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.llm_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.parse_args
-  scripts.office-simulate-loop.main → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.rules_tick
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.llm_tick
-  scripts.run_test_sessions.session_pytest_urirdp → scripts.report.util.now_iso
-  scripts.run_test_sessions.session_pytest_urirdp → scripts.test_sessions.util.write_meta
-  scripts.run_test_sessions.session_pytest_urirdp → scripts.test_sessions.util.run_cmd
 ```
 
 ## Test Contracts

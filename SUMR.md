@@ -15,7 +15,7 @@ SUMD - Structured Unified Markdown Descriptor for AI-aware project refactorizati
 ## Metadata
 
 - **name**: `urisys`
-- **version**: `0.1.39`
+- **version**: `0.1.41`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -35,7 +35,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: urisys;
-  version: 0.1.39;
+  version: 0.1.41;
 }
 
 dependencies {
@@ -150,10 +150,10 @@ HUBS[20]:
     CC=5  in:21  out:13  total:34
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  src.urisys.http_server.create_server
-    CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
+  src.urisys.http_server.create_server
+    CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
   scripts.pack_registry.pack_specs
@@ -391,23 +391,23 @@ EDGES:
   src.urisys.cli.main → src.urisys.cli.print_json
   src.urisys.cli.main → src.urisys.init_setup.run_init
   src.urisys.cli.main → scripts.run-nl-log-smoke.print
+  src.urisys.init_setup.default_pip_specs → src.urisys.uricore_install.pip_spec
+  src.urisys.init_setup.verify_uri_control → src.urisys.uricore_install.diagnose_uricore
+  src.urisys.init_setup.verify_uri_control → src.urisys.uricore_install.wheel_url
+  src.urisys.init_setup.write_env_file → src.urisys.init_setup.render_env_shell
+  src.urisys.init_setup.run_init → src.urisys.init_setup.default_pip_specs
+  src.urisys.init_setup.run_init → src.urisys.init_setup.profile_env
+  src.urisys.init_setup.run_init → src.urisys.uricore_install.is_wrong_uricore_installed
+  src.urisys.init_setup.run_init → src.urisys.uricore_install.repair_uricore
+  src.urisys.node_install.wheel_url → src.urisys.node_install.github_owner
+  src.urisys.node_install.wheel_url → src.urisys.node_install.github_version
+  src.urisys.node_install.pip_spec → src.urisys.node_install.wheel_url
+  src.urisys.node_install.diagnose_urisys_node → src.urisys.node_install.is_importable
+  src.urisys.node_install.diagnose_urisys_node → src.urisys.node_install.pip_spec
   src.urisys.http_server.create_server → src.urisys.http_server._send
   src.urisys.http_server.create_server → src.urisys.http_server._read_json
   src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.load_flow
   src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.iter_steps
-  src.urisys.controllers.server_controller.ServerController.__init__ → src.urisys.http_server.create_server
-  src.urisys.controllers.server_controller.ServerController.serve_forever → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.rules_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.rules_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.llm_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.llm_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.parse_args
-  scripts.office-simulate-loop.main → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.rules_tick
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.llm_tick
-  scripts.run_test_sessions.session_pytest_urirdp → scripts.report.util.now_iso
-  scripts.run_test_sessions.session_pytest_urirdp → scripts.test_sessions.util.write_meta
-  scripts.run_test_sessions.session_pytest_urirdp → scripts.test_sessions.util.run_cmd
 ```
 
 ## Test Contracts
@@ -466,10 +466,10 @@ HUBS[20]:
     CC=5  in:21  out:13  total:34
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  src.urisys.http_server.create_server
-    CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
+  src.urisys.http_server.create_server
+    CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
   scripts.pack_registry.pack_specs
@@ -707,34 +707,35 @@ EDGES:
   src.urisys.cli.main → src.urisys.cli.print_json
   src.urisys.cli.main → src.urisys.init_setup.run_init
   src.urisys.cli.main → scripts.run-nl-log-smoke.print
+  src.urisys.init_setup.default_pip_specs → src.urisys.uricore_install.pip_spec
+  src.urisys.init_setup.verify_uri_control → src.urisys.uricore_install.diagnose_uricore
+  src.urisys.init_setup.verify_uri_control → src.urisys.uricore_install.wheel_url
+  src.urisys.init_setup.write_env_file → src.urisys.init_setup.render_env_shell
+  src.urisys.init_setup.run_init → src.urisys.init_setup.default_pip_specs
+  src.urisys.init_setup.run_init → src.urisys.init_setup.profile_env
+  src.urisys.init_setup.run_init → src.urisys.uricore_install.is_wrong_uricore_installed
+  src.urisys.init_setup.run_init → src.urisys.uricore_install.repair_uricore
+  src.urisys.node_install.wheel_url → src.urisys.node_install.github_owner
+  src.urisys.node_install.wheel_url → src.urisys.node_install.github_version
+  src.urisys.node_install.pip_spec → src.urisys.node_install.wheel_url
+  src.urisys.node_install.diagnose_urisys_node → src.urisys.node_install.is_importable
+  src.urisys.node_install.diagnose_urisys_node → src.urisys.node_install.pip_spec
   src.urisys.http_server.create_server → src.urisys.http_server._send
   src.urisys.http_server.create_server → src.urisys.http_server._read_json
   src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.load_flow
   src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.iter_steps
-  src.urisys.controllers.server_controller.ServerController.__init__ → src.urisys.http_server.create_server
-  src.urisys.controllers.server_controller.ServerController.serve_forever → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.rules_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.rules_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.llm_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.llm_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.parse_args
-  scripts.office-simulate-loop.main → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.rules_tick
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.llm_tick
-  scripts.run_test_sessions.session_pytest_urirdp → scripts.report.util.now_iso
-  scripts.run_test_sessions.session_pytest_urirdp → scripts.test_sessions.util.write_meta
-  scripts.run_test_sessions.session_pytest_urirdp → scripts.test_sessions.util.run_cmd
 ```
 
 ### Code Analysis (`project/analysis.toon.yaml`)
 
 ```toon markpact:analysis path=project/analysis.toon.yaml
-# code2llm | 204f 13690L | shell:65,python:50,yaml:42,json:14,yml:11,toml:7,javascript:2,txt:2,conf:1,gui:1 | 2026-06-17
+# code2llm | 204f 13691L | shell:65,python:50,yaml:42,json:14,yml:11,toml:7,javascript:2,txt:2,conf:1,gui:1 | 2026-06-17
 # generated in 0.03s
 # CC̅=4.4 | critical:16/341 | dups:0 | cycles:0
 
 HEALTH[16]:
   🟡 CC    main CC=36 (limit:15)
+  🟡 CC    run_init CC=41 (limit:15)
   🟡 CC    validate_contract CC=23 (limit:15)
   🟡 CC    validate_implementation CC=18 (limit:15)
   🟡 CC    compile CC=21 (limit:15)
@@ -749,7 +750,6 @@ HEALTH[16]:
   🟡 CC    infer_steps CC=20 (limit:15)
   🟡 CC    build_lab_runtime CC=17 (limit:15)
   🟡 CC    do_POST CC=23 (limit:15)
-  🟡 CC    run_init CC=41 (limit:15)
 
 REFACTOR[1]:
   1. split 16 high-CC methods  (CC>15)
@@ -859,7 +859,7 @@ PIPELINES[128]:
 LAYERS:
   src/                            CC̄=4.7    ←in:0  →out:0
   │ !! markpact_manager           401L  1C   19m  CC=21     ←0
-  │ doctor                     287L  1C   11m  CC=11     ←3
+  │ doctor                     288L  1C   11m  CC=11     ←3
   │ !! cli                        282L  0C    6m  CC=36     ←0
   │ !! init_setup                 236L  0C    8m  CC=41     ←2
   │ source_manager             224L  2C   11m  CC=11     ←0
@@ -1105,12 +1105,12 @@ COUPLING:
   urisys-automation-lab.server                             6                                                                                                                      ──                              
          urikvm-docker.scripts                             2                                                                                        ←1                                                          ──
   CYCLES: none
+  HUB: scripts.test_sessions/ (fan-in=90)
   HUB: scripts/ (fan-in=28)
   HUB: scripts.report/ (fan-in=29)
-  HUB: scripts.test_sessions/ (fan-in=90)
+  SMELL: scripts.test_sessions/ fan-out=9 → split needed
   SMELL: scripts/ fan-out=117 → split needed
   SMELL: src.urisys/ fan-out=8 → split needed
-  SMELL: scripts.test_sessions/ fan-out=9 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon
@@ -1120,15 +1120,15 @@ EXTERNAL:
 ### Duplication (`project/duplication.toon.yaml`)
 
 ```toon markpact:analysis path=project/duplication.toon.yaml
-# redup/duplication | 2 groups | 45f 4797L | 2026-06-17
+# redup/duplication | 2 groups | 45f 4798L | 2026-06-17
 
 SUMMARY:
   files_scanned: 45
-  total_lines:   4797
+  total_lines:   4798
   dup_groups:    2
   dup_fragments: 4
   saved_lines:   15
-  scan_ms:       2197
+  scan_ms:       2645
 
 HOTSPOTS[4] (files with most duplication):
   scripts/report/run_analysis.py  dup=8L  groups=1  frags=1  (0.2%)
@@ -1141,7 +1141,7 @@ DUPLICATES[2] (ranked by impact):
       scripts/report/run_analysis.py:122-129  (write_run_analysis)
       scripts/report/session_io.py:12-19  (write_session_report)
   [487da026fcebd9df]   EXAC  _pkg_version  L=7 N=2 saved=7 sim=1.00
-      src/urisys/doctor.py:20-26  (_pkg_version)
+      src/urisys/doctor.py:22-28  (_pkg_version)
       src/urisys/uricore_install.py:38-44  (_pkg_version)
 
 REFACTOR[2] (ranked by priority):
@@ -1251,7 +1251,7 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=4.4 → now CC̄=4.3
+  prev CC̄=4.3 → now CC̄=4.3
 ```
 
 ## Intent

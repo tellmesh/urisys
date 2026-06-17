@@ -35,7 +35,7 @@ Organizacja GitHub: **[tellmesh](https://github.com/tellmesh)** (paczki urisys) 
 | `urimail` | [tellmesh/urimail](https://github.com/tellmesh/urimail) | GitHub Releases |
 | `urioffice` | [tellmesh/urioffice](https://github.com/tellmesh/urioffice) | GitHub Releases |
 | `urivql` | [tellmesh/urivql](https://github.com/tellmesh/urivql) | GitHub Releases |
-| `urisys-node` | *(brak `.git`)* | `urisys init` → wheel z Releases |
+| urisys-node | *(brak `.git`)* | wheel: `urisys_node-0.1.3-py3-none-any.whl` (PEP 427, **nie** `urisys-node-…`) |
 | `urirdp` | *(brak `.git`)* | bundle multi-module |
 | `urikvmedge` | *(brak `.git`)* | kvm docker CLI |
 | `uribrowser` | *(brak `.git`)* | |
@@ -61,7 +61,7 @@ find urisys -path '*/packages/python/*' -name handlers.py   # brak wyników
 |----------|--------|
 | uricore | `https://github.com/tellmesh/uricore/releases/download/v0.1.8/...whl` |
 | urisysedge | PyPI |
-| urisys-node | `https://github.com/tellmesh/urisys-node/releases/download/v0.1.3/...whl` |
+| urisys-node | `https://github.com/tellmesh/urisys-node/releases/download/v0.1.3/urisys_node-0.1.3-py3-none-any.whl` |
 
 Override: `URISYS_NODE_WHEEL_URL`, `URISYS_URICORE_WHEEL_URL`.
 

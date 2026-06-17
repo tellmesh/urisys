@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import importlib.util
 import os
 import subprocess
 import sys
@@ -9,7 +10,7 @@ from pathlib import Path
 from typing import Any, Literal
 
 from .doctor import run_doctor
-from .node_install import diagnose_urisys_node, pip_spec as node_pip_spec
+from .node_install import diagnose_urisys_node, install_urisys_node, pip_spec as node_pip_spec
 from .uricore_install import diagnose_uricore, is_wrong_uricore_installed, pip_spec, repair_uricore, wheel_url
 
 Profile = Literal["slave", "dev"]
@@ -74,6 +75,16 @@ def verify_uri_control() -> dict[str, Any]:
             "pip_hint": f"pip install -U {wheel_url()}",
         }
     return {"ok": True, "module": "uri_control"}
+
+
+def ensure_urisysedge(*, python: str | None = None) -> dict[str, Any]:
+    if importlib.util.find_spec("urisysedge"):
+        return {"ok": True, "already": True}
+    result = pip_install_specs(["urisysedge>=0.1.0"], python=python)
+    result["already"] = False
+    result["importable"] = importlib.util.find_spec("urisysedge") is not None
+    result["ok"] = result["ok"] and result["importable"]
+    return result
 
 
 def profile_env(profile: Profile) -> dict[str, str]:
@@ -141,17 +152,20 @@ def run_init(
             }
         else:
             pip_result = pip_install_specs(specs)
-            node_spec = default_node_pip_spec()
-            node_result = pip_install_specs([node_spec])
+            edge_result = ensure_urisysedge()
+            node_result = install_urisys_node()
             pip_result = {
                 **pip_result,
-                "node_spec": node_spec,
+                "urisysedge_install": edge_result,
+                "node_spec": default_node_pip_spec(),
                 "node_install": node_result,
             }
+            if not edge_result.get("ok"):
+                pip_result["edge_warning"] = "urisysedge missing after pip — retry: pip install -U urisysedge"
             if not node_result.get("ok"):
                 pip_result["node_warning"] = (
-                    "urisys-node wheel install failed — publish a GitHub Release or set "
-                    "URISYS_NODE_WHEEL_URL. Node serve requires urisysnode."
+                    "urisys-node install failed — publish GitHub Release "
+                    f"({node_result.get('spec')}) or set URISYS_NODE_WHEEL_URL / URISYS_NODE_PIP_SPEC"
                 )
         steps.append({"name": "pip_install", "status": "pass" if pip_result.get("ok") else "fail", "detail": pip_result})
         if not pip_result.get("ok"):

@@ -13,7 +13,9 @@ urisys node serve --host 0.0.0.0 --port 8790
 ```
 
 > **Bez hasła GitHub:** `urisys init` instaluje z **publicznych wheels** (uricore + urisys-node z GitHub Releases), nie `git+https://`.
-> Override: `URISYS_NODE_WHEEL_URL`, `URISYS_URICORE_WHEEL_URL`.
+> Override: `URISYS_NODE_WHEEL_URL`, `URISYS_NODE_PIP_SPEC`, `URISYS_URICORE_WHEEL_URL`.
+
+Wheel **musi** nazywać się `urisys_node-{ver}-py3-none-any.whl` (podkreślnik) — pip odrzuca `urisys-node-…` jako invalid version.
 
 > **Uwaga:** PyPI pakiet `uricore` to **inny projekt** (moduł `uricore/`, nie `uri_control/`).
 > `urisys init` instaluje tellmesh uricore z GitHub wheel i naprawia złą instalację automatycznie.
