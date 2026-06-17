@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import importlib.util
 import os
 import subprocess
 import sys
@@ -10,6 +9,7 @@ from pathlib import Path
 from typing import Any, Literal
 
 from .doctor import run_doctor
+from .edge_install import ensure_urisysedge
 from .node_install import diagnose_urisys_node, install_urisys_node, pip_spec as node_pip_spec
 from .uricore_install import diagnose_uricore, is_wrong_uricore_installed, pip_spec, repair_uricore, wheel_url
 
@@ -75,16 +75,6 @@ def verify_uri_control() -> dict[str, Any]:
             "pip_hint": f"pip install -U {wheel_url()}",
         }
     return {"ok": True, "module": "uri_control"}
-
-
-def ensure_urisysedge(*, python: str | None = None) -> dict[str, Any]:
-    if importlib.util.find_spec("urisysedge"):
-        return {"ok": True, "already": True}
-    result = pip_install_specs(["urisysedge>=0.1.0"], python=python)
-    result["already"] = False
-    result["importable"] = importlib.util.find_spec("urisysedge") is not None
-    result["ok"] = result["ok"] and result["importable"]
-    return result
 
 
 def profile_env(profile: Profile) -> dict[str, str]:
