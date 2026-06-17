@@ -8,12 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `docs/DATA-MODEL.md` — model danych node: config (`~/.config/urisys`) vs runtime (`~/.local/share/urisys`, XDG) vs sesje; linkowany z `docs/README.md` + `NODE-SETUP.md`. Dokumentuje fix domyślnej ścieżki danych (koniec CWD-relative `data/`) w sibling `urisys-node`
+- `docs/FLOWS.md` — tabela „który sposób kiedy" (4 ścieżki wykonania flow) + sekcja „Zdalna sesja (master→slave)" dla `lenovo_remote_session.py` — dotąd nieudokumentowana, najczęstsza dla człowieka sterującego zdalnym node'em
+- `scripts/session_core.py` — wspólny rdzeń runnerów sesji (now_iso, save_json, step_ok, ekstrakcja screenshotów base64); pierwszy krok unifikacji dwóch równoległych frameworków sesji (`run_test_sessions.py` + `lenovo_remote_session.py`). 7 testów charakteryzacyjnych (`tests/test_session_core.py`)
 - `docs/REPOS.md` — mapowanie paczek tellmesh → GitHub (tellmesh vs [semcod](https://github.com/semcod)); brak duplikatów vendored
 - `src/urisys/node_install.py` — instalacja `urisys-node` z GitHub Release wheel (bez `git+https`, bez promptu hasła)
 - `scripts/validate-pypi-metadata.sh` — guard przed direct URL w metadanych PyPI
 - `scripts/ci-checkout-siblings.sh` — CI clone sibling repos obok urisys
 
 ### Changed
+- `scripts/lenovo_remote_session.py` — używa `scripts/session_core.py` zamiast lokalnych kopii (−121L, 560→439); zweryfikowane: `--help` + `--extract-images` na realnej sesji rc=0, `tests/` 69 passed
 - `src/urisys/cli.py` — spłaszczenie god-funkcji `main` (CC 23→10): per-komenda handlery `_cmd_markpact`/`_cmd_init`/`_cmd_node`/`_cmd_uri` + `_handle_cli_error(exc)` (mapowanie wyjątków → JSON/exit-code); `main` jest teraz cienkim dispatcherem; byte-identyczne (`tests/` 62 passed, smoke doctor/init/validate rc=0)
 - `src/urisys/managers/markpact_manager.py` — obniżona złożoność trzech najcięższych metod: `run_tests` (CC 19→11, wydzielone `_check_expectations`), `compile` (CC 14→10, wydzielone `_write_handler_modules`), `_build_route` (CC 16→12, wydzielone `_resolve_handler_ref`); byte-identyczne (`urisys markpact test`/`routes` ok, `tests/` 62 passed)
 - `src/urisys/init_setup.py` — rozbicie god-funkcji `run_init` (CC 29→19, 141→95L): wydzielone `_pre_repair_uricore`, `_build_pip_result`, `_resolve_error_hint`; byte-identyczne (`urisys init --dry-run` ok, `tests/` 62 passed)
@@ -29,6 +33,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `urisys doctor` — `NameError: node_pip_spec` przy sprawdzaniu importu urisysnode
 - PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
 - Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
+
+## [0.1.52] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update docs/DATA-MODEL.md
+- Update docs/FLOWS.md
+- Update docs/NODE-SETUP.md
+- Update docs/README.md
+- Update flows/lenovo-remote/README.md
+- ... and 2 more files
+
+### Test
+- Update tests/test_session_core.py
+
+### Other
+- Update app.doql.less
+- Update flows/lenovo-remote/02-install-packs.uri.flow.yaml
+- Update flows/lenovo-remote/07-playwright-linkedin.uri.flow.yaml
+- Update flows/lenovo-remote/_upgrade-playwright.uri.flow.yaml
+- Update flows/lenovo-remote/session.manifest.yaml
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- ... and 17 more files
 
 ## [0.1.51] - 2026-06-17
 

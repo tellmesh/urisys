@@ -36,7 +36,16 @@ expect:                          # opcjonalny kontrakt efektu (patrz niżej)
 | `urisys-node/flows/` | 4 | Bootstrap PyPI/GitHub, remote probe — [`NODE-SETUP.md`](NODE-SETUP.md) |
 | `flows/` | 1 | `device-maintenance` (urisys CLI) |
 
-## Trzy sposoby wykonania
+## Sposoby wykonania — który kiedy
+
+| Sposób | Kiedy użyć | Wykonawca |
+|--------|-----------|-----------|
+| **1. urisys CLI** | lokalnie, prosta liniowa sekwencja `do:` | `FlowController` |
+| **2. zdalna sesja** | sterowanie **zdalnym node** (np. lenovo) przez route-map; pełny raport | `scripts/lenovo_remote_session.py` |
+| **3. automation-lab** `POST /uri/flow` | flow z grafem/warunkami w stacku lab | `flow_runner.py` (uri2flow+uri3) |
+| **4. uri2flow + uri3** | ręczne rozwinięcie grafu + debug | `uri2flow` / `uri3` |
+
+Dla człowieka: **lokalnie → #1**, **zdalny slave → #2**. #3/#4 to ścieżki lab/DAG.
 
 ### 1. urisys CLI (sekwencja `do:`)
 
@@ -60,6 +69,22 @@ curl -X POST http://127.0.0.1:8099/uri/flow \
 - `uri2flow.expand_flow()` — compact YAML → workflow graph
 - `uri3.graph.run_workflow_node()` — topo-order, warunki `if:`, zależności
 - `LabCallAdapter` — sync HTTP przez lab gateway / forward do urirdp
+
+### 2b. Zdalna sesja (master→slave)
+
+Master (dev) steruje slave'em (lenovo `:8790`) — flow'y `*.uri.flow.yaml` z
+`flows/lenovo-remote/`, route-map forwarduje URI do node'a, raport w
+`output/test-sessions/<id>/` (SESSION.md + screenshoty z base64).
+
+```bash
+python3 scripts/lenovo_remote_session.py                 # cała sesja (6 flow)
+python3 -m urisysnode.remote call "kv://lenovo/runtime/query/discover"   # 1 URI
+```
+
+Model: każdy krok = URI → route-map → HTTP forward do node; odpowiedzi w
+`responses/`, ekstrakcja screenshotów (`scripts/session_core.py`). Packi
+hot-loadowane po drucie (`node://…/command/install-pack`); sesje WWW (cookies)
+poza urisys — patrz [`DATA-MODEL.md`](DATA-MODEL.md).
 
 ### 3. uri2flow + uri3 (pełny executor)
 

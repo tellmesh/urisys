@@ -1,45 +1,25 @@
-# code2llm/evolution | 171 func | 27f | 2026-06-17
+# code2llm/evolution | 148 func | 22f | 2026-06-17
 # generated in 0.00s
 
-NEXT[10] (ranked by impact):
-  [1] !! SPLIT-FUNC      main  CC=36  fan=36
-      WHY: CC=36 exceeds 15
-      EFFORT: ~1h  IMPACT: 1296
+NEXT[5] (ranked by impact):
+  [1] !! SPLIT-FUNC      run_init  CC=31  fan=22
+      WHY: CC=31 exceeds 15
+      EFFORT: ~1h  IMPACT: 682
 
-  [2] !! SPLIT-FUNC      run_init  CC=41  fan=25
-      WHY: CC=41 exceeds 15
-      EFFORT: ~1h  IMPACT: 1025
-
-  [3] !  SPLIT-FUNC      MarkpactManager.compile  CC=21  fan=34
-      WHY: CC=21 exceeds 15
-      EFFORT: ~1h  IMPACT: 714
-
-  [4] !  SPLIT-FUNC      MarkpactManager.run_tests  CC=20  fan=21
-      WHY: CC=20 exceeds 15
-      EFFORT: ~1h  IMPACT: 420
-
-  [5] !  SPLIT-FUNC      build_lab_runtime  CC=17  fan=19
+  [2] !  SPLIT-FUNC      MarkpactManager.compile  CC=17  fan=33
       WHY: CC=17 exceeds 15
-      EFFORT: ~1h  IMPACT: 323
+      EFFORT: ~1h  IMPACT: 561
 
-  [6] !  SPLIT-FUNC      LabHandler.do_POST  CC=23  fan=11
-      WHY: CC=23 exceeds 15
-      EFFORT: ~1h  IMPACT: 253
+  [3] !  SPLIT-FUNC      PackManager.parse_packs  CC=15  fan=7
+      WHY: CC=15 exceeds 15
+      EFFORT: ~1h  IMPACT: 105
 
-  [7] !  SPLIT-FUNC      validate_contract  CC=23  fan=10
-      WHY: CC=23 exceeds 15
-      EFFORT: ~1h  IMPACT: 230
-
-  [8] !  SPLIT-FUNC      MarkpactManager._build_route  CC=18  fan=11
-      WHY: CC=18 exceeds 15
-      EFFORT: ~1h  IMPACT: 198
-
-  [9] !  SPLIT-FUNC      validate_implementation  CC=18  fan=10
-      WHY: CC=18 exceeds 15
-      EFFORT: ~1h  IMPACT: 180
-
-  [10] !! SPLIT           planfile.yaml
+  [4] !! SPLIT           planfile.yaml
       WHY: 1319L, 0 classes, max CC=0
+      EFFORT: ~4h  IMPACT: 0
+
+  [5] !! SPLIT           goal.yaml
+      WHY: 514L, 0 classes, max CC=0
       EFFORT: ~4h  IMPACT: 0
 
 
@@ -49,9 +29,9 @@ RISKS[2]:
 
 METRICS-TARGET:
   CC̄:          4.3 → ≤3.0
-  max-CC:      41 → ≤20
+  max-CC:      31 → ≤15
   god-modules: 2 → 0
-  high-CC(≥15): 10 → ≤5
+  high-CC(≥15): 3 → ≤1
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):

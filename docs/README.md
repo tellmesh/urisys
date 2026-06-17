@@ -8,6 +8,7 @@ Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-17, packi w sibl
 |----------|----------|------|
 | [`../README.md`](../README.md) | wszyscy | Instalacja, szybki start CLI |
 | [`NODE-SETUP.md`](NODE-SETUP.md) | slave / lenovo | `urisys init`, node serve, lazy install, systemd |
+| [`DATA-MODEL.md`](DATA-MODEL.md) | slave / ops | Gdzie trzymane są dane: config vs runtime vs sesje (XDG) |
 | [`CLI.md`](CLI.md) | dev | `urisys call`, `flow`, `markpact`, `node serve` |
 | [`EXAMPLES.md`](EXAMPLES.md) | dev | Przykłady URI i flow |
 

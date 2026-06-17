@@ -5,6 +5,13 @@ session:
   endpoint: http://192.168.188.201:8790
   route_map: ../urisys-node/config/route-map.lenovo.yaml
   wheel_server: http://192.168.188.212:8765
+  wheel_deploy_dir: /tmp/urisys-deploy
+
+wheels:
+  urikv: urikv
+  uribrowser: uribrowser
+  urioffice: urioffice
+  urimail: urimail
 
 flows:
   - flows/lenovo-remote/01-health-probe.uri.flow.yaml
@@ -13,6 +20,7 @@ flows:
   - flows/lenovo-remote/04-office-linkedin-dry.uri.flow.yaml
   - flows/lenovo-remote/05-browser-linkedin-real.uri.flow.yaml
   - flows/lenovo-remote/06-browser-auth-probe.uri.flow.yaml
+  - flows/lenovo-remote/07-playwright-linkedin.uri.flow.yaml
 
 replay:
   runner: python3 scripts/lenovo_remote_session.py

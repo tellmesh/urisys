@@ -3740,7 +3740,7 @@ source = { editable = "../urioperators" }
 
 [[package]]
 name = "urisys"
-version = "0.1.51"
+version = "0.1.52"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },

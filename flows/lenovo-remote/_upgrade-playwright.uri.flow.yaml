@@ -1,0 +1,57 @@
+flow:
+  id: lenovo-upgrade-playwright
+  description: Pre-flow-07 upgrade — playwright + uribrowser wheel + node restart (runs automatically before flow 07).
+  target: lenovo
+
+defaults:
+  approved: true
+  allow_real: true
+
+do:
+  - id: pip_playwright
+    uri: shell://pip
+    payload:
+      args: ["install", "-U", "playwright>=1.40"]
+
+  - id: shell_playwright_browser
+    uri: shell://bash
+    payload:
+      args:
+        - -lc
+        - |
+          source ~/venv/bin/activate 2>/dev/null || true
+          python3 -m playwright install chromium 2>&1 | tail -3
+
+  - id: pip_uribrowser
+    uri: shell://pip
+    payload:
+      args:
+        - install
+        - -U
+        - urisysedge>=0.1.0
+        - "{wheel:uribrowser}"
+
+  - id: restart_node
+    uri: shell://bash
+    payload:
+      args:
+        - -lc
+        - |
+          ( sleep 1
+            pkill -f 'urisys node serve' || pkill -f 'urisys-node serve' || true
+            sleep 2
+            for v in "$HOME/venv" "$HOME/venv312"; do
+              [ -f "$v/bin/activate" ] && source "$v/bin/activate" && break
+            done
+            export URISYS_ALLOW_REAL=1
+            nohup urisys node serve --host 0.0.0.0 --port 8790 >> /tmp/urisys-node.log 2>&1 &
+            echo scheduled pid=$!
+          ) >/dev/null 2>&1 &
+
+  - id: wait_restart
+    kind: host_sleep
+    seconds: 18
+
+  - id: http_health
+    kind: http_get
+    path: /health

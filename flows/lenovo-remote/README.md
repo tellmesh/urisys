@@ -27,6 +27,13 @@ python3 scripts/lenovo_remote_session.py --extract-images output/test-sessions/l
 | `04-office-linkedin-dry.uri.flow.yaml` | office doc + publish dry-run + kv draft |
 | `05-browser-linkedin-real.uri.flow.yaml` | system-open LinkedIn compose + screen + kv |
 | `06-browser-auth-probe.uri.flow.yaml` | Chrome LinkedIn cookie probe + kv + screen |
+| `07-playwright-linkedin.uri.flow.yaml` | Playwright + Chrome profile (restart node mid-flow) |
+
+**Flow 07** restarts the node on lenovo — requires `host_sleep` then health check. If node stays down after restart, on lenovo console run:
+
+```bash
+source ~/venv/bin/activate && urisys node serve --host 0.0.0.0 --port 8790
+```
 
 ## Single step
 

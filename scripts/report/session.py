@@ -18,10 +18,13 @@ def infer_steps(session_dir: Path, meta: dict[str, Any]) -> list[StepResult]:
     if not responses_dir.is_dir():
         return steps
     for path in sorted(responses_dir.glob("*.json")):
+        if path.name.startswith("_"):
+            continue
         data = read_json(path) or {}
         ok = bool(data.get("ok"))
         uri = data.get("uri")
-        result = data.get("result") or {}
+        resp = data.get("response") if isinstance(data.get("response"), dict) else {}
+        result = data.get("result") or resp.get("result") or {}
         metrics: dict[str, Any] = {}
         if isinstance(result, dict):
             for key in ("driver", "engine", "clicked", "captured", "size_bytes", "model"):
@@ -31,13 +34,20 @@ def infer_steps(session_dir: Path, meta: dict[str, Any]) -> list[StepResult]:
                 metrics["pipeline_ok"] = all(
                     (v or {}).get("ok") for v in pipeline.values() if isinstance(v, dict)
                 )
+        screenshot = None
+        shots = data.get("screenshots")
+        if isinstance(shots, list) and shots:
+            screenshot = str(shots[0])
+        elif isinstance(result, dict) and result.get("screenshot_file"):
+            screenshot = str(result["screenshot_file"])
         steps.append(
             StepResult(
                 name=path.stem,
                 status="pass" if ok else "fail",
                 uri=str(uri) if uri else None,
                 response_file=str(path.relative_to(session_dir)),
-                detail="" if ok else str(data.get("error") or result.get("error") or "not ok")[:300],
+                screenshot=screenshot,
+                detail="" if ok else str(data.get("error") or resp.get("error") or result.get("error") or "not ok")[:300],
                 metrics=metrics,
             )
         )

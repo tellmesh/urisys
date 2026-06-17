@@ -1,227 +1,24 @@
 project: /home/tom/github/tellmesh/urisys
 generated_from: code2llm call graph analysis
 stats:
-  total_nodes: 166
-  total_edges: 238
-  modules_count: 35
+  total_nodes: 192
+  total_edges: 278
+  modules_count: 36
 nodes:
-  scripts.report.session.infer_steps:
-    name: infer_steps
-    module: scripts.report.session
-    line: 12
-    cyclomatic_complexity: 20
-    calls_out: 25
+  scripts.report.events.summarize_events:
+    name: summarize_events
+    module: scripts.report.events
+    line: 63
+    cyclomatic_complexity: 8
+    calls_out: 10
     calls_in: 1
-  src.urisys.init_setup.profile_env:
-    name: profile_env
+  src.urisys.init_setup.write_env_file:
+    name: write_env_file
     module: src.urisys.init_setup
-    line: 79
+    line: 91
     cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 1
-  scripts.test_sessions.util.prepare_urirdp_data:
-    name: prepare_urirdp_data
-    module: scripts.test_sessions.util
-    line: 199
-    cyclomatic_complexity: 4
-    calls_out: 6
-    calls_in: 3
-  scripts.test_sessions.lab_rdp.capture_rdp_screenshot:
-    name: capture_rdp_screenshot
-    module: scripts.test_sessions.lab_rdp
-    line: 126
-    cyclomatic_complexity: 5
-    calls_out: 6
-    calls_in: 3
-  scripts.report.events.merge_event_summaries:
-    name: merge_event_summaries
-    module: scripts.report.events
-    line: 109
-    cyclomatic_complexity: 10
-    calls_out: 16
-    calls_in: 1
-  scripts.test_sessions.util.save_json:
-    name: save_json
-    module: scripts.test_sessions.util
-    line: 94
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  src.urisys.node_install.is_importable:
-    name: is_importable
-    module: src.urisys.node_install
-    line: 36
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 2
-  scripts.report.lab_checks.iter_step_results:
-    name: iter_step_results
-    module: scripts.report.lab_checks
-    line: 16
-    cyclomatic_complexity: 9
     calls_out: 7
     calls_in: 1
-  scripts.run_test_sessions.session_pytest_urirdp:
-    name: session_pytest_urirdp
-    module: scripts.run_test_sessions
-    line: 65
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 0
-  scripts.run_test_sessions.session_email_mailpit:
-    name: session_email_mailpit
-    module: scripts.run_test_sessions
-    line: 660
-    cyclomatic_complexity: 7
-    calls_out: 13
-    calls_in: 0
-  src.urisys.controllers.server_controller.ServerController.__init__:
-    name: __init__
-    module: src.urisys.controllers.server_controller
-    line: 7
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  src.urisys.flow.load_flow:
-    name: load_flow
-    module: src.urisys.flow
-    line: 9
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 1
-  src.urisys.node_install.github_version:
-    name: github_version
-    module: src.urisys.node_install
-    line: 17
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  scripts.test_sessions.lab_flows._flow_step_detail:
-    name: _flow_step_detail
-    module: scripts.test_sessions.lab_flows
-    line: 102
-    cyclomatic_complexity: 4
-    calls_out: 2
-    calls_in: 1
-  scripts.pack_sync._check_promoted:
-    name: _check_promoted
-    module: scripts.pack_sync
-    line: 140
-    cyclomatic_complexity: 5
-    calls_out: 7
-    calls_in: 1
-  src.urisys.uricore_install.wheel_url:
-    name: wheel_url
-    module: src.urisys.uricore_install
-    line: 23
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 12
-  src.urisys.controllers.server_controller.ServerController.serve_forever:
-    name: serve_forever
-    module: src.urisys.controllers.server_controller
-    line: 15
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  urisys-automation-lab.server.flow_runner._load_defaults:
-    name: _load_defaults
-    module: urisys-automation-lab.server.flow_runner
-    line: 46
-    cyclomatic_complexity: 5
-    calls_out: 7
-    calls_in: 1
-  scripts.pack_sync.read_version:
-    name: read_version
-    module: scripts.pack_sync
-    line: 48
-    cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 3
-  scripts.pack_sync._repo_pyproject:
-    name: _repo_pyproject
-    module: scripts.pack_sync
-    line: 163
-    cyclomatic_complexity: 14
-    calls_out: 12
-    calls_in: 1
-  scripts.test_sessions.util.wait_health:
-    name: wait_health
-    module: scripts.test_sessions.util
-    line: 73
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 0
-  scripts.report.lab_checks.analyze_lab_flows:
-    name: analyze_lab_flows
-    module: scripts.report.lab_checks
-    line: 177
-    cyclomatic_complexity: 5
-    calls_out: 4
-    calls_in: 1
-  scripts.test_sessions.util.write_meta:
-    name: write_meta
-    module: scripts.test_sessions.util
-    line: 131
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 17
-  src.urisys.flow.iter_steps:
-    name: iter_steps
-    module: src.urisys.flow
-    line: 17
-    cyclomatic_complexity: 7
-    calls_out: 8
-    calls_in: 1
-  src.urisys.http_server._read_json:
-    name: _read_json
-    module: src.urisys.http_server
-    line: 12
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 1
-  scripts.pack_registry.all_promoted_packs:
-    name: all_promoted_packs
-    module: scripts.pack_registry
-    line: 259
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  scripts.report.session.session_duration:
-    name: session_duration
-    module: scripts.report.session
-    line: 72
-    cyclomatic_complexity: 5
-    calls_out: 14
-    calls_in: 1
-  scripts.run-nl-log-smoke.print:
-    name: print
-    module: scripts.run-nl-log-smoke
-    line: 42
-    cyclomatic_complexity: 0
-    calls_out: 0
-    calls_in: 47
-  src.urisys.controllers.flow_controller.FlowController.run:
-    name: run
-    module: src.urisys.controllers.flow_controller
-    line: 14
-    cyclomatic_complexity: 6
-    calls_out: 19
-    calls_in: 0
-  scripts.run_test_sessions.session_pytest_urisys:
-    name: session_pytest_urisys
-    module: scripts.run_test_sessions
-    line: 82
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 0
-  scripts.report.events.summarize_event_records:
-    name: summarize_event_records
-    module: scripts.report.events
-    line: 11
-    cyclomatic_complexity: 14
-    calls_out: 15
-    calls_in: 2
   src.urisys.uricore_install.diagnose_uricore:
     name: diagnose_uricore
     module: src.urisys.uricore_install
@@ -229,321 +26,55 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 4
     calls_in: 3
-  scripts.run_test_sessions.session_office_writer:
-    name: session_office_writer
-    module: scripts.run_test_sessions
-    line: 612
-    cyclomatic_complexity: 7
-    calls_out: 13
+  src.urisys.cli.main:
+    name: main
+    module: src.urisys.cli
+    line: 252
+    cyclomatic_complexity: 11
+    calls_out: 20
     calls_in: 0
-  urisys-automation-lab.server.flow_runner._lab_adapter_session:
-    name: _lab_adapter_session
-    module: urisys-automation-lab.server.flow_runner
-    line: 55
+  scripts.run-office-simulate-lenovo.save_json:
+    name: save_json
+    module: scripts.run-office-simulate-lenovo
+    line: 22
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 17
+  scripts.pack_registry.sibling_repo:
+    name: sibling_repo
+    module: scripts.pack_registry
+    line: 56
     cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  src.urisys.uricore_install.repair_uricore:
-    name: repair_uricore
-    module: src.urisys.uricore_install
-    line: 112
-    cyclomatic_complexity: 6
-    calls_out: 10
-    calls_in: 2
-  src.urisys.bootstrap._init_main:
-    name: _init_main
-    module: src.urisys.bootstrap
-    line: 54
-    cyclomatic_complexity: 6
-    calls_out: 18
-    calls_in: 1
-  scripts.test_sessions.expectations.flow_expectations:
-    name: flow_expectations
-    module: scripts.test_sessions.expectations
-    line: 7
+    calls_out: 1
+    calls_in: 0
+  src.urisys.init_setup._resolve_error_hint:
+    name: _resolve_error_hint
+    module: src.urisys.init_setup
+    line: 155
     cyclomatic_complexity: 5
-    calls_out: 6
-    calls_in: 1
-  src.urisys.doctor._check_wayland_him:
-    name: _check_wayland_him
-    module: src.urisys.doctor
-    line: 153
-    cyclomatic_complexity: 3
     calls_out: 4
     calls_in: 1
-  scripts.test_sessions.expectations._opened_url_contains:
-    name: _opened_url_contains
-    module: scripts.test_sessions.expectations
-    line: 85
-    cyclomatic_complexity: 11
-    calls_out: 16
-    calls_in: 1
-  scripts.test_sessions.lab_rdp.prepare_ok_target:
-    name: prepare_ok_target
-    module: scripts.test_sessions.lab_rdp
-    line: 116
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  scripts.report.run_analysis.analyze_run:
-    name: analyze_run
-    module: scripts.report.run_analysis
-    line: 74
-    cyclomatic_complexity: 13
-    calls_out: 33
-    calls_in: 2
-  scripts.run_test_sessions.session_urirdp_real_docker:
-    name: session_urirdp_real_docker
-    module: scripts.run_test_sessions
-    line: 168
-    cyclomatic_complexity: 30
-    calls_out: 69
-    calls_in: 0
-  src.urisys.doctor._check_uricore_authentic:
-    name: _check_uricore_authentic
-    module: src.urisys.doctor
-    line: 172
+  src.urisys.managers.markpact_validation._missing_bundle_imports:
+    name: _missing_bundle_imports
+    module: src.urisys.managers.markpact_validation
+    line: 73
     cyclomatic_complexity: 6
-    calls_out: 11
+    calls_out: 6
     calls_in: 1
-  urisys-automation-lab.web.app.log:
-    name: log
-    module: urisys-automation-lab.web.app
-    line: 10
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 4
-  scripts.office-simulate-loop.llm_tick:
-    name: llm_tick
-    module: scripts.office-simulate-loop
-    line: 71
-    cyclomatic_complexity: 7
-    calls_out: 18
-    calls_in: 1
-  src.urisys.doctor._pkg_version:
-    name: _pkg_version
-    module: src.urisys.doctor
-    line: 22
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 4
-  scripts.run_test_sessions.session_pytest_urisys_node:
-    name: session_pytest_urisys_node
-    module: scripts.run_test_sessions
-    line: 91
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 0
-  scripts.test_sessions.expectations.ocr_texts:
-    name: ocr_texts
-    module: scripts.test_sessions.expectations
-    line: 18
-    cyclomatic_complexity: 11
-    calls_out: 10
-    calls_in: 1
-  scripts.pack_registry._repo:
-    name: _repo
-    module: scripts.pack_registry
-    line: 35
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 11
-  urisys-automation-lab.server.flow_runner.plan_flow:
-    name: plan_flow
-    module: urisys-automation-lab.server.flow_runner
-    line: 64
-    cyclomatic_complexity: 2
-    calls_out: 7
+  scripts.test_sessions.lab_flows._run_single_lab_flow:
+    name: _run_single_lab_flow
+    module: scripts.test_sessions.lab_flows
+    line: 120
+    cyclomatic_complexity: 10
+    calls_out: 19
     calls_in: 1
   scripts.run_test_sessions.session_urisys_node_docker_gui:
     name: session_urisys_node_docker_gui
     module: scripts.run_test_sessions
-    line: 481
+    line: 482
     cyclomatic_complexity: 7
     calls_out: 13
     calls_in: 0
-  urisys-automation-lab.web.app.SR:
-    name: SR
-    module: urisys-automation-lab.web.app
-    line: 61
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 0
-  scripts.test_sessions.lab_flows._run_single_lab_flow:
-    name: _run_single_lab_flow
-    module: scripts.test_sessions.lab_flows
-    line: 119
-    cyclomatic_complexity: 10
-    calls_out: 19
-    calls_in: 1
-  scripts.test_sessions.lab_flows._lab_bootstrap:
-    name: _lab_bootstrap
-    module: scripts.test_sessions.lab_flows
-    line: 30
-    cyclomatic_complexity: 5
-    calls_out: 7
-    calls_in: 1
-  src.urisys.init_setup.render_env_shell:
-    name: render_env_shell
-    module: src.urisys.init_setup
-    line: 83
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 2
-  scripts.run_test_sessions.session_automation_lab:
-    name: session_automation_lab
-    module: scripts.run_test_sessions
-    line: 367
-    cyclomatic_complexity: 16
-    calls_out: 43
-    calls_in: 1
-  scripts.report.util.read_json:
-    name: read_json
-    module: scripts.report.util
-    line: 19
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 5
-  src.urisys.cli.print_json:
-    name: print_json
-    module: src.urisys.cli
-    line: 24
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 16
-  src.urisys.bootstrap._missing_uricore_payload:
-    name: _missing_uricore_payload
-    module: src.urisys.bootstrap
-    line: 20
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  src.urisys.cli.resolve_markpact_source:
-    name: resolve_markpact_source
-    module: src.urisys.cli
-    line: 35
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 1
-  scripts.run_test_sessions.session_office_simulate_lenovo:
-    name: session_office_simulate_lenovo
-    module: scripts.run_test_sessions
-    line: 577
-    cyclomatic_complexity: 6
-    calls_out: 10
-    calls_in: 0
-  scripts.test_sessions.util.read_meta:
-    name: read_meta
-    module: scripts.test_sessions.util
-    line: 138
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 1
-  scripts.pack_sync.remove_vendored:
-    name: remove_vendored
-    module: scripts.pack_sync
-    line: 153
-    cyclomatic_complexity: 4
-    calls_out: 3
-    calls_in: 1
-  scripts.office-simulate-loop.main:
-    name: main
-    module: scripts.office-simulate-loop
-    line: 119
-    cyclomatic_complexity: 10
-    calls_out: 12
-    calls_in: 0
-  scripts.run_test_sessions.session_urirdp_rdp_e2e:
-    name: session_urirdp_rdp_e2e
-    module: scripts.run_test_sessions
-    line: 320
-    cyclomatic_complexity: 5
-    calls_out: 19
-    calls_in: 0
-  src.urisys.bootstrap._doctor_main:
-    name: _doctor_main
-    module: src.urisys.bootstrap
-    line: 39
-    cyclomatic_complexity: 3
-    calls_out: 7
-    calls_in: 1
-  urisys-automation-lab.server.automation_lab_server.build_lab_runtime:
-    name: build_lab_runtime
-    module: urisys-automation-lab.server.automation_lab_server
-    line: 28
-    cyclomatic_complexity: 17
-    calls_out: 23
-    calls_in: 1
-  scripts.run_test_sessions._monorepo_root:
-    name: _monorepo_root
-    module: scripts.run_test_sessions
-    line: 472
-    cyclomatic_complexity: 4
-    calls_out: 3
-    calls_in: 4
-  scripts.report.session_markdown._screenshots_section:
-    name: _screenshots_section
-    module: scripts.report.session_markdown
-    line: 54
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 1
-  src.urisys.doctor.run_doctor:
-    name: run_doctor
-    module: src.urisys.doctor
-    line: 238
-    cyclomatic_complexity: 11
-    calls_out: 21
-    calls_in: 3
-  scripts.report.session_markdown._environment_section:
-    name: _environment_section
-    module: scripts.report.session_markdown
-    line: 29
-    cyclomatic_complexity: 5
-    calls_out: 7
-    calls_in: 1
-  src.urisys.doctor._check_uricore_dist:
-    name: _check_uricore_dist
-    module: src.urisys.doctor
-    line: 204
-    cyclomatic_complexity: 3
-    calls_out: 7
-    calls_in: 1
-  src.urisys.node_install.diagnose_urisys_node:
-    name: diagnose_urisys_node
-    module: src.urisys.node_install
-    line: 40
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  scripts.run_test_sessions.main:
-    name: main
-    module: scripts.run_test_sessions
-    line: 735
-    cyclomatic_complexity: 13
-    calls_out: 32
-    calls_in: 0
-  src.urisys.doctor._check_python:
-    name: _check_python
-    module: src.urisys.doctor
-    line: 79
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 1
-  src.urisys.node_install.github_owner:
-    name: github_owner
-    module: src.urisys.node_install
-    line: 13
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  urisys-automation-lab.web.app.uriCall:
-    name: uriCall
-    module: urisys-automation-lab.web.app
-    line: 15
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 1
   src.urisys.bootstrap.main:
     name: main
     module: src.urisys.bootstrap
@@ -551,82 +82,166 @@ nodes:
     cyclomatic_complexity: 8
     calls_out: 6
     calls_in: 0
-  scripts.test_sessions.util.sleep_ports:
-    name: sleep_ports
-    module: scripts.test_sessions.util
-    line: 195
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 6
-  src.urisys.uricore_install.github_owner:
-    name: github_owner
-    module: src.urisys.uricore_install
-    line: 15
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  src.urisys.bootstrap._print_json:
-    name: _print_json
-    module: src.urisys.bootstrap
-    line: 16
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 3
-  src.urisys.cli._add_runtime_flags:
-    name: _add_runtime_flags
-    module: src.urisys.cli
-    line: 28
-    cyclomatic_complexity: 1
-    calls_out: 4
+  src.urisys.init_setup.run_init:
+    name: run_init
+    module: src.urisys.init_setup
+    line: 168
+    cyclomatic_complexity: 31
+    calls_out: 30
     calls_in: 2
-  src.urisys.uricore_install.github_version:
-    name: github_version
-    module: src.urisys.uricore_install
+  scripts.report.util.read_json:
+    name: read_json
+    module: scripts.report.util
     line: 19
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 5
+  scripts.run_test_sessions._monorepo_root:
+    name: _monorepo_root
+    module: scripts.run_test_sessions
+    line: 473
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 4
+  scripts.test_sessions.util.now_iso:
+    name: now_iso
+    module: scripts.test_sessions.util
+    line: 23
     cyclomatic_complexity: 1
     calls_out: 3
     calls_in: 1
-  scripts.report.lab_checks._duplicate_recommendation:
-    name: _duplicate_recommendation
-    module: scripts.report.lab_checks
-    line: 104
-    cyclomatic_complexity: 6
+  src.urisys.edge_install.is_importable:
+    name: is_importable
+    module: src.urisys.edge_install
+    line: 11
+    cyclomatic_complexity: 1
     calls_out: 1
-    calls_in: 1
-  scripts.report.session_markdown._steps_section:
-    name: _steps_section
-    module: scripts.report.session_markdown
-    line: 41
-    cyclomatic_complexity: 7
-    calls_out: 4
-    calls_in: 1
-  scripts.pack_sync.sync_to_repo:
-    name: sync_to_repo
-    module: scripts.pack_sync
-    line: 74
-    cyclomatic_complexity: 13
-    calls_out: 16
-    calls_in: 3
-  scripts.pack_sync.repo_module_dir:
-    name: repo_module_dir
-    module: scripts.pack_sync
-    line: 36
-    cyclomatic_complexity: 2
-    calls_out: 0
-    calls_in: 4
-  scripts.test_sessions.expectations._ocr_contains:
-    name: _ocr_contains
+    calls_in: 5
+  scripts.test_sessions.expectations.ocr_texts:
+    name: ocr_texts
     module: scripts.test_sessions.expectations
-    line: 102
+    line: 18
+    cyclomatic_complexity: 11
+    calls_out: 10
+    calls_in: 1
+  src.urisys.node_install.wheel_filename:
+    name: wheel_filename
+    module: src.urisys.node_install
+    line: 23
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 2
+  src.urisys.init_setup.render_env_shell:
+    name: render_env_shell
+    module: src.urisys.init_setup
+    line: 84
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 2
+  scripts.test_sessions.expectations.flow_expectations:
+    name: flow_expectations
+    module: scripts.test_sessions.expectations
+    line: 7
     cyclomatic_complexity: 5
     calls_out: 6
     calls_in: 1
-  scripts.test_sessions.expectations._screen_changed_since_previous:
-    name: _screen_changed_since_previous
-    module: scripts.test_sessions.expectations
-    line: 63
-    cyclomatic_complexity: 5
+  scripts.lenovo_remote_session._extract_images_from_dict:
+    name: _extract_images_from_dict
+    module: scripts.lenovo_remote_session
+    line: 204
+    cyclomatic_complexity: 8
+    calls_out: 15
+    calls_in: 2
+  src.urisys.init_setup.profile_env:
+    name: profile_env
+    module: src.urisys.init_setup
+    line: 80
+    cyclomatic_complexity: 2
     calls_out: 1
+    calls_in: 1
+  src.urisys.node_install.pip_run:
+    name: pip_run
+    module: src.urisys.node_install
+    line: 48
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 2
+  src.urisys.cli._handle_cli_error:
+    name: _handle_cli_error
+    module: src.urisys.cli
+    line: 223
+    cyclomatic_complexity: 8
+    calls_out: 13
+    calls_in: 1
+  src.urisys.node_install.wheel_url:
+    name: wheel_url
+    module: src.urisys.node_install
+    line: 29
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 5
+  scripts.pack_sync.main:
+    name: main
+    module: scripts.pack_sync
+    line: 256
+    cyclomatic_complexity: 28
+    calls_out: 39
+    calls_in: 0
+  src.urisys.uricore_install._dist_top_levels:
+    name: _dist_top_levels
+    module: src.urisys.uricore_install
+    line: 51
+    cyclomatic_complexity: 6
+    calls_out: 7
+    calls_in: 1
+  src.urisys.edge_install.repair_urisysedge:
+    name: repair_urisysedge
+    module: src.urisys.edge_install
+    line: 42
+    cyclomatic_complexity: 7
+    calls_out: 10
+    calls_in: 2
+  scripts.report.session.infer_steps:
+    name: infer_steps
+    module: scripts.report.session
+    line: 12
+    cyclomatic_complexity: 20
+    calls_out: 25
+    calls_in: 1
+  scripts.report.util.now_iso:
+    name: now_iso
+    module: scripts.report.util
+    line: 11
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 20
+  scripts.test_sessions.util.docker_logs:
+    name: docker_logs
+    module: scripts.test_sessions.util
+    line: 165
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 9
+  scripts.scan-browser-sessions.discover_browsers:
+    name: discover_browsers
+    module: scripts.scan-browser-sessions
+    line: 129
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 1
+  src.urisys.cli._cmd_uri:
+    name: _cmd_uri
+    module: src.urisys.cli
+    line: 204
+    cyclomatic_complexity: 4
+    calls_out: 9
+    calls_in: 1
+  src.urisys.node_install.install_urisys_node:
+    name: install_urisys_node
+    module: src.urisys.node_install
+    line: 61
+    cyclomatic_complexity: 7
+    calls_out: 12
     calls_in: 1
   src.urisys.uricore_install._pkg_version:
     name: _pkg_version
@@ -635,88 +250,88 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 1
     calls_in: 3
-  scripts.report.util.host_id:
-    name: host_id
-    module: scripts.report.util
-    line: 15
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 16
-  scripts.office-simulate-loop.rules_tick:
-    name: rules_tick
-    module: scripts.office-simulate-loop
-    line: 53
-    cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 1
-  src.urisys.doctor._check_import:
-    name: _check_import
-    module: src.urisys.doctor
-    line: 51
+  scripts.test_sessions.lab_flows._lab_bootstrap:
+    name: _lab_bootstrap
+    module: scripts.test_sessions.lab_flows
+    line: 31
     cyclomatic_complexity: 5
-    calls_out: 12
-    calls_in: 4
-  scripts.report.run_markdown.render_run_analysis_markdown:
-    name: render_run_analysis_markdown
-    module: scripts.report.run_markdown
-    line: 6
-    cyclomatic_complexity: 7
-    calls_out: 16
-    calls_in: 1
-  scripts.pack_sync.promote:
-    name: promote
-    module: scripts.pack_sync
-    line: 251
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  src.urisys.doctor._check_cli_path:
-    name: _check_cli_path
-    module: src.urisys.doctor
-    line: 105
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 1
-  scripts.pack_sync.main:
-    name: main
-    module: scripts.pack_sync
-    line: 256
-    cyclomatic_complexity: 28
-    calls_out: 39
-    calls_in: 0
-  src.urisys.init_setup.write_env_file:
-    name: write_env_file
-    module: src.urisys.init_setup
-    line: 90
-    cyclomatic_complexity: 2
     calls_out: 7
     calls_in: 1
-  src.urisys.uricore_install.pip_spec:
-    name: pip_spec
-    module: src.urisys.uricore_install
-    line: 34
+  scripts.test_sessions.expectations._opened_url_contains:
+    name: _opened_url_contains
+    module: scripts.test_sessions.expectations
+    line: 85
+    cyclomatic_complexity: 11
+    calls_out: 16
+    calls_in: 1
+  src.urisys.node_install.github_version:
+    name: github_version
+    module: src.urisys.node_install
+    line: 19
     cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 2
-  src.urisys.init_setup.verify_uri_control:
-    name: verify_uri_control
-    module: src.urisys.init_setup
-    line: 64
-    cyclomatic_complexity: 2
     calls_out: 3
     calls_in: 2
-  scripts.office-simulate-loop.parse_args:
-    name: parse_args
-    module: scripts.office-simulate-loop
-    line: 100
+  scripts.run-urisys-node-docker-e2e.http_json:
+    name: http_json
+    module: scripts.run-urisys-node-docker-e2e
+    line: 42
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 11
+  src.urisys.bootstrap._print_json:
+    name: _print_json
+    module: src.urisys.bootstrap
+    line: 16
     cyclomatic_complexity: 1
-    calls_out: 8
-    calls_in: 1
-  scripts.test_sessions.expectations._min_vision_confidence:
-    name: _min_vision_confidence
+    calls_out: 2
+    calls_in: 3
+  scripts.test_sessions.expectations.vision_confidences:
+    name: vision_confidences
     module: scripts.test_sessions.expectations
-    line: 110
+    line: 30
+    cyclomatic_complexity: 11
+    calls_out: 11
+    calls_in: 1
+  src.urisys.init_setup._build_pip_result:
+    name: _build_pip_result
+    module: src.urisys.init_setup
+    line: 126
     cyclomatic_complexity: 4
+    calls_out: 9
+    calls_in: 1
+  scripts.report.lab_checks._duplicate_recommendation:
+    name: _duplicate_recommendation
+    module: scripts.report.lab_checks
+    line: 104
+    cyclomatic_complexity: 6
+    calls_out: 1
+    calls_in: 1
+  src.urisys.cli._add_runtime_flags:
+    name: _add_runtime_flags
+    module: src.urisys.cli
+    line: 28
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 2
+  scripts.lenovo_remote_session.backfill_session_images:
+    name: backfill_session_images
+    module: scripts.lenovo_remote_session
+    line: 265
+    cyclomatic_complexity: 8
+    calls_out: 11
+    calls_in: 1
+  src.urisys.cli.build_parser:
+    name: build_parser
+    module: src.urisys.cli
+    line: 43
+    cyclomatic_complexity: 1
+    calls_out: 61
+    calls_in: 1
+  scripts.report.session_markdown._screenshots_section:
+    name: _screenshots_section
+    module: scripts.report.session_markdown
+    line: 54
+    cyclomatic_complexity: 3
     calls_out: 3
     calls_in: 1
   src.urisys.http_server.create_server:
@@ -726,55 +341,6 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 31
     calls_in: 1
-  scripts.test_sessions.expectations.vision_confidences:
-    name: vision_confidences
-    module: scripts.test_sessions.expectations
-    line: 30
-    cyclomatic_complexity: 11
-    calls_out: 11
-    calls_in: 1
-  urisys-automation-lab.web.app.rec:
-    name: rec
-    module: urisys-automation-lab.web.app
-    line: 66
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  scripts.run-office-writer-e2e.save_json:
-    name: save_json
-    module: scripts.run-office-writer-e2e
-    line: 61
-    cyclomatic_complexity: 0
-    calls_out: 0
-    calls_in: 17
-  urisys-automation-lab.web.app.text:
-    name: text
-    module: urisys-automation-lab.web.app
-    line: 105
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  urisys-automation-lab.server.lab_uri_adapter.LabCallAdapter.execute:
-    name: execute
-    module: urisys-automation-lab.server.lab_uri_adapter
-    line: 57
-    cyclomatic_complexity: 12
-    calls_out: 20
-    calls_in: 0
-  scripts.run_test_sessions.session_office_simulate:
-    name: session_office_simulate
-    module: scripts.run_test_sessions
-    line: 529
-    cyclomatic_complexity: 7
-    calls_out: 13
-    calls_in: 0
-  src.urisys.uricore_install._module_exists:
-    name: _module_exists
-    module: src.urisys.uricore_install
-    line: 47
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 3
   src.urisys.http_server._send:
     name: _send
     module: src.urisys.http_server
@@ -782,41 +348,6 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 12
     calls_in: 9
-  scripts.pack_registry.sibling_repo:
-    name: sibling_repo
-    module: scripts.pack_registry
-    line: 56
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  scripts.report.lab_checks.load_flow_outcomes:
-    name: load_flow_outcomes
-    module: scripts.report.lab_checks
-    line: 25
-    cyclomatic_complexity: 15
-    calls_out: 22
-    calls_in: 1
-  scripts.run_test_sessions.session_urirdp_mock_docker:
-    name: session_urirdp_mock_docker
-    module: scripts.run_test_sessions
-    line: 101
-    cyclomatic_complexity: 5
-    calls_out: 31
-    calls_in: 0
-  scripts.report.cli.main:
-    name: main
-    module: scripts.report.cli
-    line: 11
-    cyclomatic_complexity: 4
-    calls_out: 23
-    calls_in: 0
-  scripts.report.run_analysis.write_run_analysis:
-    name: write_run_analysis
-    module: scripts.report.run_analysis
-    line: 122
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 1
   scripts.office-simulate-loop.call_uri:
     name: call_uri
     module: scripts.office-simulate-loop
@@ -824,188 +355,62 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 11
     calls_in: 4
-  src.urisys.uricore_install._dist_top_levels:
-    name: _dist_top_levels
-    module: src.urisys.uricore_install
+  scripts.run-office-writer-e2e.wait_health:
+    name: wait_health
+    module: scripts.run-office-writer-e2e
     line: 51
-    cyclomatic_complexity: 6
-    calls_out: 7
-    calls_in: 1
-  src.urisys.cli.build_parser:
-    name: build_parser
-    module: src.urisys.cli
-    line: 43
-    cyclomatic_complexity: 1
-    calls_out: 61
-    calls_in: 1
-  src.urisys.doctor._parse_version:
-    name: _parse_version
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 7
+  src.urisys.doctor._check_cli_path:
+    name: _check_cli_path
     module: src.urisys.doctor
-    line: 31
-    cyclomatic_complexity: 7
-    calls_out: 6
-    calls_in: 2
-  scripts.pack_sync.vendored_module_dir:
-    name: vendored_module_dir
-    module: scripts.pack_sync
-    line: 42
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 2
-  urikvm-docker.scripts.real_pipeline.main:
-    name: main
-    module: urikvm-docker.scripts.real_pipeline
-    line: 59
-    cyclomatic_complexity: 14
-    calls_out: 26
-    calls_in: 0
-  urisys-automation-lab.server.flow_runner.run_flow_file:
-    name: run_flow_file
-    module: urisys-automation-lab.server.flow_runner
     line: 105
-    cyclomatic_complexity: 13
-    calls_out: 40
-    calls_in: 1
-  scripts.test_sessions.util.finalize_session:
-    name: finalize_session
-    module: scripts.test_sessions.util
-    line: 147
-    cyclomatic_complexity: 5
-    calls_out: 13
-    calls_in: 21
-  urisys-automation-lab.server.automation_lab_server.serve:
-    name: serve
-    module: urisys-automation-lab.server.automation_lab_server
-    line: 219
-    cyclomatic_complexity: 4
-    calls_out: 13
-    calls_in: 0
-  src.urisys.init_setup.default_pip_specs:
-    name: default_pip_specs
-    module: src.urisys.init_setup
-    line: 30
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  scripts.test_sessions.util.docker_logs:
-    name: docker_logs
-    module: scripts.test_sessions.util
-    line: 164
     cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 9
-  scripts.report.session_io.write_session_report:
-    name: write_session_report
-    module: scripts.report.session_io
-    line: 12
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 2
-  scripts.report.session_markdown.render_session_markdown:
-    name: render_session_markdown
-    module: scripts.report.session_markdown
-    line: 6
-    cyclomatic_complexity: 1
-    calls_out: 16
+    calls_out: 6
     calls_in: 1
-  scripts.pack_sync.sync_file:
-    name: sync_file
-    module: scripts.pack_sync
-    line: 63
-    cyclomatic_complexity: 5
-    calls_out: 6
-    calls_in: 2
-  urikvm-docker.scripts.real_pipeline.build_runtime:
-    name: build_runtime
-    module: urikvm-docker.scripts.real_pipeline
-    line: 49
+  src.urisys.controllers.server_controller.ServerController.serve_forever:
+    name: serve_forever
+    module: src.urisys.controllers.server_controller
+    line: 15
     cyclomatic_complexity: 1
-    calls_out: 6
-    calls_in: 2
-  src.urisys.node_install.wheel_url:
-    name: wheel_url
-    module: src.urisys.node_install
-    line: 21
+    calls_out: 3
+    calls_in: 0
+  scripts.pack_sync.repo_module_dir:
+    name: repo_module_dir
+    module: scripts.pack_sync
+    line: 36
+    cyclomatic_complexity: 2
+    calls_out: 0
+    calls_in: 4
+  scripts.lenovo_remote_session._write_base64_image:
+    name: _write_base64_image
+    module: scripts.lenovo_remote_session
+    line: 197
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  src.urisys.cli._json_arg:
+    name: _json_arg
+    module: src.urisys.cli
+    line: 16
     cyclomatic_complexity: 3
     calls_out: 5
     calls_in: 1
-  scripts.report.lab_checks.check_duplicate_screenshots:
-    name: check_duplicate_screenshots
+  scripts.report.lab_checks.iter_step_results:
+    name: iter_step_results
     module: scripts.report.lab_checks
-    line: 128
-    cyclomatic_complexity: 5
-    calls_out: 3
-    calls_in: 0
-  src.urisys.init_setup.run_init:
-    name: run_init
-    module: src.urisys.init_setup
-    line: 99
-    cyclomatic_complexity: 41
-    calls_out: 43
-    calls_in: 2
-  src.urisys.node_install.pip_spec:
-    name: pip_spec
-    module: src.urisys.node_install
-    line: 32
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  scripts.test_sessions.util.http_json:
-    name: http_json
-    module: scripts.test_sessions.util
-    line: 34
+    line: 16
     cyclomatic_complexity: 9
-    calls_out: 18
+    calls_out: 7
     calls_in: 1
-  scripts.test_sessions.util.compose_cmd:
-    name: compose_cmd
-    module: scripts.test_sessions.util
-    line: 84
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 10
-  src.urisys.uricore_install.is_wrong_uricore_installed:
-    name: is_wrong_uricore_installed
-    module: src.urisys.uricore_install
-    line: 67
-    cyclomatic_complexity: 5
-    calls_out: 3
-    calls_in: 5
-  src.urisys.uricore_install.pip_run:
-    name: pip_run
-    module: src.urisys.uricore_install
-    line: 99
-    cyclomatic_complexity: 4
-    calls_out: 2
-    calls_in: 2
-  scripts.test_sessions.lab_flows._capture_flow_screenshot:
-    name: _capture_flow_screenshot
-    module: scripts.test_sessions.lab_flows
-    line: 54
-    cyclomatic_complexity: 13
-    calls_out: 10
+  src.urisys.bootstrap._doctor_main:
+    name: _doctor_main
+    module: src.urisys.bootstrap
+    line: 39
+    cyclomatic_complexity: 3
+    calls_out: 7
     calls_in: 1
-  scripts.report.events.load_event_records:
-    name: load_event_records
-    module: scripts.report.events
-    line: 37
-    cyclomatic_complexity: 14
-    calls_out: 14
-    calls_in: 1
-  scripts.report.util.now_iso:
-    name: now_iso
-    module: scripts.report.util
-    line: 11
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 20
-  scripts.test_sessions.util.run_cmd:
-    name: run_cmd
-    module: scripts.test_sessions.util
-    line: 99
-    cyclomatic_complexity: 6
-    calls_out: 12
-    calls_in: 31
   scripts.test_sessions.lab_rdp.capture_rdp_screenshot_wait:
     name: capture_rdp_screenshot_wait
     module: scripts.test_sessions.lab_rdp
@@ -1013,34 +418,104 @@ nodes:
     cyclomatic_complexity: 9
     calls_out: 6
     calls_in: 1
-  src.urisys.doctor._check_min_version:
-    name: _check_min_version
-    module: src.urisys.doctor
-    line: 128
+  scripts.run_test_sessions.session_office_simulate_lenovo:
+    name: session_office_simulate_lenovo
+    module: scripts.run_test_sessions
+    line: 578
     cyclomatic_complexity: 6
-    calls_out: 5
+    calls_out: 10
+    calls_in: 0
+  src.urisys.uricore_install.github_version:
+    name: github_version
+    module: src.urisys.uricore_install
+    line: 19
+    cyclomatic_complexity: 1
+    calls_out: 3
     calls_in: 1
-  scripts.test_sessions.expectations.evaluate_expectations:
-    name: evaluate_expectations
-    module: scripts.test_sessions.expectations
-    line: 121
-    cyclomatic_complexity: 3
+  scripts.report.lab_checks.analyze_lab_flows:
+    name: analyze_lab_flows
+    module: scripts.report.lab_checks
+    line: 177
+    cyclomatic_complexity: 5
+    calls_out: 4
+    calls_in: 1
+  scripts.lenovo_remote_session.step_ok:
+    name: step_ok
+    module: scripts.lenovo_remote_session
+    line: 79
+    cyclomatic_complexity: 9
+    calls_out: 13
+    calls_in: 1
+  scripts.report.session.generate_report:
+    name: generate_report
+    module: scripts.report.session
+    line: 83
+    cyclomatic_complexity: 9
+    calls_out: 27
+    calls_in: 2
+  src.urisys.managers.markpact_validation._validate_contract_routes:
+    name: _validate_contract_routes
+    module: src.urisys.managers.markpact_validation
+    line: 16
+    cyclomatic_complexity: 11
+    calls_out: 15
+    calls_in: 1
+  scripts.scan-browser-sessions._copy_query:
+    name: _copy_query
+    module: scripts.scan-browser-sessions
+    line: 36
+    cyclomatic_complexity: 2
     calls_out: 10
     calls_in: 1
-  urisys-automation-lab.server.flow_runner._require_uri_stack:
-    name: _require_uri_stack
-    module: urisys-automation-lab.server.flow_runner
-    line: 27
-    cyclomatic_complexity: 2
+  scripts.lenovo_remote_session._image_ext:
+    name: _image_ext
+    module: scripts.lenovo_remote_session
+    line: 188
+    cyclomatic_complexity: 5
     calls_out: 1
-    calls_in: 2
-  scripts.test_sessions.util.file_md5:
-    name: file_md5
-    module: scripts.test_sessions.util
-    line: 189
+    calls_in: 1
+  src.urisys.managers.markpact_models.scheme_from_uri:
+    name: scheme_from_uri
+    module: src.urisys.managers.markpact_models
+    line: 84
     cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 3
+    calls_out: 2
+    calls_in: 1
+  src.urisys.node_install.diagnose_urisys_node:
+    name: diagnose_urisys_node
+    module: src.urisys.node_install
+    line: 93
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  scripts.run_test_sessions.session_automation_lab:
+    name: session_automation_lab
+    module: scripts.run_test_sessions
+    line: 368
+    cyclomatic_complexity: 16
+    calls_out: 43
+    calls_in: 1
+  scripts.test_sessions.util.read_meta:
+    name: read_meta
+    module: scripts.test_sessions.util
+    line: 139
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  scripts.run_test_sessions.session_email_mailpit:
+    name: session_email_mailpit
+    module: scripts.run_test_sessions
+    line: 661
+    cyclomatic_complexity: 7
+    calls_out: 13
+    calls_in: 0
+  scripts.run-nl-log-smoke.print:
+    name: print
+    module: scripts.run-nl-log-smoke
+    line: 42
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 54
   scripts.report.util.tail:
     name: tail
     module: scripts.report.util
@@ -1048,19 +523,110 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 0
     calls_in: 1
-  src.urisys.cli.main:
+  src.urisys.edge_install.ensure_urisysedge:
+    name: ensure_urisysedge
+    module: src.urisys.edge_install
+    line: 65
+    cyclomatic_complexity: 5
+    calls_out: 8
+    calls_in: 1
+  src.urisys.uricore_install.pip_spec:
+    name: pip_spec
+    module: src.urisys.uricore_install
+    line: 34
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  src.urisys.uricore_install.pip_run:
+    name: pip_run
+    module: src.urisys.uricore_install
+    line: 99
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 2
+  scripts.pack_sync._check_promoted:
+    name: _check_promoted
+    module: scripts.pack_sync
+    line: 140
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 1
+  scripts.test_sessions.util.http_json:
+    name: http_json
+    module: scripts.test_sessions.util
+    line: 35
+    cyclomatic_complexity: 9
+    calls_out: 18
+    calls_in: 1
+  src.urisys.doctor.run_doctor:
+    name: run_doctor
+    module: src.urisys.doctor
+    line: 238
+    cyclomatic_complexity: 12
+    calls_out: 22
+    calls_in: 3
+  scripts.lenovo_remote_session.load_yaml:
+    name: load_yaml
+    module: scripts.lenovo_remote_session
+    line: 54
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 3
+  scripts.office-simulate-loop.main:
     name: main
-    module: src.urisys.cli
-    line: 125
-    cyclomatic_complexity: 36
-    calls_out: 68
+    module: scripts.office-simulate-loop
+    line: 119
+    cyclomatic_complexity: 10
+    calls_out: 12
     calls_in: 0
-  scripts.pack_registry.pack_specs:
-    name: pack_specs
-    module: scripts.pack_registry
-    line: 60
-    cyclomatic_complexity: 17
-    calls_out: 28
+  scripts.lenovo_remote_session.extract_step_screenshots:
+    name: extract_step_screenshots
+    module: scripts.lenovo_remote_session
+    line: 239
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 2
+  scripts.pack_sync.promote:
+    name: promote
+    module: scripts.pack_sync
+    line: 251
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  scripts.run_test_sessions.session_pytest_urisys_node:
+    name: session_pytest_urisys_node
+    module: scripts.run_test_sessions
+    line: 92
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  src.urisys.doctor._check_python:
+    name: _check_python
+    module: src.urisys.doctor
+    line: 79
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  src.urisys.node_install.is_importable:
+    name: is_importable
+    module: src.urisys.node_install
+    line: 44
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 4
+  scripts.report.lab_checks.load_flow_outcomes:
+    name: load_flow_outcomes
+    module: scripts.report.lab_checks
+    line: 25
+    cyclomatic_complexity: 15
+    calls_out: 22
+    calls_in: 1
+  scripts.report.events.summarize_event_records:
+    name: summarize_event_records
+    module: scripts.report.events
+    line: 11
+    cyclomatic_complexity: 14
+    calls_out: 15
     calls_in: 2
   scripts.pack_sync.init_repo:
     name: init_repo
@@ -1069,20 +635,160 @@ nodes:
     cyclomatic_complexity: 12
     calls_out: 21
     calls_in: 1
-  urisys-automation-lab.server.lab_uri_adapter.step_ok:
-    name: step_ok
-    module: urisys-automation-lab.server.lab_uri_adapter
-    line: 39
-    cyclomatic_complexity: 9
-    calls_out: 9
+  scripts.report.events.merge_event_summaries:
+    name: merge_event_summaries
+    module: scripts.report.events
+    line: 109
+    cyclomatic_complexity: 10
+    calls_out: 16
     calls_in: 1
-  scripts.pack_sync.file_hash:
-    name: file_hash
+  scripts.pack_sync.vendored_module_dir:
+    name: vendored_module_dir
     module: scripts.pack_sync
-    line: 59
+    line: 42
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 2
+  scripts.lenovo_remote_session.save_json:
+    name: save_json
+    module: scripts.lenovo_remote_session
+    line: 297
     cyclomatic_complexity: 1
     calls_out: 3
+    calls_in: 8
+  src.urisys.init_setup.default_node_pip_spec:
+    name: default_node_pip_spec
+    module: src.urisys.init_setup
+    line: 41
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  scripts.report.lab_checks.check_duplicate_screenshots:
+    name: check_duplicate_screenshots
+    module: scripts.report.lab_checks
+    line: 128
+    cyclomatic_complexity: 5
+    calls_out: 3
+    calls_in: 0
+  src.urisys.edge_install._dist_version:
+    name: _dist_version
+    module: src.urisys.edge_install
+    line: 15
+    cyclomatic_complexity: 2
+    calls_out: 1
     calls_in: 4
+  src.urisys.doctor._pkg_version:
+    name: _pkg_version
+    module: src.urisys.doctor
+    line: 22
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 4
+  src.urisys.edge_install.pip_run:
+    name: pip_run
+    module: src.urisys.edge_install
+    line: 29
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 3
+  scripts.test_sessions.util.save_json:
+    name: save_json
+    module: scripts.test_sessions.util
+    line: 95
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  scripts.pack_sync.sync_to_repo:
+    name: sync_to_repo
+    module: scripts.pack_sync
+    line: 74
+    cyclomatic_complexity: 13
+    calls_out: 16
+    calls_in: 3
+  scripts.scan-browser-sessions.scan_chrome_cookies:
+    name: scan_chrome_cookies
+    module: scripts.scan-browser-sessions
+    line: 56
+    cyclomatic_complexity: 13
+    calls_out: 13
+    calls_in: 1
+  scripts.test_sessions.expectations.evaluate_expectations:
+    name: evaluate_expectations
+    module: scripts.test_sessions.expectations
+    line: 121
+    cyclomatic_complexity: 3
+    calls_out: 10
+    calls_in: 1
+  scripts.test_sessions.expectations._screen_changed_since_previous:
+    name: _screen_changed_since_previous
+    module: scripts.test_sessions.expectations
+    line: 63
+    cyclomatic_complexity: 5
+    calls_out: 1
+    calls_in: 1
+  scripts.report.run_analysis.analyze_run:
+    name: analyze_run
+    module: scripts.report.run_analysis
+    line: 74
+    cyclomatic_complexity: 13
+    calls_out: 33
+    calls_in: 2
+  src.urisys.doctor._check_uricore_dist:
+    name: _check_uricore_dist
+    module: src.urisys.doctor
+    line: 204
+    cyclomatic_complexity: 3
+    calls_out: 7
+    calls_in: 1
+  src.urisys.uricore_install.wheel_url:
+    name: wheel_url
+    module: src.urisys.uricore_install
+    line: 23
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 12
+  scripts.lenovo_remote_session.run_flow:
+    name: run_flow
+    module: scripts.lenovo_remote_session
+    line: 146
+    cyclomatic_complexity: 13
+    calls_out: 31
+    calls_in: 1
+  scripts.scan-browser-sessions.main:
+    name: main
+    module: scripts.scan-browser-sessions
+    line: 140
+    cyclomatic_complexity: 23
+    calls_out: 34
+    calls_in: 0
+  scripts.run_test_sessions.session_urirdp_real_docker:
+    name: session_urirdp_real_docker
+    module: scripts.run_test_sessions
+    line: 169
+    cyclomatic_complexity: 30
+    calls_out: 69
+    calls_in: 0
+  src.urisys.controllers.flow_controller.FlowController.run:
+    name: run
+    module: src.urisys.controllers.flow_controller
+    line: 14
+    cyclomatic_complexity: 6
+    calls_out: 19
+    calls_in: 0
+  scripts.run_test_sessions.session_office_writer:
+    name: session_office_writer
+    module: scripts.run_test_sessions
+    line: 613
+    cyclomatic_complexity: 7
+    calls_out: 13
+    calls_in: 0
+  scripts.lenovo_remote_session.run_step:
+    name: run_step
+    module: scripts.lenovo_remote_session
+    line: 96
+    cyclomatic_complexity: 10
+    calls_out: 25
+    calls_in: 1
   src.urisys.doctor._version_lt:
     name: _version_lt
     module: src.urisys.doctor
@@ -1090,34 +796,34 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 2
     calls_in: 1
-  scripts.test_sessions.util.copy_container_file:
-    name: copy_container_file
-    module: scripts.test_sessions.util
-    line: 170
+  src.urisys.cli.resolve_markpact_source:
+    name: resolve_markpact_source
+    module: src.urisys.cli
+    line: 35
     cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 10
-  scripts.test_sessions.lab_flows.session_lab_10_flows:
-    name: session_lab_10_flows
-    module: scripts.test_sessions.lab_flows
-    line: 229
-    cyclomatic_complexity: 7
-    calls_out: 33
-    calls_in: 0
-  scripts.report.session.generate_report:
-    name: generate_report
-    module: scripts.report.session
-    line: 83
-    cyclomatic_complexity: 9
-    calls_out: 27
+    calls_out: 3
+    calls_in: 1
+  src.urisys.uricore_install.repair_uricore:
+    name: repair_uricore
+    module: src.urisys.uricore_install
+    line: 112
+    cyclomatic_complexity: 6
+    calls_out: 10
     calls_in: 2
-  scripts.run-office-writer-e2e.wait_health:
-    name: wait_health
-    module: scripts.run-office-writer-e2e
-    line: 50
-    cyclomatic_complexity: 0
-    calls_out: 0
-    calls_in: 6
+  src.urisys.managers.markpact_validation.validate_implementation:
+    name: validate_implementation
+    module: src.urisys.managers.markpact_validation
+    line: 123
+    cyclomatic_complexity: 14
+    calls_out: 22
+    calls_in: 1
+  scripts.report.session_markdown.render_session_markdown:
+    name: render_session_markdown
+    module: scripts.report.session_markdown
+    line: 6
+    cyclomatic_complexity: 1
+    calls_out: 16
+    calls_in: 1
   scripts.test_sessions.expectations._screen_changed:
     name: _screen_changed
     module: scripts.test_sessions.expectations
@@ -1125,34 +831,468 @@ nodes:
     cyclomatic_complexity: 5
     calls_out: 1
     calls_in: 1
-  urisys-automation-lab.web.app.data:
-    name: data
-    module: urisys-automation-lab.web.app
-    line: 21
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  scripts.test_sessions.util.now_iso:
-    name: now_iso
-    module: scripts.test_sessions.util
-    line: 22
-    cyclomatic_complexity: 1
-    calls_out: 3
+  src.urisys.doctor._parse_version:
+    name: _parse_version
+    module: src.urisys.doctor
+    line: 31
+    cyclomatic_complexity: 7
+    calls_out: 6
+    calls_in: 2
+  scripts.report.events.load_event_records:
+    name: load_event_records
+    module: scripts.report.events
+    line: 37
+    cyclomatic_complexity: 14
+    calls_out: 14
     calls_in: 1
-  scripts.run-urisys-node-docker-e2e.http_json:
-    name: http_json
-    module: scripts.run-urisys-node-docker-e2e
-    line: 41
-    cyclomatic_complexity: 0
-    calls_out: 0
-    calls_in: 11
-  urisys-automation-lab.server.automation_lab_server.LabHandler.log_message:
-    name: log_message
-    module: urisys-automation-lab.server.automation_lab_server
-    line: 108
+  scripts.lenovo_remote_session.http_get:
+    name: http_get
+    module: scripts.lenovo_remote_session
+    line: 63
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 1
+  scripts.test_sessions.util.prepare_urirdp_data:
+    name: prepare_urirdp_data
+    module: scripts.test_sessions.util
+    line: 200
+    cyclomatic_complexity: 4
+    calls_out: 6
+    calls_in: 3
+  src.urisys.flow.iter_steps:
+    name: iter_steps
+    module: src.urisys.flow
+    line: 17
+    cyclomatic_complexity: 7
+    calls_out: 8
+    calls_in: 1
+  scripts.test_sessions.lab_rdp.prepare_ok_target:
+    name: prepare_ok_target
+    module: scripts.test_sessions.lab_rdp
+    line: 116
     cyclomatic_complexity: 1
     calls_out: 2
     calls_in: 0
+  scripts.pack_sync.remove_vendored:
+    name: remove_vendored
+    module: scripts.pack_sync
+    line: 153
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  scripts.report.session_io.write_session_report:
+    name: write_session_report
+    module: scripts.report.session_io
+    line: 12
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 2
+  src.urisys.uricore_install.github_owner:
+    name: github_owner
+    module: src.urisys.uricore_install
+    line: 15
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  src.urisys.bootstrap._missing_uricore_payload:
+    name: _missing_uricore_payload
+    module: src.urisys.bootstrap
+    line: 20
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  scripts.test_sessions.lab_rdp.capture_rdp_screenshot:
+    name: capture_rdp_screenshot
+    module: scripts.test_sessions.lab_rdp
+    line: 126
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 3
+  scripts.test_sessions.lab_flows._capture_flow_screenshot:
+    name: _capture_flow_screenshot
+    module: scripts.test_sessions.lab_flows
+    line: 55
+    cyclomatic_complexity: 13
+    calls_out: 10
+    calls_in: 1
+  src.urisys.cli._cmd_markpact:
+    name: _cmd_markpact
+    module: src.urisys.cli
+    line: 125
+    cyclomatic_complexity: 9
+    calls_out: 20
+    calls_in: 1
+  src.urisys.doctor._check_import:
+    name: _check_import
+    module: src.urisys.doctor
+    line: 51
+    cyclomatic_complexity: 5
+    calls_out: 12
+    calls_in: 4
+  scripts.lenovo_remote_session.now_iso:
+    name: now_iso
+    module: scripts.lenovo_remote_session
+    line: 50
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 7
+  scripts.test_sessions.util.wait_health:
+    name: wait_health
+    module: scripts.test_sessions.util
+    line: 74
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  scripts.office-simulate-loop.llm_tick:
+    name: llm_tick
+    module: scripts.office-simulate-loop
+    line: 71
+    cyclomatic_complexity: 7
+    calls_out: 18
+    calls_in: 1
+  src.urisys.flow.load_flow:
+    name: load_flow
+    module: src.urisys.flow
+    line: 9
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  src.urisys.edge_install.is_broken_install:
+    name: is_broken_install
+    module: src.urisys.edge_install
+    line: 24
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 4
+  scripts.run_test_sessions.session_pytest_urirdp:
+    name: session_pytest_urirdp
+    module: scripts.run_test_sessions
+    line: 66
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  scripts.run_test_sessions.session_pytest_urisys:
+    name: session_pytest_urisys
+    module: scripts.run_test_sessions
+    line: 83
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  scripts.lenovo_remote_session.resolve_flow_paths:
+    name: resolve_flow_paths
+    module: scripts.lenovo_remote_session
+    line: 412
+    cyclomatic_complexity: 6
+    calls_out: 5
+    calls_in: 1
+  src.urisys.init_setup.pip_install_specs:
+    name: pip_install_specs
+    module: src.urisys.init_setup
+    line: 46
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 1
+  src.urisys.init_setup._pre_repair_uricore:
+    name: _pre_repair_uricore
+    module: src.urisys.init_setup
+    line: 100
+    cyclomatic_complexity: 6
+    calls_out: 6
+    calls_in: 1
+  scripts.report.cli.main:
+    name: main
+    module: scripts.report.cli
+    line: 11
+    cyclomatic_complexity: 4
+    calls_out: 23
+    calls_in: 0
+  scripts.test_sessions.util.file_md5:
+    name: file_md5
+    module: scripts.test_sessions.util
+    line: 190
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 3
+  src.urisys.managers.markpact_validation.validate_bundle:
+    name: validate_bundle
+    module: src.urisys.managers.markpact_validation
+    line: 84
+    cyclomatic_complexity: 9
+    calls_out: 15
+    calls_in: 1
+  scripts.run_test_sessions.session_office_simulate:
+    name: session_office_simulate
+    module: scripts.run_test_sessions
+    line: 530
+    cyclomatic_complexity: 7
+    calls_out: 13
+    calls_in: 0
+  scripts.pack_sync._repo_pyproject:
+    name: _repo_pyproject
+    module: scripts.pack_sync
+    line: 163
+    cyclomatic_complexity: 14
+    calls_out: 12
+    calls_in: 1
+  scripts.pack_registry._repo:
+    name: _repo
+    module: scripts.pack_registry
+    line: 35
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 12
+  scripts.pack_registry.all_promoted_packs:
+    name: all_promoted_packs
+    module: scripts.pack_registry
+    line: 268
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  scripts.report.run_analysis.write_run_analysis:
+    name: write_run_analysis
+    module: scripts.report.run_analysis
+    line: 122
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 1
+  scripts.test_sessions.util.write_meta:
+    name: write_meta
+    module: scripts.test_sessions.util
+    line: 132
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 17
+  src.urisys.bootstrap._init_main:
+    name: _init_main
+    module: src.urisys.bootstrap
+    line: 54
+    cyclomatic_complexity: 6
+    calls_out: 18
+    calls_in: 1
+  scripts.report.run_markdown.render_run_analysis_markdown:
+    name: render_run_analysis_markdown
+    module: scripts.report.run_markdown
+    line: 6
+    cyclomatic_complexity: 7
+    calls_out: 16
+    calls_in: 1
+  src.urisys.uricore_install.is_wrong_uricore_installed:
+    name: is_wrong_uricore_installed
+    module: src.urisys.uricore_install
+    line: 67
+    cyclomatic_complexity: 5
+    calls_out: 3
+    calls_in: 5
+  src.urisys.doctor._check_wayland_him:
+    name: _check_wayland_him
+    module: src.urisys.doctor
+    line: 153
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  scripts.test_sessions.expectations._min_vision_confidence:
+    name: _min_vision_confidence
+    module: scripts.test_sessions.expectations
+    line: 110
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  scripts.report.session.session_duration:
+    name: session_duration
+    module: scripts.report.session
+    line: 72
+    cyclomatic_complexity: 5
+    calls_out: 14
+    calls_in: 1
+  scripts.pack_sync.read_version:
+    name: read_version
+    module: scripts.pack_sync
+    line: 48
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 3
+  scripts.pack_registry.pack_specs:
+    name: pack_specs
+    module: scripts.pack_registry
+    line: 60
+    cyclomatic_complexity: 17
+    calls_out: 30
+    calls_in: 2
+  scripts.test_sessions.util.compose_cmd:
+    name: compose_cmd
+    module: scripts.test_sessions.util
+    line: 85
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 10
+  scripts.report.session_markdown._environment_section:
+    name: _environment_section
+    module: scripts.report.session_markdown
+    line: 29
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 1
+  scripts.test_sessions.lab_flows._flow_step_detail:
+    name: _flow_step_detail
+    module: scripts.test_sessions.lab_flows
+    line: 103
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 1
+  src.urisys.doctor._check_uricore_authentic:
+    name: _check_uricore_authentic
+    module: src.urisys.doctor
+    line: 172
+    cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 1
+  scripts.test_sessions.lab_flows.session_lab_10_flows:
+    name: session_lab_10_flows
+    module: scripts.test_sessions.lab_flows
+    line: 230
+    cyclomatic_complexity: 7
+    calls_out: 33
+    calls_in: 0
+  scripts.test_sessions.util.run_cmd:
+    name: run_cmd
+    module: scripts.test_sessions.util
+    line: 100
+    cyclomatic_complexity: 6
+    calls_out: 12
+    calls_in: 31
+  scripts.test_sessions.util.sleep_ports:
+    name: sleep_ports
+    module: scripts.test_sessions.util
+    line: 196
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 6
+  src.urisys.doctor._check_min_version:
+    name: _check_min_version
+    module: src.urisys.doctor
+    line: 128
+    cyclomatic_complexity: 6
+    calls_out: 5
+    calls_in: 1
+  src.urisys.controllers.server_controller.ServerController.__init__:
+    name: __init__
+    module: src.urisys.controllers.server_controller
+    line: 7
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  scripts.run_test_sessions.session_urirdp_rdp_e2e:
+    name: session_urirdp_rdp_e2e
+    module: scripts.run_test_sessions
+    line: 321
+    cyclomatic_complexity: 5
+    calls_out: 19
+    calls_in: 0
+  src.urisys.http_server._read_json:
+    name: _read_json
+    module: src.urisys.http_server
+    line: 12
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  scripts.office-simulate-loop.rules_tick:
+    name: rules_tick
+    module: scripts.office-simulate-loop
+    line: 53
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 1
+  scripts.report.session_markdown._steps_section:
+    name: _steps_section
+    module: scripts.report.session_markdown
+    line: 41
+    cyclomatic_complexity: 7
+    calls_out: 4
+    calls_in: 1
+  scripts.run_test_sessions.session_urirdp_mock_docker:
+    name: session_urirdp_mock_docker
+    module: scripts.run_test_sessions
+    line: 102
+    cyclomatic_complexity: 5
+    calls_out: 31
+    calls_in: 0
+  scripts.test_sessions.expectations._ocr_contains:
+    name: _ocr_contains
+    module: scripts.test_sessions.expectations
+    line: 102
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 1
+  src.urisys.managers.markpact_validation._validate_implementation_capabilities:
+    name: _validate_implementation_capabilities
+    module: src.urisys.managers.markpact_validation
+    line: 112
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 1
+  scripts.run_test_sessions.main:
+    name: main
+    module: scripts.run_test_sessions
+    line: 736
+    cyclomatic_complexity: 13
+    calls_out: 32
+    calls_in: 0
+  src.urisys.cli.print_json:
+    name: print_json
+    module: src.urisys.cli
+    line: 24
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 16
+  src.urisys.cli._cmd_node:
+    name: _cmd_node
+    module: src.urisys.cli
+    line: 190
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  scripts.test_sessions.util.finalize_session:
+    name: finalize_session
+    module: scripts.test_sessions.util
+    line: 148
+    cyclomatic_complexity: 5
+    calls_out: 13
+    calls_in: 21
+  scripts.pack_sync.file_hash:
+    name: file_hash
+    module: scripts.pack_sync
+    line: 59
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 4
+  scripts.office-simulate-loop.parse_args:
+    name: parse_args
+    module: scripts.office-simulate-loop
+    line: 100
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 1
+  src.urisys.node_install.pip_spec:
+    name: pip_spec
+    module: src.urisys.node_install
+    line: 40
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  src.urisys.cli._cmd_init:
+    name: _cmd_init
+    module: src.urisys.cli
+    line: 171
+    cyclomatic_complexity: 6
+    calls_out: 7
+    calls_in: 1
+  src.urisys.managers.markpact_validation.validate_contract:
+    name: validate_contract
+    module: src.urisys.managers.markpact_validation
+    line: 39
+    cyclomatic_complexity: 13
+    calls_out: 21
+    calls_in: 1
   scripts.pack_sync.check_drift:
     name: check_drift
     module: scripts.pack_sync
@@ -1160,13 +1300,55 @@ nodes:
     cyclomatic_complexity: 14
     calls_out: 19
     calls_in: 1
-  scripts.report.events.summarize_events:
-    name: summarize_events
-    module: scripts.report.events
-    line: 63
-    cyclomatic_complexity: 8
-    calls_out: 10
+  scripts.test_sessions.util.copy_container_file:
+    name: copy_container_file
+    module: scripts.test_sessions.util
+    line: 171
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 10
+  src.urisys.init_setup.default_pip_specs:
+    name: default_pip_specs
+    module: src.urisys.init_setup
+    line: 31
+    cyclomatic_complexity: 1
+    calls_out: 1
     calls_in: 1
+  src.urisys.node_install.github_owner:
+    name: github_owner
+    module: src.urisys.node_install
+    line: 15
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  src.urisys.uricore_install._module_exists:
+    name: _module_exists
+    module: src.urisys.uricore_install
+    line: 47
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 3
+  scripts.pack_sync.sync_file:
+    name: sync_file
+    module: scripts.pack_sync
+    line: 63
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 2
+  src.urisys.init_setup.verify_uri_control:
+    name: verify_uri_control
+    module: src.urisys.init_setup
+    line: 65
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 2
+  scripts.report.util.host_id:
+    name: host_id
+    module: scripts.report.util
+    line: 15
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 16
 edges:
 - caller: src.urisys.uricore_install.wheel_url
   callee: src.urisys.uricore_install.github_owner
@@ -1243,69 +1425,6 @@ edges:
 - caller: src.urisys.bootstrap.main
   callee: src.urisys.bootstrap._missing_uricore_payload
   call_type: resolved
-- caller: src.urisys.cli.print_json
-  callee: scripts.run-nl-log-smoke.print
-  call_type: resolved
-- caller: src.urisys.cli.build_parser
-  callee: src.urisys.cli._add_runtime_flags
-  call_type: resolved
-- caller: src.urisys.cli.main
-  callee: src.urisys.cli.build_parser
-  call_type: resolved
-- caller: src.urisys.cli.main
-  callee: src.urisys.cli.resolve_markpact_source
-  call_type: resolved
-- caller: src.urisys.cli.main
-  callee: src.urisys.doctor.run_doctor
-  call_type: resolved
-- caller: src.urisys.cli.main
-  callee: src.urisys.cli.print_json
-  call_type: resolved
-- caller: src.urisys.cli.main
-  callee: src.urisys.init_setup.run_init
-  call_type: resolved
-- caller: src.urisys.cli.main
-  callee: scripts.run-nl-log-smoke.print
-  call_type: resolved
-- caller: src.urisys.init_setup.default_pip_specs
-  callee: src.urisys.uricore_install.pip_spec
-  call_type: resolved
-- caller: src.urisys.init_setup.verify_uri_control
-  callee: src.urisys.uricore_install.diagnose_uricore
-  call_type: resolved
-- caller: src.urisys.init_setup.verify_uri_control
-  callee: src.urisys.uricore_install.wheel_url
-  call_type: resolved
-- caller: src.urisys.init_setup.write_env_file
-  callee: src.urisys.init_setup.render_env_shell
-  call_type: resolved
-- caller: src.urisys.init_setup.run_init
-  callee: src.urisys.init_setup.default_pip_specs
-  call_type: resolved
-- caller: src.urisys.init_setup.run_init
-  callee: src.urisys.init_setup.profile_env
-  call_type: resolved
-- caller: src.urisys.init_setup.run_init
-  callee: src.urisys.uricore_install.is_wrong_uricore_installed
-  call_type: resolved
-- caller: src.urisys.init_setup.run_init
-  callee: src.urisys.uricore_install.repair_uricore
-  call_type: resolved
-- caller: src.urisys.node_install.wheel_url
-  callee: src.urisys.node_install.github_owner
-  call_type: resolved
-- caller: src.urisys.node_install.wheel_url
-  callee: src.urisys.node_install.github_version
-  call_type: resolved
-- caller: src.urisys.node_install.pip_spec
-  callee: src.urisys.node_install.wheel_url
-  call_type: resolved
-- caller: src.urisys.node_install.diagnose_urisys_node
-  callee: src.urisys.node_install.is_importable
-  call_type: resolved
-- caller: src.urisys.node_install.diagnose_urisys_node
-  callee: src.urisys.node_install.pip_spec
-  call_type: resolved
 - caller: src.urisys.http_server.create_server
   callee: src.urisys.http_server._send
   call_type: resolved
@@ -1347,6 +1466,423 @@ edges:
   call_type: resolved
 - caller: scripts.office-simulate-loop.main
   callee: scripts.office-simulate-loop.llm_tick
+  call_type: resolved
+- caller: scripts.report.cli.main
+  callee: scripts.report.run_analysis.analyze_run
+  call_type: resolved
+- caller: scripts.report.cli.main
+  callee: scripts.report.run_analysis.write_run_analysis
+  call_type: resolved
+- caller: scripts.report.events.summarize_events
+  callee: scripts.report.events.load_event_records
+  call_type: resolved
+- caller: scripts.report.events.summarize_events
+  callee: scripts.report.events.summarize_event_records
+  call_type: resolved
+- caller: scripts.report.events.merge_event_summaries
+  callee: scripts.report.events.summarize_events
+  call_type: resolved
+- caller: scripts.report.run_analysis.analyze_run
+  callee: scripts.report.util.read_json
+  call_type: resolved
+- caller: scripts.report.run_analysis.write_run_analysis
+  callee: scripts.report.run_analysis.analyze_run
+  call_type: resolved
+- caller: scripts.report.run_analysis.write_run_analysis
+  callee: scripts.report.run_markdown.render_run_analysis_markdown
+  call_type: resolved
+- caller: scripts.report.lab_checks.load_flow_outcomes
+  callee: scripts.report.util.read_json
+  call_type: resolved
+- caller: scripts.report.lab_checks.load_flow_outcomes
+  callee: scripts.report.lab_checks.iter_step_results
+  call_type: resolved
+- caller: scripts.report.lab_checks.check_duplicate_screenshots
+  callee: scripts.report.lab_checks._duplicate_recommendation
+  call_type: resolved
+- caller: scripts.report.lab_checks.analyze_lab_flows
+  callee: scripts.report.lab_checks.load_flow_outcomes
+  call_type: resolved
+- caller: scripts.report.session.infer_steps
+  callee: scripts.report.util.read_json
+  call_type: resolved
+- caller: scripts.report.session.session_duration
+  callee: scripts.report.util.now_iso
+  call_type: resolved
+- caller: scripts.report.session.generate_report
+  callee: scripts.report.session.infer_steps
+  call_type: resolved
+- caller: scripts.report.session.generate_report
+  callee: scripts.report.util.read_json
+  call_type: resolved
+- caller: scripts.report.session.generate_report
+  callee: scripts.report.util.tail
+  call_type: resolved
+- caller: scripts.report.session_markdown.render_session_markdown
+  callee: scripts.report.session_markdown._environment_section
+  call_type: resolved
+- caller: scripts.report.session_markdown.render_session_markdown
+  callee: scripts.report.session_markdown._steps_section
+  call_type: resolved
+- caller: scripts.report.session_markdown.render_session_markdown
+  callee: scripts.report.session_markdown._screenshots_section
+  call_type: resolved
+- caller: scripts.report.session_io.write_session_report
+  callee: scripts.report.session.generate_report
+  call_type: resolved
+- caller: scripts.report.session_io.write_session_report
+  callee: scripts.report.session_markdown.render_session_markdown
+  call_type: resolved
+- caller: scripts.test_sessions.expectations._ocr_contains
+  callee: scripts.test_sessions.expectations.ocr_texts
+  call_type: resolved
+- caller: scripts.test_sessions.expectations._min_vision_confidence
+  callee: scripts.test_sessions.expectations.vision_confidences
+  call_type: resolved
+- caller: scripts.test_sessions.expectations.evaluate_expectations
+  callee: scripts.test_sessions.expectations._screen_changed
+  call_type: resolved
+- caller: scripts.test_sessions.expectations.evaluate_expectations
+  callee: scripts.test_sessions.expectations._screen_changed_since_previous
+  call_type: resolved
+- caller: scripts.test_sessions.expectations.evaluate_expectations
+  callee: scripts.test_sessions.expectations._opened_url_contains
+  call_type: resolved
+- caller: scripts.test_sessions.expectations.evaluate_expectations
+  callee: scripts.test_sessions.expectations._ocr_contains
+  call_type: resolved
+- caller: scripts.test_sessions.expectations.evaluate_expectations
+  callee: scripts.test_sessions.expectations._min_vision_confidence
+  call_type: resolved
+- caller: scripts.test_sessions.lab_rdp.prepare_ok_target
+  callee: scripts.run-urisys-node-docker-e2e.http_json
+  call_type: resolved
+- caller: scripts.test_sessions.lab_rdp.capture_rdp_screenshot
+  callee: scripts.run-urisys-node-docker-e2e.http_json
+  call_type: resolved
+- caller: scripts.test_sessions.lab_rdp.capture_rdp_screenshot
+  callee: scripts.test_sessions.util.copy_container_file
+  call_type: resolved
+- caller: scripts.test_sessions.lab_rdp.capture_rdp_screenshot_wait
+  callee: scripts.test_sessions.lab_rdp.capture_rdp_screenshot
+  call_type: resolved
+- caller: scripts.test_sessions.lab_rdp.capture_rdp_screenshot_wait
+  callee: scripts.test_sessions.util.file_md5
+  call_type: resolved
+- caller: scripts.scan-browser-sessions.scan_chrome_cookies
+  callee: scripts.scan-browser-sessions._copy_query
+  call_type: resolved
+- caller: scripts.scan-browser-sessions.main
+  callee: scripts.scan-browser-sessions.discover_browsers
+  call_type: resolved
+- caller: scripts.scan-browser-sessions.main
+  callee: scripts.run-nl-log-smoke.print
+  call_type: resolved
+- caller: src.urisys.init_setup.default_pip_specs
+  callee: src.urisys.uricore_install.pip_spec
+  call_type: resolved
+- caller: src.urisys.init_setup.verify_uri_control
+  callee: src.urisys.uricore_install.diagnose_uricore
+  call_type: resolved
+- caller: src.urisys.init_setup.verify_uri_control
+  callee: src.urisys.uricore_install.wheel_url
+  call_type: resolved
+- caller: src.urisys.init_setup.write_env_file
+  callee: src.urisys.init_setup.render_env_shell
+  call_type: resolved
+- caller: src.urisys.init_setup._pre_repair_uricore
+  callee: src.urisys.uricore_install.repair_uricore
+  call_type: resolved
+- caller: src.urisys.init_setup._pre_repair_uricore
+  callee: src.urisys.uricore_install.is_wrong_uricore_installed
+  call_type: resolved
+- caller: src.urisys.init_setup._pre_repair_uricore
+  callee: src.urisys.uricore_install.wheel_url
+  call_type: resolved
+- caller: src.urisys.init_setup._build_pip_result
+  callee: src.urisys.init_setup.pip_install_specs
+  call_type: resolved
+- caller: src.urisys.init_setup._build_pip_result
+  callee: src.urisys.edge_install.ensure_urisysedge
+  call_type: resolved
+- caller: src.urisys.init_setup._build_pip_result
+  callee: src.urisys.node_install.install_urisys_node
+  call_type: resolved
+- caller: src.urisys.init_setup._build_pip_result
+  callee: src.urisys.init_setup.default_node_pip_spec
+  call_type: resolved
+- caller: src.urisys.init_setup._resolve_error_hint
+  callee: src.urisys.uricore_install.wheel_url
+  call_type: resolved
+- caller: src.urisys.init_setup.run_init
+  callee: src.urisys.init_setup.default_pip_specs
+  call_type: resolved
+- caller: src.urisys.init_setup.run_init
+  callee: src.urisys.init_setup._pre_repair_uricore
+  call_type: resolved
+- caller: src.urisys.init_setup.run_init
+  callee: src.urisys.init_setup.profile_env
+  call_type: resolved
+- caller: src.urisys.init_setup.run_init
+  callee: src.urisys.init_setup._resolve_error_hint
+  call_type: resolved
+- caller: src.urisys.init_setup.run_init
+  callee: src.urisys.init_setup._build_pip_result
+  call_type: resolved
+- caller: src.urisys.edge_install.is_broken_install
+  callee: src.urisys.edge_install._dist_version
+  call_type: resolved
+- caller: src.urisys.edge_install.is_broken_install
+  callee: src.urisys.edge_install.is_importable
+  call_type: resolved
+- caller: src.urisys.edge_install.repair_urisysedge
+  callee: src.urisys.edge_install.is_broken_install
+  call_type: resolved
+- caller: src.urisys.edge_install.repair_urisysedge
+  callee: src.urisys.edge_install.pip_run
+  call_type: resolved
+- caller: src.urisys.edge_install.repair_urisysedge
+  callee: src.urisys.edge_install.is_importable
+  call_type: resolved
+- caller: src.urisys.edge_install.repair_urisysedge
+  callee: src.urisys.edge_install._dist_version
+  call_type: resolved
+- caller: src.urisys.edge_install.ensure_urisysedge
+  callee: src.urisys.edge_install.is_importable
+  call_type: resolved
+- caller: src.urisys.edge_install.ensure_urisysedge
+  callee: src.urisys.edge_install.is_broken_install
+  call_type: resolved
+- caller: src.urisys.edge_install.ensure_urisysedge
+  callee: src.urisys.edge_install.pip_run
+  call_type: resolved
+- caller: src.urisys.edge_install.ensure_urisysedge
+  callee: src.urisys.edge_install.repair_urisysedge
+  call_type: resolved
+- caller: src.urisys.edge_install.ensure_urisysedge
+  callee: src.urisys.edge_install._dist_version
+  call_type: resolved
+- caller: src.urisys.node_install.wheel_filename
+  callee: src.urisys.node_install.github_version
+  call_type: resolved
+- caller: src.urisys.node_install.wheel_url
+  callee: src.urisys.node_install.github_owner
+  call_type: resolved
+- caller: src.urisys.node_install.wheel_url
+  callee: src.urisys.node_install.wheel_filename
+  call_type: resolved
+- caller: src.urisys.node_install.wheel_url
+  callee: src.urisys.node_install.github_version
+  call_type: resolved
+- caller: src.urisys.node_install.pip_spec
+  callee: src.urisys.node_install.wheel_url
+  call_type: resolved
+- caller: src.urisys.node_install.install_urisys_node
+  callee: src.urisys.node_install.pip_run
+  call_type: resolved
+- caller: src.urisys.node_install.install_urisys_node
+  callee: src.urisys.node_install.is_importable
+  call_type: resolved
+- caller: src.urisys.node_install.install_urisys_node
+  callee: src.urisys.node_install.wheel_url
+  call_type: resolved
+- caller: src.urisys.node_install.diagnose_urisys_node
+  callee: src.urisys.node_install.is_importable
+  call_type: resolved
+- caller: src.urisys.node_install.diagnose_urisys_node
+  callee: src.urisys.node_install.pip_spec
+  call_type: resolved
+- caller: src.urisys.node_install.diagnose_urisys_node
+  callee: src.urisys.node_install.wheel_filename
+  call_type: resolved
+- caller: src.urisys.managers.markpact_validation._validate_contract_routes
+  callee: src.urisys.managers.markpact_models.scheme_from_uri
+  call_type: resolved
+- caller: src.urisys.managers.markpact_validation.validate_contract
+  callee: src.urisys.managers.markpact_validation._validate_contract_routes
+  call_type: resolved
+- caller: src.urisys.managers.markpact_validation.validate_bundle
+  callee: src.urisys.managers.markpact_validation._missing_bundle_imports
+  call_type: resolved
+- caller: src.urisys.managers.markpact_validation.validate_implementation
+  callee: src.urisys.managers.markpact_validation._validate_implementation_capabilities
+  call_type: resolved
+- caller: src.urisys.cli.print_json
+  callee: scripts.run-nl-log-smoke.print
+  call_type: resolved
+- caller: src.urisys.cli.build_parser
+  callee: src.urisys.cli._add_runtime_flags
+  call_type: resolved
+- caller: src.urisys.cli._cmd_markpact
+  callee: src.urisys.cli.resolve_markpact_source
+  call_type: resolved
+- caller: src.urisys.cli._cmd_markpact
+  callee: src.urisys.cli.print_json
+  call_type: resolved
+- caller: src.urisys.cli._cmd_init
+  callee: src.urisys.init_setup.run_init
+  call_type: resolved
+- caller: src.urisys.cli._cmd_init
+  callee: src.urisys.cli.print_json
+  call_type: resolved
+- caller: src.urisys.cli._cmd_init
+  callee: scripts.run-nl-log-smoke.print
+  call_type: resolved
+- caller: src.urisys.cli._cmd_uri
+  callee: src.urisys.cli.print_json
+  call_type: resolved
+- caller: src.urisys.cli._cmd_uri
+  callee: src.urisys.cli._json_arg
+  call_type: resolved
+- caller: src.urisys.cli._handle_cli_error
+  callee: src.urisys.cli.print_json
+  call_type: resolved
+- caller: src.urisys.cli.main
+  callee: src.urisys.cli._cmd_uri
+  call_type: resolved
+- caller: src.urisys.cli.main
+  callee: src.urisys.cli.build_parser
+  call_type: resolved
+- caller: src.urisys.cli.main
+  callee: src.urisys.cli._cmd_markpact
+  call_type: resolved
+- caller: src.urisys.cli.main
+  callee: src.urisys.doctor.run_doctor
+  call_type: resolved
+- caller: src.urisys.cli.main
+  callee: src.urisys.cli.print_json
+  call_type: resolved
+- caller: src.urisys.cli.main
+  callee: src.urisys.cli._cmd_init
+  call_type: resolved
+- caller: src.urisys.cli.main
+  callee: scripts.run-nl-log-smoke.print
+  call_type: resolved
+- caller: src.urisys.cli.main
+  callee: src.urisys.cli._cmd_node
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._lab_bootstrap
+  callee: scripts.test_sessions.util.run_cmd
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._lab_bootstrap
+  callee: scripts.test_sessions.util.write_meta
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._capture_flow_screenshot
+  callee: scripts.test_sessions.lab_rdp.capture_rdp_screenshot_wait
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._capture_flow_screenshot
+  callee: scripts.test_sessions.lab_rdp.capture_rdp_screenshot
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._capture_flow_screenshot
+  callee: scripts.test_sessions.util.file_md5
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
+  callee: scripts.test_sessions.expectations.flow_expectations
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
+  callee: scripts.test_sessions.lab_flows._capture_flow_screenshot
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
+  callee: scripts.test_sessions.expectations.evaluate_expectations
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
+  callee: scripts.run-office-simulate-lenovo.save_json
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
+  callee: scripts.run-urisys-node-docker-e2e.http_json
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
+  callee: scripts.test_sessions.lab_flows._flow_step_detail
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
+  callee: scripts.report.util.now_iso
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
+  callee: scripts.test_sessions.util.write_meta
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
+  callee: scripts.test_sessions.util.sleep_ports
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
+  callee: scripts.test_sessions.util.run_cmd
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
+  callee: scripts.test_sessions.util.finalize_session
+  call_type: resolved
+- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
+  callee: scripts.run-office-writer-e2e.wait_health
+  call_type: resolved
+- caller: scripts.pack_sync.sync_file
+  callee: scripts.pack_sync.file_hash
+  call_type: resolved
+- caller: scripts.pack_sync.sync_to_repo
+  callee: scripts.pack_sync.vendored_module_dir
+  call_type: resolved
+- caller: scripts.pack_sync.sync_to_repo
+  callee: scripts.pack_sync.repo_module_dir
+  call_type: resolved
+- caller: scripts.pack_sync.sync_to_repo
+  callee: scripts.pack_sync.read_version
+  call_type: resolved
+- caller: scripts.pack_sync.sync_to_repo
+  callee: scripts.pack_sync.sync_file
+  call_type: resolved
+- caller: scripts.pack_sync.check_drift
+  callee: scripts.pack_sync.vendored_module_dir
+  call_type: resolved
+- caller: scripts.pack_sync.check_drift
+  callee: scripts.pack_sync.repo_module_dir
+  call_type: resolved
+- caller: scripts.pack_sync.check_drift
+  callee: scripts.pack_sync._check_promoted
+  call_type: resolved
+- caller: scripts.pack_sync.check_drift
+  callee: scripts.pack_sync.read_version
+  call_type: resolved
+- caller: scripts.pack_sync._check_promoted
+  callee: scripts.pack_sync.repo_module_dir
+  call_type: resolved
+- caller: scripts.pack_sync.remove_vendored
+  callee: scripts.run-nl-log-smoke.print
+  call_type: resolved
+- caller: scripts.pack_sync._repo_pyproject
+  callee: scripts.pack_sync.read_version
+  call_type: resolved
+- caller: scripts.pack_sync.init_repo
+  callee: scripts.pack_sync.sync_to_repo
+  call_type: resolved
+- caller: scripts.pack_sync.init_repo
+  callee: scripts.run-nl-log-smoke.print
+  call_type: resolved
+- caller: scripts.pack_sync.promote
+  callee: scripts.pack_sync.sync_to_repo
+  call_type: resolved
+- caller: scripts.pack_sync.promote
+  callee: scripts.pack_sync.remove_vendored
+  call_type: resolved
+- caller: scripts.pack_sync.main
+  callee: scripts.pack_registry.pack_specs
+  call_type: resolved
+- caller: scripts.test_sessions.util.wait_health
+  callee: scripts.test_sessions.util.http_json
+  call_type: resolved
+- caller: scripts.test_sessions.util.write_meta
+  callee: scripts.test_sessions.util.read_meta
+  call_type: resolved
+- caller: scripts.test_sessions.util.write_meta
+  callee: scripts.test_sessions.util.save_json
+  call_type: resolved
+- caller: scripts.test_sessions.util.finalize_session
+  callee: scripts.test_sessions.util.now_iso
+  call_type: resolved
+- caller: scripts.test_sessions.util.finalize_session
+  callee: scripts.test_sessions.util.write_meta
+  call_type: resolved
+- caller: scripts.test_sessions.util.docker_logs
+  callee: scripts.test_sessions.util.compose_cmd
+  call_type: resolved
+- caller: scripts.test_sessions.util.docker_logs
+  callee: scripts.test_sessions.util.run_cmd
   call_type: resolved
 - caller: scripts.run_test_sessions.session_pytest_urirdp
   callee: scripts.report.util.now_iso
@@ -1475,7 +2011,7 @@ edges:
   callee: scripts.run-office-writer-e2e.wait_health
   call_type: resolved
 - caller: scripts.run_test_sessions.session_automation_lab
-  callee: scripts.run-office-writer-e2e.save_json
+  callee: scripts.run-office-simulate-lenovo.save_json
   call_type: resolved
 - caller: scripts.run_test_sessions.session_urisys_node_docker_gui
   callee: scripts.report.util.now_iso
@@ -1553,289 +2089,52 @@ edges:
   callee: scripts.run_test_sessions._monorepo_root
   call_type: resolved
 - caller: scripts.run_test_sessions.main
-  callee: scripts.run-office-writer-e2e.save_json
+  callee: scripts.run-office-simulate-lenovo.save_json
   call_type: resolved
 - caller: scripts.run_test_sessions.main
   callee: scripts.report.util.now_iso
   call_type: resolved
-- caller: scripts.pack_sync.sync_file
-  callee: scripts.pack_sync.file_hash
+- caller: scripts.lenovo_remote_session.run_step
+  callee: scripts.lenovo_remote_session.now_iso
   call_type: resolved
-- caller: scripts.pack_sync.sync_to_repo
-  callee: scripts.pack_sync.vendored_module_dir
+- caller: scripts.lenovo_remote_session.run_step
+  callee: scripts.lenovo_remote_session.step_ok
   call_type: resolved
-- caller: scripts.pack_sync.sync_to_repo
-  callee: scripts.pack_sync.repo_module_dir
+- caller: scripts.lenovo_remote_session.run_step
+  callee: scripts.lenovo_remote_session.http_get
   call_type: resolved
-- caller: scripts.pack_sync.sync_to_repo
-  callee: scripts.pack_sync.read_version
+- caller: scripts.lenovo_remote_session.run_flow
+  callee: scripts.lenovo_remote_session.load_yaml
   call_type: resolved
-- caller: scripts.pack_sync.sync_to_repo
-  callee: scripts.pack_sync.sync_file
+- caller: scripts.lenovo_remote_session.run_flow
+  callee: scripts.lenovo_remote_session.now_iso
   call_type: resolved
-- caller: scripts.pack_sync.check_drift
-  callee: scripts.pack_sync.vendored_module_dir
+- caller: scripts.lenovo_remote_session.run_flow
+  callee: scripts.lenovo_remote_session.save_json
   call_type: resolved
-- caller: scripts.pack_sync.check_drift
-  callee: scripts.pack_sync.repo_module_dir
+- caller: scripts.lenovo_remote_session._extract_images_from_dict
+  callee: scripts.lenovo_remote_session._image_ext
   call_type: resolved
-- caller: scripts.pack_sync.check_drift
-  callee: scripts.pack_sync._check_promoted
+- caller: scripts.lenovo_remote_session._extract_images_from_dict
+  callee: scripts.lenovo_remote_session._write_base64_image
   call_type: resolved
-- caller: scripts.pack_sync.check_drift
-  callee: scripts.pack_sync.read_version
+- caller: scripts.lenovo_remote_session.extract_step_screenshots
+  callee: scripts.lenovo_remote_session._extract_images_from_dict
   call_type: resolved
-- caller: scripts.pack_sync._check_promoted
-  callee: scripts.pack_sync.repo_module_dir
+- caller: scripts.lenovo_remote_session.backfill_session_images
+  callee: scripts.lenovo_remote_session.extract_step_screenshots
   call_type: resolved
-- caller: scripts.pack_sync.remove_vendored
-  callee: scripts.run-nl-log-smoke.print
+- caller: scripts.lenovo_remote_session.backfill_session_images
+  callee: scripts.lenovo_remote_session.save_json
   call_type: resolved
-- caller: scripts.pack_sync._repo_pyproject
-  callee: scripts.pack_sync.read_version
-  call_type: resolved
-- caller: scripts.pack_sync.init_repo
-  callee: scripts.pack_sync.sync_to_repo
-  call_type: resolved
-- caller: scripts.pack_sync.init_repo
-  callee: scripts.run-nl-log-smoke.print
-  call_type: resolved
-- caller: scripts.pack_sync.promote
-  callee: scripts.pack_sync.sync_to_repo
-  call_type: resolved
-- caller: scripts.pack_sync.promote
-  callee: scripts.pack_sync.remove_vendored
-  call_type: resolved
-- caller: scripts.pack_sync.main
-  callee: scripts.pack_registry.pack_specs
+- caller: scripts.lenovo_remote_session.resolve_flow_paths
+  callee: scripts.lenovo_remote_session.load_yaml
   call_type: resolved
 - caller: scripts.pack_registry.sibling_repo
   callee: scripts.pack_registry._repo
   call_type: resolved
 - caller: scripts.pack_registry.all_promoted_packs
   callee: scripts.pack_registry.pack_specs
-  call_type: resolved
-- caller: scripts.report.cli.main
-  callee: scripts.report.run_analysis.analyze_run
-  call_type: resolved
-- caller: scripts.report.cli.main
-  callee: scripts.report.run_analysis.write_run_analysis
-  call_type: resolved
-- caller: scripts.report.events.summarize_events
-  callee: scripts.report.events.load_event_records
-  call_type: resolved
-- caller: scripts.report.events.summarize_events
-  callee: scripts.report.events.summarize_event_records
-  call_type: resolved
-- caller: scripts.report.events.merge_event_summaries
-  callee: scripts.report.events.summarize_events
-  call_type: resolved
-- caller: scripts.report.run_analysis.analyze_run
-  callee: scripts.report.util.read_json
-  call_type: resolved
-- caller: scripts.report.run_analysis.write_run_analysis
-  callee: scripts.report.run_analysis.analyze_run
-  call_type: resolved
-- caller: scripts.report.run_analysis.write_run_analysis
-  callee: scripts.report.run_markdown.render_run_analysis_markdown
-  call_type: resolved
-- caller: scripts.report.lab_checks.load_flow_outcomes
-  callee: scripts.report.util.read_json
-  call_type: resolved
-- caller: scripts.report.lab_checks.load_flow_outcomes
-  callee: scripts.report.lab_checks.iter_step_results
-  call_type: resolved
-- caller: scripts.report.lab_checks.check_duplicate_screenshots
-  callee: scripts.report.lab_checks._duplicate_recommendation
-  call_type: resolved
-- caller: scripts.report.lab_checks.analyze_lab_flows
-  callee: scripts.report.lab_checks.load_flow_outcomes
-  call_type: resolved
-- caller: scripts.report.session.infer_steps
-  callee: scripts.report.util.read_json
-  call_type: resolved
-- caller: scripts.report.session.session_duration
-  callee: scripts.report.util.now_iso
-  call_type: resolved
-- caller: scripts.report.session.generate_report
-  callee: scripts.report.session.infer_steps
-  call_type: resolved
-- caller: scripts.report.session.generate_report
-  callee: scripts.report.util.read_json
-  call_type: resolved
-- caller: scripts.report.session.generate_report
-  callee: scripts.report.util.tail
-  call_type: resolved
-- caller: scripts.report.session_markdown.render_session_markdown
-  callee: scripts.report.session_markdown._environment_section
-  call_type: resolved
-- caller: scripts.report.session_markdown.render_session_markdown
-  callee: scripts.report.session_markdown._steps_section
-  call_type: resolved
-- caller: scripts.report.session_markdown.render_session_markdown
-  callee: scripts.report.session_markdown._screenshots_section
-  call_type: resolved
-- caller: scripts.report.session_io.write_session_report
-  callee: scripts.report.session.generate_report
-  call_type: resolved
-- caller: scripts.report.session_io.write_session_report
-  callee: scripts.report.session_markdown.render_session_markdown
-  call_type: resolved
-- caller: scripts.test_sessions.expectations._ocr_contains
-  callee: scripts.test_sessions.expectations.ocr_texts
-  call_type: resolved
-- caller: scripts.test_sessions.expectations._min_vision_confidence
-  callee: scripts.test_sessions.expectations.vision_confidences
-  call_type: resolved
-- caller: scripts.test_sessions.expectations.evaluate_expectations
-  callee: scripts.test_sessions.expectations._screen_changed
-  call_type: resolved
-- caller: scripts.test_sessions.expectations.evaluate_expectations
-  callee: scripts.test_sessions.expectations._screen_changed_since_previous
-  call_type: resolved
-- caller: scripts.test_sessions.expectations.evaluate_expectations
-  callee: scripts.test_sessions.expectations._opened_url_contains
-  call_type: resolved
-- caller: scripts.test_sessions.expectations.evaluate_expectations
-  callee: scripts.test_sessions.expectations._ocr_contains
-  call_type: resolved
-- caller: scripts.test_sessions.expectations.evaluate_expectations
-  callee: scripts.test_sessions.expectations._min_vision_confidence
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows._lab_bootstrap
-  callee: scripts.test_sessions.util.run_cmd
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows._lab_bootstrap
-  callee: scripts.test_sessions.util.write_meta
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows._capture_flow_screenshot
-  callee: scripts.test_sessions.lab_rdp.capture_rdp_screenshot_wait
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows._capture_flow_screenshot
-  callee: scripts.test_sessions.lab_rdp.capture_rdp_screenshot
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows._capture_flow_screenshot
-  callee: scripts.test_sessions.util.file_md5
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
-  callee: scripts.test_sessions.expectations.flow_expectations
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
-  callee: scripts.test_sessions.lab_flows._capture_flow_screenshot
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
-  callee: scripts.test_sessions.expectations.evaluate_expectations
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
-  callee: scripts.run-office-writer-e2e.save_json
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
-  callee: scripts.run-urisys-node-docker-e2e.http_json
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows._run_single_lab_flow
-  callee: scripts.test_sessions.lab_flows._flow_step_detail
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
-  callee: scripts.report.util.now_iso
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
-  callee: scripts.test_sessions.util.write_meta
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
-  callee: scripts.test_sessions.util.sleep_ports
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
-  callee: scripts.test_sessions.util.run_cmd
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
-  callee: scripts.test_sessions.util.finalize_session
-  call_type: resolved
-- caller: scripts.test_sessions.lab_flows.session_lab_10_flows
-  callee: scripts.run-office-writer-e2e.wait_health
-  call_type: resolved
-- caller: scripts.test_sessions.lab_rdp.prepare_ok_target
-  callee: scripts.run-urisys-node-docker-e2e.http_json
-  call_type: resolved
-- caller: scripts.test_sessions.lab_rdp.capture_rdp_screenshot
-  callee: scripts.run-urisys-node-docker-e2e.http_json
-  call_type: resolved
-- caller: scripts.test_sessions.lab_rdp.capture_rdp_screenshot
-  callee: scripts.test_sessions.util.copy_container_file
-  call_type: resolved
-- caller: scripts.test_sessions.lab_rdp.capture_rdp_screenshot_wait
-  callee: scripts.test_sessions.lab_rdp.capture_rdp_screenshot
-  call_type: resolved
-- caller: scripts.test_sessions.lab_rdp.capture_rdp_screenshot_wait
-  callee: scripts.test_sessions.util.file_md5
-  call_type: resolved
-- caller: scripts.test_sessions.util.wait_health
-  callee: scripts.test_sessions.util.http_json
-  call_type: resolved
-- caller: scripts.test_sessions.util.write_meta
-  callee: scripts.test_sessions.util.read_meta
-  call_type: resolved
-- caller: scripts.test_sessions.util.write_meta
-  callee: scripts.test_sessions.util.save_json
-  call_type: resolved
-- caller: scripts.test_sessions.util.finalize_session
-  callee: scripts.test_sessions.util.now_iso
-  call_type: resolved
-- caller: scripts.test_sessions.util.finalize_session
-  callee: scripts.test_sessions.util.write_meta
-  call_type: resolved
-- caller: scripts.test_sessions.util.docker_logs
-  callee: scripts.test_sessions.util.compose_cmd
-  call_type: resolved
-- caller: scripts.test_sessions.util.docker_logs
-  callee: scripts.test_sessions.util.run_cmd
-  call_type: resolved
-- caller: urikvm-docker.scripts.real_pipeline.main
-  callee: urikvm-docker.scripts.real_pipeline.build_runtime
-  call_type: resolved
-- caller: urikvm-docker.scripts.real_pipeline.main
-  callee: scripts.run-nl-log-smoke.print
-  call_type: resolved
-- caller: urisys-automation-lab.web.app.uriCall
-  callee: urisys-automation-lab.web.app.log
-  call_type: resolved
-- caller: urisys-automation-lab.web.app.data
-  callee: urisys-automation-lab.web.app.log
-  call_type: resolved
-- caller: urisys-automation-lab.web.app.SR
-  callee: urisys-automation-lab.web.app.log
-  call_type: resolved
-- caller: urisys-automation-lab.web.app.rec
-  callee: urisys-automation-lab.web.app.log
-  call_type: resolved
-- caller: urisys-automation-lab.web.app.text
-  callee: urisys-automation-lab.web.app.uriCall
-  call_type: resolved
-- caller: urisys-automation-lab.server.flow_runner.plan_flow
-  callee: urisys-automation-lab.server.flow_runner._require_uri_stack
-  call_type: resolved
-- caller: urisys-automation-lab.server.flow_runner.plan_flow
-  callee: urisys-automation-lab.server.flow_runner._load_defaults
-  call_type: resolved
-- caller: urisys-automation-lab.server.flow_runner.run_flow_file
-  callee: urisys-automation-lab.server.flow_runner._require_uri_stack
-  call_type: resolved
-- caller: urisys-automation-lab.server.flow_runner.run_flow_file
-  callee: urisys-automation-lab.server.flow_runner.plan_flow
-  call_type: resolved
-- caller: urisys-automation-lab.server.flow_runner.run_flow_file
-  callee: urisys-automation-lab.server.flow_runner._lab_adapter_session
-  call_type: resolved
-- caller: urisys-automation-lab.server.automation_lab_server.LabHandler.log_message
-  callee: scripts.run-nl-log-smoke.print
-  call_type: resolved
-- caller: urisys-automation-lab.server.automation_lab_server.serve
-  callee: urisys-automation-lab.server.automation_lab_server.build_lab_runtime
-  call_type: resolved
-- caller: urisys-automation-lab.server.automation_lab_server.serve
-  callee: scripts.run-nl-log-smoke.print
-  call_type: resolved
-- caller: urisys-automation-lab.server.lab_uri_adapter.LabCallAdapter.execute
-  callee: urisys-automation-lab.server.lab_uri_adapter.step_ok
   call_type: resolved
 - caller: src.urisys.doctor._version_lt
   callee: src.urisys.doctor._parse_version
@@ -1874,6 +2173,9 @@ edges:
   callee: src.urisys.doctor._check_wayland_him
   call_type: resolved
 - caller: src.urisys.doctor.run_doctor
+  callee: src.urisys.edge_install.is_broken_install
+  call_type: resolved
+- caller: src.urisys.doctor.run_doctor
   callee: src.urisys.doctor._check_python
   call_type: resolved
 - caller: src.urisys.doctor.run_doctor
@@ -1883,6 +2185,20 @@ edges:
   callee: src.urisys.doctor._check_uricore_dist
   call_type: resolved
 modules:
+  scripts.lenovo_remote_session:
+  - scripts.lenovo_remote_session._extract_images_from_dict
+  - scripts.lenovo_remote_session._image_ext
+  - scripts.lenovo_remote_session._write_base64_image
+  - scripts.lenovo_remote_session.backfill_session_images
+  - scripts.lenovo_remote_session.extract_step_screenshots
+  - scripts.lenovo_remote_session.http_get
+  - scripts.lenovo_remote_session.load_yaml
+  - scripts.lenovo_remote_session.now_iso
+  - scripts.lenovo_remote_session.resolve_flow_paths
+  - scripts.lenovo_remote_session.run_flow
+  - scripts.lenovo_remote_session.run_step
+  - scripts.lenovo_remote_session.save_json
+  - scripts.lenovo_remote_session.step_ok
   scripts.office-simulate-loop:
   - scripts.office-simulate-loop.call_uri
   - scripts.office-simulate-loop.llm_tick
@@ -1944,8 +2260,9 @@ modules:
   - scripts.report.util.tail
   scripts.run-nl-log-smoke:
   - scripts.run-nl-log-smoke.print
+  scripts.run-office-simulate-lenovo:
+  - scripts.run-office-simulate-lenovo.save_json
   scripts.run-office-writer-e2e:
-  - scripts.run-office-writer-e2e.save_json
   - scripts.run-office-writer-e2e.wait_health
   scripts.run-urisys-node-docker-e2e:
   - scripts.run-urisys-node-docker-e2e.http_json
@@ -1964,6 +2281,11 @@ modules:
   - scripts.run_test_sessions.session_urirdp_rdp_e2e
   - scripts.run_test_sessions.session_urirdp_real_docker
   - scripts.run_test_sessions.session_urisys_node_docker_gui
+  scripts.scan-browser-sessions:
+  - scripts.scan-browser-sessions._copy_query
+  - scripts.scan-browser-sessions.discover_browsers
+  - scripts.scan-browser-sessions.main
+  - scripts.scan-browser-sessions.scan_chrome_cookies
   scripts.test_sessions.expectations:
   - scripts.test_sessions.expectations._min_vision_confidence
   - scripts.test_sessions.expectations._ocr_contains
@@ -2007,6 +2329,12 @@ modules:
   - src.urisys.bootstrap.main
   src.urisys.cli:
   - src.urisys.cli._add_runtime_flags
+  - src.urisys.cli._cmd_init
+  - src.urisys.cli._cmd_markpact
+  - src.urisys.cli._cmd_node
+  - src.urisys.cli._cmd_uri
+  - src.urisys.cli._handle_cli_error
+  - src.urisys.cli._json_arg
   - src.urisys.cli.build_parser
   - src.urisys.cli.main
   - src.urisys.cli.print_json
@@ -2028,6 +2356,13 @@ modules:
   - src.urisys.doctor._pkg_version
   - src.urisys.doctor._version_lt
   - src.urisys.doctor.run_doctor
+  src.urisys.edge_install:
+  - src.urisys.edge_install._dist_version
+  - src.urisys.edge_install.ensure_urisysedge
+  - src.urisys.edge_install.is_broken_install
+  - src.urisys.edge_install.is_importable
+  - src.urisys.edge_install.pip_run
+  - src.urisys.edge_install.repair_urisysedge
   src.urisys.flow:
   - src.urisys.flow.iter_steps
   - src.urisys.flow.load_flow
@@ -2036,18 +2371,35 @@ modules:
   - src.urisys.http_server._send
   - src.urisys.http_server.create_server
   src.urisys.init_setup:
+  - src.urisys.init_setup._build_pip_result
+  - src.urisys.init_setup._pre_repair_uricore
+  - src.urisys.init_setup._resolve_error_hint
+  - src.urisys.init_setup.default_node_pip_spec
   - src.urisys.init_setup.default_pip_specs
+  - src.urisys.init_setup.pip_install_specs
   - src.urisys.init_setup.profile_env
   - src.urisys.init_setup.render_env_shell
   - src.urisys.init_setup.run_init
   - src.urisys.init_setup.verify_uri_control
   - src.urisys.init_setup.write_env_file
+  src.urisys.managers.markpact_models:
+  - src.urisys.managers.markpact_models.scheme_from_uri
+  src.urisys.managers.markpact_validation:
+  - src.urisys.managers.markpact_validation._missing_bundle_imports
+  - src.urisys.managers.markpact_validation._validate_contract_routes
+  - src.urisys.managers.markpact_validation._validate_implementation_capabilities
+  - src.urisys.managers.markpact_validation.validate_bundle
+  - src.urisys.managers.markpact_validation.validate_contract
+  - src.urisys.managers.markpact_validation.validate_implementation
   src.urisys.node_install:
   - src.urisys.node_install.diagnose_urisys_node
   - src.urisys.node_install.github_owner
   - src.urisys.node_install.github_version
+  - src.urisys.node_install.install_urisys_node
   - src.urisys.node_install.is_importable
+  - src.urisys.node_install.pip_run
   - src.urisys.node_install.pip_spec
+  - src.urisys.node_install.wheel_filename
   - src.urisys.node_install.wheel_url
   src.urisys.uricore_install:
   - src.urisys.uricore_install._dist_top_levels
@@ -2061,29 +2413,6 @@ modules:
   - src.urisys.uricore_install.pip_spec
   - src.urisys.uricore_install.repair_uricore
   - src.urisys.uricore_install.wheel_url
-  urikvm-docker.scripts.real_pipeline:
-  - urikvm-docker.scripts.real_pipeline.build_runtime
-  - urikvm-docker.scripts.real_pipeline.main
-  urisys-automation-lab.server.automation_lab_server:
-  - urisys-automation-lab.server.automation_lab_server.LabHandler.log_message
-  - urisys-automation-lab.server.automation_lab_server.build_lab_runtime
-  - urisys-automation-lab.server.automation_lab_server.serve
-  urisys-automation-lab.server.flow_runner:
-  - urisys-automation-lab.server.flow_runner._lab_adapter_session
-  - urisys-automation-lab.server.flow_runner._load_defaults
-  - urisys-automation-lab.server.flow_runner._require_uri_stack
-  - urisys-automation-lab.server.flow_runner.plan_flow
-  - urisys-automation-lab.server.flow_runner.run_flow_file
-  urisys-automation-lab.server.lab_uri_adapter:
-  - urisys-automation-lab.server.lab_uri_adapter.LabCallAdapter.execute
-  - urisys-automation-lab.server.lab_uri_adapter.step_ok
-  urisys-automation-lab.web.app:
-  - urisys-automation-lab.web.app.SR
-  - urisys-automation-lab.web.app.data
-  - urisys-automation-lab.web.app.log
-  - urisys-automation-lab.web.app.rec
-  - urisys-automation-lab.web.app.text
-  - urisys-automation-lab.web.app.uriCall
 entry_points:
 - examples.frontend.app.client
 - examples.frontend.app.out
@@ -2092,9 +2421,13 @@ entry_points:
 - examples.frontend.app.runtime
 - scripts.ci-checkout-siblings.clone_repo
 - scripts.ci-install-siblings.install_editable
+- scripts.deploy-lenovo-node.build_wheel
 - scripts.deploy-lenovo-node.call
 - scripts.deploy-lenovo-node.health
+- scripts.deploy-lenovo-node.pkg_version
+- scripts.deploy-lenovo-node.wheel_name
 - scripts.lenovo-node-session.install_pack
+- scripts.lenovo_remote_session.main
 - scripts.office-simulate-loop.main
 - scripts.pack_registry.all_promoted_packs
 - scripts.pack_registry.sibling_repo
@@ -2118,17 +2451,20 @@ entry_points:
 - scripts.run-email-mailpit-e2e.save_json
 - scripts.run-email-mailpit-e2e.uri_call
 - scripts.run-email-mailpit-e2e.wait_health
+- scripts.run-lenovo-office-linkedin.install_pack
+- scripts.run-lenovo-office-linkedin.serve_wheels
+- scripts.run-lenovo-office-linkedin.uri_call
 - scripts.run-office-simulate-e2e.cleanup
 - scripts.run-office-simulate-e2e.save_json
 - scripts.run-office-simulate-e2e.uri_call
 - scripts.run-office-simulate-e2e.wait_health
-- scripts.run-office-simulate-lenovo.save_json
 - scripts.run-office-simulate-lenovo.serve_wheels
 - scripts.run-office-simulate-lenovo.upgrade_him
 - scripts.run-office-simulate-lenovo.upgrade_llm
 - scripts.run-office-simulate-lenovo.uri_call
 - scripts.run-office-simulate-lenovo.wait_node
 - scripts.run-office-writer-e2e.cleanup
+- scripts.run-office-writer-e2e.save_json
 - scripts.run-office-writer-e2e.uri_call
 - scripts.run-urisys-node-docker-e2e.cleanup
 - scripts.run-urisys-node-docker-e2e.remote_call
@@ -2146,6 +2482,7 @@ entry_points:
 - scripts.run_test_sessions.session_urirdp_rdp_e2e
 - scripts.run_test_sessions.session_urirdp_real_docker
 - scripts.run_test_sessions.session_urisys_node_docker_gui
+- scripts.scan-browser-sessions.main
 - scripts.test-python-matrix.run_one
 - scripts.test_sessions.lab_flows.session_lab_10_flows
 - scripts.test_sessions.lab_rdp.flow_step_context
@@ -2176,14 +2513,17 @@ entry_points:
 - src.urisys.managers.markpact_manager.MarkpactManager.__init__
 - src.urisys.managers.markpact_manager.MarkpactManager._build_route
 - src.urisys.managers.markpact_manager.MarkpactManager._capabilities
+- src.urisys.managers.markpact_manager.MarkpactManager._check_expectations
 - src.urisys.managers.markpact_manager.MarkpactManager._compile_manifest
 - src.urisys.managers.markpact_manager.MarkpactManager._ensure_importable
 - src.urisys.managers.markpact_manager.MarkpactManager._handler_blocks
 - src.urisys.managers.markpact_manager.MarkpactManager._handler_id_from_ref
 - src.urisys.managers.markpact_manager.MarkpactManager._load_yaml_blocks
 - src.urisys.managers.markpact_manager.MarkpactManager._package_id
+- src.urisys.managers.markpact_manager.MarkpactManager._resolve_handler_ref
 - src.urisys.managers.markpact_manager.MarkpactManager._scheme
 - src.urisys.managers.markpact_manager.MarkpactManager._validate_pack
+- src.urisys.managers.markpact_manager.MarkpactManager._write_handler_modules
 - src.urisys.managers.markpact_manager.MarkpactManager._yaml_blocks
 - src.urisys.managers.markpact_manager.MarkpactManager.compile
 - src.urisys.managers.markpact_manager.MarkpactManager.load_pack_block
@@ -2229,40 +2569,3 @@ entry_points:
 - src.urisys.managers.source_manager.SourceManager.fetch
 - src.urisys.managers.source_manager.SourceManager.is_remote_source
 - src.urisys.managers.source_manager.SourceManager.resolve
-- urikvm-docker.scripts.real_pipeline.main
-- urikvm-docker.scripts.test-real.run_kvm
-- urirdp-docker.docker.bootstrap-rdp-session.detect_session_display
-- urirdp-docker.docker.bootstrap-rdp-session.main
-- urirdp-docker.docker.bootstrap-rdp-session.show_ok_target
-- urirdp-docker.docker.bootstrap-rdp-session.start_client_display
-- urirdp-docker.docker.bootstrap-rdp-session.start_rdp_client
-- urirdp-docker.docker.bootstrap-rdp-session.wait_session_display
-- urirdp-docker.docker.bootstrap-rdp-session.wait_xrdp
-- urirdp-docker.scripts.test-real-docker.cleanup
-- urisys-automation-lab.server.automation_lab_server.LabHandler._json
-- urisys-automation-lab.server.automation_lab_server.LabHandler._read_json
-- urisys-automation-lab.server.automation_lab_server.LabHandler.do_GET
-- urisys-automation-lab.server.automation_lab_server.LabHandler.do_OPTIONS
-- urisys-automation-lab.server.automation_lab_server.LabHandler.do_POST
-- urisys-automation-lab.server.automation_lab_server.LabHandler.log_message
-- urisys-automation-lab.server.automation_lab_server.serve
-- urisys-automation-lab.server.lab_uri_adapter.LabCallAdapter._execute_log
-- urisys-automation-lab.server.lab_uri_adapter.LabCallAdapter.execute
-- urisys-automation-lab.web.app.SR
-- urisys-automation-lab.web.app.answer
-- urisys-automation-lab.web.app.data
-- urisys-automation-lab.web.app.dataChannel
-- urisys-automation-lab.web.app.line
-- urisys-automation-lab.web.app.localStream
-- urisys-automation-lab.web.app.logEl
-- urisys-automation-lab.web.app.offer
-- urisys-automation-lab.web.app.payloadEl
-- urisys-automation-lab.web.app.pc
-- urisys-automation-lab.web.app.rec
-- urisys-automation-lab.web.app.res
-- urisys-automation-lab.web.app.text
-- urisys-automation-lab.web.app.transcriptEl
-- urisys-automation-lab.web.app.uriEl
-- urisys-node.docker.entrypoint.show_gui_target
-- urisys-node.docker.entrypoint.start_xvfb
-- urisys-node.docker.entrypoint.verify_cli

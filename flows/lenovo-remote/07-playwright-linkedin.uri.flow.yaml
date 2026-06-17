@@ -1,0 +1,42 @@
+flow:
+  id: lenovo-07-playwright-linkedin
+  description: Playwright LinkedIn compose using Chrome Default profile on lenovo (draft + manual submit).
+  target: lenovo
+  requires:
+    - upgrade: flows/lenovo-remote/_upgrade-playwright.uri.flow.yaml
+
+defaults:
+  approved: true
+  dry_run: false
+  allow_real: true
+
+do:
+  - id: load_browser_pack
+    uri: node://lenovo/command/install-pack
+    payload:
+      pack: browser
+      install: false
+      force: false
+
+  - id: playwright_compose
+    uri: browser://linkedin/social/command/publish-post
+    payload:
+      platform: linkedin
+      driver: playwright
+      headless: false
+      user_data_dir: /home/tom/.config/google-chrome/Default
+      text: "urisys lenovo flow-07 — playwright draft (manual submit)"
+    note: LinkedIn compose with Chrome logged-in profile
+
+  - id: screen_after_playwright
+    uri: screen://lenovo/monitor/1/query/frame
+    allow_real: true
+
+  - id: kv_record_playwright
+    uri: kv://session/key/linkedin-playwright/command/set
+    payload:
+      value:
+        flow: lenovo-07-playwright-linkedin
+        user_data_dir: /home/tom/.config/google-chrome/Default
+        driver: playwright
+      ttl: 86400

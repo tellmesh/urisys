@@ -15,7 +15,6 @@ Single step via Python CLI (no bash scripts):
 from __future__ import annotations
 
 import argparse
-import base64
 import json
 import os
 import shutil
@@ -23,6 +22,7 @@ import subprocess
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -30,9 +30,19 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 NODE_ROOT = ROOT.parent / "urisys-node"
-if str(NODE_ROOT) not in sys.path:
-    sys.path.insert(0, str(NODE_ROOT))
+SCRIPTS_DIR = Path(__file__).resolve().parent
+for _p in (str(NODE_ROOT), str(SCRIPTS_DIR)):
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
 
+from session_core import (  # noqa: E402
+    backfill_session_images,
+    expand_step_wheels,
+    extract_step_screenshots,
+    now_iso,
+    save_json,
+    step_ok,
+)
 from urisysnode.remote import (  # noqa: E402
     call_uri,
     default_endpoint,
@@ -45,10 +55,6 @@ try:
     import yaml
 except ImportError:
     yaml = None  # type: ignore
-
-
-def now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
@@ -76,23 +82,6 @@ def http_get(endpoint: str, path: str, *, timeout: float = 30.0) -> dict[str, An
         return {"ok": False, "url": url, "error": str(exc)}
 
 
-def step_ok(result: dict[str, Any]) -> bool:
-    if result.get("error"):
-        return False
-    if result.get("kind") == "http_get":
-        return bool(result.get("response", {}).get("ok"))
-    resp = result.get("response")
-    if isinstance(resp, dict):
-        if resp.get("ok") is False:
-            return False
-        inner = resp.get("result")
-        if isinstance(inner, dict) and inner.get("ok") is False:
-            return False
-        if isinstance(inner, dict) and inner.get("loaded") is False:
-            return False
-    return True
-
-
 def run_step(
     step: dict[str, Any],
     *,
@@ -109,6 +98,12 @@ def run_step(
         if kind == "http_get":
             out["kind"] = "http_get"
             out["response"] = http_get(endpoint, str(step.get("path") or "/health"))
+        elif kind == "host_sleep":
+            seconds = float(step.get("seconds") or step.get("sleep") or 5)
+            out["kind"] = "host_sleep"
+            out["seconds"] = seconds
+            time.sleep(seconds)
+            out["response"] = {"ok": True, "slept": seconds}
         else:
             uri = str(step.get("uri") or "")
             if not uri:
@@ -149,6 +144,8 @@ def run_flow(
     endpoint: str,
     route_map: str,
     session_dir: Path,
+    wheel_server: str,
+    wheel_deploy_dir: Path,
 ) -> dict[str, Any]:
     data = load_yaml(flow_path)
     flow = data.get("flow") or {}
@@ -174,6 +171,7 @@ def run_flow(
                 step["payload"] = payload
         else:
             step = dict(raw)
+        step = expand_step_wheels(step, wheel_server=wheel_server, deploy_dir=wheel_deploy_dir)
         result = run_step(step, endpoint=endpoint, route_map=route_map, defaults=defaults)
         extract_step_screenshots(result, session_dir=session_dir, flow_id=flow_id)
         record["steps"].append(result)
@@ -183,120 +181,6 @@ def run_flow(
     record["ok"] = all(s.get("ok") for s in record["steps"]) if record["steps"] else False
     save_json(session_dir / "flows" / f"{flow_id}.json", record)
     return record
-
-
-def _image_ext(mime: str) -> str:
-    mime = (mime or "image/png").lower()
-    if "jpeg" in mime or "jpg" in mime:
-        return "jpg"
-    if "webp" in mime:
-        return "webp"
-    return "png"
-
-
-def _write_base64_image(b64: str, dest: Path) -> int:
-    raw = base64.b64decode(b64)
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_bytes(raw)
-    return len(raw)
-
-
-def _extract_images_from_dict(
-    obj: dict[str, Any],
-    *,
-    session_dir: Path,
-    filename: str,
-    strip_base64: bool,
-) -> list[str]:
-    """Extract base64 image from dict (and nested shots[]) to screenshots/."""
-    saved: list[str] = []
-    b64 = obj.get("base64")
-    if isinstance(b64, str) and len(b64) > 100:
-        ext = _image_ext(str(obj.get("mime") or ""))
-        rel = f"screenshots/{filename}.{ext}"
-        size = _write_base64_image(b64, session_dir / rel)
-        saved.append(rel)
-        if strip_base64:
-            obj.pop("base64", None)
-            obj["screenshot_file"] = rel
-            obj["screenshot_bytes"] = size
-
-    shots = obj.get("shots")
-    if isinstance(shots, list):
-        for i, shot in enumerate(shots):
-            if isinstance(shot, dict):
-                saved.extend(
-                    _extract_images_from_dict(
-                        shot,
-                        session_dir=session_dir,
-                        filename=f"{filename}_shot{i}",
-                        strip_base64=strip_base64,
-                    )
-                )
-    return saved
-
-
-def extract_step_screenshots(
-    step: dict[str, Any],
-    *,
-    session_dir: Path,
-    flow_id: str,
-    strip_base64: bool = True,
-) -> list[str]:
-    """Write embedded base64 from URI response to session_dir/screenshots/."""
-    resp = step.get("response")
-    if not isinstance(resp, dict):
-        return []
-    result = resp.get("result")
-    if not isinstance(result, dict):
-        return []
-    step_id = str(step.get("id") or "step")
-    saved = _extract_images_from_dict(
-        result,
-        session_dir=session_dir,
-        filename=f"{flow_id}__{step_id}",
-        strip_base64=strip_base64,
-    )
-    if saved:
-        step["screenshots"] = saved
-    return saved
-
-
-def backfill_session_images(session_dir: Path, *, strip_base64: bool = True) -> list[str]:
-    """Extract images from all response JSON files (also for past sessions)."""
-    responses = session_dir / "responses"
-    if not responses.is_dir():
-        return []
-    all_saved: list[str] = []
-    for path in sorted(responses.glob("*.json")):
-        if path.name.startswith("_"):
-            continue
-        try:
-            data = json.loads(path.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
-            continue
-        if not isinstance(data, dict):
-            continue
-        stem = path.stem
-        flow_id, _, step_id = stem.partition("__")
-        if not step_id:
-            continue
-        data["id"] = step_id
-        saved = extract_step_screenshots(
-            data,
-            session_dir=session_dir,
-            flow_id=flow_id,
-            strip_base64=strip_base64,
-        )
-        if saved:
-            save_json(path, data)
-            all_saved.extend(saved)
-    return all_saved
-
-
-def save_json(path: Path, data: Any) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
 def append_log(path: Path, line: str) -> None:
@@ -417,6 +301,14 @@ def resolve_flow_paths(manifest_path: Path, explicit: list[str] | None) -> list[
     return [ROOT / f for f in flows]
 
 
+def load_manifest_session(manifest_path: Path) -> dict[str, Any]:
+    data = load_yaml(manifest_path)
+    return data.get("session") if isinstance(data.get("session"), dict) else {}
+
+
+UPGRADE_PLAYWRIGHT_FLOW = ROOT / "flows/lenovo-remote/_upgrade-playwright.uri.flow.yaml"
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Lenovo remote session runner (flow-based, Python only).")
     parser.add_argument("--endpoint", default=os.environ.get("URISYS_LENOVO_ENDPOINT", default_endpoint()))
@@ -455,11 +347,18 @@ def main(argv: list[str] | None = None) -> int:
     (session_dir / "flows").mkdir(exist_ok=True)
     log_path = session_dir / "session.log"
 
+    manifest_path = Path(args.manifest)
+    session_cfg = load_manifest_session(manifest_path)
+    wheel_server = str(session_cfg.get("wheel_server") or "http://192.168.188.212:8765")
+    wheel_deploy_dir = Path(str(session_cfg.get("wheel_deploy_dir") or "/tmp/urisys-deploy"))
+
     wheel_proc = None
     if args.build_wheels:
-        build_wheels(Path("/tmp/urisys-deploy"))
+        build_wheels(wheel_deploy_dir)
     if args.serve_wheels:
-        wheel_proc = start_wheel_server(Path("/tmp/urisys-deploy"), "192.168.188.212", 8765)
+        host = urllib.parse.urlparse(wheel_server).hostname or "192.168.188.212"
+        port = urllib.parse.urlparse(wheel_server).port or 8765
+        wheel_proc = start_wheel_server(wheel_deploy_dir, host, port)
 
     node_reachable = False
     health_data: dict[str, Any] = {}
@@ -482,7 +381,6 @@ def main(argv: list[str] | None = None) -> int:
 
     save_json(session_dir / "responses" / "_00_preflight_health.json", health_data)
 
-    manifest_path = Path(args.manifest)
     flow_paths = resolve_flow_paths(manifest_path, args.flows)
     flows_copy = session_dir / "flow-sources"
     flows_copy.mkdir(exist_ok=True)
@@ -505,6 +403,18 @@ def main(argv: list[str] | None = None) -> int:
     save_json(session_dir / "meta.json", meta)
 
     flow_records: list[dict[str, Any]] = []
+    upgrade_ran = False
+
+    def _run_one(fp: Path) -> dict[str, Any]:
+        return run_flow(
+            fp,
+            endpoint=args.endpoint,
+            route_map=args.route_map,
+            session_dir=session_dir,
+            wheel_server=wheel_server,
+            wheel_deploy_dir=wheel_deploy_dir,
+        )
+
     for fp in flow_paths:
         append_log(log_path, f"flow {fp.name} start")
         if not fp.exists():
@@ -534,9 +444,53 @@ def main(argv: list[str] | None = None) -> int:
             save_json(session_dir / "flows" / f"{rec['flow_id']}.json", rec)
             append_log(log_path, f"flow {fp.name} skipped (node down)")
             continue
-        rec = run_flow(fp, endpoint=args.endpoint, route_map=args.route_map, session_dir=session_dir)
+        if (
+            fp.name == "07-playwright-linkedin.uri.flow.yaml"
+            and UPGRADE_PLAYWRIGHT_FLOW.exists()
+            and not upgrade_ran
+        ):
+            append_log(log_path, f"flow {UPGRADE_PLAYWRIGHT_FLOW.name} start (pre-07 upgrade)")
+            up_rec = _run_one(UPGRADE_PLAYWRIGHT_FLOW)
+            flow_records.append(up_rec)
+            upgrade_ran = True
+            append_log(log_path, f"flow {UPGRADE_PLAYWRIGHT_FLOW.name} ok={up_rec.get('ok')}")
+            if not up_rec.get("ok"):
+                append_log(log_path, f"flow {fp.name} skipped (upgrade failed)")
+                continue
+            try:
+                health_data = wait_health(endpoint=args.endpoint, timeout_s=30)
+                node_reachable = bool(health_data.get("ok"))
+            except TimeoutError:
+                node_reachable = False
+            if not node_reachable:
+                rec = {
+                    "flow_id": load_yaml(fp).get("flow", {}).get("id", fp.stem),
+                    "flow_path": str(fp.relative_to(ROOT)),
+                    "ok": False,
+                    "skipped": True,
+                    "reason": "node unreachable after playwright upgrade",
+                    "steps": [],
+                }
+                flow_records.append(rec)
+                save_json(session_dir / "flows" / f"{rec['flow_id']}.json", rec)
+                append_log(log_path, f"flow {fp.name} skipped (node down after upgrade)")
+                continue
+        rec = _run_one(fp)
         flow_records.append(rec)
         append_log(log_path, f"flow {fp.name} ok={rec.get('ok')}")
+
+    meta["steps"] = [
+        {
+            "name": f"{rec.get('flow_id', 'flow')}__{s['id']}",
+            "status": "pass" if s.get("ok") else "fail",
+            "uri": s.get("uri"),
+            "response_file": f"responses/{rec.get('flow_id', 'flow')}__{s['id']}.json",
+            "screenshot": (s.get("screenshots") or [None])[0],
+            "detail": "" if s.get("ok") else str(s.get("error") or "not ok")[:300],
+        }
+        for rec in flow_records
+        for s in rec.get("steps") or []
+    ]
 
     meta["finished_at"] = now_iso()
     meta["flows_ok"] = sum(1 for r in flow_records if r.get("ok"))

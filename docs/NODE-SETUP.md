@@ -1,5 +1,9 @@
 # Bootstrap lenovo — `urisys init`, potem node
 
+> Gdzie node trzyma dane (identity, pairing, events, captures) i jak ustawić
+> ścieżki: [`DATA-MODEL.md`](DATA-MODEL.md). Skrót: runtime → `~/.local/share/urisys`
+> (XDG, niezależnie od CWD), config → `~/.config/urisys/`.
+
 ## Jedna komenda (zalecane)
 
 Na świeżym venv lub po błędzie `ModuleNotFoundError: uri_control`:
