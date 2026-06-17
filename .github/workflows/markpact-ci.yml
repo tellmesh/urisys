@@ -1,0 +1,51 @@
+name: markpact-ci
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/generate_pack_markpacts.py"
+      - "scripts/generate_showcase_markpacts.py"
+      - "scripts/pack_registry.py"
+      - "scripts/validate-all-markpacts.sh"
+      - "scripts/paths.sh"
+      - "src/urisys/managers/markpact*.py"
+      - "src/urisys/cli.py"
+      - "tests/test_markpact*.py"
+      - "tests/test_showcase.py"
+      - ".github/workflows/markpact-ci.yml"
+
+jobs:
+  markpact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: urisys
+
+      - name: Checkout tellmesh sibling repos
+        env:
+          TELLMESH_ROOT: ${{ github.workspace }}
+          URISYS_ROOT: ${{ github.workspace }}/urisys
+        run: bash urisys/scripts/ci-checkout-siblings.sh
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install urisys stack
+        working-directory: urisys
+        env:
+          TELLMESH_ROOT: ${{ github.workspace }}
+        run: |
+          pip install -q pytest pyyaml
+          bash scripts/ci-install-siblings.sh
+          pip install -q -e ".[real]"
+
+      - name: Markpact CI (drift + validate + tests)
+        working-directory: urisys
+        env:
+          TELLMESH_ROOT: ${{ github.workspace }}
+        run: bash scripts/run-markpact-ci.sh

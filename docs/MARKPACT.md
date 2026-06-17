@@ -50,6 +50,8 @@ W prawdziwym pliku nie zagnieżdżaj bloków ``` w środku innych bloków Markdo
 | `yaml markpact:pack` | Manifest paczki: URI, capability, policy, runtime. Wymagany dokładnie jeden. |
 | `python markpact:handler id=<id>` | Handler runtime Python. Musi definiować `handle(payload, context)`. |
 | `yaml markpact:tests` | Testy wykonywane przez `urisys markpact test`. |
+| `yaml markpact:flow id=<id>` | Use case / integracja — wyciągane do cache przy compile. |
+| `proto markpact:proto path=<rel>` | Osadzone typy `.proto` (referencje `command_type`). |
 | `markdown markpact:docs` | Dokumentacja użytkowa wyciągana do cache. |
 | `js markpact:handler id=<id>` | Źródło JS dla przyszłego `urisys-js`; Python runtime go nie wykonuje. |
 
@@ -63,7 +65,55 @@ urisys markpact validate "$PACK"
 urisys markpact compile "$PACK"
 urisys markpact routes "$PACK"
 urisys markpact test "$PACK"
+urisys markpact analyze "$PACK"
+urisys markpact materialize "$PACK"
+urisys markpact run "$PACK" --as flow --approve --dry-run
+urisys markpact run "$PACK#shell-smoke" --as flow --approve --dry-run   # jeden flow z fragmentu
+urisys markpact run "$PACK" --as service --port 8789
 ```
+
+### Tryby `markpact run --as`
+
+| Tryb | Rola |
+|------|------|
+| `pack` | rejestracja manifestu → lista tras |
+| `service` | HTTP `POST /uri/call` — proces `scheme://` |
+| `flow` | osadzone flow (z auto-load zależności z `uses:`) |
+| `interface` | katalog tras dla człowieka/CLI |
+| `adapter` | JSON kontraktu integracji (routes + uses + wire) |
+
+Domyślny tryb z bloku `markpact:run`; nadpisanie: `--as`.
+
+Unpack: `.markpact/{id}/{hash}/` w cwd (`--out`).
+
+Generator (thin, w paczce):
+
+```bash
+python3 scripts/generate_pack_markpacts.py
+python3 scripts/generate_pack_markpacts.py --check
+```
+
+Każdy pack: `tellmesh/{pack}/markpacts/{pack}.markpact.md` — bez duplikacji `handlers.py`.
+
+CI (drift + walidacja):
+
+```bash
+python3 scripts/generate_pack_markpacts.py --check
+bash scripts/validate-all-markpacts.sh
+```
+
+Showcase (mock, ręczny):
+
+```bash
+SHOWCASE="$(markpact_contracts_packs)/uribrowser.showcase.markpact.md"
+urisys markpact analyze "$SHOWCASE"
+urisys markpact run-flow "$SHOWCASE#open-and-read" --approve --dry-run
+urisys markpact run-flow "$SHOWCASE#install-and-verify" --approve --dry-run
+# integracja: sibling repos (TELLMESH_ROOT) albo pip:
+# urisys markpact run-flow "$SHOWCASE#install-and-verify" --approve --dry-run --auto-install
+```
+
+Skrypt smoke: ``examples/markpact/showcase-run-flow.sh`` (ustawia ``TELLMESH_ROOT``).
 
 Wywołanie URI bez instalowania paczki:
 

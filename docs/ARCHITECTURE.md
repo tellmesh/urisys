@@ -55,27 +55,28 @@ Szczegóły CLI: [`docs/CLI.md`](CLI.md), Markpact: [`docs/MARKPACT.md`](MARKPAC
 
 ## Edge runtime (Docker)
 
-Wspólne biblioteki edge:
+Wspólne biblioteki:
 
-- **`packages/python/urisysedge/`** — Route, Runtime, JSONL events, env policy
-- **`packages/python/urioperators/`** — wspólne helpery LLM (chat, plan, decide, JSON parse) dla `urillm` / `urirdp_llm`
+- **`tellmesh/urisysedge/`** — `Runtime`, JSONL events, env policy, `http.serve`
+- **`tellmesh/urioperators/`** — helpery LLM dla `urillm`
 
-Shimy kompatybilności:
+Edge CLIs (rejestrują standalone packi):
 
-- `urirdp-docker/packages/python/urirdpedge/` → import z `urisysedge`
-- `urisys-automation-lab/packages/python/labedge/` → import z `urisysedge`
+- **`tellmesh/urirdpedge/`** — `urisys-rdp` (:8795)
+- **`tellmesh/urikvmedge/`** — `urisys-kvm` (:8794)
+- **`tellmesh/uristepperedge/`** — `uristepper` (:8790)
 
-Każdy obraz Docker rejestruje własne schematy URI (`routes.py` + `handlers.py`):
+Każdy obraz Docker instaluje sibling packi + edge CLI:
 
-| Obraz | Port | Schematy |
-|-------|------|----------|
-| `urirdp-docker` | 8795, 3389 | rdp, kvm, him, ocr, llm, shell, browser, env |
-| `urikvm-docker` | **8794** | kvm, him, ocr, llm (+ urioffice/urimail/urivql vendored) |
-| `uribrowser-docker` | 8792 / 8797 | browser |
-| `urienv-docker` | 8798 | env |
-| `uristepper-docker` | 8799 | stepper |
-| `urisys-automation-lab` | 8099 | stt, chat (deprecated), webrtc + forward do urirdp |
-| `urisys-node` | 8790 | screen, node identity, routing slave |
+| Obraz | Port | Edge CLI | Schematy |
+|-------|------|----------|----------|
+| `urirdp-docker` | 8795, 3389 | `urisys-rdp` | rdp, kvm, him, ocr, llm, shell, browser, env |
+| `urikvm-docker` | 8794 | `urisys-kvm` | kvm, him, ocr, llm |
+| `uribrowser-docker` | 8792 / 8797 | `urisys-browser` | browser |
+| `urienv-docker` | 8798 | env pack | env |
+| `uristepper-docker` | 8791 | `uristepperedge` | stepper |
+| `urisys-automation-lab` | 8099 | lab server | stt, webrtc, message + forward → urirdp |
+| `urisys-node` | 8790 | `urisysnode` | screen, node, lazy packs |
 
 Slave (`urisys-node`) ładuje packi **lazy** (PyPI/GitHub), **hot-load** (`POST /uri/pack`) lub **release hot-load** (`{contract,version,catalog}` → OCI worker). Auto-provisioning: `release_forwards` w config. Szczegóły: [`DISTRIBUTION.md`](DISTRIBUTION.md), [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md), [`NODE-SETUP.md`](NODE-SETUP.md).
 
@@ -124,6 +125,7 @@ Szczegóły: [`docs/FLOWS.md`](FLOWS.md).
 python3 scripts/run_test_sessions.py --sessions lab-10-flows
 python3 scripts/session_report.py analyze output/test-sessions/<run-id> --write-md
 bash scripts/validate-all-markpacts.sh
+bash scripts/run-markpact-ci.sh              # drift + validate + markpact tests
 ```
 
 Artefakty sesji: `responses/*.json`, `screenshots/`, `report.json`, `events-*.jsonl`.

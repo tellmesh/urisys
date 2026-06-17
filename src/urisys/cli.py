@@ -134,6 +134,77 @@ def build_parser() -> argparse.ArgumentParser:
     p_test.add_argument("path")
     p_test.add_argument("--out", default=None, help="Optional compile/cache directory.")
 
+    p_gen = msub.add_parser("gen-contract", help="Generate a UriContract Markpact from a runtime manifest.yaml.")
+    p_gen.add_argument("manifest", help="Path to a pack manifest.yaml.")
+    p_gen.add_argument("--out", default=None, help="Write contract to this file (default: print to stdout).")
+    p_gen.add_argument("--force", action="store_true", help="Overwrite --out if it already exists.")
+
+    p_drift = msub.add_parser("check-drift", help="Compare a manifest.yaml against an existing UriContract Markpact.")
+    p_drift.add_argument("manifest", help="Path to a pack manifest.yaml.")
+    p_drift.add_argument("contract", help="Path/source of the UriContract Markpact.")
+
+    p_analyze = msub.add_parser("analyze", help="Summarise a showcase Markpact: definitions, embedded flows (use_case/integration), protos.")
+    p_analyze.add_argument("path")
+
+    p_run_flow = msub.add_parser(
+        "run-flow",
+        help="Compile Markpact, build urisysedge runtime (manifest + uses: packs) and run an embedded flow.",
+    )
+    p_run_flow.add_argument(
+        "path",
+        help="Markpact path or markpact://… with optional #flow.id fragment (e.g. showcase.md#open-and-read).",
+    )
+    p_run_flow.add_argument("--out", default=None, help="Optional compile/cache directory.")
+    p_run_flow.add_argument("--force", action="store_true", help="Force recompile before run.")
+    p_run_flow.add_argument(
+        "--extra-packs",
+        default="",
+        help="Additional pack aliases to register (comma-separated) beyond flow dependencies.",
+    )
+    p_run_flow.add_argument(
+        "--auto-install",
+        action="store_true",
+        help="pip install missing flow packs via urisys-node pack_resolver (when available).",
+    )
+    _add_runtime_flags(p_run_flow)
+
+    p_mat = msub.add_parser(
+        "materialize",
+        help="Compile Markpact and unpack to .markpact/{package_id}/ (manifest, handlers, flows, proto).",
+    )
+    p_mat.add_argument("path", help="Markpact path (optional #flow.id ignored).")
+    p_mat.add_argument("--root", default=".markpact", help="Output root directory (default: .markpact).")
+    p_mat.add_argument("--force", action="store_true")
+
+    p_run = msub.add_parser(
+        "run",
+        help="Unpack to .markpact/ and run (pack|service|flow|interface|adapter per markpact:run or --as).",
+    )
+    p_run.add_argument("path", help="Markpact path (optional #flow.id for flow mode).")
+    p_run.add_argument("--as", dest="run_mode", default=None, help="Override mode: pack|service|flow|interface|adapter.")
+    p_run.add_argument("--out", default=".markpact", help="Unpack root (default: .markpact).")
+    p_run.add_argument("--host", default="0.0.0.0")
+    p_run.add_argument("--port", type=int, default=None)
+    p_run.add_argument("--config", default=None, help="Optional runtime config YAML.")
+    p_run.add_argument("--force", action="store_true", help="Force recompile/unpack.")
+    p_run.add_argument(
+        "--auto-install",
+        action="store_true",
+        help="pip install missing flow packs via urisys-node pack_resolver (flow mode).",
+    )
+    _add_runtime_flags(p_run)
+
+    p_pack = msub.add_parser(
+        "pack",
+        help="Generate a complete self-contained Markpact (definitions + full source + run config) for a uri* package.",
+    )
+    p_pack.add_argument("package", help="Package name or path (dir holding <pkg>/manifest.yaml).")
+    p_pack.add_argument("--out", default=None, help="Write here (default: <pkg>/<pkg>.markpact.md).")
+    p_pack.add_argument("--scheme", default=None, help="For multi-scheme packages, which scheme to emit (one pack file per scheme).")
+    p_pack.add_argument("--port", type=int, default=8790, help="Default service port written into markpact:run.")
+    p_pack.add_argument("--force", action="store_true", help="Overwrite an existing output file.")
+    p_pack.add_argument("--stdout", action="store_true", help="Print to stdout instead of writing a file.")
+
     return parser
 
 
@@ -148,6 +219,59 @@ def _cmd_markpact(args) -> int:
     if args.markpact_command == "fetch":
         print_json(source_manager.fetch(args.source, force=args.force))
         return 0
+    if args.markpact_command in ("gen-contract", "check-drift"):
+        return _cmd_contract(args, source_manager)
+    if args.markpact_command == "run-flow":
+        from .managers.markpact_run_flow import run_markpact_flow, split_flow_ref
+
+        base, flow_id = split_flow_ref(args.path)
+        local = resolve_markpact_source(base, source_manager=source_manager)
+        result = run_markpact_flow(
+            local,
+            flow_id=flow_id,
+            manager=manager,
+            out_dir=args.out,
+            force=args.force,
+            extra_packs=args.extra_packs or None,
+            auto_install=args.auto_install,
+            events_path=args.events,
+            approved=args.approve,
+            dry_run=args.dry_run,
+            allow_real=args.allow_real,
+            environment=args.environment,
+        )
+        print_json(result)
+        return 0 if result.get("ok") else 1
+    if args.markpact_command == "materialize":
+        from .managers.markpact_materialize import materialize_markpact
+        from .managers.markpact_run_flow import split_flow_ref
+
+        base, _ = split_flow_ref(args.path)
+        local = resolve_markpact_source(base, source_manager=source_manager)
+        print_json(materialize_markpact(local, root=args.root, manager=manager, force=args.force))
+        return 0
+    if args.markpact_command == "run":
+        from .managers.markpact_run import run_markpact
+        from .managers.markpact_run_flow import split_flow_ref
+
+        base, flow_id = split_flow_ref(args.path)
+        local = resolve_markpact_source(base, source_manager=source_manager)
+        result = run_markpact(
+            local,
+            mode=args.run_mode,
+            flow_id=flow_id,
+            out=args.out,
+            host=args.host,
+            port=args.port,
+            config_path=args.config,
+            approve=args.approve,
+            dry_run=args.dry_run,
+            auto_install=args.auto_install,
+        )
+        print_json(result)
+        return 0 if result.get("ok", True) else 1
+    if args.markpact_command == "pack":
+        return _cmd_pack(args)
     local_path = resolve_markpact_source(args.path, source_manager=source_manager)
     if args.markpact_command == "validate":
         print_json(manager.validate(local_path))
@@ -180,7 +304,63 @@ def _cmd_markpact(args) -> int:
     if args.markpact_command == "test":
         print_json(manager.run_tests(local_path, events_path=args.events))
         return 0
+    if args.markpact_command == "analyze":
+        result = manager.analyze(local_path)
+        print_json(result)
+        return 0 if result.get("ok") else 1
     return 1
+
+
+def _cmd_pack(args) -> int:
+    from .managers.markpact_pack_gen import find_package_dir, generate_pack_markpact
+
+    rendered = generate_pack_markpact(args.package, port=args.port, scheme=args.scheme)
+    if args.stdout:
+        print(rendered)
+        return 0
+    if args.out:
+        out = Path(args.out)
+    else:
+        pkg_dir = find_package_dir(args.package)
+        suffix = f".{args.scheme}" if args.scheme else ""
+        out = pkg_dir.parent / f"{pkg_dir.name}{suffix}.markpact.md"
+    if out.exists() and not args.force:
+        print_json({"ok": False, "error": f"{out} exists; use --force to overwrite."})
+        return 2
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(rendered, encoding="utf-8")
+    print_json({"ok": True, "package": args.package, "markpact": str(out)})
+    return 0
+
+
+def _cmd_contract(args, source_manager: SourceManager) -> int:
+    from .managers import contract_gen
+
+    manifest = contract_gen.load_manifest(args.manifest)
+    if args.markpact_command == "gen-contract":
+        rendered = contract_gen.render_contract_markpact(manifest)
+        if args.out:
+            out = Path(args.out)
+            if out.exists() and not args.force:
+                print_json({"ok": False, "error": f"{out} exists; use --force to overwrite."})
+                return 2
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_text(rendered, encoding="utf-8")
+            print_json({"ok": True, "manifest": args.manifest, "contract": str(out)})
+            return 0
+        print(rendered)
+        return 0
+    # check-drift
+    contract_path = resolve_markpact_source(args.contract, source_manager=source_manager)
+    contract = contract_gen.load_contract_block(contract_path)
+    issues = contract_gen.diff_manifest_contract(manifest, contract)
+    print_json({
+        "ok": not issues,
+        "manifest": args.manifest,
+        "contract": contract_path,
+        "drift": issues,
+    })
+    return 0 if not issues else 1
 
 
 def _cmd_init(args) -> int:

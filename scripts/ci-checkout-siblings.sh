@@ -31,7 +31,12 @@ KVM_REPOS=(
   urirdp urienv uribrowser uristepper urisys-automation-lab
 )
 
-REPOS=("${CORE_REPOS[@]}" "${KVM_REPOS[@]}")
+# Markpact capability packs (thin generated copies + legacy showcase archive)
+MARKPACT_REPOS=(
+  urichat urishell uriscreen urimessage uriwebrtc uristt urikv uriimg2nl
+)
+
+REPOS=("${CORE_REPOS[@]}" "${KVM_REPOS[@]}" "${MARKPACT_REPOS[@]}")
 
 clone_repo() {
   local name="$1"

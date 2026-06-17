@@ -6,7 +6,7 @@ SUMMARY:
   dup_groups:    3
   dup_fragments: 7
   saved_lines:   37
-  scan_ms:       2230
+  scan_ms:       2451
 
 HOTSPOTS[6] (files with most duplication):
   src/urisys/uricore_install.py  dup=18L  groups=2  frags=2  (0.3%)

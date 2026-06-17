@@ -91,13 +91,13 @@
 - **Functions**: 8
 - **File**: `lab_rdp.py`
 
-### examples.frontend.app
-- **Functions**: 6
-- **File**: `app.js`
-
 ### src.urisys.edge_install
 - **Functions**: 6
 - **File**: `edge_install.py`
+
+### src.urisys.managers.markpact_validation
+- **Functions**: 6
+- **File**: `markpact_validation.py`
 
 ## Key Entry Points
 

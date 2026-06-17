@@ -15,7 +15,7 @@ SUMD - Structured Unified Markdown Descriptor for AI-aware project refactorizati
 ## Metadata
 
 - **name**: `urisys`
-- **version**: `0.1.65`
+- **version**: `0.1.66`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -35,7 +35,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: urisys;
-  version: 0.1.65;
+  version: 0.1.66;
 }
 
 dependencies {
@@ -120,7 +120,7 @@ costs>=0.1.20
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
-# generated in 0.09s
+# generated in 0.10s
 # nodes: 206 | edges: 295 | modules: 36
 # CC̄=4.7
 
@@ -141,28 +141,28 @@ HUBS[20]:
     CC=22  in:1  out:34  total:35
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
-  scripts.lenovo_remote_session.run_flow
-    CC=14  in:1  out:33  total:34
-  scripts.test_sessions.util.finalize_session
-    CC=5  in:21  out:13  total:34
   scripts.scan-browser-sessions.main
     CC=23  in:0  out:34  total:34
+  scripts.test_sessions.util.finalize_session
+    CC=5  in:21  out:13  total:34
+  scripts.lenovo_remote_session.run_flow
+    CC=14  in:1  out:33  total:34
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  src.urisys.init_setup.run_init
-    CC=31  in:2  out:30  total:32
   scripts.run_test_sessions.session_automation_lab
     CC=13  in:1  out:31  total:32
+  scripts.pack_registry.pack_specs
+    CC=17  in:2  out:30  total:32
+  src.urisys.init_setup.run_init
+    CC=31  in:2  out:30  total:32
   src.urisys.http_server.create_server
     CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
-  scripts.pack_registry.pack_specs
-    CC=17  in:2  out:30  total:32
-  scripts.run_test_sessions.session_urirdp_mock_docker
-    CC=5  in:0  out:31  total:31
   scripts.session_core.now_iso
     CC=1  in:29  out:2  total:31
+  scripts.run_test_sessions.session_urirdp_mock_docker
+    CC=5  in:0  out:31  total:31
   scripts.report.session.generate_report
     CC=9  in:2  out:27  total:29
 
@@ -466,7 +466,7 @@ EDGES:
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
-# generated in 0.09s
+# generated in 0.10s
 # nodes: 206 | edges: 295 | modules: 36
 # CC̄=4.7
 
@@ -487,28 +487,28 @@ HUBS[20]:
     CC=22  in:1  out:34  total:35
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
-  scripts.lenovo_remote_session.run_flow
-    CC=14  in:1  out:33  total:34
-  scripts.test_sessions.util.finalize_session
-    CC=5  in:21  out:13  total:34
   scripts.scan-browser-sessions.main
     CC=23  in:0  out:34  total:34
+  scripts.test_sessions.util.finalize_session
+    CC=5  in:21  out:13  total:34
+  scripts.lenovo_remote_session.run_flow
+    CC=14  in:1  out:33  total:34
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  src.urisys.init_setup.run_init
-    CC=31  in:2  out:30  total:32
   scripts.run_test_sessions.session_automation_lab
     CC=13  in:1  out:31  total:32
+  scripts.pack_registry.pack_specs
+    CC=17  in:2  out:30  total:32
+  src.urisys.init_setup.run_init
+    CC=31  in:2  out:30  total:32
   src.urisys.http_server.create_server
     CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
-  scripts.pack_registry.pack_specs
-    CC=17  in:2  out:30  total:32
-  scripts.run_test_sessions.session_urirdp_mock_docker
-    CC=5  in:0  out:31  total:31
   scripts.session_core.now_iso
     CC=1  in:29  out:2  total:31
+  scripts.run_test_sessions.session_urirdp_mock_docker
+    CC=5  in:0  out:31  total:31
   scripts.report.session.generate_report
     CC=9  in:2  out:27  total:29
 
@@ -788,7 +788,7 @@ EDGES:
 ### Code Analysis (`project/analysis.toon.yaml`)
 
 ```toon markpact:analysis path=project/analysis.toon.yaml
-# code2llm | 102f 11916L | python:49,shell:41,yaml:7,json:1,yml:1,javascript:1,toml:1 | 2026-06-17
+# code2llm | 102f 11916L | python:49,shell:41,yaml:7,json:1,yml:1,toml:1,javascript:1 | 2026-06-17
 # generated in 0.02s
 # CC̅=4.7 | critical:13/366 | dups:0 | cycles:0
 
@@ -811,105 +811,105 @@ REFACTOR[1]:
   1. split 13 high-CC methods  (CC>15)
 
 PIPELINES[111]:
-  [1] Src [registry]: registry
+  [1] Src [main]: main → _doctor_main → run_doctor → _check_uricore_authentic → ...(2 more)
       PURITY: 100% pure
-  [2] Src [runtime]: runtime
+  [2] Src [main]: main → _cmd_uri → print_json → print
       PURITY: 100% pure
-  [3] Src [out]: out
+  [3] Src [__init__]: __init__
       PURITY: 100% pure
-  [4] Src [result]: result
+  [4] Src [run]: run → load_flow
       PURITY: 100% pure
-  [5] Src [client]: client
+  [5] Src [close]: close
       PURITY: 100% pure
-  [6] Src [main]: main → _doctor_main → run_doctor → _check_uricore_authentic → ...(2 more)
+  [6] Src [__init__]: __init__ → create_server → _send
       PURITY: 100% pure
-  [7] Src [main]: main → _cmd_uri → print_json → print
+  [7] Src [serve_forever]: serve_forever → print
       PURITY: 100% pure
   [8] Src [__init__]: __init__
       PURITY: 100% pure
-  [9] Src [run]: run → load_flow
+  [9] Src [call]: call
       PURITY: 100% pure
-  [10] Src [close]: close
+  [10] Src [explain]: explain
       PURITY: 100% pure
-  [11] Src [__init__]: __init__ → create_server → _send
+  [11] Src [routes]: routes
       PURITY: 100% pure
-  [12] Src [serve_forever]: serve_forever → print
+  [12] Src [close]: close
       PURITY: 100% pure
-  [13] Src [__init__]: __init__
+  [13] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [14] Src [call]: call
+  [14] Src [safe_identifier]: safe_identifier
       PURITY: 100% pure
-  [15] Src [explain]: explain
+  [15] Src [parse_meta]: parse_meta
       PURITY: 100% pure
-  [16] Src [routes]: routes
+  [16] Src [source_hash]: source_hash
       PURITY: 100% pure
-  [17] Src [close]: close
+  [17] Src [__init__]: __init__
       PURITY: 100% pure
-  [18] Src [to_dict]: to_dict
+  [18] Src [list_events]: list_events
       PURITY: 100% pure
-  [19] Src [safe_identifier]: safe_identifier
+  [19] Src [build_context]: build_context
       PURITY: 100% pure
-  [20] Src [parse_meta]: parse_meta
+  [20] Src [explain]: explain
       PURITY: 100% pure
-  [21] Src [source_hash]: source_hash
+  [21] Src [__init__]: __init__
       PURITY: 100% pure
-  [22] Src [__init__]: __init__
+  [22] Src [create_runtime]: create_runtime
       PURITY: 100% pure
-  [23] Src [list_events]: list_events
+  [23] Src [close]: close
       PURITY: 100% pure
-  [24] Src [build_context]: build_context
+  [24] Src [__exit__]: __exit__
       PURITY: 100% pure
-  [25] Src [explain]: explain
+  [25] Src [__init__]: __init__
       PURITY: 100% pure
-  [26] Src [__init__]: __init__
+  [26] Src [read_blocks]: read_blocks
       PURITY: 100% pure
-  [27] Src [create_runtime]: create_runtime
+  [27] Src [source_hash]: source_hash
       PURITY: 100% pure
-  [28] Src [close]: close
+  [28] Src [load_pack_block]: load_pack_block
       PURITY: 100% pure
-  [29] Src [__exit__]: __exit__
+  [29] Src [validate]: validate → validate_contract → _validate_contract_routes → scheme_from_uri
       PURITY: 100% pure
-  [30] Src [__init__]: __init__
+  [30] Src [_validate_pack]: _validate_pack
       PURITY: 100% pure
-  [31] Src [read_blocks]: read_blocks
+  [31] Src [compile]: compile
       PURITY: 100% pure
-  [32] Src [source_hash]: source_hash
+  [32] Src [_write_handler_modules]: _write_handler_modules
       PURITY: 100% pure
-  [33] Src [load_pack_block]: load_pack_block
+  [33] Src [manifest_path_for]: manifest_path_for
       PURITY: 100% pure
-  [34] Src [validate]: validate → validate_contract → _validate_contract_routes → scheme_from_uri
+  [34] Src [run_tests]: run_tests
       PURITY: 100% pure
-  [35] Src [_validate_pack]: _validate_pack
+  [35] Src [_check_expectations]: _check_expectations
       PURITY: 100% pure
-  [36] Src [compile]: compile
+  [36] Src [_build_route]: _build_route
       PURITY: 100% pure
-  [37] Src [_write_handler_modules]: _write_handler_modules
+  [37] Src [_resolve_handler_ref]: _resolve_handler_ref
       PURITY: 100% pure
-  [38] Src [manifest_path_for]: manifest_path_for
+  [38] Src [_compile_manifest]: _compile_manifest
       PURITY: 100% pure
-  [39] Src [run_tests]: run_tests
+  [39] Src [_package_id]: _package_id
       PURITY: 100% pure
-  [40] Src [_check_expectations]: _check_expectations
+  [40] Src [_capabilities]: _capabilities
       PURITY: 100% pure
-  [41] Src [_build_route]: _build_route
+  [41] Src [_scheme]: _scheme
       PURITY: 100% pure
-  [42] Src [_resolve_handler_ref]: _resolve_handler_ref
+  [42] Src [_handler_blocks]: _handler_blocks
       PURITY: 100% pure
-  [43] Src [_compile_manifest]: _compile_manifest
+  [43] Src [_load_yaml_blocks]: _load_yaml_blocks
       PURITY: 100% pure
-  [44] Src [_package_id]: _package_id
+  [44] Src [_handler_id_from_ref]: _handler_id_from_ref
       PURITY: 100% pure
-  [45] Src [_capabilities]: _capabilities
+  [45] Src [_ensure_importable]: _ensure_importable
       PURITY: 100% pure
-  [46] Src [_scheme]: _scheme
+  [46] Src [call_http]: call_http
       PURITY: 100% pure
-  [47] Src [_handler_blocks]: _handler_blocks
+  [47] Src [__init__]: __init__
       PURITY: 100% pure
-  [48] Src [_load_yaml_blocks]: _load_yaml_blocks
+  [48] Src [_split_specs]: _split_specs
       PURITY: 100% pure
-  [49] Src [_handler_id_from_ref]: _handler_id_from_ref
+  [49] Src [_is_all]: _is_all
       PURITY: 100% pure
-  [50] Src [_ensure_importable]: _ensure_importable
+  [50] Src [parse_packs]: parse_packs
       PURITY: 100% pure
 
 LAYERS:
@@ -1042,9 +1042,9 @@ COUPLING:
   HUB: scripts/ (fan-in=32)
   HUB: scripts.test_sessions/ (fan-in=88)
   SMELL: scripts/ fan-out=88 → split needed
+  SMELL: src.urisys/ fan-out=8 → split needed
   SMELL: scripts.test_sessions/ fan-out=11 → split needed
   SMELL: scripts.report/ fan-out=13 → split needed
-  SMELL: src.urisys/ fan-out=8 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon
@@ -1062,7 +1062,7 @@ SUMMARY:
   dup_groups:    3
   dup_fragments: 7
   saved_lines:   37
-  scan_ms:       2230
+  scan_ms:       2451
 
 HOTSPOTS[6] (files with most duplication):
   src/urisys/uricore_install.py  dup=18L  groups=2  frags=2  (0.3%)

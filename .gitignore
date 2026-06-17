@@ -17,6 +17,7 @@ __pycache__/
 .nlp2dsl
 .urisys
 .urisys/
+.markpact/
 data
 # C extensions
 *.so

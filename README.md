@@ -118,13 +118,15 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 ```text
 tellmesh/
 ├── urisys/              pip package — CLI + managers + docker glue
+├── uricore/             control-plane engine (uri_control)
 ├── urisysedge/          wspólny edge runtime (canonical)
 ├── urioperators/        wspólne helpery LLM
-├── urisys-node/         urisysnode, uriscreen, urishell
-├── urikvm/ urihim/ uriocr/ urillm/ …   capability packs
+├── urisys-node/         urisysnode (bundled); uriscreen/urishell via pip
+├── urikvm/ urihim/ uriocr/ urillm/ urirdp/ urishell/ urienv/ …
 ├── urikvmedge/          CLI urisys-kvm
-├── urirdp/              RDP desktop bundle
-└── urisys-node/  integracja slave (testy, docker config)
+├── urirdpedge/          CLI urisys-rdp
+├── urirdp-docker/       RDP + URI stack (:8795 / :3389)
+└── urisys-automation-lab/  lab UI (:8099)
 ```
 
 ## Managers
@@ -138,10 +140,22 @@ tellmesh/
 
 ## Markpact
 
+Thin pack Markpacts live in each capability repo: `{pack}/markpacts/{pack}.markpact.md`.
+
 ```bash
-urisys markpact validate markpacts/packs/uribrowser.markpact.md
+cd tellmesh/urisys
+python3 scripts/generate_pack_markpacts.py --check   # CI drift guard
+bash scripts/run-markpact-ci.sh                      # drift + validate + tests
+
+cd tellmesh/urishell
+export TELLMESH_ROOT=~/github/tellmesh
+urisys markpact run markpacts/urishell.markpact.md --as flow --approve --dry-run
+
 bash scripts/validate-all-markpacts.sh
+bash examples/markpact/showcase-run-flow.sh          # uribrowser integration demo
 ```
+
+Docs: [`docs/MARKPACT.md`](docs/MARKPACT.md) · layout: [`markpacts/README.md`](markpacts/README.md)
 
 ## Analiza projektu (code2llm)
 

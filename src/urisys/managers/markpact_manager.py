@@ -152,6 +152,9 @@ class MarkpactManager:
 
         if manifest_path.exists() and not force:
             self._ensure_importable(cache_dir)
+            flows_dir, flow_ids = self._flows_from_cache(cache_dir, blocks)
+            proto_dir, proto_files = self._protos_from_cache(cache_dir, blocks)
+            module_files = self._modules_from_cache(cache_dir, blocks)
             return CompiledMarkpact(
                 source_path=source_path,
                 source_hash=digest,
@@ -162,6 +165,11 @@ class MarkpactManager:
                 tests_path=tests_path if tests_path.exists() else None,
                 docs_path=docs_path if docs_path.exists() else None,
                 metadata_path=metadata_path if metadata_path.exists() else None,
+                flows_dir=flows_dir,
+                flow_ids=flow_ids,
+                proto_dir=proto_dir,
+                proto_files=proto_files,
+                module_files=module_files,
             )
 
         validation = self.validate(source_path)
@@ -189,6 +197,10 @@ class MarkpactManager:
         else:
             docs_path = None  # type: ignore[assignment]
 
+        flows_dir, flow_ids = self._write_flows(cache_dir, blocks)
+        proto_dir, proto_files = self._write_protos(cache_dir, blocks)
+        module_files = self._write_modules(cache_dir, blocks)
+
         metadata = {
             "kind": "CompiledUriPackMarkpact",
             "source_path": str(source_path),
@@ -211,7 +223,116 @@ class MarkpactManager:
             tests_path=tests_path if isinstance(tests_path, Path) and tests_path.exists() else None,
             docs_path=docs_path if isinstance(docs_path, Path) and docs_path.exists() else None,
             metadata_path=metadata_path,
+            flows_dir=flows_dir,
+            flow_ids=flow_ids,
+            proto_dir=proto_dir,
+            proto_files=proto_files,
+            module_files=module_files,
         )
+
+    def _write_modules(self, cache_dir: Path, blocks: list[MarkpactBlock]) -> tuple[str, ...]:
+        """Write embedded ``markpact:module`` blocks under the unpack dir as a real
+        importable package tree (cache_dir is already on sys.path)."""
+        from .markpact_flows import extract_modules
+
+        modules = extract_modules(blocks)
+        written: list[str] = []
+        for rel, content in modules:
+            target = cache_dir / rel
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(content, encoding="utf-8")
+            written.append(rel)
+        return tuple(written)
+
+    def _flows_from_cache(self, cache_dir: Path, blocks: list[MarkpactBlock]) -> tuple[Path | None, tuple[str, ...]]:
+        flows_dir = cache_dir / "flows"
+        if not flows_dir.is_dir():
+            return None, ()
+        from .markpact_flows import extract_flows
+
+        flows = extract_flows(blocks)
+        return flows_dir, tuple(f["id"] for f in flows)
+
+    def _protos_from_cache(self, cache_dir: Path, blocks: list[MarkpactBlock]) -> tuple[Path | None, tuple[str, ...]]:
+        proto_dir = cache_dir / "proto"
+        if not proto_dir.is_dir():
+            return None, ()
+        from .markpact_flows import extract_protos
+
+        return proto_dir, tuple(name for name, _ in extract_protos(blocks))
+
+    def _modules_from_cache(self, cache_dir: Path, blocks: list[MarkpactBlock]) -> tuple[str, ...]:
+        from .markpact_flows import extract_modules
+
+        modules = extract_modules(blocks)
+        if not modules:
+            return ()
+        return tuple(rel for rel, _ in modules if (cache_dir / rel).is_file())
+
+    def _write_flows(self, cache_dir: Path, blocks: list[MarkpactBlock]) -> tuple[Path | None, tuple[str, ...]]:
+        """Write embedded ``markpact:flow`` blocks as ``flows/<id>.uri.flow.yaml``."""
+        from .markpact_flows import extract_flows
+
+        flows = extract_flows(blocks)
+        if not flows:
+            return None, ()
+        flows_dir = cache_dir / "flows"
+        flows_dir.mkdir(parents=True, exist_ok=True)
+        ids: list[str] = []
+        for flow in flows:
+            fid = _safe_identifier(flow["id"], fallback="flow")
+            (flows_dir / f"{fid}.uri.flow.yaml").write_text(flow["raw"], encoding="utf-8")
+            ids.append(flow["id"])
+        return flows_dir, tuple(ids)
+
+    def _write_protos(self, cache_dir: Path, blocks: list[MarkpactBlock]) -> tuple[Path | None, tuple[str, ...]]:
+        """Write embedded ``markpact:proto`` blocks as ``proto/<name>.proto``."""
+        from .markpact_flows import extract_protos
+
+        protos = extract_protos(blocks)
+        if not protos:
+            return None, ()
+        proto_dir = cache_dir / "proto"
+        proto_dir.mkdir(parents=True, exist_ok=True)
+        names: list[str] = []
+        for name, content in protos:
+            target = proto_dir / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(content, encoding="utf-8")
+            names.append(name)
+        return proto_dir, tuple(names)
+
+    def analyze(self, path: str | Path) -> dict[str, Any]:
+        """Compile + summarise a showcase Markpact: definitions, flows (classified
+        use_case/integration), protos, and integration dependency gaps."""
+        from .markpact_flows import classify_flow, declared_uses, extract_flows, extract_protos
+
+        source_path = Path(path)
+        blocks = self.read_blocks(source_path)
+        pack = self.load_pack_block(source_path)
+        scheme = self._scheme(pack, self._capabilities(pack))
+        uses = declared_uses(pack)
+        flows = extract_flows(blocks)
+
+        analyzed = []
+        all_undeclared: set[str] = set()
+        for flow in flows:
+            info = classify_flow(flow["data"], pack_scheme=scheme, declared_uses=uses)
+            all_undeclared.update(info["undeclared_uses"])
+            analyzed.append({"id": flow["id"], **info})
+
+        return {
+            "ok": not all_undeclared,
+            "package_id": self._package_id(pack, source_path),
+            "scheme": scheme,
+            "declared_uses": sorted(uses),
+            "capabilities": len(self._capabilities(pack)),
+            "protos": [name for name, _ in extract_protos(blocks)],
+            "flows": analyzed,
+            "use_cases": [f["id"] for f in analyzed if f["kind"] == "use_case"],
+            "integrations": [f["id"] for f in analyzed if f["kind"] == "integration"],
+            "undeclared_uses": sorted(all_undeclared),
+        }
 
     def _write_handler_modules(self, package_dir: Path, handler_blocks: dict[str, MarkpactBlock]) -> None:
         """Write each python handler block to its own module under package_dir."""

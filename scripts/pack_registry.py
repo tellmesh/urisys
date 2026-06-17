@@ -1,6 +1,6 @@
 """Registry: capability pack → tellmesh sibling repo (single source of truth).
 
-After migration, urisys monorepo holds only docker glue (*edge CLIs, configs).
+After migration, urisys monorepo holds only docker glue (*-docker, configs).
 Pack code lives in /home/tom/github/tellmesh/{repo}/.
 
 Usage:
@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TELLMESH = ROOT.parent
 
 MODULE_FILES = ("__init__.py", "handlers.py", "routes.py", "manifest.yaml")
-EDGE_FILES = ("__init__.py", "runtime.py", "env.py", "cli.py")
+EDGE_FILES = ("__init__.py", "runtime.py", "cli.py", "__main__.py")
 
 
 @dataclass
@@ -36,18 +36,6 @@ def _repo(name: str) -> Path:
     return TELLMESH / name
 
 
-def _vendored_kvm(name: str) -> Path:
-    return TELLMESH / "urikvm-docker" / "packages" / "python" / name
-
-
-def _vendored_rdp(name: str) -> Path:
-    return TELLMESH / "urirdp-docker" / "packages" / "python" / name
-
-
-def _vendored_node(name: str) -> Path:
-    return TELLMESH / "urisys-node" / "packages" / "python" / name
-
-
 def sibling_uv_path(name: str) -> str:
     """Relative path for [tool.uv.sources] from urisys root."""
     return f"../{name}"
@@ -57,26 +45,46 @@ def sibling_repo(name: str) -> Path:
     return _repo(name)
 
 
+def _pack(
+    name: str,
+    *,
+    repo: str | None = None,
+    vendored: Path | None = None,
+    module_files: tuple[str, ...] = MODULE_FILES,
+    test_files: tuple[str, ...] = (),
+    optional_extras: dict[str, list[str]] | None = None,
+    repo_readme: str = "",
+    layout: str = "nested",
+    extra_deps: tuple[str, ...] = (),
+) -> PackSpec:
+    return PackSpec(
+        name=name,
+        repo=_repo(repo or name),
+        vendored=vendored,
+        module_files=module_files,
+        test_files=test_files,
+        optional_extras=optional_extras or {},
+        repo_readme=repo_readme,
+        layout=layout,
+        extra_deps=extra_deps,
+    )
+
+
 def pack_specs() -> dict[str, PackSpec]:
-    specs: dict[str, PackSpec] = {
-        "urisysedge": PackSpec(
-            name="urisysedge",
-            repo=_repo("urisysedge"),
-            vendored=ROOT / "packages" / "python" / "urisysedge",
-            module_files=("__init__.py", "runtime.py", "env.py"),
-            repo_readme="Shared URI edge runtime for urisys capability packs.",
-            layout="nested",
-        ),
-        "urioperators": PackSpec(
-            name="urioperators",
-            repo=_repo("urioperators"),
-            vendored=ROOT / "packages" / "python" / "urioperators",
-            module_files=("__init__.py", "llm_json.py", "llm_chat.py", "llm_plan.py", "llm_decide.py"),
-            test_files=("test_llm_helpers.py",),
-            repo_readme="Shared LLM operator helpers for urikvm and urirdp packs.",
-            layout="flat",
-        ),
-    }
+    specs: dict[str, PackSpec] = {}
+
+    specs["urisysedge"] = _pack(
+        "urisysedge",
+        module_files=("__init__.py", "runtime.py", "env.py"),
+        repo_readme="Shared URI edge runtime for urisys capability packs.",
+    )
+    specs["urioperators"] = _pack(
+        "urioperators",
+        module_files=("__init__.py", "llm_json.py", "llm_chat.py", "llm_plan.py", "llm_decide.py"),
+        test_files=("test_llm_helpers.py",),
+        repo_readme="Shared LLM operator helpers for urikvm and urirdp packs.",
+        layout="flat",
+    )
 
     kvm_tests: dict[str, list[str]] = {
         "urihim": ["test_him_driver.py", "test_him_scroll.py"],
@@ -94,123 +102,109 @@ def pack_specs() -> dict[str, PackSpec]:
         "urillm": ("urioperators>=0.1.0",),
     }
 
-    for name in (
-        "urikvm",
-        "urihim",
-        "uriocr",
-        "urillm",
-        "urimail",
-        "urioffice",
-        "urivql",
-    ):
-        specs[name] = PackSpec(
-            name=name,
-            repo=_repo(name),
-            vendored=_vendored_kvm(name),
+    for name in ("urikvm", "urihim", "uriocr", "urillm", "urimail", "urioffice", "urivql"):
+        specs[name] = _pack(
+            name,
             test_files=tuple(kvm_tests.get(name, ())),
             optional_extras=kvm_extras.get(name, {}),
             extra_deps=kvm_extra_deps.get(name, ()),
-            repo_readme=f"{name}:// URI capability pack for urisys-node.",
+            repo_readme=f"{name}:// URI capability pack.",
         )
 
-    specs["urikvmedge"] = PackSpec(
-        name="urikvmedge",
-        repo=_repo("urikvmedge"),
-        vendored=_vendored_kvm("urikvmedge"),
+    specs["urikvmedge"] = _pack(
+        "urikvmedge",
         module_files=EDGE_FILES,
-        repo_readme="KVM docker bundle CLI (urisys-kvm) — composes urikvm/him/ocr/llm packs.",
+        repo_readme="KVM edge CLI (urisys-kvm) — composes urikvm/him/ocr/llm packs.",
     )
 
-    for name in (
-        "urisysnode",
+    specs["uriscreen"] = _pack(
         "uriscreen",
-        "urishell",
-    ):
-        module_files = MODULE_FILES if name != "urisysnode" else ("__init__.py", "cli.py", "serve.py", "handlers.py", "routes.py", "runtime.py", "env.py", "forward.py", "forward_config.py", "artifact_resolver.py", "pack_resolver.py", "release_verify.py", "identity.py", "router.py", "client.py", "display_bootstrap.py")
-        if name == "uriscreen":
-            module_files = ("__init__.py", "handlers.py", "routes.py", "backends.py", "portal_capture.py")
-        if name == "urishell":
-            module_files = ("__init__.py", "handlers.py", "routes.py")
-        specs[name] = PackSpec(
-            name=name,
-            repo=_repo("urisys-node"),
-            vendored=_vendored_node(name),
-            module_files=module_files,
-            repo_readme="urisys-node slave: screen/kvm/him URI server components.",
-        )
-
-    rdp_packs = (
-        "urirdp",
-        "urirdp_kvm",
-        "urirdp_him",
-        "urirdp_ocr",
-        "urirdp_llm",
-        "urirdp_browser",
-        "urirdp_shell",
-        "urirdp_env",
-        "urirdpedge",
+        module_files=("__init__.py", "handlers.py", "routes.py", "backends.py", "portal_capture.py", "manifest.yaml"),
+        repo_readme="screen:// URI capability pack.",
     )
-    for name in rdp_packs:
-        files = EDGE_FILES if name == "urirdpedge" else MODULE_FILES
-        if name == "urirdp_kvm":
-            files = ("__init__.py", "handlers.py", "routes.py", "display.py")
-        if name == "urirdp_env":
-            files = ("__init__.py", "routes.py")
-        specs[name] = PackSpec(
-            name=name,
-            repo=_repo("urirdp"),
-            vendored=_vendored_rdp(name),
-            module_files=files,
-            extra_deps=("urioperators>=0.1.0",) if name == "urirdp_llm" else (),
-            repo_readme="RDP desktop automation pack bundle for urisys.",
-        )
 
-    for name, vendored_base in (
-        ("uribrowserdocker", TELLMESH / "uribrowser-docker" / "packages" / "python" / "uribrowserdocker"),
-        ("uribrowseredge", TELLMESH / "uribrowser-docker" / "packages" / "python" / "uribrowseredge"),
-    ):
-        specs[name] = PackSpec(
-            name=name,
-            repo=_repo("uribrowser"),
-            vendored=vendored_base,
+    specs["urisysnode"] = _pack(
+        "urisysnode",
+        repo="urisys-node",
+        module_files=(
+            "__init__.py",
+            "cli.py",
+            "serve.py",
+            "handlers.py",
+            "routes.py",
+            "runtime.py",
+            "env.py",
+            "forward.py",
+            "forward_config.py",
+            "artifact_resolver.py",
+            "pack_resolver.py",
+            "release_verify.py",
+            "identity.py",
+            "router.py",
+            "client.py",
+            "display_bootstrap.py",
+        ),
+        repo_readme="urisys-node slave URI server runtime.",
+    )
+
+    specs["urishell"] = _pack(
+        "urishell",
+        repo_readme="shell:// URI capability pack.",
+    )
+
+    specs["urirdp"] = _pack(
+        "urirdp",
+        module_files=("__init__.py", "handlers.py", "routes.py", "manifest.yaml", "display.py"),
+        repo_readme="rdp:// URI capability pack.",
+    )
+    specs["urirdpedge"] = _pack(
+        "urirdpedge",
+        module_files=EDGE_FILES + ("lab_browser.py",),
+        repo_readme="RDP edge CLI (urisys-rdp) — composes desktop automation packs.",
+    )
+
+    for name in ("uribrowserdocker", "uribrowseredge"):
+        specs[name] = _pack(
+            name,
+            repo="uribrowser",
             module_files=EDGE_FILES if "edge" in name else MODULE_FILES,
             repo_readme="browser:// URI capability pack.",
         )
 
-    specs["urienv"] = PackSpec(
-        name="urienv",
-        repo=_repo("urienv"),
-        vendored=TELLMESH / "urienv-docker" / "packages" / "python" / "urienv" / "src" / "urienv",
-        module_files=("__init__.py", "handlers.py", "manifest.yaml"),
+    specs["urienv"] = _pack(
+        "urienv",
+        module_files=("__init__.py", "handlers.py", "routes.py", "manifest.yaml"),
         repo_readme="env:// URI capability pack.",
         layout="flat",
     )
 
-    specs["urikv"] = PackSpec(
-        name="urikv",
-        repo=_repo("urikv"),
-        vendored=None,
-        module_files=MODULE_FILES,
+    specs["urikv"] = _pack(
+        "urikv",
         repo_readme="kv:// and log:// URI packs — shared state and system introspection.",
     )
 
-    for name in ("uristepper", "uristepperedge"):
-        specs[name] = PackSpec(
-            name=name,
-            repo=_repo("uristepper"),
-            vendored=TELLMESH / "uristepper-docker" / "packages" / "python" / name,
-            module_files=EDGE_FILES if name == "uristepperedge" else MODULE_FILES,
-            repo_readme="stepper:// URI capability pack.",
-        )
+    specs["uristepper"] = _pack(
+        "uristepper",
+        repo_readme="stepper:// URI capability pack.",
+    )
+    specs["uristepperedge"] = _pack(
+        "uristepperedge",
+        module_files=EDGE_FILES,
+        repo_readme="Stepper edge CLI — composes uristepper pack.",
+    )
 
-    lab_packs = ("labedge", "urimessage", "urichat", "uristt", "uriwebrtc")
-    for name in lab_packs:
-        specs[name] = PackSpec(
-            name=name,
-            repo=_repo("urisys-automation-lab"),
-            vendored=TELLMESH / "urisys-automation-lab" / "packages" / "python" / name,
+    for name in ("labedge",):
+        specs[name] = _pack(
+            name,
+            repo="urisys-automation-lab",
             module_files=EDGE_FILES if name == "labedge" else MODULE_FILES,
             repo_readme="urisys automation lab MVP packs.",
+        )
+
+    for name in ("urimessage", "uristt", "uriwebrtc", "urichat"):
+        specs[name] = _pack(
+            name,
+            repo_readme=f"{name}:// URI capability pack for automation lab.",
         )
 
     return specs
@@ -231,32 +225,25 @@ SIBLING_ONLY = frozenset(
         "urikvmedge",
         "urienv",
         "urikv",
+        "urishell",
+        "uriscreen",
+        "urirdp",
+        "urirdpedge",
+        "uristepperedge",
+        "urimessage",
+        "uristt",
+        "uriwebrtc",
+        "urichat",
     }
 )
 
-# Bundled into multi-module tellmesh repos
+# Multi-module repos (several pack names → one git repo)
 BUNDLE_REPOS: dict[str, str] = {
     "urisysnode": "urisys-node",
-    "uriscreen": "urisys-node",
-    "urishell": "urisys-node",
-    "urirdp": "urirdp",
-    "urirdp_kvm": "urirdp",
-    "urirdp_him": "urirdp",
-    "urirdp_ocr": "urirdp",
-    "urirdp_llm": "urirdp",
-    "urirdp_browser": "urirdp",
-    "urirdp_shell": "urirdp",
-    "urirdp_env": "urirdp",
-    "urirdpedge": "urirdp",
     "uribrowserdocker": "uribrowser",
     "uribrowseredge": "uribrowser",
     "uristepper": "uristepper",
-    "uristepperedge": "uristepper",
     "labedge": "urisys-automation-lab",
-    "urimessage": "urisys-automation-lab",
-    "urichat": "urisys-automation-lab",
-    "uristt": "urisys-automation-lab",
-    "uriwebrtc": "urisys-automation-lab",
 }
 
 

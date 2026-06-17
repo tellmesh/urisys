@@ -14,6 +14,19 @@ DEFAULT_PACKAGES = {
     "vql": "urivql",
     "llm": "urillm",
     "agent": "uriagent",
+    "shell": "urishell",
+    "kvm": "urikvm",
+    "env": "urienv",
+    "rdp": "urirdp",
+    "screen": "uriscreen",
+    "chat": "urichat",
+    "stt": "uristt",
+    "message": "urimessage",
+    "stepper": "uristepper",
+    "him": "urihim",
+    "ocr": "uriocr",
+    "webrtc": "uriwebrtc",
+    "kv": "urikv",
 }
 
 DEFAULT_EVENTS_PATH = "output/urisys-events.jsonl"

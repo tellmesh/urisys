@@ -11,11 +11,12 @@ Organizacja GitHub: **[tellmesh](https://github.com/tellmesh)** (paczki urisys) 
 ├── urisys/                 glue + CLI (git: tellmesh/urisys)
 ├── urisysedge/             edge runtime
 ├── urioperators/           LLM helpers
-├── urisys-node/            urisysnode, uriscreen, urishell
-├── urikvm/ urihim/ uriocr/ urillm/
+├── urisys-node/            urisysnode (bundled); uriscreen/urishell → pip
+├── uriscreen/ urishell/ urichat/ uristt/ uriwebrtc/ urimessage/
 ├── urimail/ urioffice/ urivql/
 ├── urikvmedge/             CLI urisys-kvm
-├── urirdp/                 urirdp*, urirdpedge
+├── urirdp/ urirdpedge/ urishell/ urichat/     ← RDP + shell + deprecated chat
+├── uristt/ uriwebrtc/ urimessage/
 ├── uribrowser/ urienv/ uristepper/
 └── urisys-automation-lab/  labedge, stt, chat, …
 ```

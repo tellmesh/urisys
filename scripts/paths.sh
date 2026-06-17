@@ -10,6 +10,21 @@ urisys_root() {
   _urisys_root
 }
 
+# tellmesh workspace root (urisys + urisysedge siblings), or TELLMESH_ROOT env.
+tellmesh_root() {
+  local root
+  root="$(_urisys_root)"
+  if [ -n "${TELLMESH_ROOT:-}" ] && [ -d "$TELLMESH_ROOT" ]; then
+    echo "$TELLMESH_ROOT"
+    return 0
+  fi
+  if [ -d "$root/../urisysedge" ] && [ -d "$root/../uricore" ]; then
+    cd "$root/.." && pwd
+    return 0
+  fi
+  return 1
+}
+
 # tellmesh/markpact-contracts/packs when urisys lives in tellmesh/urisys
 markpact_contracts_packs() {
   local root

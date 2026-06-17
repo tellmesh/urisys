@@ -7,8 +7,8 @@ from urisys.managers.markpact_manager import MarkpactManager
 
 ROOT = Path(__file__).resolve().parents[1]
 TELLMESH = ROOT.parent
-BROWSER_MARKPACT = ROOT / "markpacts" / "packs" / "uribrowser.markpact.md"
-SYSTEMD_MARKPACT = ROOT / "markpacts" / "packs" / "urisystemd.markpact.md"
+BROWSER_MARKPACT = TELLMESH / "markpact-contracts" / "packs" / "uribrowser.markpact.md"
+SYSTEMD_MARKPACT = TELLMESH / "markpact-contracts" / "packs" / "urisystemd.markpact.md"
 
 
 def test_markpact_validate():

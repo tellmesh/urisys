@@ -31,13 +31,12 @@ tellmesh/
 ├── urisys/                 # glue + CLI (repo git)
 ├── urisysedge/             # ★ edge runtime
 ├── urioperators/           # ★ LLM helpers
-├── urisys-node/            # urisysnode, uriscreen, urishell
-├── urikvm/ urihim/ uriocr/ urillm/
-├── urimail/ urioffice/ urivql/
+├── urisys-node/            # urisysnode (bundled); uriscreen/urishell → pip
+├── uriscreen/ urishell/ urichat/
 ├── urikvmedge/             # CLI urisys-kvm
-├── urirdp/                 # urirdp*, urirdpedge
-├── uribrowser/ urienv/ uristepper/
-└── urisys-automation-lab/  # labedge, urichat, uristt, …
+├── urirdpedge/             # CLI urisys-rdp
+├── uribrowser/ uristepper/ uristepperedge/
+└── urisys-automation-lab/  # lab server + voice pack glue
 ```
 
 ```bash
@@ -59,9 +58,10 @@ bash scripts/ci-install-siblings.sh    # pip install -e
 |-----|------|----------|
 | **core** | Centralny controller | `src/urisys/` |
 | **edge-shared** | Wspólny runtime Docker | `tellmesh/urisysedge/` |
-| **edge-shim** | Alias kompatybilności | `urirdpedge`, `labedge` w bundle repo |
+| **edge-shim** | Legacy alias (removed) | — |
+| **edge-compose** | CLI + pack registration | `urirdpedge`, `urikvmedge`, `uristepperedge` |
 | **handlers** | Implementacja schematu URI | `tellmesh/urikvm/`, `tellmesh/urirdp/` |
-| **lab-pack** | MVP w automation-lab | `tellmesh/urisys-automation-lab/` |
+| **lab-pack** | MVP w automation-lab | deprecated `urichat/` only |
 
 ## Drzewo urisys (glue only)
 
@@ -81,7 +81,7 @@ urisys/
 
 ## Wspólny pakiet: `urioperators`
 
-Wyodrębnione helpery LLM współdzielone przez `urillm` i `urirdp_llm`:
+Wyodrębnione helpery LLM współdzielone przez `urillm`:
 
 | Moduł | Zawartość |
 |-------|-----------|
@@ -103,18 +103,22 @@ Lokalizacja: **`tellmesh/urioperators/`**.
 
 Lokalizacja: **`tellmesh/urisysedge/`**.
 
-Shimy (re-export w bundle repos): `urirdpedge`, `urikvmedge`, `labedge`, `uribrowseredge`, `urisysnode/runtime.py`.
+Shimy usunięte — edge CLIs importują `urisysedge` bezpośrednio: `urirdpedge`, `urikvmedge`, `uristepperedge`.
 
-## Fork lineage urikvm ↔ urirdp
+## Standalone packs (by domain)
 
-| Domena | tellmesh repo | Uwagi |
-|--------|---------------|-------|
-| KVM | `urikvm` / `urirdp_kvm` | RDP display vs czysty KVM |
-| HIM | `urihim` / `urirdp_him` | xdotool |
-| OCR | `uriocr` / `urirdp_ocr` | `latest.png` convention |
-| LLM | `urillm` / `urirdp_llm` | helpery → `urioperators` |
-| Browser | `uribrowser` / `urirdp_browser` | Chromium w RDP |
-| Env | `urienv` / `urirdp_env` | alias |
+| Schemes | Canonical repo | Edge CLI |
+|---------|----------------|----------|
+| `rdp://` | `urirdp` | `urirdpedge` (`urisys-rdp`) |
+| `kvm/him/ocr/llm` | `urikvm`, `urihim`, `uriocr`, `urillm` | `urikvmedge` / `urirdpedge` |
+| `screen://` | `uriscreen` | bundled in `urisys-node` via pip |
+| `shell://` | `urishell` | `urirdpedge` / `urisys-node` pip dep |
+| `stt/webrtc/message/chat` | `uristt`, `uriwebrtc`, `urimessage`, `urichat` | lab / lazy-install |
+| `env://` | `urienv` | `urirdpedge` |
+| `browser://` | `uribrowser` | `urirdpedge` (+ lab aliases) |
+| `stepper://` | `uristepper` | `uristepperedge` |
+
+Wspólne X11 helpers: `urirdp/urirdp/display.py`, `urikvm/urikvm/display.py`.
 
 Konwencja danych: `data/screenshots/latest.png`, `runtime.state`.
 
@@ -130,6 +134,7 @@ Pełny opis: **[`docs/DISTRIBUTION.md`](DISTRIBUTION.md)**.
 | `urioperators` | `tellmesh/urioperators` | brak vendored |
 | `urikvm` … `urivql` | `tellmesh/{pack}/` | brak vendored |
 | `urikvmedge` | `tellmesh/urikvmedge` | `tellmesh/urikvm-docker/` glue |
+| `urirdpedge` | `tellmesh/urirdpedge` | `tellmesh/urirdp-docker/` glue |
 
 ### Dev
 
@@ -149,12 +154,13 @@ docker build -f urirdp-docker/Dockerfile /path/to/tellmesh
 
 ## Plan konsolidacji
 
-1. ✅ **`urisysedge`** — runtime + env; shimy edge
-2. ✅ **`urioperators` (LLM)** — wired w `urillm` + `urirdp_llm`
+1. ✅ **`urisysedge`** — runtime + env + HTTP
+2. ✅ **`urioperators` (LLM)** — wired w `urillm`
 3. ✅ **PyPI layout** — osobne repo `tellmesh/{pack}/`
-4. ✅ **Migracja vendored → sibling** — `pack_sync promote --all`
-5. 🔲 **`urioperators` (OCR/HIM)** — faza 2 dedup
-6. 🔲 **`uriimgl` / `urivql`** — forward lub in-process pack
+4. ✅ **Migracja monolitu `urirdp`** → `urirdp` + `urirdpedge` + standalone packi
+5. ✅ **Voice packs** — `uristt`, `uriwebrtc`, `urimessage` poza automation-lab
+6. 🔲 **`urioperators` (OCR/HIM)** — faza 2 dedup
+7. 🔲 **`uriimgl` / `urivql`** — forward lub in-process pack
 
 ## Instalacja dev
 

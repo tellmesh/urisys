@@ -20,7 +20,7 @@ URI control system managers/controllers over separate uri* capability packs.
 ## Metadata
 
 - **name**: `urisys`
-- **version**: `0.1.65`
+- **version**: `0.1.66`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -40,7 +40,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: urisys;
-  version: 0.1.65;
+  version: 0.1.66;
 }
 
 dependencies {
@@ -197,7 +197,7 @@ ASSERT[14]{field, operator, expected}:
 ```yaml
 project:
   name: urisys
-  version: 0.1.65
+  version: 0.1.66
   env: local
 ```
 
@@ -852,7 +852,7 @@ D:
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.65', 'python').
+project_metadata('urisys', '0.1.66', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 49, 'less').
@@ -1445,7 +1445,7 @@ sumd_interface('cli', '').
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
-# generated in 0.09s
+# generated in 0.10s
 # nodes: 206 | edges: 295 | modules: 36
 # CC̄=4.7
 
@@ -1466,28 +1466,28 @@ HUBS[20]:
     CC=22  in:1  out:34  total:35
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
-  scripts.lenovo_remote_session.run_flow
-    CC=14  in:1  out:33  total:34
-  scripts.test_sessions.util.finalize_session
-    CC=5  in:21  out:13  total:34
   scripts.scan-browser-sessions.main
     CC=23  in:0  out:34  total:34
+  scripts.test_sessions.util.finalize_session
+    CC=5  in:21  out:13  total:34
+  scripts.lenovo_remote_session.run_flow
+    CC=14  in:1  out:33  total:34
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  src.urisys.init_setup.run_init
-    CC=31  in:2  out:30  total:32
   scripts.run_test_sessions.session_automation_lab
     CC=13  in:1  out:31  total:32
+  scripts.pack_registry.pack_specs
+    CC=17  in:2  out:30  total:32
+  src.urisys.init_setup.run_init
+    CC=31  in:2  out:30  total:32
   src.urisys.http_server.create_server
     CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
-  scripts.pack_registry.pack_specs
-    CC=17  in:2  out:30  total:32
-  scripts.run_test_sessions.session_urirdp_mock_docker
-    CC=5  in:0  out:31  total:31
   scripts.session_core.now_iso
     CC=1  in:29  out:2  total:31
+  scripts.run_test_sessions.session_urirdp_mock_docker
+    CC=5  in:0  out:31  total:31
   scripts.report.session.generate_report
     CC=9  in:2  out:27  total:29
 

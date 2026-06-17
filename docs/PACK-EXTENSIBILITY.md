@@ -22,11 +22,11 @@ pip install wheel  →  import modułu  →  pack.register(runtime)  →  runtim
 
 Domyślnie przy starcie (`URISYS_NODE_PACKS=node,screen,shell`):
 
-| Pack | Schemat | Moduł |
-|------|---------|-------|
-| `node` | `node://` | `urisysnode.routes` |
-| `screen` | `screen://` | `uriscreen.routes` |
-| `shell` | `shell://` | `urishell.routes` |
+| Pack | Schemat | Moduł | Instalacja |
+|------|---------|-------|------------|
+| `node` | `node://` | `urisysnode.routes` | bundled w wheel |
+| `screen` | `screen://` | `uriscreen` | pip dep (`uriscreen>=0.1.0`) |
+| `shell` | `shell://` | `urishell` | pip dep (`urishell>=0.1.0`) |
 
 ## Packi opcjonalne (lazy / hot-load)
 
@@ -40,7 +40,11 @@ Mapowanie w `urisysnode/pack_resolver.py`:
 | `llm` | `llm://` | `urillm` | GitHub (auto) |
 | `img2nl` | `img2nl://` | `uriimg2nl` | tellmesh + `pip install img2nl[analyze]` |
 | `vql` | `vql://` | `urivql` | GitHub (auto) |
-| `browser` | `browser://` | `uribrowserdocker` | GitHub (auto) | — trzeba dodać wpis w `PACK_MODULES` i `SCHEME_TO_PACK` (lub użyć forward workera).
+| `browser` | `browser://` | `uribrowserdocker` | GitHub (auto) |
+| `rdp` | `rdp://` | `urirdp` | GitHub (auto) |
+| `rdpedge` | rdp+kvm+him+… bundle | `urirdpedge` | GitHub (auto) — full desktop stack |
+| `env` | `env://` | `urienv` | GitHub (auto) |
+| `chat` | `chat://` (deprecated) | `urichat` | GitHub (auto) |
 
 ## Kontrakt packa in-process
 

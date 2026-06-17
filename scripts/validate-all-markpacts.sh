@@ -7,16 +7,28 @@ cd "$ROOT"
 # shellcheck source=paths.sh
 source "$ROOT/scripts/paths.sh"
 
+_prune_markpact_find() {
+  find "$1" \
+    \( -path '*/.urisys/*' -o -path '*/.markpact/*' -o -path '*/legacy/*' \) -prune \
+    -o -name '*.markpact.md' -print 2>/dev/null || true
+}
+
 mapfile -t FILES < <(
   {
     if packs="$(markpact_contracts_packs 2>/dev/null)"; then
-      find "$packs" -maxdepth 1 -name '*.markpact.md' -print
+      _prune_markpact_find "$packs"
     elif [ -n "${MARKPACT_CONTRACTS_PACKS:-}" ] && [ -d "$MARKPACT_CONTRACTS_PACKS" ]; then
-      find "$MARKPACT_CONTRACTS_PACKS" -maxdepth 1 -name '*.markpact.md' -print
+      _prune_markpact_find "$MARKPACT_CONTRACTS_PACKS"
     else
       echo "WARN: markpact-contracts/packs not found — skipping shared packs" >&2
     fi
-    find . -path './.urisys/*' -prune -o -path './markpacts/packs/*' -prune -o -name '*.markpact.md' -print
+    if tm="$(tellmesh_root 2>/dev/null)"; then
+      for repo in "$tm"/uri* "$tm"/uriimg2nl; do
+        [ -d "$repo/markpacts" ] || continue
+        _prune_markpact_find "$repo/markpacts"
+      done
+    fi
+    find . -path './.urisys/*' -prune -o -path './.markpact/*' -prune -o -path './markpacts/packs/*' -prune -o -name '*.markpact.md' -print
   } | sort -u
 )
 

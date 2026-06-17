@@ -39,6 +39,11 @@ class CompiledMarkpact:
     tests_path: Path | None = None
     docs_path: Path | None = None
     metadata_path: Path | None = None
+    flows_dir: Path | None = None
+    flow_ids: tuple[str, ...] = ()
+    proto_dir: Path | None = None
+    proto_files: tuple[str, ...] = ()
+    module_files: tuple[str, ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -51,6 +56,11 @@ class CompiledMarkpact:
             "tests_path": str(self.tests_path) if self.tests_path else None,
             "docs_path": str(self.docs_path) if self.docs_path else None,
             "metadata_path": str(self.metadata_path) if self.metadata_path else None,
+            "flows_dir": str(self.flows_dir) if self.flows_dir else None,
+            "flow_ids": list(self.flow_ids),
+            "proto_dir": str(self.proto_dir) if self.proto_dir else None,
+            "proto_files": list(self.proto_files),
+            "module_files": list(self.module_files),
         }
 
 
