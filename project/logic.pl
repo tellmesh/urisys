@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.31', 'python').
+project_metadata('urisys', '0.1.32', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 48, 'less').
@@ -23,6 +23,7 @@ project_file('scripts/deploy-lenovo-node.sh', 72, 'shell').
 project_file('scripts/install-kvm-packs-editable.sh', 16, 'shell').
 project_file('scripts/lenovo-node-session.sh', 73, 'shell').
 project_file('scripts/office-simulate-loop.py', 147, 'python').
+project_file('scripts/pack_sync.py', 341, 'python').
 project_file('scripts/paths.sh', 55, 'shell').
 project_file('scripts/publish-pypi-packs.sh', 65, 'shell').
 project_file('scripts/remote-node-smoke.sh', 100, 'shell').
@@ -50,9 +51,10 @@ project_file('scripts/run-urisys-node-docker-e2e.sh', 163, 'shell').
 project_file('scripts/run-urisys-node-docker-session.sh', 7, 'shell').
 project_file('scripts/run_test_sessions.py', 783, 'python').
 project_file('scripts/session_report.py', 50, 'python').
-project_file('scripts/sync-vendored-urisysedge.sh', 16, 'shell').
+project_file('scripts/sync-vendored-pack.sh', 34, 'shell').
+project_file('scripts/sync-vendored-urisysedge.sh', 17, 'shell').
 project_file('scripts/test-goal.sh', 12, 'shell').
-project_file('scripts/test-python-matrix.sh', 55, 'shell').
+project_file('scripts/test-python-matrix.sh', 59, 'shell').
 project_file('scripts/test_sessions/__init__.py', 99, 'python').
 project_file('scripts/test_sessions/expectations.py', 154, 'python').
 project_file('scripts/test_sessions/lab_flows.py', 320, 'python').
@@ -60,8 +62,8 @@ project_file('scripts/test_sessions/lab_rdp.py', 181, 'python').
 project_file('scripts/test_sessions/util.py', 210, 'python').
 project_file('scripts/validate-all-markpacts.sh', 54, 'shell').
 project_file('src/urisys/__init__.py', 4, 'python').
-project_file('src/urisys/bootstrap.py', 72, 'python').
-project_file('src/urisys/cli.py', 254, 'python').
+project_file('src/urisys/bootstrap.py', 112, 'python').
+project_file('src/urisys/cli.py', 283, 'python').
 project_file('src/urisys/controllers/__init__.py', 1, 'python').
 project_file('src/urisys/controllers/flow_controller.py', 34, 'python').
 project_file('src/urisys/controllers/server_controller.py', 19, 'python').
@@ -70,6 +72,7 @@ project_file('src/urisys/defaults.py', 21, 'python').
 project_file('src/urisys/doctor.py', 237, 'python').
 project_file('src/urisys/flow.py', 26, 'python').
 project_file('src/urisys/http_server.py', 79, 'python').
+project_file('src/urisys/init_setup.py', 159, 'python').
 project_file('src/urisys/managers/__init__.py', 1, 'python').
 project_file('src/urisys/managers/bridge_manager.py', 15, 'python').
 project_file('src/urisys/managers/event_manager.py', 14, 'python').
@@ -83,6 +86,7 @@ project_file('src/urisys/managers/runtime_manager.py', 31, 'python').
 project_file('src/urisys/managers/source_manager.py', 225, 'python').
 project_file('tests/test_bootstrap.py', 61, 'python').
 project_file('tests/test_doctor.py', 29, 'python').
+project_file('tests/test_init.py', 61, 'python').
 project_file('tests/test_kvm_pack_pyprojects.py', 66, 'python').
 project_file('tests/test_markpact.py', 99, 'python').
 project_file('tests/test_python_compat.py', 53, 'python').
@@ -90,6 +94,7 @@ project_file('tests/test_run_expectations.py', 56, 'python').
 project_file('tests/test_session_report_events.py', 59, 'python').
 project_file('tests/test_source_manager.py', 36, 'python').
 project_file('tests/test_urisys.py', 46, 'python').
+project_file('tests/test_vendored_sync.py', 52, 'python').
 project_file('tree.sh', 2, 'shell').
 project_file('uribrowser-docker/packages/python/uribrowserdocker/__init__.py', 2, 'python').
 project_file('uribrowser-docker/packages/python/uribrowserdocker/handlers.py', 110, 'python').
@@ -292,6 +297,19 @@ python_function('scripts/office-simulate-loop.py', 'rules_tick', 3, 3, 5).
 python_function('scripts/office-simulate-loop.py', 'llm_tick', 3, 7, 6).
 python_function('scripts/office-simulate-loop.py', 'parse_args', 1, 1, 4).
 python_function('scripts/office-simulate-loop.py', 'main', 1, 10, 9).
+python_function('scripts/pack_sync.py', '_vendored_kvm', 1, 1, 0).
+python_function('scripts/pack_sync.py', '_repo', 1, 1, 0).
+python_function('scripts/pack_sync.py', 'pack_specs', 0, 6, 5).
+python_function('scripts/pack_sync.py', 'read_version', 1, 1, 4).
+python_function('scripts/pack_sync.py', 'file_hash', 1, 1, 3).
+python_function('scripts/pack_sync.py', 'repo_module_dir', 1, 1, 0).
+python_function('scripts/pack_sync.py', 'vendored_module_dir', 1, 1, 0).
+python_function('scripts/pack_sync.py', 'sync_file', 2, 5, 4).
+python_function('scripts/pack_sync.py', 'sync_to_repo', 1, 11, 11).
+python_function('scripts/pack_sync.py', 'check_drift', 1, 12, 9).
+python_function('scripts/pack_sync.py', '_repo_pyproject', 1, 5, 5).
+python_function('scripts/pack_sync.py', 'init_repo', 1, 9, 10).
+python_function('scripts/pack_sync.py', 'main', 1, 18, 16).
 python_function('scripts/report/cli.py', 'main', 0, 4, 13).
 python_function('scripts/report/events.py', 'summarize_event_records', 1, 14, 5).
 python_function('scripts/report/events.py', 'load_event_records', 1, 14, 7).
@@ -387,13 +405,14 @@ python_function('scripts/test_sessions/util.py', 'prepare_urirdp_data', 1, 4, 5)
 python_function('src/urisys/bootstrap.py', '_print_json', 1, 1, 2).
 python_function('src/urisys/bootstrap.py', '_missing_uricore_payload', 1, 1, 1).
 python_function('src/urisys/bootstrap.py', '_doctor_main', 1, 3, 6).
-python_function('src/urisys/bootstrap.py', 'main', 1, 6, 5).
+python_function('src/urisys/bootstrap.py', '_init_main', 1, 6, 9).
+python_function('src/urisys/bootstrap.py', 'main', 1, 8, 6).
 python_function('src/urisys/cli.py', '_json_arg', 1, 3, 4).
 python_function('src/urisys/cli.py', 'print_json', 1, 1, 2).
 python_function('src/urisys/cli.py', '_add_runtime_flags', 1, 1, 1).
 python_function('src/urisys/cli.py', 'resolve_markpact_source', 1, 2, 3).
-python_function('src/urisys/cli.py', 'build_parser', 0, 1, 7).
-python_function('src/urisys/cli.py', 'main', 1, 30, 35).
+python_function('src/urisys/cli.py', 'build_parser', 0, 1, 9).
+python_function('src/urisys/cli.py', 'main', 1, 36, 36).
 python_function('src/urisys/doctor.py', '_pkg_version', 1, 2, 1).
 python_function('src/urisys/doctor.py', '_parse_version', 1, 7, 6).
 python_function('src/urisys/doctor.py', '_version_lt', 2, 2, 1).
@@ -409,6 +428,13 @@ python_function('src/urisys/flow.py', 'iter_steps', 1, 7, 7).
 python_function('src/urisys/http_server.py', '_read_json', 1, 3, 5).
 python_function('src/urisys/http_server.py', '_send', 3, 1, 8).
 python_function('src/urisys/http_server.py', 'create_server', 2, 1, 13).
+python_function('src/urisys/init_setup.py', 'default_pip_specs', 0, 1, 0).
+python_function('src/urisys/init_setup.py', 'pip_install_specs', 1, 4, 2).
+python_function('src/urisys/init_setup.py', 'verify_uri_control', 0, 2, 1).
+python_function('src/urisys/init_setup.py', 'profile_env', 1, 2, 1).
+python_function('src/urisys/init_setup.py', 'render_env_shell', 1, 2, 4).
+python_function('src/urisys/init_setup.py', 'write_env_file', 2, 2, 5).
+python_function('src/urisys/init_setup.py', 'run_init', 0, 20, 13).
 python_function('src/urisys/managers/markpact_models.py', 'safe_identifier', 1, 3, 4).
 python_function('src/urisys/managers/markpact_models.py', 'parse_meta', 1, 4, 2).
 python_function('src/urisys/managers/markpact_models.py', 'scheme_from_uri', 1, 2, 2).
@@ -424,6 +450,9 @@ python_function('tests/test_bootstrap.py', 'test_doctor_subcommand_via_bootstrap
 python_function('tests/test_doctor.py', 'test_doctor_ok_in_dev_env', 0, 8, 1).
 python_function('tests/test_doctor.py', 'test_doctor_fails_high_min_version', 0, 3, 2).
 python_function('tests/test_doctor.py', 'test_doctor_hints_include_node_serve', 0, 2, 2).
+python_function('tests/test_init.py', 'test_init_dry_run_via_bootstrap', 0, 8, 4).
+python_function('tests/test_init.py', 'test_run_init_skip_pip_writes_env', 1, 5, 4).
+python_function('tests/test_init.py', 'test_pip_install_failure', 0, 3, 2).
 python_function('tests/test_kvm_pack_pyprojects.py', '_name', 1, 1, 2).
 python_function('tests/test_kvm_pack_pyprojects.py', 'test_urisysedge_pyproject', 0, 3, 2).
 python_function('tests/test_kvm_pack_pyprojects.py', 'test_each_pack_has_own_pyproject', 0, 4, 2).
@@ -453,6 +482,11 @@ python_function('tests/test_urisys.py', 'test_call_browser_open', 1, 3, 4).
 python_function('tests/test_urisys.py', 'test_routes_load', 1, 3, 5).
 python_function('tests/test_urisys.py', 'test_all_skips_uninstalled_packs', 1, 4, 3).
 python_function('tests/test_urisys.py', 'test_explicit_missing_pack_raises_helpful_error', 0, 1, 3).
+python_function('tests/test_vendored_sync.py', '_run_check', 1, 1, 2).
+python_function('tests/test_vendored_sync.py', 'test_pack_sync_script_exists', 0, 3, 1).
+python_function('tests/test_vendored_sync.py', 'test_vendored_kvm_packs_have_pyproject', 0, 3, 1).
+python_function('tests/test_vendored_sync.py', 'test_sibling_repos_exist_for_sync_set', 0, 4, 2).
+python_function('tests/test_vendored_sync.py', 'test_no_drift_monorepo_to_tellmesh', 0, 3, 3).
 python_function('uribrowser-docker/packages/python/uribrowserdocker/handlers.py', '_profile', 1, 1, 1).
 python_function('uribrowser-docker/packages/python/uribrowserdocker/handlers.py', '_session_state', 1, 1, 2).
 python_function('uribrowser-docker/packages/python/uribrowserdocker/handlers.py', 'status', 2, 1, 3).
@@ -1029,6 +1063,7 @@ python_method('Runtime', 'register', 2, 2, 4).
 python_method('Runtime', 'resolve', 1, 3, 2).
 python_method('Runtime', '_load_handler', 1, 2, 5).
 python_method('Runtime', 'call', 3, 10, 14).
+python_class('scripts/pack_sync.py', 'PackSpec').
 python_class('scripts/report/models.py', 'StepResult').
 python_class('scripts/report/models.py', 'SessionReport').
 python_method('SessionReport', 'passed', 0, 3, 1).
