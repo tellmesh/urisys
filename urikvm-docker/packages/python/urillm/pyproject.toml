@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "urillm"
 version = "0.1.1"
 description = "llm:// URI capability pack (vision/heuristic) for urisys-node"
+readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
 dependencies = ["urisysedge>=0.1.0"]

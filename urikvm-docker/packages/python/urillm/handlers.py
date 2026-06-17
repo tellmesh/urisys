@@ -271,8 +271,25 @@ _OFFICE_PHRASE_MAP: list[tuple[str, str, dict]] = [
 ]
 
 
-def _match_office_transcript(text: str) -> tuple[str, dict]:
+def _match_office_transcript(text: str, allowed: list[str] | None = None) -> tuple[str, dict]:
     lowered = (text or '').lower().strip()
+    schemes = {s.lower() for s in allowed} if allowed else None
+
+    if not schemes or "urimail" in schemes:
+        if any(k in lowered for k in ("unread", "summarize", "summary", "mail", "inbox", "draft", "reply")):
+            return "urimail://local/message/command/compose", {
+                "subject": "Re: Weekly report",
+                "body": "Thanks — I'll review and reply tomorrow.",
+            }
+
+    if not schemes or "urioffice" in schemes:
+        if any(k in lowered for k in ("writer", "document", "paragraph", "docx", "quarterly", "report")):
+            return "urioffice://local/writer/command/render", {
+                "title": "writer-output",
+                "text": "Quarterly results show steady growth across all regions.",
+                "format": "txt",
+            }
+
     for phrase, uri, payload in _OFFICE_PHRASE_MAP:
         if phrase in lowered:
             out = dict(payload)
@@ -343,7 +360,7 @@ def text_plan(payload, context):
     cfg = _llm_cfg(context)
     driver = _driver(context)
     model_used = 'phrase-map'
-    uri, inner_payload = _match_office_transcript(transcript)
+    uri, inner_payload = _match_office_transcript(transcript, schemes)
 
     if not context.get('dry_run') and _real_allowed(context) and driver not in ('mock', 'heuristic'):
         model = _env('model', cfg, context)

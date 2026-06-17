@@ -17,6 +17,9 @@ PACK_MODULES: dict[str, str] = {
     "him": "urihim",
     "ocr": "uriocr",
     "llm": "urillm",
+    "office": "urioffice",
+    "mail": "urimail",
+    "vql": "urivql",
 }
 
 CORE_PACKS = frozenset({"node", "screen", "shell"})
@@ -27,6 +30,9 @@ PACK_PYPI: dict[str, str] = {
     "him": "urihim>=0.1.0",
     "ocr": "uriocr>=0.1.0",
     "llm": "urillm[vision]>=0.1.0",
+    "office": "urioffice>=0.1.0",
+    "mail": "urimail>=0.1.0",
+    "vql": "urivql>=0.1.0",
 }
 
 # GitHub Releases wheel (PyPI alternative) — tellmesh/<repo>/releases/download/vX/Y.whl
@@ -36,6 +42,9 @@ PACK_GITHUB_VERSION: dict[str, str] = {
     "him": "0.1.3",
     "ocr": "0.1.0",
     "llm": "0.1.0",
+    "office": "0.1.0",
+    "mail": "0.1.0",
+    "vql": "0.1.0",
 }
 PACK_GITHUB_REPO: dict[str, str] = {
     "urisysedge": "urisysedge",
@@ -43,9 +52,12 @@ PACK_GITHUB_REPO: dict[str, str] = {
     "him": "urihim",
     "ocr": "uriocr",
     "llm": "urillm",
+    "office": "urioffice",
+    "mail": "urimail",
+    "vql": "urivql",
 }
 # Prefer GitHub in auto mode until PyPI publish succeeds
-GITHUB_PREFERRED_PACKS = frozenset({"him", "ocr", "llm"})
+GITHUB_PREFERRED_PACKS = frozenset({"him", "ocr", "llm", "office", "mail", "vql"})
 
 # URI scheme -> pack alias (screen/uriscreen is bundled with urisys wheel)
 SCHEME_TO_PACK: dict[str, str] = {
@@ -53,6 +65,10 @@ SCHEME_TO_PACK: dict[str, str] = {
     "him": "him",
     "ocr": "ocr",
     "llm": "llm",
+    "urioffice": "office",
+    "urimail": "mail",
+    "vql": "vql",
+    "browser": "browser",
 }
 
 # Real backends: extra pip specs when handler needs mss/pyautogui/etc.

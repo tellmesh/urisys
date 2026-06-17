@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "urihim"
 version = "0.1.5"
 description = "him:// URI capability pack (mouse/keyboard) for urisys-node"
+readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
 dependencies = ["urisysedge>=0.1.0"]

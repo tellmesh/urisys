@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `hotload_release_pack()` + `POST /uri/pack {contract,version,catalog}` — full orchestration glue: pairing-gated and signature-gated, `fetch_release`→`verify_release`→`run_release`→`register_forward_pack` in one call; `/uri/pack` dispatches release vs. local-pack by request shape (403 when unpaired)
 - `urisysnode/release_verify.py` — `verify_release()` signature gate (ed25519 over a canonical digest, keyid pinned via `URISYS_NODE_TRUSTED_KEYS`); **fail-closed** when `URISYS_NODE_REQUIRE_SIGNATURE=1` and the release is unsigned, signed by an untrusted key, or no crypto backend is present; pass-through (`verified: false`) until keys are provisioned
 - `artifact_resolver.run_release(release, …)` — extracted from `resolve_from_release` so the glue runs the exact release it verified (no re-fetch)
+- `artifact_resolver.parse_contract_spec()` / `contract_spec_from_release()` / `fetch_text()` — derive `{scheme, patterns}` straight from the UriContract referenced by a release; hot-load now wires the correct routes from the contract (source of truth) regardless of catalog response shape, falling back only when caller/release don't supply them
+- Release-forward auto-provisioning at node boot — `forward_config.load_release_forward_entries()` / `wire_release_forward_packs()` + `build_runtime` wiring: a node reads `release_forwards: [{contract, version, catalog?, profile?}]` from config (or `URISYS_NODE_RELEASE_FORWARDS` env) and self-provisions each capability via `hotload_release_pack` at startup (best-effort: one failure does not abort the rest)
+- READMEs for `urihim`/`uriocr`/`urillm` + `readme` in pyproject — wheels now `twine check` clean (PyPI pages non-empty)
 
 ### Fixed
 - `markpact_manager.load_pack_block` — removed duplicate (shadowing) definition
@@ -30,6 +33,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Vendored `urisysedge` drift guard (AST-compare vs canonical), node pack hot-load + forward, vision/decide dispatch — new CI lanes `node-unit`, `pack-handlers-unit`
 - `test_uriscreen_auto`/`test_ocr_llm` skip gracefully when Pillow/tesseract absent
 - Host→Docker desktop and host→LAN node (`192.168.188.201:8790`) control verified live (capture + OCR)
+
+## [0.1.30] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update docs/OFFICE-AUTOMATION.md
+- Update urikvm-docker/packages/python/urihim/README.md
+- Update urikvm-docker/packages/python/urillm/README.md
+- Update urikvm-docker/packages/python/uriocr/README.md
+
+### Other
+- Update app.doql.less
+- Update flows/browser-form-vql.uri.flow.yaml
+- Update flows/email-mailpit.uri.flow.yaml
+- Update flows/office-writer.uri.flow.yaml
+- Update project/duplication.toon.yaml
+- Update project/logic.pl
+- Update project/map.toon.yaml
+- Update scripts/run-email-mailpit-e2e.sh
+- Update scripts/run-office-writer-e2e.sh
+- Update scripts/run_test_sessions.py
+- ... and 26 more files
 
 ## [0.1.29] - 2026-06-17
 

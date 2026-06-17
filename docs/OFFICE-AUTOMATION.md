@@ -42,13 +42,14 @@ Stack lab: `urisys-automation-lab/docker-compose.lab.yml` — porty **8099**, **
 - [ ] SSO (Google/Microsoft) — profil persistent / CDP
 - [ ] LinkedIn — post, komentarz, InMail (`vql://` verify modal)
 - [ ] Formularze web — Typeform, Google Forms
-- [ ] Forward `browser://` na slave node → `uribrowser-docker` :8792
+- [x] Forward `browser://` na slave node → `uribrowser-docker` :8792 (`node-profile.lenovo.json`)
+- [x] `browser://…/form/command/submit` (mock + policy approval)
 - [ ] CDP bridge: Chrome na hoście bez RDP
 
-## Office (`urioffice://` — planowany pack)
+## Office (`urioffice://` — pack vendored w `urikvm-docker`)
 
-- [ ] Schemat URI: open, save, export PDF, cell range, slide export
-- [ ] Writer — szablon + tekst z `llm://` → DOCX/PDF
+- [x] Schemat URI: open, save, export PDF (`urioffice://`)
+- [x] Writer — tekst z `llm://` → TXT/DOCX + export PDF (mock/LibreOffice)
 - [ ] Calc — CSV/env → arkusz → XLSX
 - [ ] Impress — slajdy z planu `llm://`
 - [ ] OnlyOffice Document Server (Docker) + forward pack
@@ -56,9 +57,9 @@ Stack lab: `urisys-automation-lab/docker-compose.lab.yml` — porty **8099**, **
 
 ## Email (`urimail://`)
 
-- [ ] Pack IMAP/SMTP — read, search, compose, send
-- [ ] Dev mock: Mailpit (:8025/:1025 w stacku lokalnym)
-- [ ] Flow: nieprzeczytane → podsumowanie `llm://` → draft odpowiedzi
+- [x] Pack IMAP/SMTP — read (unread), compose, send (mock + Mailpit/SMTP gdy `URISYS_ALLOW_REAL=1`)
+- [x] Dev mock: Mailpit (`urimail-docker/docker-compose.yml` — :8025/:1025)
+- [x] Flow: nieprzeczytane → podsumowanie `llm://` → draft → send (`flows/email-mailpit.uri.flow.yaml`)
 - [ ] Załącznik z dysku / zrzutu ekranu
 - [ ] Outlook/Proton web przez browser automation
 
@@ -76,11 +77,11 @@ Stack lab: `urisys-automation-lab/docker-compose.lab.yml` — porty **8099**, **
 
 ## Weryfikacja i CI
 
-- [ ] `vql://` assert przed/po każdym kroku biurowym
+- [x] `vql://` mock detect/compare (`urivql` pack, forward na slave opcjonalnie)
 - [ ] `imgl://` — targets z layoutu zamiast sztywnych współrzędnych
-- [ ] Policy: approval na send-mail, submit-form, publish-post
+- [x] Policy: approval na send-mail, submit-form, publish-post, export-pdf (`node-profile.*.json`)
 - [ ] CI: `lab-10-flows` + `urisys-node-docker-gui` na merge
-- [ ] Nowe sesje: `office-writer`, `office-calc`, `email-mailpit`, `browser-linkedin`
+- [x] Sesje: `office-writer`, `email-mailpit` (+ istniejące `office-simulate`)
 
 ## Naprawione w trakcie testów (2026-06-17)
 
@@ -121,6 +122,32 @@ python3 scripts/run_test_sessions.py --sessions office-simulate
 ```
 
 W Dockerze HIM używa **xdotool** (Xvfb); na Wayland — **ydotool**; na pulpicie X11 — xdotool jeśli dostępny, inaczej pyautogui.
+
+### Office writer + email (MVP packi)
+
+Packi vendored (jak `urikvm`): `urioffice`, `urimail`, `urivql` w `urikvm-docker/packages/python/`.
+
+```bash
+# Writer: llm plan → render → export PDF
+urisys flow flows/office-writer.uri.flow.yaml --approve --dry-run
+
+# Email: unread → llm summary → compose → send
+urisys flow flows/email-mailpit.uri.flow.yaml --approve --dry-run
+
+# Browser + vql verify (forward browser:// na slave :8792)
+urisys flow flows/browser-form-vql.uri.flow.yaml --approve --dry-run
+
+# E2E Docker
+bash scripts/run-office-writer-e2e.sh
+bash scripts/run-email-mailpit-e2e.sh
+python3 scripts/run_test_sessions.py --sessions office-writer,email-mailpit
+
+# Mailpit lokalnie (opcjonalnie real SMTP z kontenera node)
+docker compose -f urimail-docker/docker-compose.yml up -d
+URISYS_MAILPIT=1 bash scripts/run-email-mailpit-e2e.sh
+```
+
+Na **lenovo** profil `urisys-node/config/node-profile.lenovo.json` forwarduje `browser://` → `:8792` i trzyma policy approval dla mail/form/post.
 
 ### Lenovo (192.168.188.201:8790)
 

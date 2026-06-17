@@ -77,7 +77,29 @@ def get_dom(payload, context):
     return {'html': sess.get('html'), 'url': sess.get('url'), 'title': sess.get('title')}
 
 
-def screenshot(payload, context):
+def submit_form(payload, context):
+    profile = _profile(context)
+    driver = payload.get('driver') or profile.get('driver', 'mock')
+    form_id = str(payload.get('form_id') or payload.get('id') or 'default')
+    fields = payload.get('fields') or {}
+    sess = _session_state(context)
+    if context.get('dry_run'):
+        return {
+            'dry_run': True,
+            'driver': driver,
+            'form_id': form_id,
+            'fields': fields,
+            'url': sess.get('url'),
+        }
+    return {
+        'submitted': True,
+        'driver': driver,
+        'form_id': form_id,
+        'fields': fields,
+        'url': sess.get('url'),
+        'mock': driver == 'mock',
+    }
+
     sess = _session_state(context)
     if context.get('dry_run'):
         return {'dry_run': True, 'would_capture': True}

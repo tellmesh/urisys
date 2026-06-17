@@ -609,6 +609,102 @@ def session_office_simulate_lenovo(session_dir: Path) -> int:
     return finalize_session(session_dir, started, proc.returncode, steps)
 
 
+def session_office_writer(session_dir: Path) -> int:
+    started = now_iso()
+    port = int(os.environ.get("URISYS_NODE_HOST_PORT", "8790"))
+    write_meta(
+        session_dir,
+        session_id=session_dir.name,
+        session_name="office-writer",
+        suite="docker-gui",
+        started_at=started,
+        host=host_id(),
+        ports={"node": port},
+    )
+    log = session_dir / "session.log"
+    steps: list[dict[str, Any]] = []
+    code = 0
+
+    if _monorepo_root() is None:
+        steps.append(
+            {
+                "name": "preflight-monorepo",
+                "status": "fail",
+                "detail": "uricore sibling missing — run from tellmesh checkout",
+            }
+        )
+        return finalize_session(session_dir, started, 1, steps)
+
+    env = os.environ.copy()
+    env["URISYS_OFFICE_E2E_KEEP"] = "0"
+    env["URISYS_OFFICE_WRITER_SESSION_DIR"] = str(session_dir)
+    proc = run_cmd(
+        ["bash", "scripts/run-office-writer-e2e.sh"],
+        cwd=ROOT,
+        log_file=log,
+        timeout=900.0,
+        env=env,
+    )
+    steps.append(
+        {
+            "name": "office-writer-e2e",
+            "status": "pass" if proc.returncode == 0 else "fail",
+            "detail": "" if proc.returncode == 0 else (proc.stderr or proc.stdout or "")[-800:],
+        }
+    )
+    if proc.returncode != 0:
+        code = 1
+    return finalize_session(session_dir, started, code, steps)
+
+
+def session_email_mailpit(session_dir: Path) -> int:
+    started = now_iso()
+    port = int(os.environ.get("URISYS_NODE_HOST_PORT", "8790"))
+    write_meta(
+        session_dir,
+        session_id=session_dir.name,
+        session_name="email-mailpit",
+        suite="docker-gui",
+        started_at=started,
+        host=host_id(),
+        ports={"node": port, "mailpit_ui": 8025, "mailpit_smtp": 1025},
+    )
+    log = session_dir / "session.log"
+    steps: list[dict[str, Any]] = []
+    code = 0
+
+    if _monorepo_root() is None:
+        steps.append(
+            {
+                "name": "preflight-monorepo",
+                "status": "fail",
+                "detail": "uricore sibling missing — run from tellmesh checkout",
+            }
+        )
+        return finalize_session(session_dir, started, 1, steps)
+
+    env = os.environ.copy()
+    env["URISYS_OFFICE_E2E_KEEP"] = "0"
+    env["URISYS_EMAIL_MAILPIT_SESSION_DIR"] = str(session_dir)
+    proc = run_cmd(
+        ["bash", "scripts/run-email-mailpit-e2e.sh"],
+        cwd=ROOT,
+        log_file=log,
+        timeout=900.0,
+        env=env,
+    )
+    steps.append(
+        {
+            "name": "email-mailpit-e2e",
+            "status": "pass" if proc.returncode == 0 else "fail",
+            "detail": "" if proc.returncode == 0 else (proc.stderr or proc.stdout or "")[-800:],
+        }
+    )
+    if proc.returncode != 0:
+        code = 1
+    return finalize_session(session_dir, started, code, steps)
+
+
 SESSIONS: dict[str, Callable[[Path], int]] = {
     "pytest-urirdp": session_pytest_urirdp,
     "pytest-urisys": session_pytest_urisys,
@@ -621,6 +717,8 @@ SESSIONS: dict[str, Callable[[Path], int]] = {
     "urisys-node-docker-gui": session_urisys_node_docker_gui,
     "office-simulate": session_office_simulate,
     "office-simulate-lenovo": session_office_simulate_lenovo,
+    "office-writer": session_office_writer,
+    "email-mailpit": session_email_mailpit,
 }
 
 DEFAULT_ORDER = [

@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "urimail"
+version = "0.1.0"
+description = "urimail:// URI capability pack (IMAP/SMTP/Mailpit) for urisys-node"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+dependencies = ["urisysedge>=0.1.0"]
+
+[tool.setuptools]
+packages = ["urimail"]
+package-dir = { "urimail" = "." }
+
+[tool.setuptools.package-data]
+urimail = ["manifest.yaml"]

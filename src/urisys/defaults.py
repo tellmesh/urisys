@@ -10,6 +10,8 @@ DEFAULT_PACKAGES = {
     "camera": "uricamera",
     "display": "uridisplay",
     "mail": "urimail",
+    "office": "urioffice",
+    "vql": "urivql",
     "llm": "urillm",
     "agent": "uriagent",
 }

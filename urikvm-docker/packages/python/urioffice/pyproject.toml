@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "urioffice"
+version = "0.1.0"
+description = "urioffice:// URI capability pack (Writer/DOCX/PDF) for urisys-node"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+dependencies = ["urisysedge>=0.1.0"]
+
+[project.optional-dependencies]
+writer = ["python-docx>=1.1.0"]
+
+[tool.setuptools]
+packages = ["urioffice"]
+package-dir = { "urioffice" = "." }
+
+[tool.setuptools.package-data]
+urioffice = ["manifest.yaml"]

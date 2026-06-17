@@ -10,6 +10,17 @@
   },
   "forwards": [
     {
+      "scheme": "browser",
+      "endpoint": "http://127.0.0.1:8792",
+      "patterns": [
+        "browser://{session}/query/status",
+        "browser://{session}/page/command/open",
+        "browser://{session}/page/query/dom",
+        "browser://{session}/page/command/screenshot",
+        "browser://{session}/form/command/submit"
+      ]
+    },
+    {
       "scheme": "imgl",
       "endpoint": "http://127.0.0.1:8219",
       "patterns": [
@@ -28,6 +39,25 @@
   ],
   "policy": {
     "require_pairing": false,
-    "require_approval_for": ["him.*", "kvm.task.*", "screen.*.capture*"]
+    "require_approval_for": [
+      "him.*",
+      "kvm.task.*",
+      "screen.*.capture*",
+      "mail.message.send",
+      "mail.message.publish_post",
+      "office.document.export_pdf",
+      "browser.form.submit",
+      "browser.page.open"
+    ]
+  },
+  "office": {
+    "driver": "mock",
+    "output_dir": "data/office"
+  },
+  "mail": {
+    "driver": "mock",
+    "mailpit_api": "http://127.0.0.1:8025/api/v1",
+    "smtp_host": "127.0.0.1",
+    "smtp_port": 1025
   }
 }

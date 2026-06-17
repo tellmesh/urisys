@@ -1,0 +1,18 @@
+id: urivql
+version: 0.1.0
+scheme: vql
+
+uri_patterns:
+  - pattern: vql://{host}/ui/latest/query/detect
+    kind: query
+    operation: vql.ui.detect
+    handler: python://urivql.handlers:ui_detect
+    side_effects: false
+    approval: not_required
+
+  - pattern: vql://{host}/ui/latest/query/compare
+    kind: query
+    operation: vql.ui.compare
+    handler: python://urivql.handlers:ui_compare
+    side_effects: false
+    approval: not_required
