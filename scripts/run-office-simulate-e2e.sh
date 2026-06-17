@@ -23,7 +23,7 @@ cleanup() {
 trap cleanup EXIT
 
 uri_call() {
-  local uri="$1" payload="${2:-{}}" ctx="${3:-}"
+  local uri="$1" payload="${2:-\{\}}" ctx="${3:-}"
   URI="$uri" PAYLOAD="$payload" CTX="$ctx" BASE="$BASE" python3 - <<'PY'
 import json, os, urllib.request, sys
 payload_raw = os.environ.get("PAYLOAD") or "{}"

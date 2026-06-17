@@ -1,7 +1,13 @@
 import base64
 import io
+import shutil
 
 import pytest
+
+pytest.importorskip("PIL", reason="Pillow not installed")
+if shutil.which("tesseract") is None:
+    pytest.skip("tesseract OCR binary not installed", allow_module_level=True)
+
 from PIL import Image, ImageDraw, ImageFont
 
 from urikvmedge.runtime import Runtime

@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.26-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$7.46-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-14.6h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.27-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$8.04-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-15.1h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $7.4639 (36 commits)
-- 👤 **Human dev:** ~$1464 (14.6h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $8.0371 (37 commits)
+- 👤 **Human dev:** ~$1514 (15.1h @ $100/h, 30min dedup)
 
 Generated on 2026-06-17 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -62,6 +62,11 @@ Dev monorepo (wszystkie packi od razu):
 ```bash
 uv sync --extra kvm
 ```
+
+Każdy capability pack ma własny `pyproject.toml` (samodzielnie publikowalny na PyPI;
+zależy od `urisysedge`). Po publikacji: `pip install urikvm urihim uriocr urillm`.
+Na działającym node dogrywasz po połączeniu: `POST /uri/pack {"pack":"kvm"}` (wymaga
+`URISYS_NODE_ALLOW_PACK_LOAD=1`). Szczegóły: [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md).
 
 ## Szybki start
 

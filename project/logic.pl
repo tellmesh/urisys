@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.25', 'python').
+project_metadata('urisys', '0.1.26', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 48, 'less').
@@ -22,6 +22,7 @@ project_file('project.sh', 63, 'shell').
 project_file('scripts/deploy-lenovo-node.sh', 59, 'shell').
 project_file('scripts/install-kvm-packs-editable.sh', 16, 'shell').
 project_file('scripts/lenovo-node-session.sh', 73, 'shell').
+project_file('scripts/office-simulate-loop.py', 147, 'python').
 project_file('scripts/paths.sh', 55, 'shell').
 project_file('scripts/publish-pypi-packs.sh', 65, 'shell').
 project_file('scripts/remote-node-smoke.sh', 100, 'shell').
@@ -40,16 +41,17 @@ project_file('scripts/run-lab-e2e.sh', 15, 'shell').
 project_file('scripts/run-lab-nightly.sh', 17, 'shell').
 project_file('scripts/run-lab-unit-ci.sh', 21, 'shell').
 project_file('scripts/run-nl-log-smoke.sh', 44, 'shell').
+project_file('scripts/run-office-simulate-e2e.sh', 130, 'shell').
 project_file('scripts/run-smoke-all.sh', 25, 'shell').
 project_file('scripts/run-urisys-node-docker-e2e.sh', 163, 'shell').
 project_file('scripts/run-urisys-node-docker-session.sh', 7, 'shell').
-project_file('scripts/run_test_sessions.py', 600, 'python').
+project_file('scripts/run_test_sessions.py', 649, 'python').
 project_file('scripts/session_report.py', 50, 'python').
 project_file('scripts/sync-vendored-urisysedge.sh', 16, 'shell').
 project_file('scripts/test-goal.sh', 12, 'shell').
 project_file('scripts/test_sessions/__init__.py', 99, 'python').
 project_file('scripts/test_sessions/expectations.py', 154, 'python').
-project_file('scripts/test_sessions/lab_flows.py', 318, 'python').
+project_file('scripts/test_sessions/lab_flows.py', 320, 'python').
 project_file('scripts/test_sessions/lab_rdp.py', 181, 'python').
 project_file('scripts/test_sessions/util.py', 210, 'python').
 project_file('scripts/validate-all-markpacts.sh', 54, 'shell').
@@ -102,8 +104,8 @@ project_file('urienv-docker/scripts/test-docker.sh', 5, 'shell').
 project_file('urienv-docker/tests/e2e_env.py', 64, 'python').
 project_file('urienv-docker/tests/test_urienv.py', 70, 'python').
 project_file('urikvm-docker/packages/python/urihim/__init__.py', 2, 'python').
-project_file('urikvm-docker/packages/python/urihim/handlers.py', 182, 'python').
-project_file('urikvm-docker/packages/python/urihim/routes.py', 7, 'python').
+project_file('urikvm-docker/packages/python/urihim/handlers.py', 213, 'python').
+project_file('urikvm-docker/packages/python/urihim/routes.py', 8, 'python').
 project_file('urikvm-docker/packages/python/urikvm/__init__.py', 2, 'python').
 project_file('urikvm-docker/packages/python/urikvm/handlers.py', 104, 'python').
 project_file('urikvm-docker/packages/python/urikvm/routes.py', 6, 'python').
@@ -112,8 +114,8 @@ project_file('urikvm-docker/packages/python/urikvmedge/cli.py', 57, 'python').
 project_file('urikvm-docker/packages/python/urikvmedge/env.py', 20, 'python').
 project_file('urikvm-docker/packages/python/urikvmedge/runtime.py', 24, 'python').
 project_file('urikvm-docker/packages/python/urillm/__init__.py', 2, 'python').
-project_file('urikvm-docker/packages/python/urillm/handlers.py', 217, 'python').
-project_file('urikvm-docker/packages/python/urillm/routes.py', 3, 'python').
+project_file('urikvm-docker/packages/python/urillm/handlers.py', 398, 'python').
+project_file('urikvm-docker/packages/python/urillm/routes.py', 4, 'python').
 project_file('urikvm-docker/packages/python/uriocr/__init__.py', 2, 'python').
 project_file('urikvm-docker/packages/python/uriocr/handlers.py', 116, 'python').
 project_file('urikvm-docker/packages/python/uriocr/routes.py', 4, 'python').
@@ -122,8 +124,10 @@ project_file('urikvm-docker/scripts/real_pipeline.py', 96, 'python').
 project_file('urikvm-docker/scripts/test-local.sh', 9, 'shell').
 project_file('urikvm-docker/scripts/test-real.sh', 48, 'shell').
 project_file('urikvm-docker/tests/test_him_driver.py', 39, 'python').
+project_file('urikvm-docker/tests/test_him_scroll.py', 15, 'python').
 project_file('urikvm-docker/tests/test_kvm.py', 35, 'python').
-project_file('urikvm-docker/tests/test_ocr_llm.py', 81, 'python').
+project_file('urikvm-docker/tests/test_llm_plan.py', 32, 'python').
+project_file('urikvm-docker/tests/test_ocr_llm.py', 87, 'python').
 project_file('urikvm-docker/tests/test_vision_dispatch.py', 83, 'python').
 project_file('urirdp-docker/docker/bootstrap-rdp-session.sh', 112, 'shell').
 project_file('urirdp-docker/docker/entrypoint.sh', 26, 'shell').
@@ -150,8 +154,8 @@ project_file('urirdp-docker/packages/python/urirdp_ocr/__init__.py', 4, 'python'
 project_file('urirdp-docker/packages/python/urirdp_ocr/handlers.py', 80, 'python').
 project_file('urirdp-docker/packages/python/urirdp_ocr/routes.py', 4, 'python').
 project_file('urirdp-docker/packages/python/urirdp_shell/__init__.py', 5, 'python').
-project_file('urirdp-docker/packages/python/urirdp_shell/handlers.py', 4, 'python').
-project_file('urirdp-docker/packages/python/urirdp_shell/routes.py', 4, 'python').
+project_file('urirdp-docker/packages/python/urirdp_shell/handlers.py', 69, 'python').
+project_file('urirdp-docker/packages/python/urirdp_shell/routes.py', 10, 'python').
 project_file('urirdp-docker/packages/python/urirdpedge/__init__.py', 1, 'python').
 project_file('urirdp-docker/packages/python/urirdpedge/cli.py', 99, 'python').
 project_file('urirdp-docker/packages/python/urirdpedge/env.py', 20, 'python').
@@ -242,7 +246,7 @@ project_file('urisys-node/tests/test_forward_pack.py', 75, 'python').
 project_file('urisys-node/tests/test_pack_auto_install.py', 113, 'python').
 project_file('urisys-node/tests/test_pack_github.py', 28, 'python').
 project_file('urisys-node/tests/test_pack_hotload.py', 65, 'python').
-project_file('urisys-node/tests/test_uriscreen_auto.py', 35, 'python').
+project_file('urisys-node/tests/test_uriscreen_auto.py', 37, 'python').
 project_file('urisys-node/tests/test_urishell.py', 49, 'python').
 project_file('urisys-node/tests/test_urisys_node.py', 51, 'python').
 project_file('urisys-node/tests/test_urisysedge_single_source.py', 35, 'python').
@@ -261,6 +265,11 @@ python_function('packages/python/urisysedge/runtime.py', 'load_yaml_flow', 1, 14
 python_function('packages/python/urisysedge/runtime.py', 'run_flow', 3, 7, 11).
 python_function('packages/python/urisysedge/runtime.py', 'make_handler', 1, 1, 15).
 python_function('packages/python/urisysedge/runtime.py', 'serve', 3, 2, 4).
+python_function('scripts/office-simulate-loop.py', 'call_uri', 4, 4, 9).
+python_function('scripts/office-simulate-loop.py', 'rules_tick', 3, 3, 5).
+python_function('scripts/office-simulate-loop.py', 'llm_tick', 3, 7, 6).
+python_function('scripts/office-simulate-loop.py', 'parse_args', 1, 1, 4).
+python_function('scripts/office-simulate-loop.py', 'main', 1, 10, 9).
 python_function('scripts/report/cli.py', 'main', 0, 4, 13).
 python_function('scripts/report/events.py', 'summarize_event_records', 1, 14, 5).
 python_function('scripts/report/events.py', 'load_event_records', 1, 14, 7).
@@ -309,6 +318,7 @@ python_function('scripts/run_test_sessions.py', 'session_urirdp_rdp_e2e', 1, 5, 
 python_function('scripts/run_test_sessions.py', 'session_automation_lab', 1, 16, 17).
 python_function('scripts/run_test_sessions.py', '_monorepo_root', 0, 4, 1).
 python_function('scripts/run_test_sessions.py', 'session_urisys_node_docker_gui', 1, 7, 11).
+python_function('scripts/run_test_sessions.py', 'session_office_simulate', 1, 7, 11).
 python_function('scripts/run_test_sessions.py', 'main', 0, 13, 19).
 python_function('scripts/test_sessions/expectations.py', 'flow_expectations', 1, 5, 5).
 python_function('scripts/test_sessions/expectations.py', 'ocr_texts', 1, 11, 4).
@@ -320,7 +330,7 @@ python_function('scripts/test_sessions/expectations.py', '_ocr_contains', 2, 5, 
 python_function('scripts/test_sessions/expectations.py', '_min_vision_confidence', 2, 4, 3).
 python_function('scripts/test_sessions/expectations.py', 'evaluate_expectations', 1, 3, 6).
 python_function('scripts/test_sessions/lab_flows.py', '_lab_bootstrap', 1, 5, 4).
-python_function('scripts/test_sessions/lab_flows.py', '_capture_flow_screenshot', 1, 12, 7).
+python_function('scripts/test_sessions/lab_flows.py', '_capture_flow_screenshot', 1, 13, 7).
 python_function('scripts/test_sessions/lab_flows.py', '_flow_step_detail', 0, 4, 2).
 python_function('scripts/test_sessions/lab_flows.py', '_run_single_lab_flow', 1, 10, 11).
 python_function('scripts/test_sessions/lab_flows.py', 'session_lab_10_flows', 1, 7, 22).
@@ -457,6 +467,7 @@ python_function('urikvm-docker/packages/python/urihim/handlers.py', 'mouse_statu
 python_function('urikvm-docker/packages/python/urihim/handlers.py', 'mouse_move', 2, 5, 9).
 python_function('urikvm-docker/packages/python/urihim/handlers.py', 'mouse_click', 2, 12, 10).
 python_function('urikvm-docker/packages/python/urihim/handlers.py', 'keyboard_type', 2, 5, 8).
+python_function('urikvm-docker/packages/python/urihim/handlers.py', 'mouse_scroll', 2, 13, 14).
 python_function('urikvm-docker/packages/python/urihim/handlers.py', 'keyboard_hotkey', 2, 8, 11).
 python_function('urikvm-docker/packages/python/urihim/routes.py', 'register', 1, 1, 1).
 python_function('urikvm-docker/packages/python/urikvm/handlers.py', '_profile', 1, 1, 1).
@@ -486,6 +497,14 @@ python_function('urikvm-docker/packages/python/urillm/handlers.py', '_analyze_op
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_analyze_litellm', 2, 6, 10).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_vision_analyze', 2, 6, 7).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', 'vision_analyze', 2, 1, 1).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', '_real_allowed', 1, 2, 2).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', '_env', 4, 3, 5).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', '_openai_compatible_chat', 6, 1, 9).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', '_litellm_plan_chat', 4, 2, 3).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', '_match_office_transcript', 1, 21, 7).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', '_plan_messages', 2, 3, 2).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', '_plan_from_parsed', 3, 4, 5).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', 'text_plan', 2, 24, 19).
 python_function('urikvm-docker/packages/python/urillm/routes.py', 'register', 1, 1, 1).
 python_function('urikvm-docker/packages/python/uriocr/handlers.py', '_ocr_cfg', 1, 1, 1).
 python_function('urikvm-docker/packages/python/uriocr/handlers.py', '_driver', 1, 1, 2).
@@ -508,10 +527,15 @@ python_function('urikvm-docker/tests/test_him_driver.py', 'test_driver_env_overr
 python_function('urikvm-docker/tests/test_him_driver.py', 'test_driver_wayland_prefers_ydotool', 0, 2, 3).
 python_function('urikvm-docker/tests/test_him_driver.py', 'test_driver_x11_defaults_pyautogui', 0, 5, 3).
 python_function('urikvm-docker/tests/test_him_driver.py', 'test_ydotool_key_sequence_ctrl_enter', 0, 2, 1).
+python_function('urikvm-docker/tests/test_him_scroll.py', 'test_mouse_scroll_dry_run_mock', 0, 3, 1).
+python_function('urikvm-docker/tests/test_him_scroll.py', 'test_mouse_scroll_dry_run_ydotool', 0, 3, 1).
 python_function('urikvm-docker/tests/test_kvm.py', 'runtime', 0, 1, 2).
 python_function('urikvm-docker/tests/test_kvm.py', 'test_him_requires_approval', 0, 3, 2).
 python_function('urikvm-docker/tests/test_kvm.py', 'test_kvm_click_text_uses_him_ocr_llm', 0, 4, 2).
 python_function('urikvm-docker/tests/test_kvm.py', 'test_type_text', 0, 3, 2).
+python_function('urikvm-docker/tests/test_llm_plan.py', 'test_plan_scroll_phrase_map', 0, 5, 1).
+python_function('urikvm-docker/tests/test_llm_plan.py', 'test_plan_type_letter', 0, 4, 1).
+python_function('urikvm-docker/tests/test_llm_plan.py', 'test_plan_rejects_disallowed_scheme', 0, 3, 1).
 python_function('urikvm-docker/tests/test_ocr_llm.py', '_png_with_labels', 1, 4, 9).
 python_function('urikvm-docker/tests/test_ocr_llm.py', '_runtime', 2, 1, 2).
 python_function('urikvm-docker/tests/test_ocr_llm.py', '_inject_png', 2, 1, 2).
@@ -597,6 +621,11 @@ python_function('urirdp-docker/packages/python/urirdp_ocr/handlers.py', 'latest_
 python_function('urirdp-docker/packages/python/urirdp_ocr/handlers.py', 'image_text', 2, 6, 6).
 python_function('urirdp-docker/packages/python/urirdp_ocr/routes.py', 'register', 1, 1, 1).
 python_function('urirdp-docker/packages/python/urirdp_shell/__init__.py', 'register', 1, 1, 1).
+python_function('urirdp-docker/packages/python/urirdp_shell/handlers.py', '_allow_real', 1, 2, 2).
+python_function('urirdp-docker/packages/python/urirdp_shell/handlers.py', '_detect_display', 1, 5, 2).
+python_function('urirdp-docker/packages/python/urirdp_shell/handlers.py', '_mock', 3, 2, 2).
+python_function('urirdp-docker/packages/python/urirdp_shell/handlers.py', 'shell_run', 2, 16, 10).
+python_function('urirdp-docker/packages/python/urirdp_shell/routes.py', 'register', 1, 1, 1).
 python_function('urirdp-docker/packages/python/urirdpedge/cli.py', 'build_runtime', 1, 10, 7).
 python_function('urirdp-docker/packages/python/urirdpedge/cli.py', 'main', 1, 8, 16).
 python_function('urirdp-docker/tests/test_decide_dispatch.py', '_cfg', 1, 1, 0).
@@ -846,7 +875,7 @@ python_function('urisys-node/tests/test_pack_hotload.py', 'test_hotload_empty_pa
 python_function('urisys-node/tests/test_pack_hotload.py', 'test_hotload_unknown_pack_reports_failure', 1, 3, 2).
 python_function('urisys-node/tests/test_uriscreen_auto.py', 'test_resolve_backend_auto_x11', 1, 2, 2).
 python_function('urisys-node/tests/test_uriscreen_auto.py', 'test_resolve_backend_auto_wayland', 1, 2, 2).
-python_function('urisys-node/tests/test_uriscreen_auto.py', 'test_is_black_png', 1, 3, 3).
+python_function('urisys-node/tests/test_uriscreen_auto.py', 'test_is_black_png', 1, 3, 4).
 python_function('urisys-node/tests/test_urishell.py', 'test_shell_route_registered', 0, 2, 3).
 python_function('urisys-node/tests/test_urishell.py', 'test_shell_pip_dry_run', 0, 4, 3).
 python_function('urisys-node/tests/test_urishell.py', 'test_shell_requires_allow_real', 0, 3, 4).

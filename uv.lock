@@ -3637,7 +3637,7 @@ requires-dist = [{ name = "uricore", specifier = ">=0.1.0" }]
 
 [[package]]
 name = "urihim"
-version = "0.1.4"
+version = "0.1.5"
 source = { editable = "urikvm-docker/packages/python/urihim" }
 dependencies = [
     { name = "urisysedge" },
@@ -3721,7 +3721,7 @@ provides-extras = ["real"]
 
 [[package]]
 name = "urisys"
-version = "0.1.26"
+version = "0.1.27"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },

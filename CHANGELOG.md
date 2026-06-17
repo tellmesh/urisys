@@ -5,6 +5,51 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - 2026-06-17 — refactor & hardening
+
+### Refactored (god-modules → focused units, behaviour byte-identical)
+- `markpact_manager.py` (579→401L) — split out `markpact_models.py` (dataclasses + pure helpers) and `markpact_validation.py` (contract/bundle/implementation validators); extracted `_build_route` from `_compile_manifest` (CC 28→~6)
+- `urillm.handlers._vision_analyze` (urikvm) — driver table `_VISION_DRIVERS` + `_analyze_openai`/`_analyze_litellm` (CC 22→~5); `_heuristic_analyze` split into `_find_target_box`/`_find_goal_box`/`_click_box` (CC 16→~7)
+- `urirdp_llm.handlers.decide` — `_decide_litellm`/`_decide_openai`/`_decision_from_parsed` + dispatch (CC 23→~10)
+- Each refactor verified by before/after output-snapshot diff (identical) + new characterization tests
+
+### Added (capability hot-load primitives)
+- `POST /uri/pack` + `load_pack_into_runtime()` — activate an installed pack into a live node (idempotent, secure-by-default behind `URISYS_NODE_ALLOW_PACK_LOAD=1`)
+- `register_forward_pack()` + `urisysnode/forward.py` — route a contract's URI patterns to a resolved out-of-process worker (bridge to `ArtifactResolver` markpact.com→GitHub→worker)
+
+### Fixed
+- `markpact_manager.load_pack_block` — removed duplicate (shadowing) definition
+- `urisys-node/serve.py` — `urisys-node serve` no longer crashes when an optional pack (`urikvm`/`urihim`/…) is missing; best-effort load with a clear warning, hard error only for explicitly-named missing packs
+- `PackManager` `--packs all` — skips uninstalled optional packs instead of `ModuleNotFoundError`; CLI runtime errors return clean JSON instead of tracebacks
+
+### Tested / Verified
+- Per-pack `pyproject.toml` (`urikvm`/`urihim`/`uriocr`/`urillm`) build + install + import standalone (`register` exported)
+- Vendored `urisysedge` drift guard (AST-compare vs canonical), node pack hot-load + forward, vision/decide dispatch — new CI lanes `node-unit`, `pack-handlers-unit`
+- `test_uriscreen_auto`/`test_ocr_llm` skip gracefully when Pillow/tesseract absent
+- Host→Docker desktop and host→LAN node (`192.168.188.201:8790`) control verified live (capture + OCR)
+
+## [0.1.27] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+
+### Other
+- Update app.doql.less
+- Update project/logic.pl
+- Update project/map.toon.yaml
+- Update scripts/run-office-simulate-e2e.sh
+- Update urikvm-docker/packages/python/urihim/handlers.py
+- Update urikvm-docker/packages/python/urihim/pyproject.toml
+- Update urikvm-docker/tests/test_him_driver.py
+- Update urikvm-docker/tests/test_ocr_llm.py
+- Update urisys-node/data/events.jsonl
+- Update urisys-node/uv.lock
+- ... and 1 more files
+
 ## [0.1.24] - 2026-06-17
 
 ### Added

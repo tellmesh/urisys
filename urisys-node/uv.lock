@@ -3464,7 +3464,7 @@ wheels = [
 
 [[package]]
 name = "urihim"
-version = "0.1.4"
+version = "0.1.5"
 source = { editable = "../urikvm-docker/packages/python/urihim" }
 dependencies = [
     { name = "urisysedge" },

@@ -20,7 +20,7 @@ URI control system managers/controllers over separate uri* capability packs.
 ## Metadata
 
 - **name**: `urisys`
-- **version**: `0.1.25`
+- **version**: `0.1.26`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -40,7 +40,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: urisys;
-  version: 0.1.25;
+  version: 0.1.26;
 }
 
 dependencies {
@@ -197,7 +197,7 @@ ASSERT[14]{field, operator, expected}:
 ```yaml
 project:
   name: urisys
-  version: 0.1.25
+  version: 0.1.26
   env: local
 ```
 
@@ -262,13 +262,13 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# urisys | 244f 15084L | python:184,shell:57,javascript:2,less:1 | 2026-06-17
-# stats: 609 func | 37 cls | 244 mod | CC̄=4.3 | critical:56 | cycles:0
-# alerts[5]: CC session_urirdp_real_docker=30; CC main=23; CC validate_contract=23; CC load_pack_into_runtime=23; CC infer_steps=20
+# urisys | 248f 15752L | python:187,shell:58,javascript:2,less:1 | 2026-06-17
+# stats: 634 func | 37 cls | 248 mod | CC̄=4.3 | critical:61 | cycles:0
+# alerts[5]: CC session_urirdp_real_docker=30; CC text_plan=24; CC main=23; CC validate_contract=23; CC load_pack_into_runtime=23
 # hotspots[5]: main fan=31; main fan=29; session_urirdp_real_docker fan=25; serve fan=24; analyze_run fan=23
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[244]:
+M[248]:
   app.doql.less,48
   examples/frontend/app.js,22
   examples/markpact/browser-call.sh,13
@@ -289,6 +289,7 @@ M[244]:
   scripts/deploy-lenovo-node.sh,59
   scripts/install-kvm-packs-editable.sh,16
   scripts/lenovo-node-session.sh,73
+  scripts/office-simulate-loop.py,147
   scripts/paths.sh,55
   scripts/publish-pypi-packs.sh,65
   scripts/remote-node-smoke.sh,100
@@ -307,16 +308,17 @@ M[244]:
   scripts/run-lab-nightly.sh,17
   scripts/run-lab-unit-ci.sh,21
   scripts/run-nl-log-smoke.sh,44
+  scripts/run-office-simulate-e2e.sh,130
   scripts/run-smoke-all.sh,25
   scripts/run-urisys-node-docker-e2e.sh,163
   scripts/run-urisys-node-docker-session.sh,7
-  scripts/run_test_sessions.py,600
+  scripts/run_test_sessions.py,649
   scripts/session_report.py,50
   scripts/sync-vendored-urisysedge.sh,16
   scripts/test-goal.sh,12
   scripts/test_sessions/__init__.py,99
   scripts/test_sessions/expectations.py,154
-  scripts/test_sessions/lab_flows.py,318
+  scripts/test_sessions/lab_flows.py,320
   scripts/test_sessions/lab_rdp.py,181
   scripts/test_sessions/util.py,210
   scripts/validate-all-markpacts.sh,54
@@ -369,8 +371,8 @@ M[244]:
   urienv-docker/tests/e2e_env.py,64
   urienv-docker/tests/test_urienv.py,70
   urikvm-docker/packages/python/urihim/__init__.py,2
-  urikvm-docker/packages/python/urihim/handlers.py,182
-  urikvm-docker/packages/python/urihim/routes.py,7
+  urikvm-docker/packages/python/urihim/handlers.py,213
+  urikvm-docker/packages/python/urihim/routes.py,8
   urikvm-docker/packages/python/urikvm/__init__.py,2
   urikvm-docker/packages/python/urikvm/handlers.py,104
   urikvm-docker/packages/python/urikvm/routes.py,6
@@ -379,8 +381,8 @@ M[244]:
   urikvm-docker/packages/python/urikvmedge/env.py,20
   urikvm-docker/packages/python/urikvmedge/runtime.py,24
   urikvm-docker/packages/python/urillm/__init__.py,2
-  urikvm-docker/packages/python/urillm/handlers.py,217
-  urikvm-docker/packages/python/urillm/routes.py,3
+  urikvm-docker/packages/python/urillm/handlers.py,398
+  urikvm-docker/packages/python/urillm/routes.py,4
   urikvm-docker/packages/python/uriocr/__init__.py,2
   urikvm-docker/packages/python/uriocr/handlers.py,116
   urikvm-docker/packages/python/uriocr/routes.py,4
@@ -389,8 +391,10 @@ M[244]:
   urikvm-docker/scripts/test-local.sh,9
   urikvm-docker/scripts/test-real.sh,48
   urikvm-docker/tests/test_him_driver.py,39
+  urikvm-docker/tests/test_him_scroll.py,15
   urikvm-docker/tests/test_kvm.py,35
-  urikvm-docker/tests/test_ocr_llm.py,81
+  urikvm-docker/tests/test_llm_plan.py,32
+  urikvm-docker/tests/test_ocr_llm.py,87
   urikvm-docker/tests/test_vision_dispatch.py,83
   urirdp-docker/docker/bootstrap-rdp-session.sh,112
   urirdp-docker/docker/entrypoint.sh,26
@@ -417,8 +421,8 @@ M[244]:
   urirdp-docker/packages/python/urirdp_ocr/handlers.py,80
   urirdp-docker/packages/python/urirdp_ocr/routes.py,4
   urirdp-docker/packages/python/urirdp_shell/__init__.py,5
-  urirdp-docker/packages/python/urirdp_shell/handlers.py,4
-  urirdp-docker/packages/python/urirdp_shell/routes.py,4
+  urirdp-docker/packages/python/urirdp_shell/handlers.py,69
+  urirdp-docker/packages/python/urirdp_shell/routes.py,10
   urirdp-docker/packages/python/urirdpedge/__init__.py,1
   urirdp-docker/packages/python/urirdpedge/cli.py,99
   urirdp-docker/packages/python/urirdpedge/env.py,20
@@ -509,7 +513,7 @@ M[244]:
   urisys-node/tests/test_pack_auto_install.py,113
   urisys-node/tests/test_pack_github.py,28
   urisys-node/tests/test_pack_hotload.py,65
-  urisys-node/tests/test_uriscreen_auto.py,35
+  urisys-node/tests/test_uriscreen_auto.py,37
   urisys-node/tests/test_urishell.py,49
   urisys-node/tests/test_urisys_node.py,51
   urisys-node/tests/test_urisysedge_single_source.py,35
@@ -535,6 +539,13 @@ D:
     run_flow(runtime;path;context)
     make_handler(runtime)
     serve(runtime;host;port)
+  scripts/office-simulate-loop.py:
+    e: call_uri,rules_tick,llm_tick,parse_args,main
+    call_uri(base;uri;payload;context)
+    rules_tick(base;ctx;letter)
+    llm_tick(base;ctx;letter)
+    parse_args(argv)
+    main(argv)
   scripts/report/__init__.py:
   scripts/report/cli.py:
     e: main
@@ -601,7 +612,7 @@ D:
     read_json(path)
     tail(text;limit)
   scripts/run_test_sessions.py:
-    e: session_pytest_urirdp,session_pytest_urisys,session_pytest_urisys_node,session_urirdp_mock_docker,session_urirdp_real_docker,session_urirdp_rdp_e2e,session_automation_lab,_monorepo_root,session_urisys_node_docker_gui,main
+    e: session_pytest_urirdp,session_pytest_urisys,session_pytest_urisys_node,session_urirdp_mock_docker,session_urirdp_real_docker,session_urirdp_rdp_e2e,session_automation_lab,_monorepo_root,session_urisys_node_docker_gui,session_office_simulate,main
     session_pytest_urirdp(session_dir)
     session_pytest_urisys(session_dir)
     session_pytest_urisys_node(session_dir)
@@ -611,6 +622,7 @@ D:
     session_automation_lab(session_dir)
     _monorepo_root()
     session_urisys_node_docker_gui(session_dir)
+    session_office_simulate(session_dir)
     main()
   scripts/session_report.py:
   scripts/test_sessions/__init__.py:
@@ -851,7 +863,7 @@ D:
     test_mutable_var_is_process_local(monkeypatch)
   urikvm-docker/packages/python/urihim/__init__.py:
   urikvm-docker/packages/python/urihim/handlers.py:
-    e: _state,_real_allowed,_wayland_session,_ydotool_available,_driver,_pyautogui,_run_ydotool,_ydotool_key_sequence,mouse_status,mouse_move,mouse_click,keyboard_type,keyboard_hotkey
+    e: _state,_real_allowed,_wayland_session,_ydotool_available,_driver,_pyautogui,_run_ydotool,_ydotool_key_sequence,mouse_status,mouse_move,mouse_click,keyboard_type,mouse_scroll,keyboard_hotkey
     _state(context)
     _real_allowed(context)
     _wayland_session()
@@ -864,6 +876,7 @@ D:
     mouse_move(payload;context)
     mouse_click(payload;context)
     keyboard_type(payload;context)
+    mouse_scroll(payload;context)
     keyboard_hotkey(payload;context)
   urikvm-docker/packages/python/urihim/routes.py:
     e: register
@@ -889,7 +902,7 @@ D:
   urikvm-docker/packages/python/urikvmedge/runtime.py:
   urikvm-docker/packages/python/urillm/__init__.py:
   urikvm-docker/packages/python/urillm/handlers.py:
-    e: _llm_cfg,_driver,_goal_text,_target_from_goal,_box_center,_click_box,_find_target_box,_find_goal_box,_heuristic_analyze,_parse_json_response,_openai_chat,_litellm_chat,_vision_messages,_normalize_action,_analyze_openai,_analyze_litellm,_vision_analyze,vision_analyze
+    e: _llm_cfg,_driver,_goal_text,_target_from_goal,_box_center,_click_box,_find_target_box,_find_goal_box,_heuristic_analyze,_parse_json_response,_openai_chat,_litellm_chat,_vision_messages,_normalize_action,_analyze_openai,_analyze_litellm,_vision_analyze,vision_analyze,_real_allowed,_env,_openai_compatible_chat,_litellm_plan_chat,_match_office_transcript,_plan_messages,_plan_from_parsed,text_plan
     _llm_cfg(context)
     _driver(context)
     _goal_text(payload)
@@ -908,6 +921,14 @@ D:
     _analyze_litellm(payload;context)
     _vision_analyze(payload;context)
     vision_analyze(payload;context)
+    _real_allowed(context)
+    _env(name;cfg;context;default)
+    _openai_compatible_chat(messages;model;api_key;base_url;temperature;max_tokens)
+    _litellm_plan_chat(messages;model;temperature;max_tokens)
+    _match_office_transcript(text)
+    _plan_messages(transcript;allowed)
+    _plan_from_parsed(parsed;model;transcript)
+    text_plan(payload;context)
   urikvm-docker/packages/python/urillm/routes.py:
     e: register
     register(runtime)
@@ -941,12 +962,21 @@ D:
     test_driver_wayland_prefers_ydotool()
     test_driver_x11_defaults_pyautogui()
     test_ydotool_key_sequence_ctrl_enter()
+  urikvm-docker/tests/test_him_scroll.py:
+    e: test_mouse_scroll_dry_run_mock,test_mouse_scroll_dry_run_ydotool
+    test_mouse_scroll_dry_run_mock()
+    test_mouse_scroll_dry_run_ydotool()
   urikvm-docker/tests/test_kvm.py:
     e: runtime,test_him_requires_approval,test_kvm_click_text_uses_him_ocr_llm,test_type_text
     runtime()
     test_him_requires_approval()
     test_kvm_click_text_uses_him_ocr_llm()
     test_type_text()
+  urikvm-docker/tests/test_llm_plan.py:
+    e: test_plan_scroll_phrase_map,test_plan_type_letter,test_plan_rejects_disallowed_scheme
+    test_plan_scroll_phrase_map()
+    test_plan_type_letter()
+    test_plan_rejects_disallowed_scheme()
   urikvm-docker/tests/test_ocr_llm.py:
     e: _png_with_labels,_runtime,_inject_png,test_tesseract_finds_ok,test_heuristic_llm_clicks_ok_from_ocr,test_openai_vision_clicks_ok_from_image
     _png_with_labels(labels)
@@ -1079,7 +1109,14 @@ D:
     e: register
     register(runtime)
   urirdp-docker/packages/python/urirdp_shell/handlers.py:
+    e: _allow_real,_detect_display,_mock,shell_run
+    _allow_real(context)
+    _detect_display(context)
+    _mock(command;payload;context)
+    shell_run(payload;context)
   urirdp-docker/packages/python/urirdp_shell/routes.py:
+    e: register
+    register(rt)
   urirdp-docker/packages/python/urirdpedge/__init__.py:
   urirdp-docker/packages/python/urirdpedge/cli.py:
     e: build_runtime,main
@@ -1492,7 +1529,7 @@ D:
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.25', 'python').
+project_metadata('urisys', '0.1.26', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 48, 'less').
@@ -1515,6 +1552,7 @@ project_file('project.sh', 63, 'shell').
 project_file('scripts/deploy-lenovo-node.sh', 59, 'shell').
 project_file('scripts/install-kvm-packs-editable.sh', 16, 'shell').
 project_file('scripts/lenovo-node-session.sh', 73, 'shell').
+project_file('scripts/office-simulate-loop.py', 147, 'python').
 project_file('scripts/paths.sh', 55, 'shell').
 project_file('scripts/publish-pypi-packs.sh', 65, 'shell').
 project_file('scripts/remote-node-smoke.sh', 100, 'shell').
@@ -1533,16 +1571,17 @@ project_file('scripts/run-lab-e2e.sh', 15, 'shell').
 project_file('scripts/run-lab-nightly.sh', 17, 'shell').
 project_file('scripts/run-lab-unit-ci.sh', 21, 'shell').
 project_file('scripts/run-nl-log-smoke.sh', 44, 'shell').
+project_file('scripts/run-office-simulate-e2e.sh', 130, 'shell').
 project_file('scripts/run-smoke-all.sh', 25, 'shell').
 project_file('scripts/run-urisys-node-docker-e2e.sh', 163, 'shell').
 project_file('scripts/run-urisys-node-docker-session.sh', 7, 'shell').
-project_file('scripts/run_test_sessions.py', 600, 'python').
+project_file('scripts/run_test_sessions.py', 649, 'python').
 project_file('scripts/session_report.py', 50, 'python').
 project_file('scripts/sync-vendored-urisysedge.sh', 16, 'shell').
 project_file('scripts/test-goal.sh', 12, 'shell').
 project_file('scripts/test_sessions/__init__.py', 99, 'python').
 project_file('scripts/test_sessions/expectations.py', 154, 'python').
-project_file('scripts/test_sessions/lab_flows.py', 318, 'python').
+project_file('scripts/test_sessions/lab_flows.py', 320, 'python').
 project_file('scripts/test_sessions/lab_rdp.py', 181, 'python').
 project_file('scripts/test_sessions/util.py', 210, 'python').
 project_file('scripts/validate-all-markpacts.sh', 54, 'shell').
@@ -1595,8 +1634,8 @@ project_file('urienv-docker/scripts/test-docker.sh', 5, 'shell').
 project_file('urienv-docker/tests/e2e_env.py', 64, 'python').
 project_file('urienv-docker/tests/test_urienv.py', 70, 'python').
 project_file('urikvm-docker/packages/python/urihim/__init__.py', 2, 'python').
-project_file('urikvm-docker/packages/python/urihim/handlers.py', 182, 'python').
-project_file('urikvm-docker/packages/python/urihim/routes.py', 7, 'python').
+project_file('urikvm-docker/packages/python/urihim/handlers.py', 213, 'python').
+project_file('urikvm-docker/packages/python/urihim/routes.py', 8, 'python').
 project_file('urikvm-docker/packages/python/urikvm/__init__.py', 2, 'python').
 project_file('urikvm-docker/packages/python/urikvm/handlers.py', 104, 'python').
 project_file('urikvm-docker/packages/python/urikvm/routes.py', 6, 'python').
@@ -1605,8 +1644,8 @@ project_file('urikvm-docker/packages/python/urikvmedge/cli.py', 57, 'python').
 project_file('urikvm-docker/packages/python/urikvmedge/env.py', 20, 'python').
 project_file('urikvm-docker/packages/python/urikvmedge/runtime.py', 24, 'python').
 project_file('urikvm-docker/packages/python/urillm/__init__.py', 2, 'python').
-project_file('urikvm-docker/packages/python/urillm/handlers.py', 217, 'python').
-project_file('urikvm-docker/packages/python/urillm/routes.py', 3, 'python').
+project_file('urikvm-docker/packages/python/urillm/handlers.py', 398, 'python').
+project_file('urikvm-docker/packages/python/urillm/routes.py', 4, 'python').
 project_file('urikvm-docker/packages/python/uriocr/__init__.py', 2, 'python').
 project_file('urikvm-docker/packages/python/uriocr/handlers.py', 116, 'python').
 project_file('urikvm-docker/packages/python/uriocr/routes.py', 4, 'python').
@@ -1615,8 +1654,10 @@ project_file('urikvm-docker/scripts/real_pipeline.py', 96, 'python').
 project_file('urikvm-docker/scripts/test-local.sh', 9, 'shell').
 project_file('urikvm-docker/scripts/test-real.sh', 48, 'shell').
 project_file('urikvm-docker/tests/test_him_driver.py', 39, 'python').
+project_file('urikvm-docker/tests/test_him_scroll.py', 15, 'python').
 project_file('urikvm-docker/tests/test_kvm.py', 35, 'python').
-project_file('urikvm-docker/tests/test_ocr_llm.py', 81, 'python').
+project_file('urikvm-docker/tests/test_llm_plan.py', 32, 'python').
+project_file('urikvm-docker/tests/test_ocr_llm.py', 87, 'python').
 project_file('urikvm-docker/tests/test_vision_dispatch.py', 83, 'python').
 project_file('urirdp-docker/docker/bootstrap-rdp-session.sh', 112, 'shell').
 project_file('urirdp-docker/docker/entrypoint.sh', 26, 'shell').
@@ -1643,8 +1684,8 @@ project_file('urirdp-docker/packages/python/urirdp_ocr/__init__.py', 4, 'python'
 project_file('urirdp-docker/packages/python/urirdp_ocr/handlers.py', 80, 'python').
 project_file('urirdp-docker/packages/python/urirdp_ocr/routes.py', 4, 'python').
 project_file('urirdp-docker/packages/python/urirdp_shell/__init__.py', 5, 'python').
-project_file('urirdp-docker/packages/python/urirdp_shell/handlers.py', 4, 'python').
-project_file('urirdp-docker/packages/python/urirdp_shell/routes.py', 4, 'python').
+project_file('urirdp-docker/packages/python/urirdp_shell/handlers.py', 69, 'python').
+project_file('urirdp-docker/packages/python/urirdp_shell/routes.py', 10, 'python').
 project_file('urirdp-docker/packages/python/urirdpedge/__init__.py', 1, 'python').
 project_file('urirdp-docker/packages/python/urirdpedge/cli.py', 99, 'python').
 project_file('urirdp-docker/packages/python/urirdpedge/env.py', 20, 'python').
@@ -1735,7 +1776,7 @@ project_file('urisys-node/tests/test_forward_pack.py', 75, 'python').
 project_file('urisys-node/tests/test_pack_auto_install.py', 113, 'python').
 project_file('urisys-node/tests/test_pack_github.py', 28, 'python').
 project_file('urisys-node/tests/test_pack_hotload.py', 65, 'python').
-project_file('urisys-node/tests/test_uriscreen_auto.py', 35, 'python').
+project_file('urisys-node/tests/test_uriscreen_auto.py', 37, 'python').
 project_file('urisys-node/tests/test_urishell.py', 49, 'python').
 project_file('urisys-node/tests/test_urisys_node.py', 51, 'python').
 project_file('urisys-node/tests/test_urisysedge_single_source.py', 35, 'python').
@@ -1754,6 +1795,11 @@ python_function('packages/python/urisysedge/runtime.py', 'load_yaml_flow', 1, 14
 python_function('packages/python/urisysedge/runtime.py', 'run_flow', 3, 7, 11).
 python_function('packages/python/urisysedge/runtime.py', 'make_handler', 1, 1, 15).
 python_function('packages/python/urisysedge/runtime.py', 'serve', 3, 2, 4).
+python_function('scripts/office-simulate-loop.py', 'call_uri', 4, 4, 9).
+python_function('scripts/office-simulate-loop.py', 'rules_tick', 3, 3, 5).
+python_function('scripts/office-simulate-loop.py', 'llm_tick', 3, 7, 6).
+python_function('scripts/office-simulate-loop.py', 'parse_args', 1, 1, 4).
+python_function('scripts/office-simulate-loop.py', 'main', 1, 10, 9).
 python_function('scripts/report/cli.py', 'main', 0, 4, 13).
 python_function('scripts/report/events.py', 'summarize_event_records', 1, 14, 5).
 python_function('scripts/report/events.py', 'load_event_records', 1, 14, 7).
@@ -1802,6 +1848,7 @@ python_function('scripts/run_test_sessions.py', 'session_urirdp_rdp_e2e', 1, 5, 
 python_function('scripts/run_test_sessions.py', 'session_automation_lab', 1, 16, 17).
 python_function('scripts/run_test_sessions.py', '_monorepo_root', 0, 4, 1).
 python_function('scripts/run_test_sessions.py', 'session_urisys_node_docker_gui', 1, 7, 11).
+python_function('scripts/run_test_sessions.py', 'session_office_simulate', 1, 7, 11).
 python_function('scripts/run_test_sessions.py', 'main', 0, 13, 19).
 python_function('scripts/test_sessions/expectations.py', 'flow_expectations', 1, 5, 5).
 python_function('scripts/test_sessions/expectations.py', 'ocr_texts', 1, 11, 4).
@@ -1813,7 +1860,7 @@ python_function('scripts/test_sessions/expectations.py', '_ocr_contains', 2, 5, 
 python_function('scripts/test_sessions/expectations.py', '_min_vision_confidence', 2, 4, 3).
 python_function('scripts/test_sessions/expectations.py', 'evaluate_expectations', 1, 3, 6).
 python_function('scripts/test_sessions/lab_flows.py', '_lab_bootstrap', 1, 5, 4).
-python_function('scripts/test_sessions/lab_flows.py', '_capture_flow_screenshot', 1, 12, 7).
+python_function('scripts/test_sessions/lab_flows.py', '_capture_flow_screenshot', 1, 13, 7).
 python_function('scripts/test_sessions/lab_flows.py', '_flow_step_detail', 0, 4, 2).
 python_function('scripts/test_sessions/lab_flows.py', '_run_single_lab_flow', 1, 10, 11).
 python_function('scripts/test_sessions/lab_flows.py', 'session_lab_10_flows', 1, 7, 22).
@@ -1950,6 +1997,7 @@ python_function('urikvm-docker/packages/python/urihim/handlers.py', 'mouse_statu
 python_function('urikvm-docker/packages/python/urihim/handlers.py', 'mouse_move', 2, 5, 9).
 python_function('urikvm-docker/packages/python/urihim/handlers.py', 'mouse_click', 2, 12, 10).
 python_function('urikvm-docker/packages/python/urihim/handlers.py', 'keyboard_type', 2, 5, 8).
+python_function('urikvm-docker/packages/python/urihim/handlers.py', 'mouse_scroll', 2, 13, 14).
 python_function('urikvm-docker/packages/python/urihim/handlers.py', 'keyboard_hotkey', 2, 8, 11).
 python_function('urikvm-docker/packages/python/urihim/routes.py', 'register', 1, 1, 1).
 python_function('urikvm-docker/packages/python/urikvm/handlers.py', '_profile', 1, 1, 1).
@@ -1979,6 +2027,14 @@ python_function('urikvm-docker/packages/python/urillm/handlers.py', '_analyze_op
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_analyze_litellm', 2, 6, 10).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_vision_analyze', 2, 6, 7).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', 'vision_analyze', 2, 1, 1).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', '_real_allowed', 1, 2, 2).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', '_env', 4, 3, 5).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', '_openai_compatible_chat', 6, 1, 9).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', '_litellm_plan_chat', 4, 2, 3).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', '_match_office_transcript', 1, 21, 7).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', '_plan_messages', 2, 3, 2).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', '_plan_from_parsed', 3, 4, 5).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', 'text_plan', 2, 24, 19).
 python_function('urikvm-docker/packages/python/urillm/routes.py', 'register', 1, 1, 1).
 python_function('urikvm-docker/packages/python/uriocr/handlers.py', '_ocr_cfg', 1, 1, 1).
 python_function('urikvm-docker/packages/python/uriocr/handlers.py', '_driver', 1, 1, 2).
@@ -2001,10 +2057,15 @@ python_function('urikvm-docker/tests/test_him_driver.py', 'test_driver_env_overr
 python_function('urikvm-docker/tests/test_him_driver.py', 'test_driver_wayland_prefers_ydotool', 0, 2, 3).
 python_function('urikvm-docker/tests/test_him_driver.py', 'test_driver_x11_defaults_pyautogui', 0, 5, 3).
 python_function('urikvm-docker/tests/test_him_driver.py', 'test_ydotool_key_sequence_ctrl_enter', 0, 2, 1).
+python_function('urikvm-docker/tests/test_him_scroll.py', 'test_mouse_scroll_dry_run_mock', 0, 3, 1).
+python_function('urikvm-docker/tests/test_him_scroll.py', 'test_mouse_scroll_dry_run_ydotool', 0, 3, 1).
 python_function('urikvm-docker/tests/test_kvm.py', 'runtime', 0, 1, 2).
 python_function('urikvm-docker/tests/test_kvm.py', 'test_him_requires_approval', 0, 3, 2).
 python_function('urikvm-docker/tests/test_kvm.py', 'test_kvm_click_text_uses_him_ocr_llm', 0, 4, 2).
 python_function('urikvm-docker/tests/test_kvm.py', 'test_type_text', 0, 3, 2).
+python_function('urikvm-docker/tests/test_llm_plan.py', 'test_plan_scroll_phrase_map', 0, 5, 1).
+python_function('urikvm-docker/tests/test_llm_plan.py', 'test_plan_type_letter', 0, 4, 1).
+python_function('urikvm-docker/tests/test_llm_plan.py', 'test_plan_rejects_disallowed_scheme', 0, 3, 1).
 python_function('urikvm-docker/tests/test_ocr_llm.py', '_png_with_labels', 1, 4, 9).
 python_function('urikvm-docker/tests/test_ocr_llm.py', '_runtime', 2, 1, 2).
 python_function('urikvm-docker/tests/test_ocr_llm.py', '_inject_png', 2, 1, 2).
@@ -2090,6 +2151,11 @@ python_function('urirdp-docker/packages/python/urirdp_ocr/handlers.py', 'latest_
 python_function('urirdp-docker/packages/python/urirdp_ocr/handlers.py', 'image_text', 2, 6, 6).
 python_function('urirdp-docker/packages/python/urirdp_ocr/routes.py', 'register', 1, 1, 1).
 python_function('urirdp-docker/packages/python/urirdp_shell/__init__.py', 'register', 1, 1, 1).
+python_function('urirdp-docker/packages/python/urirdp_shell/handlers.py', '_allow_real', 1, 2, 2).
+python_function('urirdp-docker/packages/python/urirdp_shell/handlers.py', '_detect_display', 1, 5, 2).
+python_function('urirdp-docker/packages/python/urirdp_shell/handlers.py', '_mock', 3, 2, 2).
+python_function('urirdp-docker/packages/python/urirdp_shell/handlers.py', 'shell_run', 2, 16, 10).
+python_function('urirdp-docker/packages/python/urirdp_shell/routes.py', 'register', 1, 1, 1).
 python_function('urirdp-docker/packages/python/urirdpedge/cli.py', 'build_runtime', 1, 10, 7).
 python_function('urirdp-docker/packages/python/urirdpedge/cli.py', 'main', 1, 8, 16).
 python_function('urirdp-docker/tests/test_decide_dispatch.py', '_cfg', 1, 1, 0).
@@ -2339,7 +2405,7 @@ python_function('urisys-node/tests/test_pack_hotload.py', 'test_hotload_empty_pa
 python_function('urisys-node/tests/test_pack_hotload.py', 'test_hotload_unknown_pack_reports_failure', 1, 3, 2).
 python_function('urisys-node/tests/test_uriscreen_auto.py', 'test_resolve_backend_auto_x11', 1, 2, 2).
 python_function('urisys-node/tests/test_uriscreen_auto.py', 'test_resolve_backend_auto_wayland', 1, 2, 2).
-python_function('urisys-node/tests/test_uriscreen_auto.py', 'test_is_black_png', 1, 3, 3).
+python_function('urisys-node/tests/test_uriscreen_auto.py', 'test_is_black_png', 1, 3, 4).
 python_function('urisys-node/tests/test_urishell.py', 'test_shell_route_registered', 0, 2, 3).
 python_function('urisys-node/tests/test_urishell.py', 'test_shell_pip_dry_run', 0, 4, 3).
 python_function('urisys-node/tests/test_urishell.py', 'test_shell_requires_allow_real', 0, 3, 4).
@@ -2562,44 +2628,44 @@ sumd_interface('cli', '').
 
 ## Call Graph
 
-*375 nodes · 491 edges · 71 modules · CC̄=4.1*
+*382 nodes · 500 edges · 73 modules · CC̄=4.2*
 
 ### Hubs (by degree)
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
 | `session_urirdp_real_docker` *(in scripts.run_test_sessions)* | 30 ⚠ | 0 | 69 | **69** |
-| `print` *(in scripts.run-nl-log-smoke)* | 0 | 59 | 0 | **59** |
-| `run_cmd` *(in scripts.test_sessions.util)* | 6 | 47 | 12 | **59** |
+| `print` *(in scripts.run-nl-log-smoke)* | 0 | 66 | 0 | **66** |
+| `run_cmd` *(in scripts.test_sessions.util)* | 6 | 48 | 12 | **60** |
 | `main` *(in src.urisys.cli)* | 23 ⚠ | 0 | 53 | **53** |
 | `make_handler` *(in urisys-node.packages.python.urisysnode.serve)* | 2 | 1 | 50 | **51** |
 | `build_parser` *(in src.urisys.cli)* | 1 | 1 | 47 | **48** |
-| `make_handler` *(in uristepper-docker.packages.python.uristepperedge.server)* | 1 | 1 | 43 | **44** |
 | `session_automation_lab` *(in scripts.run_test_sessions)* | 16 ⚠ | 1 | 43 | **44** |
+| `make_handler` *(in uristepper-docker.packages.python.uristepperedge.server)* | 1 | 1 | 43 | **44** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
 # generated in 0.18s
-# nodes: 375 | edges: 491 | modules: 71
-# CC̄=4.1
+# nodes: 382 | edges: 500 | modules: 73
+# CC̄=4.2
 
 HUBS[20]:
   scripts.run_test_sessions.session_urirdp_real_docker
     CC=30  in:0  out:69  total:69
   scripts.run-nl-log-smoke.print
-    CC=0  in:59  out:0  total:59
+    CC=0  in:66  out:0  total:66
   scripts.test_sessions.util.run_cmd
-    CC=6  in:47  out:12  total:59
+    CC=6  in:48  out:12  total:60
   src.urisys.cli.main
     CC=23  in:0  out:53  total:53
   urisys-node.packages.python.urisysnode.serve.make_handler
     CC=2  in:1  out:50  total:51
   src.urisys.cli.build_parser
     CC=1  in:1  out:47  total:48
-  uristepper-docker.packages.python.uristepperedge.server.make_handler
-    CC=1  in:1  out:43  total:44
   scripts.run_test_sessions.session_automation_lab
     CC=16  in:1  out:43  total:44
+  uristepper-docker.packages.python.uristepperedge.server.make_handler
+    CC=1  in:1  out:43  total:44
   urisys-automation-lab.server.flow_runner.run_flow_file
     CC=13  in:1  out:40  total:41
   urienv-docker.packages.python.urienv.src.urienv.handlers._cfg
@@ -2612,18 +2678,18 @@ HUBS[20]:
     CC=7  in:0  out:33  total:33
   urirdp-docker.packages.python.urirdp_browser.handlers.open_page
     CC=15  in:0  out:33  total:33
-  src.urisys.http_server.create_server
-    CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
+  src.urisys.http_server.create_server
+    CC=1  in:1  out:31  total:32
+  packages.python.urisysedge.env.resolve_env_var
+    CC=11  in:23  out:9  total:32
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
-  urisys-node.packages.python.urisysnode.serve.call_uri
-    CC=20  in:2  out:29  total:31
   urirdp-docker.packages.python.urirdp_llm.handlers.analyze
     CC=18  in:0  out:31  total:31
-  scripts.report.session.generate_report
-    CC=9  in:2  out:27  total:29
+  urisys-node.packages.python.urisysnode.serve.call_uri
+    CC=20  in:2  out:29  total:31
 
 MODULES:
   packages.python.urisysedge.env  [7 funcs]
@@ -2642,6 +2708,12 @@ MODULES:
     make_handler  CC=1  out:24
     run_flow  CC=7  out:13
     serve  CC=2  out:6
+  scripts.office-simulate-loop  [5 funcs]
+    call_uri  CC=4  out:11
+    llm_tick  CC=7  out:18
+    main  CC=10  out:12
+    parse_args  CC=1  out:8
+    rules_tick  CC=3  out:8
   scripts.report.cli  [1 funcs]
     main  CC=4  out:23
   scripts.report.events  [4 funcs]
@@ -2682,17 +2754,17 @@ MODULES:
     remote_call  CC=0  out:0
     save_json  CC=0  out:0
     wait_health  CC=0  out:0
-  scripts.run_test_sessions  [10 funcs]
+  scripts.run_test_sessions  [11 funcs]
     _monorepo_root  CC=4  out:3
     main  CC=13  out:32
     session_automation_lab  CC=16  out:43
+    session_office_simulate  CC=7  out:13
     session_pytest_urirdp  CC=3  out:5
     session_pytest_urisys  CC=2  out:5
     session_pytest_urisys_node  CC=2  out:5
     session_urirdp_mock_docker  CC=5  out:31
     session_urirdp_rdp_e2e  CC=5  out:19
     session_urirdp_real_docker  CC=30  out:69
-    session_urisys_node_docker_gui  CC=7  out:13
   scripts.test_sessions.expectations  [9 funcs]
     _min_vision_confidence  CC=4  out:3
     _ocr_contains  CC=5  out:6
@@ -2704,7 +2776,7 @@ MODULES:
     ocr_texts  CC=11  out:10
     vision_confidences  CC=11  out:11
   scripts.test_sessions.lab_flows  [5 funcs]
-    _capture_flow_screenshot  CC=12  out:8
+    _capture_flow_screenshot  CC=13  out:10
     _flow_step_detail  CC=4  out:2
     _lab_bootstrap  CC=5  out:7
     _run_single_lab_flow  CC=10  out:19
@@ -2776,7 +2848,7 @@ MODULES:
     result_to_dict  CC=2  out:0
   urienv-docker.packages.python.urisysedge.src.urisysedge.server  [1 funcs]
     serve  CC=1  out:36
-  urikvm-docker.packages.python.urihim.handlers  [13 funcs]
+  urikvm-docker.packages.python.urihim.handlers  [14 funcs]
     _driver  CC=6  out:8
     _pyautogui  CC=3  out:3
     _real_allowed  CC=2  out:3
@@ -2794,7 +2866,7 @@ MODULES:
     screenshot  CC=5  out:18
   urikvm-docker.packages.python.urikvmedge.cli  [1 funcs]
     build_runtime  CC=6  out:11
-  urikvm-docker.packages.python.urillm.handlers  [18 funcs]
+  urikvm-docker.packages.python.urillm.handlers  [15 funcs]
     _analyze_litellm  CC=6  out:11
     _analyze_openai  CC=10  out:13
     _box_center  CC=1  out:4
@@ -2867,6 +2939,10 @@ MODULES:
     _tesseract_ocr  CC=9  out:23
     image_text  CC=6  out:8
     latest_text  CC=2  out:5
+  urirdp-docker.packages.python.urirdp_shell.handlers  [3 funcs]
+    _detect_display  CC=5  out:6
+    _mock  CC=2  out:2
+    shell_run  CC=16  out:18
   urirdp-docker.packages.python.urirdpedge.cli  [1 funcs]
     build_runtime  CC=10  out:16
   uristepper-docker.packages.python.uristepper.drivers  [1 funcs]
@@ -3041,6 +3117,11 @@ EDGES:
   packages.python.urisysedge.env.resolve_env_var → packages.python.urisysedge.env.load_env_policy
   packages.python.urisysedge.env.resolve_env_var → urienv-docker.packages.python.urienv.src.urienv.handlers.secret_value
   packages.python.urisysedge.env.resolve_env_var → urienv-docker.packages.python.urienv.src.urienv.handlers.var_value
+  src.urisys.cli.print_json → scripts.run-nl-log-smoke.print
+  src.urisys.cli.build_parser → src.urisys.cli._add_runtime_flags
+  src.urisys.cli.main → src.urisys.cli.build_parser
+  src.urisys.cli.main → src.urisys.cli.resolve_markpact_source
+  src.urisys.cli.main → src.urisys.cli.print_json
   src.urisys.http_server.create_server → src.urisys.http_server._send
   src.urisys.http_server.create_server → src.urisys.http_server._read_json
   src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.load_flow
@@ -3075,11 +3156,6 @@ EDGES:
   uristepper-docker.packages.python.uristepper.handlers.stop → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
   uristepper-docker.packages.python.uristepper.handlers.move_relative → uristepper-docker.packages.python.uristepper.handlers._device_axis
   uristepper-docker.packages.python.uristepper.handlers.move_relative → uristepper-docker.packages.python.uristepper.handlers._enforce_safety
-  uristepper-docker.packages.python.uristepper.handlers.move_relative → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
-  uristepper-docker.packages.python.uristepper.handlers.move_absolute → uristepper-docker.packages.python.uristepper.handlers._device_axis
-  uristepper-docker.packages.python.uristepper.handlers.move_absolute → uristepper-docker.packages.python.uristepper.handlers._enforce_safety
-  uristepper-docker.packages.python.uristepper.handlers.move_absolute → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
-  uristepper-docker.packages.python.uristepper.handlers.home → uristepper-docker.packages.python.uristepper.handlers._device_axis
 ```
 
 ## Test Contracts
