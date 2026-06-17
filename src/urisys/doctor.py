@@ -6,6 +6,8 @@ import sys
 from dataclasses import asdict, dataclass
 from typing import Any, Literal
 
+from .node_install import pip_spec as node_pip_spec
+
 CheckStatus = Literal["ok", "warn", "fail"]
 
 
@@ -168,7 +170,6 @@ def _check_wayland_him() -> Check | None:
 
 
 def _check_uricore_authentic() -> Check | None:
-    from .node_install import pip_spec as node_pip_spec
     from .uricore_install import diagnose_uricore, is_wrong_uricore_installed, wheel_url
 
     diag = diagnose_uricore()
@@ -235,7 +236,6 @@ def _check_uricore_dist() -> Check:
 
 
 def run_doctor(*, min_version: str | None = "0.1.25") -> dict[str, Any]:
-    from .node_install import pip_spec as node_pip_spec
     from .uricore_install import wheel_url
 
     checks: list[Check] = [

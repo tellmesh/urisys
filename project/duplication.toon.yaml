@@ -1,12 +1,12 @@
-# redup/duplication | 2 groups | 45f 4797L | 2026-06-17
+# redup/duplication | 2 groups | 45f 4798L | 2026-06-17
 
 SUMMARY:
   files_scanned: 45
-  total_lines:   4797
+  total_lines:   4798
   dup_groups:    2
   dup_fragments: 4
   saved_lines:   15
-  scan_ms:       2197
+  scan_ms:       2645
 
 HOTSPOTS[4] (files with most duplication):
   scripts/report/run_analysis.py  dup=8L  groups=1  frags=1  (0.2%)
@@ -19,7 +19,7 @@ DUPLICATES[2] (ranked by impact):
       scripts/report/run_analysis.py:122-129  (write_run_analysis)
       scripts/report/session_io.py:12-19  (write_session_report)
   [487da026fcebd9df]   EXAC  _pkg_version  L=7 N=2 saved=7 sim=1.00
-      src/urisys/doctor.py:20-26  (_pkg_version)
+      src/urisys/doctor.py:22-28  (_pkg_version)
       src/urisys/uricore_install.py:38-44  (_pkg_version)
 
 REFACTOR[2] (ranked by priority):

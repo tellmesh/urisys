@@ -1,4 +1,4 @@
-# urisys | 341 func | 62f | 13690L | shell | 2026-06-17
+# urisys | 341 func | 62f | 13691L | shell | 2026-06-17
 # generated in 0.00s
 
 HEALTH:
@@ -23,7 +23,7 @@ MODULES[204] (top by size):
   M[src/urisys/managers/markpact_manager.py] 401L C:1 F:19 CC↑21 D:0 (python)
   M[scripts/pack_sync.py] 347L C:0 F:13 CC↑28 D:0 (python)
   M[scripts/test_sessions/lab_flows.py] 319L C:0 F:5 CC↑13 D:0 (python)
-  M[src/urisys/doctor.py] 287L C:1 F:11 CC↑11 D:3 (python)
+  M[src/urisys/doctor.py] 288L C:1 F:11 CC↑11 D:3 (python)
   M[src/urisys/cli.py] 282L C:0 F:6 CC↑36 D:0 (python)
   M[scripts/pack_registry.py] 260L C:1 F:9 CC↑17 D:1 (python)
   M[urisys-automation-lab/server/automation_lab_server.py] 247L C:1 F:9 CC↑23 D:0 (python)
@@ -43,10 +43,10 @@ HOTSPOTS[10]:
 
 REFACTOR[15]:
   [1] H/L Split main (CC=36)
-  [2] H/L Split session_urirdp_real_docker (CC=30)
-  [3] H/L Split main (CC=28)
-  [4] H/L Split run_init (CC=41)
+  [2] H/L Split run_init (CC=41)
+  [3] H/L Split session_urirdp_real_docker (CC=30)
+  [4] H/L Split main (CC=28)
   [5] H/H Split god module scripts/run_test_sessions.py (782L, 0 classes)
 
 EVOLUTION:
-  2026-06-17 CC̄=4.4 crit=48 13690L // Automated analysis
+  2026-06-17 CC̄=4.4 crit=48 13691L // Automated analysis

@@ -72,6 +72,10 @@
 - **Classes**: 1
 - **File**: `automation_lab_server.py`
 
+### src.urisys.init_setup
+- **Functions**: 8
+- **File**: `init_setup.py`
+
 ### scripts.report.session_markdown
 - **Functions**: 8
 - **File**: `session_markdown.py`
@@ -79,10 +83,6 @@
 ### scripts.test_sessions.lab_rdp
 - **Functions**: 8
 - **File**: `lab_rdp.py`
-
-### src.urisys.init_setup
-- **Functions**: 8
-- **File**: `init_setup.py`
 
 ### urirdp-docker.docker.bootstrap-rdp-session
 - **Functions**: 7
@@ -423,8 +423,8 @@ Functions exposed as public API (no underscore prefix):
 - `src.urisys.cli.main` - 68 calls
 - `src.urisys.cli.build_parser` - 61 calls
 - `src.urisys.managers.markpact_manager.MarkpactManager.compile` - 46 calls
-- `scripts.run_test_sessions.session_automation_lab` - 43 calls
 - `src.urisys.init_setup.run_init` - 43 calls
+- `scripts.run_test_sessions.session_automation_lab` - 43 calls
 - `src.urisys.managers.markpact_manager.MarkpactManager.run_tests` - 42 calls
 - `urisys-automation-lab.server.automation_lab_server.LabHandler.do_POST` - 41 calls
 - `urisys-automation-lab.server.flow_runner.run_flow_file` - 40 calls

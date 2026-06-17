@@ -1,9 +1,10 @@
-# code2llm | 204f 13690L | shell:65,python:50,yaml:42,json:14,yml:11,toml:7,javascript:2,txt:2,conf:1,gui:1 | 2026-06-17
+# code2llm | 204f 13691L | shell:65,python:50,yaml:42,json:14,yml:11,toml:7,javascript:2,txt:2,conf:1,gui:1 | 2026-06-17
 # generated in 0.03s
 # CC̅=4.4 | critical:16/341 | dups:0 | cycles:0
 
 HEALTH[16]:
   🟡 CC    main CC=36 (limit:15)
+  🟡 CC    run_init CC=41 (limit:15)
   🟡 CC    validate_contract CC=23 (limit:15)
   🟡 CC    validate_implementation CC=18 (limit:15)
   🟡 CC    compile CC=21 (limit:15)
@@ -18,7 +19,6 @@ HEALTH[16]:
   🟡 CC    infer_steps CC=20 (limit:15)
   🟡 CC    build_lab_runtime CC=17 (limit:15)
   🟡 CC    do_POST CC=23 (limit:15)
-  🟡 CC    run_init CC=41 (limit:15)
 
 REFACTOR[1]:
   1. split 16 high-CC methods  (CC>15)
@@ -128,7 +128,7 @@ PIPELINES[128]:
 LAYERS:
   src/                            CC̄=4.7    ←in:0  →out:0
   │ !! markpact_manager           401L  1C   19m  CC=21     ←0
-  │ doctor                     287L  1C   11m  CC=11     ←3
+  │ doctor                     288L  1C   11m  CC=11     ←3
   │ !! cli                        282L  0C    6m  CC=36     ←0
   │ !! init_setup                 236L  0C    8m  CC=41     ←2
   │ source_manager             224L  2C   11m  CC=11     ←0
@@ -374,12 +374,12 @@ COUPLING:
   urisys-automation-lab.server                             6                                                                                                                      ──                              
          urikvm-docker.scripts                             2                                                                                        ←1                                                          ──
   CYCLES: none
+  HUB: scripts.test_sessions/ (fan-in=90)
   HUB: scripts/ (fan-in=28)
   HUB: scripts.report/ (fan-in=29)
-  HUB: scripts.test_sessions/ (fan-in=90)
+  SMELL: scripts.test_sessions/ fan-out=9 → split needed
   SMELL: scripts/ fan-out=117 → split needed
   SMELL: src.urisys/ fan-out=8 → split needed
-  SMELL: scripts.test_sessions/ fan-out=9 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon
