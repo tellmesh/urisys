@@ -3465,7 +3465,7 @@ wheels = [
 [[package]]
 name = "urihim"
 version = "0.1.5"
-source = { editable = "../urikvm-docker/packages/python/urihim" }
+source = { editable = "../../urihim" }
 dependencies = [
     { name = "urisysedge" },
 ]
@@ -3477,15 +3477,19 @@ real = [
 
 [package.metadata]
 requires-dist = [
+    { name = "costs", marker = "extra == 'dev'", specifier = ">=0.1.20" },
+    { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
+    { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
     { name = "pyautogui", marker = "extra == 'real'", specifier = ">=0.9.54" },
-    { name = "urisysedge", editable = "../packages/python/urisysedge" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
+    { name = "urisysedge", editable = "../../urisysedge" },
 ]
-provides-extras = ["real"]
+provides-extras = ["real", "dev"]
 
 [[package]]
 name = "urikvm"
 version = "0.1.1"
-source = { editable = "../urikvm-docker/packages/python/urikvm" }
+source = { editable = "../../urikvm" }
 dependencies = [
     { name = "urisysedge" },
 ]
@@ -3498,16 +3502,20 @@ real = [
 
 [package.metadata]
 requires-dist = [
+    { name = "costs", marker = "extra == 'dev'", specifier = ">=0.1.20" },
+    { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
     { name = "mss", marker = "extra == 'real'", specifier = ">=9.0" },
+    { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
     { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
-    { name = "urisysedge", editable = "../packages/python/urisysedge" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
+    { name = "urisysedge", editable = "../../urisysedge" },
 ]
-provides-extras = ["real"]
+provides-extras = ["real", "dev"]
 
 [[package]]
 name = "urillm"
-version = "0.1.1"
-source = { editable = "../urikvm-docker/packages/python/urillm" }
+version = "0.1.0"
+source = { editable = "../../urillm" }
 dependencies = [
     { name = "urioperators" },
     { name = "urisysedge" },
@@ -3520,16 +3528,18 @@ vision = [
 
 [package.metadata]
 requires-dist = [
+    { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
     { name = "litellm", marker = "extra == 'vision'", specifier = ">=1.40" },
-    { name = "urioperators", editable = "../packages/python/urioperators" },
-    { name = "urisysedge", editable = "../packages/python/urisysedge" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
+    { name = "urioperators", editable = "../../urioperators" },
+    { name = "urisysedge", editable = "../../urisysedge" },
 ]
-provides-extras = ["vision"]
+provides-extras = ["vision", "dev"]
 
 [[package]]
 name = "uriocr"
 version = "0.1.0"
-source = { editable = "../urikvm-docker/packages/python/uriocr" }
+source = { editable = "../../uriocr" }
 dependencies = [
     { name = "urisysedge" },
 ]
@@ -3542,16 +3552,18 @@ real = [
 
 [package.metadata]
 requires-dist = [
+    { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
     { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
     { name = "pytesseract", marker = "extra == 'real'", specifier = ">=0.3.10" },
-    { name = "urisysedge", editable = "../packages/python/urisysedge" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
+    { name = "urisysedge", editable = "../../urisysedge" },
 ]
-provides-extras = ["real"]
+provides-extras = ["real", "dev"]
 
 [[package]]
 name = "urioperators"
 version = "0.1.0"
-source = { editable = "../packages/python/urioperators" }
+source = { editable = "../../urioperators" }
 
 [[package]]
 name = "urisys-node"
@@ -3606,11 +3618,11 @@ requires-dist = [
     { name = "pytesseract", marker = "extra == 'real'", specifier = ">=0.3.10" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
     { name = "pyyaml", specifier = ">=6.0" },
-    { name = "urihim", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm-docker/packages/python/urihim" },
-    { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm-docker/packages/python/urikvm" },
-    { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "../urikvm-docker/packages/python/urillm" },
-    { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm-docker/packages/python/uriocr" },
-    { name = "urisysedge", editable = "../packages/python/urisysedge" },
+    { name = "urihim", extras = ["real"], marker = "extra == 'kvm'", editable = "../../urihim" },
+    { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "../../urikvm" },
+    { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "../../urillm" },
+    { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "../../uriocr" },
+    { name = "urisysedge", editable = "../../urisysedge" },
     { name = "zeroconf", marker = "extra == 'discovery'", specifier = ">=0.131.0" },
 ]
 provides-extras = ["real", "kvm", "discovery", "dev"]
@@ -3626,7 +3638,16 @@ dev = [
 [[package]]
 name = "urisysedge"
 version = "0.1.1"
-source = { editable = "../packages/python/urisysedge" }
+source = { editable = "../../urisysedge" }
+
+[package.metadata]
+requires-dist = [
+    { name = "costs", marker = "extra == 'dev'", specifier = ">=0.1.20" },
+    { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
+    { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
+]
+provides-extras = ["dev"]
 
 [[package]]
 name = "urllib3"

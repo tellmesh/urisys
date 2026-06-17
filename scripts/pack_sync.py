@@ -1,120 +1,57 @@
 #!/usr/bin/env python3
-"""Sync vendored capability packs between urisys monorepo and tellmesh/* repos.
+"""Sync capability packs: urisys monorepo ↔ tellmesh/* sibling repos.
 
-Canonical flow (default): monorepo vendored → tellmesh/{pack}/{pack}/
+Canonical source after migration: tellmesh/{repo}/ (no vendored duplicate in urisys).
 
 Usage:
-  python3 scripts/pack_sync.py to-repo urihim urillm
-  python3 scripts/pack_sync.py to-repo --all
-  python3 scripts/pack_sync.py check --all
-  python3 scripts/pack_sync.py init-repo urimail
+  python3 scripts/pack_sync.py to-repo --all      # push remaining vendored → sibling (once)
+  python3 scripts/pack_sync.py promote --all      # to-repo + remove vendored copies
+  python3 scripts/pack_sync.py check --all        # drift or missing sibling
+  python3 scripts/pack_sync.py init-repo urikvmedge
 """
 
 from __future__ import annotations
 
 import argparse
 import hashlib
-import re
 import shutil
 import sys
 import tomllib
-from dataclasses import dataclass, field
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-TELLMESH = ROOT.parent
+_SCRIPTS = Path(__file__).resolve().parent
+if str(_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS))
 
-MODULE_FILES = ("__init__.py", "handlers.py", "routes.py", "manifest.yaml")
-
-KVM_PACKS = (
-    "urikvm",
-    "urihim",
-    "uriocr",
-    "urillm",
-    "urimail",
-    "urioffice",
-    "urivql",
+from pack_registry import (
+    ROOT,
+    SIBLING_ONLY,
+    TELLMESH,
+    PackSpec,
+    pack_specs,
+    sibling_uv_path,
 )
 
-OFFICE_PACKS = ("urimail", "urioffice", "urivql")
 
-PACK_TESTS: dict[str, list[str]] = {
-    "urihim": ["test_him_driver.py", "test_him_scroll.py"],
-    "urillm": ["test_llm_plan.py", "test_vision_dispatch.py"],
-    "uriocr": ["test_ocr_llm.py"],
-    "urikvm": ["test_kvm.py"],
-    "urimail": [],
-    "urioffice": [],
-    "urivql": [],
-}
+def repo_module_dir(spec: PackSpec) -> Path:
+    if spec.layout == "flat":
+        return spec.repo
+    return spec.repo / spec.name
 
 
-@dataclass
-class PackSpec:
-    name: str
-    vendored: Path
-    repo: Path
-    module_files: tuple[str, ...] = MODULE_FILES
-    test_files: tuple[str, ...] = ()
-    optional_extras: dict[str, list[str]] = field(default_factory=dict)
-    repo_readme: str = ""
+def vendored_module_dir(spec: PackSpec) -> Path:
+    if spec.vendored is None:
+        raise FileNotFoundError(f"no vendored path for {spec.name}")
+    return spec.vendored
 
 
-def _vendored_kvm(name: str) -> Path:
-    return ROOT / "urikvm-docker" / "packages" / "python" / name
-
-
-def _repo(name: str) -> Path:
-    return TELLMESH / name
-
-
-def pack_specs() -> dict[str, PackSpec]:
-    specs: dict[str, PackSpec] = {
-        "urisysedge": PackSpec(
-            name="urisysedge",
-            vendored=ROOT / "packages" / "python" / "urisysedge",
-            repo=_repo("urisysedge"),
-            module_files=("__init__.py", "runtime.py", "env.py"),
-            test_files=(),
-            repo_readme="Shared URI edge runtime for urisys capability packs.",
-        ),
-    }
-    for name in KVM_PACKS:
-        extras: dict[str, list[str]] = {}
-        if name == "urihim":
-            extras["real"] = ["pyautogui>=0.9.54"]
-        elif name == "uriocr":
-            extras["real"] = ["pytesseract>=0.3.10", "Pillow>=10.0"]
-        elif name == "urillm":
-            extras["vision"] = ["litellm>=1.40"]
-        elif name == "urioffice":
-            extras["writer"] = ["python-docx>=1.1.0"]
-        specs[name] = PackSpec(
-            name=name,
-            vendored=_vendored_kvm(name),
-            repo=_repo(name),
-            test_files=tuple(PACK_TESTS.get(name, ())),
-            optional_extras=extras,
-            repo_readme=f"{name}:// URI capability pack for urisys-node.",
-        )
-    return specs
-
-
-def read_version(vendored: Path) -> str:
-    data = tomllib.loads((vendored / "pyproject.toml").read_text(encoding="utf-8"))
+def read_version(path: Path) -> str:
+    data = tomllib.loads((path / "pyproject.toml").read_text(encoding="utf-8"))
     return str(data["project"]["version"]).strip()
 
 
 def file_hash(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
-
-
-def repo_module_dir(spec: PackSpec) -> Path:
-    return spec.repo / spec.name
-
-
-def vendored_module_dir(spec: PackSpec) -> Path:
-    return spec.vendored
 
 
 def sync_file(src: Path, dst: Path, *, dry_run: bool) -> bool:
@@ -130,6 +67,8 @@ def sync_file(src: Path, dst: Path, *, dry_run: bool) -> bool:
 
 def sync_to_repo(spec: PackSpec, *, dry_run: bool = False, tests: bool = True) -> list[str]:
     changed: list[str] = []
+    if spec.vendored is None or not spec.vendored.is_dir():
+        return changed
     src_dir = vendored_module_dir(spec)
     dst_dir = repo_module_dir(spec)
     if not src_dir.is_dir():
@@ -144,6 +83,7 @@ def sync_to_repo(spec: PackSpec, *, dry_run: bool = False, tests: bool = True) -
     version_path = spec.repo / "VERSION"
     if not version_path.is_file() or version_path.read_text(encoding="utf-8").strip() != version:
         if not dry_run:
+            version_path.parent.mkdir(parents=True, exist_ok=True)
             version_path.write_text(f"{version}\n", encoding="utf-8")
         changed.append(f"{spec.name}/VERSION")
 
@@ -161,6 +101,8 @@ def sync_to_repo(spec: PackSpec, *, dry_run: bool = False, tests: bool = True) -
 def check_drift(spec: PackSpec) -> list[str]:
     if not spec.repo.is_dir():
         return [f"{spec.name}: repo missing at {spec.repo}"]
+    if spec.vendored is None or not spec.vendored.exists():
+        return _check_promoted(spec)
     drifts: list[str] = []
     src_dir = vendored_module_dir(spec)
     dst_dir = repo_module_dir(spec)
@@ -189,18 +131,59 @@ def check_drift(spec: PackSpec) -> list[str]:
     return drifts
 
 
+def _check_promoted(spec: PackSpec) -> list[str]:
+    issues: list[str] = []
+    dst_dir = repo_module_dir(spec)
+    if not dst_dir.is_dir():
+        issues.append(f"{spec.name}: promoted but repo module dir missing {dst_dir}")
+        return issues
+    if spec.vendored is not None and spec.vendored.is_dir():
+        issues.append(f"{spec.name}: vendored copy still present at {spec.vendored} (run promote)")
+    if not (spec.repo / "pyproject.toml").is_file():
+        issues.append(f"{spec.name}: repo missing pyproject.toml")
+    return issues
+
+
+def remove_vendored(spec: PackSpec, *, dry_run: bool = False) -> bool:
+    if spec.vendored is None or not spec.vendored.is_dir():
+        return False
+    if dry_run:
+        print(f"would remove {spec.vendored}")
+        return True
+    shutil.rmtree(spec.vendored)
+    return True
+
+
 def _repo_pyproject(spec: PackSpec) -> str:
-    version = read_version(spec.vendored)
+    version_path = spec.vendored / "pyproject.toml" if spec.vendored and (spec.vendored / "pyproject.toml").is_file() else spec.repo / "pyproject.toml"
+    version = read_version(version_path.parent) if version_path.is_file() else "0.1.0"
     extras_lines = []
     for extra_name, deps in spec.optional_extras.items():
         dep_str = ", ".join(f'"{d}"' for d in deps)
         extras_lines.append(f'{extra_name} = [{dep_str}]')
     optional_block = ""
     if extras_lines:
-        optional_block = "\n[project.optional-dependencies]\n" + "\n".join(extras_lines) + "\ndev = [\"pytest>=8.0\", \"goal>=2.1.0\"]\n"
+        optional_block = "\n[project.optional-dependencies]\n" + "\n".join(extras_lines) + '\ndev = ["pytest>=8.0", "goal>=2.1.0"]\n'
     package_data = ""
-    if (spec.vendored / "manifest.yaml").is_file():
+    if (repo_module_dir(spec) / "manifest.yaml").is_file() or (spec.vendored and (spec.vendored / "manifest.yaml").is_file()):
         package_data = f'\n[tool.setuptools.package-data]\n{spec.name} = ["manifest.yaml"]\n'
+    deps = ['"urisysedge>=0.1.0"'] + [f'"{d}"' for d in spec.extra_deps]
+    deps_str = ", ".join(deps)
+    if spec.layout == "flat":
+        setuptools = f"""
+[tool.setuptools]
+packages = ["{spec.name}"]
+package-dir = {{ "{spec.name}" = "." }}
+"""
+    else:
+        setuptools = f"""
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["{spec.name}*"]
+"""
+    uv_extra = ""
+    if any("urioperators" in d for d in spec.extra_deps):
+        uv_extra = '\nurioperators = { path = "../urioperators", editable = true }\n'
     return f"""[build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
@@ -214,14 +197,11 @@ requires-python = ">=3.10"
 license = "Apache-2.0"
 authors = [{{ name = "urisys contributors" }}, {{ name = "Tom Sapletta", email = "tom@sapletta.com" }}]
 keywords = ["uri", "urisys", "{spec.name}"]
-dependencies = ["urisysedge>=0.1.0"]
+dependencies = [{deps_str}]
 {optional_block}
 [tool.uv.sources]
-urisysedge = {{ path = "../urisysedge", editable = true }}
-
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["{spec.name}*"]
+urisysedge = {{ path = "../urisysedge", editable = true }}{uv_extra}
+{setuptools}
 {package_data}
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -234,27 +214,23 @@ def init_repo(spec: PackSpec, *, force: bool = False) -> None:
             print(f"skip init {spec.name}: repo exists at {spec.repo}")
             return
     spec.repo.mkdir(parents=True, exist_ok=True)
-    (spec.repo / spec.name).mkdir(parents=True, exist_ok=True)
+    if spec.layout != "flat":
+        (spec.repo / spec.name).mkdir(parents=True, exist_ok=True)
     (spec.repo / "tests").mkdir(parents=True, exist_ok=True)
-    (spec.repo / "pyproject.toml").write_text(_repo_pyproject(spec), encoding="utf-8")
-    (spec.repo / "README.md").write_text(
-        f"# {spec.name}\n\n{spec.repo_readme}\n\nLicensed under Apache-2.0.\n",
-        encoding="utf-8",
-    )
+    if not (spec.repo / "pyproject.toml").is_file():
+        (spec.repo / "pyproject.toml").write_text(_repo_pyproject(spec), encoding="utf-8")
+    if not (spec.repo / "README.md").is_file():
+        (spec.repo / "README.md").write_text(
+            f"# {spec.name}\n\n{spec.repo_readme}\n\nLicensed under Apache-2.0.\n",
+            encoding="utf-8",
+        )
     license_src = TELLMESH / "uriocr" / "LICENSE"
-    if license_src.is_file():
+    if license_src.is_file() and not (spec.repo / "LICENSE").is_file():
         shutil.copy2(license_src, spec.repo / "LICENSE")
     gitignore_src = TELLMESH / "uriocr" / ".gitignore"
-    if gitignore_src.is_file():
+    if gitignore_src.is_file() and not (spec.repo / ".gitignore").is_file():
         shutil.copy2(gitignore_src, spec.repo / ".gitignore")
-    goal_src = TELLMESH / "uriocr" / "goal.yaml"
-    if goal_src.is_file() and not (spec.repo / "goal.yaml").is_file():
-        text = goal_src.read_text(encoding="utf-8")
-        text = re.sub(r"name: uriocr", f"name: {spec.name}", text)
-        text = re.sub(r"scope: uriocr", f"scope: {spec.name}", text)
-        text = re.sub(r"dist/uriocr-", f"dist/{spec.name}-", text)
-        (spec.repo / "goal.yaml").write_text(text, encoding="utf-8")
-    test_path = spec.repo / "tests" / "test_import.py"
+    test_path = spec.repo / "tests" / f"test_import_{spec.name}.py"
     if not test_path.is_file():
         test_path.write_text(
             f'def test_import_{spec.name}():\n'
@@ -266,32 +242,43 @@ def init_repo(spec: PackSpec, *, force: bool = False) -> None:
     print(f"initialized {spec.name} at {spec.repo}")
 
 
+def promote(spec: PackSpec, *, dry_run: bool = False) -> None:
+    sync_to_repo(spec, dry_run=dry_run, tests=True)
+    remove_vendored(spec, dry_run=dry_run)
+
+
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Sync urisys vendored packs ↔ tellmesh repos")
+    parser = argparse.ArgumentParser(description="Sync urisys packs ↔ tellmesh sibling repos")
     sub = parser.add_subparsers(dest="cmd", required=True)
 
-    p_to = sub.add_parser("to-repo", help="Copy monorepo vendored → tellmesh repo")
-    p_to.add_argument("packs", nargs="*", default=[])
-    p_to.add_argument("--all", action="store_true")
-    p_to.add_argument("--dry-run", action="store_true")
-    p_to.add_argument("--no-tests", action="store_true")
+    for cmd_name, help_text in (
+        ("to-repo", "Copy vendored → tellmesh repo"),
+        ("check", "Report drift or promote status"),
+        ("promote", "to-repo then remove vendored copy"),
+    ):
+        p = sub.add_parser(cmd_name, help=help_text)
+        p.add_argument("packs", nargs="*", default=[])
+        p.add_argument("--all", action="store_true")
+        if cmd_name != "check":
+            p.add_argument("--dry-run", action="store_true")
+        if cmd_name == "to-repo":
+            p.add_argument("--no-tests", action="store_true")
 
-    p_check = sub.add_parser("check", help="Report drift without copying")
-    p_check.add_argument("packs", nargs="*", default=[])
-    p_check.add_argument("--all", action="store_true")
-
-    p_init = sub.add_parser("init-repo", help="Scaffold tellmesh repo from urihim template")
+    p_init = sub.add_parser("init-repo", help="Scaffold tellmesh repo from vendored copy")
     p_init.add_argument("packs", nargs="+")
     p_init.add_argument("--force", action="store_true")
+
+    p_uv = sub.add_parser("print-uv-sources", help="Print [tool.uv.sources] snippet for promoted packs")
+    p_uv.add_argument("packs", nargs="*", default=[])
+    p_uv.add_argument("--all", action="store_true")
 
     args = parser.parse_args(argv)
     specs = pack_specs()
     names = list(specs.keys()) if getattr(args, "all", False) else (args.packs or [])
-    if not names and args.cmd != "init-repo":
+    if not names and args.cmd not in ("init-repo",):
         parser.error("specify pack names or --all")
 
     if args.cmd == "to-repo":
-        total: list[str] = []
         for name in names:
             if name not in specs:
                 print(f"unknown pack: {name}", file=sys.stderr)
@@ -307,7 +294,15 @@ def main(argv: list[str] | None = None) -> int:
                     print(f"  - {item}")
             else:
                 print(f"{name}: already up to date")
-            total.extend(changed)
+        return 0
+
+    if args.cmd == "promote":
+        for name in names:
+            if name not in specs:
+                print(f"unknown pack: {name}", file=sys.stderr)
+                return 2
+            promote(specs[name], dry_run=args.dry_run)
+            print(f"{name}: promoted → {specs[name].repo}")
         return 0
 
     if args.cmd == "check":
@@ -331,6 +326,12 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"unknown pack: {name}", file=sys.stderr)
                 return 2
             init_repo(specs[name], force=args.force)
+        return 0
+
+    if args.cmd == "print-uv-sources":
+        for name in names:
+            if name in SIBLING_ONLY or name in specs:
+                print(f'{name} = {{ path = "{sibling_uv_path(name)}", editable = true }}')
         return 0
 
     return 1

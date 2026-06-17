@@ -20,7 +20,7 @@ URI control system managers/controllers over separate uri* capability packs.
 ## Metadata
 
 - **name**: `urisys`
-- **version**: `0.1.33`
+- **version**: `0.1.34`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -40,7 +40,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: urisys;
-  version: 0.1.33;
+  version: 0.1.34;
 }
 
 dependencies {
@@ -201,7 +201,7 @@ ASSERT[14]{field, operator, expected}:
 ```yaml
 project:
   name: urisys
-  version: 0.1.33
+  version: 0.1.34
   env: local
 ```
 
@@ -1783,7 +1783,7 @@ D:
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.33', 'python').
+project_metadata('urisys', '0.1.34', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 52, 'less').
@@ -3078,32 +3078,30 @@ sumd_interface('cli', '').
 
 ## Call Graph
 
-*373 nodes · 500 edges · 77 modules · CC̄=4.3*
+*365 nodes · 500 edges · 74 modules · CC̄=4.3*
 
 ### Hubs (by degree)
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
 | `print` *(in scripts.run-nl-log-smoke)* | 0 | 82 | 0 | **82** |
-| `make_handler` *(in urisys-node.packages.python.urisysnode.serve)* | 2 | 1 | 77 | **78** |
 | `session_urirdp_real_docker` *(in scripts.run_test_sessions)* | 30 ⚠ | 0 | 69 | **69** |
 | `main` *(in src.urisys.cli)* | 36 ⚠ | 0 | 68 | **68** |
 | `run_cmd` *(in scripts.test_sessions.util)* | 6 | 51 | 12 | **63** |
 | `build_parser` *(in src.urisys.cli)* | 1 | 1 | 61 | **62** |
-| `session_automation_lab` *(in scripts.run_test_sessions)* | 16 ⚠ | 1 | 43 | **44** |
 | `make_handler` *(in uristepper-docker.packages.python.uristepperedge.server)* | 1 | 1 | 43 | **44** |
+| `session_automation_lab` *(in scripts.run_test_sessions)* | 16 ⚠ | 1 | 43 | **44** |
+| `run_flow_file` *(in urisys-automation-lab.server.flow_runner)* | 13 ⚠ | 1 | 40 | **41** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
-# generated in 0.19s
-# nodes: 373 | edges: 500 | modules: 77
+# generated in 0.39s
+# nodes: 365 | edges: 500 | modules: 74
 # CC̄=4.3
 
 HUBS[20]:
   scripts.run-nl-log-smoke.print
     CC=0  in:82  out:0  total:82
-  urisys-node.packages.python.urisysnode.serve.make_handler
-    CC=2  in:1  out:77  total:78
   scripts.run_test_sessions.session_urirdp_real_docker
     CC=30  in:0  out:69  total:69
   src.urisys.cli.main
@@ -3112,10 +3110,10 @@ HUBS[20]:
     CC=6  in:51  out:12  total:63
   src.urisys.cli.build_parser
     CC=1  in:1  out:61  total:62
-  scripts.run_test_sessions.session_automation_lab
-    CC=16  in:1  out:43  total:44
   uristepper-docker.packages.python.uristepperedge.server.make_handler
     CC=1  in:1  out:43  total:44
+  scripts.run_test_sessions.session_automation_lab
+    CC=16  in:1  out:43  total:44
   urisys-automation-lab.server.flow_runner.run_flow_file
     CC=13  in:1  out:40  total:41
   urienv-docker.packages.python.urienv.src.urienv.handlers._cfg
@@ -3132,16 +3130,23 @@ HUBS[20]:
     CC=5  in:21  out:13  total:34
   urikvm-docker.packages.python.urihim.handlers.mouse_click
     CC=17  in:0  out:34  total:34
-  scripts.test_sessions.lab_flows.session_lab_10_flows
-    CC=7  in:0  out:33  total:33
   urirdp-docker.packages.python.urirdp_browser.handlers.open_page
     CC=15  in:0  out:33  total:33
-  scripts.run_test_sessions.main
-    CC=13  in:0  out:32  total:32
+  scripts.test_sessions.lab_flows.session_lab_10_flows
+    CC=7  in:0  out:33  total:33
   src.urisys.http_server.create_server
     CC=1  in:1  out:31  total:32
+  scripts.run_test_sessions.main
+    CC=13  in:0  out:32  total:32
+  packages.python.urisysedge.env.resolve_env_var
+    CC=11  in:23  out:9  total:32
 
 MODULES:
+  packages.python.urioperators.llm_chat  [2 funcs]
+    litellm_chat  CC=2  out:3
+    openai_compatible_chat  CC=1  out:9
+  packages.python.urioperators.llm_json  [1 funcs]
+    parse_json_response  CC=5  out:5
   packages.python.urisysedge.env  [6 funcs]
     _env_config  CC=7  out:6
     _env_policy_candidates  CC=2  out:7
@@ -3212,9 +3217,8 @@ MODULES:
   scripts.run-office-writer-e2e  [2 funcs]
     save_json  CC=0  out:0
     wait_health  CC=0  out:0
-  scripts.run-urisys-node-docker-e2e  [2 funcs]
+  scripts.run-urisys-node-docker-e2e  [1 funcs]
     http_json  CC=0  out:0
-    remote_call  CC=0  out:0
   scripts.run_test_sessions  [14 funcs]
     _monorepo_root  CC=4  out:3
     main  CC=13  out:32
@@ -3257,6 +3261,12 @@ MODULES:
     prepare_urirdp_data  CC=4  out:6
     read_meta  CC=3  out:3
     run_cmd  CC=6  out:12
+  src.urisys.bootstrap  [5 funcs]
+    _doctor_main  CC=3  out:7
+    _init_main  CC=6  out:18
+    _missing_uricore_payload  CC=1  out:1
+    _print_json  CC=1  out:2
+    main  CC=8  out:6
   src.urisys.cli  [5 funcs]
     _add_runtime_flags  CC=1  out:4
     build_parser  CC=1  out:61
@@ -3268,8 +3278,17 @@ MODULES:
   src.urisys.controllers.server_controller  [2 funcs]
     __init__  CC=1  out:1
     serve_forever  CC=1  out:3
-  src.urisys.doctor  [1 funcs]
-    run_doctor  CC=11  out:20
+  src.urisys.doctor  [11 funcs]
+    _check_cli_path  CC=3  out:6
+    _check_import  CC=5  out:12
+    _check_min_version  CC=6  out:5
+    _check_python  CC=3  out:3
+    _check_uricore_authentic  CC=6  out:11
+    _check_uricore_dist  CC=3  out:7
+    _check_wayland_him  CC=3  out:4
+    _parse_version  CC=7  out:6
+    _pkg_version  CC=2  out:1
+    _version_lt  CC=2  out:2
   src.urisys.flow  [2 funcs]
     iter_steps  CC=7  out:8
     load_flow  CC=3  out:5
@@ -3277,10 +3296,26 @@ MODULES:
     _read_json  CC=3  out:5
     _send  CC=1  out:12
     create_server  CC=1  out:31
-  src.urisys.init_setup  [1 funcs]
+  src.urisys.init_setup  [6 funcs]
+    default_pip_specs  CC=1  out:1
+    profile_env  CC=2  out:1
+    render_env_shell  CC=2  out:5
     run_init  CC=34  out:35
+    verify_uri_control  CC=2  out:3
+    write_env_file  CC=2  out:7
   src.urisys.managers.pack_manager  [1 funcs]
     manifest_paths  CC=9  out:20
+  src.urisys.uricore_install  [11 funcs]
+    _dist_top_levels  CC=6  out:7
+    _module_exists  CC=1  out:1
+    _pkg_version  CC=2  out:1
+    diagnose_uricore  CC=4  out:4
+    github_owner  CC=1  out:2
+    github_version  CC=1  out:3
+    is_wrong_uricore_installed  CC=5  out:3
+    pip_run  CC=4  out:2
+    pip_spec  CC=1  out:1
+    repair_uricore  CC=6  out:10
   uribrowser-docker.packages.python.uribrowserdocker.handlers  [6 funcs]
     _profile  CC=1  out:2
     _session_state  CC=1  out:5
@@ -3491,23 +3526,6 @@ MODULES:
   urisys-node.packages.python.uriscreen.portal_capture  [2 funcs]
     _portal_python  CC=6  out:5
     capture_portal_png  CC=8  out:14
-  urisys-node.packages.python.urisysnode.artifact_resolver  [3 funcs]
-    contract_spec_from_release  CC=2  out:4
-    fetch_release  CC=5  out:11
-    run_release  CC=8  out:19
-  urisys-node.packages.python.urisysnode.client  [2 funcs]
-    call_via_route_map  CC=6  out:14
-    remote_call  CC=3  out:8
-  urisys-node.packages.python.urisysnode.display_bootstrap  [7 funcs]
-    _agent_up  CC=2  out:2
-    _agent_url  CC=1  out:2
-    _ensure_session_env  CC=5  out:7
-    _screencast_ready  CC=4  out:9
-    _start_agent  CC=4  out:9
-    _start_screencast  CC=5  out:7
-    bootstrap_wayland_capture  CC=7  out:17
-  urisys-node.packages.python.urisysnode.forward  [1 funcs]
-    forward_call  CC=9  out:8
   urisys-node.packages.python.urisysnode.forward_config  [6 funcs]
     _normalize_entry  CC=11  out:13
     _normalize_release_entry  CC=11  out:15
@@ -3515,55 +3533,28 @@ MODULES:
     load_release_forward_entries  CC=11  out:12
     wire_forward_packs  CC=2  out:2
     wire_release_forward_packs  CC=3  out:4
-  urisys-node.packages.python.urisysnode.handlers  [7 funcs]
-    command_indicator_off  CC=1  out:2
-    command_indicator_on  CC=1  out:4
-    command_install_pack  CC=6  out:13
-    command_register_forward  CC=7  out:12
-    query_health  CC=1  out:2
-    query_identity  CC=2  out:8
-    query_packs  CC=2  out:7
-  urisys-node.packages.python.urisysnode.identity  [11 funcs]
-    _data_dir  CC=1  out:3
-    _hostname  CC=1  out:1
-    _identity_path  CC=1  out:1
-    _pairing_path  CC=1  out:1
-    enroll  CC=3  out:6
-    health_payload  CC=15  out:22
-    load_identity  CC=4  out:15
-    load_pairing  CC=3  out:5
-    require_paired  CC=4  out:5
-    save_identity  CC=1  out:3
-  urisys-node.packages.python.urisysnode.pack_resolver  [5 funcs]
+  urisys-node.packages.python.urisysnode.pack_resolver  [4 funcs]
     auto_install_enabled  CC=1  out:1
     ensure_pack_pypi  CC=3  out:3
     pack_for_scheme  CC=1  out:1
-    pack_importable  CC=2  out:1
     scheme_for_uri  CC=2  out:2
   urisys-node.packages.python.urisysnode.release_verify  [4 funcs]
     _ed25519_verify  CC=3  out:5
     canonical_digest  CC=3  out:5
     signature_required  CC=3  out:2
     verify_release  CC=14  out:15
-  urisys-node.packages.python.urisysnode.router  [5 funcs]
-    _match_pattern  CC=1  out:4
-    load_route_map  CC=3  out:4
-    node_endpoint  CC=5  out:6
-    resolve_remote_route  CC=5  out:3
-    rewrite_uri_for_slave  CC=6  out:5
-  urisys-node.packages.python.urisysnode.serve  [11 funcs]
+  urisys-node.packages.python.urisysnode.serve  [7 funcs]
     _extend_pack_paths  CC=4  out:7
     _register_pack  CC=8  out:13
-    _release_forward_spec  CC=11  out:8
     build_runtime  CC=13  out:28
-    call_uri  CC=20  out:29
     ensure_pack_for_uri  CC=3  out:6
     hotload_release_pack  CC=14  out:17
     load_pack_into_runtime  CC=23  out:23
-    make_handler  CC=2  out:77
     register_forward_pack  CC=13  out:8
 
 EDGES:
+  packages.python.urioperators.llm_chat.openai_compatible_chat → packages.python.urioperators.llm_json.parse_json_response
+  packages.python.urioperators.llm_chat.litellm_chat → packages.python.urioperators.llm_json.parse_json_response
   packages.python.urisysedge.runtime.Runtime.call → packages.python.urisysedge.env.load_env_policy
   packages.python.urisysedge.runtime.run_flow → packages.python.urisysedge.runtime.load_yaml_flow
   packages.python.urisysedge.runtime.serve → scripts.run-nl-log-smoke.print
@@ -3575,6 +3566,31 @@ EDGES:
   packages.python.urisysedge.env.resolve_env_var → packages.python.urisysedge.env.load_env_policy
   packages.python.urisysedge.env.resolve_env_var → urienv-docker.packages.python.urienv.src.urienv.handlers.secret_value
   packages.python.urisysedge.env.resolve_env_var → urienv-docker.packages.python.urienv.src.urienv.handlers.var_value
+  src.urisys.uricore_install.wheel_url → src.urisys.uricore_install.github_owner
+  src.urisys.uricore_install.wheel_url → src.urisys.uricore_install.github_version
+  src.urisys.uricore_install.pip_spec → src.urisys.uricore_install.wheel_url
+  src.urisys.uricore_install.is_wrong_uricore_installed → src.urisys.uricore_install._module_exists
+  src.urisys.uricore_install.is_wrong_uricore_installed → src.urisys.uricore_install._dist_top_levels
+  src.urisys.uricore_install.is_wrong_uricore_installed → src.urisys.uricore_install._pkg_version
+  src.urisys.uricore_install.diagnose_uricore → src.urisys.uricore_install._pkg_version
+  src.urisys.uricore_install.diagnose_uricore → src.urisys.uricore_install._module_exists
+  src.urisys.uricore_install.diagnose_uricore → src.urisys.uricore_install.is_wrong_uricore_installed
+  src.urisys.uricore_install.diagnose_uricore → src.urisys.uricore_install.pip_spec
+  src.urisys.uricore_install.repair_uricore → src.urisys.uricore_install.pip_run
+  src.urisys.uricore_install.repair_uricore → src.urisys.uricore_install.is_wrong_uricore_installed
+  src.urisys.uricore_install.repair_uricore → src.urisys.uricore_install._pkg_version
+  src.urisys.uricore_install.repair_uricore → src.urisys.uricore_install._module_exists
+  src.urisys.uricore_install.repair_uricore → src.urisys.uricore_install.wheel_url
+  src.urisys.uricore_install.repair_uricore → src.urisys.uricore_install.diagnose_uricore
+  src.urisys.bootstrap._print_json → scripts.run-nl-log-smoke.print
+  src.urisys.bootstrap._doctor_main → src.urisys.doctor.run_doctor
+  src.urisys.bootstrap._doctor_main → src.urisys.bootstrap._print_json
+  src.urisys.bootstrap._init_main → src.urisys.init_setup.run_init
+  src.urisys.bootstrap._init_main → src.urisys.bootstrap._print_json
+  src.urisys.bootstrap.main → src.urisys.bootstrap._doctor_main
+  src.urisys.bootstrap.main → src.urisys.bootstrap._init_main
+  src.urisys.bootstrap.main → src.urisys.bootstrap._print_json
+  src.urisys.bootstrap.main → src.urisys.bootstrap._missing_uricore_payload
   src.urisys.cli.print_json → scripts.run-nl-log-smoke.print
   src.urisys.cli.build_parser → src.urisys.cli._add_runtime_flags
   src.urisys.cli.main → src.urisys.cli.build_parser
@@ -3583,37 +3599,10 @@ EDGES:
   src.urisys.cli.main → src.urisys.cli.print_json
   src.urisys.cli.main → src.urisys.init_setup.run_init
   src.urisys.cli.main → scripts.run-nl-log-smoke.print
-  src.urisys.http_server.create_server → src.urisys.http_server._send
-  src.urisys.http_server.create_server → src.urisys.http_server._read_json
-  src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.load_flow
-  src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.iter_steps
-  src.urisys.controllers.server_controller.ServerController.__init__ → src.urisys.http_server.create_server
-  src.urisys.controllers.server_controller.ServerController.serve_forever → scripts.run-nl-log-smoke.print
-  uristepper-docker.packages.python.uristepperedge.runtime.build_runtime → uristepper-docker.packages.python.uristepperedge.runtime.load_json
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_call → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_call → uristepper-docker.packages.python.uristepperedge.cli._json_arg
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_call → scripts.run-nl-log-smoke.print
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_explain → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_explain → scripts.run-nl-log-smoke.print
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_routes → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_routes → scripts.run-nl-log-smoke.print
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_events → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_events → scripts.run-nl-log-smoke.print
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_flow → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_flow → scripts.run-nl-log-smoke.print
-  uristepper-docker.packages.python.uristepperedge.cli.cmd_serve → packages.python.urisysedge.runtime.serve
-  uristepper-docker.packages.python.uristepperedge.server.serve → uristepper-docker.packages.python.uristepperedge.runtime.build_runtime
-  uristepper-docker.packages.python.uristepperedge.server.serve → scripts.run-nl-log-smoke.print
-  uristepper-docker.packages.python.uristepperedge.server.serve → uristepper-docker.packages.python.uristepperedge.server.make_handler
-  uristepper-docker.packages.python.uristepper.handlers._driver → uristepper-docker.packages.python.uristepper.drivers.make_driver
-  uristepper-docker.packages.python.uristepper.handlers._dry_or_driver → uristepper-docker.packages.python.uristepper.handlers._driver
-  uristepper-docker.packages.python.uristepper.handlers.status → uristepper-docker.packages.python.uristepper.handlers._device_axis
-  uristepper-docker.packages.python.uristepper.handlers.status → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
-  uristepper-docker.packages.python.uristepper.handlers.enable → uristepper-docker.packages.python.uristepper.handlers._device_axis
-  uristepper-docker.packages.python.uristepper.handlers.enable → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
-  uristepper-docker.packages.python.uristepper.handlers.disable → uristepper-docker.packages.python.uristepper.handlers._device_axis
-  uristepper-docker.packages.python.uristepper.handlers.disable → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
-  uristepper-docker.packages.python.uristepper.handlers.stop → uristepper-docker.packages.python.uristepper.handlers._device_axis
+  src.urisys.doctor._version_lt → src.urisys.doctor._parse_version
+  src.urisys.doctor._check_import → src.urisys.doctor._pkg_version
+  src.urisys.doctor._check_min_version → src.urisys.doctor._pkg_version
+  src.urisys.doctor._check_min_version → src.urisys.doctor._version_lt
 ```
 
 ## Test Contracts

@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.33', 'python').
+project_metadata('urisys', '0.1.34', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 52, 'less').

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "urisys"
-version = "0.1.34"
+version = "0.1.35"
 description = "URI control system managers/controllers over separate uri* capability packs."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -62,14 +62,15 @@ lab = [
 ]
 
 [tool.uv.sources]
-urisysedge = { path = "packages/python/urisysedge", editable = true }
-urikvm = { path = "urikvm-docker/packages/python/urikvm", editable = true }
-urihim = { path = "urikvm-docker/packages/python/urihim", editable = true }
-uriocr = { path = "urikvm-docker/packages/python/uriocr", editable = true }
-urillm = { path = "urikvm-docker/packages/python/urillm", editable = true }
-urimail = { path = "urikvm-docker/packages/python/urimail", editable = true }
-urioffice = { path = "urikvm-docker/packages/python/urioffice", editable = true }
-urivql = { path = "urikvm-docker/packages/python/urivql", editable = true }
+urisysedge = { path = "../urisysedge", editable = true }
+urioperators = { path = "../urioperators", editable = true }
+urikvm = { path = "../urikvm", editable = true }
+urihim = { path = "../urihim", editable = true }
+uriocr = { path = "../uriocr", editable = true }
+urillm = { path = "../urillm", editable = true }
+urimail = { path = "../urimail", editable = true }
+urioffice = { path = "../urioffice", editable = true }
+urivql = { path = "../urivql", editable = true }
 uricore = { path = "../uricore", editable = true }
 uribrowser = { path = "../uri-packs/packages/python/uribrowser", editable = true }
 uridocker = { path = "../uri-packs/packages/python/uridocker", editable = true }
@@ -88,8 +89,8 @@ urisys-node = "urisysnode.cli:main"
 package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
-where = ["src", "packages/python", "urisys-node/packages/python"]
-include = ["urisys*", "urisysnode*", "uriscreen*", "urishell*", "urisysedge*"]
+where = ["src", "urisys-node/packages/python"]
+include = ["urisys*", "urisysnode*", "uriscreen*", "urishell*"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

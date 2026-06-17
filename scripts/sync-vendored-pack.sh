@@ -16,6 +16,11 @@ if [ "${1:-}" = "--check" ]; then
   exec python3 scripts/pack_sync.py check "$@"
 fi
 
+if [ "${1:-}" = "--promote" ]; then
+  shift
+  exec python3 scripts/pack_sync.py promote "$@"
+fi
+
 if [ "${1:-}" = "--init" ]; then
   shift
   exec python3 scripts/pack_sync.py init-repo "$@"

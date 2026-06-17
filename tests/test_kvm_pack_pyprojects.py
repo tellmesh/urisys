@@ -1,4 +1,4 @@
-"""PyPI-ready layout for kvm/him/ocr/llm capability packs (vendored in monorepo)."""
+"""PyPI-ready layout for kvm/him/ocr/llm capability packs (tellmesh sibling repos)."""
 
 from __future__ import annotations
 
@@ -6,8 +6,9 @@ import tomllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-EDGE = ROOT / "packages" / "python" / "urisysedge" / "pyproject.toml"
+TELLMESH = ROOT.parent
 PACKS = ("urikvm", "urihim", "uriocr", "urillm", "urimail", "urioffice", "urivql")
+OFFICE_PACKS = ("urimail", "urioffice", "urivql")
 
 
 def _name(path: Path) -> str:
@@ -15,51 +16,50 @@ def _name(path: Path) -> str:
     return data["project"]["name"]
 
 
-def test_urisysedge_pyproject():
-    assert EDGE.is_file()
-    assert _name(EDGE) == "urisysedge"
+def test_urisysedge_sibling_pyproject():
+    path = TELLMESH / "urisysedge" / "pyproject.toml"
+    assert path.is_file()
+    assert _name(path) == "urisysedge"
 
 
-def test_each_pack_has_own_pyproject():
+def test_each_kvm_pack_has_sibling_pyproject():
     for pkg in PACKS:
-        path = ROOT / "urikvm-docker" / "packages" / "python" / pkg / "pyproject.toml"
+        path = TELLMESH / pkg / "pyproject.toml"
         assert path.is_file(), f"missing {path}"
         assert _name(path) == pkg
 
 
-def test_pack_pyprojects_depend_on_urisysedge():
+def test_sibling_pack_pyprojects_depend_on_urisysedge():
     for pkg in PACKS:
-        path = ROOT / "urikvm-docker" / "packages" / "python" / pkg / "pyproject.toml"
+        path = TELLMESH / pkg / "pyproject.toml"
         deps = tomllib.loads(path.read_text(encoding="utf-8"))["project"]["dependencies"]
         assert any(d.startswith("urisysedge>=") for d in deps), pkg
 
 
 def test_urillm_imports_urisysedge_not_urikvmedge():
-    src = (ROOT / "urikvm-docker" / "packages" / "python" / "urillm" / "handlers.py").read_text(
-        encoding="utf-8"
-    )
+    handlers = TELLMESH / "urillm" / "urillm" / "handlers.py"
+    if not handlers.is_file():
+        handlers = TELLMESH / "urillm" / "handlers.py"
+    src = handlers.read_text(encoding="utf-8")
     assert "urisysedge.env" in src
     assert "urikvmedge" not in src
 
 
-def test_urisys_bundles_urisysedge():
-    data = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
-    include = data["tool"]["setuptools"]["packages"]["find"]["include"]
-    assert any("urisysedge" in item for item in include)
-
-
-def test_urisys_kvm_optional_uses_local_sources():
+def test_urisys_root_uv_sources_point_to_siblings():
     data = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
     sources = data["tool"]["uv"]["sources"]
+    for pkg in ("urisysedge", "urioperators", *PACKS):
+        rel = sources[pkg]["path"]
+        assert rel.startswith("../"), f"{pkg} should use sibling path, got {rel}"
+        assert (TELLMESH / pkg).is_dir(), f"missing sibling repo {pkg}"
+
+
+def test_vendored_kvm_pack_dirs_removed():
     for pkg in PACKS:
-        assert pkg in sources, pkg
+        vendored = ROOT / "urikvm-docker" / "packages" / "python" / pkg
+        assert not vendored.is_dir(), f"vendored copy still present: {vendored}"
 
 
-def test_urisys_node_kvm_optional_deps():
-    path = ROOT / "urisys-node" / "pyproject.toml"
-    data = tomllib.loads(path.read_text(encoding="utf-8"))
-    deps = data["project"]["dependencies"]
-    assert any(d.startswith("urisysedge>=") for d in deps)
-    kvm = data["project"]["optional-dependencies"]["kvm"]
-    assert any("urikvm" in d for d in kvm)
-    assert any("urillm" in d for d in kvm)
+def test_urikvmedge_remains_in_monorepo():
+    path = ROOT / "urikvm-docker" / "packages" / "python" / "urikvmedge"
+    assert path.is_dir(), "urikvmedge CLI glue stays in urikvm-docker until promoted"
