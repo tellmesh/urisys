@@ -298,13 +298,7 @@ class MarkpactManager:
         if not operation:
             raise MarkpactError(f"Capability has no operation/id: {item!r}")
         kind = str(item.get("kind") or ("command" if "/command/" in pattern else "query"))
-        handler_ref = item.get("handler")
-        if isinstance(handler_ref, str) and handler_ref.startswith("markpact://"):
-            handler_id = self._handler_id_from_ref(handler_ref)
-            handlers[operation] = f"python://{module_name}.{_safe_identifier(handler_id)}:handle"
-            handler_ref = handlers[operation]
-        elif isinstance(handler_ref, str) and handler_ref.startswith("python://"):
-            handlers[operation] = handler_ref
+        handler_ref = self._resolve_handler_ref(item.get("handler"), operation, module_name, handlers)
         route = {
             "pattern": pattern,
             "kind": kind,
@@ -318,6 +312,20 @@ class MarkpactManager:
         if handler_ref:
             route["handler"] = handler_ref
         return route
+
+    def _resolve_handler_ref(
+        self, handler_ref: Any, operation: str, module_name: str, handlers: dict[str, str]
+    ) -> Any:
+        """Resolve a capability handler reference, registering the generated
+        python handler in ``handlers`` for markpact:// and python:// sources."""
+        if isinstance(handler_ref, str) and handler_ref.startswith("markpact://"):
+            handler_id = self._handler_id_from_ref(handler_ref)
+            resolved = f"python://{module_name}.{_safe_identifier(handler_id)}:handle"
+            handlers[operation] = resolved
+            return resolved
+        if isinstance(handler_ref, str) and handler_ref.startswith("python://"):
+            handlers[operation] = handler_ref
+        return handler_ref
 
     def _compile_manifest(self, pack: dict[str, Any], *, package_id: str, module_name: str, source_hash: str) -> dict[str, Any]:
         capabilities = self._capabilities(pack)
