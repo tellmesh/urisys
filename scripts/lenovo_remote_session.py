@@ -380,6 +380,16 @@ def main(argv: list[str] | None = None) -> int:
             rec = {"flow_id": fp.stem, "ok": False, "error": "flow file missing", "steps": []}
             flow_records.append(rec)
             continue
+        if fp.name != "01-health-probe.uri.flow.yaml":
+            try:
+                health_data = remote_health(endpoint=args.endpoint)
+                node_reachable = bool(health_data.get("ok"))
+                if node_reachable:
+                    meta["node_reachable"] = True
+                    save_json(session_dir / "responses" / "_00_preflight_health.json", health_data)
+            except Exception as exc:
+                node_reachable = False
+                append_log(log_path, f"health re-check failed: {exc}")
         if not node_reachable and fp.name != "01-health-probe.uri.flow.yaml":
             rec = {
                 "flow_id": load_yaml(fp).get("flow", {}).get("id", fp.stem),
