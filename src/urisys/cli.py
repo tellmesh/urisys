@@ -6,7 +6,13 @@ import os
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from .defaults import DEFAULT_ENVIRONMENT
+from .defaults import (
+    DEFAULT_ENVIRONMENT,
+    DEFAULT_EVENTS_PATH,
+    DEFAULT_MIN_VERSION,
+    MIN_VERSION_ENV,
+    NODE_SERVE_CMD,
+)
 from .doctor import run_doctor
 
 if TYPE_CHECKING:
@@ -44,7 +50,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="urisys", description="URI control system: managers/controllers over uri* packs and UriPack Markpacts.")
     parser.add_argument("--packs", default="all", help="Comma-separated pack aliases/packages, plain manifest paths, Markpact paths or all/none.")
     parser.add_argument("--markpact", action="append", default=[], help="Load one UriPack Markpact. Can be used multiple times.")
-    parser.add_argument("--events", default="output/urisys-events.jsonl")
+    parser.add_argument("--events", default=DEFAULT_EVENTS_PATH)
     sub = parser.add_subparsers(dest="command", required=True)
 
     p = sub.add_parser("call", help="Execute a URI through urisys.")
@@ -65,8 +71,8 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("doctor", help="Check installation, Python env, and dependencies.")
     p.add_argument(
         "--min-version",
-        default=os.environ.get("URISYS_MIN_VERSION", "0.1.25"),
-        help="Minimum urisys version (default: 0.1.25).",
+        default=os.environ.get(MIN_VERSION_ENV, DEFAULT_MIN_VERSION),
+        help=f"Minimum urisys version (default: {DEFAULT_MIN_VERSION}).",
     )
 
     p = sub.add_parser(
@@ -74,7 +80,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="Install uricore/urisysedge/urisys[real], doctor, write slave env (~/.config/urisys/node.env).",
     )
     p.add_argument("--profile", choices=("slave", "dev"), default=os.environ.get("URISYS_INIT_PROFILE", "slave"))
-    p.add_argument("--min-version", default=os.environ.get("URISYS_MIN_VERSION", "0.1.25"))
+    p.add_argument("--min-version", default=os.environ.get(MIN_VERSION_ENV, DEFAULT_MIN_VERSION))
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--skip-pip", action="store_true")
     p.add_argument("--no-write-env", action="store_true")
@@ -270,7 +276,7 @@ def main(argv: list[str] | None = None) -> int:
             from .controllers.server_controller import ServerController
 
             print(
-                "hint: desktop slave (lenovo) → urisys node serve --host 0.0.0.0 --port 8790",
+                f"hint: desktop slave (lenovo) → {NODE_SERVE_CMD}",
                 file=sys.stderr,
             )
             ServerController(host=args.host, port=args.port, packs=args.packs, markpacts=args.markpact, events_path=args.events).serve_forever()

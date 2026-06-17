@@ -5,12 +5,12 @@
 
 - **Project**: /home/tom/github/tellmesh/urisys
 - **Primary Language**: python
-- **Languages**: python: 48, shell: 41, yaml: 19, json: 1, yml: 1
+- **Languages**: python: 49, shell: 41, yaml: 21, json: 1, yml: 1
 - **Analysis Mode**: static
-- **Total Functions**: 342
+- **Total Functions**: 348
 - **Total Classes**: 22
-- **Modules**: 113
-- **Entry Points**: 155
+- **Modules**: 116
+- **Entry Points**: 158
 
 ## Architecture by Module
 
@@ -18,10 +18,6 @@
 - **Functions**: 22
 - **Classes**: 1
 - **File**: `markpact_manager.py`
-
-### scripts.lenovo_remote_session
-- **Functions**: 18
-- **File**: `lenovo_remote_session.py`
 
 ### scripts.test_sessions.util
 - **Functions**: 17
@@ -32,7 +28,7 @@
 - **File**: `run_test_sessions.py`
 
 ### src.urisys.managers.pack_manager
-- **Functions**: 13
+- **Functions**: 14
 - **Classes**: 1
 - **File**: `pack_manager.py`
 
@@ -40,18 +36,14 @@
 - **Functions**: 13
 - **File**: `pack_sync.py`
 
-### src.urisys.uricore_install
-- **Functions**: 11
-- **File**: `uricore_install.py`
-
 ### src.urisys.managers.source_manager
-- **Functions**: 11
+- **Functions**: 12
 - **Classes**: 2
 - **File**: `source_manager.py`
 
-### src.urisys.init_setup
+### src.urisys.uricore_install
 - **Functions**: 11
-- **File**: `init_setup.py`
+- **File**: `uricore_install.py`
 
 ### src.urisys.cli
 - **Functions**: 11
@@ -62,13 +54,17 @@
 - **Classes**: 1
 - **File**: `doctor.py`
 
-### scripts.report.lab_checks
-- **Functions**: 9
-- **File**: `lab_checks.py`
+### src.urisys.init_setup
+- **Functions**: 11
+- **File**: `init_setup.py`
 
-### scripts.test_sessions.expectations
-- **Functions**: 9
-- **File**: `expectations.py`
+### scripts.lenovo_remote_session
+- **Functions**: 11
+- **File**: `lenovo_remote_session.py`
+
+### scripts.session_core
+- **Functions**: 11
+- **File**: `session_core.py`
 
 ### src.urisys.node_install
 - **Functions**: 9
@@ -78,6 +74,14 @@
 - **Functions**: 9
 - **Classes**: 1
 - **File**: `pack_registry.py`
+
+### scripts.report.lab_checks
+- **Functions**: 9
+- **File**: `lab_checks.py`
+
+### scripts.test_sessions.expectations
+- **Functions**: 9
+- **File**: `expectations.py`
 
 ### scripts.report.session_markdown
 - **Functions**: 8
@@ -91,13 +95,9 @@
 - **Functions**: 6
 - **File**: `app.js`
 
-### scripts.run-office-simulate-lenovo
+### src.urisys.edge_install
 - **Functions**: 6
-- **File**: `run-office-simulate-lenovo.sh`
-
-### scripts.paths
-- **Functions**: 6
-- **File**: `paths.sh`
+- **File**: `edge_install.py`
 
 ## Key Entry Points
 
@@ -123,7 +123,7 @@ Main execution flows into the system:
 - **Calls**: scripts.report.util.now_iso, scripts.test_sessions.util.write_meta, scripts.test_sessions.util.sleep_ports, scripts.test_sessions.util.run_cmd, scripts.test_sessions.util.run_cmd, scripts.test_sessions.util.finalize_session, steps.append, scripts.test_sessions.util.finalize_session
 
 ### scripts.run_test_sessions.main
-- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, run_dir.mkdir, scripts.run-office-simulate-lenovo.save_json
+- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, run_dir.mkdir, scripts.run-office-writer-e2e.save_json
 
 ### scripts.run_test_sessions.session_urirdp_mock_docker
 - **Calls**: scripts.report.util.now_iso, scripts.test_sessions.util.write_meta, scripts.test_sessions.util.prepare_urirdp_data, scripts.test_sessions.util.sleep_ports, scripts.test_sessions.util.run_cmd, scripts.test_sessions.util.run_cmd, scripts.test_sessions.util.finalize_session, scripts.test_sessions.util.compose_cmd
@@ -143,17 +143,14 @@ Main execution flows into the system:
 ### scripts.report.cli.main
 - **Calls**: argparse.ArgumentParser, parser.add_subparsers, sub.add_parser, gen.add_argument, sub.add_parser, ana.add_argument, ana.add_argument, parser.parse_args
 
-### src.urisys.managers.source_manager.SourceManager._fetch_zip
-- **Calls**: body.split, self._cache_dir, cache_dir.mkdir, in_archive_path.lstrip, self._result, SourceError, local_path.exists, self._result
-
 ### src.urisys.managers.markpact_manager.MarkpactManager._validate_pack
 - **Calls**: self._package_id, self._capabilities, self._handler_blocks, set, sorted, self._scheme, isinstance, MarkpactError
 
-### src.urisys.managers.pack_manager.PackManager.manifest_paths
-- **Calls**: self._is_markpact_path, self._is_manifest_path, self.resolve_package_name, None.joinpath, self._stack.enter_context, paths.append, self.source_manager.resolve, paths.append
-
 ### src.urisys.cli.main
 - **Calls**: None.parse_args, src.urisys.cli._cmd_uri, src.urisys.cli.build_parser, src.urisys.cli._cmd_markpact, src.urisys.doctor.run_doctor, src.urisys.cli.print_json, src.urisys.cli._cmd_init, scripts.run-nl-log-smoke.print
+
+### src.urisys.managers.pack_manager.PackManager.manifest_paths
+- **Calls**: self._is_markpact_path, self._is_manifest_path, self.resolve_package_name, None.joinpath, self._stack.enter_context, paths.append, self.source_manager.resolve, paths.append
 
 ### src.urisys.controllers.flow_controller.FlowController.run
 - **Calls**: src.urisys.flow.load_flow, src.urisys.flow.iter_steps, flow.get, self.uri_controller.call, results.append, all, flow.get, bool
@@ -170,18 +167,12 @@ or pytho
 ### scripts.test_sessions.lab_rdp.parse_lab_flow
 - **Calls**: dict, yaml.safe_load, data.get, isinstance, path.read_text, data.get, steps.append, isinstance
 
-### src.urisys.managers.source_manager.SourceManager._fetch_http
-- **Calls**: self._cache_dir, cache_dir.mkdir, local_path.write_bytes, meta_path.write_text, self._result, spec.startswith, local_path.exists, meta_path.exists
-
-### src.urisys.managers.source_manager.SourceManager._fetch_github_raw
-- **Calls**: self._cache_dir, cache_dir.mkdir, local_path.write_bytes, meta_path.write_text, self._result, local_path.exists, meta_path.exists, self._result
+### src.urisys.managers.source_manager.SourceManager._fetch_zip
+- **Calls**: body.split, self._cache_dir, cache_dir.mkdir, self._http_download, in_archive_path.lstrip, self._result, SourceError, local_path.exists
 
 ### src.urisys.managers.markpact_manager.MarkpactManager._check_expectations
 > Compare a test result against its declared expectations.
 - **Calls**: failures.append, failures.append, None.items, bool, bool, result.get, result.get, None.get
-
-### scripts.test_sessions.lab_rdp.summarize_uri_response
-- **Calls**: isinstance, bool, res.get, res.get, isinstance, result.get, result.get, res.get
 
 ### scripts.run_test_sessions.session_urisys_node_docker_gui
 - **Calls**: scripts.report.util.now_iso, int, scripts.test_sessions.util.write_meta, os.environ.copy, str, scripts.test_sessions.util.run_cmd, steps.append, scripts.test_sessions.util.finalize_session
@@ -195,8 +186,17 @@ or pytho
 ### scripts.run_test_sessions.session_email_mailpit
 - **Calls**: scripts.report.util.now_iso, int, scripts.test_sessions.util.write_meta, os.environ.copy, str, scripts.test_sessions.util.run_cmd, steps.append, scripts.test_sessions.util.finalize_session
 
-### src.urisys.managers.pack_manager.PackManager.parse_packs
-- **Calls**: isinstance, any, any, list, list, p.strip, None.strip, packs.split
+### scripts.test_sessions.lab_rdp.summarize_uri_response
+- **Calls**: isinstance, bool, res.get, res.get, isinstance, result.get, result.get, res.get
+
+### src.urisys.managers.source_manager.SourceManager._fetch_http
+- **Calls**: self._cache_dir, cache_dir.mkdir, self._http_download, local_path.write_bytes, meta_path.write_text, self._result, spec.startswith, local_path.exists
+
+### scripts.office-simulate-loop.main
+- **Calls**: scripts.office-simulate-loop.parse_args, scripts.run-nl-log-smoke.print, random.choice, scripts.run-nl-log-smoke.print, all, scripts.run-nl-log-smoke.print, time.sleep, os.environ.get
+
+### src.urisys.managers.source_manager.SourceManager._fetch_github_raw
+- **Calls**: self._cache_dir, cache_dir.mkdir, self._http_download, local_path.write_bytes, meta_path.write_text, self._result, local_path.exists, meta_path.exists
 
 ## Process Flows
 
@@ -262,9 +262,9 @@ _fetch_git [src.urisys.managers.source_manager.SourceManager]
 validate [src.urisys.managers.markpact_manager.MarkpactManager]
 ```
 
-### Flow 10: _fetch_zip
+### Flow 10: _validate_pack
 ```
-_fetch_zip [src.urisys.managers.source_manager.SourceManager]
+_validate_pack [src.urisys.managers.markpact_manager.MarkpactManager]
 ```
 
 ## Key Classes
@@ -278,13 +278,13 @@ Markpact is an authoring/distribution format. Runti
 
 ### src.urisys.managers.pack_manager.PackManager
 > Loads separate uri* packages, plain manifest.yaml files and UriPack Markpacts.
-- **Methods**: 13
-- **Key Methods**: src.urisys.managers.pack_manager.PackManager.__init__, src.urisys.managers.pack_manager.PackManager._is_all, src.urisys.managers.pack_manager.PackManager.parse_packs, src.urisys.managers.pack_manager.PackManager.parse_markpacts, src.urisys.managers.pack_manager.PackManager.resolve_package_name, src.urisys.managers.pack_manager.PackManager._is_markpact_path, src.urisys.managers.pack_manager.PackManager._is_manifest_path, src.urisys.managers.pack_manager.PackManager.manifest_paths, src.urisys.managers.pack_manager.PackManager.create_registry, src.urisys.managers.pack_manager.PackManager.capabilities
+- **Methods**: 14
+- **Key Methods**: src.urisys.managers.pack_manager.PackManager.__init__, src.urisys.managers.pack_manager.PackManager._split_specs, src.urisys.managers.pack_manager.PackManager._is_all, src.urisys.managers.pack_manager.PackManager.parse_packs, src.urisys.managers.pack_manager.PackManager.parse_markpacts, src.urisys.managers.pack_manager.PackManager.resolve_package_name, src.urisys.managers.pack_manager.PackManager._is_markpact_path, src.urisys.managers.pack_manager.PackManager._is_manifest_path, src.urisys.managers.pack_manager.PackManager.manifest_paths, src.urisys.managers.pack_manager.PackManager.create_registry
 
 ### src.urisys.managers.source_manager.SourceManager
 > Resolve Markpact sources from local paths, HTTP(S), GitHub, git repos and ZIP archives.
-- **Methods**: 11
-- **Key Methods**: src.urisys.managers.source_manager.SourceManager.__init__, src.urisys.managers.source_manager.SourceManager.is_remote_source, src.urisys.managers.source_manager.SourceManager.resolve, src.urisys.managers.source_manager.SourceManager.fetch, src.urisys.managers.source_manager.SourceManager._result, src.urisys.managers.source_manager.SourceManager._cache_dir, src.urisys.managers.source_manager.SourceManager._fetch_http, src.urisys.managers.source_manager.SourceManager._fetch_github_uri, src.urisys.managers.source_manager.SourceManager._fetch_github_raw, src.urisys.managers.source_manager.SourceManager._fetch_git
+- **Methods**: 12
+- **Key Methods**: src.urisys.managers.source_manager.SourceManager.__init__, src.urisys.managers.source_manager.SourceManager.is_remote_source, src.urisys.managers.source_manager.SourceManager.resolve, src.urisys.managers.source_manager.SourceManager.fetch, src.urisys.managers.source_manager.SourceManager._result, src.urisys.managers.source_manager.SourceManager._cache_dir, src.urisys.managers.source_manager.SourceManager._http_download, src.urisys.managers.source_manager.SourceManager._fetch_http, src.urisys.managers.source_manager.SourceManager._fetch_github_uri, src.urisys.managers.source_manager.SourceManager._fetch_github_raw
 
 ### src.urisys.controllers.uri_controller.UriController
 - **Methods**: 5
@@ -336,6 +336,9 @@ Markpact is an authoring/distribution format. Runti
 - **Methods**: 1
 - **Key Methods**: scripts.report.models.RunAnalysis.all_passed
 
+### src.urisys.doctor.Check
+- **Methods**: 0
+
 ### src.urisys.managers.markpact_models.MarkpactBlock
 - **Methods**: 0
 
@@ -344,38 +347,21 @@ Markpact is an authoring/distribution format. Runti
 - **Methods**: 0
 - **Inherits**: ValueError
 
-### src.urisys.managers.source_manager.SourceError
-> Raised when a Markpact source cannot be resolved.
+### scripts.pack_registry.PackSpec
 - **Methods**: 0
-- **Inherits**: ValueError
 
 ### scripts.report.models.StepResult
-- **Methods**: 0
-
-### scripts.report.models.Finding
 - **Methods**: 0
 
 ## Data Transformation Functions
 
 Key functions that process and transform data:
 
-### src.urisys.managers.markpact_models.parse_meta
-- **Output to**: shlex.split, raw.strip, raw.strip, token.split, None.strip
+### src.urisys.cli.build_parser
+- **Output to**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_subparsers
 
-### src.urisys.managers.pack_manager.PackManager.parse_packs
-- **Output to**: isinstance, any, any, list, list
-
-### src.urisys.managers.pack_manager.PackManager.parse_markpacts
-- **Output to**: isinstance, None.strip, p.strip, None.strip, markpacts.split
-
-### scripts.office-simulate-loop.parse_args
-- **Output to**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument
-
-### scripts.test_sessions.lab_rdp.parse_lab_flow
-- **Output to**: dict, yaml.safe_load, data.get, isinstance, path.read_text
-
-### scripts.test_sessions.lab_rdp.parse_docker_log_errors
-- **Output to**: path.read_text, text.count, text.count, text.splitlines, path.is_file
+### src.urisys.doctor._parse_version
+- **Output to**: None.split, tuple, None.strip, ch.isdigit, parts.append
 
 ### src.urisys.managers.markpact_validation._validate_contract_routes
 > Validate every query/command entry and return them; scheme must match.
@@ -394,8 +380,8 @@ Key functions that process and transform data:
 ### src.urisys.managers.markpact_validation.validate_implementation
 - **Output to**: None.strip, str, isinstance, src.urisys.managers.markpact_validation._validate_implementation_capabilities, isinstance
 
-### src.urisys.cli.build_parser
-- **Output to**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_subparsers
+### src.urisys.managers.markpact_models.parse_meta
+- **Output to**: shlex.split, raw.strip, raw.strip, token.split, None.strip
 
 ### src.urisys.managers.markpact_manager.MarkpactManager.validate
 - **Output to**: Path, self.read_blocks, self._yaml_blocks, self._yaml_blocks, self._yaml_blocks
@@ -403,15 +389,27 @@ Key functions that process and transform data:
 ### src.urisys.managers.markpact_manager.MarkpactManager._validate_pack
 - **Output to**: self._package_id, self._capabilities, self._handler_blocks, set, sorted
 
-### src.urisys.doctor._parse_version
-- **Output to**: None.split, tuple, None.strip, ch.isdigit, parts.append
+### scripts.office-simulate-loop.parse_args
+- **Output to**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument
+
+### scripts.test_sessions.lab_rdp.parse_lab_flow
+- **Output to**: dict, yaml.safe_load, data.get, isinstance, path.read_text
+
+### scripts.test_sessions.lab_rdp.parse_docker_log_errors
+- **Output to**: path.read_text, text.count, text.count, text.splitlines, path.is_file
+
+### src.urisys.managers.pack_manager.PackManager.parse_packs
+- **Output to**: PackManager._split_specs, list, list
+
+### src.urisys.managers.pack_manager.PackManager.parse_markpacts
+- **Output to**: PackManager._split_specs
 
 ## Behavioral Patterns
 
-### recursion__extract_images_from_dict
+### recursion_extract_images_from_dict
 - **Type**: recursion
 - **Confidence**: 0.90
-- **Functions**: scripts.lenovo_remote_session._extract_images_from_dict
+- **Functions**: scripts.session_core.extract_images_from_dict
 
 ### state_machine_RuntimeManager
 - **Type**: state_machine
@@ -421,52 +419,52 @@ Key functions that process and transform data:
 ### state_machine_PackManager
 - **Type**: state_machine
 - **Confidence**: 0.70
-- **Functions**: src.urisys.managers.pack_manager.PackManager.__init__, src.urisys.managers.pack_manager.PackManager._is_all, src.urisys.managers.pack_manager.PackManager.parse_packs, src.urisys.managers.pack_manager.PackManager.parse_markpacts, src.urisys.managers.pack_manager.PackManager.resolve_package_name
+- **Functions**: src.urisys.managers.pack_manager.PackManager.__init__, src.urisys.managers.pack_manager.PackManager._split_specs, src.urisys.managers.pack_manager.PackManager._is_all, src.urisys.managers.pack_manager.PackManager.parse_packs, src.urisys.managers.pack_manager.PackManager.parse_markpacts
 
 ## Public API Surface
 
 Functions exposed as public API (no underscore prefix):
 
-- `scripts.lenovo_remote_session.main` - 98 calls
+- `scripts.lenovo_remote_session.main` - 122 calls
 - `scripts.run_test_sessions.session_urirdp_real_docker` - 69 calls
 - `src.urisys.cli.build_parser` - 61 calls
 - `scripts.lenovo_remote_session.write_session_md` - 52 calls
 - `src.urisys.managers.markpact_manager.MarkpactManager.compile` - 43 calls
 - `scripts.run_test_sessions.session_automation_lab` - 43 calls
 - `scripts.pack_sync.main` - 39 calls
+- `scripts.report.session.infer_steps` - 37 calls
+- `scripts.lenovo_remote_session.run_step` - 35 calls
 - `scripts.scan-browser-sessions.main` - 34 calls
 - `scripts.report.run_analysis.analyze_run` - 33 calls
 - `scripts.test_sessions.lab_flows.session_lab_10_flows` - 33 calls
 - `scripts.run_test_sessions.main` - 32 calls
+- `scripts.lenovo_remote_session.run_flow` - 32 calls
 - `src.urisys.http_server.create_server` - 31 calls
 - `scripts.run_test_sessions.session_urirdp_mock_docker` - 31 calls
-- `scripts.lenovo_remote_session.run_flow` - 31 calls
 - `src.urisys.init_setup.run_init` - 30 calls
 - `scripts.pack_registry.pack_specs` - 30 calls
 - `src.urisys.managers.source_manager.SourceManager.fetch` - 29 calls
 - `src.urisys.managers.markpact_manager.MarkpactManager.run_tests` - 28 calls
 - `scripts.report.session.generate_report` - 27 calls
-- `scripts.report.session.infer_steps` - 25 calls
-- `scripts.lenovo_remote_session.run_step` - 25 calls
+- `scripts.session_core.expand_step_wheels` - 25 calls
 - `src.urisys.managers.markpact_manager.MarkpactManager.validate` - 24 calls
 - `scripts.report.cli.main` - 23 calls
-- `scripts.report.lab_checks.load_flow_outcomes` - 22 calls
-- `src.urisys.managers.markpact_validation.validate_implementation` - 22 calls
 - `src.urisys.doctor.run_doctor` - 22 calls
+- `src.urisys.managers.markpact_validation.validate_implementation` - 22 calls
+- `scripts.report.lab_checks.load_flow_outcomes` - 22 calls
 - `src.urisys.managers.markpact_validation.validate_contract` - 21 calls
 - `scripts.pack_sync.init_repo` - 21 calls
-- `src.urisys.managers.pack_manager.PackManager.manifest_paths` - 20 calls
 - `src.urisys.cli.main` - 20 calls
+- `src.urisys.managers.pack_manager.PackManager.manifest_paths` - 20 calls
 - `src.urisys.controllers.flow_controller.FlowController.run` - 19 calls
-- `scripts.pack_sync.check_drift` - 19 calls
 - `scripts.run_test_sessions.session_urirdp_rdp_e2e` - 19 calls
+- `scripts.pack_sync.check_drift` - 19 calls
 - `scripts.office-simulate-loop.llm_tick` - 18 calls
 - `scripts.test_sessions.lab_rdp.parse_lab_flow` - 18 calls
 - `scripts.test_sessions.util.http_json` - 18 calls
-- `scripts.report.events.merge_event_summaries` - 16 calls
-- `scripts.report.run_markdown.render_run_analysis_markdown` - 16 calls
-- `scripts.report.session_markdown.render_session_markdown` - 16 calls
+- `scripts.session_core.step_ok` - 17 calls
 - `scripts.pack_sync.sync_to_repo` - 16 calls
+- `scripts.report.events.merge_event_summaries` - 16 calls
 
 ## System Interactions
 

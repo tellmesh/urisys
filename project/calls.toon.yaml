@@ -1,6 +1,6 @@
 # code2llm call graph | /home/tom/github/tellmesh/urisys
 # generated in 0.09s
-# nodes: 192 | edges: 278 | modules: 36
+# nodes: 193 | edges: 278 | modules: 36
 # CC̄=4.6
 
 HUBS[20]:
@@ -16,47 +16,43 @@ HUBS[20]:
     CC=6  in:31  out:12  total:43
   scripts.pack_sync.main
     CC=28  in:0  out:39  total:39
+  scripts.report.session.infer_steps
+    CC=28  in:1  out:37  total:38
+  scripts.lenovo_remote_session.run_step
+    CC=17  in:1  out:35  total:36
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
-  scripts.scan-browser-sessions.main
-    CC=23  in:0  out:34  total:34
   scripts.test_sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
+  scripts.scan-browser-sessions.main
+    CC=23  in:0  out:34  total:34
+  scripts.lenovo_remote_session.run_flow
+    CC=13  in:1  out:32  total:33
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  src.urisys.init_setup.run_init
-    CC=31  in:2  out:30  total:32
-  src.urisys.http_server.create_server
-    CC=1  in:1  out:31  total:32
-  scripts.lenovo_remote_session.run_flow
-    CC=13  in:1  out:31  total:32
   scripts.pack_registry.pack_specs
     CC=17  in:2  out:30  total:32
+  src.urisys.http_server.create_server
+    CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
+  src.urisys.init_setup.run_init
+    CC=31  in:2  out:30  total:32
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
+  scripts.report.util.now_iso
+    CC=1  in:27  out:3  total:30
   scripts.report.session.generate_report
     CC=9  in:2  out:27  total:29
-  scripts.report.session.infer_steps
-    CC=20  in:1  out:25  total:26
-  scripts.lenovo_remote_session.run_step
-    CC=10  in:1  out:25  total:26
-  src.urisys.doctor.run_doctor
-    CC=12  in:3  out:22  total:25
 
 MODULES:
-  scripts.lenovo_remote_session  [13 funcs]
-    _extract_images_from_dict  CC=8  out:15
-    _image_ext  CC=5  out:1
-    _write_base64_image  CC=1  out:4
-    backfill_session_images  CC=8  out:11
-    extract_step_screenshots  CC=5  out:7
+  scripts.lenovo_remote_session  [6 funcs]
     http_get  CC=4  out:7
+    load_manifest_session  CC=2  out:4
     load_yaml  CC=3  out:4
-    now_iso  CC=1  out:2
     resolve_flow_paths  CC=6  out:5
-    run_flow  CC=13  out:31
+    run_flow  CC=13  out:32
+    run_step  CC=17  out:35
   scripts.office-simulate-loop  [5 funcs]
     call_uri  CC=4  out:11
     llm_tick  CC=7  out:18
@@ -99,7 +95,7 @@ MODULES:
     render_run_analysis_markdown  CC=7  out:16
   scripts.report.session  [3 funcs]
     generate_report  CC=9  out:27
-    infer_steps  CC=20  out:25
+    infer_steps  CC=28  out:37
     session_duration  CC=5  out:14
   scripts.report.session_io  [1 funcs]
     write_session_report  CC=2  out:7
@@ -115,9 +111,8 @@ MODULES:
     tail  CC=2  out:0
   scripts.run-nl-log-smoke  [1 funcs]
     print  CC=0  out:0
-  scripts.run-office-simulate-lenovo  [1 funcs]
+  scripts.run-office-writer-e2e  [2 funcs]
     save_json  CC=0  out:0
-  scripts.run-office-writer-e2e  [1 funcs]
     wait_health  CC=0  out:0
   scripts.run-urisys-node-docker-e2e  [1 funcs]
     http_json  CC=0  out:0
@@ -137,6 +132,15 @@ MODULES:
     discover_browsers  CC=1  out:0
     main  CC=23  out:34
     scan_chrome_cookies  CC=13  out:13
+  scripts.session_core  [8 funcs]
+    backfill_session_images  CC=8  out:11
+    expand_step_wheels  CC=18  out:25
+    extract_images_from_dict  CC=8  out:15
+    extract_step_screenshots  CC=5  out:7
+    find_wheel_file  CC=2  out:2
+    save_json  CC=1  out:3
+    step_ok  CC=10  out:17
+    write_base64_image  CC=1  out:4
   scripts.test_sessions.expectations  [9 funcs]
     _min_vision_confidence  CC=4  out:3
     _ocr_contains  CC=5  out:6
@@ -283,28 +287,28 @@ EDGES:
   src.urisys.bootstrap.main → src.urisys.bootstrap._init_main
   src.urisys.bootstrap.main → src.urisys.bootstrap._print_json
   src.urisys.bootstrap.main → src.urisys.bootstrap._missing_uricore_payload
-  src.urisys.http_server.create_server → src.urisys.http_server._send
-  src.urisys.http_server.create_server → src.urisys.http_server._read_json
-  src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.load_flow
-  src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.iter_steps
-  src.urisys.controllers.server_controller.ServerController.__init__ → src.urisys.http_server.create_server
-  src.urisys.controllers.server_controller.ServerController.serve_forever → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.rules_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.rules_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.llm_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.llm_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.parse_args
-  scripts.office-simulate-loop.main → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.rules_tick
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.llm_tick
-  scripts.report.cli.main → scripts.report.run_analysis.analyze_run
-  scripts.report.cli.main → scripts.report.run_analysis.write_run_analysis
-  scripts.report.events.summarize_events → scripts.report.events.load_event_records
-  scripts.report.events.summarize_events → scripts.report.events.summarize_event_records
-  scripts.report.events.merge_event_summaries → scripts.report.events.summarize_events
-  scripts.report.run_analysis.analyze_run → scripts.report.util.read_json
-  scripts.report.run_analysis.write_run_analysis → scripts.report.run_analysis.analyze_run
-  scripts.report.run_analysis.write_run_analysis → scripts.report.run_markdown.render_run_analysis_markdown
-  scripts.report.lab_checks.load_flow_outcomes → scripts.report.util.read_json
-  scripts.report.lab_checks.load_flow_outcomes → scripts.report.lab_checks.iter_step_results
-  scripts.report.lab_checks.check_duplicate_screenshots → scripts.report.lab_checks._duplicate_recommendation
+  src.urisys.cli.print_json → scripts.run-nl-log-smoke.print
+  src.urisys.cli.build_parser → src.urisys.cli._add_runtime_flags
+  src.urisys.cli._cmd_markpact → src.urisys.cli.resolve_markpact_source
+  src.urisys.cli._cmd_markpact → src.urisys.cli.print_json
+  src.urisys.cli._cmd_init → src.urisys.init_setup.run_init
+  src.urisys.cli._cmd_init → src.urisys.cli.print_json
+  src.urisys.cli._cmd_init → scripts.run-nl-log-smoke.print
+  src.urisys.cli._cmd_uri → src.urisys.cli.print_json
+  src.urisys.cli._cmd_uri → src.urisys.cli._json_arg
+  src.urisys.cli._handle_cli_error → src.urisys.cli.print_json
+  src.urisys.cli.main → src.urisys.cli._cmd_uri
+  src.urisys.cli.main → src.urisys.cli.build_parser
+  src.urisys.cli.main → src.urisys.cli._cmd_markpact
+  src.urisys.cli.main → src.urisys.doctor.run_doctor
+  src.urisys.cli.main → src.urisys.cli.print_json
+  src.urisys.cli.main → src.urisys.cli._cmd_init
+  src.urisys.cli.main → scripts.run-nl-log-smoke.print
+  src.urisys.cli.main → src.urisys.cli._cmd_node
+  src.urisys.doctor._version_lt → src.urisys.doctor._parse_version
+  src.urisys.doctor._check_import → src.urisys.doctor._pkg_version
+  src.urisys.doctor._check_min_version → src.urisys.doctor._pkg_version
+  src.urisys.doctor._check_min_version → src.urisys.doctor._version_lt
+  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.diagnose_uricore
+  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.is_wrong_uricore_installed
+  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.wheel_url
