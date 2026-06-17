@@ -3509,6 +3509,7 @@ name = "urillm"
 version = "0.1.1"
 source = { editable = "../urikvm-docker/packages/python/urillm" }
 dependencies = [
+    { name = "urioperators" },
     { name = "urisysedge" },
 ]
 
@@ -3520,6 +3521,7 @@ vision = [
 [package.metadata]
 requires-dist = [
     { name = "litellm", marker = "extra == 'vision'", specifier = ">=1.40" },
+    { name = "urioperators", editable = "../packages/python/urioperators" },
     { name = "urisysedge", editable = "../packages/python/urisysedge" },
 ]
 provides-extras = ["vision"]
@@ -3545,6 +3547,11 @@ requires-dist = [
     { name = "urisysedge", editable = "../packages/python/urisysedge" },
 ]
 provides-extras = ["real"]
+
+[[package]]
+name = "urioperators"
+version = "0.1.0"
+source = { editable = "../packages/python/urioperators" }
 
 [[package]]
 name = "urisys-node"

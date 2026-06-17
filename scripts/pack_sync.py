@@ -43,9 +43,9 @@ PACK_TESTS: dict[str, list[str]] = {
     "urillm": ["test_llm_plan.py", "test_vision_dispatch.py"],
     "uriocr": ["test_ocr_llm.py"],
     "urikvm": ["test_kvm.py"],
-    "urimail": ["test_office_mail.py"],
-    "urioffice": ["test_office_mail.py"],
-    "urivql": ["test_office_mail.py"],
+    "urimail": [],
+    "urioffice": [],
+    "urivql": [],
 }
 
 

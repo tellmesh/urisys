@@ -8,9 +8,9 @@ GET  /health
 GET  /uri/routes
 ```
 
-Mapa modułów (243 pliki, 581 funkcji): [`project/map.toon.yaml`](../project/map.toon.yaml).  
-Katalog paczek i duplikatów: [`docs/PACKAGES.md`](PACKAGES.md), [`project/PACKAGES.md`](../project/PACKAGES.md).  
-Slave node i packi: [`docs/NODE-SETUP.md`](NODE-SETUP.md), [`docs/DISTRIBUTION.md`](DISTRIBUTION.md), [`docs/PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md).
+Mapa modułów: [`project/map.toon.yaml`](../project/map.toon.yaml).  
+Indeks dokumentacji: [`docs/README.md`](README.md).  
+Katalog paczek: [`docs/PACKAGES.md`](PACKAGES.md), [`project/PACKAGES.md`](../project/PACKAGES.md).
 
 ## Warstwy
 
@@ -55,7 +55,10 @@ Szczegóły CLI: [`docs/CLI.md`](CLI.md), Markpact: [`docs/MARKPACT.md`](MARKPAC
 
 ## Edge runtime (Docker)
 
-Wspólna biblioteka: **`packages/python/urisysedge/`** (Route, Runtime, JSONL events, env policy).
+Wspólne biblioteki edge:
+
+- **`packages/python/urisysedge/`** — Route, Runtime, JSONL events, env policy
+- **`packages/python/urioperators/`** — wspólne helpery LLM (chat, plan, decide, JSON parse) dla `urillm` / `urirdp_llm`
 
 Shimy kompatybilności:
 
@@ -67,14 +70,14 @@ Każdy obraz Docker rejestruje własne schematy URI (`routes.py` + `handlers.py`
 | Obraz | Port | Schematy |
 |-------|------|----------|
 | `urirdp-docker` | 8795, 3389 | rdp, kvm, him, ocr, llm, shell, browser, env |
-| `urikvm-docker` | 8796 | kvm, him, ocr, llm |
-| `uribrowser-docker` | 8797 | browser |
+| `urikvm-docker` | **8794** | kvm, him, ocr, llm (+ urioffice/urimail/urivql vendored) |
+| `uribrowser-docker` | 8792 / 8797 | browser |
 | `urienv-docker` | 8798 | env |
 | `uristepper-docker` | 8799 | stepper |
-| `urisys-automation-lab` | 8099 | stt, chat, webrtc + forward do urirdp |
+| `urisys-automation-lab` | 8099 | stt, chat (deprecated), webrtc + forward do urirdp |
 | `urisys-node` | 8790 | screen, node identity, routing slave |
 
-Slave (`urisys-node`) ładuje packi **lazy** (PyPI/GitHub) lub **hot-load** (`POST /uri/pack`, `install-pack`) bez restartu procesu. Po restarcie PC: `pip` zostaje, node trzeba uruchomić (systemd user — [`NODE-SETUP.md`](NODE-SETUP.md)). Szczegóły: [`DISTRIBUTION.md`](DISTRIBUTION.md), [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md).
+Slave (`urisys-node`) ładuje packi **lazy** (PyPI/GitHub), **hot-load** (`POST /uri/pack`) lub **release hot-load** (`{contract,version,catalog}` → OCI worker). Auto-provisioning: `release_forwards` w config. Szczegóły: [`DISTRIBUTION.md`](DISTRIBUTION.md), [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md), [`NODE-SETUP.md`](NODE-SETUP.md).
 
 ### Pipeline Wayland (lenovo)
 

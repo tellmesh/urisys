@@ -2,15 +2,17 @@
 
 Jak dodać capability pack do slave node bez restartu procesu (hot-load) i co dzieje się po restarcie komputera.
 
-Powiązane: [`NODE-SETUP.md`](NODE-SETUP.md), [`DISTRIBUTION.md`](DISTRIBUTION.md), [`PACKAGES.md`](PACKAGES.md).
+Powiązane: [`README.md`](README.md) · [`NODE-SETUP.md`](NODE-SETUP.md) · [`DISTRIBUTION.md`](DISTRIBUTION.md) · [`PACKAGES.md`](PACKAGES.md).
 
 ## Model trzech warstw
 
 | Warstwa | Co robi | Przykład |
 |---------|---------|----------|
 | **pip / wheel** | Instalacja kodu w venv (trwałe na dysku) | `urihim`, `uriimgl` |
-| **hot-load** | Rejestracja tras w działającym procesie node | `POST /uri/pack`, `install-pack` |
+| **hot-load (pack)** | Rejestracja tras w działającym procesie | `POST /uri/pack {"pack":"him"}` |
+| **hot-load (release)** | OCI worker + forward z kontraktu | `POST /uri/pack {contract,version,catalog}` |
 | **lazy install** | pip + hot-load przy pierwszym URI | pierwsze `him://…` |
+| **boot `release_forwards`** | auto hot-load release przy starcie node | config JSON / env |
 
 ```text
 pip install wheel  →  import modułu  →  pack.register(runtime)  →  runtime.routes
@@ -98,7 +100,22 @@ Node proxy’uje do workera (`urisysnode/forward.py`). Worker startuje osobno (s
 
 Alternatywy: env `URISYS_NODE_FORWARDS` (JSON array) lub `URISYS_NODE_FORWARDS_FILE`. Przykład lenovo: [`urisys-node/config/node-profile.lenovo.json`](../urisys-node/config/node-profile.lenovo.json).
 
-Docelowo: auto-wire z Markpact + `ArtifactResolver` ([`DISTRIBUTION.md`](DISTRIBUTION.md) — TODO).
+**Release auto-wire** (Markpact + OCI) — wpis w config:
+
+```json
+{
+  "release_forwards": [
+    {
+      "contract": "urikvm.contract",
+      "version": "0.1.5",
+      "catalog": "https://markpact.com",
+      "profile": "config/node-profile.json"
+    }
+  ]
+}
+```
+
+Alternatywa: env `URISYS_NODE_RELEASE_FORWARDS` (JSON array). Node wywołuje `hotload_release_pack()` przy starcie (best-effort). Szczegóły: [`DISTRIBUTION.md`](DISTRIBUTION.md).
 
 ### C — `shell://pip` + hot-load (bez release urisys)
 
@@ -120,11 +137,13 @@ curl -X POST http://NODE:8790/uri/pack -d '{"pack":"imgl","install":false}'
 
 | Endpoint / URI | Opis |
 |----------------|------|
-| `POST /uri/pack` | `{"pack":"him","install":true,"force":true,"specs":[]}` |
+| `POST /uri/pack` | `{"pack":"him"}` — lokalny pack; `{"contract":"…","version":"…"}` — release OCI |
 | `node://local/command/install-pack` | to samo przez URI (wymaga `approved`); `force: true` po `pip install -U` |
 | `node://local/command/register-forward` | hot-load forward workera (`scheme`, `endpoint`, `patterns`) |
 | `node://local/query/packs` | `loaded` + `available` |
 | `GET /uri/routes` | wszystkie zarejestrowane wzorce |
+
+Release hot-load wymaga sparowanego node (`require_paired`). Opcjonalnie: `URISYS_NODE_REQUIRE_SIGNATURE=1` + `URISYS_NODE_TRUSTED_KEYS`.
 
 Wymaga `URISYS_NODE_ALLOW_PACK_LOAD=1` (domyślnie włączone z auto-install).
 

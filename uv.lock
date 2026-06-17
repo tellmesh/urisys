@@ -3607,7 +3607,7 @@ requires-dist = [{ name = "uricore", specifier = ">=0.1.0" }]
 
 [[package]]
 name = "uricore"
-version = "0.1.7"
+version = "0.1.8"
 source = { editable = "../uricore" }
 dependencies = [
     { name = "pyyaml" },
@@ -3682,6 +3682,7 @@ name = "urillm"
 version = "0.1.1"
 source = { editable = "urikvm-docker/packages/python/urillm" }
 dependencies = [
+    { name = "urioperators" },
     { name = "urisysedge" },
 ]
 
@@ -3693,6 +3694,7 @@ vision = [
 [package.metadata]
 requires-dist = [
     { name = "litellm", marker = "extra == 'vision'", specifier = ">=1.40" },
+    { name = "urioperators", editable = "packages/python/urioperators" },
     { name = "urisysedge", editable = "packages/python/urisysedge" },
 ]
 provides-extras = ["vision"]
@@ -3720,8 +3722,13 @@ requires-dist = [
 provides-extras = ["real"]
 
 [[package]]
+name = "urioperators"
+version = "0.1.0"
+source = { editable = "packages/python/urioperators" }
+
+[[package]]
 name = "urisys"
-version = "0.1.32"
+version = "0.1.34"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },

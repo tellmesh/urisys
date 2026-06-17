@@ -20,7 +20,7 @@ URI control system managers/controllers over separate uri* capability packs.
 ## Metadata
 
 - **name**: `urisys`
-- **version**: `0.1.32`
+- **version**: `0.1.33`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -40,11 +40,11 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: urisys;
-  version: 0.1.32;
+  version: 0.1.33;
 }
 
 dependencies {
-  runtime: "uricore>=0.1.2, PyYAML>=6.0, urisysedge>=0.1.0";
+  runtime: "uricore @ https://github.com/tellmesh/uricore/releases/download/v0.1.8/uricore-0.1.8-py3-none-any.whl, PyYAML>=6.0, urisysedge>=0.1.0";
   dev: "pytest>=8.0, uricore, uribrowser, uridocker, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60";
   lab: uri2flow>=0.1.2;
   real: "mss>=9.0, Pillow>=10.0, pyautogui>=0.9.54, pytesseract>=0.3.10, litellm>=1.40";
@@ -62,12 +62,16 @@ interface[type="cli"] page[name="urisys-node"] {
   entry: urisysnode.cli:main;
 }
 
+integration[name="github"] {
+  type: scm;
+}
+
 tests {
   import: testql-scenarios/**/*.testql.toon.yaml;
 }
 
 env_vars {
-  keys: OPENROUTER_API_KEY, LLM_MODEL, LLM_BASE_URL, LLM_TEMPERATURE, LLM_MAX_TOKENS, PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_MAX_RETRIES, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_CREATE_BACKUPS, PIP_DISABLE_PIP_VERSION_CHECK, URISYS_MIN_VERSION, URISYS_INIT_PROFILE, URISYS_NODE_HOST, URISYS_NODE_PORT, URISYS_NODE_CONFIG, WAYLAND_DISPLAY;
+  keys: OPENROUTER_API_KEY, LLM_MODEL, LLM_BASE_URL, LLM_TEMPERATURE, LLM_MAX_TOKENS, PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_MAX_RETRIES, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_CREATE_BACKUPS, PIP_DISABLE_PIP_VERSION_CHECK, URISYS_URICORE_GITHUB_OWNER, URISYS_URICORE_VERSION, URISYS_URICORE_WHEEL_URL, URISYS_MIN_VERSION, URISYS_INIT_PROFILE, URISYS_NODE_HOST, URISYS_NODE_PORT, URISYS_NODE_CONFIG, WAYLAND_DISPLAY;
 }
 
 deploy {
@@ -197,7 +201,7 @@ ASSERT[14]{field, operator, expected}:
 ```yaml
 project:
   name: urisys
-  version: 0.1.32
+  version: 0.1.33
   env: local
 ```
 
@@ -206,7 +210,7 @@ project:
 ### Runtime
 
 ```text markpact:deps python
-uricore>=0.1.2
+uricore @ https://github.com/tellmesh/uricore/releases/download/v0.1.8/uricore-0.1.8-py3-none-any.whl
 PyYAML>=6.0
 urisysedge>=0.1.0
 ```
@@ -262,14 +266,14 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# urisys | 275f 19083L | python:209,shell:63,javascript:2,less:1 | 2026-06-17
-# stats: 769 func | 40 cls | 275 mod | CC̄=4.5 | critical:80 | cycles:0
-# alerts[5]: CC main=36; CC _match_office_transcript=31; CC session_urirdp_real_docker=30; CC text_plan=24; CC validate_contract=23
+# urisys | 284f 19407L | python:218,shell:63,javascript:2,less:1 | 2026-06-17
+# stats: 787 func | 40 cls | 284 mod | CC̄=4.5 | critical:80 | cycles:0
+# alerts[5]: CC main=36; CC run_init=34; CC _match_office_transcript=31; CC session_urirdp_real_docker=30; CC text_plan=24
 # hotspots[5]: main fan=36; main fan=30; session_urirdp_real_docker fan=25; make_handler fan=25; serve fan=24
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[275]:
-  app.doql.less,48
+M[284]:
+  app.doql.less,52
   examples/frontend/app.js,22
   examples/markpact/browser-call.sh,13
   examples/shell/call-uri.sh,7
@@ -282,6 +286,12 @@ M[275]:
   local-lab/scripts/06-register-release.sh,63
   local-lab/scripts/install-urisys.sh,21
   local-lab/scripts/run-all.sh,26
+  packages/python/urioperators/__init__.py,17
+  packages/python/urioperators/llm_chat.py,59
+  packages/python/urioperators/llm_decide.py,17
+  packages/python/urioperators/llm_json.py,19
+  packages/python/urioperators/llm_plan.py,18
+  packages/python/urioperators/tests/test_llm_helpers.py,47
   packages/python/urisysedge/__init__.py,13
   packages/python/urisysedge/env.py,130
   packages/python/urisysedge/runtime.py,271
@@ -336,10 +346,10 @@ M[275]:
   src/urisys/controllers/server_controller.py,19
   src/urisys/controllers/uri_controller.py,34
   src/urisys/defaults.py,21
-  src/urisys/doctor.py,237
+  src/urisys/doctor.py,283
   src/urisys/flow.py,26
   src/urisys/http_server.py,79
-  src/urisys/init_setup.py,159
+  src/urisys/init_setup.py,208
   src/urisys/managers/__init__.py,1
   src/urisys/managers/bridge_manager.py,15
   src/urisys/managers/event_manager.py,14
@@ -351,8 +361,10 @@ M[275]:
   src/urisys/managers/route_manager.py,24
   src/urisys/managers/runtime_manager.py,31
   src/urisys/managers/source_manager.py,225
+  src/urisys/uricore_install.py,131
   tests/test_bootstrap.py,61
   tests/test_doctor.py,29
+  tests/test_doctor_uricore.py,27
   tests/test_init.py,61
   tests/test_kvm_pack_pyprojects.py,66
   tests/test_markpact.py,99
@@ -360,6 +372,7 @@ M[275]:
   tests/test_run_expectations.py,56
   tests/test_session_report_events.py,59
   tests/test_source_manager.py,36
+  tests/test_uricore_install.py,38
   tests/test_urisys.py,46
   tests/test_vendored_sync.py,52
   tree.sh,2
@@ -395,7 +408,7 @@ M[275]:
   urikvm-docker/packages/python/urikvmedge/env.py,20
   urikvm-docker/packages/python/urikvmedge/runtime.py,24
   urikvm-docker/packages/python/urillm/__init__.py,2
-  urikvm-docker/packages/python/urillm/handlers.py,415
+  urikvm-docker/packages/python/urillm/handlers.py,335
   urikvm-docker/packages/python/urillm/routes.py,4
   urikvm-docker/packages/python/urimail/__init__.py,4
   urikvm-docker/packages/python/urimail/handlers.py,128
@@ -439,7 +452,7 @@ M[275]:
   urirdp-docker/packages/python/urirdp_kvm/handlers.py,134
   urirdp-docker/packages/python/urirdp_kvm/routes.py,6
   urirdp-docker/packages/python/urirdp_llm/__init__.py,4
-  urirdp-docker/packages/python/urirdp_llm/handlers.py,388
+  urirdp-docker/packages/python/urirdp_llm/handlers.py,320
   urirdp-docker/packages/python/urirdp_llm/routes.py,5
   urirdp-docker/packages/python/urirdp_ocr/__init__.py,4
   urirdp-docker/packages/python/urirdp_ocr/handlers.py,80
@@ -545,6 +558,29 @@ M[275]:
   urisys-node/tests/test_urisys_node.py,65
   urisys-node/tests/test_urisysedge_single_source.py,35
 D:
+  packages/python/urioperators/__init__.py:
+  packages/python/urioperators/llm_chat.py:
+    e: openai_compatible_chat,litellm_chat
+    openai_compatible_chat(messages;model;api_key;base_url)
+    litellm_chat(messages;model)
+  packages/python/urioperators/llm_decide.py:
+    e: decision_from_parsed
+    decision_from_parsed(parsed;model;question)
+  packages/python/urioperators/llm_json.py:
+    e: parse_json_response
+    parse_json_response(text)
+  packages/python/urioperators/llm_plan.py:
+    e: plan_from_parsed
+    plan_from_parsed(parsed;model;transcript)
+  packages/python/urioperators/tests/test_llm_helpers.py:
+    e: test_parse_json_response_plain,test_parse_json_response_embedded,test_parse_json_response_empty,test_plan_from_parsed_ok,test_plan_from_parsed_missing_uri,test_decision_from_parsed_retry,test_decision_from_parsed_abort_default
+    test_parse_json_response_plain()
+    test_parse_json_response_embedded()
+    test_parse_json_response_empty()
+    test_plan_from_parsed_ok()
+    test_plan_from_parsed_missing_uri()
+    test_decision_from_parsed_retry()
+    test_decision_from_parsed_abort_default()
   packages/python/urisysedge/__init__.py:
   packages/python/urisysedge/env.py:
     e: _urisys_root,load_urisys_env,_env_policy_candidates,load_env_policy,_env_config,resolve_env_var,is_secret_env
@@ -747,7 +783,7 @@ D:
     UriController: __init__(1),call(2),explain(1),routes(0),close(0)
   src/urisys/defaults.py:
   src/urisys/doctor.py:
-    e: _pkg_version,_parse_version,_version_lt,_check_import,_check_python,_check_cli_path,_check_min_version,_check_wayland_him,_check_uricore_dist,run_doctor,Check
+    e: _pkg_version,_parse_version,_version_lt,_check_import,_check_python,_check_cli_path,_check_min_version,_check_wayland_him,_check_uricore_authentic,_check_uricore_dist,run_doctor,Check
     Check:
     _pkg_version(dist_name)
     _parse_version(text)
@@ -757,6 +793,7 @@ D:
     _check_cli_path()
     _check_min_version(min_version)
     _check_wayland_him()
+    _check_uricore_authentic()
     _check_uricore_dist()
     run_doctor()
   src/urisys/flow.py:
@@ -817,6 +854,19 @@ D:
     e: SourceError,SourceManager
     SourceError:  # Raised when a Markpact source cannot be resolved.
     SourceManager: __init__(1),is_remote_source(1),resolve(1),fetch(1),_result(2),_cache_dir(1),_fetch_http(1),_fetch_github_uri(1),_fetch_github_raw(4),_fetch_git(1),_fetch_zip(1)  # Resolve Markpact sources from local paths, HTTP(S), GitHub, 
+  src/urisys/uricore_install.py:
+    e: github_owner,github_version,wheel_url,pip_spec,_pkg_version,_module_exists,_dist_top_levels,is_wrong_uricore_installed,diagnose_uricore,pip_run,repair_uricore
+    github_owner()
+    github_version()
+    wheel_url(version)
+    pip_spec()
+    _pkg_version(dist_name)
+    _module_exists(name)
+    _dist_top_levels(dist_name)
+    is_wrong_uricore_installed()
+    diagnose_uricore()
+    pip_run(args)
+    repair_uricore()
   tests/test_bootstrap.py:
     e: _load_module,test_bootstrap_import_does_not_require_uri_control,test_cli_import_does_not_require_uri_control,test_missing_uricore_payload,test_doctor_subcommand_via_bootstrap
     _load_module(name;path)
@@ -829,6 +879,9 @@ D:
     test_doctor_ok_in_dev_env()
     test_doctor_fails_high_min_version()
     test_doctor_hints_include_node_serve()
+  tests/test_doctor_uricore.py:
+    e: test_check_uricore_authentic_fails_on_squatter
+    test_check_uricore_authentic_fails_on_squatter()
   tests/test_init.py:
     e: test_init_dry_run_via_bootstrap,test_run_init_skip_pip_writes_env,test_pip_install_failure
     test_init_dry_run_via_bootstrap()
@@ -872,6 +925,12 @@ D:
     e: test_fetch_local_file,test_fetch_github_raw
     test_fetch_local_file(tmp_path)
     test_fetch_github_raw(monkeypatch;tmp_path)
+  tests/test_uricore_install.py:
+    e: test_wheel_url_default,test_wrong_uricore_detected_when_squatter_present,test_not_wrong_when_uri_control_present,test_diagnose_includes_wheel_url
+    test_wheel_url_default()
+    test_wrong_uricore_detected_when_squatter_present()
+    test_not_wrong_when_uri_control_present()
+    test_diagnose_includes_wheel_url()
   tests/test_urisys.py:
     e: test_call_browser_open,test_routes_load,test_all_skips_uninstalled_packs,test_explicit_missing_pack_raises_helpful_error
     test_call_browser_open(tmp_path)
@@ -1008,7 +1067,7 @@ D:
   urikvm-docker/packages/python/urikvmedge/runtime.py:
   urikvm-docker/packages/python/urillm/__init__.py:
   urikvm-docker/packages/python/urillm/handlers.py:
-    e: _llm_cfg,_driver,_goal_text,_target_from_goal,_box_center,_click_box,_find_target_box,_find_goal_box,_heuristic_analyze,_parse_json_response,_openai_chat,_litellm_chat,_vision_messages,_normalize_action,_analyze_openai,_analyze_litellm,_vision_analyze,vision_analyze,_real_allowed,_env,_openai_compatible_chat,_litellm_plan_chat,_match_office_transcript,_plan_messages,_plan_from_parsed,text_plan
+    e: _llm_cfg,_driver,_goal_text,_target_from_goal,_box_center,_click_box,_find_target_box,_find_goal_box,_heuristic_analyze,_vision_messages,_normalize_action,_analyze_openai,_analyze_litellm,_vision_analyze,vision_analyze,_real_allowed,_env,_match_office_transcript,_plan_messages,text_plan
     _llm_cfg(context)
     _driver(context)
     _goal_text(payload)
@@ -1018,9 +1077,6 @@ D:
     _find_target_box(boxes;target)
     _find_goal_box(boxes;goal)
     _heuristic_analyze(payload;source)
-    _parse_json_response(text)
-    _openai_chat(messages;model;api_key;base_url)
-    _litellm_chat(messages;model)
     _vision_messages(goal;target;shot;ocr)
     _normalize_action(parsed;source)
     _analyze_openai(payload;context)
@@ -1029,11 +1085,8 @@ D:
     vision_analyze(payload;context)
     _real_allowed(context)
     _env(name;cfg;context;default)
-    _openai_compatible_chat(messages;model;api_key;base_url;temperature;max_tokens)
-    _litellm_plan_chat(messages;model;temperature;max_tokens)
     _match_office_transcript(text;allowed)
     _plan_messages(transcript;allowed)
-    _plan_from_parsed(parsed;model;transcript)
     text_plan(payload;context)
   urikvm-docker/packages/python/urillm/routes.py:
     e: register
@@ -1224,28 +1277,23 @@ D:
     e: register
     register(runtime)
   urirdp-docker/packages/python/urirdp_llm/handlers.py:
-    e: _config,_llm_cfg,_env,_target,_heuristic,_parse_json_response,_screenshot_b64,_vision_messages,_openai_compatible_chat,_litellm_chat,_normalize,analyze,_decide_messages,_mock_decide,_decide_litellm,_decide_openai,_decision_from_parsed,decide,_match_transcript,_plan_messages,_plan_from_parsed,plan
+    e: _config,_llm_cfg,_env,_target,_heuristic,_screenshot_b64,_vision_messages,_normalize,analyze,_decide_messages,_mock_decide,_decide_litellm,_decide_openai,decide,_match_transcript,_plan_messages,plan
     _config(context)
     _llm_cfg(context)
     _env(name;cfg;context;default)
     _target(payload)
     _heuristic(tokens;target;source)
-    _parse_json_response(text)
     _screenshot_b64(context)
     _vision_messages(target;tokens;png_b64)
-    _openai_compatible_chat(messages;model;api_key;base_url;temperature;max_tokens)
-    _litellm_chat(messages;model;temperature;max_tokens)
     _normalize(parsed;model)
     analyze(payload;context)
     _decide_messages(question;context_value)
     _mock_decide(question;context_value)
     _decide_litellm(messages;model;context)
     _decide_openai(messages;model;api_key;base_url;context)
-    _decision_from_parsed(parsed;model;question)
     decide(payload;context)
     _match_transcript(text)
     _plan_messages(transcript;allowed)
-    _plan_from_parsed(parsed;model;transcript)
     plan(payload;context)
   urirdp-docker/packages/python/urirdp_llm/routes.py:
     e: register
@@ -1735,10 +1783,10 @@ D:
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.32', 'python').
+project_metadata('urisys', '0.1.33', 'python').
 
 % ── Project Files ────────────────────────────────────────
-project_file('app.doql.less', 48, 'less').
+project_file('app.doql.less', 52, 'less').
 project_file('examples/frontend/app.js', 22, 'javascript').
 project_file('examples/markpact/browser-call.sh', 13, 'shell').
 project_file('examples/shell/call-uri.sh', 7, 'shell').
@@ -1751,6 +1799,12 @@ project_file('local-lab/scripts/05-resolve-from-url.sh', 24, 'shell').
 project_file('local-lab/scripts/06-register-release.sh', 63, 'shell').
 project_file('local-lab/scripts/install-urisys.sh', 21, 'shell').
 project_file('local-lab/scripts/run-all.sh', 26, 'shell').
+project_file('packages/python/urioperators/__init__.py', 17, 'python').
+project_file('packages/python/urioperators/llm_chat.py', 59, 'python').
+project_file('packages/python/urioperators/llm_decide.py', 17, 'python').
+project_file('packages/python/urioperators/llm_json.py', 19, 'python').
+project_file('packages/python/urioperators/llm_plan.py', 18, 'python').
+project_file('packages/python/urioperators/tests/test_llm_helpers.py', 47, 'python').
 project_file('packages/python/urisysedge/__init__.py', 13, 'python').
 project_file('packages/python/urisysedge/env.py', 130, 'python').
 project_file('packages/python/urisysedge/runtime.py', 271, 'python').
@@ -1805,10 +1859,10 @@ project_file('src/urisys/controllers/flow_controller.py', 34, 'python').
 project_file('src/urisys/controllers/server_controller.py', 19, 'python').
 project_file('src/urisys/controllers/uri_controller.py', 34, 'python').
 project_file('src/urisys/defaults.py', 21, 'python').
-project_file('src/urisys/doctor.py', 237, 'python').
+project_file('src/urisys/doctor.py', 283, 'python').
 project_file('src/urisys/flow.py', 26, 'python').
 project_file('src/urisys/http_server.py', 79, 'python').
-project_file('src/urisys/init_setup.py', 159, 'python').
+project_file('src/urisys/init_setup.py', 208, 'python').
 project_file('src/urisys/managers/__init__.py', 1, 'python').
 project_file('src/urisys/managers/bridge_manager.py', 15, 'python').
 project_file('src/urisys/managers/event_manager.py', 14, 'python').
@@ -1820,8 +1874,10 @@ project_file('src/urisys/managers/policy_manager.py', 19, 'python').
 project_file('src/urisys/managers/route_manager.py', 24, 'python').
 project_file('src/urisys/managers/runtime_manager.py', 31, 'python').
 project_file('src/urisys/managers/source_manager.py', 225, 'python').
+project_file('src/urisys/uricore_install.py', 131, 'python').
 project_file('tests/test_bootstrap.py', 61, 'python').
 project_file('tests/test_doctor.py', 29, 'python').
+project_file('tests/test_doctor_uricore.py', 27, 'python').
 project_file('tests/test_init.py', 61, 'python').
 project_file('tests/test_kvm_pack_pyprojects.py', 66, 'python').
 project_file('tests/test_markpact.py', 99, 'python').
@@ -1829,6 +1885,7 @@ project_file('tests/test_python_compat.py', 53, 'python').
 project_file('tests/test_run_expectations.py', 56, 'python').
 project_file('tests/test_session_report_events.py', 59, 'python').
 project_file('tests/test_source_manager.py', 36, 'python').
+project_file('tests/test_uricore_install.py', 38, 'python').
 project_file('tests/test_urisys.py', 46, 'python').
 project_file('tests/test_vendored_sync.py', 52, 'python').
 project_file('tree.sh', 2, 'shell').
@@ -1864,7 +1921,7 @@ project_file('urikvm-docker/packages/python/urikvmedge/cli.py', 57, 'python').
 project_file('urikvm-docker/packages/python/urikvmedge/env.py', 20, 'python').
 project_file('urikvm-docker/packages/python/urikvmedge/runtime.py', 24, 'python').
 project_file('urikvm-docker/packages/python/urillm/__init__.py', 2, 'python').
-project_file('urikvm-docker/packages/python/urillm/handlers.py', 415, 'python').
+project_file('urikvm-docker/packages/python/urillm/handlers.py', 335, 'python').
 project_file('urikvm-docker/packages/python/urillm/routes.py', 4, 'python').
 project_file('urikvm-docker/packages/python/urimail/__init__.py', 4, 'python').
 project_file('urikvm-docker/packages/python/urimail/handlers.py', 128, 'python').
@@ -1908,7 +1965,7 @@ project_file('urirdp-docker/packages/python/urirdp_kvm/display.py', 64, 'python'
 project_file('urirdp-docker/packages/python/urirdp_kvm/handlers.py', 134, 'python').
 project_file('urirdp-docker/packages/python/urirdp_kvm/routes.py', 6, 'python').
 project_file('urirdp-docker/packages/python/urirdp_llm/__init__.py', 4, 'python').
-project_file('urirdp-docker/packages/python/urirdp_llm/handlers.py', 388, 'python').
+project_file('urirdp-docker/packages/python/urirdp_llm/handlers.py', 320, 'python').
 project_file('urirdp-docker/packages/python/urirdp_llm/routes.py', 5, 'python').
 project_file('urirdp-docker/packages/python/urirdp_ocr/__init__.py', 4, 'python').
 project_file('urirdp-docker/packages/python/urirdp_ocr/handlers.py', 80, 'python').
@@ -2015,6 +2072,18 @@ project_file('urisys-node/tests/test_urisys_node.py', 65, 'python').
 project_file('urisys-node/tests/test_urisysedge_single_source.py', 35, 'python').
 
 % ── Python Functions ─────────────────────────────────────
+python_function('packages/python/urioperators/llm_chat.py', 'openai_compatible_chat', 4, 1, 9).
+python_function('packages/python/urioperators/llm_chat.py', 'litellm_chat', 2, 2, 3).
+python_function('packages/python/urioperators/llm_decide.py', 'decision_from_parsed', 3, 5, 5).
+python_function('packages/python/urioperators/llm_json.py', 'parse_json_response', 1, 5, 4).
+python_function('packages/python/urioperators/llm_plan.py', 'plan_from_parsed', 3, 4, 5).
+python_function('packages/python/urioperators/tests/test_llm_helpers.py', 'test_parse_json_response_plain', 0, 2, 1).
+python_function('packages/python/urioperators/tests/test_llm_helpers.py', 'test_parse_json_response_embedded', 0, 2, 1).
+python_function('packages/python/urioperators/tests/test_llm_helpers.py', 'test_parse_json_response_empty', 0, 2, 1).
+python_function('packages/python/urioperators/tests/test_llm_helpers.py', 'test_plan_from_parsed_ok', 0, 4, 1).
+python_function('packages/python/urioperators/tests/test_llm_helpers.py', 'test_plan_from_parsed_missing_uri', 0, 1, 2).
+python_function('packages/python/urioperators/tests/test_llm_helpers.py', 'test_decision_from_parsed_retry', 0, 3, 1).
+python_function('packages/python/urioperators/tests/test_llm_helpers.py', 'test_decision_from_parsed_abort_default', 0, 2, 1).
 python_function('packages/python/urisysedge/env.py', '_urisys_root', 0, 1, 2).
 python_function('packages/python/urisysedge/env.py', 'load_urisys_env', 0, 8, 12).
 python_function('packages/python/urisysedge/env.py', '_env_policy_candidates', 0, 2, 5).
@@ -2157,20 +2226,21 @@ python_function('src/urisys/doctor.py', '_check_python', 0, 3, 1).
 python_function('src/urisys/doctor.py', '_check_cli_path', 0, 3, 4).
 python_function('src/urisys/doctor.py', '_check_min_version', 1, 6, 4).
 python_function('src/urisys/doctor.py', '_check_wayland_him', 0, 3, 3).
-python_function('src/urisys/doctor.py', '_check_uricore_dist', 0, 3, 2).
-python_function('src/urisys/doctor.py', 'run_doctor', 0, 10, 9).
+python_function('src/urisys/doctor.py', '_check_uricore_authentic', 0, 6, 5).
+python_function('src/urisys/doctor.py', '_check_uricore_dist', 0, 3, 3).
+python_function('src/urisys/doctor.py', 'run_doctor', 0, 11, 12).
 python_function('src/urisys/flow.py', 'load_flow', 1, 3, 5).
 python_function('src/urisys/flow.py', 'iter_steps', 1, 7, 7).
 python_function('src/urisys/http_server.py', '_read_json', 1, 3, 5).
 python_function('src/urisys/http_server.py', '_send', 3, 1, 8).
 python_function('src/urisys/http_server.py', 'create_server', 2, 1, 13).
-python_function('src/urisys/init_setup.py', 'default_pip_specs', 0, 1, 0).
+python_function('src/urisys/init_setup.py', 'default_pip_specs', 0, 1, 1).
 python_function('src/urisys/init_setup.py', 'pip_install_specs', 1, 4, 2).
-python_function('src/urisys/init_setup.py', 'verify_uri_control', 0, 2, 1).
+python_function('src/urisys/init_setup.py', 'verify_uri_control', 0, 2, 3).
 python_function('src/urisys/init_setup.py', 'profile_env', 1, 2, 1).
 python_function('src/urisys/init_setup.py', 'render_env_shell', 1, 2, 4).
 python_function('src/urisys/init_setup.py', 'write_env_file', 2, 2, 5).
-python_function('src/urisys/init_setup.py', 'run_init', 0, 20, 13).
+python_function('src/urisys/init_setup.py', 'run_init', 0, 34, 16).
 python_function('src/urisys/managers/markpact_models.py', 'safe_identifier', 1, 3, 4).
 python_function('src/urisys/managers/markpact_models.py', 'parse_meta', 1, 4, 2).
 python_function('src/urisys/managers/markpact_models.py', 'scheme_from_uri', 1, 2, 2).
@@ -2178,6 +2248,17 @@ python_function('src/urisys/managers/markpact_models.py', 'source_hash', 1, 1, 4
 python_function('src/urisys/managers/markpact_validation.py', 'validate_contract', 3, 23, 8).
 python_function('src/urisys/managers/markpact_validation.py', 'validate_bundle', 3, 14, 8).
 python_function('src/urisys/managers/markpact_validation.py', 'validate_implementation', 3, 18, 7).
+python_function('src/urisys/uricore_install.py', 'github_owner', 0, 1, 2).
+python_function('src/urisys/uricore_install.py', 'github_version', 0, 1, 3).
+python_function('src/urisys/uricore_install.py', 'wheel_url', 1, 3, 5).
+python_function('src/urisys/uricore_install.py', 'pip_spec', 0, 1, 1).
+python_function('src/urisys/uricore_install.py', '_pkg_version', 1, 2, 1).
+python_function('src/urisys/uricore_install.py', '_module_exists', 1, 1, 1).
+python_function('src/urisys/uricore_install.py', '_dist_top_levels', 1, 6, 5).
+python_function('src/urisys/uricore_install.py', 'is_wrong_uricore_installed', 0, 5, 3).
+python_function('src/urisys/uricore_install.py', 'diagnose_uricore', 0, 4, 4).
+python_function('src/urisys/uricore_install.py', 'pip_run', 1, 4, 2).
+python_function('src/urisys/uricore_install.py', 'repair_uricore', 0, 6, 7).
 python_function('tests/test_bootstrap.py', '_load_module', 2, 2, 3).
 python_function('tests/test_bootstrap.py', 'test_bootstrap_import_does_not_require_uri_control', 0, 2, 2).
 python_function('tests/test_bootstrap.py', 'test_cli_import_does_not_require_uri_control', 0, 3, 1).
@@ -2186,6 +2267,7 @@ python_function('tests/test_bootstrap.py', 'test_doctor_subcommand_via_bootstrap
 python_function('tests/test_doctor.py', 'test_doctor_ok_in_dev_env', 0, 8, 1).
 python_function('tests/test_doctor.py', 'test_doctor_fails_high_min_version', 0, 3, 2).
 python_function('tests/test_doctor.py', 'test_doctor_hints_include_node_serve', 0, 2, 2).
+python_function('tests/test_doctor_uricore.py', 'test_check_uricore_authentic_fails_on_squatter', 0, 7, 4).
 python_function('tests/test_init.py', 'test_init_dry_run_via_bootstrap', 0, 8, 4).
 python_function('tests/test_init.py', 'test_run_init_skip_pip_writes_env', 1, 5, 4).
 python_function('tests/test_init.py', 'test_pip_install_failure', 0, 3, 2).
@@ -2214,6 +2296,10 @@ python_function('tests/test_session_report_events.py', 'test_summarize_events_ap
 python_function('tests/test_session_report_events.py', 'test_summarize_events_jsonl', 1, 4, 5).
 python_function('tests/test_source_manager.py', 'test_fetch_local_file', 1, 4, 5).
 python_function('tests/test_source_manager.py', 'test_fetch_github_raw', 2, 3, 4).
+python_function('tests/test_uricore_install.py', 'test_wheel_url_default', 0, 3, 3).
+python_function('tests/test_uricore_install.py', 'test_wrong_uricore_detected_when_squatter_present', 0, 2, 2).
+python_function('tests/test_uricore_install.py', 'test_not_wrong_when_uri_control_present', 0, 2, 2).
+python_function('tests/test_uricore_install.py', 'test_diagnose_includes_wheel_url', 0, 3, 2).
 python_function('tests/test_urisys.py', 'test_call_browser_open', 1, 3, 4).
 python_function('tests/test_urisys.py', 'test_routes_load', 1, 3, 5).
 python_function('tests/test_urisys.py', 'test_all_skips_uninstalled_packs', 1, 4, 3).
@@ -2309,22 +2395,16 @@ python_function('urikvm-docker/packages/python/urillm/handlers.py', '_click_box'
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_find_target_box', 2, 6, 2).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_find_goal_box', 2, 6, 2).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_heuristic_analyze', 2, 8, 8).
-python_function('urikvm-docker/packages/python/urillm/handlers.py', '_parse_json_response', 1, 5, 4).
-python_function('urikvm-docker/packages/python/urillm/handlers.py', '_openai_chat', 4, 2, 9).
-python_function('urikvm-docker/packages/python/urillm/handlers.py', '_litellm_chat', 2, 2, 3).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_vision_messages', 4, 12, 4).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_normalize_action', 2, 4, 4).
-python_function('urikvm-docker/packages/python/urillm/handlers.py', '_analyze_openai', 2, 10, 6).
+python_function('urikvm-docker/packages/python/urillm/handlers.py', '_analyze_openai', 2, 11, 6).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_analyze_litellm', 2, 6, 10).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_vision_analyze', 2, 6, 7).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', 'vision_analyze', 2, 1, 1).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_real_allowed', 1, 2, 2).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_env', 4, 3, 5).
-python_function('urikvm-docker/packages/python/urillm/handlers.py', '_openai_compatible_chat', 6, 1, 9).
-python_function('urikvm-docker/packages/python/urillm/handlers.py', '_litellm_plan_chat', 4, 2, 3).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_match_office_transcript', 2, 31, 8).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', '_plan_messages', 2, 3, 2).
-python_function('urikvm-docker/packages/python/urillm/handlers.py', '_plan_from_parsed', 3, 4, 5).
 python_function('urikvm-docker/packages/python/urillm/handlers.py', 'text_plan', 2, 24, 19).
 python_function('urikvm-docker/packages/python/urillm/routes.py', 'register', 1, 1, 1).
 python_function('urikvm-docker/packages/python/urimail/handlers.py', '_mail_cfg', 1, 2, 1).
@@ -2451,22 +2531,17 @@ python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_llm_cf
 python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_env', 4, 3, 5).
 python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_target', 1, 3, 3).
 python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_heuristic', 3, 5, 5).
-python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_parse_json_response', 1, 5, 4).
 python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_screenshot_b64', 1, 2, 7).
 python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_vision_messages', 3, 4, 2).
-python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_openai_compatible_chat', 6, 1, 9).
-python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_litellm_chat', 4, 2, 3).
 python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_normalize', 2, 4, 4).
 python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', 'analyze', 2, 18, 17).
 python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_decide_messages', 2, 2, 2).
 python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_mock_decide', 2, 6, 2).
 python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_decide_litellm', 3, 3, 5).
 python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_decide_openai', 5, 3, 2).
-python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_decision_from_parsed', 3, 5, 5).
 python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', 'decide', 2, 15, 13).
 python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_match_transcript', 1, 4, 3).
 python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_plan_messages', 2, 3, 2).
-python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', '_plan_from_parsed', 3, 4, 5).
 python_function('urirdp-docker/packages/python/urirdp_llm/handlers.py', 'plan', 2, 20, 16).
 python_function('urirdp-docker/packages/python/urirdp_llm/routes.py', 'register', 1, 1, 1).
 python_function('urirdp-docker/packages/python/urirdp_ocr/__init__.py', 'register', 1, 1, 1).
@@ -3003,75 +3078,74 @@ sumd_interface('cli', '').
 
 ## Call Graph
 
-*367 nodes · 500 edges · 73 modules · CC̄=4.3*
+*373 nodes · 500 edges · 77 modules · CC̄=4.3*
 
 ### Hubs (by degree)
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
-| `print` *(in scripts.run-nl-log-smoke)* | 0 | 80 | 0 | **80** |
+| `print` *(in scripts.run-nl-log-smoke)* | 0 | 82 | 0 | **82** |
 | `make_handler` *(in urisys-node.packages.python.urisysnode.serve)* | 2 | 1 | 77 | **78** |
 | `session_urirdp_real_docker` *(in scripts.run_test_sessions)* | 30 ⚠ | 0 | 69 | **69** |
+| `main` *(in src.urisys.cli)* | 36 ⚠ | 0 | 68 | **68** |
 | `run_cmd` *(in scripts.test_sessions.util)* | 6 | 51 | 12 | **63** |
-| `make_handler` *(in uristepper-docker.packages.python.uristepperedge.server)* | 1 | 1 | 43 | **44** |
+| `build_parser` *(in src.urisys.cli)* | 1 | 1 | 61 | **62** |
 | `session_automation_lab` *(in scripts.run_test_sessions)* | 16 ⚠ | 1 | 43 | **44** |
-| `run_flow_file` *(in urisys-automation-lab.server.flow_runner)* | 13 ⚠ | 1 | 40 | **41** |
-| `_cfg` *(in urienv-docker.packages.python.urienv.src.urienv.handlers)* | 7 | 9 | 29 | **38** |
+| `make_handler` *(in uristepper-docker.packages.python.uristepperedge.server)* | 1 | 1 | 43 | **44** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
 # generated in 0.19s
-# nodes: 367 | edges: 500 | modules: 73
+# nodes: 373 | edges: 500 | modules: 77
 # CC̄=4.3
 
 HUBS[20]:
   scripts.run-nl-log-smoke.print
-    CC=0  in:80  out:0  total:80
+    CC=0  in:82  out:0  total:82
   urisys-node.packages.python.urisysnode.serve.make_handler
     CC=2  in:1  out:77  total:78
   scripts.run_test_sessions.session_urirdp_real_docker
     CC=30  in:0  out:69  total:69
+  src.urisys.cli.main
+    CC=36  in:0  out:68  total:68
   scripts.test_sessions.util.run_cmd
     CC=6  in:51  out:12  total:63
-  uristepper-docker.packages.python.uristepperedge.server.make_handler
-    CC=1  in:1  out:43  total:44
+  src.urisys.cli.build_parser
+    CC=1  in:1  out:61  total:62
   scripts.run_test_sessions.session_automation_lab
     CC=16  in:1  out:43  total:44
+  uristepper-docker.packages.python.uristepperedge.server.make_handler
+    CC=1  in:1  out:43  total:44
   urisys-automation-lab.server.flow_runner.run_flow_file
     CC=13  in:1  out:40  total:41
   urienv-docker.packages.python.urienv.src.urienv.handlers._cfg
     CC=7  in:9  out:29  total:38
   urikvm-docker.packages.python.urihim.handlers.mouse_scroll
     CC=18  in:0  out:37  total:37
+  src.urisys.init_setup.run_init
+    CC=34  in:2  out:35  total:37
   urienv-docker.packages.python.urisysedge.src.urisysedge.server.serve
     CC=1  in:0  out:36  total:36
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
-  urikvm-docker.packages.python.urihim.handlers.mouse_click
-    CC=17  in:0  out:34  total:34
   scripts.test_sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
+  urikvm-docker.packages.python.urihim.handlers.mouse_click
+    CC=17  in:0  out:34  total:34
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
   urirdp-docker.packages.python.urirdp_browser.handlers.open_page
     CC=15  in:0  out:33  total:33
-  urikvm-docker.packages.python.urillm.handlers.text_plan
-    CC=24  in:0  out:33  total:33
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
   src.urisys.http_server.create_server
     CC=1  in:1  out:31  total:32
-  packages.python.urisysedge.env.resolve_env_var
-    CC=11  in:23  out:9  total:32
-  urirdp-docker.packages.python.urirdp_llm.handlers.analyze
-    CC=18  in:0  out:31  total:31
 
 MODULES:
-  packages.python.urisysedge.env  [7 funcs]
+  packages.python.urisysedge.env  [6 funcs]
     _env_config  CC=7  out:6
     _env_policy_candidates  CC=2  out:7
     _urisys_root  CC=1  out:2
-    is_secret_env  CC=1  out:1
     load_env_policy  CC=6  out:5
     load_urisys_env  CC=8  out:17
     resolve_env_var  CC=11  out:9
@@ -3089,6 +3163,17 @@ MODULES:
     main  CC=10  out:12
     parse_args  CC=1  out:8
     rules_tick  CC=3  out:8
+  scripts.pack_sync  [12 funcs]
+    _repo  CC=1  out:0
+    _repo_pyproject  CC=5  out:6
+    _vendored_kvm  CC=1  out:0
+    check_drift  CC=12  out:17
+    file_hash  CC=1  out:3
+    init_repo  CC=9  out:24
+    pack_specs  CC=6  out:7
+    read_version  CC=1  out:4
+    repo_module_dir  CC=1  out:0
+    sync_file  CC=5  out:6
   scripts.report.cli  [1 funcs]
     main  CC=4  out:23
   scripts.report.events  [4 funcs]
@@ -3127,8 +3212,9 @@ MODULES:
   scripts.run-office-writer-e2e  [2 funcs]
     save_json  CC=0  out:0
     wait_health  CC=0  out:0
-  scripts.run-urisys-node-docker-e2e  [1 funcs]
+  scripts.run-urisys-node-docker-e2e  [2 funcs]
     http_json  CC=0  out:0
+    remote_call  CC=0  out:0
   scripts.run_test_sessions  [14 funcs]
     _monorepo_root  CC=4  out:3
     main  CC=13  out:32
@@ -3171,11 +3257,19 @@ MODULES:
     prepare_urirdp_data  CC=4  out:6
     read_meta  CC=3  out:3
     run_cmd  CC=6  out:12
+  src.urisys.cli  [5 funcs]
+    _add_runtime_flags  CC=1  out:4
+    build_parser  CC=1  out:61
+    main  CC=36  out:68
+    print_json  CC=1  out:2
+    resolve_markpact_source  CC=2  out:3
   src.urisys.controllers.flow_controller  [1 funcs]
     run  CC=6  out:19
   src.urisys.controllers.server_controller  [2 funcs]
     __init__  CC=1  out:1
     serve_forever  CC=1  out:3
+  src.urisys.doctor  [1 funcs]
+    run_doctor  CC=11  out:20
   src.urisys.flow  [2 funcs]
     iter_steps  CC=7  out:8
     load_flow  CC=3  out:5
@@ -3183,6 +3277,8 @@ MODULES:
     _read_json  CC=3  out:5
     _send  CC=1  out:12
     create_server  CC=1  out:31
+  src.urisys.init_setup  [1 funcs]
+    run_init  CC=34  out:35
   src.urisys.managers.pack_manager  [1 funcs]
     manifest_paths  CC=9  out:20
   uribrowser-docker.packages.python.uribrowserdocker.handlers  [6 funcs]
@@ -3235,17 +3331,6 @@ MODULES:
     screenshot  CC=5  out:18
   urikvm-docker.packages.python.urikvmedge.cli  [1 funcs]
     build_runtime  CC=6  out:11
-  urikvm-docker.packages.python.urillm.handlers  [24 funcs]
-    _analyze_litellm  CC=6  out:11
-    _analyze_openai  CC=10  out:13
-    _box_center  CC=1  out:4
-    _click_box  CC=1  out:2
-    _driver  CC=1  out:2
-    _env  CC=3  out:6
-    _find_goal_box  CC=6  out:2
-    _find_target_box  CC=6  out:2
-    _goal_text  CC=4  out:4
-    _heuristic_analyze  CC=8  out:17
   urikvm-docker.packages.python.urimail.handlers  [10 funcs]
     _draft_state  CC=1  out:5
     _driver  CC=3  out:4
@@ -3313,17 +3398,6 @@ MODULES:
   urirdp-docker.packages.python.urirdp_kvm.handlers  [2 funcs]
     display_info  CC=4  out:5
     screenshot  CC=9  out:23
-  urirdp-docker.packages.python.urirdp_llm.handlers  [17 funcs]
-    _config  CC=2  out:1
-    _decide_litellm  CC=3  out:5
-    _decide_messages  CC=2  out:2
-    _decide_openai  CC=3  out:2
-    _env  CC=3  out:6
-    _heuristic  CC=5  out:22
-    _litellm_chat  CC=2  out:3
-    _llm_cfg  CC=6  out:7
-    _match_transcript  CC=4  out:3
-    _openai_compatible_chat  CC=1  out:9
   urirdp-docker.packages.python.urirdp_ocr.handlers  [5 funcs]
     _mock_ocr  CC=1  out:0
     _parse_tesseract_tsv  CC=7  out:19
@@ -3421,10 +3495,19 @@ MODULES:
     contract_spec_from_release  CC=2  out:4
     fetch_release  CC=5  out:11
     run_release  CC=8  out:19
-  urisys-node.packages.python.urisysnode.client  [1 funcs]
+  urisys-node.packages.python.urisysnode.client  [2 funcs]
     call_via_route_map  CC=6  out:14
-  urisys-node.packages.python.urisysnode.display_bootstrap  [1 funcs]
+    remote_call  CC=3  out:8
+  urisys-node.packages.python.urisysnode.display_bootstrap  [7 funcs]
+    _agent_up  CC=2  out:2
+    _agent_url  CC=1  out:2
+    _ensure_session_env  CC=5  out:7
+    _screencast_ready  CC=4  out:9
+    _start_agent  CC=4  out:9
+    _start_screencast  CC=5  out:7
     bootstrap_wayland_capture  CC=7  out:17
+  urisys-node.packages.python.urisysnode.forward  [1 funcs]
+    forward_call  CC=9  out:8
   urisys-node.packages.python.urisysnode.forward_config  [6 funcs]
     _normalize_entry  CC=11  out:13
     _normalize_release_entry  CC=11  out:15
@@ -3432,9 +3515,25 @@ MODULES:
     load_release_forward_entries  CC=11  out:12
     wire_forward_packs  CC=2  out:2
     wire_release_forward_packs  CC=3  out:4
-  urisys-node.packages.python.urisysnode.identity  [2 funcs]
+  urisys-node.packages.python.urisysnode.handlers  [7 funcs]
+    command_indicator_off  CC=1  out:2
+    command_indicator_on  CC=1  out:4
+    command_install_pack  CC=6  out:13
+    command_register_forward  CC=7  out:12
+    query_health  CC=1  out:2
+    query_identity  CC=2  out:8
+    query_packs  CC=2  out:7
+  urisys-node.packages.python.urisysnode.identity  [11 funcs]
+    _data_dir  CC=1  out:3
+    _hostname  CC=1  out:1
+    _identity_path  CC=1  out:1
+    _pairing_path  CC=1  out:1
+    enroll  CC=3  out:6
+    health_payload  CC=15  out:22
     load_identity  CC=4  out:15
+    load_pairing  CC=3  out:5
     require_paired  CC=4  out:5
+    save_identity  CC=1  out:3
   urisys-node.packages.python.urisysnode.pack_resolver  [5 funcs]
     auto_install_enabled  CC=1  out:1
     ensure_pack_pypi  CC=3  out:3
@@ -3446,8 +3545,12 @@ MODULES:
     canonical_digest  CC=3  out:5
     signature_required  CC=3  out:2
     verify_release  CC=14  out:15
-  urisys-node.packages.python.urisysnode.router  [1 funcs]
+  urisys-node.packages.python.urisysnode.router  [5 funcs]
+    _match_pattern  CC=1  out:4
     load_route_map  CC=3  out:4
+    node_endpoint  CC=5  out:6
+    resolve_remote_route  CC=5  out:3
+    rewrite_uri_for_slave  CC=6  out:5
   urisys-node.packages.python.urisysnode.serve  [11 funcs]
     _extend_pack_paths  CC=4  out:7
     _register_pack  CC=8  out:13
@@ -3472,6 +3575,14 @@ EDGES:
   packages.python.urisysedge.env.resolve_env_var → packages.python.urisysedge.env.load_env_policy
   packages.python.urisysedge.env.resolve_env_var → urienv-docker.packages.python.urienv.src.urienv.handlers.secret_value
   packages.python.urisysedge.env.resolve_env_var → urienv-docker.packages.python.urienv.src.urienv.handlers.var_value
+  src.urisys.cli.print_json → scripts.run-nl-log-smoke.print
+  src.urisys.cli.build_parser → src.urisys.cli._add_runtime_flags
+  src.urisys.cli.main → src.urisys.cli.build_parser
+  src.urisys.cli.main → src.urisys.cli.resolve_markpact_source
+  src.urisys.cli.main → src.urisys.doctor.run_doctor
+  src.urisys.cli.main → src.urisys.cli.print_json
+  src.urisys.cli.main → src.urisys.init_setup.run_init
+  src.urisys.cli.main → scripts.run-nl-log-smoke.print
   src.urisys.http_server.create_server → src.urisys.http_server._send
   src.urisys.http_server.create_server → src.urisys.http_server._read_json
   src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.load_flow
@@ -3503,14 +3614,6 @@ EDGES:
   uristepper-docker.packages.python.uristepper.handlers.disable → uristepper-docker.packages.python.uristepper.handlers._device_axis
   uristepper-docker.packages.python.uristepper.handlers.disable → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
   uristepper-docker.packages.python.uristepper.handlers.stop → uristepper-docker.packages.python.uristepper.handlers._device_axis
-  uristepper-docker.packages.python.uristepper.handlers.stop → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
-  uristepper-docker.packages.python.uristepper.handlers.move_relative → uristepper-docker.packages.python.uristepper.handlers._device_axis
-  uristepper-docker.packages.python.uristepper.handlers.move_relative → uristepper-docker.packages.python.uristepper.handlers._enforce_safety
-  uristepper-docker.packages.python.uristepper.handlers.move_relative → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
-  uristepper-docker.packages.python.uristepper.handlers.move_absolute → uristepper-docker.packages.python.uristepper.handlers._device_axis
-  uristepper-docker.packages.python.uristepper.handlers.move_absolute → uristepper-docker.packages.python.uristepper.handlers._enforce_safety
-  uristepper-docker.packages.python.uristepper.handlers.move_absolute → uristepper-docker.packages.python.uristepper.handlers._dry_or_driver
-  uristepper-docker.packages.python.uristepper.handlers.home → uristepper-docker.packages.python.uristepper.handlers._device_axis
 ```
 
 ## Test Contracts

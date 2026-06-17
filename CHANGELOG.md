@@ -37,6 +37,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `test_uriscreen_auto`/`test_ocr_llm` skip gracefully when Pillow/tesseract absent
 - Host→Docker desktop and host→LAN node (`192.168.188.201:8790`) control verified live (capture + OCR)
 
+## [0.1.34] - 2026-06-17
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update docs/ARCHITECTURE.md
+- Update docs/CLI.md
+- Update docs/DISTRIBUTION.md
+- Update docs/NODE-SETUP.md
+- Update docs/OFFICE-AUTOMATION.md
+- Update docs/PACK-EXTENSIBILITY.md
+- ... and 5 more files
+
+### Test
+- Update tests/test_doctor_uricore.py
+- Update tests/test_uricore_install.py
+
+### Other
+- Update VERSION
+- Update app.doql.less
+- Update packages/python/urioperators/__init__.py
+- Update packages/python/urioperators/llm_chat.py
+- Update packages/python/urioperators/llm_decide.py
+- Update packages/python/urioperators/llm_json.py
+- Update packages/python/urioperators/llm_plan.py
+- Update packages/python/urioperators/pyproject.toml
+- Update packages/python/urioperators/tests/test_llm_helpers.py
+- Update project/analysis.toon.yaml
+- ... and 32 more files
+
 ## [0.1.32] - 2026-06-17
 
 ### Docs

@@ -56,7 +56,7 @@ Packi **kvm/him/ocr/llm** i backendy **`[real]`** doinstalowują się przy pierw
 urisys node serve --no-auto-install
 ```
 
-Szczegóły: [`NODE-SETUP.md`](NODE-SETUP.md).
+Szczegóły: [`NODE-SETUP.md`](NODE-SETUP.md) · [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md) · [`DISTRIBUTION.md`](DISTRIBUTION.md).
 
 ## Flow
 

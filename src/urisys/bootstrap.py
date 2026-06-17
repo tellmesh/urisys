@@ -24,8 +24,8 @@ def _missing_uricore_payload(exc: ModuleNotFoundError) -> dict:
         "type": "module_not_found",
         "missing": exc.name,
         "hint": (
-            "uri_control is provided by PyPI package uricore (not a separate pip name). "
-            "Run: urisys init — or manually: pip install -U uricore urisysedge \"urisys[real]\""
+            "uri_control is in tellmesh uricore (GitHub wheel). "
+            "PyPI package 'uricore' is a different project — run: urisys init"
         ),
         "commands": {
             "fix": "urisys init",

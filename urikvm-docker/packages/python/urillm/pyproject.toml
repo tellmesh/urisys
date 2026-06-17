@@ -9,7 +9,7 @@ description = "llm:// URI capability pack (vision/heuristic) for urisys-node"
 readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
-dependencies = ["urisysedge>=0.1.0"]
+dependencies = ["urisysedge>=0.1.0", "urioperators>=0.1.0"]
 keywords = ["uri", "llm", "vision", "urisys"]
 
 [project.optional-dependencies]
@@ -17,6 +17,7 @@ vision = ["litellm>=1.40"]
 
 [tool.uv.sources]
 urisysedge = { path = "../../../../packages/python/urisysedge", editable = true }
+urioperators = { path = "../../../../packages/python/urioperators", editable = true }
 
 [tool.setuptools]
 packages = ["urillm"]

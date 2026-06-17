@@ -19,7 +19,8 @@ Indeks modułów z liczbami linii: [`project/map.toon.yaml`](../project/map.toon
 ```text
 urisys/
 ├── src/urisys/                 # pip package urisys (CLI + managers)
-├── packages/python/urisysedge/ # ★ wspólny edge runtime (NOWY)
+├── packages/python/urisysedge/ # ★ wspólny edge runtime
+├── packages/python/urioperators/ # ★ wspólne helpery LLM (Tor R)
 ├── flows/                      # przykładowy flow CLI
 ├── examples/                   # shell + frontend
 ├── markpacts/                  # → ../markpact-contracts/packs (symlink w tellmesh)
@@ -33,6 +34,25 @@ urisys/
 ├── urisys-automation-lab/      # 10 flows + lab UI
 └── urisys-node/                # slave/master node + ArtifactResolver
 ```
+
+## Wspólny pakiet: `urioperators` (2026-06-17)
+
+Wyodrębnione helpery LLM współdzielone przez `urillm` i `urirdp_llm`:
+
+| Moduł | Zawartość |
+|-------|-----------|
+| `llm_json.py` | `parse_json_response` |
+| `llm_chat.py` | `openai_compatible_chat`, `litellm_chat` |
+| `llm_plan.py` | `plan_from_parsed` |
+| `llm_decide.py` | `decision_from_parsed` |
+
+Lokalizacja: `packages/python/urioperators/`. Docker COPY obok `urisysedge`:
+
+```dockerfile
+COPY packages/python/urioperators ./packages/python/urioperators
+```
+
+**Faza 2 (plan):** OCR/HIM helpers — ten sam wzorzec.
 
 ## Wspólny pakiet: `urisysedge`
 
@@ -80,7 +100,7 @@ COPY packages/python/urisysedge ./packages/python/urisysedge
 | KVM | `urikvm` | `urirdp_kvm` | RDP display vs czysty KVM |
 | HIM | `urihim` | `urirdp_him` | xdotool |
 | OCR | `uriocr` | `urirdp_ocr` | `latest.png` convention |
-| LLM | `urillm` | `urirdp_llm` | vision analyze |
+| LLM | `urillm` | `urirdp_llm` | vision analyze; **helpery → `urioperators`** |
 | Browser | `uribrowserdocker` | `urirdp_browser` | Chromium w RDP |
 | Env | — | `urirdp_env` | alias do urienv |
 
@@ -94,18 +114,19 @@ COPY packages/python/urisysedge ./packages/python/urisysedge
 | `urirdpedge/env.py` | shim |
 | `urikvmedge/env.py` | shim |
 
-## Paczki PyPI i dystrybucja (stan 2026-06-16)
+## Paczki PyPI i dystrybucja (stan 2026-06-17)
 
-Pełny opis trzech ścieżek (PyPI · Markpact · GitHub): **[`docs/DISTRIBUTION.md`](DISTRIBUTION.md)** · rozszerzenia URI: **[`docs/PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md)**.
+Pełny opis: **[`docs/DISTRIBUTION.md`](DISTRIBUTION.md)** · rozszerzenia: **[`docs/PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md)**.
 
-| Pakiet | PyPI | Monorepo (vendored) |
-|--------|------|---------------------|
-| `urisys`, `urisys-node` | ✅ | ✅ |
-| `uriscreen` | bundled w node | ✅ |
+| Pakiet | PyPI | Monorepo |
+|--------|------|----------|
+| `urisys` | 🔲 0.1.33 | ✅ |
+| `urisys-node` | bundled | ✅ |
 | `urisysedge` | ✅ 0.1.1 | `packages/python/urisysedge/` |
-| `urikvm` | ✅ 0.1.1 | `urikvm-docker/packages/python/urikvm/` |
-| `urihim`, `uriocr`, `urillm` | 🔲 PyPI / ✅ GitHub Releases | vendored w monorepo |
-| `urikvm-docker-example` | ❌ nie publikować | dev bundle only |
+| `urikvm` | ✅ 0.1.1 | vendored |
+| `urihim`, `uriocr`, `urillm` | 🔲 / ✅ GitHub | vendored |
+| `urioperators` | 🔲 0.1.0 | `packages/python/urioperators/` |
+| `urimail`, `urioffice`, `urivql` | 🔲 / ✅ GitHub | vendored w urikvm-docker |
 
 ### Dev — monorepo (gdy PyPI nie ma packa)
 
@@ -142,8 +163,8 @@ URISYS_NODE_ALLOW_PACK_LOAD=1 URISYS_NODE_PACKS=node,screen,kvm,him urisys-node 
 
 ### Bez PyPI — Markpact + GitHub OCI
 
-Kontrakty: `urikvm-docker/markpacts/*.markpact.md` → docelowo `markpact-contracts/packs/`.  
-Runtime: `ArtifactResolver` + `register_forward_pack()` — szczegóły w [`DISTRIBUTION.md`](DISTRIBUTION.md) i [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md).
+Kontrakty kvm: ✅ w `markpact-contracts/packs/` (11/11 validate).  
+Runtime: `hotload_release_pack()` + `release_forwards` — [`DISTRIBUTION.md`](DISTRIBUTION.md), [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md).
 
 ## Ekosystem zewnętrzny (imgl / vql)
 
@@ -176,9 +197,10 @@ Szczegóły implementacji: [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md), sta
 3. ✅ **`JsonlEventStore`/`Runtime` dedup** — urisys-node + uristepper → urisysedge ([`MIGRATION-STEP3.md`](MIGRATION-STEP3.md))
 4. ✅ **PyPI layout packów** — vendored w monorepo + osobne repo `tellmesh/{urisysedge,urikvm,urihim,uriocr,urillm}`; [`DISTRIBUTION.md`](DISTRIBUTION.md)
 5. 🔲 **`uriimgl` / `urivql`** — forward lub in-process pack; [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md)
-6. 🔲 **Handlery OCR/LLM/HIM** — wspólny `packages/python/urioperators/` z adapterem display
-7. 🔲 **`FlowController`** — dodać `after`/`depends_on` (parity z uri2flow)
-8. 🔲 **Pełny `uri3 run-workflow`** w lab (schema root w kontenerze)
+6. ✅ **`urioperators/` (LLM)** — `parse_json_response`, chat, plan, decide; wired w `urillm` + `urirdp_llm`
+7. 🔲 **`urioperators/` (OCR/HIM)** — faza 2 dedup
+8. 🔲 **`FlowController`** — dodać `after`/`depends_on` (parity z uri2flow)
+9. 🔲 **Pełny `uri3 run-workflow`** w lab (schema root w kontenerze)
 
 ## Zależności importów (z map.toon.yaml)
 

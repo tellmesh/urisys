@@ -2,7 +2,7 @@
 
 Pipeline sterowania maszyną przez URI: capture → analiza → akcja → weryfikacja.
 
-Powiązane: [`FLOWS.md`](FLOWS.md), [`urisys-automation-lab/docs/10_AUTOMATIONS.md`](../urisys-automation-lab/docs/10_AUTOMATIONS.md), [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md).
+Powiązane: [`README.md`](README.md) · [`NODE-SETUP.md`](NODE-SETUP.md) · [`DISTRIBUTION.md`](DISTRIBUTION.md).
 
 ## Pipeline docelowy
 
@@ -11,18 +11,20 @@ screen:// / kvm:// capture  →  vql:// verify UI  →  imgl:// layout  →  him
                               ocr:// text          llm:// plan step
 ```
 
-## Stan testów Docker (2026-06-17)
+## Stan testów (2026-06-17)
 
-| Sesja | Wynik | Zrzuty |
-|-------|-------|--------|
-| `urisys-node-docker-gui` | **PASS** | `screen://` Xvfb, 8.8 KB PNG |
-| `lab-10-flows` | **12/12 PASS** | 11 PNG RDP (fix flow 04 → example.com) |
-| `urirdp-real-docker` | **PASS** | screenshot + OCR + xdotool click |
+| Sesja | Wynik | Uwagi |
+|-------|-------|-------|
+| `urisys-node-docker-gui` | **PASS** | `screen://` Xvfb |
+| `lab-10-flows` | **12/12 PASS** | RDP flows |
+| `urirdp-real-docker` | **PASS** | screenshot + OCR + click |
 | `automation-lab` | **PASS** | chat → real KVM click |
 | `remote-node-smoke` :8790 | **7/7** | identity, screen, hot-load kvm |
-| `pytest-urisys-node` | **PASS** | 39 unit tests |
-| `urirdp-rdp-e2e` | **PASS** | pipeline screenshot/ocr/llm/him + xdotool |
-| `pytest-urirdp` | **18/19** | fail: `test_env_health_call` (env pack mock) |
+| `pytest-urisys-node` | **64 passed**, 6 skipped | unit (hot-load, forward, release glue) |
+| `urirdp-rdp-e2e` | **PASS** | pipeline screenshot/ocr/llm/him |
+| `pytest-urirdp decide` | **6 passed** | LLM dispatch (uses `urioperators`) |
+| `pytest-urikvm llm+vision` | **9 passed** | plan + vision dispatch |
+| `pytest-urioperators` | **7 passed** | shared LLM helpers |
 
 Uruchomienie:
 

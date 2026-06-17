@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.32-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$9.46-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-15.4h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.34-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$10.11-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-15.7h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $9.4572 (43 commits)
-- 👤 **Human dev:** ~$1536 (15.4h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $10.1085 (49 commits)
+- 👤 **Human dev:** ~$1570 (15.7h @ $100/h, 30min dedup)
 
 Generated on 2026-06-17 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -47,7 +47,7 @@ urisys --help
 which urisys   # → .venv/bin/urisys
 ```
 
-Zależności runtime: **`uricore`** (PyPI `uricore>=0.1.2` lub editable `../uricore`), paczki URI z **`uri-packs`** (dev group w `pyproject.toml`).
+Zależności runtime: **`uricore`** (tellmesh wheel z GitHub — **nie** PyPI `uricore`), paczki URI z **`uri-packs`** (dev group w `pyproject.toml`).
 
 Capability packi **kvm/him/ocr/llm** doinstalowują się **lazy przy pierwszym URI** — [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md).
 
@@ -98,21 +98,19 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 
 ## Dokumentacja
 
+**Indeks:** [`docs/README.md`](docs/README.md) — nawigacja, stan projektu, otwarte zadania.
+
 | Dokument | Temat |
 |----------|--------|
-| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Jak działa urisys — warstwy, runtime, testy |
-| [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md) | **Slave bez `.sh`** — pip, lazy install, hot-load, systemd |
-| [`docs/PACK-EXTENSIBILITY.md`](docs/PACK-EXTENSIBILITY.md) | **Nowe schematy URI** — `imgl://`, forward pack, lifecycle |
-| [`docs/OFFICE-AUTOMATION.md`](docs/OFFICE-AUTOMATION.md) | **Automatyzacja biurowa** — browser, office, email, roadmap testów Docker |
-| [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md) | **PyPI · Markpact · GitHub** — packi kvm, publikacja |
-| [`docs/PACKAGES.md`](docs/PACKAGES.md) | Layout monorepo, duplikaty, plan konsolidacji |
-| [`docs/FLOWS.md`](docs/FLOWS.md) | URI flows, zależności, walidacja |
-| [`docs/EXAMPLES.md`](docs/EXAMPLES.md) | Przykłady shell/frontend/Docker |
+| [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md) | **Slave** — `urisys init`, lazy install, hot-load, systemd |
+| [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md) | **PyPI · Markpact · GitHub OCI** — packi, kvm-release |
+| [`docs/PACKAGES.md`](docs/PACKAGES.md) | Layout monorepo, `urisysedge`, `urioperators` |
+| [`docs/PACK-EXTENSIBILITY.md`](docs/PACK-EXTENSIBILITY.md) | Nowe schematy URI, forward, `release_forwards` |
+| [`docs/OFFICE-AUTOMATION.md`](docs/OFFICE-AUTOMATION.md) | Automatyzacja biurowa — roadmap |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Warstwy, runtime, porty Docker |
+| [`docs/FLOWS.md`](docs/FLOWS.md) | URI flows, uri2flow / uri3 |
 | [`docs/CLI.md`](docs/CLI.md) | Komendy CLI |
 | [`docs/MARKPACT.md`](docs/MARKPACT.md) | Markpact validate/compile/test |
-| [`docs/MIGRATION-STEP1.md`](docs/MIGRATION-STEP1.md) | Migracja krok 1 |
-| [`docs/MIGRATION-STEP2.md`](docs/MIGRATION-STEP2.md) | Migracja krok 2 |
-| [`docs/MIGRATION-STEP3.md`](docs/MIGRATION-STEP3.md) | Migracja krok 3 — dedup urisysedge |
 | [`urisys-node/README.md`](urisys-node/README.md) | Slave node, kvm packs, hot-load, forward OCI |
 | [`urisys-node/docs/SCREEN_BACKENDS.md`](urisys-node/docs/SCREEN_BACKENDS.md) | Wayland capture — portal, vdisplay, mss |
 | [`urisys-node/docs/PAIRING.md`](urisys-node/docs/PAIRING.md) | Parowanie master ↔ slave |

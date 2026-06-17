@@ -1,6 +1,7 @@
 FROM python:3.12-slim
 WORKDIR /app
 COPY packages/python/urisysedge ./packages/python/urisysedge
+COPY packages/python/urioperators ./packages/python/urioperators
 COPY urikvm-docker/ .
 ENV PYTHONPATH=/app/packages/python
 RUN pip install --no-cache-dir -e .

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "urioffice"
-version = "0.1.0"
+version = "0.1.1"
 description = "urioffice:// URI capability pack (Writer/DOCX/PDF) for urisys-node"
 requires-python = ">=3.10"
 license = "Apache-2.0"

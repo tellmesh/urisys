@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /opt/urirdp
 COPY urirdp-docker/pyproject.toml ./
 COPY packages/python/urisysedge ./packages/python/urisysedge
+COPY packages/python/urioperators ./packages/python/urioperators
 COPY urirdp-docker/packages ./packages
 COPY urirdp-docker/config ./config
 COPY urirdp-docker/flows ./flows

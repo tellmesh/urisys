@@ -9,10 +9,12 @@ from pathlib import Path
 from typing import Any, Literal
 
 from .doctor import run_doctor
+from .uricore_install import diagnose_uricore, is_wrong_uricore_installed, pip_spec, repair_uricore, wheel_url
 
 Profile = Literal["slave", "dev"]
 
 DEFAULT_MIN_VERSION = "0.1.25"
+DEFAULT_GITHUB_URICORE_VERSION = "0.1.8"
 
 SLAVE_ENV = {
     "URISYS_ALLOW_REAL": "1",
@@ -28,7 +30,7 @@ def default_pip_specs(*, profile: Profile = "slave") -> list[str]:
     del profile
     return [
         "pip",
-        "uricore>=0.1.2",
+        pip_spec(),
         "urisysedge>=0.1.0",
         'urisys[real]>=0.1.25',
     ]
@@ -57,7 +59,14 @@ def verify_uri_control() -> dict[str, Any]:
     try:
         import uri_control  # noqa: F401
     except ModuleNotFoundError as exc:
-        return {"ok": False, "error": str(exc), "missing": exc.name}
+        detail = diagnose_uricore()
+        return {
+            "ok": False,
+            "error": str(exc),
+            "missing": exc.name,
+            "diagnosis": detail,
+            "pip_hint": f"pip install -U {wheel_url()}",
+        }
     return {"ok": True, "module": "uri_control"}
 
 
@@ -97,6 +106,24 @@ def run_init(
         specs.extend(extra_specs)
 
     pip_result: dict[str, Any] | None = None
+    if install and not dry_run and is_wrong_uricore_installed():
+        pre_repair = repair_uricore()
+        steps.append(
+            {
+                "name": "pre_repair_uricore",
+                "status": "pass" if pre_repair.get("ok") else "fail",
+                "detail": pre_repair,
+            }
+        )
+        if not pre_repair.get("ok"):
+            return {
+                "ok": False,
+                "profile": profile,
+                "steps": steps,
+                "error": "could not remove wrong PyPI uricore before install",
+                "hint": f"Run: pip uninstall -y uricore && pip install -U {wheel_url()}",
+            }
+
     if install:
         if dry_run:
             pip_result = {
@@ -119,6 +146,16 @@ def run_init(
             }
 
     verify = verify_uri_control() if not dry_run else {"ok": True, "dry_run": True}
+    if not dry_run and not verify.get("ok") and (is_wrong_uricore_installed() or install):
+        repair = repair_uricore()
+        steps.append(
+            {
+                "name": "repair_uricore",
+                "status": "pass" if repair.get("ok") else "fail",
+                "detail": repair,
+            }
+        )
+        verify = verify_uri_control()
     steps.append({"name": "verify_uri_control", "status": "pass" if verify.get("ok") else "fail", "detail": verify})
 
     doctor = run_doctor(min_version=min_version) if not dry_run else {"ok": True, "dry_run": True, "checks": []}
@@ -138,6 +175,16 @@ def run_init(
         steps.append({"name": "write_env", "status": "pass", "detail": env_written})
 
     ok = all(step["status"] == "pass" for step in steps)
+    error = None
+    hint = None
+    if not ok:
+        if not verify.get("ok"):
+            error = "uri_control not importable after init"
+            hint = verify.get("pip_hint") or f"pip install -U {wheel_url()}"
+        elif doctor.get("ok") is False:
+            error = "urisys doctor reported failures"
+            hint = "urisys doctor"
+
     next_steps = [
         f"source {env_path}" if env_written and env else "",
         "urisys doctor",
@@ -155,4 +202,6 @@ def run_init(
         "env_file": str(env_path) if env_written else None,
         "shell_env": render_env_shell(env) if env else "",
         "next_steps": next_steps,
+        "error": error,
+        "hint": hint,
     }

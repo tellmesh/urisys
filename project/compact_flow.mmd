@@ -1,6 +1,6 @@
 flowchart TD
-%% generated in 0.02s
-    packages__python["packages.python<br/>23 funcs"]
+%% generated in 0.03s
+    packages__python["packages.python<br/>28 funcs"]
     scripts__office_simulate_loop["scripts.office-simulate-loop<br/>5 funcs"]
     scripts__pack_sync["scripts.pack_sync<br/>13 funcs"]
     scripts__report["scripts.report<br/>39 funcs"]
@@ -9,28 +9,28 @@ flowchart TD
     scripts__run_urisys_node_docker_e2e["scripts.run-urisys-node-docker-e2e<br/>5 funcs"]
     scripts__run_test_sessions["scripts.run_test_sessions<br/>14 funcs"]
     scripts__test_sessions["scripts.test_sessions<br/>39 funcs"]
-    src__urisys["src.urisys<br/>98 funcs"]
+    src__urisys["src.urisys<br/>118 funcs"]
     uribrowser_docker__packages["uribrowser-docker.packages<br/>9 funcs"]
     urienv_docker__packages["urienv-docker.packages<br/>29 funcs"]
-    urikvm_docker__packages["urikvm-docker.packages<br/>91 funcs"]
+    urikvm_docker__packages["urikvm-docker.packages<br/>85 funcs"]
     urikvm_docker__scripts["urikvm-docker.scripts<br/>5 funcs"]
-    urirdp_docker__packages["urirdp-docker.packages<br/>75 funcs"]
+    urirdp_docker__packages["urirdp-docker.packages<br/>70 funcs"]
     uristepper_docker__packages["uristepper-docker.packages<br/>60 funcs"]
     urisys_automation_lab__server["urisys-automation-lab.server<br/>19 funcs"]
     urisys_node__packages["urisys-node.packages<br/>126 funcs"]
     scripts__run_test_sessions ==>|90| scripts__test_sessions
     scripts__run_test_sessions ==>|27| scripts__report
+    urirdp_docker__packages ==>|22| packages__python
+    urikvm_docker__packages ==>|22| packages__python
     urirdp_docker__packages ==>|20| scripts__test_sessions
     scripts__run_test_sessions ==>|19| scripts__run_office_writer_e2e
     urisys_node__packages ==>|18| scripts__run_nl_log_smoke
-    urikvm_docker__packages ==>|17| packages__python
-    urirdp_docker__packages ==>|16| packages__python
     scripts__pack_sync ==>|11| scripts__run_nl_log_smoke
     scripts__run_test_sessions ==>|8| scripts__run_urisys_node_docker_e2e
+    src__urisys ==>|7| scripts__run_nl_log_smoke
     uristepper_docker__packages ==>|7| scripts__run_nl_log_smoke
     scripts__office_simulate_loop ==>|7| scripts__run_nl_log_smoke
     scripts__report ==>|6| scripts__run_nl_log_smoke
-    src__urisys ==>|5| scripts__run_nl_log_smoke
     scripts__run_test_sessions ==>|5| scripts__run_nl_log_smoke
     urisys_automation_lab__server ==>|5| scripts__run_nl_log_smoke
     urienv_docker__packages ==>|5| scripts__run_nl_log_smoke
@@ -48,6 +48,7 @@ flowchart TD
     urienv_docker__packages -->|2| uristepper_docker__packages
     urienv_docker__packages -->|2| packages__python
     urisys_node__packages -->|2| uristepper_docker__packages
+    src__urisys -->|1| uristepper_docker__packages
     uristepper_docker__packages -->|1| packages__python
     scripts__report -->|1| packages__python
     urikvm_docker__scripts -->|1| packages__python
@@ -56,4 +57,3 @@ flowchart TD
     urienv_docker__packages -->|1| src__urisys
     urisys_node__packages -->|1| src__urisys
     urisys_node__packages -->|1| scripts__run_urisys_node_docker_e2e
-    src__urisys -->|1| uristepper_docker__packages

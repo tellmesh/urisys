@@ -167,6 +167,38 @@ def _check_wayland_him() -> Check | None:
     )
 
 
+def _check_uricore_authentic() -> Check | None:
+    from .uricore_install import diagnose_uricore, is_wrong_uricore_installed, wheel_url
+
+    diag = diagnose_uricore()
+    if diag.get("uri_control_importable"):
+        return Check(
+            id="uricore_source",
+            status="ok",
+            message=f"uri_control from tellmesh uricore {diag.get('uricore_dist') or 'wheel'}",
+            detail=diag,
+        )
+    if is_wrong_uricore_installed():
+        return Check(
+            id="uricore_source",
+            status="fail",
+            message="Wrong PyPI package 'uricore' installed (squatter — provides uricore/, not uri_control/)",
+            detail={
+                **diag,
+                "pip_hint": f"pip uninstall -y uricore && pip install -U {wheel_url()}",
+                "auto_fix": "urisys init",
+            },
+        )
+    if diag.get("uricore_dist") and not diag.get("uri_control_importable"):
+        return Check(
+            id="uricore_source",
+            status="fail",
+            message="uricore metadata present but uri_control missing (broken install)",
+            detail={**diag, "pip_hint": f"pip install -U {wheel_url()}", "auto_fix": "urisys init"},
+        )
+    return None
+
+
 def _check_uricore_dist() -> Check:
     """urisys declares uricore dependency; a missing dist usually means broken user install."""
     urisys_ver = _pkg_version("urisys")
@@ -179,34 +211,47 @@ def _check_uricore_dist() -> Check:
             detail={"urisys": urisys_ver, "uricore": uricore_ver},
         )
     if urisys_ver:
+        from .uricore_install import wheel_url
+
         return Check(
             id="dist_uricore",
             status="fail",
-            message="urisys is installed but uricore package is missing (broken pip install)",
+            message="urisys is installed but tellmesh uricore is missing",
             detail={
                 "urisys": urisys_ver,
-                "pip_hint": 'pip install -U uricore urisysedge "urisys[real]"',
-                "note": "uri_control lives inside uricore — do not pip install uri_control",
+                "pip_hint": f"pip install -U {wheel_url()}",
+                "note": "Do not pip install PyPI uricore — wrong package. Use tellmesh GitHub wheel.",
             },
         )
+    from .uricore_install import wheel_url
+
     return Check(
         id="dist_uricore",
         status="warn",
         message="uricore not found in site-packages (editable/dev install?)",
-        detail={"pip_hint": "pip install -U uricore"},
+        detail={"pip_hint": f"pip install -U {wheel_url()}"},
     )
 
 
 def run_doctor(*, min_version: str | None = "0.1.25") -> dict[str, Any]:
+    from .uricore_install import wheel_url
+
     checks: list[Check] = [
         _check_python(),
         _check_cli_path(),
         _check_uricore_dist(),
-        _check_import("uricore", "uri_control", pip_hint="pip install -U uricore"),
-        _check_import("urisys", "urisys", pip_hint='pip install -U "urisys[real]"'),
-        _check_import("urisysedge", "urisysedge", pip_hint="pip install -U urisysedge"),
-        _check_import("urisysnode", "urisysnode", pip_hint='pip install -U "urisys[real]"'),
     ]
+    authentic = _check_uricore_authentic()
+    if authentic:
+        checks.append(authentic)
+    checks.extend(
+        [
+            _check_import("uricore", "uri_control", pip_hint=f"pip install -U {wheel_url()}"),
+            _check_import("urisys", "urisys", pip_hint='pip install -U "urisys[real]"'),
+            _check_import("urisysedge", "urisysedge", pip_hint="pip install -U urisysedge"),
+            _check_import("urisysnode", "urisysnode", pip_hint='pip install -U "urisys[real]"'),
+        ]
+    )
     extra = _check_min_version(min_version)
     if extra:
         checks.append(extra)
@@ -217,7 +262,8 @@ def run_doctor(*, min_version: str | None = "0.1.25") -> dict[str, Any]:
     hints = [
         "Desktop slave (lenovo): urisys node serve --host 0.0.0.0 --port 8790",
         "Dev pack server (not slave): urisys serve --port 8789",
-        "Recommended install: python3.12 -m venv ~/venv && source ~/venv/bin/activate && pip install -U uricore urisysedge \"urisys[real]\"",
+        f"Broken uri_control? Run: urisys init  (installs {wheel_url()})",
+        "Recommended: python3.12 -m venv ~/venv && source ~/venv/bin/activate && urisys init",
     ]
 
     failed = [c for c in checks if c.status == "fail"]

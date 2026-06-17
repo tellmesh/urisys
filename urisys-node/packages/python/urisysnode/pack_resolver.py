@@ -42,9 +42,9 @@ PACK_GITHUB_VERSION: dict[str, str] = {
     "him": "0.1.3",
     "ocr": "0.1.0",
     "llm": "0.1.0",
-    "office": "0.1.0",
-    "mail": "0.1.0",
-    "vql": "0.1.0",
+    "office": "0.1.1",
+    "mail": "0.1.2",
+    "vql": "0.1.1",
 }
 PACK_GITHUB_REPO: dict[str, str] = {
     "urisysedge": "urisysedge",

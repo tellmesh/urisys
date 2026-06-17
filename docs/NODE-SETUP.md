@@ -6,18 +6,30 @@ Na świeżym venv lub po błędzie `ModuleNotFoundError: uri_control`:
 
 ```bash
 python3.12 -m venv ~/venv && source ~/venv/bin/activate
-pip install -U urisys   # tylko bootstrap CLI (doctor/init działają bez uricore)
+pip install -U "urisys>=0.1.33"
 urisys init
 source ~/.config/urisys/node.env
 urisys node serve --host 0.0.0.0 --port 8790
 ```
 
+> **Uwaga:** PyPI pakiet `uricore` to **inny projekt** (moduł `uricore/`, nie `uri_control/`).
+> `urisys init` instaluje tellmesh uricore z GitHub wheel i naprawia złą instalację automatycznie.
+
 `urisys init` wykonuje:
 
-1. `pip install -U pip uricore urisysedge "urisys[real]"`
-2. weryfikację `import uri_control`
-3. `urisys doctor`
-4. zapis `~/.config/urisys/node.env` z `URISYS_ALLOW_REAL=1` i `URISYS_NODE_AUTO_INSTALL=1`
+1. `pip install -U pip` + tellmesh uricore wheel + `urisysedge` + `urisys[real]`
+2. jeśli wykryje zły PyPI `uricore` → `pip uninstall` + wheel z GitHub
+3. weryfikację `import uri_control`
+4. `urisys doctor`
+5. zapis `~/.config/urisys/node.env` z `URISYS_ALLOW_REAL=1` i `URISYS_NODE_AUTO_INSTALL=1`
+
+Ręczna naprawa (gdy init niedostępny):
+
+```bash
+pip uninstall -y uricore
+pip install -U https://github.com/tellmesh/uricore/releases/download/v0.1.8/uricore-0.1.8-py3-none-any.whl
+python -c "import uri_control; print('OK')"
+```
 
 Opcje: `--dry-run`, `--skip-pip`, `--no-write-env`, `--profile dev`.
 
@@ -106,6 +118,18 @@ curl -sS -X POST http://192.168.188.201:8790/uri/pack \
   -d '{"pack":"him","install":false}'
 ```
 
+### Hot-load z release (OCI worker, bez pip)
+
+Gdy capability jest w osobnym kontenerze (markpact.com + GitHub Release assets):
+
+```bash
+curl -sS -X POST http://192.168.188.201:8790/uri/pack \
+  -H 'Content-Type: application/json' \
+  -d '{"contract":"urikvm.contract","version":"0.1.5","catalog":"https://markpact.com"}'
+```
+
+Wymaga: node **sparowany** z kontrolerem. Opcjonalnie weryfikacja podpisu: `URISYS_NODE_REQUIRE_SIGNATURE=1`. Szczegóły: [`DISTRIBUTION.md`](DISTRIBUTION.md).
+
 Wyłączenie auto-install:
 
 ```text
@@ -158,7 +182,7 @@ Lazy install (`URISYS_PACK_SOURCE=auto`, domyślnie) pobiera **him/ocr/llm z Git
 | `URISYS_NODE_ALLOW_PACK_LOAD` | `1` (gdy auto-install) | `POST /uri/pack` |
 | `URISYS_ALLOW_REAL` | `0` | `pyautogui`, portal capture, `shell` subprocess |
 | `URISYS_PACK_SOURCE` | `auto` | `pypi` \| `github` \| `auto` |
-| `URISYS_NODE_CONFIG` | `config/node-profile.json` | Profil `him`, `screen`, policy |
+| `URISYS_NODE_CONFIG` | `config/node-profile.json` | Profil `him`, `screen`, policy, `release_forwards` |
 
 ## Stary sposób (dev monorepo)
 

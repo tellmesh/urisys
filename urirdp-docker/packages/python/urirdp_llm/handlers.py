@@ -3,7 +3,6 @@ from __future__ import annotations
 import base64
 import json
 import os
-import re
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -11,6 +10,12 @@ from typing import Any
 
 from urirdp_kvm.display import allow_real
 from urirdpedge.env import is_secret_env, resolve_env_var
+from urioperators import (
+    decision_from_parsed,
+    litellm_chat,
+    openai_compatible_chat,
+    plan_from_parsed,
+)
 
 
 def _config(context: dict[str, Any]) -> dict[str, Any]:
@@ -67,19 +72,6 @@ def _heuristic(tokens: list[dict[str, Any]], target: str, source: str) -> dict[s
     return {'model': source, 'action': 'none', 'confidence': 0.0, 'reason': 'No OCR tokens'}
 
 
-def _parse_json_response(text: str) -> dict[str, Any]:
-    text = (text or '').strip()
-    if not text:
-        return {}
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        match = re.search(r'\{.*\}', text, re.DOTALL)
-        if match:
-            return json.loads(match.group(0))
-        raise
-
-
 def _screenshot_b64(context: dict[str, Any]) -> str | None:
     cfg = _config(context)
     shot_dir = Path(cfg.get('screenshot_dir', 'data/screenshots'))
@@ -102,39 +94,6 @@ def _vision_messages(target: str, tokens: list[dict[str, Any]], png_b64: str | N
     if png_b64:
         content.append({'type': 'image_url', 'image_url': {'url': f'data:image/png;base64,{png_b64}'}})
     return [{'role': 'user', 'content': content}]
-
-
-def _openai_compatible_chat(messages, model, api_key, base_url, temperature=0.0, max_tokens=1024):
-    url = base_url.rstrip('/') + '/chat/completions'
-    body = json.dumps({
-        'model': model,
-        'messages': messages,
-        'temperature': temperature,
-        'max_tokens': max_tokens,
-    }).encode('utf-8')
-    req = urllib.request.Request(
-        url,
-        data=body,
-        headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {api_key}'},
-        method='POST',
-    )
-    with urllib.request.urlopen(req, timeout=90) as resp:
-        data = json.loads(resp.read().decode('utf-8'))
-    return _parse_json_response(data['choices'][0]['message']['content'])
-
-
-def _litellm_chat(messages, model, temperature=0.0, max_tokens=1024):
-    try:
-        import litellm  # type: ignore
-    except Exception as exc:
-        raise RuntimeError('litellm driver requires: pip install litellm') from exc
-    response = litellm.completion(
-        model=model,
-        messages=messages,
-        temperature=temperature,
-        max_tokens=max_tokens,
-    )
-    return _parse_json_response(response.choices[0].message.content)
 
 
 def _normalize(parsed: dict[str, Any], model: str) -> dict[str, Any]:
@@ -183,12 +142,12 @@ def analyze(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
         if driver == 'litellm':
             if not str(model).startswith('openrouter/') and resolve_env_var('OPENROUTER_API_KEY', context, secret=True):
                 model = f'openrouter/{model.lstrip("openrouter/")}'
-            parsed = _litellm_chat(messages, model, temperature=temperature, max_tokens=max_tokens)
+            parsed = litellm_chat(messages, model, temperature=temperature, max_tokens=max_tokens)
             return _normalize(parsed, model)
         if driver in ('openai', 'openrouter'):
             if not base_url:
                 base_url = 'https://openrouter.ai/api/v1' if resolve_env_var('OPENROUTER_API_KEY', context, secret=True) else 'https://api.openai.com/v1'
-            parsed = _openai_compatible_chat(messages, model, api_key, base_url, temperature, max_tokens)
+            parsed = openai_compatible_chat(messages, model, api_key, base_url, temperature=temperature, max_tokens=max_tokens)
             return _normalize(parsed, model)
     except (urllib.error.URLError, TimeoutError, KeyError, json.JSONDecodeError, ValueError, RuntimeError):
         return _heuristic(tokens, target, 'heuristic-fallback')
@@ -225,26 +184,13 @@ def _mock_decide(question: str, context_value: Any) -> dict[str, Any]:
 def _decide_litellm(messages, model, context, *, temperature, max_tokens):
     if not str(model).startswith('openrouter/') and resolve_env_var('OPENROUTER_API_KEY', context, secret=True):
         model = f'openrouter/{model.lstrip("openrouter/")}'
-    return _litellm_chat(messages, model, temperature=temperature, max_tokens=max_tokens), model
+    return litellm_chat(messages, model, temperature=temperature, max_tokens=max_tokens), model
 
 
 def _decide_openai(messages, model, api_key, base_url, context, *, temperature, max_tokens):
     if not base_url:
         base_url = 'https://openrouter.ai/api/v1' if resolve_env_var('OPENROUTER_API_KEY', context, secret=True) else 'https://api.openai.com/v1'
-    return _openai_compatible_chat(messages, model, api_key, base_url, temperature, max_tokens), model
-
-
-def _decision_from_parsed(parsed: dict[str, Any], model: str, question: str) -> dict[str, Any]:
-    decision = str(parsed.get('decision') or ('retry' if parsed.get('ok') else 'abort')).lower()
-    ok = bool(parsed.get('ok')) if 'ok' in parsed else decision == 'retry'
-    return {
-        'ok': ok,
-        'decision': decision,
-        'reason': str(parsed.get('reason') or 'llm-decide'),
-        'confidence': float(parsed.get('confidence', 0.7)),
-        'model': model,
-        'question': question,
-    }
+    return openai_compatible_chat(messages, model, api_key, base_url, temperature=temperature, max_tokens=max_tokens), model
 
 
 def decide(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
@@ -280,7 +226,7 @@ def decide(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
             parsed, model = _decide_openai(messages, model, api_key, base_url, context, temperature=temperature, max_tokens=max_tokens)
         else:
             return _mock_decide(question, context_value)
-        return _decision_from_parsed(parsed, model, question)
+        return decision_from_parsed(parsed, model, question)
     except (urllib.error.URLError, TimeoutError, KeyError, json.JSONDecodeError, ValueError, RuntimeError):
         return _mock_decide(question, context_value)
 
@@ -317,20 +263,6 @@ def _plan_messages(transcript: str, allowed: list[str] | None) -> list[dict[str,
     return [{'role': 'user', 'content': prompt}]
 
 
-def _plan_from_parsed(parsed: dict[str, Any], model: str, transcript: str) -> dict[str, Any]:
-    uri = str(parsed.get('uri') or '').strip()
-    inner_payload = parsed.get('payload') if isinstance(parsed.get('payload'), dict) else {}
-    if not uri:
-        raise ValueError('missing uri in LLM plan response')
-    return {
-        'ok': True,
-        'uri': uri,
-        'payload': inner_payload,
-        'transcript': transcript,
-        'model': model,
-    }
-
-
 def plan(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
     transcript = str(payload.get('transcript') or payload.get('text') or '').strip()
     if not transcript:
@@ -362,7 +294,7 @@ def plan(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
                         messages, model, api_key, _env('base_url', cfg, context), context,
                         temperature=temperature, max_tokens=max_tokens,
                     )
-                planned = _plan_from_parsed(parsed, model, transcript)
+                planned = plan_from_parsed(parsed, model, transcript)
                 uri = planned['uri']
                 inner_payload = planned['payload']
                 model_used = str(model)
