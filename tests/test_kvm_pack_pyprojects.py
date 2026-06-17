@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EDGE = ROOT / "packages" / "python" / "urisysedge" / "pyproject.toml"
-PACKS = ("urikvm", "urihim", "uriocr", "urillm")
+PACKS = ("urikvm", "urihim", "uriocr", "urillm", "urimail", "urioffice", "urivql")
 
 
 def _name(path: Path) -> str:

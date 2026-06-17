@@ -1,12 +1,12 @@
-# redup/duplication | 1 groups | 39f 3531L | 2026-06-17
+# redup/duplication | 1 groups | 41f 3992L | 2026-06-17
 
 SUMMARY:
-  files_scanned: 39
-  total_lines:   3531
+  files_scanned: 41
+  total_lines:   3992
   dup_groups:    1
   dup_fragments: 2
   saved_lines:   8
-  scan_ms:       2346
+  scan_ms:       2181
 
 HOTSPOTS[2] (files with most duplication):
   scripts/report/run_analysis.py  dup=8L  groups=1  frags=1  (0.2%)

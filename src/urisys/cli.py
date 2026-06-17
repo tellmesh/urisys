@@ -69,6 +69,17 @@ def build_parser() -> argparse.ArgumentParser:
         help="Minimum urisys version (default: 0.1.25).",
     )
 
+    p = sub.add_parser(
+        "init",
+        help="Install uricore/urisysedge/urisys[real], doctor, write slave env (~/.config/urisys/node.env).",
+    )
+    p.add_argument("--profile", choices=("slave", "dev"), default=os.environ.get("URISYS_INIT_PROFILE", "slave"))
+    p.add_argument("--min-version", default=os.environ.get("URISYS_MIN_VERSION", "0.1.25"))
+    p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--skip-pip", action="store_true")
+    p.add_argument("--no-write-env", action="store_true")
+    p.add_argument("--env-file", default=str(Path.home() / ".config" / "urisys" / "node.env"))
+
     p = sub.add_parser("serve", help="Run HTTP URI server (dev packs; for desktop slave use: urisys node serve).")
     p.add_argument("--host", default="127.0.0.1")
     p.add_argument("--port", type=int, default=8789)
@@ -162,6 +173,24 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "doctor":
             report = run_doctor(min_version=args.min_version or None)
             print_json(report)
+            return 0 if report.get("ok") else 1
+
+        if args.command == "init":
+            from .init_setup import run_init
+
+            report = run_init(
+                profile=args.profile,
+                min_version=args.min_version or None,
+                install=not args.skip_pip,
+                dry_run=args.dry_run,
+                write_env=not args.no_write_env,
+                env_file=Path(args.env_file),
+            )
+            print_json(report)
+            if report.get("ok") and report.get("shell_env") and not args.dry_run:
+                import sys
+
+                print(report["shell_env"], file=sys.stderr)
             return 0 if report.get("ok") else 1
 
         if args.command == "serve":

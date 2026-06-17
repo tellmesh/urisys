@@ -1,6 +1,29 @@
-# Bootstrap lenovo — tylko `pip install urisys`, potem URI
+# Bootstrap lenovo — `urisys init`, potem node
 
-Po `pip install urisys` wystarczy:
+## Jedna komenda (zalecane)
+
+Na świeżym venv lub po błędzie `ModuleNotFoundError: uri_control`:
+
+```bash
+python3.12 -m venv ~/venv && source ~/venv/bin/activate
+pip install -U urisys   # tylko bootstrap CLI (doctor/init działają bez uricore)
+urisys init
+source ~/.config/urisys/node.env
+urisys node serve --host 0.0.0.0 --port 8790
+```
+
+`urisys init` wykonuje:
+
+1. `pip install -U pip uricore urisysedge "urisys[real]"`
+2. weryfikację `import uri_control`
+3. `urisys doctor`
+4. zapis `~/.config/urisys/node.env` z `URISYS_ALLOW_REAL=1` i `URISYS_NODE_AUTO_INSTALL=1`
+
+Opcje: `--dry-run`, `--skip-pip`, `--no-write-env`, `--profile dev`.
+
+---
+
+Po `pip install urisys` (z pełnymi zależnościami) wystarczy:
 
 ```text
 urisys node serve --host 0.0.0.0 --port 8790
@@ -151,7 +174,15 @@ Moduł `uri_control` jest **w pakiecie PyPI `uricore`** (nie instaluj go osobno)
 2. **Zły interpreter** — `urisys` z 3.14, a pracujesz w 3.12 (Jupyter/inne)
 3. **Zła komenda** — na slave potrzebujesz **`urisys node serve`**, nie samo `urisys serve`
 
-**Naprawa (zalecany venv Python 3.12):**
+**Szybka naprawa (ten sam Python 3.14, bez venv):**
+
+```bash
+python3.14 -m pip install -U uricore urisysedge "urisys[real]"
+urisys doctor    # od urisys ≥0.1.30 działa nawet gdy coś dalej brakuje
+urisys serve --help
+```
+
+**Naprawa zalecana (venv Python 3.12):**
 
 ```bash
 python3.12 -m venv ~/venv
@@ -179,6 +210,15 @@ urisys node serve --host 0.0.0.0 --port 8790
 python3.14 -m pip uninstall -y urisys urisysedge uricore
 rm -f ~/.local/bin/urisys ~/.local/bin/urisys-node
 ```
+
+### Test zgodności Python (3.10–3.14)
+
+```bash
+bash scripts/test-python-matrix.sh          # lokalnie: venv per dostępna wersja
+python3 -m pytest tests/test_python_compat.py tests/test_bootstrap.py -q
+```
+
+CI: `.github/workflows/python-compat.yml` (macierz 3.10–3.13 + unit bootstrap/doctor).
 
 ### `urisys serve` vs `urisys node serve`
 

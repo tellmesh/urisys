@@ -22,8 +22,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `artifact_resolver.parse_contract_spec()` / `contract_spec_from_release()` / `fetch_text()` — derive `{scheme, patterns}` straight from the UriContract referenced by a release; hot-load now wires the correct routes from the contract (source of truth) regardless of catalog response shape, falling back only when caller/release don't supply them
 - Release-forward auto-provisioning at node boot — `forward_config.load_release_forward_entries()` / `wire_release_forward_packs()` + `build_runtime` wiring: a node reads `release_forwards: [{contract, version, catalog?, profile?}]` from config (or `URISYS_NODE_RELEASE_FORWARDS` env) and self-provisions each capability via `hotload_release_pack` at startup (best-effort: one failure does not abort the rest)
 - READMEs for `urihim`/`uriocr`/`urillm` + `readme` in pyproject — wheels now `twine check` clean (PyPI pages non-empty)
+- `.github/workflows/kvm-release.yml` — kvm bundle release pipeline (tag `urikvm-v*`): build the urikvm OCI image once, generate 4 per-contract `artifact-index.json` (port 8794, per-scheme capabilities) + commit once, then a matrix `register` job POSTs each release to markpact.com (no git race)
+- 4 kvm contracts copied into `markpact-contracts/packs/` + `manifest.json` entries (`delivery: oci-forward`); `validate-all` → 11/11 PASS
 
 ### Fixed
+- `artifact_resolver.run_release` — honors the selected artifact's `port`/`container_port` (urikvm worker listens on 8794, not the 8790 default) instead of hardcoding the container port
 - `markpact_manager.load_pack_block` — removed duplicate (shadowing) definition
 - `urisys-node/serve.py` — `urisys-node serve` no longer crashes when an optional pack (`urikvm`/`urihim`/…) is missing; best-effort load with a clear warning, hard error only for explicitly-named missing packs
 - `PackManager` `--packs all` — skips uninstalled optional packs instead of `ModuleNotFoundError`; CLI runtime errors return clean JSON instead of tracebacks
@@ -33,6 +36,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Vendored `urisysedge` drift guard (AST-compare vs canonical), node pack hot-load + forward, vision/decide dispatch — new CI lanes `node-unit`, `pack-handlers-unit`
 - `test_uriscreen_auto`/`test_ocr_llm` skip gracefully when Pillow/tesseract absent
 - Host→Docker desktop and host→LAN node (`192.168.188.201:8790`) control verified live (capture + OCR)
+
+## [0.1.32] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMR.md
+- Update docs/DISTRIBUTION.md
+- Update docs/NODE-SETUP.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update tests/test_init.py
+- Update tests/test_kvm_pack_pyprojects.py
+
+### Other
+- Update app.doql.less
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/compact_flow.mmd
+- Update project/compact_flow.png
+- Update project/duplication.toon.yaml
+- Update project/evolution.toon.yaml
+- ... and 12 more files
 
 ## [0.1.31] - 2026-06-17
 

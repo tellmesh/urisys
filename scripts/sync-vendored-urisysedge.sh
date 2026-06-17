@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Copy canonical urisysedge into urisys-node vendored path (standalone wheel builds).
+# Tellmesh repo sync: bash scripts/sync-vendored-pack.sh urisysedge
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SRC="${ROOT}/packages/python/urisysedge"

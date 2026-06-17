@@ -35,6 +35,23 @@ Powiązane: [`PACKAGES.md`](PACKAGES.md) (layout monorepo), [`PACK-EXTENSIBILITY
 
 ## Stan publikacji (2026-06-17)
 
+### Sync vendored ↔ tellmesh repos (Faza 0+1)
+
+```bash
+cd urisys
+# nowe repo (jednorazowo)
+bash scripts/sync-vendored-pack.sh --init urimail urioffice urivql
+
+# monorepo → tellmesh/{pack}
+bash scripts/sync-vendored-pack.sh --all
+
+# drift check (CI)
+python3 scripts/pack_sync.py check --all
+python3 -m pytest tests/test_vendored_sync.py -q
+```
+
+Packi office: `tellmesh/urimail`, `urioffice`, `urivql` (GitHub Releases + lazy install na node).
+
 ### PyPI
 
 | Pakiet | PyPI | Repo tellmesh | W monorepo urisys |
@@ -45,6 +62,9 @@ Powiązane: [`PACKAGES.md`](PACKAGES.md) (layout monorepo), [`PACK-EXTENSIBILITY
 | `urihim` | 🔲 PyPI / ✅ [GitHub v0.1.3](https://github.com/tellmesh/urihim/releases/tag/v0.1.3) | `tellmesh/urihim` | vendored |
 | `uriocr` | 🔲 PyPI / ✅ [GitHub v0.1.0](https://github.com/tellmesh/uriocr/releases/tag/v0.1.0) | `tellmesh/uriocr` | vendored |
 | `urillm` | 🔲 PyPI / ✅ [GitHub v0.1.0](https://github.com/tellmesh/urillm/releases/tag/v0.1.0) | `tellmesh/urillm` | vendored |
+| `urimail` | 🔲 PyPI / 🔲 GitHub | `tellmesh/urimail` | vendored |
+| `urioffice` | 🔲 PyPI / 🔲 GitHub | `tellmesh/urioffice` | vendored |
+| `urivql` | 🔲 PyPI / 🔲 GitHub | `tellmesh/urivql` | vendored |
 
 **Monorepo jako fallback:** dopóki `urihim` / `uriocr` / `urillm` nie są na PyPI, kopię kanoniczną trzymamy w `urisys/` (vendored). Lazy install na node domyślnie pobiera wheel z **GitHub Releases** (`URISYS_PACK_SOURCE=auto`).
 
@@ -86,10 +106,12 @@ bash scripts/publish-kvm-packs-goal.sh
 
 | Kontrakt | Lokalizacja w urisys | W `markpact-contracts/packs/` |
 |----------|----------------------|-------------------------------|
-| `urikvm.contract` | `urikvm-docker/markpacts/urikvm.contract.markpact.md` | 🔲 |
-| `urihim.contract` | `urikvm-docker/markpacts/urihim.contract.markpact.md` | 🔲 |
-| `uriocr.contract` | `urikvm-docker/markpacts/uriocr.contract.markpact.md` | 🔲 |
-| `urillm-vision` | `urikvm-docker/markpacts/urillm-vision.contract.markpact.md` | 🔲 |
+| `urikvm.contract` | `urikvm-docker/markpacts/urikvm.contract.markpact.md` | ✅ skopiowany + w `manifest.json` |
+| `urihim.contract` | `urikvm-docker/markpacts/urihim.contract.markpact.md` | ✅ skopiowany + w `manifest.json` |
+| `uriocr.contract` | `urikvm-docker/markpacts/uriocr.contract.markpact.md` | ✅ skopiowany + w `manifest.json` |
+| `urillm-vision` (`urillm.vision.contract`) | `urikvm-docker/markpacts/urillm-vision.contract.markpact.md` | ✅ skopiowany + w `manifest.json` |
+
+Kontrakty skopiowane do `markpact-contracts/packs/` (delivery `oci-forward`); `scripts/validate-all.sh` → **11/11 PASS**. Portal publish (`publish-all.sh`) wymaga `MARKPACT_TOKEN` (poniżej).
 
 Walidacja lokalna (bez publikacji portalu):
 
@@ -107,13 +129,17 @@ MARKPACT_TOKEN=... bash scripts/publish-all.sh
 
 ### GitHub (OCI + artifact-index)
 
-Wzorcowy pipeline: [`.github/workflows/markpact-release.yml`](../.github/workflows/markpact-release.yml) (dziś skonfigurowany dla `uristepper`).
+Pipeline'y:
+- [`.github/workflows/markpact-release.yml`](../.github/workflows/markpact-release.yml) — `uristepper` (tag `v*`).
+- [`.github/workflows/kvm-release.yml`](../.github/workflows/kvm-release.yml) — **kvm bundle** (tag `urikvm-v*`): **build-once + matrix-register**. Jeden obraz `urikvm-docker` (port 8794) serwuje 4 schematy; job `build` buduje/pushuje obraz raz, generuje 4× `artifact-index.json` (+ `contract.markpact.md`) i commituje raz; job `register` (matrix po 4 kontraktach, bez git) POST-uje każdy release na markpact.com.
 
-Docelowy flow dla kvm (równoległy do pisania kontraktów):
+Flow kvm:
 
-1. Tag `v*` → build obrazu `urikvm-docker` → push `ghcr.io/...`
-2. Generacja `releases/{contract-id}/{version}/artifact-index.json` + `contract.markpact.md`
-3. Rejestracja na markpact.com (`local-lab/scripts/06-register-release.sh` lub CI)
+1. Tag `urikvm-v*` → walidacja 4 kontraktów → build obrazu `urikvm-docker` → push `ghcr.io/{owner}/urikvm:{ver}-linux-amd64`
+2. Generacja `releases/{contract-id}/{version}/artifact-index.json` (`port: 8794`, `capabilities` per scheme) + `contract.markpact.md`
+3. Rejestracja na markpact.com (job `register`, wymaga `MARKPACT_API_TOKEN`)
+
+> Node-side: `artifact_resolver.run_release` honoruje `artifact.port` (kvm = 8794), a `hotload_release_pack` wyciąga scheme+patterns z `contract_url` release'a — więc payload rejestracji wystarcza do poprawnego wpięcia route'ów. Walidacja workflow wymaga **otagowania** (`git tag urikvm-v0.1.0 && git push --tags`) i sekretów (`MARKPACT_API_TOKEN`).
 
 Chain local-lab (pełny E2E):
 
