@@ -15,7 +15,7 @@ SUMD - Structured Unified Markdown Descriptor for AI-aware project refactorizati
 ## Metadata
 
 - **name**: `urisys`
-- **version**: `0.1.51`
+- **version**: `0.1.55`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -35,7 +35,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: urisys;
-  version: 0.1.51;
+  version: 0.1.55;
 }
 
 dependencies {
@@ -104,7 +104,7 @@ pfix>=0.1.60
 
 ## Call Graph
 
-*192 nodes · 278 edges · 36 modules · CC̄=4.6*
+*193 nodes · 278 edges · 36 modules · CC̄=4.6*
 
 ### Hubs (by degree)
 
@@ -116,13 +116,13 @@ pfix>=0.1.60
 | `session_automation_lab` *(in scripts.run_test_sessions)* | 16 ⚠ | 1 | 43 | **44** |
 | `run_cmd` *(in scripts.test_sessions.util)* | 6 | 31 | 12 | **43** |
 | `main` *(in scripts.pack_sync)* | 28 ⚠ | 0 | 39 | **39** |
-| `analyze_run` *(in scripts.report.run_analysis)* | 13 ⚠ | 2 | 33 | **35** |
-| `main` *(in scripts.scan-browser-sessions)* | 23 ⚠ | 0 | 34 | **34** |
+| `infer_steps` *(in scripts.report.session)* | 28 ⚠ | 1 | 37 | **38** |
+| `run_step` *(in scripts.lenovo_remote_session)* | 17 ⚠ | 1 | 35 | **36** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
 # generated in 0.09s
-# nodes: 192 | edges: 278 | modules: 36
+# nodes: 193 | edges: 278 | modules: 36
 # CC̄=4.6
 
 HUBS[20]:
@@ -138,47 +138,43 @@ HUBS[20]:
     CC=6  in:31  out:12  total:43
   scripts.pack_sync.main
     CC=28  in:0  out:39  total:39
+  scripts.report.session.infer_steps
+    CC=28  in:1  out:37  total:38
+  scripts.lenovo_remote_session.run_step
+    CC=17  in:1  out:35  total:36
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
-  scripts.scan-browser-sessions.main
-    CC=23  in:0  out:34  total:34
   scripts.test_sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
+  scripts.scan-browser-sessions.main
+    CC=23  in:0  out:34  total:34
+  scripts.lenovo_remote_session.run_flow
+    CC=13  in:1  out:32  total:33
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  src.urisys.init_setup.run_init
-    CC=31  in:2  out:30  total:32
-  src.urisys.http_server.create_server
-    CC=1  in:1  out:31  total:32
-  scripts.lenovo_remote_session.run_flow
-    CC=13  in:1  out:31  total:32
   scripts.pack_registry.pack_specs
     CC=17  in:2  out:30  total:32
+  src.urisys.http_server.create_server
+    CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
+  src.urisys.init_setup.run_init
+    CC=31  in:2  out:30  total:32
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
+  scripts.report.util.now_iso
+    CC=1  in:27  out:3  total:30
   scripts.report.session.generate_report
     CC=9  in:2  out:27  total:29
-  scripts.report.session.infer_steps
-    CC=20  in:1  out:25  total:26
-  scripts.lenovo_remote_session.run_step
-    CC=10  in:1  out:25  total:26
-  src.urisys.doctor.run_doctor
-    CC=12  in:3  out:22  total:25
 
 MODULES:
-  scripts.lenovo_remote_session  [13 funcs]
-    _extract_images_from_dict  CC=8  out:15
-    _image_ext  CC=5  out:1
-    _write_base64_image  CC=1  out:4
-    backfill_session_images  CC=8  out:11
-    extract_step_screenshots  CC=5  out:7
+  scripts.lenovo_remote_session  [6 funcs]
     http_get  CC=4  out:7
+    load_manifest_session  CC=2  out:4
     load_yaml  CC=3  out:4
-    now_iso  CC=1  out:2
     resolve_flow_paths  CC=6  out:5
-    run_flow  CC=13  out:31
+    run_flow  CC=13  out:32
+    run_step  CC=17  out:35
   scripts.office-simulate-loop  [5 funcs]
     call_uri  CC=4  out:11
     llm_tick  CC=7  out:18
@@ -221,7 +217,7 @@ MODULES:
     render_run_analysis_markdown  CC=7  out:16
   scripts.report.session  [3 funcs]
     generate_report  CC=9  out:27
-    infer_steps  CC=20  out:25
+    infer_steps  CC=28  out:37
     session_duration  CC=5  out:14
   scripts.report.session_io  [1 funcs]
     write_session_report  CC=2  out:7
@@ -237,9 +233,8 @@ MODULES:
     tail  CC=2  out:0
   scripts.run-nl-log-smoke  [1 funcs]
     print  CC=0  out:0
-  scripts.run-office-simulate-lenovo  [1 funcs]
+  scripts.run-office-writer-e2e  [2 funcs]
     save_json  CC=0  out:0
-  scripts.run-office-writer-e2e  [1 funcs]
     wait_health  CC=0  out:0
   scripts.run-urisys-node-docker-e2e  [1 funcs]
     http_json  CC=0  out:0
@@ -259,6 +254,15 @@ MODULES:
     discover_browsers  CC=1  out:0
     main  CC=23  out:34
     scan_chrome_cookies  CC=13  out:13
+  scripts.session_core  [8 funcs]
+    backfill_session_images  CC=8  out:11
+    expand_step_wheels  CC=18  out:25
+    extract_images_from_dict  CC=8  out:15
+    extract_step_screenshots  CC=5  out:7
+    find_wheel_file  CC=2  out:2
+    save_json  CC=1  out:3
+    step_ok  CC=10  out:17
+    write_base64_image  CC=1  out:4
   scripts.test_sessions.expectations  [9 funcs]
     _min_vision_confidence  CC=4  out:3
     _ocr_contains  CC=5  out:6
@@ -405,31 +409,31 @@ EDGES:
   src.urisys.bootstrap.main → src.urisys.bootstrap._init_main
   src.urisys.bootstrap.main → src.urisys.bootstrap._print_json
   src.urisys.bootstrap.main → src.urisys.bootstrap._missing_uricore_payload
-  src.urisys.http_server.create_server → src.urisys.http_server._send
-  src.urisys.http_server.create_server → src.urisys.http_server._read_json
-  src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.load_flow
-  src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.iter_steps
-  src.urisys.controllers.server_controller.ServerController.__init__ → src.urisys.http_server.create_server
-  src.urisys.controllers.server_controller.ServerController.serve_forever → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.rules_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.rules_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.llm_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.llm_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.parse_args
-  scripts.office-simulate-loop.main → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.rules_tick
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.llm_tick
-  scripts.report.cli.main → scripts.report.run_analysis.analyze_run
-  scripts.report.cli.main → scripts.report.run_analysis.write_run_analysis
-  scripts.report.events.summarize_events → scripts.report.events.load_event_records
-  scripts.report.events.summarize_events → scripts.report.events.summarize_event_records
-  scripts.report.events.merge_event_summaries → scripts.report.events.summarize_events
-  scripts.report.run_analysis.analyze_run → scripts.report.util.read_json
-  scripts.report.run_analysis.write_run_analysis → scripts.report.run_analysis.analyze_run
-  scripts.report.run_analysis.write_run_analysis → scripts.report.run_markdown.render_run_analysis_markdown
-  scripts.report.lab_checks.load_flow_outcomes → scripts.report.util.read_json
-  scripts.report.lab_checks.load_flow_outcomes → scripts.report.lab_checks.iter_step_results
-  scripts.report.lab_checks.check_duplicate_screenshots → scripts.report.lab_checks._duplicate_recommendation
+  src.urisys.cli.print_json → scripts.run-nl-log-smoke.print
+  src.urisys.cli.build_parser → src.urisys.cli._add_runtime_flags
+  src.urisys.cli._cmd_markpact → src.urisys.cli.resolve_markpact_source
+  src.urisys.cli._cmd_markpact → src.urisys.cli.print_json
+  src.urisys.cli._cmd_init → src.urisys.init_setup.run_init
+  src.urisys.cli._cmd_init → src.urisys.cli.print_json
+  src.urisys.cli._cmd_init → scripts.run-nl-log-smoke.print
+  src.urisys.cli._cmd_uri → src.urisys.cli.print_json
+  src.urisys.cli._cmd_uri → src.urisys.cli._json_arg
+  src.urisys.cli._handle_cli_error → src.urisys.cli.print_json
+  src.urisys.cli.main → src.urisys.cli._cmd_uri
+  src.urisys.cli.main → src.urisys.cli.build_parser
+  src.urisys.cli.main → src.urisys.cli._cmd_markpact
+  src.urisys.cli.main → src.urisys.doctor.run_doctor
+  src.urisys.cli.main → src.urisys.cli.print_json
+  src.urisys.cli.main → src.urisys.cli._cmd_init
+  src.urisys.cli.main → scripts.run-nl-log-smoke.print
+  src.urisys.cli.main → src.urisys.cli._cmd_node
+  src.urisys.doctor._version_lt → src.urisys.doctor._parse_version
+  src.urisys.doctor._check_import → src.urisys.doctor._pkg_version
+  src.urisys.doctor._check_min_version → src.urisys.doctor._pkg_version
+  src.urisys.doctor._check_min_version → src.urisys.doctor._version_lt
+  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.diagnose_uricore
+  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.is_wrong_uricore_installed
+  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.wheel_url
 ```
 
 ## Test Contracts
@@ -460,7 +464,7 @@ EDGES:
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
 # generated in 0.09s
-# nodes: 192 | edges: 278 | modules: 36
+# nodes: 193 | edges: 278 | modules: 36
 # CC̄=4.6
 
 HUBS[20]:
@@ -476,47 +480,43 @@ HUBS[20]:
     CC=6  in:31  out:12  total:43
   scripts.pack_sync.main
     CC=28  in:0  out:39  total:39
+  scripts.report.session.infer_steps
+    CC=28  in:1  out:37  total:38
+  scripts.lenovo_remote_session.run_step
+    CC=17  in:1  out:35  total:36
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
-  scripts.scan-browser-sessions.main
-    CC=23  in:0  out:34  total:34
   scripts.test_sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
+  scripts.scan-browser-sessions.main
+    CC=23  in:0  out:34  total:34
+  scripts.lenovo_remote_session.run_flow
+    CC=13  in:1  out:32  total:33
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  src.urisys.init_setup.run_init
-    CC=31  in:2  out:30  total:32
-  src.urisys.http_server.create_server
-    CC=1  in:1  out:31  total:32
-  scripts.lenovo_remote_session.run_flow
-    CC=13  in:1  out:31  total:32
   scripts.pack_registry.pack_specs
     CC=17  in:2  out:30  total:32
+  src.urisys.http_server.create_server
+    CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
+  src.urisys.init_setup.run_init
+    CC=31  in:2  out:30  total:32
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
+  scripts.report.util.now_iso
+    CC=1  in:27  out:3  total:30
   scripts.report.session.generate_report
     CC=9  in:2  out:27  total:29
-  scripts.report.session.infer_steps
-    CC=20  in:1  out:25  total:26
-  scripts.lenovo_remote_session.run_step
-    CC=10  in:1  out:25  total:26
-  src.urisys.doctor.run_doctor
-    CC=12  in:3  out:22  total:25
 
 MODULES:
-  scripts.lenovo_remote_session  [13 funcs]
-    _extract_images_from_dict  CC=8  out:15
-    _image_ext  CC=5  out:1
-    _write_base64_image  CC=1  out:4
-    backfill_session_images  CC=8  out:11
-    extract_step_screenshots  CC=5  out:7
+  scripts.lenovo_remote_session  [6 funcs]
     http_get  CC=4  out:7
+    load_manifest_session  CC=2  out:4
     load_yaml  CC=3  out:4
-    now_iso  CC=1  out:2
     resolve_flow_paths  CC=6  out:5
-    run_flow  CC=13  out:31
+    run_flow  CC=13  out:32
+    run_step  CC=17  out:35
   scripts.office-simulate-loop  [5 funcs]
     call_uri  CC=4  out:11
     llm_tick  CC=7  out:18
@@ -559,7 +559,7 @@ MODULES:
     render_run_analysis_markdown  CC=7  out:16
   scripts.report.session  [3 funcs]
     generate_report  CC=9  out:27
-    infer_steps  CC=20  out:25
+    infer_steps  CC=28  out:37
     session_duration  CC=5  out:14
   scripts.report.session_io  [1 funcs]
     write_session_report  CC=2  out:7
@@ -575,9 +575,8 @@ MODULES:
     tail  CC=2  out:0
   scripts.run-nl-log-smoke  [1 funcs]
     print  CC=0  out:0
-  scripts.run-office-simulate-lenovo  [1 funcs]
+  scripts.run-office-writer-e2e  [2 funcs]
     save_json  CC=0  out:0
-  scripts.run-office-writer-e2e  [1 funcs]
     wait_health  CC=0  out:0
   scripts.run-urisys-node-docker-e2e  [1 funcs]
     http_json  CC=0  out:0
@@ -597,6 +596,15 @@ MODULES:
     discover_browsers  CC=1  out:0
     main  CC=23  out:34
     scan_chrome_cookies  CC=13  out:13
+  scripts.session_core  [8 funcs]
+    backfill_session_images  CC=8  out:11
+    expand_step_wheels  CC=18  out:25
+    extract_images_from_dict  CC=8  out:15
+    extract_step_screenshots  CC=5  out:7
+    find_wheel_file  CC=2  out:2
+    save_json  CC=1  out:3
+    step_ok  CC=10  out:17
+    write_base64_image  CC=1  out:4
   scripts.test_sessions.expectations  [9 funcs]
     _min_vision_confidence  CC=4  out:3
     _ocr_contains  CC=5  out:6
@@ -743,59 +751,60 @@ EDGES:
   src.urisys.bootstrap.main → src.urisys.bootstrap._init_main
   src.urisys.bootstrap.main → src.urisys.bootstrap._print_json
   src.urisys.bootstrap.main → src.urisys.bootstrap._missing_uricore_payload
-  src.urisys.http_server.create_server → src.urisys.http_server._send
-  src.urisys.http_server.create_server → src.urisys.http_server._read_json
-  src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.load_flow
-  src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.iter_steps
-  src.urisys.controllers.server_controller.ServerController.__init__ → src.urisys.http_server.create_server
-  src.urisys.controllers.server_controller.ServerController.serve_forever → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.rules_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.rules_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.llm_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.llm_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.parse_args
-  scripts.office-simulate-loop.main → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.rules_tick
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.llm_tick
-  scripts.report.cli.main → scripts.report.run_analysis.analyze_run
-  scripts.report.cli.main → scripts.report.run_analysis.write_run_analysis
-  scripts.report.events.summarize_events → scripts.report.events.load_event_records
-  scripts.report.events.summarize_events → scripts.report.events.summarize_event_records
-  scripts.report.events.merge_event_summaries → scripts.report.events.summarize_events
-  scripts.report.run_analysis.analyze_run → scripts.report.util.read_json
-  scripts.report.run_analysis.write_run_analysis → scripts.report.run_analysis.analyze_run
-  scripts.report.run_analysis.write_run_analysis → scripts.report.run_markdown.render_run_analysis_markdown
-  scripts.report.lab_checks.load_flow_outcomes → scripts.report.util.read_json
-  scripts.report.lab_checks.load_flow_outcomes → scripts.report.lab_checks.iter_step_results
-  scripts.report.lab_checks.check_duplicate_screenshots → scripts.report.lab_checks._duplicate_recommendation
+  src.urisys.cli.print_json → scripts.run-nl-log-smoke.print
+  src.urisys.cli.build_parser → src.urisys.cli._add_runtime_flags
+  src.urisys.cli._cmd_markpact → src.urisys.cli.resolve_markpact_source
+  src.urisys.cli._cmd_markpact → src.urisys.cli.print_json
+  src.urisys.cli._cmd_init → src.urisys.init_setup.run_init
+  src.urisys.cli._cmd_init → src.urisys.cli.print_json
+  src.urisys.cli._cmd_init → scripts.run-nl-log-smoke.print
+  src.urisys.cli._cmd_uri → src.urisys.cli.print_json
+  src.urisys.cli._cmd_uri → src.urisys.cli._json_arg
+  src.urisys.cli._handle_cli_error → src.urisys.cli.print_json
+  src.urisys.cli.main → src.urisys.cli._cmd_uri
+  src.urisys.cli.main → src.urisys.cli.build_parser
+  src.urisys.cli.main → src.urisys.cli._cmd_markpact
+  src.urisys.cli.main → src.urisys.doctor.run_doctor
+  src.urisys.cli.main → src.urisys.cli.print_json
+  src.urisys.cli.main → src.urisys.cli._cmd_init
+  src.urisys.cli.main → scripts.run-nl-log-smoke.print
+  src.urisys.cli.main → src.urisys.cli._cmd_node
+  src.urisys.doctor._version_lt → src.urisys.doctor._parse_version
+  src.urisys.doctor._check_import → src.urisys.doctor._pkg_version
+  src.urisys.doctor._check_min_version → src.urisys.doctor._pkg_version
+  src.urisys.doctor._check_min_version → src.urisys.doctor._version_lt
+  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.diagnose_uricore
+  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.is_wrong_uricore_installed
+  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.wheel_url
 ```
 
 ### Code Analysis (`project/analysis.toon.yaml`)
 
 ```toon markpact:analysis path=project/analysis.toon.yaml
-# code2llm | 113f 11797L | python:48,shell:41,yaml:19,json:1,yml:1,javascript:1,toml:1 | 2026-06-17
-# generated in 0.02s
-# CC̅=4.6 | critical:12/342 | dups:0 | cycles:1
+# code2llm | 116f 12059L | python:49,shell:41,yaml:21,json:1,yml:1,javascript:1,toml:1 | 2026-06-17
+# generated in 0.03s
+# CC̅=4.6 | critical:13/348 | dups:0 | cycles:1
 
-HEALTH[12]:
-  🟡 CC    parse_packs CC=15 (limit:15)
-  🟡 CC    load_flow_outcomes CC=15 (limit:15)
-  🟡 CC    infer_steps CC=20 (limit:15)
-  🟡 CC    main CC=23 (limit:15)
+HEALTH[13]:
   🟡 CC    run_init CC=31 (limit:15)
-  🟡 CC    main CC=28 (limit:15)
   🟡 CC    compile CC=17 (limit:15)
+  🟡 CC    main CC=23 (limit:15)
   🟡 CC    session_urirdp_real_docker CC=30 (limit:15)
   🟡 CC    session_automation_lab CC=16 (limit:15)
-  🟡 CC    write_session_md CC=22 (limit:15)
-  🟡 CC    main CC=29 (limit:15)
+  🟡 CC    main CC=28 (limit:15)
   🟡 CC    pack_specs CC=17 (limit:15)
+  🟡 CC    load_flow_outcomes CC=15 (limit:15)
+  🟡 CC    run_step CC=17 (limit:15)
+  🟡 CC    write_session_md CC=22 (limit:15)
+  🟡 CC    main CC=44 (limit:15)
+  🟡 CC    expand_step_wheels CC=18 (limit:15)
+  🟡 CC    infer_steps CC=28 (limit:15)
 
 REFACTOR[2]:
-  1. split 12 high-CC methods  (CC>15)
+  1. split 13 high-CC methods  (CC>15)
   2. break 1 circular dependencies
 
-PIPELINES[108]:
+PIPELINES[111]:
   [1] Src [registry]: registry
       PURITY: 100% pure
   [2] Src [runtime]: runtime
@@ -808,119 +817,120 @@ PIPELINES[108]:
       PURITY: 100% pure
   [6] Src [main]: main → _doctor_main → run_doctor → _check_uricore_authentic → ...(2 more)
       PURITY: 100% pure
-  [7] Src [__init__]: __init__
+  [7] Src [main]: main → _cmd_uri → print_json → print
       PURITY: 100% pure
-  [8] Src [run]: run → load_flow
+  [8] Src [__init__]: __init__
       PURITY: 100% pure
-  [9] Src [close]: close
+  [9] Src [run]: run → load_flow
       PURITY: 100% pure
-  [10] Src [__init__]: __init__ → create_server → _send
+  [10] Src [close]: close
       PURITY: 100% pure
-  [11] Src [serve_forever]: serve_forever → print
+  [11] Src [__init__]: __init__ → create_server → _send
       PURITY: 100% pure
-  [12] Src [__init__]: __init__
+  [12] Src [serve_forever]: serve_forever → print
       PURITY: 100% pure
-  [13] Src [call]: call
+  [13] Src [__init__]: __init__
       PURITY: 100% pure
-  [14] Src [explain]: explain
+  [14] Src [call]: call
       PURITY: 100% pure
-  [15] Src [routes]: routes
+  [15] Src [explain]: explain
       PURITY: 100% pure
-  [16] Src [close]: close
+  [16] Src [routes]: routes
       PURITY: 100% pure
-  [17] Src [to_dict]: to_dict
+  [17] Src [close]: close
       PURITY: 100% pure
-  [18] Src [safe_identifier]: safe_identifier
+  [18] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [19] Src [parse_meta]: parse_meta
+  [19] Src [safe_identifier]: safe_identifier
       PURITY: 100% pure
-  [20] Src [source_hash]: source_hash
+  [20] Src [parse_meta]: parse_meta
       PURITY: 100% pure
-  [21] Src [__init__]: __init__
+  [21] Src [source_hash]: source_hash
       PURITY: 100% pure
-  [22] Src [list_events]: list_events
+  [22] Src [__init__]: __init__
       PURITY: 100% pure
-  [23] Src [build_context]: build_context
+  [23] Src [list_events]: list_events
       PURITY: 100% pure
-  [24] Src [explain]: explain
+  [24] Src [build_context]: build_context
       PURITY: 100% pure
-  [25] Src [__init__]: __init__
+  [25] Src [explain]: explain
       PURITY: 100% pure
-  [26] Src [create_runtime]: create_runtime
+  [26] Src [__init__]: __init__
       PURITY: 100% pure
-  [27] Src [close]: close
+  [27] Src [create_runtime]: create_runtime
       PURITY: 100% pure
-  [28] Src [__exit__]: __exit__
+  [28] Src [close]: close
       PURITY: 100% pure
-  [29] Src [call_http]: call_http
+  [29] Src [__exit__]: __exit__
       PURITY: 100% pure
   [30] Src [__init__]: __init__
       PURITY: 100% pure
-  [31] Src [_is_all]: _is_all
+  [31] Src [read_blocks]: read_blocks
       PURITY: 100% pure
-  [32] Src [parse_packs]: parse_packs
+  [32] Src [source_hash]: source_hash
       PURITY: 100% pure
-  [33] Src [parse_markpacts]: parse_markpacts
+  [33] Src [load_pack_block]: load_pack_block
       PURITY: 100% pure
-  [34] Src [resolve_package_name]: resolve_package_name
+  [34] Src [validate]: validate → validate_contract → _validate_contract_routes → scheme_from_uri
       PURITY: 100% pure
-  [35] Src [_is_markpact_path]: _is_markpact_path
+  [35] Src [_validate_pack]: _validate_pack
       PURITY: 100% pure
-  [36] Src [_is_manifest_path]: _is_manifest_path
+  [36] Src [compile]: compile
       PURITY: 100% pure
-  [37] Src [manifest_paths]: manifest_paths
+  [37] Src [_write_handler_modules]: _write_handler_modules
       PURITY: 100% pure
-  [38] Src [create_registry]: create_registry
+  [38] Src [manifest_path_for]: manifest_path_for
       PURITY: 100% pure
-  [39] Src [capabilities]: capabilities
+  [39] Src [run_tests]: run_tests
       PURITY: 100% pure
-  [40] Src [close]: close
+  [40] Src [_check_expectations]: _check_expectations
       PURITY: 100% pure
-  [41] Src [__exit__]: __exit__
+  [41] Src [_build_route]: _build_route
       PURITY: 100% pure
-  [42] Src [__init__]: __init__
+  [42] Src [_resolve_handler_ref]: _resolve_handler_ref
       PURITY: 100% pure
-  [43] Src [is_remote_source]: is_remote_source
+  [43] Src [_compile_manifest]: _compile_manifest
       PURITY: 100% pure
-  [44] Src [resolve]: resolve
+  [44] Src [_package_id]: _package_id
       PURITY: 100% pure
-  [45] Src [fetch]: fetch
+  [45] Src [_capabilities]: _capabilities
       PURITY: 100% pure
-  [46] Src [_result]: _result
+  [46] Src [_scheme]: _scheme
       PURITY: 100% pure
-  [47] Src [_cache_dir]: _cache_dir
+  [47] Src [_handler_blocks]: _handler_blocks
       PURITY: 100% pure
-  [48] Src [_fetch_http]: _fetch_http
+  [48] Src [_load_yaml_blocks]: _load_yaml_blocks
       PURITY: 100% pure
-  [49] Src [_fetch_github_uri]: _fetch_github_uri
+  [49] Src [_handler_id_from_ref]: _handler_id_from_ref
       PURITY: 100% pure
-  [50] Src [_fetch_github_raw]: _fetch_github_raw
+  [50] Src [_ensure_importable]: _ensure_importable
       PURITY: 100% pure
 
 LAYERS:
-  scripts/                        CC̄=4.9    ←in:20  →out:117  !! split
+  scripts/                        CC̄=5.1    ←in:20  →out:124  !! split
   │ !! run_test_sessions          783L  0C   14m  CC=30     ←0
-  │ !! lenovo_remote_session      560L  0C   18m  CC=29     ←0
+  │ !! lenovo_remote_session      507L  0C   11m  CC=44     ←0
   │ !! pack_sync                  347L  0C   13m  CC=28     ←0
   │ lab_flows                  320L  0C    5m  CC=13     ←0
   │ !! pack_registry              269L  1C    9m  CC=17     ←1
+  │ !! session_core               212L  0C   11m  CC=18     ←1
   │ util                       210L  0C   17m  CC=9      ←3
   │ !! scan-browser-sessions      199L  0C    6m  CC=23     ←0
   │ !! lab_checks                 188L  0C    9m  CC=15     ←1
-  │ run-office-simulate-lenovo.sh   182L  0C    6m  CC=0.0    ←2
+  │ run-office-simulate-lenovo.sh   182L  0C    6m  CC=0.0    ←0
   │ lab_rdp                    180L  0C    8m  CC=11     ←1
   │ run-urisys-node-docker-e2e.sh   163L  0C    5m  CC=0.0    ←3
   │ expectations               153L  0C    9m  CC=11     ←1
   │ office-simulate-loop       146L  0C    5m  CC=10     ←1
   │ events                     138L  0C    5m  CC=14     ←1
   │ run-email-mailpit-e2e.sh   134L  0C    4m  CC=0.0    ←0
-  │ deploy-lenovo-node.sh      130L  0C    5m  CC=0.0    ←0
   │ run-office-simulate-e2e.sh   130L  0C    4m  CC=0.0    ←0
+  │ deploy-lenovo-node.sh      130L  0C    5m  CC=0.0    ←0
   │ run_analysis               129L  0C    5m  CC=13     ←1
   │ session_markdown           120L  0C    8m  CC=7      ←1
   │ run-lenovo-office-linkedin.sh   118L  0C    3m  CC=0.0    ←0
+  │ !! session                    115L  0C    5m  CC=28     ←2
   │ run-office-writer-e2e.sh   113L  0C    4m  CC=0.0    ←3
-  │ !! session                    105L  0C    5m  CC=20     ←2
   │ __init__                   100L  0C    0m  CC=0.0    ←0
   │ remote-node-smoke.sh        99L  0C    2m  CC=0.0    ←0
   │ models                      86L  5C    0m  CC=0.0    ←0
@@ -938,7 +948,7 @@ LAYERS:
   │ run_markdown                42L  0C    1m  CC=7      ←1
   │ cli                         41L  0C    1m  CC=4      ←0
   │ sync-vendored-pack.sh       38L  0C    0m  CC=0.0    ←0
-  │ util                        29L  0C    4m  CC=3      ←5
+  │ util                        29L  0C    4m  CC=3      ←6
   │ ci-install-siblings.sh      28L  0C    1m  CC=0.0    ←0
   │ run-smoke-all.sh            24L  0C    0m  CC=0.0    ←0
   │ run-lab-unit-ci.sh          21L  0C    0m  CC=0.0    ←0
@@ -951,26 +961,26 @@ LAYERS:
   │ test-goal.sh                11L  0C    0m  CC=0.0    ←0
   │ run-urisys-node-docker-session.sh     6L  0C    0m  CC=0.0    ←0
   │
-  src/                            CC̄=4.3    ←in:0  →out:0
+  src/                            CC̄=4.2    ←in:0  →out:0
   │ !! markpact_manager           412L  1C   22m  CC=17     ←0
   │ cli                        304L  0C   11m  CC=11     ←0
   │ doctor                     295L  1C   11m  CC=12     ←3
   │ !! init_setup                 262L  0C   11m  CC=31     ←2
-  │ source_manager             224L  2C   11m  CC=11     ←0
+  │ source_manager             218L  2C   12m  CC=11     ←0
   │ markpact_validation        156L  0C    6m  CC=14     ←1
   │ uricore_install            130L  0C   11m  CC=6      ←2
-  │ !! pack_manager               128L  1C   13m  CC=15     ←0
+  │ pack_manager               125L  1C   14m  CC=9      ←0
   │ bootstrap                  111L  0C    5m  CC=8      ←0
   │ node_install               106L  0C    9m  CC=7      ←1
   │ markpact_models             92L  3C    5m  CC=4      ←1
-  │ http_server                 78L  0C    3m  CC=3      ←1
   │ edge_install                78L  0C    6m  CC=7      ←2
+  │ http_server                 78L  0C    3m  CC=3      ←1
   │ flow_controller             33L  1C    3m  CC=6      ←0
   │ uri_controller              33L  1C    5m  CC=3      ←0
   │ runtime_manager             30L  1C    5m  CC=2      ←0
+  │ defaults                    27L  0C    0m  CC=0.0    ←0
   │ flow                        25L  0C    2m  CC=7      ←1
   │ route_manager               23L  1C    3m  CC=2      ←0
-  │ defaults                    20L  0C    0m  CC=0.0    ←0
   │ server_controller           18L  1C    2m  CC=1      ←0
   │ policy_manager              18L  1C    1m  CC=2      ←0
   │ bridge_manager              14L  1C    1m  CC=3      ←0
@@ -1014,8 +1024,10 @@ LAYERS:
   │ generated-cli-tests.testql.toon.yaml    20L  0C    0m  CC=0.0    ←0
   │
   flows/                          CC̄=0.0    ←in:0  →out:0
-  │ 02-install-packs.uri.flow.yaml    56L  0C    0m  CC=0.0    ←0
   │ 06-browser-auth-probe.uri.flow.yaml    53L  0C    0m  CC=0.0    ←0
+  │ 07-playwright-linkedin.uri.flow.yaml    50L  0C    0m  CC=0.0    ←0
+  │ 02-install-packs.uri.flow.yaml    48L  0C    0m  CC=0.0    ←0
+  │ _upgrade-playwright.uri.flow.yaml    45L  0C    0m  CC=0.0    ←0
   │ 04-office-linkedin-dry.uri.flow.yaml    40L  0C    0m  CC=0.0    ←0
   │ 05-browser-linkedin-real.uri.flow.yaml    39L  0C    0m  CC=0.0    ←0
   │ email-mailpit.uri.flow.yaml    36L  0C    0m  CC=0.0    ←0
@@ -1024,7 +1036,7 @@ LAYERS:
   │ 01-health-probe.uri.flow.yaml    31L  0C    0m  CC=0.0    ←0
   │ 03-system-introspect.uri.flow.yaml    30L  0C    0m  CC=0.0    ←0
   │ office-simulate-tick.uri.flow.yaml    27L  0C    0m  CC=0.0    ←0
-  │ session.manifest.yaml       19L  0C    0m  CC=0.0    ←0
+  │ session.manifest.yaml       27L  0C    0m  CC=0.0    ←0
   │ device-maintenance.uri.flow.yaml    17L  0C    0m  CC=0.0    ←0
   │
   ── zero ──
@@ -1032,16 +1044,16 @@ LAYERS:
 
 COUPLING:
                                        scripts  scripts.test_sessions         scripts.report             src.urisys
-                scripts                     ──                     90                     27                     ←7  hub
+                scripts                     ──                     90                     34                     ←7  hub
   scripts.test_sessions                      7                     ──                      2                         hub
          scripts.report                      6                     ←2                     ──                         hub
              src.urisys                      7                                                                   ──
   CYCLES: 1
-  HUB: scripts.test_sessions/ (fan-in=90)
-  HUB: scripts.report/ (fan-in=29)
   HUB: scripts/ (fan-in=20)
+  HUB: scripts.test_sessions/ (fan-in=90)
+  HUB: scripts.report/ (fan-in=36)
+  SMELL: scripts/ fan-out=124 → split needed
   SMELL: scripts.test_sessions/ fan-out=9 → split needed
-  SMELL: scripts/ fan-out=117 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon
@@ -1051,18 +1063,18 @@ EXTERNAL:
 ### Duplication (`project/duplication.toon.yaml`)
 
 ```toon markpact:analysis path=project/duplication.toon.yaml
-# redup/duplication | 3 groups | 43f 5134L | 2026-06-17
+# redup/duplication | 3 groups | 44f 5307L | 2026-06-17
 
 SUMMARY:
-  files_scanned: 43
-  total_lines:   5134
+  files_scanned: 44
+  total_lines:   5307
   dup_groups:    3
   dup_fragments: 7
   saved_lines:   37
-  scan_ms:       2155
+  scan_ms:       2270
 
 HOTSPOTS[6] (files with most duplication):
-  src/urisys/uricore_install.py  dup=18L  groups=2  frags=2  (0.4%)
+  src/urisys/uricore_install.py  dup=18L  groups=2  frags=2  (0.3%)
   src/urisys/edge_install.py  dup=11L  groups=1  frags=1  (0.2%)
   src/urisys/node_install.py  dup=11L  groups=1  frags=1  (0.2%)
   scripts/report/run_analysis.py  dup=8L  groups=1  frags=1  (0.2%)
@@ -1113,10 +1125,10 @@ METRICS-TARGET:
 ### Evolution / Churn (`project/evolution.toon.yaml`)
 
 ```toon markpact:analysis path=project/evolution.toon.yaml
-# code2llm/evolution | 148 func | 22f | 2026-06-17
+# code2llm/evolution | 150 func | 22f | 2026-06-17
 # generated in 0.00s
 
-NEXT[5] (ranked by impact):
+NEXT[4] (ranked by impact):
   [1] !! SPLIT-FUNC      run_init  CC=31  fan=22
       WHY: CC=31 exceeds 15
       EFFORT: ~1h  IMPACT: 682
@@ -1125,15 +1137,11 @@ NEXT[5] (ranked by impact):
       WHY: CC=17 exceeds 15
       EFFORT: ~1h  IMPACT: 561
 
-  [3] !  SPLIT-FUNC      PackManager.parse_packs  CC=15  fan=7
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 105
-
-  [4] !! SPLIT           planfile.yaml
+  [3] !! SPLIT           planfile.yaml
       WHY: 1319L, 0 classes, max CC=0
       EFFORT: ~4h  IMPACT: 0
 
-  [5] !! SPLIT           goal.yaml
+  [4] !! SPLIT           goal.yaml
       WHY: 514L, 0 classes, max CC=0
       EFFORT: ~4h  IMPACT: 0
 
@@ -1143,10 +1151,10 @@ RISKS[2]:
   ⚠ Splitting goal.yaml may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          4.3 → ≤3.0
+  CC̄:          4.2 → ≤2.9
   max-CC:      31 → ≤15
   god-modules: 2 → 0
-  high-CC(≥15): 3 → ≤1
+  high-CC(≥15): 2 → ≤1
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -1174,7 +1182,7 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=4.3 → now CC̄=4.3
+  prev CC̄=4.3 → now CC̄=4.2
 ```
 
 ## Intent

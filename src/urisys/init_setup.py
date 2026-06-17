@@ -15,7 +15,7 @@ from .uricore_install import diagnose_uricore, is_wrong_uricore_installed, pip_s
 
 Profile = Literal["slave", "dev"]
 
-DEFAULT_MIN_VERSION = "0.1.25"
+from .defaults import DEFAULT_MIN_VERSION, NODE_SERVE_CMD
 DEFAULT_GITHUB_URICORE_VERSION = "0.1.8"
 
 SLAVE_ENV = {
@@ -34,7 +34,7 @@ def default_pip_specs(*, profile: Profile = "slave") -> list[str]:
         "pip",
         pip_spec(),
         "urisysedge>=0.1.0",
-        'urisys[real]>=0.1.25',
+        f'urisys[real]>={DEFAULT_MIN_VERSION}',
     ]
 
 
@@ -84,7 +84,7 @@ def profile_env(profile: Profile) -> dict[str, str]:
 def render_env_shell(env: dict[str, str]) -> str:
     lines = [f'export {key}="{value}"' for key, value in sorted(env.items())]
     lines.append("# start desktop slave:")
-    lines.append("urisys node serve --host 0.0.0.0 --port 8790")
+    lines.append(NODE_SERVE_CMD)
     return "\n".join(lines) + "\n"
 
 
@@ -243,7 +243,7 @@ def run_init(
     next_steps = [
         f"source {env_path}" if env_written and env else "",
         "urisys doctor",
-        "urisys node serve --host 0.0.0.0 --port 8790",
+        NODE_SERVE_CMD,
     ]
     next_steps = [s for s in next_steps if s]
 

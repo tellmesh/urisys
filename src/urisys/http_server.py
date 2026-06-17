@@ -6,6 +6,7 @@ from urllib.parse import urlparse
 
 from .controllers.uri_controller import UriController
 from .defaults import DEFAULT_ENVIRONMENT
+from .defaults import DEFAULT_EVENTS_PATH
 from .managers.event_manager import EventManager
 
 
@@ -28,7 +29,7 @@ def _send(handler: BaseHTTPRequestHandler, status: int, data: dict) -> None:
     handler.wfile.write(raw)
 
 
-def create_server(host: str, port: int, *, packs="all", markpacts=None, events_path="output/urisys-events.jsonl") -> ThreadingHTTPServer:
+def create_server(host: str, port: int, *, packs="all", markpacts=None, events_path=DEFAULT_EVENTS_PATH) -> ThreadingHTTPServer:
     controller = UriController(packs=packs, markpacts=markpacts, events_path=events_path)
 
     class Handler(BaseHTTPRequestHandler):

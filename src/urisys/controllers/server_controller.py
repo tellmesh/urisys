@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 from ..http_server import create_server
+from ..defaults import DEFAULT_EVENTS_PATH
 
 
 class ServerController:
-    def __init__(self, *, host="127.0.0.1", port=8789, packs="all", markpacts=None, events_path="output/urisys-events.jsonl") -> None:
+    def __init__(self, *, host="127.0.0.1", port=8789, packs="all", markpacts=None, events_path=DEFAULT_EVENTS_PATH) -> None:
         self.host = host
         self.port = port
         self.packs = packs

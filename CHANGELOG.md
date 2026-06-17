@@ -36,6 +36,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
 - Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
 
+## [0.1.56] - 2026-06-17
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+
+### Other
+- Update app.doql.less
+- Update project/logic.pl
+- Update project/map.toon.yaml
+- Update uv.lock
+
 ## [0.1.55] - 2026-06-17
 
 ### Docs

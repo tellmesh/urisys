@@ -12,6 +12,11 @@ import os
 import sys
 from pathlib import Path
 
+# NOTE: bootstrap is loaded standalone (importlib.util.spec_from_file_location)
+# so a broken install can still run `urisys doctor`. It must NOT use relative
+# imports — the "0.1.25" / serve-cmd literals below intentionally mirror
+# defaults.py (DEFAULT_MIN_VERSION / NODE_SERVE_CMD); keep them in sync by hand.
+
 
 def _print_json(data: dict) -> None:
     print(json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True))

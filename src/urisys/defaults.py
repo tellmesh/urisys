@@ -20,6 +20,7 @@ DEFAULT_EVENTS_PATH = "output/urisys-events.jsonl"
 DEFAULT_ENVIRONMENT = "real"
 
 # Minimum urisys version asserted by `urisys init` / `doctor`.
+# (bootstrap.py mirrors this literal on purpose — it runs standalone, no imports.)
 DEFAULT_MIN_VERSION = "0.1.25"
 MIN_VERSION_ENV = "URISYS_MIN_VERSION"
 

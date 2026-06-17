@@ -20,7 +20,7 @@ URI control system managers/controllers over separate uri* capability packs.
 ## Metadata
 
 - **name**: `urisys`
-- **version**: `0.1.51`
+- **version**: `0.1.55`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -40,7 +40,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: urisys;
-  version: 0.1.51;
+  version: 0.1.55;
 }
 
 dependencies {
@@ -197,7 +197,7 @@ ASSERT[14]{field, operator, expected}:
 ```yaml
 project:
   name: urisys
-  version: 0.1.51
+  version: 0.1.55
   env: local
 ```
 
@@ -261,13 +261,13 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# urisys | 108f 10047L | python:65,shell:41,less:1,javascript:1 | 2026-06-17
-# stats: 282 func | 23 cls | 108 mod | CC̄=5.3 | critical:39 | cycles:0
-# alerts[5]: CC run_init=31; CC session_urirdp_real_docker=30; CC main=29; CC main=28; CC main=23
-# hotspots[5]: main fan=37; session_urirdp_real_docker fan=25; analyze_run fan=23; session_lab_10_flows fan=22; main fan=19
+# urisys | 111f 10351L | python:68,shell:41,less:1,javascript:1 | 2026-06-17
+# stats: 297 func | 23 cls | 111 mod | CC̄=5.4 | critical:41 | cycles:0
+# alerts[5]: CC main=44; CC run_init=31; CC session_urirdp_real_docker=30; CC main=28; CC infer_steps=28
+# hotspots[5]: main fan=40; session_urirdp_real_docker fan=25; analyze_run fan=23; session_lab_10_flows fan=22; run_flow fan=19
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[108]:
+M[111]:
   app.doql.less,49
   examples/frontend/app.js,22
   examples/markpact/browser-call.sh,13
@@ -288,7 +288,7 @@ M[108]:
   scripts/deploy-lenovo-node.sh,131
   scripts/install-kvm-packs-editable.sh,14
   scripts/lenovo-node-session.sh,74
-  scripts/lenovo_remote_session.py,561
+  scripts/lenovo_remote_session.py,508
   scripts/office-simulate-loop.py,147
   scripts/pack_registry.py,270
   scripts/pack_sync.py,348
@@ -303,7 +303,7 @@ M[108]:
   scripts/report/models.py,87
   scripts/report/run_analysis.py,130
   scripts/report/run_markdown.py,43
-  scripts/report/session.py,106
+  scripts/report/session.py,116
   scripts/report/session_io.py,20
   scripts/report/session_markdown.py,121
   scripts/report/util.py,30
@@ -321,6 +321,7 @@ M[108]:
   scripts/run-urisys-node-docker-session.sh,7
   scripts/run_test_sessions.py,784
   scripts/scan-browser-sessions.py,200
+  scripts/session_core.py,213
   scripts/session_report.py,50
   scripts/sync-vendored-pack.sh,39
   scripts/sync-vendored-urisysedge.sh,18
@@ -335,16 +336,16 @@ M[108]:
   scripts/validate-pypi-metadata.sh,63
   src/urisys/__init__.py,4
   src/urisys/bootstrap.py,112
-  src/urisys/cli.py,305
+  src/urisys/cli.py,311
   src/urisys/controllers/__init__.py,1
   src/urisys/controllers/flow_controller.py,34
-  src/urisys/controllers/server_controller.py,19
+  src/urisys/controllers/server_controller.py,20
   src/urisys/controllers/uri_controller.py,34
-  src/urisys/defaults.py,21
-  src/urisys/doctor.py,296
+  src/urisys/defaults.py,28
+  src/urisys/doctor.py,297
   src/urisys/edge_install.py,79
   src/urisys/flow.py,26
-  src/urisys/http_server.py,79
+  src/urisys/http_server.py,80
   src/urisys/init_setup.py,263
   src/urisys/managers/__init__.py,1
   src/urisys/managers/bridge_manager.py,15
@@ -352,11 +353,11 @@ M[108]:
   src/urisys/managers/markpact_manager.py,413
   src/urisys/managers/markpact_models.py,93
   src/urisys/managers/markpact_validation.py,157
-  src/urisys/managers/pack_manager.py,129
+  src/urisys/managers/pack_manager.py,126
   src/urisys/managers/policy_manager.py,19
   src/urisys/managers/route_manager.py,24
   src/urisys/managers/runtime_manager.py,31
-  src/urisys/managers/source_manager.py,225
+  src/urisys/managers/source_manager.py,219
   src/urisys/node_install.py,107
   src/urisys/uricore_install.py,131
   tests/test_bootstrap.py,61
@@ -367,9 +368,11 @@ M[108]:
   tests/test_kvm_pack_pyprojects.py,69
   tests/test_markpact.py,100
   tests/test_node_install.py,39
+  tests/test_pack_manager_parse.py,45
   tests/test_pypi_metadata.py,35
   tests/test_python_compat.py,53
   tests/test_run_expectations.py,56
+  tests/test_session_core.py,82
   tests/test_session_report_events.py,59
   tests/test_source_manager.py,36
   tests/test_uricore_install.py,38
@@ -378,24 +381,17 @@ M[108]:
   tree.sh,2
 D:
   scripts/lenovo_remote_session.py:
-    e: now_iso,load_yaml,http_get,step_ok,run_step,run_flow,_image_ext,_write_base64_image,_extract_images_from_dict,extract_step_screenshots,backfill_session_images,save_json,append_log,build_wheels,start_wheel_server,write_session_md,resolve_flow_paths,main
-    now_iso()
+    e: load_yaml,http_get,run_step,run_flow,append_log,build_wheels,start_wheel_server,write_session_md,resolve_flow_paths,load_manifest_session,main
     load_yaml(path)
     http_get(endpoint;path)
-    step_ok(result)
     run_step(step)
     run_flow(flow_path)
-    _image_ext(mime)
-    _write_base64_image(b64;dest)
-    _extract_images_from_dict(obj)
-    extract_step_screenshots(step)
-    backfill_session_images(session_dir)
-    save_json(path;data)
     append_log(path;line)
     build_wheels(deploy_dir)
     start_wheel_server(deploy_dir;host;port)
     write_session_md(session_dir;meta;flow_records)
     resolve_flow_paths(manifest_path;explicit)
+    load_manifest_session(manifest_path)
     main(argv)
   scripts/office-simulate-loop.py:
     e: call_uri,rules_tick,llm_tick,parse_args,main
@@ -520,6 +516,19 @@ D:
     firefox_profiles(base)
     discover_browsers(home)
     main()
+  scripts/session_core.py:
+    e: now_iso,save_json,step_ok,image_ext,write_base64_image,extract_images_from_dict,extract_step_screenshots,backfill_session_images,find_wheel_file,wheel_url,expand_step_wheels
+    now_iso()
+    save_json(path;data)
+    step_ok(result)
+    image_ext(mime)
+    write_base64_image(b64;dest)
+    extract_images_from_dict(obj)
+    extract_step_screenshots(step)
+    backfill_session_images(session_dir)
+    find_wheel_file(deploy_dir;prefix)
+    wheel_url(wheel_server;wheel_path)
+    expand_step_wheels(step)
   scripts/session_report.py:
   scripts/test_sessions/__init__.py:
   scripts/test_sessions/expectations.py:
@@ -674,7 +683,7 @@ D:
     validate_implementation(source_path;data;source_hash)
   src/urisys/managers/pack_manager.py:
     e: PackManager
-    PackManager: __init__(1),_is_all(1),parse_packs(1),parse_markpacts(1),resolve_package_name(1),_is_markpact_path(1),_is_manifest_path(1),manifest_paths(0),create_registry(0),capabilities(0),close(0),__enter__(0),__exit__(3)  # Loads separate uri* packages, plain manifest.yaml files and 
+    PackManager: __init__(1),_split_specs(1),_is_all(1),parse_packs(1),parse_markpacts(1),resolve_package_name(1),_is_markpact_path(1),_is_manifest_path(1),manifest_paths(0),create_registry(0),capabilities(0),close(0),__enter__(0),__exit__(3)  # Loads separate uri* packages, plain manifest.yaml files and 
   src/urisys/managers/policy_manager.py:
     e: PolicyManager
     PolicyManager: build_context(0)  # Placeholder for stronger policies: RBAC, signed approvals, O
@@ -687,7 +696,7 @@ D:
   src/urisys/managers/source_manager.py:
     e: SourceError,SourceManager
     SourceError:  # Raised when a Markpact source cannot be resolved.
-    SourceManager: __init__(1),is_remote_source(1),resolve(1),fetch(1),_result(2),_cache_dir(1),_fetch_http(1),_fetch_github_uri(1),_fetch_github_raw(4),_fetch_git(1),_fetch_zip(1)  # Resolve Markpact sources from local paths, HTTP(S), GitHub, 
+    SourceManager: __init__(1),is_remote_source(1),resolve(1),fetch(1),_result(2),_cache_dir(1),_http_download(1),_fetch_http(1),_fetch_github_uri(1),_fetch_github_raw(4),_fetch_git(1),_fetch_zip(1)  # Resolve Markpact sources from local paths, HTTP(S), GitHub, 
   src/urisys/node_install.py:
     e: github_owner,github_version,wheel_filename,wheel_url,pip_spec,is_importable,pip_run,install_urisys_node,diagnose_urisys_node
     github_owner()
@@ -762,6 +771,12 @@ D:
     test_urisys_node_uses_release_wheel()
     test_urisys_node_wheel_filename_pep427()
     test_urisys_node_wheel_url_override()
+  tests/test_pack_manager_parse.py:
+    e: test_parse_packs_default_set,test_parse_packs_explicit_and_none_filter,test_is_all,test_parse_markpacts
+    test_parse_packs_default_set()
+    test_parse_packs_explicit_and_none_filter()
+    test_is_all()
+    test_parse_markpacts()
   tests/test_pypi_metadata.py:
     e: test_validate_pypi_metadata_script_exists,test_built_wheel_has_no_direct_url_requires_dist,test_pyproject_runtime_deps_have_no_direct_urls
     test_validate_pypi_metadata_script_exists()
@@ -777,6 +792,15 @@ D:
     test_screen_changed_uses_baseline_not_previous_flow()
     test_screen_changed_fails_when_equal_baseline()
     test_ocr_contains_from_pipeline()
+  tests/test_session_core.py:
+    e: test_step_ok_variants,test_image_ext,test_write_base64_image_roundtrip,test_extract_step_screenshots_strips_base64,test_extract_handles_nested_shots,test_extract_ignores_non_image_response,test_backfill_session_images
+    test_step_ok_variants()
+    test_image_ext()
+    test_write_base64_image_roundtrip(tmp_path)
+    test_extract_step_screenshots_strips_base64(tmp_path)
+    test_extract_handles_nested_shots(tmp_path)
+    test_extract_ignores_non_image_response(tmp_path)
+    test_backfill_session_images(tmp_path)
   tests/test_session_report_events.py:
     e: test_summarize_events_api_json,test_summarize_events_jsonl
     test_summarize_events_api_json(tmp_path)
@@ -811,7 +835,7 @@ D:
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.51', 'python').
+project_metadata('urisys', '0.1.55', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 49, 'less').
@@ -834,7 +858,7 @@ project_file('scripts/ci-install-siblings.sh', 29, 'shell').
 project_file('scripts/deploy-lenovo-node.sh', 131, 'shell').
 project_file('scripts/install-kvm-packs-editable.sh', 14, 'shell').
 project_file('scripts/lenovo-node-session.sh', 74, 'shell').
-project_file('scripts/lenovo_remote_session.py', 561, 'python').
+project_file('scripts/lenovo_remote_session.py', 508, 'python').
 project_file('scripts/office-simulate-loop.py', 147, 'python').
 project_file('scripts/pack_registry.py', 270, 'python').
 project_file('scripts/pack_sync.py', 348, 'python').
@@ -849,7 +873,7 @@ project_file('scripts/report/lab_checks.py', 189, 'python').
 project_file('scripts/report/models.py', 87, 'python').
 project_file('scripts/report/run_analysis.py', 130, 'python').
 project_file('scripts/report/run_markdown.py', 43, 'python').
-project_file('scripts/report/session.py', 106, 'python').
+project_file('scripts/report/session.py', 116, 'python').
 project_file('scripts/report/session_io.py', 20, 'python').
 project_file('scripts/report/session_markdown.py', 121, 'python').
 project_file('scripts/report/util.py', 30, 'python').
@@ -867,6 +891,7 @@ project_file('scripts/run-urisys-node-docker-e2e.sh', 164, 'shell').
 project_file('scripts/run-urisys-node-docker-session.sh', 7, 'shell').
 project_file('scripts/run_test_sessions.py', 784, 'python').
 project_file('scripts/scan-browser-sessions.py', 200, 'python').
+project_file('scripts/session_core.py', 213, 'python').
 project_file('scripts/session_report.py', 50, 'python').
 project_file('scripts/sync-vendored-pack.sh', 39, 'shell').
 project_file('scripts/sync-vendored-urisysedge.sh', 18, 'shell').
@@ -881,16 +906,16 @@ project_file('scripts/validate-all-markpacts.sh', 54, 'shell').
 project_file('scripts/validate-pypi-metadata.sh', 63, 'shell').
 project_file('src/urisys/__init__.py', 4, 'python').
 project_file('src/urisys/bootstrap.py', 112, 'python').
-project_file('src/urisys/cli.py', 305, 'python').
+project_file('src/urisys/cli.py', 311, 'python').
 project_file('src/urisys/controllers/__init__.py', 1, 'python').
 project_file('src/urisys/controllers/flow_controller.py', 34, 'python').
-project_file('src/urisys/controllers/server_controller.py', 19, 'python').
+project_file('src/urisys/controllers/server_controller.py', 20, 'python').
 project_file('src/urisys/controllers/uri_controller.py', 34, 'python').
-project_file('src/urisys/defaults.py', 21, 'python').
-project_file('src/urisys/doctor.py', 296, 'python').
+project_file('src/urisys/defaults.py', 28, 'python').
+project_file('src/urisys/doctor.py', 297, 'python').
 project_file('src/urisys/edge_install.py', 79, 'python').
 project_file('src/urisys/flow.py', 26, 'python').
-project_file('src/urisys/http_server.py', 79, 'python').
+project_file('src/urisys/http_server.py', 80, 'python').
 project_file('src/urisys/init_setup.py', 263, 'python').
 project_file('src/urisys/managers/__init__.py', 1, 'python').
 project_file('src/urisys/managers/bridge_manager.py', 15, 'python').
@@ -898,11 +923,11 @@ project_file('src/urisys/managers/event_manager.py', 14, 'python').
 project_file('src/urisys/managers/markpact_manager.py', 413, 'python').
 project_file('src/urisys/managers/markpact_models.py', 93, 'python').
 project_file('src/urisys/managers/markpact_validation.py', 157, 'python').
-project_file('src/urisys/managers/pack_manager.py', 129, 'python').
+project_file('src/urisys/managers/pack_manager.py', 126, 'python').
 project_file('src/urisys/managers/policy_manager.py', 19, 'python').
 project_file('src/urisys/managers/route_manager.py', 24, 'python').
 project_file('src/urisys/managers/runtime_manager.py', 31, 'python').
-project_file('src/urisys/managers/source_manager.py', 225, 'python').
+project_file('src/urisys/managers/source_manager.py', 219, 'python').
 project_file('src/urisys/node_install.py', 107, 'python').
 project_file('src/urisys/uricore_install.py', 131, 'python').
 project_file('tests/test_bootstrap.py', 61, 'python').
@@ -913,9 +938,11 @@ project_file('tests/test_init.py', 61, 'python').
 project_file('tests/test_kvm_pack_pyprojects.py', 69, 'python').
 project_file('tests/test_markpact.py', 100, 'python').
 project_file('tests/test_node_install.py', 39, 'python').
+project_file('tests/test_pack_manager_parse.py', 45, 'python').
 project_file('tests/test_pypi_metadata.py', 35, 'python').
 project_file('tests/test_python_compat.py', 53, 'python').
 project_file('tests/test_run_expectations.py', 56, 'python').
+project_file('tests/test_session_core.py', 82, 'python').
 project_file('tests/test_session_report_events.py', 59, 'python').
 project_file('tests/test_source_manager.py', 36, 'python').
 project_file('tests/test_uricore_install.py', 38, 'python').
@@ -924,24 +951,17 @@ project_file('tests/test_vendored_sync.py', 58, 'python').
 project_file('tree.sh', 2, 'shell').
 
 % ── Python Functions ─────────────────────────────────────
-python_function('scripts/lenovo_remote_session.py', 'now_iso', 0, 1, 2).
 python_function('scripts/lenovo_remote_session.py', 'load_yaml', 1, 3, 4).
 python_function('scripts/lenovo_remote_session.py', 'http_get', 2, 4, 6).
-python_function('scripts/lenovo_remote_session.py', 'step_ok', 1, 9, 3).
-python_function('scripts/lenovo_remote_session.py', 'run_step', 1, 10, 9).
-python_function('scripts/lenovo_remote_session.py', 'run_flow', 1, 13, 18).
-python_function('scripts/lenovo_remote_session.py', '_image_ext', 1, 5, 1).
-python_function('scripts/lenovo_remote_session.py', '_write_base64_image', 2, 1, 4).
-python_function('scripts/lenovo_remote_session.py', '_extract_images_from_dict', 1, 8, 11).
-python_function('scripts/lenovo_remote_session.py', 'extract_step_screenshots', 1, 5, 4).
-python_function('scripts/lenovo_remote_session.py', 'backfill_session_images', 1, 8, 11).
-python_function('scripts/lenovo_remote_session.py', 'save_json', 2, 1, 3).
+python_function('scripts/lenovo_remote_session.py', 'run_step', 1, 17, 12).
+python_function('scripts/lenovo_remote_session.py', 'run_flow', 1, 13, 19).
 python_function('scripts/lenovo_remote_session.py', 'append_log', 2, 1, 4).
 python_function('scripts/lenovo_remote_session.py', 'build_wheels', 1, 3, 4).
 python_function('scripts/lenovo_remote_session.py', 'start_wheel_server', 3, 2, 4).
 python_function('scripts/lenovo_remote_session.py', 'write_session_md', 3, 22, 9).
 python_function('scripts/lenovo_remote_session.py', 'resolve_flow_paths', 2, 6, 4).
-python_function('scripts/lenovo_remote_session.py', 'main', 1, 29, 37).
+python_function('scripts/lenovo_remote_session.py', 'load_manifest_session', 1, 2, 3).
+python_function('scripts/lenovo_remote_session.py', 'main', 1, 44, 40).
 python_function('scripts/office-simulate-loop.py', 'call_uri', 4, 4, 9).
 python_function('scripts/office-simulate-loop.py', 'rules_tick', 3, 3, 5).
 python_function('scripts/office-simulate-loop.py', 'llm_tick', 3, 7, 6).
@@ -990,7 +1010,7 @@ python_function('scripts/report/run_analysis.py', '_run_recommendations', 2, 10,
 python_function('scripts/report/run_analysis.py', 'analyze_run', 1, 13, 23).
 python_function('scripts/report/run_analysis.py', 'write_run_analysis', 2, 2, 6).
 python_function('scripts/report/run_markdown.py', 'render_run_analysis_markdown', 1, 7, 4).
-python_function('scripts/report/session.py', 'infer_steps', 2, 20, 13).
+python_function('scripts/report/session.py', 'infer_steps', 2, 28, 14).
 python_function('scripts/report/session.py', 'collect_artifacts', 1, 7, 8).
 python_function('scripts/report/session.py', 'session_status', 2, 9, 4).
 python_function('scripts/report/session.py', 'session_duration', 1, 5, 8).
@@ -1028,6 +1048,17 @@ python_function('scripts/scan-browser-sessions.py', 'chrome_profiles', 1, 11, 9)
 python_function('scripts/scan-browser-sessions.py', 'firefox_profiles', 1, 8, 10).
 python_function('scripts/scan-browser-sessions.py', 'discover_browsers', 1, 1, 0).
 python_function('scripts/scan-browser-sessions.py', 'main', 0, 23, 18).
+python_function('scripts/session_core.py', 'now_iso', 0, 1, 2).
+python_function('scripts/session_core.py', 'save_json', 2, 1, 3).
+python_function('scripts/session_core.py', 'step_ok', 1, 10, 3).
+python_function('scripts/session_core.py', 'image_ext', 1, 5, 1).
+python_function('scripts/session_core.py', 'write_base64_image', 2, 1, 4).
+python_function('scripts/session_core.py', 'extract_images_from_dict', 1, 8, 11).
+python_function('scripts/session_core.py', 'extract_step_screenshots', 1, 5, 4).
+python_function('scripts/session_core.py', 'backfill_session_images', 1, 8, 11).
+python_function('scripts/session_core.py', 'find_wheel_file', 2, 2, 2).
+python_function('scripts/session_core.py', 'wheel_url', 2, 1, 1).
+python_function('scripts/session_core.py', 'expand_step_wheels', 1, 18, 11).
 python_function('scripts/test_sessions/expectations.py', 'flow_expectations', 1, 5, 5).
 python_function('scripts/test_sessions/expectations.py', 'ocr_texts', 1, 11, 4).
 python_function('scripts/test_sessions/expectations.py', 'vision_confidences', 1, 11, 6).
@@ -1180,6 +1211,10 @@ python_function('tests/test_node_install.py', 'test_default_pip_specs_no_git_url
 python_function('tests/test_node_install.py', 'test_urisys_node_uses_release_wheel', 0, 6, 3).
 python_function('tests/test_node_install.py', 'test_urisys_node_wheel_filename_pep427', 0, 3, 1).
 python_function('tests/test_node_install.py', 'test_urisys_node_wheel_url_override', 0, 2, 2).
+python_function('tests/test_pack_manager_parse.py', 'test_parse_packs_default_set', 0, 6, 1).
+python_function('tests/test_pack_manager_parse.py', 'test_parse_packs_explicit_and_none_filter', 0, 7, 1).
+python_function('tests/test_pack_manager_parse.py', 'test_is_all', 0, 5, 1).
+python_function('tests/test_pack_manager_parse.py', 'test_parse_markpacts', 0, 6, 1).
 python_function('tests/test_pypi_metadata.py', 'test_validate_pypi_metadata_script_exists', 0, 2, 1).
 python_function('tests/test_pypi_metadata.py', 'test_built_wheel_has_no_direct_url_requires_dist', 0, 3, 6).
 python_function('tests/test_pypi_metadata.py', 'test_pyproject_runtime_deps_have_no_direct_urls', 0, 4, 2).
@@ -1188,6 +1223,13 @@ python_function('tests/test_python_compat.py', 'test_current_python_supported', 
 python_function('tests/test_run_expectations.py', 'test_screen_changed_uses_baseline_not_previous_flow', 0, 2, 1).
 python_function('tests/test_run_expectations.py', 'test_screen_changed_fails_when_equal_baseline', 0, 3, 2).
 python_function('tests/test_run_expectations.py', 'test_ocr_contains_from_pipeline', 0, 2, 1).
+python_function('tests/test_session_core.py', 'test_step_ok_variants', 0, 8, 1).
+python_function('tests/test_session_core.py', 'test_image_ext', 0, 5, 1).
+python_function('tests/test_session_core.py', 'test_write_base64_image_roundtrip', 1, 3, 5).
+python_function('tests/test_session_core.py', 'test_extract_step_screenshots_strips_base64', 1, 6, 2).
+python_function('tests/test_session_core.py', 'test_extract_handles_nested_shots', 1, 2, 1).
+python_function('tests/test_session_core.py', 'test_extract_ignores_non_image_response', 1, 2, 1).
+python_function('tests/test_session_core.py', 'test_backfill_session_images', 1, 3, 5).
 python_function('tests/test_session_report_events.py', 'test_summarize_events_api_json', 1, 4, 3).
 python_function('tests/test_session_report_events.py', 'test_summarize_events_jsonl', 1, 4, 5).
 python_function('tests/test_source_manager.py', 'test_fetch_local_file', 1, 4, 5).
@@ -1267,9 +1309,10 @@ python_method('CompiledMarkpact', 'to_dict', 0, 4, 1).
 python_class('src/urisys/managers/markpact_models.py', 'MarkpactError').
 python_class('src/urisys/managers/pack_manager.py', 'PackManager').
 python_method('PackManager', '__init__', 1, 1, 6).
-python_method('PackManager', '_is_all', 1, 10, 5).
-python_method('PackManager', 'parse_packs', 1, 15, 6).
-python_method('PackManager', 'parse_markpacts', 1, 8, 4).
+python_method('PackManager', '_split_specs', 1, 6, 4).
+python_method('PackManager', '_is_all', 1, 4, 1).
+python_method('PackManager', 'parse_packs', 1, 8, 2).
+python_method('PackManager', 'parse_markpacts', 1, 1, 1).
 python_method('PackManager', 'resolve_package_name', 1, 1, 1).
 python_method('PackManager', '_is_markpact_path', 1, 3, 2).
 python_method('PackManager', '_is_manifest_path', 1, 4, 1).
@@ -1299,11 +1342,12 @@ python_method('SourceManager', 'resolve', 1, 1, 1).
 python_method('SourceManager', 'fetch', 1, 11, 17).
 python_method('SourceManager', '_result', 2, 3, 4).
 python_method('SourceManager', '_cache_dir', 1, 1, 3).
-python_method('SourceManager', '_fetch_http', 1, 7, 14).
+python_method('SourceManager', '_http_download', 1, 2, 4).
+python_method('SourceManager', '_fetch_http', 1, 6, 11).
 python_method('SourceManager', '_fetch_github_uri', 1, 4, 6).
-python_method('SourceManager', '_fetch_github_raw', 4, 6, 13).
+python_method('SourceManager', '_fetch_github_raw', 4, 5, 10).
 python_method('SourceManager', '_fetch_git', 1, 11, 18).
-python_method('SourceManager', '_fetch_zip', 1, 10, 17).
+python_method('SourceManager', '_fetch_zip', 1, 9, 16).
 python_class('tests/test_python_compat.py', '_FakeVersionInfo').
 python_method('_FakeVersionInfo', '__init__', 3, 1, 0).
 python_method('_FakeVersionInfo', '__getitem__', 1, 1, 0).
@@ -1349,7 +1393,7 @@ sumd_interface('cli', '').
 
 ## Call Graph
 
-*192 nodes · 278 edges · 36 modules · CC̄=4.6*
+*193 nodes · 278 edges · 36 modules · CC̄=4.6*
 
 ### Hubs (by degree)
 
@@ -1361,13 +1405,13 @@ sumd_interface('cli', '').
 | `session_automation_lab` *(in scripts.run_test_sessions)* | 16 ⚠ | 1 | 43 | **44** |
 | `run_cmd` *(in scripts.test_sessions.util)* | 6 | 31 | 12 | **43** |
 | `main` *(in scripts.pack_sync)* | 28 ⚠ | 0 | 39 | **39** |
-| `analyze_run` *(in scripts.report.run_analysis)* | 13 ⚠ | 2 | 33 | **35** |
-| `main` *(in scripts.scan-browser-sessions)* | 23 ⚠ | 0 | 34 | **34** |
+| `infer_steps` *(in scripts.report.session)* | 28 ⚠ | 1 | 37 | **38** |
+| `run_step` *(in scripts.lenovo_remote_session)* | 17 ⚠ | 1 | 35 | **36** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
 # generated in 0.09s
-# nodes: 192 | edges: 278 | modules: 36
+# nodes: 193 | edges: 278 | modules: 36
 # CC̄=4.6
 
 HUBS[20]:
@@ -1383,47 +1427,43 @@ HUBS[20]:
     CC=6  in:31  out:12  total:43
   scripts.pack_sync.main
     CC=28  in:0  out:39  total:39
+  scripts.report.session.infer_steps
+    CC=28  in:1  out:37  total:38
+  scripts.lenovo_remote_session.run_step
+    CC=17  in:1  out:35  total:36
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
-  scripts.scan-browser-sessions.main
-    CC=23  in:0  out:34  total:34
   scripts.test_sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
+  scripts.scan-browser-sessions.main
+    CC=23  in:0  out:34  total:34
+  scripts.lenovo_remote_session.run_flow
+    CC=13  in:1  out:32  total:33
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  src.urisys.init_setup.run_init
-    CC=31  in:2  out:30  total:32
-  src.urisys.http_server.create_server
-    CC=1  in:1  out:31  total:32
-  scripts.lenovo_remote_session.run_flow
-    CC=13  in:1  out:31  total:32
   scripts.pack_registry.pack_specs
     CC=17  in:2  out:30  total:32
+  src.urisys.http_server.create_server
+    CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
+  src.urisys.init_setup.run_init
+    CC=31  in:2  out:30  total:32
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
+  scripts.report.util.now_iso
+    CC=1  in:27  out:3  total:30
   scripts.report.session.generate_report
     CC=9  in:2  out:27  total:29
-  scripts.report.session.infer_steps
-    CC=20  in:1  out:25  total:26
-  scripts.lenovo_remote_session.run_step
-    CC=10  in:1  out:25  total:26
-  src.urisys.doctor.run_doctor
-    CC=12  in:3  out:22  total:25
 
 MODULES:
-  scripts.lenovo_remote_session  [13 funcs]
-    _extract_images_from_dict  CC=8  out:15
-    _image_ext  CC=5  out:1
-    _write_base64_image  CC=1  out:4
-    backfill_session_images  CC=8  out:11
-    extract_step_screenshots  CC=5  out:7
+  scripts.lenovo_remote_session  [6 funcs]
     http_get  CC=4  out:7
+    load_manifest_session  CC=2  out:4
     load_yaml  CC=3  out:4
-    now_iso  CC=1  out:2
     resolve_flow_paths  CC=6  out:5
-    run_flow  CC=13  out:31
+    run_flow  CC=13  out:32
+    run_step  CC=17  out:35
   scripts.office-simulate-loop  [5 funcs]
     call_uri  CC=4  out:11
     llm_tick  CC=7  out:18
@@ -1466,7 +1506,7 @@ MODULES:
     render_run_analysis_markdown  CC=7  out:16
   scripts.report.session  [3 funcs]
     generate_report  CC=9  out:27
-    infer_steps  CC=20  out:25
+    infer_steps  CC=28  out:37
     session_duration  CC=5  out:14
   scripts.report.session_io  [1 funcs]
     write_session_report  CC=2  out:7
@@ -1482,9 +1522,8 @@ MODULES:
     tail  CC=2  out:0
   scripts.run-nl-log-smoke  [1 funcs]
     print  CC=0  out:0
-  scripts.run-office-simulate-lenovo  [1 funcs]
+  scripts.run-office-writer-e2e  [2 funcs]
     save_json  CC=0  out:0
-  scripts.run-office-writer-e2e  [1 funcs]
     wait_health  CC=0  out:0
   scripts.run-urisys-node-docker-e2e  [1 funcs]
     http_json  CC=0  out:0
@@ -1504,6 +1543,15 @@ MODULES:
     discover_browsers  CC=1  out:0
     main  CC=23  out:34
     scan_chrome_cookies  CC=13  out:13
+  scripts.session_core  [8 funcs]
+    backfill_session_images  CC=8  out:11
+    expand_step_wheels  CC=18  out:25
+    extract_images_from_dict  CC=8  out:15
+    extract_step_screenshots  CC=5  out:7
+    find_wheel_file  CC=2  out:2
+    save_json  CC=1  out:3
+    step_ok  CC=10  out:17
+    write_base64_image  CC=1  out:4
   scripts.test_sessions.expectations  [9 funcs]
     _min_vision_confidence  CC=4  out:3
     _ocr_contains  CC=5  out:6
@@ -1650,31 +1698,31 @@ EDGES:
   src.urisys.bootstrap.main → src.urisys.bootstrap._init_main
   src.urisys.bootstrap.main → src.urisys.bootstrap._print_json
   src.urisys.bootstrap.main → src.urisys.bootstrap._missing_uricore_payload
-  src.urisys.http_server.create_server → src.urisys.http_server._send
-  src.urisys.http_server.create_server → src.urisys.http_server._read_json
-  src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.load_flow
-  src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.iter_steps
-  src.urisys.controllers.server_controller.ServerController.__init__ → src.urisys.http_server.create_server
-  src.urisys.controllers.server_controller.ServerController.serve_forever → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.rules_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.rules_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.llm_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.llm_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.parse_args
-  scripts.office-simulate-loop.main → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.rules_tick
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.llm_tick
-  scripts.report.cli.main → scripts.report.run_analysis.analyze_run
-  scripts.report.cli.main → scripts.report.run_analysis.write_run_analysis
-  scripts.report.events.summarize_events → scripts.report.events.load_event_records
-  scripts.report.events.summarize_events → scripts.report.events.summarize_event_records
-  scripts.report.events.merge_event_summaries → scripts.report.events.summarize_events
-  scripts.report.run_analysis.analyze_run → scripts.report.util.read_json
-  scripts.report.run_analysis.write_run_analysis → scripts.report.run_analysis.analyze_run
-  scripts.report.run_analysis.write_run_analysis → scripts.report.run_markdown.render_run_analysis_markdown
-  scripts.report.lab_checks.load_flow_outcomes → scripts.report.util.read_json
-  scripts.report.lab_checks.load_flow_outcomes → scripts.report.lab_checks.iter_step_results
-  scripts.report.lab_checks.check_duplicate_screenshots → scripts.report.lab_checks._duplicate_recommendation
+  src.urisys.cli.print_json → scripts.run-nl-log-smoke.print
+  src.urisys.cli.build_parser → src.urisys.cli._add_runtime_flags
+  src.urisys.cli._cmd_markpact → src.urisys.cli.resolve_markpact_source
+  src.urisys.cli._cmd_markpact → src.urisys.cli.print_json
+  src.urisys.cli._cmd_init → src.urisys.init_setup.run_init
+  src.urisys.cli._cmd_init → src.urisys.cli.print_json
+  src.urisys.cli._cmd_init → scripts.run-nl-log-smoke.print
+  src.urisys.cli._cmd_uri → src.urisys.cli.print_json
+  src.urisys.cli._cmd_uri → src.urisys.cli._json_arg
+  src.urisys.cli._handle_cli_error → src.urisys.cli.print_json
+  src.urisys.cli.main → src.urisys.cli._cmd_uri
+  src.urisys.cli.main → src.urisys.cli.build_parser
+  src.urisys.cli.main → src.urisys.cli._cmd_markpact
+  src.urisys.cli.main → src.urisys.doctor.run_doctor
+  src.urisys.cli.main → src.urisys.cli.print_json
+  src.urisys.cli.main → src.urisys.cli._cmd_init
+  src.urisys.cli.main → scripts.run-nl-log-smoke.print
+  src.urisys.cli.main → src.urisys.cli._cmd_node
+  src.urisys.doctor._version_lt → src.urisys.doctor._parse_version
+  src.urisys.doctor._check_import → src.urisys.doctor._pkg_version
+  src.urisys.doctor._check_min_version → src.urisys.doctor._pkg_version
+  src.urisys.doctor._check_min_version → src.urisys.doctor._version_lt
+  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.diagnose_uricore
+  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.is_wrong_uricore_installed
+  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.wheel_url
 ```
 
 ## Test Contracts

@@ -5,6 +5,7 @@ import shutil
 import sys
 from dataclasses import asdict, dataclass
 from typing import Any, Literal
+from .defaults import DEFAULT_MIN_VERSION, NODE_SERVE_CMD
 
 from .node_install import pip_spec as node_pip_spec
 
@@ -235,7 +236,7 @@ def _check_uricore_dist() -> Check:
     )
 
 
-def run_doctor(*, min_version: str | None = "0.1.25") -> dict[str, Any]:
+def run_doctor(*, min_version: str | None = DEFAULT_MIN_VERSION) -> dict[str, Any]:
     from .edge_install import is_broken_install
     from .uricore_install import wheel_url
 
@@ -273,7 +274,7 @@ def run_doctor(*, min_version: str | None = "0.1.25") -> dict[str, Any]:
         checks.append(wayland)
 
     hints = [
-        "Desktop slave (lenovo): urisys node serve --host 0.0.0.0 --port 8790",
+        f"Desktop slave (lenovo): {NODE_SERVE_CMD}",
         "Dev pack server (not slave): urisys serve --port 8789",
         f"Broken uri_control? Run: urisys init  (installs {wheel_url()})",
         "Recommended: python3.12 -m venv ~/venv && source ~/venv/bin/activate && urisys init",
