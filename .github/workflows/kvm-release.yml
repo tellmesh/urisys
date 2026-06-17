@@ -34,6 +34,7 @@ jobs:
     outputs:
       version: ${{ steps.ver.outputs.version }}
       git_ref: ${{ steps.ver.outputs.git_ref }}
+      release_sha: ${{ steps.commit.outputs.release_sha }}
       image_ref: ${{ steps.image.outputs.image_ref }}
       image_tag: ${{ steps.image.outputs.image_tag }}
     steps:
@@ -133,6 +134,7 @@ jobs:
           PY
 
       - name: Commit release metadata (single writer)
+        id: commit
         env:
           VERSION: ${{ steps.ver.outputs.version }}
         run: |
@@ -141,7 +143,10 @@ jobs:
           git add releases/
           git diff --staged --quiet || git commit -m "release: urikvm bundle ${VERSION} [skip ci]"
           git push origin "HEAD:main"
-          git push origin "HEAD:${{ steps.ver.outputs.git_ref }}" --force
+          # Pin downstream to the immutable commit that actually carries the
+          # release files, so the register job and markpact.com fetch the right
+          # blob regardless of branch/tag ref resolution.
+          echo "release_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
   register:
     needs: build
@@ -162,12 +167,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ needs.build.outputs.git_ref }}
+          ref: ${{ needs.build.outputs.release_sha }}
 
       - name: Register release on markpact.com
         env:
           VERSION: ${{ needs.build.outputs.version }}
-          GIT_REF: ${{ needs.build.outputs.git_ref }}
+          RELEASE_SHA: ${{ needs.build.outputs.release_sha }}
           CONTRACT_ID: ${{ matrix.contract_id }}
           MARKPACT_URL: ${{ vars.MARKPACT_URL }}
           MARKPACT_API_TOKEN: ${{ secrets.MARKPACT_API_TOKEN }}
@@ -178,8 +183,8 @@ jobs:
           fi
           MARKPACT_URL="${MARKPACT_URL:-https://markpact.com}"
           RELEASE_DIR="releases/${CONTRACT_ID}/${VERSION}"
-          INDEX_URL="https://raw.githubusercontent.com/${{ github.repository }}/${GIT_REF}/${RELEASE_DIR}/artifact-index.json"
-          CONTRACT_URL="https://raw.githubusercontent.com/${{ github.repository }}/${GIT_REF}/${RELEASE_DIR}/contract.markpact.md"
+          INDEX_URL="https://raw.githubusercontent.com/${{ github.repository }}/${RELEASE_SHA}/${RELEASE_DIR}/artifact-index.json"
+          CONTRACT_URL="https://raw.githubusercontent.com/${{ github.repository }}/${RELEASE_SHA}/${RELEASE_DIR}/contract.markpact.md"
           CONTRACT_SHA="$(python3 -c "import json; print(json.load(open('${RELEASE_DIR}/artifact-index.json'))['contract']['digest'])")"
           ARTIFACTS="$(python3 -c "import json; print(json.dumps(json.load(open('${RELEASE_DIR}/artifact-index.json'))['artifacts']))")"
           curl -fsS -X POST "${MARKPACT_URL}/api/releases" \
