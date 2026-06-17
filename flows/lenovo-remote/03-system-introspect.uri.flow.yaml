@@ -24,5 +24,7 @@ do:
       limit: 30
       tail: true
 
-  - id: screen_status
-    uri: screen://lenovo/monitor/primary/query/status
+  - id: screen_frame
+    uri: screen://lenovo/monitor/1/query/frame
+    allow_real: true
+    note: Latest frame metadata (portal/mss backend on lenovo)

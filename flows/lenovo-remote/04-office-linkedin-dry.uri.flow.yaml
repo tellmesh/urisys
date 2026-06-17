@@ -9,11 +9,11 @@ defaults:
   allow_real: false
 
 do:
-  - id: office_create
-    uri: urioffice://lenovo/document/command/create
+  - id: office_render
+    uri: urioffice://lenovo/writer/command/render
     payload:
       title: LinkedIn session doc
-      body: "Test post from lenovo-remote session flow"
+      text: "Test post from lenovo-remote session flow"
 
   - id: browser_publish_dry
     uri: browser://linkedin/social/command/publish-post

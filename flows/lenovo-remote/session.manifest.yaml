@@ -11,6 +11,8 @@ flows:
   - flows/lenovo-remote/02-install-packs.uri.flow.yaml
   - flows/lenovo-remote/03-system-introspect.uri.flow.yaml
   - flows/lenovo-remote/04-office-linkedin-dry.uri.flow.yaml
+  - flows/lenovo-remote/05-browser-linkedin-real.uri.flow.yaml
+  - flows/lenovo-remote/06-browser-auth-probe.uri.flow.yaml
 
 replay:
   runner: python3 scripts/lenovo_remote_session.py

@@ -15,6 +15,7 @@ Single step via Python CLI (no bash scripts):
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 import os
 import shutil
@@ -118,6 +119,9 @@ def run_step(
                 "dry_run": bool(defaults.get("dry_run", False)),
                 "allow_real": bool(defaults.get("allow_real", True)),
             }
+            for key in ("approved", "dry_run", "allow_real"):
+                if key in step:
+                    ctx[key] = bool(step[key])
             out["kind"] = "uri_call"
             out["uri"] = uri
             out["payload"] = payload
@@ -171,6 +175,7 @@ def run_flow(
         else:
             step = dict(raw)
         result = run_step(step, endpoint=endpoint, route_map=route_map, defaults=defaults)
+        extract_step_screenshots(result, session_dir=session_dir, flow_id=flow_id)
         record["steps"].append(result)
         save_json(session_dir / "responses" / f"{flow_id}__{result['id']}.json", result)
 
@@ -178,6 +183,115 @@ def run_flow(
     record["ok"] = all(s.get("ok") for s in record["steps"]) if record["steps"] else False
     save_json(session_dir / "flows" / f"{flow_id}.json", record)
     return record
+
+
+def _image_ext(mime: str) -> str:
+    mime = (mime or "image/png").lower()
+    if "jpeg" in mime or "jpg" in mime:
+        return "jpg"
+    if "webp" in mime:
+        return "webp"
+    return "png"
+
+
+def _write_base64_image(b64: str, dest: Path) -> int:
+    raw = base64.b64decode(b64)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_bytes(raw)
+    return len(raw)
+
+
+def _extract_images_from_dict(
+    obj: dict[str, Any],
+    *,
+    session_dir: Path,
+    filename: str,
+    strip_base64: bool,
+) -> list[str]:
+    """Extract base64 image from dict (and nested shots[]) to screenshots/."""
+    saved: list[str] = []
+    b64 = obj.get("base64")
+    if isinstance(b64, str) and len(b64) > 100:
+        ext = _image_ext(str(obj.get("mime") or ""))
+        rel = f"screenshots/{filename}.{ext}"
+        size = _write_base64_image(b64, session_dir / rel)
+        saved.append(rel)
+        if strip_base64:
+            obj.pop("base64", None)
+            obj["screenshot_file"] = rel
+            obj["screenshot_bytes"] = size
+
+    shots = obj.get("shots")
+    if isinstance(shots, list):
+        for i, shot in enumerate(shots):
+            if isinstance(shot, dict):
+                saved.extend(
+                    _extract_images_from_dict(
+                        shot,
+                        session_dir=session_dir,
+                        filename=f"{filename}_shot{i}",
+                        strip_base64=strip_base64,
+                    )
+                )
+    return saved
+
+
+def extract_step_screenshots(
+    step: dict[str, Any],
+    *,
+    session_dir: Path,
+    flow_id: str,
+    strip_base64: bool = True,
+) -> list[str]:
+    """Write embedded base64 from URI response to session_dir/screenshots/."""
+    resp = step.get("response")
+    if not isinstance(resp, dict):
+        return []
+    result = resp.get("result")
+    if not isinstance(result, dict):
+        return []
+    step_id = str(step.get("id") or "step")
+    saved = _extract_images_from_dict(
+        result,
+        session_dir=session_dir,
+        filename=f"{flow_id}__{step_id}",
+        strip_base64=strip_base64,
+    )
+    if saved:
+        step["screenshots"] = saved
+    return saved
+
+
+def backfill_session_images(session_dir: Path, *, strip_base64: bool = True) -> list[str]:
+    """Extract images from all response JSON files (also for past sessions)."""
+    responses = session_dir / "responses"
+    if not responses.is_dir():
+        return []
+    all_saved: list[str] = []
+    for path in sorted(responses.glob("*.json")):
+        if path.name.startswith("_"):
+            continue
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+        if not isinstance(data, dict):
+            continue
+        stem = path.stem
+        flow_id, _, step_id = stem.partition("__")
+        if not step_id:
+            continue
+        data["id"] = step_id
+        saved = extract_step_screenshots(
+            data,
+            session_dir=session_dir,
+            flow_id=flow_id,
+            strip_base64=strip_base64,
+        )
+        if saved:
+            save_json(path, data)
+            all_saved.extend(saved)
+    return all_saved
 
 
 def save_json(path: Path, data: Any) -> None:
@@ -268,6 +382,8 @@ def write_session_md(session_dir: Path, meta: dict[str, Any], flow_records: list
                 lines.append(f"  - error: `{err}`")
             if step.get("note"):
                 lines.append(f"  - note: {step['note']}")
+            for shot in step.get("screenshots") or []:
+                lines.append(f"  - screenshot: `{shot}`")
         lines.append("")
 
     lines.extend([
@@ -286,6 +402,7 @@ def write_session_md(session_dir: Path, meta: dict[str, Any], flow_records: list
     lines.append("")
     lines.append(f"- Flow copies: `{session_dir.relative_to(ROOT)}/flows/`")
     lines.append(f"- Responses: `{session_dir.relative_to(ROOT)}/responses/`")
+    lines.append(f"- Screenshots: `{session_dir.relative_to(ROOT)}/screenshots/` (extracted from base64)")
     lines.append(f"- Manifest: `flows/lenovo-remote/session.manifest.yaml`")
     lines.append("")
 
@@ -311,7 +428,21 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--serve-wheels", action="store_true", help="Start python -m http.server for wheels")
     parser.add_argument("--session-dir", default="", help="Reuse existing session dir (replay doc only)")
     parser.add_argument("--run-id", default="")
+    parser.add_argument(
+        "--extract-images",
+        metavar="SESSION_DIR",
+        help="Extract base64 images from existing session responses to screenshots/ (no flows run)",
+    )
     args = parser.parse_args(argv)
+
+    if args.extract_images:
+        session_dir = Path(args.extract_images)
+        if not session_dir.is_dir():
+            print(json.dumps({"ok": False, "error": f"not a directory: {session_dir}"}), file=sys.stderr)
+            return 2
+        saved = backfill_session_images(session_dir)
+        print(json.dumps({"ok": True, "session_dir": str(session_dir), "screenshots": saved}, indent=2))
+        return 0
 
     if yaml is None:
         print("ERROR: pip install pyyaml", file=sys.stderr)

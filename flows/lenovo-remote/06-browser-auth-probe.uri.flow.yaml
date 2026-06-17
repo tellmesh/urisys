@@ -1,0 +1,53 @@
+flow:
+  id: lenovo-06-browser-auth-probe
+  description: Probe Chrome Default cookies on lenovo (LinkedIn li_at) and snapshot kv + screen.
+  target: lenovo
+
+defaults:
+  approved: true
+  dry_run: false
+  allow_real: true
+
+do:
+  - id: shell_linkedin_cookie
+    uri: shell://bash
+    payload:
+      args:
+        - -lc
+        - |
+          python3 <<'PY'
+          import sqlite3, shutil, tempfile, os, json
+          db = os.path.expanduser("~/.config/google-chrome/Default/Cookies")
+          out = {"chrome_cookies_db": db, "exists": os.path.isfile(db), "linkedin": {"logged_in": False, "cookies": []}}
+          if out["exists"]:
+              tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".db")
+              tmp.close()
+              shutil.copy2(db, tmp.name)
+              con = sqlite3.connect(f"file:{tmp.name}?mode=ro", uri=True)
+              rows = con.execute(
+                  "SELECT name, expires_utc FROM cookies WHERE host_key LIKE '%linkedin.com%'"
+              ).fetchall()
+              con.close()
+              os.unlink(tmp.name)
+              names = sorted({r[0] for r in rows})
+              out["linkedin"]["cookies"] = names
+              out["linkedin"]["logged_in"] = "li_at" in names
+          print(json.dumps(out))
+          PY
+    note: Read-only cookie probe on lenovo Chrome Default profile
+
+  - id: kv_store_probe
+    uri: kv://session/key/browser-auth-probe/command/set
+    payload:
+      value:
+        flow: lenovo-06-browser-auth-probe
+        chrome_profile: "~/.config/google-chrome/Default"
+        playwright_env: "URISYS_BROWSER_USER_DATA_DIR=/home/tom/.config/google-chrome/Default"
+      ttl: 86400
+
+  - id: kv_discover
+    uri: kv://lenovo/runtime/query/discover
+
+  - id: screen_desktop
+    uri: screen://lenovo/monitor/1/query/frame
+    allow_real: true
