@@ -96,6 +96,25 @@ def build_runtime(config_path: str | None = None) -> Runtime:
     except Exception as exc:
         warnings.warn(f"forward pack wiring skipped: {exc}", stacklevel=2)
 
+    try:
+        from urisysnode.forward_config import (
+            load_release_forward_entries,
+            wire_release_forward_packs,
+        )
+
+        release_forwards = load_release_forward_entries(config=config)
+        if release_forwards:
+            rt.config["release_forwards"] = release_forwards
+            for result in wire_release_forward_packs(rt, release_forwards):
+                if not result.get("ok"):
+                    warnings.warn(
+                        f"release forward {result.get('contract_id')}@{result.get('version')} "
+                        f"skipped at stage '{result.get('stage')}': {result.get('error')}",
+                        stacklevel=2,
+                    )
+    except Exception as exc:
+        warnings.warn(f"release forward wiring skipped: {exc}", stacklevel=2)
+
     return rt
 
 
@@ -239,12 +258,20 @@ def _release_forward_spec(
     scheme: str | None,
     patterns: list[str] | None,
 ) -> tuple[str, list[str]]:
-    """Resolve the URI scheme and patterns to wire for a release. Caller-supplied
-    values win; otherwise they come from the release/contract metadata."""
+    """Resolve the URI scheme and patterns to wire for a release. Precedence:
+    caller-supplied > inline on the release payload > parsed from the contract
+    the release references. The contract is the source of truth, so we fall back
+    to it whenever the catalog response does not already carry the patterns."""
     out_scheme = (scheme or release.get("scheme") or "").strip()
     out_patterns = patterns or release.get("patterns") or []
     clean = [str(p).strip() for p in out_patterns if str(p).strip()]
-    return out_scheme, clean
+    if out_scheme and clean:
+        return out_scheme, clean
+
+    from .artifact_resolver import contract_spec_from_release
+
+    spec = contract_spec_from_release(release)
+    return (out_scheme or spec["scheme"], clean or spec["patterns"])
 
 
 def hotload_release_pack(
@@ -288,7 +315,10 @@ def hotload_release_pack(
     if not verdict.get("ok"):
         return {"ok": False, "stage": "verify", "error": verdict.get("error"), "signature": verdict}
 
-    fwd_scheme, fwd_patterns = _release_forward_spec(release, scheme, patterns)
+    try:
+        fwd_scheme, fwd_patterns = _release_forward_spec(release, scheme, patterns)
+    except Exception as exc:
+        return {"ok": False, "stage": "spec", "error": str(exc), "signature": verdict}
     if not fwd_scheme or not fwd_patterns:
         return {
             "ok": False,

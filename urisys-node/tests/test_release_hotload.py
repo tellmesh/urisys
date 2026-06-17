@@ -186,3 +186,73 @@ def test_hotload_missing_scheme_patterns(tmp_path, monkeypatch):
     )
     assert out["ok"] is False
     assert out["stage"] == "spec"
+
+
+# ---- contract-derived scheme/patterns ------------------------------------
+
+_CONTRACT_MD = """# UriContract: urihim
+
+```yaml markpact:contract
+apiVersion: urisys.io/v1
+kind: UriContract
+metadata:
+  id: urihim.contract
+  version: 1.0.0
+scheme: him
+commands:
+  - id: him.mouse.click
+    pattern: him://{host}/mouse/command/click
+    side_effects: true
+queries:
+  - id: him.mouse.status
+    pattern: him://{host}/mouse/query/status
+```
+"""
+
+
+def test_parse_contract_spec_extracts_scheme_and_patterns():
+    spec = artifact_resolver.parse_contract_spec(_CONTRACT_MD)
+    assert spec["scheme"] == "him"
+    assert spec["patterns"] == [
+        "him://{host}/mouse/query/status",
+        "him://{host}/mouse/command/click",
+    ]
+
+
+def test_parse_contract_spec_rejects_block_without_scheme():
+    bad = "# c\n\n```yaml markpact:contract\nqueries: []\n```\n"
+    with pytest.raises(ValueError):
+        artifact_resolver.parse_contract_spec(bad)
+
+
+def test_contract_url_from_release_variants():
+    assert artifact_resolver.contract_url_from_release({"contract_url": "u1"}) == "u1"
+    assert artifact_resolver.contract_url_from_release({"contract": {"url": "u2"}}) == "u2"
+    assert artifact_resolver.contract_url_from_release({}) == ""
+
+
+def test_hotload_derives_spec_from_contract(tmp_path, monkeypatch):
+    monkeypatch.delenv("URISYS_NODE_REQUIRE_SIGNATURE", raising=False)
+    rt = _runtime(tmp_path)
+    # release carries no inline scheme/patterns, only a contract URL
+    rel = _release(contract_url="https://example/contract.markpact.md")
+    rel.pop("scheme")
+    rel.pop("patterns")
+    monkeypatch.setattr(artifact_resolver, "fetch_release", lambda *a, **k: rel)
+    monkeypatch.setattr(artifact_resolver, "fetch_text", lambda url, **k: _CONTRACT_MD)
+    monkeypatch.setattr(
+        artifact_resolver, "run_release",
+        lambda release, profile, *, container, port: {"ok": True, "port": port, "container": container},
+    )
+
+    out = hotload_release_pack(
+        rt, "urihim.contract", "1.0.0",
+        catalog_url="https://markpact.com", profile_path=str(tmp_path / "p.yaml"),
+        context={"skip_pairing": True}, port=8792,
+    )
+
+    assert out["ok"] is True
+    assert out["scheme"] == "him"
+    assert rt.config["forward_targets"]["him"] == "http://127.0.0.1:8792"
+    click = next(r for r in rt.routes if r.pattern.endswith("/command/click"))
+    assert click.approval == "required" and click.side_effects is True

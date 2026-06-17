@@ -74,6 +74,63 @@ def test_command_register_forward(tmp_path):
     assert "vql" in rt._loaded_packs
 
 
+def test_load_release_forward_entries_from_config():
+    config = {
+        "release_forwards": [
+            {"contract": "urihim.contract", "version": "1.0.0"},
+            {"contract_id": "urikvm.contract", "version": "1.0.0", "catalog": "https://cat"},
+            {"version": "1.0.0"},  # no contract — dropped
+        ]
+    }
+    entries = fc.load_release_forward_entries(config=config)
+    assert len(entries) == 2
+    assert entries[0]["contract"] == "urihim.contract"
+    assert entries[0]["catalog"] == fc.DEFAULT_CATALOG_URL
+    assert entries[1]["catalog"] == "https://cat"
+
+
+def test_load_release_forward_entries_env_inline():
+    payload = json.dumps({"contract": "urihim.contract", "version": "1.0.0"})
+    with mock.patch.dict(os.environ, {"URISYS_NODE_RELEASE_FORWARDS": payload}, clear=False):
+        entries = fc.load_release_forward_entries()
+    assert entries[0]["contract"] == "urihim.contract"
+
+
+def test_wire_release_forward_packs_calls_hotload(tmp_path, monkeypatch):
+    rt = _runtime(tmp_path)
+    calls = []
+
+    def fake_hotload(runtime, contract, version, *, catalog_url, profile_path):
+        calls.append((contract, version, catalog_url))
+        return {"ok": True, "stage": "registered", "contract_id": contract, "version": version}
+
+    monkeypatch.setattr(fc, "hotload_release_pack", fake_hotload)
+    results = fc.wire_release_forward_packs(
+        rt, [{"contract": "urihim.contract", "version": "1.0.0", "catalog": "https://cat"}]
+    )
+    assert results[0]["ok"] is True
+    assert calls == [("urihim.contract", "1.0.0", "https://cat")]
+
+
+def test_wire_release_forward_packs_is_best_effort(tmp_path, monkeypatch):
+    rt = _runtime(tmp_path)
+
+    def fake_hotload(runtime, contract, version, **k):
+        if contract == "bad.contract":
+            return {"ok": False, "stage": "run", "error": "docker missing", "contract_id": contract}
+        return {"ok": True, "stage": "registered", "contract_id": contract}
+
+    monkeypatch.setattr(fc, "hotload_release_pack", fake_hotload)
+    results = fc.wire_release_forward_packs(
+        rt,
+        [
+            {"contract": "bad.contract", "version": "1.0.0", "catalog": "c"},
+            {"contract": "good.contract", "version": "1.0.0", "catalog": "c"},
+        ],
+    )
+    assert [r["ok"] for r in results] == [False, True]  # one failure does not abort the rest
+
+
 def test_build_runtime_wires_config_forwards(tmp_path, monkeypatch):
     config_path = tmp_path / "profile.json"
     config_path.write_text(
