@@ -1,6 +1,6 @@
 # code2llm call graph | /home/tom/github/tellmesh/urisys
 # generated in 0.08s
-# nodes: 160 | edges: 233 | modules: 34
+# nodes: 166 | edges: 238 | modules: 35
 # CC̄=4.4
 
 HUBS[20]:
@@ -12,6 +12,8 @@ HUBS[20]:
     CC=1  in:1  out:61  total:62
   scripts.run-nl-log-smoke.print
     CC=0  in:47  out:0  total:47
+  src.urisys.init_setup.run_init
+    CC=41  in:2  out:43  total:45
   scripts.run_test_sessions.session_automation_lab
     CC=16  in:1  out:43  total:44
   scripts.test_sessions.util.run_cmd
@@ -20,28 +22,26 @@ HUBS[20]:
     CC=13  in:1  out:40  total:41
   scripts.pack_sync.main
     CC=28  in:0  out:39  total:39
-  src.urisys.init_setup.run_init
-    CC=34  in:2  out:35  total:37
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
   scripts.test_sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  scripts.run_test_sessions.main
-    CC=13  in:0  out:32  total:32
   src.urisys.http_server.create_server
     CC=1  in:1  out:31  total:32
+  scripts.run_test_sessions.main
+    CC=13  in:0  out:32  total:32
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
   scripts.pack_registry.pack_specs
     CC=17  in:2  out:28  total:30
   scripts.report.session.generate_report
     CC=9  in:2  out:27  total:29
-  urikvm-docker.scripts.real_pipeline.main
-    CC=14  in:0  out:26  total:26
   scripts.report.session.infer_steps
     CC=20  in:1  out:25  total:26
+  urikvm-docker.scripts.real_pipeline.main
+    CC=14  in:0  out:26  total:26
   urisys-automation-lab.server.automation_lab_server.build_lab_runtime
     CC=17  in:1  out:23  total:24
 
@@ -190,9 +190,16 @@ MODULES:
     default_pip_specs  CC=1  out:1
     profile_env  CC=2  out:1
     render_env_shell  CC=2  out:5
-    run_init  CC=34  out:35
+    run_init  CC=41  out:43
     verify_uri_control  CC=2  out:3
     write_env_file  CC=2  out:7
+  src.urisys.node_install  [6 funcs]
+    diagnose_urisys_node  CC=3  out:4
+    github_owner  CC=1  out:2
+    github_version  CC=1  out:3
+    is_importable  CC=1  out:1
+    pip_spec  CC=1  out:1
+    wheel_url  CC=3  out:5
   src.urisys.uricore_install  [11 funcs]
     _dist_top_levels  CC=6  out:7
     _module_exists  CC=1  out:1

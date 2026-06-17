@@ -3740,7 +3740,7 @@ source = { editable = "../urioperators" }
 
 [[package]]
 name = "urisys"
-version = "0.1.39"
+version = "0.1.40"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
@@ -3835,8 +3835,11 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "costs", marker = "extra == 'dev'", specifier = ">=0.1.20" },
+    { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
     { name = "litellm", marker = "extra == 'real'", specifier = ">=1.40" },
     { name = "mss", marker = "extra == 'real'", specifier = ">=9.0" },
+    { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
     { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
     { name = "pyautogui", marker = "extra == 'real'", specifier = ">=0.9.54" },
     { name = "pytesseract", marker = "extra == 'real'", specifier = ">=0.3.10" },

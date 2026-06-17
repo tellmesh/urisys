@@ -1,0 +1,25 @@
+# urisys — TODO (priorytety)
+
+> Pełna lista prefact: [`TODO.md`](TODO.md) · status org: [`../TODO_STATUS.md`](../TODO_STATUS.md)
+
+## Zakończone (2026-06-17)
+
+- [x] Migracja packów → `tellmesh/{repo}/` (32 packi, `pack_sync promote`)
+- [x] Usunięcie vendored `packages/python/*` z urisys
+- [x] PyPI `urisys` bez direct URL deps (`validate-pypi-metadata.sh`)
+- [x] `urisys init` bez `git+https` (wheel urisys-node, bez hasła GitHub)
+- [x] Dokumentacja: `docs/REPOS.md`, `PACKAGES.md`, `DISTRIBUTION.md`, `NODE-SETUP.md`
+
+## Otwarte (priorytet)
+
+- [ ] GitHub Release `urisys-node` v0.1.3 wheel (wymagane dla `urisys init` na lenovo)
+- [ ] PyPI upload: `urihim`, `uriocr`, `urillm`, `urioperators`, `urimail`, `urioffice`, `urivql`
+- [ ] `git init` + push bundle repos bez `.git`: `urisys-node`, `urirdp`, `urioperators`, `urikvmedge`, …
+- [ ] Portal publish kontraktów kvm (`MARKPACT_TOKEN`)
+- [ ] Tor R faza 2: OCR/HIM helpers → `urioperators`
+- [ ] E2E lenovo: `bash scripts/run-office-simulate-lenovo.sh` (maszyna online w LAN)
+- [ ] Zaktualizować `deploy-lenovo-node.sh` / CI pod sibling-only (bez starych ścieżek vendored)
+
+## Mapowanie repo
+
+Zob. [`docs/REPOS.md`](docs/REPOS.md) — paczki URI są pod **tellmesh**, nie **semcod**.

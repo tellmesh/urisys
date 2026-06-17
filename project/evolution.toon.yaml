@@ -1,4 +1,4 @@
-# code2llm/evolution | 164 func | 26f | 2026-06-17
+# code2llm/evolution | 171 func | 27f | 2026-06-17
 # generated in 0.00s
 
 NEXT[10] (ranked by impact):
@@ -6,13 +6,13 @@ NEXT[10] (ranked by impact):
       WHY: CC=36 exceeds 15
       EFFORT: ~1h  IMPACT: 1296
 
-  [2] !  SPLIT-FUNC      MarkpactManager.compile  CC=21  fan=34
+  [2] !! SPLIT-FUNC      run_init  CC=41  fan=25
+      WHY: CC=41 exceeds 15
+      EFFORT: ~1h  IMPACT: 1025
+
+  [3] !  SPLIT-FUNC      MarkpactManager.compile  CC=21  fan=34
       WHY: CC=21 exceeds 15
       EFFORT: ~1h  IMPACT: 714
-
-  [3] !! SPLIT-FUNC      run_init  CC=34  fan=20
-      WHY: CC=34 exceeds 15
-      EFFORT: ~1h  IMPACT: 680
 
   [4] !  SPLIT-FUNC      MarkpactManager.run_tests  CC=20  fan=21
       WHY: CC=20 exceeds 15
@@ -48,8 +48,8 @@ RISKS[2]:
   ⚠ Splitting goal.yaml may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          4.4 → ≤3.1
-  max-CC:      36 → ≤18
+  CC̄:          4.3 → ≤3.0
+  max-CC:      41 → ≤20
   god-modules: 2 → 0
   high-CC(≥15): 10 → ≤5
   hub-types:   0 → ≤0
@@ -79,4 +79,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=4.3 → now CC̄=4.4
+  prev CC̄=4.4 → now CC̄=4.3

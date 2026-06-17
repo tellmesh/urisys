@@ -20,7 +20,7 @@ URI control system managers/controllers over separate uri* capability packs.
 ## Metadata
 
 - **name**: `urisys`
-- **version**: `0.1.38`
+- **version**: `0.1.39`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -40,7 +40,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: urisys;
-  version: 0.1.38;
+  version: 0.1.39;
 }
 
 dependencies {
@@ -68,7 +68,7 @@ tests {
 }
 
 env_vars {
-  keys: OPENROUTER_API_KEY, LLM_MODEL, LLM_BASE_URL, LLM_TEMPERATURE, LLM_MAX_TOKENS, PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_MAX_RETRIES, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_CREATE_BACKUPS, PIP_DISABLE_PIP_VERSION_CHECK, URISYS_URICORE_GITHUB_OWNER, URISYS_URICORE_VERSION, URISYS_URICORE_WHEEL_URL, URISYS_MIN_VERSION, URISYS_INIT_PROFILE, URISYS_NODE_HOST, URISYS_NODE_PORT, URISYS_NODE_CONFIG, WAYLAND_DISPLAY;
+  keys: OPENROUTER_API_KEY, LLM_MODEL, LLM_BASE_URL, LLM_TEMPERATURE, LLM_MAX_TOKENS, PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_MAX_RETRIES, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_CREATE_BACKUPS, PIP_DISABLE_PIP_VERSION_CHECK, URISYS_URICORE_GITHUB_OWNER, URISYS_URICORE_VERSION, URISYS_URICORE_WHEEL_URL, URISYS_MIN_VERSION, URISYS_INIT_PROFILE, URISYS_NODE_HOST, URISYS_NODE_PORT, URISYS_NODE_CONFIG, WAYLAND_DISPLAY, URISYS_NODE_GITHUB_OWNER, URISYS_NODE_VERSION, URISYS_NODE_WHEEL_URL;
 }
 
 deploy {
@@ -197,7 +197,7 @@ ASSERT[14]{field, operator, expected}:
 ```yaml
 project:
   name: urisys
-  version: 0.1.38
+  version: 0.1.39
   env: local
 ```
 
@@ -261,13 +261,13 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# urisys | 167f 12527L | python:98,shell:66,javascript:2,less:1 | 2026-06-17
-# stats: 414 func | 28 cls | 167 mod | CC̄=4.5 | critical:38 | cycles:0
-# alerts[5]: CC main=36; CC run_init=34; CC session_urirdp_real_docker=30; CC main=28; CC validate_contract=23
+# urisys | 169f 12640L | python:100,shell:66,javascript:2,less:1 | 2026-06-17
+# stats: 424 func | 28 cls | 169 mod | CC̄=4.5 | critical:38 | cycles:0
+# alerts[5]: CC run_init=41; CC main=36; CC session_urirdp_real_docker=30; CC main=28; CC validate_contract=23
 # hotspots[5]: main fan=36; session_urirdp_real_docker fan=25; analyze_run fan=23; session_lab_10_flows fan=22; main fan=19
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[167]:
+M[169]:
   app.doql.less,49
   examples/frontend/app.js,22
   examples/markpact/browser-call.sh,13
@@ -336,10 +336,10 @@ M[167]:
   src/urisys/controllers/server_controller.py,19
   src/urisys/controllers/uri_controller.py,34
   src/urisys/defaults.py,21
-  src/urisys/doctor.py,287
+  src/urisys/doctor.py,288
   src/urisys/flow.py,26
   src/urisys/http_server.py,79
-  src/urisys/init_setup.py,209
+  src/urisys/init_setup.py,237
   src/urisys/managers/__init__.py,1
   src/urisys/managers/bridge_manager.py,15
   src/urisys/managers/event_manager.py,14
@@ -351,6 +351,7 @@ M[167]:
   src/urisys/managers/route_manager.py,24
   src/urisys/managers/runtime_manager.py,31
   src/urisys/managers/source_manager.py,225
+  src/urisys/node_install.py,53
   src/urisys/uricore_install.py,131
   tests/test_bootstrap.py,61
   tests/test_doctor.py,29
@@ -358,6 +359,7 @@ M[167]:
   tests/test_init.py,61
   tests/test_kvm_pack_pyprojects.py,69
   tests/test_markpact.py,99
+  tests/test_node_install.py,31
   tests/test_pypi_metadata.py,35
   tests/test_python_compat.py,53
   tests/test_run_expectations.py,56
@@ -651,8 +653,9 @@ D:
     _send(handler;status;data)
     create_server(host;port)
   src/urisys/init_setup.py:
-    e: default_pip_specs,pip_install_specs,verify_uri_control,profile_env,render_env_shell,write_env_file,run_init
+    e: default_pip_specs,default_node_pip_spec,pip_install_specs,verify_uri_control,profile_env,render_env_shell,write_env_file,run_init
     default_pip_specs()
+    default_node_pip_spec()
     pip_install_specs(specs)
     verify_uri_control()
     profile_env(profile)
@@ -699,6 +702,14 @@ D:
     e: SourceError,SourceManager
     SourceError:  # Raised when a Markpact source cannot be resolved.
     SourceManager: __init__(1),is_remote_source(1),resolve(1),fetch(1),_result(2),_cache_dir(1),_fetch_http(1),_fetch_github_uri(1),_fetch_github_raw(4),_fetch_git(1),_fetch_zip(1)  # Resolve Markpact sources from local paths, HTTP(S), GitHub, 
+  src/urisys/node_install.py:
+    e: github_owner,github_version,wheel_url,pip_spec,is_importable,diagnose_urisys_node
+    github_owner()
+    github_version()
+    wheel_url(version)
+    pip_spec()
+    is_importable()
+    diagnose_urisys_node()
   src/urisys/uricore_install.py:
     e: github_owner,github_version,wheel_url,pip_spec,_pkg_version,_module_exists,_dist_top_levels,is_wrong_uricore_installed,diagnose_uricore,pip_run,repair_uricore
     github_owner()
@@ -752,6 +763,11 @@ D:
     test_uri_controller_loads_markpact_directly(tmp_path)
     test_markpact_embedded_tests(tmp_path)
     test_build_route_shape()
+  tests/test_node_install.py:
+    e: test_default_pip_specs_no_git_urls,test_urisys_node_uses_release_wheel,test_urisys_node_wheel_url_override
+    test_default_pip_specs_no_git_urls()
+    test_urisys_node_uses_release_wheel()
+    test_urisys_node_wheel_url_override()
   tests/test_pypi_metadata.py:
     e: test_validate_pypi_metadata_script_exists,test_built_wheel_has_no_direct_url_requires_dist,test_pyproject_runtime_deps_have_no_direct_urls
     test_validate_pypi_metadata_script_exists()
@@ -1072,7 +1088,7 @@ D:
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.38', 'python').
+project_metadata('urisys', '0.1.39', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 49, 'less').
@@ -1143,10 +1159,10 @@ project_file('src/urisys/controllers/flow_controller.py', 34, 'python').
 project_file('src/urisys/controllers/server_controller.py', 19, 'python').
 project_file('src/urisys/controllers/uri_controller.py', 34, 'python').
 project_file('src/urisys/defaults.py', 21, 'python').
-project_file('src/urisys/doctor.py', 287, 'python').
+project_file('src/urisys/doctor.py', 288, 'python').
 project_file('src/urisys/flow.py', 26, 'python').
 project_file('src/urisys/http_server.py', 79, 'python').
-project_file('src/urisys/init_setup.py', 209, 'python').
+project_file('src/urisys/init_setup.py', 237, 'python').
 project_file('src/urisys/managers/__init__.py', 1, 'python').
 project_file('src/urisys/managers/bridge_manager.py', 15, 'python').
 project_file('src/urisys/managers/event_manager.py', 14, 'python').
@@ -1158,6 +1174,7 @@ project_file('src/urisys/managers/policy_manager.py', 19, 'python').
 project_file('src/urisys/managers/route_manager.py', 24, 'python').
 project_file('src/urisys/managers/runtime_manager.py', 31, 'python').
 project_file('src/urisys/managers/source_manager.py', 225, 'python').
+project_file('src/urisys/node_install.py', 53, 'python').
 project_file('src/urisys/uricore_install.py', 131, 'python').
 project_file('tests/test_bootstrap.py', 61, 'python').
 project_file('tests/test_doctor.py', 29, 'python').
@@ -1165,6 +1182,7 @@ project_file('tests/test_doctor_uricore.py', 27, 'python').
 project_file('tests/test_init.py', 61, 'python').
 project_file('tests/test_kvm_pack_pyprojects.py', 69, 'python').
 project_file('tests/test_markpact.py', 99, 'python').
+project_file('tests/test_node_install.py', 31, 'python').
 project_file('tests/test_pypi_metadata.py', 35, 'python').
 project_file('tests/test_python_compat.py', 53, 'python').
 project_file('tests/test_run_expectations.py', 56, 'python').
@@ -1384,19 +1402,20 @@ python_function('src/urisys/doctor.py', '_check_min_version', 1, 6, 4).
 python_function('src/urisys/doctor.py', '_check_wayland_him', 0, 3, 3).
 python_function('src/urisys/doctor.py', '_check_uricore_authentic', 0, 6, 5).
 python_function('src/urisys/doctor.py', '_check_uricore_dist', 0, 3, 3).
-python_function('src/urisys/doctor.py', 'run_doctor', 0, 11, 12).
+python_function('src/urisys/doctor.py', 'run_doctor', 0, 11, 13).
 python_function('src/urisys/flow.py', 'load_flow', 1, 3, 5).
 python_function('src/urisys/flow.py', 'iter_steps', 1, 7, 7).
 python_function('src/urisys/http_server.py', '_read_json', 1, 3, 5).
 python_function('src/urisys/http_server.py', '_send', 3, 1, 8).
 python_function('src/urisys/http_server.py', 'create_server', 2, 1, 13).
 python_function('src/urisys/init_setup.py', 'default_pip_specs', 0, 1, 1).
+python_function('src/urisys/init_setup.py', 'default_node_pip_spec', 0, 1, 1).
 python_function('src/urisys/init_setup.py', 'pip_install_specs', 1, 4, 2).
 python_function('src/urisys/init_setup.py', 'verify_uri_control', 0, 2, 3).
 python_function('src/urisys/init_setup.py', 'profile_env', 1, 2, 1).
 python_function('src/urisys/init_setup.py', 'render_env_shell', 1, 2, 4).
 python_function('src/urisys/init_setup.py', 'write_env_file', 2, 2, 5).
-python_function('src/urisys/init_setup.py', 'run_init', 0, 34, 16).
+python_function('src/urisys/init_setup.py', 'run_init', 0, 41, 18).
 python_function('src/urisys/managers/markpact_models.py', 'safe_identifier', 1, 3, 4).
 python_function('src/urisys/managers/markpact_models.py', 'parse_meta', 1, 4, 2).
 python_function('src/urisys/managers/markpact_models.py', 'scheme_from_uri', 1, 2, 2).
@@ -1404,6 +1423,12 @@ python_function('src/urisys/managers/markpact_models.py', 'source_hash', 1, 1, 4
 python_function('src/urisys/managers/markpact_validation.py', 'validate_contract', 3, 23, 8).
 python_function('src/urisys/managers/markpact_validation.py', 'validate_bundle', 3, 14, 8).
 python_function('src/urisys/managers/markpact_validation.py', 'validate_implementation', 3, 18, 7).
+python_function('src/urisys/node_install.py', 'github_owner', 0, 1, 2).
+python_function('src/urisys/node_install.py', 'github_version', 0, 1, 3).
+python_function('src/urisys/node_install.py', 'wheel_url', 1, 3, 5).
+python_function('src/urisys/node_install.py', 'pip_spec', 0, 1, 1).
+python_function('src/urisys/node_install.py', 'is_importable', 0, 1, 1).
+python_function('src/urisys/node_install.py', 'diagnose_urisys_node', 0, 3, 3).
 python_function('src/urisys/uricore_install.py', 'github_owner', 0, 1, 2).
 python_function('src/urisys/uricore_install.py', 'github_version', 0, 1, 3).
 python_function('src/urisys/uricore_install.py', 'wheel_url', 1, 3, 5).
@@ -1443,6 +1468,9 @@ python_function('tests/test_markpact.py', 'test_markpact_compile_and_call', 1, 5
 python_function('tests/test_markpact.py', 'test_uri_controller_loads_markpact_directly', 1, 4, 4).
 python_function('tests/test_markpact.py', 'test_markpact_embedded_tests', 1, 3, 3).
 python_function('tests/test_markpact.py', 'test_build_route_shape', 0, 7, 2).
+python_function('tests/test_node_install.py', 'test_default_pip_specs_no_git_urls', 0, 3, 2).
+python_function('tests/test_node_install.py', 'test_urisys_node_uses_release_wheel', 0, 5, 3).
+python_function('tests/test_node_install.py', 'test_urisys_node_wheel_url_override', 0, 2, 2).
 python_function('tests/test_pypi_metadata.py', 'test_validate_pypi_metadata_script_exists', 0, 2, 1).
 python_function('tests/test_pypi_metadata.py', 'test_built_wheel_has_no_direct_url_requires_dist', 0, 3, 6).
 python_function('tests/test_pypi_metadata.py', 'test_pyproject_runtime_deps_have_no_direct_urls', 0, 4, 2).
@@ -1816,7 +1844,7 @@ sumd_interface('cli', '').
 
 ## Call Graph
 
-*160 nodes · 233 edges · 34 modules · CC̄=4.4*
+*166 nodes · 238 edges · 35 modules · CC̄=4.4*
 
 ### Hubs (by degree)
 
@@ -1826,15 +1854,15 @@ sumd_interface('cli', '').
 | `main` *(in src.urisys.cli)* | 36 ⚠ | 0 | 68 | **68** |
 | `build_parser` *(in src.urisys.cli)* | 1 | 1 | 61 | **62** |
 | `print` *(in scripts.run-nl-log-smoke)* | 0 | 47 | 0 | **47** |
+| `run_init` *(in src.urisys.init_setup)* | 41 ⚠ | 2 | 43 | **45** |
 | `session_automation_lab` *(in scripts.run_test_sessions)* | 16 ⚠ | 1 | 43 | **44** |
 | `run_cmd` *(in scripts.test_sessions.util)* | 6 | 31 | 12 | **43** |
 | `run_flow_file` *(in urisys-automation-lab.server.flow_runner)* | 13 ⚠ | 1 | 40 | **41** |
-| `main` *(in scripts.pack_sync)* | 28 ⚠ | 0 | 39 | **39** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
 # generated in 0.08s
-# nodes: 160 | edges: 233 | modules: 34
+# nodes: 166 | edges: 238 | modules: 35
 # CC̄=4.4
 
 HUBS[20]:
@@ -1846,6 +1874,8 @@ HUBS[20]:
     CC=1  in:1  out:61  total:62
   scripts.run-nl-log-smoke.print
     CC=0  in:47  out:0  total:47
+  src.urisys.init_setup.run_init
+    CC=41  in:2  out:43  total:45
   scripts.run_test_sessions.session_automation_lab
     CC=16  in:1  out:43  total:44
   scripts.test_sessions.util.run_cmd
@@ -1854,28 +1884,26 @@ HUBS[20]:
     CC=13  in:1  out:40  total:41
   scripts.pack_sync.main
     CC=28  in:0  out:39  total:39
-  src.urisys.init_setup.run_init
-    CC=34  in:2  out:35  total:37
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
   scripts.test_sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  scripts.run_test_sessions.main
-    CC=13  in:0  out:32  total:32
   src.urisys.http_server.create_server
     CC=1  in:1  out:31  total:32
+  scripts.run_test_sessions.main
+    CC=13  in:0  out:32  total:32
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
   scripts.pack_registry.pack_specs
     CC=17  in:2  out:28  total:30
   scripts.report.session.generate_report
     CC=9  in:2  out:27  total:29
-  urikvm-docker.scripts.real_pipeline.main
-    CC=14  in:0  out:26  total:26
   scripts.report.session.infer_steps
     CC=20  in:1  out:25  total:26
+  urikvm-docker.scripts.real_pipeline.main
+    CC=14  in:0  out:26  total:26
   urisys-automation-lab.server.automation_lab_server.build_lab_runtime
     CC=17  in:1  out:23  total:24
 
@@ -2024,9 +2052,16 @@ MODULES:
     default_pip_specs  CC=1  out:1
     profile_env  CC=2  out:1
     render_env_shell  CC=2  out:5
-    run_init  CC=34  out:35
+    run_init  CC=41  out:43
     verify_uri_control  CC=2  out:3
     write_env_file  CC=2  out:7
+  src.urisys.node_install  [6 funcs]
+    diagnose_urisys_node  CC=3  out:4
+    github_owner  CC=1  out:2
+    github_version  CC=1  out:3
+    is_importable  CC=1  out:1
+    pip_spec  CC=1  out:1
+    wheel_url  CC=3  out:5
   src.urisys.uricore_install  [11 funcs]
     _dist_top_levels  CC=6  out:7
     _module_exists  CC=1  out:1

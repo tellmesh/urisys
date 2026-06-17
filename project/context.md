@@ -5,11 +5,11 @@
 
 - **Project**: /home/tom/github/tellmesh/urisys
 - **Primary Language**: shell
-- **Languages**: shell: 65, python: 49, yaml: 42, json: 14, yml: 11
+- **Languages**: shell: 65, python: 50, yaml: 42, json: 14, yml: 11
 - **Analysis Mode**: static
-- **Total Functions**: 334
+- **Total Functions**: 341
 - **Total Classes**: 24
-- **Modules**: 203
+- **Modules**: 204
 - **Entry Points**: 181
 
 ## Architecture by Module
@@ -54,6 +54,11 @@
 - **Classes**: 1
 - **File**: `doctor.py`
 
+### scripts.pack_registry
+- **Functions**: 9
+- **Classes**: 1
+- **File**: `pack_registry.py`
+
 ### scripts.report.lab_checks
 - **Functions**: 9
 - **File**: `lab_checks.py`
@@ -67,11 +72,6 @@
 - **Classes**: 1
 - **File**: `automation_lab_server.py`
 
-### scripts.pack_registry
-- **Functions**: 9
-- **Classes**: 1
-- **File**: `pack_registry.py`
-
 ### scripts.report.session_markdown
 - **Functions**: 8
 - **File**: `session_markdown.py`
@@ -80,6 +80,10 @@
 - **Functions**: 8
 - **File**: `lab_rdp.py`
 
+### src.urisys.init_setup
+- **Functions**: 8
+- **File**: `init_setup.py`
+
 ### urirdp-docker.docker.bootstrap-rdp-session
 - **Functions**: 7
 - **File**: `bootstrap-rdp-session.sh`
@@ -87,10 +91,6 @@
 ### urisys-automation-lab.server.flow_runner
 - **Functions**: 7
 - **File**: `flow_runner.py`
-
-### src.urisys.init_setup
-- **Functions**: 7
-- **File**: `init_setup.py`
 
 ### examples.frontend.app
 - **Functions**: 6
@@ -424,12 +424,12 @@ Functions exposed as public API (no underscore prefix):
 - `src.urisys.cli.build_parser` - 61 calls
 - `src.urisys.managers.markpact_manager.MarkpactManager.compile` - 46 calls
 - `scripts.run_test_sessions.session_automation_lab` - 43 calls
+- `src.urisys.init_setup.run_init` - 43 calls
 - `src.urisys.managers.markpact_manager.MarkpactManager.run_tests` - 42 calls
 - `urisys-automation-lab.server.automation_lab_server.LabHandler.do_POST` - 41 calls
 - `urisys-automation-lab.server.flow_runner.run_flow_file` - 40 calls
 - `scripts.pack_sync.main` - 39 calls
 - `src.urisys.managers.markpact_validation.validate_contract` - 35 calls
-- `src.urisys.init_setup.run_init` - 35 calls
 - `scripts.report.run_analysis.analyze_run` - 33 calls
 - `scripts.test_sessions.lab_flows.session_lab_10_flows` - 33 calls
 - `scripts.run_test_sessions.main` - 32 calls
@@ -446,10 +446,10 @@ Functions exposed as public API (no underscore prefix):
 - `urisys-automation-lab.server.automation_lab_server.build_lab_runtime` - 23 calls
 - `scripts.report.lab_checks.load_flow_outcomes` - 22 calls
 - `scripts.pack_sync.init_repo` - 21 calls
+- `src.urisys.doctor.run_doctor` - 21 calls
 - `src.urisys.managers.markpact_validation.validate_bundle` - 20 calls
 - `src.urisys.managers.pack_manager.PackManager.manifest_paths` - 20 calls
 - `urisys-automation-lab.server.lab_uri_adapter.LabCallAdapter.execute` - 20 calls
-- `src.urisys.doctor.run_doctor` - 20 calls
 - `src.urisys.controllers.flow_controller.FlowController.run` - 19 calls
 - `scripts.run_test_sessions.session_urirdp_rdp_e2e` - 19 calls
 - `scripts.pack_sync.check_drift` - 19 calls
@@ -457,8 +457,8 @@ Functions exposed as public API (no underscore prefix):
 - `scripts.test_sessions.lab_rdp.parse_lab_flow` - 18 calls
 - `scripts.test_sessions.util.http_json` - 18 calls
 - `urisys-automation-lab.server.automation_lab_server.LabHandler.do_GET` - 18 calls
+- `scripts.pack_sync.sync_to_repo` - 16 calls
 - `scripts.report.events.merge_event_summaries` - 16 calls
-- `scripts.report.run_markdown.render_run_analysis_markdown` - 16 calls
 
 ## System Interactions
 

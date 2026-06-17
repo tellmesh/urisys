@@ -1,59 +1,59 @@
 flowchart LR
 %% generated in 0.01s
     subgraph scripts__office_simulate_loop
-        scripts__office_simulate_loop__parse_args["parse_args"]
-        scripts__office_simulate_loop__rules_tick["rules_tick"]
         scripts__office_simulate_loop__main["main"]
         scripts__office_simulate_loop__llm_tick["llm_tick"]
         scripts__office_simulate_loop__call_uri["call_uri"]
+        scripts__office_simulate_loop__parse_args["parse_args"]
+        scripts__office_simulate_loop__rules_tick["rules_tick"]
     end
     subgraph scripts__pack_registry
-        scripts__pack_registry__all_promoted_packs["all_promoted_packs"]
         scripts__pack_registry__sibling_repo["sibling_repo"]
+        scripts__pack_registry__all_promoted_packs["all_promoted_packs"]
         scripts__pack_registry___repo["_repo"]
         scripts__pack_registry__pack_specs["pack_specs"]
     end
     subgraph scripts__pack_sync
-        scripts__pack_sync__check_drift["check_drift"]
-        scripts__pack_sync__sync_to_repo["sync_to_repo"]
-        scripts__pack_sync__sync_file["sync_file"]
-        scripts__pack_sync__vendored_module_dir["vendored_module_dir"]
-        scripts__pack_sync__file_hash["file_hash"]
+        scripts__pack_sync___repo_pyproject["_repo_pyproject"]
         scripts__pack_sync__repo_module_dir["repo_module_dir"]
         scripts__pack_sync__remove_vendored["remove_vendored"]
+        scripts__pack_sync__vendored_module_dir["vendored_module_dir"]
         scripts__pack_sync__main["main"]
+        scripts__pack_sync__file_hash["file_hash"]
+        scripts__pack_sync__sync_to_repo["sync_to_repo"]
         scripts__pack_sync__promote["promote"]
-        scripts__pack_sync___check_promoted["_check_promoted"]
-        scripts__pack_sync___repo_pyproject["_repo_pyproject"]
-        scripts__pack_sync__init_repo["init_repo"]
         scripts__pack_sync__read_version["read_version"]
+        scripts__pack_sync__check_drift["check_drift"]
+        scripts__pack_sync__sync_file["sync_file"]
+        scripts__pack_sync__init_repo["init_repo"]
+        scripts__pack_sync___check_promoted["_check_promoted"]
     end
     subgraph scripts__report
-        scripts__report__events__summarize_event_records["summarize_event_records"]
-        scripts__report__util__now_iso["now_iso"]
-        scripts__report__util__host_id["host_id"]
-        scripts__report__events__load_event_records["load_event_records"]
-        scripts__report__util__read_json["read_json"]
-        scripts__report__session_io__write_session_report["write_session_report"]
         scripts__report__run_analysis__analyze_run["analyze_run"]
-        scripts__report__lab_checks___duplicate_recommendation["_duplicate_recommendation"]
+        scripts__report__session__infer_steps["infer_steps"]
+        scripts__report__util__now_iso["now_iso"]
+        scripts__report__events__summarize_events["summarize_events"]
+        scripts__report__lab_checks__iter_step_results["iter_step_results"]
+        scripts__report__session_io__write_session_report["write_session_report"]
+        scripts__report__events__load_event_records["load_event_records"]
         scripts__report__session_markdown___environment_section["_environment_section"]
+        scripts__report__run_markdown__render_run_analysis_markdown["render_run_analysis_markdown"]
+        scripts__report__events__summarize_event_records["summarize_event_records"]
+        scripts__report__session__session_duration["session_duration"]
+        scripts__report__util__tail["tail"]
+        scripts__report__lab_checks___duplicate_recommendation["_duplicate_recommendation"]
+        scripts__report__run_analysis__write_run_analysis["write_run_analysis"]
+        scripts__report__lab_checks__analyze_lab_flows["analyze_lab_flows"]
+        scripts__report__lab_checks__load_flow_outcomes["load_flow_outcomes"]
         scripts__report__lab_checks__check_duplicate_screenshots["check_duplicate_screenshots"]
+        scripts__report__util__read_json["read_json"]
+        scripts__report__events__merge_event_summaries["merge_event_summaries"]
+        scripts__report__session_markdown___steps_section["_steps_section"]
         scripts__report__session_markdown___screenshots_section["_screenshots_section"]
         scripts__report__session_markdown__render_session_markdown["render_session_markdown"]
-        scripts__report__session_markdown___steps_section["_steps_section"]
-        scripts__report__run_markdown__render_run_analysis_markdown["render_run_analysis_markdown"]
-        scripts__report__cli__main["main"]
-        scripts__report__lab_checks__iter_step_results["iter_step_results"]
-        scripts__report__util__tail["tail"]
-        scripts__report__lab_checks__analyze_lab_flows["analyze_lab_flows"]
-        scripts__report__session__session_duration["session_duration"]
-        scripts__report__run_analysis__write_run_analysis["write_run_analysis"]
-        scripts__report__lab_checks__load_flow_outcomes["load_flow_outcomes"]
-        scripts__report__events__summarize_events["summarize_events"]
+        scripts__report__util__host_id["host_id"]
         scripts__report__session__generate_report["generate_report"]
-        scripts__report__events__merge_event_summaries["merge_event_summaries"]
-        scripts__report__session__infer_steps["infer_steps"]
+        scripts__report__cli__main["main"]
     end
     subgraph scripts__run_nl_log_smoke
         scripts__run_nl_log_smoke__print["print"]
@@ -66,101 +66,107 @@ flowchart LR
         scripts__run_urisys_node_docker_e2e__http_json["http_json"]
     end
     subgraph scripts__run_test_sessions
-        scripts__run_test_sessions__session_pytest_urisys_node["session_pytest_urisys_node"]
         scripts__run_test_sessions__session_office_writer["session_office_writer"]
-        scripts__run_test_sessions__session_pytest_urirdp["session_pytest_urirdp"]
-        scripts__run_test_sessions__session_email_mailpit["session_email_mailpit"]
-        scripts__run_test_sessions__session_office_simulate["session_office_simulate"]
-        scripts__run_test_sessions__main["main"]
         scripts__run_test_sessions__session_urirdp_mock_docker["session_urirdp_mock_docker"]
+        scripts__run_test_sessions__main["main"]
+        scripts__run_test_sessions__session_email_mailpit["session_email_mailpit"]
         scripts__run_test_sessions__session_urirdp_real_docker["session_urirdp_real_docker"]
-        scripts__run_test_sessions___monorepo_root["_monorepo_root"]
-        scripts__run_test_sessions__session_pytest_urisys["session_pytest_urisys"]
         scripts__run_test_sessions__session_urisys_node_docker_gui["session_urisys_node_docker_gui"]
-        scripts__run_test_sessions__session_urirdp_rdp_e2e["session_urirdp_rdp_e2e"]
-        scripts__run_test_sessions__session_office_simulate_lenovo["session_office_simulate_lenovo"]
         scripts__run_test_sessions__session_automation_lab["session_automation_lab"]
+        scripts__run_test_sessions__session_pytest_urisys["session_pytest_urisys"]
+        scripts__run_test_sessions__session_office_simulate_lenovo["session_office_simulate_lenovo"]
+        scripts__run_test_sessions__session_pytest_urisys_node["session_pytest_urisys_node"]
+        scripts__run_test_sessions__session_pytest_urirdp["session_pytest_urirdp"]
+        scripts__run_test_sessions___monorepo_root["_monorepo_root"]
+        scripts__run_test_sessions__session_office_simulate["session_office_simulate"]
+        scripts__run_test_sessions__session_urirdp_rdp_e2e["session_urirdp_rdp_e2e"]
     end
     subgraph scripts__test_sessions
-        scripts__test_sessions__expectations___min_vision_confidence["_min_vision_confidence"]
-        scripts__test_sessions__lab_flows___capture_flow_screenshot["_capture_flow_screenshot"]
         scripts__test_sessions__expectations__vision_confidences["vision_confidences"]
-        scripts__test_sessions__util__read_meta["read_meta"]
-        scripts__test_sessions__expectations__evaluate_expectations["evaluate_expectations"]
-        scripts__test_sessions__lab_rdp__capture_rdp_screenshot_wait["capture_rdp_screenshot_wait"]
-        scripts__test_sessions__lab_flows___run_single_lab_flow["_run_single_lab_flow"]
-        scripts__test_sessions__util__prepare_urirdp_data["prepare_urirdp_data"]
-        scripts__test_sessions__util__copy_container_file["copy_container_file"]
-        scripts__test_sessions__util__http_json["http_json"]
-        scripts__test_sessions__expectations__ocr_texts["ocr_texts"]
-        scripts__test_sessions__util__run_cmd["run_cmd"]
-        scripts__test_sessions__util__now_iso["now_iso"]
+        scripts__test_sessions__lab_flows__session_lab_10_flows["session_lab_10_flows"]
+        scripts__test_sessions__expectations___min_vision_confidence["_min_vision_confidence"]
         scripts__test_sessions__util__wait_health["wait_health"]
-        scripts__test_sessions__lab_rdp__prepare_ok_target["prepare_ok_target"]
-        scripts__test_sessions__util__write_meta["write_meta"]
-        scripts__test_sessions__expectations__flow_expectations["flow_expectations"]
-        scripts__test_sessions__expectations___ocr_contains["_ocr_contains"]
-        scripts__test_sessions__lab_flows___lab_bootstrap["_lab_bootstrap"]
+        scripts__test_sessions__util__finalize_session["finalize_session"]
         scripts__test_sessions__expectations___screen_changed["_screen_changed"]
-        scripts__test_sessions__util__save_json["save_json"]
-        scripts__test_sessions__util__compose_cmd["compose_cmd"]
-        scripts__test_sessions__lab_rdp__capture_rdp_screenshot["capture_rdp_screenshot"]
+        scripts__test_sessions__lab_flows___capture_flow_screenshot["_capture_flow_screenshot"]
         scripts__test_sessions__lab_flows___flow_step_detail["_flow_step_detail"]
+        scripts__test_sessions__util__copy_container_file["copy_container_file"]
+        scripts__test_sessions__expectations___ocr_contains["_ocr_contains"]
+        scripts__test_sessions__util__read_meta["read_meta"]
+        scripts__test_sessions__expectations__flow_expectations["flow_expectations"]
+        scripts__test_sessions__lab_rdp__capture_rdp_screenshot_wait["capture_rdp_screenshot_wait"]
         scripts__test_sessions__util__docker_logs["docker_logs"]
         scripts__test_sessions__util__sleep_ports["sleep_ports"]
-        scripts__test_sessions__lab_flows__session_lab_10_flows["session_lab_10_flows"]
-        scripts__test_sessions__expectations___opened_url_contains["_opened_url_contains"]
-        scripts__test_sessions__util__finalize_session["finalize_session"]
+        scripts__test_sessions__util__save_json["save_json"]
+        scripts__test_sessions__expectations__evaluate_expectations["evaluate_expectations"]
         scripts__test_sessions__expectations___screen_changed_since_previous["_screen_changed_since_previous"]
+        scripts__test_sessions__lab_flows___lab_bootstrap["_lab_bootstrap"]
+        scripts__test_sessions__util__http_json["http_json"]
         scripts__test_sessions__util__file_md5["file_md5"]
+        scripts__test_sessions__lab_rdp__capture_rdp_screenshot["capture_rdp_screenshot"]
+        scripts__test_sessions__util__now_iso["now_iso"]
+        scripts__test_sessions__util__write_meta["write_meta"]
+        scripts__test_sessions__expectations___opened_url_contains["_opened_url_contains"]
+        scripts__test_sessions__expectations__ocr_texts["ocr_texts"]
+        scripts__test_sessions__lab_flows___run_single_lab_flow["_run_single_lab_flow"]
+        scripts__test_sessions__util__run_cmd["run_cmd"]
+        scripts__test_sessions__lab_rdp__prepare_ok_target["prepare_ok_target"]
+        scripts__test_sessions__util__compose_cmd["compose_cmd"]
+        scripts__test_sessions__util__prepare_urirdp_data["prepare_urirdp_data"]
     end
     subgraph src__urisys
-        src__urisys__init_setup__profile_env["profile_env"]
-        src__urisys__uricore_install___pkg_version["_pkg_version"]
-        src__urisys__init_setup__run_init["run_init"]
-        src__urisys__init_setup__verify_uri_control["verify_uri_control"]
-        src__urisys__http_server___read_json["_read_json"]
-        src__urisys__doctor__run_doctor["run_doctor"]
-        src__urisys__uricore_install___dist_top_levels["_dist_top_levels"]
-        src__urisys__doctor___check_wayland_him["_check_wayland_him"]
-        src__urisys__cli___add_runtime_flags["_add_runtime_flags"]
-        src__urisys__doctor___check_min_version["_check_min_version"]
-        src__urisys__doctor___check_uricore_authentic["_check_uricore_authentic"]
-        src__urisys__uricore_install__pip_run["pip_run"]
-        src__urisys__cli__build_parser["build_parser"]
-        src__urisys__bootstrap___missing_uricore_payload["_missing_uricore_payload"]
-        src__urisys__bootstrap___print_json["_print_json"]
-        src__urisys__controllers__flow_controller__FlowController__run["run"]
-        src__urisys__controllers__server_controller__ServerController____init__["__init__"]
-        src__urisys__cli__main["main"]
-        src__urisys__bootstrap___init_main["_init_main"]
-        src__urisys__doctor___check_python["_check_python"]
-        src__urisys__uricore_install__diagnose_uricore["diagnose_uricore"]
-        src__urisys__init_setup__default_pip_specs["default_pip_specs"]
-        src__urisys__uricore_install___module_exists["_module_exists"]
-        src__urisys__doctor___check_uricore_dist["_check_uricore_dist"]
-        src__urisys__bootstrap___doctor_main["_doctor_main"]
-        src__urisys__doctor___parse_version["_parse_version"]
-        src__urisys__uricore_install__github_owner["github_owner"]
-        src__urisys__http_server__create_server["create_server"]
-        src__urisys__cli__print_json["print_json"]
-        src__urisys__uricore_install__is_wrong_uricore_installed["is_wrong_uricore_installed"]
-        src__urisys__doctor___pkg_version["_pkg_version"]
-        src__urisys__flow__iter_steps["iter_steps"]
-        src__urisys__flow__load_flow["load_flow"]
-        src__urisys__controllers__server_controller__ServerController__serve_forever["serve_forever"]
-        src__urisys__http_server___send["_send"]
-        src__urisys__init_setup__write_env_file["write_env_file"]
-        src__urisys__init_setup__render_env_shell["render_env_shell"]
+        src__urisys__doctor___version_lt["_version_lt"]
         src__urisys__bootstrap__main["main"]
-        src__urisys__doctor___check_cli_path["_check_cli_path"]
+        src__urisys__http_server___read_json["_read_json"]
+        src__urisys__flow__load_flow["load_flow"]
+        src__urisys__uricore_install__diagnose_uricore["diagnose_uricore"]
+        src__urisys__bootstrap___print_json["_print_json"]
+        src__urisys__uricore_install__pip_run["pip_run"]
+        src__urisys__node_install__github_version["github_version"]
+        src__urisys__controllers__flow_controller__FlowController__run["run"]
+        src__urisys__http_server__create_server["create_server"]
+        src__urisys__doctor___check_min_version["_check_min_version"]
+        src__urisys__cli__resolve_markpact_source["resolve_markpact_source"]
         src__urisys__uricore_install__github_version["github_version"]
         src__urisys__uricore_install__pip_spec["pip_spec"]
+        src__urisys__init_setup__verify_uri_control["verify_uri_control"]
+        src__urisys__doctor___check_uricore_authentic["_check_uricore_authentic"]
         src__urisys__uricore_install__repair_uricore["repair_uricore"]
-        src__urisys__uricore_install__wheel_url["wheel_url"]
-        src__urisys__doctor___version_lt["_version_lt"]
+        src__urisys__node_install__wheel_url["wheel_url"]
+        src__urisys__bootstrap___doctor_main["_doctor_main"]
+        src__urisys__init_setup__render_env_shell["render_env_shell"]
+        src__urisys__uricore_install__github_owner["github_owner"]
         src__urisys__doctor___check_import["_check_import"]
-        src__urisys__cli__resolve_markpact_source["resolve_markpact_source"]
+        src__urisys__doctor___pkg_version["_pkg_version"]
+        src__urisys__uricore_install__is_wrong_uricore_installed["is_wrong_uricore_installed"]
+        src__urisys__uricore_install__wheel_url["wheel_url"]
+        src__urisys__init_setup__profile_env["profile_env"]
+        src__urisys__cli__print_json["print_json"]
+        src__urisys__bootstrap___init_main["_init_main"]
+        src__urisys__doctor___parse_version["_parse_version"]
+        src__urisys__controllers__server_controller__ServerController__serve_forever["serve_forever"]
+        src__urisys__node_install__diagnose_urisys_node["diagnose_urisys_node"]
+        src__urisys__init_setup__default_pip_specs["default_pip_specs"]
+        src__urisys__uricore_install___module_exists["_module_exists"]
+        src__urisys__uricore_install___pkg_version["_pkg_version"]
+        src__urisys__cli___add_runtime_flags["_add_runtime_flags"]
+        src__urisys__init_setup__write_env_file["write_env_file"]
+        src__urisys__doctor___check_cli_path["_check_cli_path"]
+        src__urisys__doctor__run_doctor["run_doctor"]
+        src__urisys__http_server___send["_send"]
+        src__urisys__controllers__server_controller__ServerController____init__["__init__"]
+        src__urisys__doctor___check_uricore_dist["_check_uricore_dist"]
+        src__urisys__uricore_install___dist_top_levels["_dist_top_levels"]
+        src__urisys__flow__iter_steps["iter_steps"]
+        src__urisys__bootstrap___missing_uricore_payload["_missing_uricore_payload"]
+        src__urisys__doctor___check_wayland_him["_check_wayland_him"]
+        src__urisys__node_install__pip_spec["pip_spec"]
+        src__urisys__node_install__github_owner["github_owner"]
+        src__urisys__init_setup__run_init["run_init"]
+        src__urisys__cli__main["main"]
+        src__urisys__doctor___check_python["_check_python"]
+        src__urisys__cli__build_parser["build_parser"]
+        src__urisys__node_install__is_importable["is_importable"]
     end
     subgraph urikvm_docker__scripts
         urikvm_docker__scripts__real_pipeline__main["main"]
@@ -168,23 +174,23 @@ flowchart LR
     end
     subgraph urisys_automation_lab__server
         urisys_automation_lab__server__lab_uri_adapter__step_ok["step_ok"]
-        urisys_automation_lab__server__flow_runner__plan_flow["plan_flow"]
-        urisys_automation_lab__server__flow_runner__run_flow_file["run_flow_file"]
-        urisys_automation_lab__server__automation_lab_server__build_lab_runtime["build_lab_runtime"]
         urisys_automation_lab__server__flow_runner___load_defaults["_load_defaults"]
-        urisys_automation_lab__server__automation_lab_server__serve["serve"]
         urisys_automation_lab__server__flow_runner___lab_adapter_session["_lab_adapter_session"]
-        urisys_automation_lab__server__flow_runner___require_uri_stack["_require_uri_stack"]
         urisys_automation_lab__server__lab_uri_adapter__LabCallAdapter__execute["execute"]
+        urisys_automation_lab__server__flow_runner__plan_flow["plan_flow"]
+        urisys_automation_lab__server__automation_lab_server__build_lab_runtime["build_lab_runtime"]
+        urisys_automation_lab__server__flow_runner___require_uri_stack["_require_uri_stack"]
         urisys_automation_lab__server__automation_lab_server__LabHandler__log_message["log_message"]
+        urisys_automation_lab__server__automation_lab_server__serve["serve"]
+        urisys_automation_lab__server__flow_runner__run_flow_file["run_flow_file"]
     end
     subgraph urisys_automation_lab__web
-        urisys_automation_lab__web__app__uriCall["uriCall"]
-        urisys_automation_lab__web__app__text["text"]
-        urisys_automation_lab__web__app__rec["rec"]
-        urisys_automation_lab__web__app__data["data"]
         urisys_automation_lab__web__app__SR["SR"]
+        urisys_automation_lab__web__app__rec["rec"]
+        urisys_automation_lab__web__app__text["text"]
         urisys_automation_lab__web__app__log["log"]
+        urisys_automation_lab__web__app__uriCall["uriCall"]
+        urisys_automation_lab__web__app__data["data"]
     end
     src__urisys__uricore_install__wheel_url --> src__urisys__uricore_install__github_owner
     src__urisys__uricore_install__wheel_url --> src__urisys__uricore_install__github_version
@@ -303,6 +309,25 @@ flowchart LR
     scripts__run_test_sessions__session_email_mailpit --> scripts__run_test_sessions___monorepo_root
     scripts__run_test_sessions__main --> scripts__run_office_writer_e2e__save_json
     scripts__run_test_sessions__main --> scripts__report__util__now_iso
+    scripts__pack_sync__sync_file --> scripts__pack_sync__file_hash
+    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__vendored_module_dir
+    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__repo_module_dir
+    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__read_version
+    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__sync_file
+    scripts__pack_sync__check_drift --> scripts__pack_sync__vendored_module_dir
+    scripts__pack_sync__check_drift --> scripts__pack_sync__repo_module_dir
+    scripts__pack_sync__check_drift --> scripts__pack_sync___check_promoted
+    scripts__pack_sync__check_drift --> scripts__pack_sync__read_version
+    scripts__pack_sync___check_promoted --> scripts__pack_sync__repo_module_dir
+    scripts__pack_sync__remove_vendored --> scripts__run_nl_log_smoke__print
+    scripts__pack_sync___repo_pyproject --> scripts__pack_sync__read_version
+    scripts__pack_sync__init_repo --> scripts__pack_sync__sync_to_repo
+    scripts__pack_sync__init_repo --> scripts__run_nl_log_smoke__print
+    scripts__pack_sync__promote --> scripts__pack_sync__sync_to_repo
+    scripts__pack_sync__promote --> scripts__pack_sync__remove_vendored
+    scripts__pack_sync__main --> scripts__pack_registry__pack_specs
+    scripts__pack_registry__sibling_repo --> scripts__pack_registry___repo
+    scripts__pack_registry__all_promoted_packs --> scripts__pack_registry__pack_specs
     scripts__report__cli__main --> scripts__report__run_analysis__analyze_run
     scripts__report__cli__main --> scripts__report__run_analysis__write_run_analysis
     scripts__report__events__summarize_events --> scripts__report__events__load_event_records
@@ -400,22 +425,8 @@ flowchart LR
     src__urisys__init_setup__run_init --> src__urisys__init_setup__profile_env
     src__urisys__init_setup__run_init --> src__urisys__uricore_install__is_wrong_uricore_installed
     src__urisys__init_setup__run_init --> src__urisys__uricore_install__repair_uricore
-    scripts__pack_sync__sync_file --> scripts__pack_sync__file_hash
-    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__vendored_module_dir
-    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__repo_module_dir
-    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__read_version
-    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__sync_file
-    scripts__pack_sync__check_drift --> scripts__pack_sync__vendored_module_dir
-    scripts__pack_sync__check_drift --> scripts__pack_sync__repo_module_dir
-    scripts__pack_sync__check_drift --> scripts__pack_sync___check_promoted
-    scripts__pack_sync__check_drift --> scripts__pack_sync__read_version
-    scripts__pack_sync___check_promoted --> scripts__pack_sync__repo_module_dir
-    scripts__pack_sync__remove_vendored --> scripts__run_nl_log_smoke__print
-    scripts__pack_sync___repo_pyproject --> scripts__pack_sync__read_version
-    scripts__pack_sync__init_repo --> scripts__pack_sync__sync_to_repo
-    scripts__pack_sync__init_repo --> scripts__run_nl_log_smoke__print
-    scripts__pack_sync__promote --> scripts__pack_sync__sync_to_repo
-    scripts__pack_sync__promote --> scripts__pack_sync__remove_vendored
-    scripts__pack_sync__main --> scripts__pack_registry__pack_specs
-    scripts__pack_registry__sibling_repo --> scripts__pack_registry___repo
-    scripts__pack_registry__all_promoted_packs --> scripts__pack_registry__pack_specs
+    src__urisys__node_install__wheel_url --> src__urisys__node_install__github_owner
+    src__urisys__node_install__wheel_url --> src__urisys__node_install__github_version
+    src__urisys__node_install__pip_spec --> src__urisys__node_install__wheel_url
+    src__urisys__node_install__diagnose_urisys_node --> src__urisys__node_install__is_importable
+    src__urisys__node_install__diagnose_urisys_node --> src__urisys__node_install__pip_spec

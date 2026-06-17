@@ -1,10 +1,10 @@
-# urisys | 167f 12527L | python:98,shell:66,javascript:2,less:1 | 2026-06-17
-# stats: 414 func | 28 cls | 167 mod | CC̄=4.5 | critical:38 | cycles:0
-# alerts[5]: CC main=36; CC run_init=34; CC session_urirdp_real_docker=30; CC main=28; CC validate_contract=23
+# urisys | 169f 12640L | python:100,shell:66,javascript:2,less:1 | 2026-06-17
+# stats: 424 func | 28 cls | 169 mod | CC̄=4.5 | critical:38 | cycles:0
+# alerts[5]: CC run_init=41; CC main=36; CC session_urirdp_real_docker=30; CC main=28; CC validate_contract=23
 # hotspots[5]: main fan=36; session_urirdp_real_docker fan=25; analyze_run fan=23; session_lab_10_flows fan=22; main fan=19
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[167]:
+M[169]:
   app.doql.less,49
   examples/frontend/app.js,22
   examples/markpact/browser-call.sh,13
@@ -73,10 +73,10 @@ M[167]:
   src/urisys/controllers/server_controller.py,19
   src/urisys/controllers/uri_controller.py,34
   src/urisys/defaults.py,21
-  src/urisys/doctor.py,287
+  src/urisys/doctor.py,288
   src/urisys/flow.py,26
   src/urisys/http_server.py,79
-  src/urisys/init_setup.py,209
+  src/urisys/init_setup.py,237
   src/urisys/managers/__init__.py,1
   src/urisys/managers/bridge_manager.py,15
   src/urisys/managers/event_manager.py,14
@@ -88,6 +88,7 @@ M[167]:
   src/urisys/managers/route_manager.py,24
   src/urisys/managers/runtime_manager.py,31
   src/urisys/managers/source_manager.py,225
+  src/urisys/node_install.py,53
   src/urisys/uricore_install.py,131
   tests/test_bootstrap.py,61
   tests/test_doctor.py,29
@@ -95,6 +96,7 @@ M[167]:
   tests/test_init.py,61
   tests/test_kvm_pack_pyprojects.py,69
   tests/test_markpact.py,99
+  tests/test_node_install.py,31
   tests/test_pypi_metadata.py,35
   tests/test_python_compat.py,53
   tests/test_run_expectations.py,56
@@ -388,8 +390,9 @@ D:
     _send(handler;status;data)
     create_server(host;port)
   src/urisys/init_setup.py:
-    e: default_pip_specs,pip_install_specs,verify_uri_control,profile_env,render_env_shell,write_env_file,run_init
+    e: default_pip_specs,default_node_pip_spec,pip_install_specs,verify_uri_control,profile_env,render_env_shell,write_env_file,run_init
     default_pip_specs()
+    default_node_pip_spec()
     pip_install_specs(specs)
     verify_uri_control()
     profile_env(profile)
@@ -436,6 +439,14 @@ D:
     e: SourceError,SourceManager
     SourceError:  # Raised when a Markpact source cannot be resolved.
     SourceManager: __init__(1),is_remote_source(1),resolve(1),fetch(1),_result(2),_cache_dir(1),_fetch_http(1),_fetch_github_uri(1),_fetch_github_raw(4),_fetch_git(1),_fetch_zip(1)  # Resolve Markpact sources from local paths, HTTP(S), GitHub, 
+  src/urisys/node_install.py:
+    e: github_owner,github_version,wheel_url,pip_spec,is_importable,diagnose_urisys_node
+    github_owner()
+    github_version()
+    wheel_url(version)
+    pip_spec()
+    is_importable()
+    diagnose_urisys_node()
   src/urisys/uricore_install.py:
     e: github_owner,github_version,wheel_url,pip_spec,_pkg_version,_module_exists,_dist_top_levels,is_wrong_uricore_installed,diagnose_uricore,pip_run,repair_uricore
     github_owner()
@@ -489,6 +500,11 @@ D:
     test_uri_controller_loads_markpact_directly(tmp_path)
     test_markpact_embedded_tests(tmp_path)
     test_build_route_shape()
+  tests/test_node_install.py:
+    e: test_default_pip_specs_no_git_urls,test_urisys_node_uses_release_wheel,test_urisys_node_wheel_url_override
+    test_default_pip_specs_no_git_urls()
+    test_urisys_node_uses_release_wheel()
+    test_urisys_node_wheel_url_override()
   tests/test_pypi_metadata.py:
     e: test_validate_pypi_metadata_script_exists,test_built_wheel_has_no_direct_url_requires_dist,test_pyproject_runtime_deps_have_no_direct_urls
     test_validate_pypi_metadata_script_exists()

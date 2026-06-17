@@ -15,7 +15,7 @@ SUMD - Structured Unified Markdown Descriptor for AI-aware project refactorizati
 ## Metadata
 
 - **name**: `urisys`
-- **version**: `0.1.38`
+- **version**: `0.1.39`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -35,7 +35,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: urisys;
-  version: 0.1.38;
+  version: 0.1.39;
 }
 
 dependencies {
@@ -63,7 +63,7 @@ tests {
 }
 
 env_vars {
-  keys: OPENROUTER_API_KEY, LLM_MODEL, LLM_BASE_URL, LLM_TEMPERATURE, LLM_MAX_TOKENS, PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_MAX_RETRIES, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_CREATE_BACKUPS, PIP_DISABLE_PIP_VERSION_CHECK, URISYS_URICORE_GITHUB_OWNER, URISYS_URICORE_VERSION, URISYS_URICORE_WHEEL_URL, URISYS_MIN_VERSION, URISYS_INIT_PROFILE, URISYS_NODE_HOST, URISYS_NODE_PORT, URISYS_NODE_CONFIG, WAYLAND_DISPLAY;
+  keys: OPENROUTER_API_KEY, LLM_MODEL, LLM_BASE_URL, LLM_TEMPERATURE, LLM_MAX_TOKENS, PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_MAX_RETRIES, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_CREATE_BACKUPS, PIP_DISABLE_PIP_VERSION_CHECK, URISYS_URICORE_GITHUB_OWNER, URISYS_URICORE_VERSION, URISYS_URICORE_WHEEL_URL, URISYS_MIN_VERSION, URISYS_INIT_PROFILE, URISYS_NODE_HOST, URISYS_NODE_PORT, URISYS_NODE_CONFIG, WAYLAND_DISPLAY, URISYS_NODE_GITHUB_OWNER, URISYS_NODE_VERSION, URISYS_NODE_WHEEL_URL;
 }
 
 deploy {
@@ -104,7 +104,7 @@ pfix>=0.1.60
 
 ## Call Graph
 
-*160 nodes · 233 edges · 34 modules · CC̄=4.4*
+*166 nodes · 238 edges · 35 modules · CC̄=4.4*
 
 ### Hubs (by degree)
 
@@ -114,15 +114,15 @@ pfix>=0.1.60
 | `main` *(in src.urisys.cli)* | 36 ⚠ | 0 | 68 | **68** |
 | `build_parser` *(in src.urisys.cli)* | 1 | 1 | 61 | **62** |
 | `print` *(in scripts.run-nl-log-smoke)* | 0 | 47 | 0 | **47** |
+| `run_init` *(in src.urisys.init_setup)* | 41 ⚠ | 2 | 43 | **45** |
 | `session_automation_lab` *(in scripts.run_test_sessions)* | 16 ⚠ | 1 | 43 | **44** |
 | `run_cmd` *(in scripts.test_sessions.util)* | 6 | 31 | 12 | **43** |
 | `run_flow_file` *(in urisys-automation-lab.server.flow_runner)* | 13 ⚠ | 1 | 40 | **41** |
-| `main` *(in scripts.pack_sync)* | 28 ⚠ | 0 | 39 | **39** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
 # generated in 0.08s
-# nodes: 160 | edges: 233 | modules: 34
+# nodes: 166 | edges: 238 | modules: 35
 # CC̄=4.4
 
 HUBS[20]:
@@ -134,6 +134,8 @@ HUBS[20]:
     CC=1  in:1  out:61  total:62
   scripts.run-nl-log-smoke.print
     CC=0  in:47  out:0  total:47
+  src.urisys.init_setup.run_init
+    CC=41  in:2  out:43  total:45
   scripts.run_test_sessions.session_automation_lab
     CC=16  in:1  out:43  total:44
   scripts.test_sessions.util.run_cmd
@@ -142,28 +144,26 @@ HUBS[20]:
     CC=13  in:1  out:40  total:41
   scripts.pack_sync.main
     CC=28  in:0  out:39  total:39
-  src.urisys.init_setup.run_init
-    CC=34  in:2  out:35  total:37
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
   scripts.test_sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  scripts.run_test_sessions.main
-    CC=13  in:0  out:32  total:32
   src.urisys.http_server.create_server
     CC=1  in:1  out:31  total:32
+  scripts.run_test_sessions.main
+    CC=13  in:0  out:32  total:32
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
   scripts.pack_registry.pack_specs
     CC=17  in:2  out:28  total:30
   scripts.report.session.generate_report
     CC=9  in:2  out:27  total:29
-  urikvm-docker.scripts.real_pipeline.main
-    CC=14  in:0  out:26  total:26
   scripts.report.session.infer_steps
     CC=20  in:1  out:25  total:26
+  urikvm-docker.scripts.real_pipeline.main
+    CC=14  in:0  out:26  total:26
   urisys-automation-lab.server.automation_lab_server.build_lab_runtime
     CC=17  in:1  out:23  total:24
 
@@ -312,9 +312,16 @@ MODULES:
     default_pip_specs  CC=1  out:1
     profile_env  CC=2  out:1
     render_env_shell  CC=2  out:5
-    run_init  CC=34  out:35
+    run_init  CC=41  out:43
     verify_uri_control  CC=2  out:3
     write_env_file  CC=2  out:7
+  src.urisys.node_install  [6 funcs]
+    diagnose_urisys_node  CC=3  out:4
+    github_owner  CC=1  out:2
+    github_version  CC=1  out:3
+    is_importable  CC=1  out:1
+    pip_spec  CC=1  out:1
+    wheel_url  CC=3  out:5
   src.urisys.uricore_install  [11 funcs]
     _dist_top_levels  CC=6  out:7
     _module_exists  CC=1  out:1
@@ -431,7 +438,7 @@ EDGES:
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
 # generated in 0.08s
-# nodes: 160 | edges: 233 | modules: 34
+# nodes: 166 | edges: 238 | modules: 35
 # CC̄=4.4
 
 HUBS[20]:
@@ -443,6 +450,8 @@ HUBS[20]:
     CC=1  in:1  out:61  total:62
   scripts.run-nl-log-smoke.print
     CC=0  in:47  out:0  total:47
+  src.urisys.init_setup.run_init
+    CC=41  in:2  out:43  total:45
   scripts.run_test_sessions.session_automation_lab
     CC=16  in:1  out:43  total:44
   scripts.test_sessions.util.run_cmd
@@ -451,28 +460,26 @@ HUBS[20]:
     CC=13  in:1  out:40  total:41
   scripts.pack_sync.main
     CC=28  in:0  out:39  total:39
-  src.urisys.init_setup.run_init
-    CC=34  in:2  out:35  total:37
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
   scripts.test_sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  scripts.run_test_sessions.main
-    CC=13  in:0  out:32  total:32
   src.urisys.http_server.create_server
     CC=1  in:1  out:31  total:32
+  scripts.run_test_sessions.main
+    CC=13  in:0  out:32  total:32
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
   scripts.pack_registry.pack_specs
     CC=17  in:2  out:28  total:30
   scripts.report.session.generate_report
     CC=9  in:2  out:27  total:29
-  urikvm-docker.scripts.real_pipeline.main
-    CC=14  in:0  out:26  total:26
   scripts.report.session.infer_steps
     CC=20  in:1  out:25  total:26
+  urikvm-docker.scripts.real_pipeline.main
+    CC=14  in:0  out:26  total:26
   urisys-automation-lab.server.automation_lab_server.build_lab_runtime
     CC=17  in:1  out:23  total:24
 
@@ -621,9 +628,16 @@ MODULES:
     default_pip_specs  CC=1  out:1
     profile_env  CC=2  out:1
     render_env_shell  CC=2  out:5
-    run_init  CC=34  out:35
+    run_init  CC=41  out:43
     verify_uri_control  CC=2  out:3
     write_env_file  CC=2  out:7
+  src.urisys.node_install  [6 funcs]
+    diagnose_urisys_node  CC=3  out:4
+    github_owner  CC=1  out:2
+    github_version  CC=1  out:3
+    is_importable  CC=1  out:1
+    pip_spec  CC=1  out:1
+    wheel_url  CC=3  out:5
   src.urisys.uricore_install  [11 funcs]
     _dist_top_levels  CC=6  out:7
     _module_exists  CC=1  out:1
@@ -715,9 +729,9 @@ EDGES:
 ### Code Analysis (`project/analysis.toon.yaml`)
 
 ```toon markpact:analysis path=project/analysis.toon.yaml
-# code2llm | 203f 13609L | shell:65,python:49,yaml:42,json:14,yml:11,toml:7,javascript:2,txt:2,conf:1,gui:1 | 2026-06-17
+# code2llm | 204f 13690L | shell:65,python:50,yaml:42,json:14,yml:11,toml:7,javascript:2,txt:2,conf:1,gui:1 | 2026-06-17
 # generated in 0.03s
-# CC̅=4.4 | critical:16/334 | dups:0 | cycles:0
+# CC̅=4.4 | critical:16/341 | dups:0 | cycles:0
 
 HEALTH[16]:
   🟡 CC    main CC=36 (limit:15)
@@ -729,13 +743,13 @@ HEALTH[16]:
   🟡 CC    parse_packs CC=15 (limit:15)
   🟡 CC    session_urirdp_real_docker CC=30 (limit:15)
   🟡 CC    session_automation_lab CC=16 (limit:15)
+  🟡 CC    main CC=28 (limit:15)
+  🟡 CC    pack_specs CC=17 (limit:15)
   🟡 CC    load_flow_outcomes CC=15 (limit:15)
   🟡 CC    infer_steps CC=20 (limit:15)
   🟡 CC    build_lab_runtime CC=17 (limit:15)
   🟡 CC    do_POST CC=23 (limit:15)
-  🟡 CC    run_init CC=34 (limit:15)
-  🟡 CC    main CC=28 (limit:15)
-  🟡 CC    pack_specs CC=17 (limit:15)
+  🟡 CC    run_init CC=41 (limit:15)
 
 REFACTOR[1]:
   1. split 16 high-CC methods  (CC>15)
@@ -843,18 +857,19 @@ PIPELINES[128]:
       PURITY: 100% pure
 
 LAYERS:
-  src/                            CC̄=4.8    ←in:0  →out:0
+  src/                            CC̄=4.7    ←in:0  →out:0
   │ !! markpact_manager           401L  1C   19m  CC=21     ←0
-  │ doctor                     286L  1C   11m  CC=11     ←3
+  │ doctor                     287L  1C   11m  CC=11     ←3
   │ !! cli                        282L  0C    6m  CC=36     ←0
+  │ !! init_setup                 236L  0C    8m  CC=41     ←2
   │ source_manager             224L  2C   11m  CC=11     ←0
-  │ !! init_setup                 208L  0C    7m  CC=34     ←2
   │ !! markpact_validation        140L  0C    3m  CC=23     ←1
   │ uricore_install            130L  0C   11m  CC=6      ←2
   │ !! pack_manager               128L  1C   13m  CC=15     ←0
   │ bootstrap                  111L  0C    5m  CC=8      ←0
   │ markpact_models             92L  3C    5m  CC=4      ←1
   │ http_server                 78L  0C    3m  CC=3      ←1
+  │ node_install                52L  0C    6m  CC=3      ←1
   │ flow_controller             33L  1C    3m  CC=6      ←0
   │ uri_controller              33L  1C    5m  CC=3      ←0
   │ runtime_manager             30L  1C    5m  CC=2      ←0
@@ -1061,8 +1076,8 @@ LAYERS:
   │
   urienv-docker/                  CC̄=0.0    ←in:0  →out:0
   │ docker-compose.yml          52L  0C    0m  CC=0.0    ←0
-  │ env-policy.yaml             36L  0C    0m  CC=0.0    ←0
   │ Dockerfile                  36L  0C    0m  CC=0.0    ←0
+  │ env-policy.yaml             36L  0C    0m  CC=0.0    ←0
   │ pyproject.toml              22L  0C    0m  CC=0.0    ←0
   │ mutate-process-env.uri.flow.yaml    16L  0C    0m  CC=0.0    ←0
   │ startup-env-check.uri.flow.yaml    15L  0C    0m  CC=0.0    ←0
@@ -1090,12 +1105,12 @@ COUPLING:
   urisys-automation-lab.server                             6                                                                                                                      ──                              
          urikvm-docker.scripts                             2                                                                                        ←1                                                          ──
   CYCLES: none
-  HUB: scripts.test_sessions/ (fan-in=90)
-  HUB: scripts.report/ (fan-in=29)
   HUB: scripts/ (fan-in=28)
+  HUB: scripts.report/ (fan-in=29)
+  HUB: scripts.test_sessions/ (fan-in=90)
+  SMELL: scripts/ fan-out=117 → split needed
   SMELL: src.urisys/ fan-out=8 → split needed
   SMELL: scripts.test_sessions/ fan-out=9 → split needed
-  SMELL: scripts/ fan-out=117 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon
@@ -1105,15 +1120,15 @@ EXTERNAL:
 ### Duplication (`project/duplication.toon.yaml`)
 
 ```toon markpact:analysis path=project/duplication.toon.yaml
-# redup/duplication | 2 groups | 44f 4716L | 2026-06-17
+# redup/duplication | 2 groups | 45f 4797L | 2026-06-17
 
 SUMMARY:
-  files_scanned: 44
-  total_lines:   4716
+  files_scanned: 45
+  total_lines:   4797
   dup_groups:    2
   dup_fragments: 4
   saved_lines:   15
-  scan_ms:       4946
+  scan_ms:       2197
 
 HOTSPOTS[4] (files with most duplication):
   scripts/report/run_analysis.py  dup=8L  groups=1  frags=1  (0.2%)
@@ -1155,7 +1170,7 @@ METRICS-TARGET:
 ### Evolution / Churn (`project/evolution.toon.yaml`)
 
 ```toon markpact:analysis path=project/evolution.toon.yaml
-# code2llm/evolution | 164 func | 26f | 2026-06-17
+# code2llm/evolution | 171 func | 27f | 2026-06-17
 # generated in 0.00s
 
 NEXT[10] (ranked by impact):
@@ -1163,13 +1178,13 @@ NEXT[10] (ranked by impact):
       WHY: CC=36 exceeds 15
       EFFORT: ~1h  IMPACT: 1296
 
-  [2] !  SPLIT-FUNC      MarkpactManager.compile  CC=21  fan=34
+  [2] !! SPLIT-FUNC      run_init  CC=41  fan=25
+      WHY: CC=41 exceeds 15
+      EFFORT: ~1h  IMPACT: 1025
+
+  [3] !  SPLIT-FUNC      MarkpactManager.compile  CC=21  fan=34
       WHY: CC=21 exceeds 15
       EFFORT: ~1h  IMPACT: 714
-
-  [3] !! SPLIT-FUNC      run_init  CC=34  fan=20
-      WHY: CC=34 exceeds 15
-      EFFORT: ~1h  IMPACT: 680
 
   [4] !  SPLIT-FUNC      MarkpactManager.run_tests  CC=20  fan=21
       WHY: CC=20 exceeds 15
@@ -1205,8 +1220,8 @@ RISKS[2]:
   ⚠ Splitting goal.yaml may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          4.4 → ≤3.1
-  max-CC:      36 → ≤18
+  CC̄:          4.3 → ≤3.0
+  max-CC:      41 → ≤20
   god-modules: 2 → 0
   high-CC(≥15): 10 → ≤5
   hub-types:   0 → ≤0
@@ -1236,7 +1251,7 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=4.3 → now CC̄=4.4
+  prev CC̄=4.4 → now CC̄=4.3
 ```
 
 ## Intent

@@ -9,7 +9,7 @@ flowchart TD
     scripts__run_urisys_node_docker_e2e["scripts.run-urisys-node-docker-e2e<br/>5 funcs"]
     scripts__run_test_sessions["scripts.run_test_sessions<br/>14 funcs"]
     scripts__test_sessions["scripts.test_sessions<br/>39 funcs"]
-    src__urisys["src.urisys<br/>118 funcs"]
+    src__urisys["src.urisys<br/>125 funcs"]
     urikvm_docker__scripts["urikvm-docker.scripts<br/>5 funcs"]
     urisys_automation_lab__server["urisys-automation-lab.server<br/>19 funcs"]
     scripts__run_test_sessions ==>|90| scripts__test_sessions
@@ -24,8 +24,8 @@ flowchart TD
     urisys_automation_lab__server ==>|5| scripts__run_nl_log_smoke
     scripts__test_sessions ==>|4| scripts__run_office_writer_e2e
     scripts__test_sessions -->|3| scripts__run_urisys_node_docker_e2e
+    scripts__pack_sync -->|2| scripts__pack_registry
     scripts__test_sessions -->|2| scripts__report
     urikvm_docker__scripts -->|2| scripts__run_nl_log_smoke
-    scripts__pack_sync -->|2| scripts__pack_registry
     src__urisys -->|1| urikvm_docker__scripts
     urisys_automation_lab__server -->|1| scripts__office_simulate_loop

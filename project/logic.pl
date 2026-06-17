@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.38', 'python').
+project_metadata('urisys', '0.1.39', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 49, 'less').
@@ -70,10 +70,10 @@ project_file('src/urisys/controllers/flow_controller.py', 34, 'python').
 project_file('src/urisys/controllers/server_controller.py', 19, 'python').
 project_file('src/urisys/controllers/uri_controller.py', 34, 'python').
 project_file('src/urisys/defaults.py', 21, 'python').
-project_file('src/urisys/doctor.py', 287, 'python').
+project_file('src/urisys/doctor.py', 288, 'python').
 project_file('src/urisys/flow.py', 26, 'python').
 project_file('src/urisys/http_server.py', 79, 'python').
-project_file('src/urisys/init_setup.py', 209, 'python').
+project_file('src/urisys/init_setup.py', 237, 'python').
 project_file('src/urisys/managers/__init__.py', 1, 'python').
 project_file('src/urisys/managers/bridge_manager.py', 15, 'python').
 project_file('src/urisys/managers/event_manager.py', 14, 'python').
@@ -85,6 +85,7 @@ project_file('src/urisys/managers/policy_manager.py', 19, 'python').
 project_file('src/urisys/managers/route_manager.py', 24, 'python').
 project_file('src/urisys/managers/runtime_manager.py', 31, 'python').
 project_file('src/urisys/managers/source_manager.py', 225, 'python').
+project_file('src/urisys/node_install.py', 53, 'python').
 project_file('src/urisys/uricore_install.py', 131, 'python').
 project_file('tests/test_bootstrap.py', 61, 'python').
 project_file('tests/test_doctor.py', 29, 'python').
@@ -92,6 +93,7 @@ project_file('tests/test_doctor_uricore.py', 27, 'python').
 project_file('tests/test_init.py', 61, 'python').
 project_file('tests/test_kvm_pack_pyprojects.py', 69, 'python').
 project_file('tests/test_markpact.py', 99, 'python').
+project_file('tests/test_node_install.py', 31, 'python').
 project_file('tests/test_pypi_metadata.py', 35, 'python').
 project_file('tests/test_python_compat.py', 53, 'python').
 project_file('tests/test_run_expectations.py', 56, 'python').
@@ -311,7 +313,7 @@ python_function('src/urisys/doctor.py', '_check_min_version', 1, 6, 4).
 python_function('src/urisys/doctor.py', '_check_wayland_him', 0, 3, 3).
 python_function('src/urisys/doctor.py', '_check_uricore_authentic', 0, 6, 5).
 python_function('src/urisys/doctor.py', '_check_uricore_dist', 0, 3, 3).
-python_function('src/urisys/doctor.py', 'run_doctor', 0, 11, 12).
+python_function('src/urisys/doctor.py', 'run_doctor', 0, 11, 13).
 python_function('src/urisys/flow.py', 'load_flow', 1, 3, 5).
 python_function('src/urisys/flow.py', 'iter_steps', 1, 7, 7).
 python_function('src/urisys/http_server.py', '_read_json', 1, 3, 5).
@@ -377,6 +379,9 @@ python_function('tests/test_markpact.py', 'test_markpact_compile_and_call', 1, 5
 python_function('tests/test_markpact.py', 'test_uri_controller_loads_markpact_directly', 1, 4, 4).
 python_function('tests/test_markpact.py', 'test_markpact_embedded_tests', 1, 3, 3).
 python_function('tests/test_markpact.py', 'test_build_route_shape', 0, 7, 2).
+python_function('tests/test_node_install.py', 'test_default_pip_specs_no_git_urls', 0, 3, 2).
+python_function('tests/test_node_install.py', 'test_urisys_node_uses_release_wheel', 0, 5, 3).
+python_function('tests/test_node_install.py', 'test_urisys_node_wheel_url_override', 0, 2, 2).
 python_function('tests/test_pypi_metadata.py', 'test_validate_pypi_metadata_script_exists', 0, 2, 1).
 python_function('tests/test_pypi_metadata.py', 'test_built_wheel_has_no_direct_url_requires_dist', 0, 3, 6).
 python_function('tests/test_pypi_metadata.py', 'test_pyproject_runtime_deps_have_no_direct_urls', 0, 4, 2).

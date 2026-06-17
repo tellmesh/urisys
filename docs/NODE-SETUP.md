@@ -6,11 +6,14 @@ Na świeżym venv lub po błędzie `ModuleNotFoundError: uri_control`:
 
 ```bash
 python3.12 -m venv ~/venv && source ~/venv/bin/activate
-pip install -U "urisys>=0.1.33"
+pip install -U "urisys>=0.1.36"
 urisys init
 source ~/.config/urisys/node.env
 urisys node serve --host 0.0.0.0 --port 8790
 ```
+
+> **Bez hasła GitHub:** `urisys init` instaluje z **publicznych wheels** (uricore + urisys-node z GitHub Releases), nie `git+https://`.
+> Override: `URISYS_NODE_WHEEL_URL`, `URISYS_URICORE_WHEEL_URL`.
 
 > **Uwaga:** PyPI pakiet `uricore` to **inny projekt** (moduł `uricore/`, nie `uri_control/`).
 > `urisys init` instaluje tellmesh uricore z GitHub wheel i naprawia złą instalację automatycznie.
@@ -18,7 +21,8 @@ urisys node serve --host 0.0.0.0 --port 8790
 `urisys init` wykonuje:
 
 1. `pip install -U pip` + tellmesh uricore wheel + `urisysedge` + `urisys[real]`
-2. jeśli wykryje zły PyPI `uricore` → `pip uninstall` + wheel z GitHub
+2. opcjonalnie urisys-node wheel z GitHub Releases (osobny krok; warn jeśli brak release)
+3. jeśli wykryje zły PyPI `uricore` → `pip uninstall` + wheel z GitHub
 3. weryfikację `import uri_control`
 4. `urisys doctor`
 5. zapis `~/.config/urisys/node.env` z `URISYS_ALLOW_REAL=1` i `URISYS_NODE_AUTO_INSTALL=1`

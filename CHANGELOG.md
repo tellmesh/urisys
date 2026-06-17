@@ -5,6 +5,53 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- `docs/REPOS.md` — mapowanie paczek tellmesh → GitHub (tellmesh vs [semcod](https://github.com/semcod)); brak duplikatów vendored
+- `src/urisys/node_install.py` — instalacja `urisys-node` z GitHub Release wheel (bez `git+https`, bez promptu hasła)
+- `scripts/validate-pypi-metadata.sh` — guard przed direct URL w metadanych PyPI
+- `scripts/ci-checkout-siblings.sh` — CI clone sibling repos obok urisys
+
+### Changed
+- Migracja 32 packów z `urisys/**/packages/python/*` → `tellmesh/{repo}/` (canonical source)
+- `urisys init` — uricore + urisys-node tylko jako publiczne wheels; core pip bez git credentials
+- Skrypty lenovo/deploy i `publish-pypi-packs.sh` — ścieżki sibling zamiast vendored
+- Dokumentacja: `PACKAGES.md`, `DISTRIBUTION.md`, `NODE-SETUP.md`, `docs/README.md`
+
+### Fixed
+- `urisys doctor` — `NameError: node_pip_spec` przy sprawdzaniu importu urisysnode
+- PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
+- Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
+
+## [0.1.40] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update TODO.priority.md
+- Update docs/NODE-SETUP.md
+- Update docs/README.md
+- Update docs/REPOS.md
+- Update project/README.md
+- ... and 1 more files
+
+### Other
+- Update app.doql.less
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/compact_flow.mmd
+- Update project/compact_flow.png
+- Update project/duplication.toon.yaml
+- Update project/evolution.toon.yaml
+- ... and 8 more files
+
 ## [0.1.10] - 2026-06-17
 
 ### Fixed

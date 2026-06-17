@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.39-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$11.02-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-16.4h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.40-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$11.16-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-16.5h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $11.0158 (54 commits)
-- 👤 **Human dev:** ~$1641 (16.4h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $11.1627 (55 commits)
+- 👤 **Human dev:** ~$1646 (16.5h @ $100/h, 30min dedup)
 
 Generated on 2026-06-17 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -46,8 +46,9 @@ Zależności runtime: **`uricore`** (tellmesh wheel z GitHub — **nie** PyPI `u
 Capability packi **kvm/him/ocr/llm** doinstalowują się **lazy przy pierwszym URI** — [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md).
 
 ```bash
-# slave / lenovo — tylko urisys, potem node
-pip install urisys
+# slave / lenovo
+pip install -U urisys
+urisys init
 urisys node serve --host 0.0.0.0 --port 8790
 ```
 
@@ -98,7 +99,8 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 |----------|--------|
 | [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md) | **Slave** — `urisys init`, lazy install, hot-load, systemd |
 | [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md) | **PyPI · Markpact · GitHub OCI** — packi, kvm-release |
-| [`docs/PACKAGES.md`](docs/PACKAGES.md) | Layout monorepo, `urisysedge`, `urioperators` |
+| [`docs/PACKAGES.md`](docs/PACKAGES.md) | Layout tellmesh sibling repos, `urioperators` |
+| [`docs/REPOS.md`](docs/REPOS.md) | GitHub tellmesh vs semcod, mapowanie paczek |
 | [`docs/PACK-EXTENSIBILITY.md`](docs/PACK-EXTENSIBILITY.md) | Nowe schematy URI, forward, `release_forwards` |
 | [`docs/OFFICE-AUTOMATION.md`](docs/OFFICE-AUTOMATION.md) | Automatyzacja biurowa — roadmap |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Warstwy, runtime, porty Docker |
