@@ -16,19 +16,21 @@ do:
         - -U
         - "{wheel:urisys_node}"
 
-  - id: restart_node
+  - id: deploy_lenovo_profile
     uri: shell://bash
     payload:
       args:
         - -lc
         - |
-          source ~/venv/bin/activate 2>/dev/null || true
-          export URISYS_ALLOW_REAL=1
-          export URISYS_NODE_CONFIG="${URISYS_NODE_CONFIG:-config/node-profile.lenovo.json}"
-          nohup setsid urisys node serve --host 0.0.0.0 --port 8790 >> /tmp/urisys-node.log 2>&1 &
-          echo started pid=$!
+          mkdir -p ~/.config/urisys
+          curl -fsS -o ~/.config/urisys/node-profile.lenovo.json \
+            http://192.168.188.212:8765/node-profile.lenovo.json
+          echo deployed $(wc -c < ~/.config/urisys/node-profile.lenovo.json) bytes
 
-  - id: wait_restart
-    kind: host_wait_health
+  - id: restart_and_wait
+    kind: host_restart_and_wait
     timeout: 90
-    note: New serve kills the old listener on :8790, then binds
+    settle_s: 4
+    expect:
+      him_driver: ydotool
+    note: Schedule serve, wait for new instance_id + profile him.driver

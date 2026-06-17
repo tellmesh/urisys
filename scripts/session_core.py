@@ -54,6 +54,15 @@ def step_ok(result: dict[str, Any]) -> bool:
         return bool(result.get("response", {}).get("ok"))
     if result.get("kind") == "host_wait_health":
         return bool(result.get("response", {}).get("ok"))
+    if result.get("kind") == "host_restart_and_wait":
+        return bool(result.get("response", {}).get("ok")) and not result.get("error")
+    if result.get("kind") == "host_schedule_restart":
+        resp = result.get("response") or {}
+        if resp.get("ok") is True:
+            return True
+        if resp.get("note") == "connection closed during takeover":
+            return True
+        return not result.get("error")
     resp = result.get("response")
     if isinstance(resp, dict):
         if resp.get("ok") is False:
@@ -170,9 +179,26 @@ def backfill_session_images(session_dir: Path, *, strip_base64: bool = True) -> 
     return all_saved
 
 
+def _wheel_version_key(path: Path, prefix: str) -> tuple:
+    """Parse ``prefix-1.2.3-py3-none-any.whl`` for semver ordering."""
+    name = path.name
+    if not name.startswith(f"{prefix}-") or not name.endswith(".whl"):
+        return (0,)
+    ver_part = name[len(prefix) + 1 : -4].split("-py", 1)[0]
+    key: list[Any] = []
+    for piece in ver_part.split("."):
+        try:
+            key.append(int(piece))
+        except ValueError:
+            key.append(piece)
+    return tuple(key)
+
+
 def find_wheel_file(deploy_dir: Path, prefix: str) -> Path | None:
-    candidates = sorted(deploy_dir.glob(f"{prefix}-*.whl"), reverse=True)
-    return candidates[0] if candidates else None
+    candidates = list(deploy_dir.glob(f"{prefix}-*.whl"))
+    if not candidates:
+        return None
+    return max(candidates, key=lambda p: _wheel_version_key(p, prefix))
 
 
 def wheel_url(wheel_server: str, wheel_path: Path) -> str:

@@ -73,6 +73,15 @@ do:
         - -U
         - "{wheel:uriimg2nl}"
 
+  - id: pip_urisys_node
+    uri: shell://pip
+    payload:
+      args:
+        - install
+        - -U
+        - "{wheel:urisys_node}"
+    note: Ensure PACK_MODULES includes img2nl before hot-load
+
   - id: install_img2nl
     uri: node://lenovo/command/install-pack
     payload:
@@ -88,8 +97,7 @@ do:
         - install
         - -U
         - "img2nl[analyze]>=0.1.0"
-    note: img2nl analyze; imgl[capture] optional on lenovo for capture-click
-    note: img2nl library (PyPI); uriimg2nl pack wraps it
+    note: img2nl analyze library on lenovo
 
   - id: him_status
     uri: him://lenovo/mouse/query/status

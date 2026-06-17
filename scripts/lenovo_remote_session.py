@@ -48,6 +48,7 @@ from urisysnode.remote import (  # noqa: E402
     default_endpoint,
     default_route_map,
     health as remote_health,
+    schedule_restart,
     wait_health,
 )
 
@@ -108,12 +109,98 @@ def run_step(
             out["seconds"] = seconds
             time.sleep(seconds)
             out["response"] = {"ok": True, "slept": seconds}
+        elif kind == "host_restart_and_wait":
+            timeout = float(step.get("timeout") or step.get("seconds") or 90)
+            expect = step.get("expect") if isinstance(step.get("expect"), dict) else {}
+            settle_s = float(step.get("settle_s") or 3)
+            out["kind"] = "host_restart_and_wait"
+            out["timeout"] = timeout
+            if expect:
+                out["expect"] = expect
+            baseline_id = None
+            try:
+                baseline = remote_health(endpoint=endpoint)
+                baseline_id = baseline.get("instance_id")
+                out["baseline_instance_id"] = baseline_id
+            except Exception as exc:
+                out["baseline_error"] = str(exc)
+            try:
+                out["restart"] = schedule_restart(endpoint=endpoint, route_map=route_map)
+            except Exception as exc:
+                msg = str(exc)
+                if "Remote end closed connection" not in msg and "Connection reset" not in msg:
+                    out["error"] = msg
+                    out["response"] = {"ok": False, "error": msg}
+                    out["finished_at"] = now_iso()
+                    out["ok"] = False
+                    return out
+                out["restart"] = {"ok": True, "note": "connection closed during takeover", "error": msg}
+            time.sleep(settle_s)
+            deadline = time.time() + timeout
+            last: dict[str, Any] = {"ok": False, "error": "unreachable"}
+            while time.time() < deadline:
+                try:
+                    last = remote_health(endpoint=endpoint)
+                except Exception as exc:
+                    last = {"ok": False, "error": str(exc)}
+                    time.sleep(2.0)
+                    continue
+                if not last.get("ok"):
+                    time.sleep(2.0)
+                    continue
+                if expect and not all(last.get(k) == v for k, v in expect.items()):
+                    time.sleep(2.0)
+                    continue
+                new_id = last.get("instance_id")
+                if baseline_id and new_id == baseline_id:
+                    time.sleep(2.0)
+                    continue
+                out["response"] = last
+                break
+            else:
+                out["error"] = (
+                    f"restart wait failed after {timeout}s expect={expect!r} "
+                    f"baseline={baseline_id!r} last={last!r}"
+                )
+                out["response"] = last
+        elif kind == "host_schedule_restart":
+            out["kind"] = "host_schedule_restart"
+            try:
+                out["response"] = schedule_restart(
+                    endpoint=endpoint,
+                    route_map=route_map,
+                )
+            except Exception as exc:
+                msg = str(exc)
+                if "Remote end closed connection" in msg or "Connection reset" in msg:
+                    out["response"] = {"ok": True, "note": "connection closed during takeover", "error": msg}
+                else:
+                    out["error"] = msg
+                    out["response"] = {"ok": False, "error": msg}
         elif kind == "host_wait_health":
             timeout = float(step.get("timeout") or step.get("seconds") or 60)
+            expect = step.get("expect") if isinstance(step.get("expect"), dict) else {}
             out["kind"] = "host_wait_health"
             out["timeout"] = timeout
+            if expect:
+                out["expect"] = expect
+            deadline = time.time() + timeout
+            last: dict[str, Any] = {"ok": False, "error": "unreachable"}
             try:
-                out["response"] = wait_health(endpoint=endpoint, timeout_s=timeout)
+                while time.time() < deadline:
+                    try:
+                        last = remote_health(endpoint=endpoint)
+                    except Exception as exc:
+                        last = {"ok": False, "error": str(exc)}
+                        time.sleep(2.0)
+                        continue
+                    if last.get("ok") and all(last.get(k) == v for k, v in expect.items()):
+                        out["response"] = last
+                        break
+                    time.sleep(2.0)
+                else:
+                    out["error"] = f"health expect not met after {timeout}s: {expect!r} last={last!r}"
+                    out["response"] = last
             except TimeoutError as exc:
                 out["error"] = str(exc)
                 out["response"] = {"ok": False, "error": str(exc)}
@@ -212,6 +299,9 @@ def build_wheels(deploy_dir: Path) -> None:
                 [sys.executable, "-m", "pip", "wheel", "-w", str(deploy_dir), str(pkg_dir), "-q"],
                 check=False,
             )
+    profile = tellmesh / "urisys-node" / "config" / "node-profile.lenovo.json"
+    if profile.is_file():
+        shutil.copy2(profile, deploy_dir / "node-profile.lenovo.json")
 
 
 def start_wheel_server(deploy_dir: Path, host: str, port: int) -> subprocess.Popen[Any] | None:
@@ -427,7 +517,11 @@ def main(argv: list[str] | None = None) -> int:
     def _needs_node_upgrade(flow_paths: list[Path]) -> bool:
         names = {p.name for p in flow_paths}
         return bool(
-            names & {"02-install-packs.uri.flow.yaml", "07-playwright-linkedin.uri.flow.yaml"}
+            names
+            & {
+                "02-install-packs.uri.flow.yaml",
+                "07-playwright-linkedin.uri.flow.yaml",
+            }
             or any("install-packs" in p.name for p in flow_paths)
         )
 
