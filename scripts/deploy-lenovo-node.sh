@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Upgrade lenovo slave via URI (no .sh on target). Run from dev machine on LAN.
 #
-#   HOST=192.168.188.212 bash scripts/deploy-lenovo-node.sh
+#   bash scripts/deploy-lenovo-node.sh
 #   LENOVO=http://192.168.188.201:8790 DEV=http://192.168.188.212:8765 bash scripts/deploy-lenovo-node.sh
 set -euo pipefail
 
@@ -26,8 +26,14 @@ health | python3 -m json.tool
 echo ""
 echo "== build wheels (if missing) =="
 mkdir -p /tmp/urisys-deploy
-if [ ! -f /tmp/urisys-deploy/urisys-0.1.24-py3-none-any.whl ]; then
-  (cd "$ROOT" && python3 -m build -o /tmp/urisys-deploy)
+if [ ! -f /tmp/urisys-deploy/urisys-0.1.27-py3-none-any.whl ]; then
+  (cd "$ROOT" && python3 -m build -o /tmp/urisys-deploy 2>/dev/null || python3 -m pip wheel -w /tmp/urisys-deploy . -q)
+fi
+if [ ! -f /tmp/urisys-deploy/urihim-0.1.5-py3-none-any.whl ]; then
+  (cd "$ROOT/urikvm-docker/packages/python/urihim" && python3 -m pip wheel -w /tmp/urisys-deploy . -q)
+fi
+if [ ! -f /tmp/urisys-deploy/urillm-0.1.1-py3-none-any.whl ]; then
+  (cd "$ROOT/urikvm-docker/packages/python/urillm" && python3 -m pip wheel -w /tmp/urisys-deploy . -q)
 fi
 
 echo ""
@@ -37,22 +43,29 @@ if ! pgrep -f "http.server 8765.*192.168.188.212" >/dev/null 2>&1; then
   sleep 1
 fi
 
+URISYS_WHL="$(ls -1 /tmp/urisys-deploy/urisys-*.whl 2>/dev/null | sort -V | tail -1)"
 echo ""
-echo "== pip install urisys 0.1.24 on lenovo =="
-call shell://pip "{\"args\":[\"install\",\"-U\",\"$DEV/urisys-0.1.24-py3-none-any.whl\"]}" | python3 -m json.tool
+echo "== pip install urisys on lenovo =="
+call shell://pip "{\"args\":[\"install\",\"-U\",\"$DEV/$(basename "$URISYS_WHL")\"]}" | python3 -m json.tool
 
 echo ""
-echo "== pip install urihim from GitHub v0.1.3 =="
-call shell://pip "{\"args\":[\"install\",\"-U\",\"https://github.com/tellmesh/urihim/releases/download/v0.1.3/urihim-0.1.3-py3-none-any.whl\"]}" | python3 -m json.tool
+echo "== install-pack urihim 0.1.5 =="
+call node://local/command/install-pack "{\"pack\":\"him\",\"install\":true,\"force\":true,\"specs\":[\"urisysedge>=0.1.0\",\"$DEV/urihim-0.1.5-py3-none-any.whl\"]}" | python3 -m json.tool
+
+echo ""
+echo "== install-pack urillm 0.1.1 =="
+call node://local/command/install-pack "{\"pack\":\"llm\",\"install\":true,\"force\":true,\"specs\":[\"urisysedge>=0.1.0\",\"$DEV/urillm-0.1.1-py3-none-any.whl\"]}" | python3 -m json.tool
 
 echo ""
 echo "== restart urisys-node =="
 call shell://bash '{"args":["-lc","pkill -f \"urisys-node serve\" || true; sleep 2; nohup /home/tom/venv/bin/urisys-node serve --host 0.0.0.0 --port 8790 >> /tmp/urisys-node.log 2>&1 & sleep 2; curl -sS http://127.0.0.1:8790/health"]}' | python3 -m json.tool
 
 echo ""
-echo "== probe him driver =="
+echo "== probe him driver + scroll route =="
 sleep 2
 call him://lenovo/mouse/query/status '{}' | python3 -m json.tool
+curl -sS "$LENOVO/uri/routes" | grep -E 'scroll|text/query/plan' || true
 
 echo ""
-echo "Done. Install ydotool on lenovo manually: sudo apt install ydotool"
+echo "Done. Wayland: sudo apt install ydotool && sudo systemctl enable --now ydotoold"
+echo "Test: bash scripts/run-office-simulate-lenovo.sh"

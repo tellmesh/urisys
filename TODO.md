@@ -14,11 +14,13 @@
 - God-moduły rozbite: `run_test_sessions.py`→`scripts/test_sessions/`, `session_report.py`→`scripts/report/`, `markpact_manager.py`→`+markpact_models/+markpact_validation`; handlery `_vision_analyze`/`decide`/`_compile_manifest`/`_heuristic_analyze`.
 - Capability packi (`urikvm`/`urihim`/`uriocr`/`urillm`) mają własny `pyproject.toml` — build+install+import OK standalone.
 - Hot-load: `POST /uri/pack` (aktywacja zainstalowanego packa) + `register_forward_pack`/`forward.py` (worker forwarding); gated `URISYS_NODE_ALLOW_PACK_LOAD`.
+- Orkiestracja hot-load (glue): `POST /uri/pack {contract,version,catalog}` → `hotload_release_pack` → `fetch_release`/`verify_release`/`run_release`/`register_forward_pack`. Bramkowana pairingiem + podpisami: `release_verify.py` (ed25519 nad kanonicznym digestem, keyid pinowane przez `URISYS_NODE_TRUSTED_KEYS`), **fail-closed** pod `URISYS_NODE_REQUIRE_SIGNATURE=1`. 11 nowych testów (`test_release_hotload.py`); live docker/catalog mockowane.
 - Guardy: drift `urisysedge`, dispatch vision/decide; CI lanes `node-unit`, `pack-handlers-unit`.
 
 **Remaining:**
-- [ ] **Publikacja PyPI**: `urisysedge` + `urikvm`/`urihim`/`uriocr`/`urillm` (+ `uriscreen`/`urishell`) — buildowalne, ale nieopublikowane → `pip install urikvm` zadziała dopiero po publikacji.
-- [ ] **Orkiestracja hot-load**: `POST /uri/pack {contract,version,catalog}` → `resolve_from_release` → `register_forward_pack`, bramkowane pairingiem + podpisami (model markpact.com + GitHub). Prymitywy gotowe; glue wymaga żywego środowiska.
+- [x] **Publikacja PyPI (częściowo)**: `urisysedge` 0.1.1 + `urikvm` 0.1.1 **opublikowane** — `pip install urikvm` działa.
+- [ ] **Publikacja PyPI (pozostałe)**: `urihim` (pyproject 0.1.5), `uriocr` (0.1.0), `urillm` (0.1.1), `uriscreen`, `urishell` — buildowalne, jeszcze nie na PyPI (`scripts/publish-pypi-packs.sh`, wymaga credentials).
+- [x] **Orkiestracja hot-load (glue)**: zaimplementowane — `hotload_release_pack` + dispatch `/uri/pack`, bramkowanie pairing+podpis (`release_verify.py`, ed25519, fail-closed), 11 testów. Pozostaje **E2E na żywym środowisku**: realny release na markpact.com + provisioning kluczy w `URISYS_NODE_TRUSTED_KEYS` + `cryptography` na node (na razie pass-through dopóki podpisy nie wymagane).
 - [ ] **OCR test flakiness**: `test_ocr_llm` pada, gdy tesseract nie odczyta wygenerowanej czcionki (env-flaky) — potrzebny pewniejszy fixture lub skip.
 - [ ] **Wayland real backendy** na lenovo: zweryfikować driver `ydotool` (kvm/him) end-to-end.
 

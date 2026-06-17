@@ -574,6 +574,41 @@ def session_office_simulate(session_dir: Path) -> int:
     return finalize_session(session_dir, started, code, steps)
 
 
+def session_office_simulate_lenovo(session_dir: Path) -> int:
+    started = now_iso()
+    base = os.environ.get("LENOVO", "http://192.168.188.201:8790")
+    write_meta(
+        session_dir,
+        session_id=session_dir.name,
+        session_name="office-simulate-lenovo",
+        suite="remote-node",
+        started_at=started,
+        host=host_id(),
+        ports={"node": base.rsplit(":", 1)[-1] if ":" in base else "8790"},
+        extra={"target": base},
+    )
+    log = session_dir / "session.log"
+    steps: list[dict[str, Any]] = []
+    env = os.environ.copy()
+    env["OFFICE_LENOVO_SESSION_DIR"] = str(session_dir)
+    env["LENOVO"] = base
+    proc = run_cmd(
+        ["bash", "scripts/run-office-simulate-lenovo.sh"],
+        cwd=ROOT,
+        log_file=log,
+        timeout=900.0,
+        env=env,
+    )
+    steps.append(
+        {
+            "name": "office-simulate-lenovo",
+            "status": "pass" if proc.returncode == 0 else "fail",
+            "detail": "" if proc.returncode == 0 else (proc.stderr or proc.stdout or "")[-800:],
+        }
+    )
+    return finalize_session(session_dir, started, proc.returncode, steps)
+
+
 SESSIONS: dict[str, Callable[[Path], int]] = {
     "pytest-urirdp": session_pytest_urirdp,
     "pytest-urisys": session_pytest_urisys,
@@ -585,6 +620,7 @@ SESSIONS: dict[str, Callable[[Path], int]] = {
     "lab-10-flows": session_lab_10_flows,
     "urisys-node-docker-gui": session_urisys_node_docker_gui,
     "office-simulate": session_office_simulate,
+    "office-simulate-lenovo": session_office_simulate_lenovo,
 }
 
 DEFAULT_ORDER = [

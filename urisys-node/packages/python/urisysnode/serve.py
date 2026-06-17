@@ -234,6 +234,89 @@ def register_forward_pack(
     return {"ok": True, "scheme": scheme, "endpoint": endpoint, "new_routes": new_routes}
 
 
+def _release_forward_spec(
+    release: dict[str, Any],
+    scheme: str | None,
+    patterns: list[str] | None,
+) -> tuple[str, list[str]]:
+    """Resolve the URI scheme and patterns to wire for a release. Caller-supplied
+    values win; otherwise they come from the release/contract metadata."""
+    out_scheme = (scheme or release.get("scheme") or "").strip()
+    out_patterns = patterns or release.get("patterns") or []
+    clean = [str(p).strip() for p in out_patterns if str(p).strip()]
+    return out_scheme, clean
+
+
+def hotload_release_pack(
+    runtime: Runtime,
+    contract_id: str,
+    version: str,
+    *,
+    catalog_url: str,
+    profile_path: str | Path,
+    context: dict[str, Any] | None = None,
+    container: str = "urisys-stepper-worker",
+    port: int = 8791,
+    scheme: str | None = None,
+    patterns: list[str] | None = None,
+) -> dict[str, Any]:
+    """Hot-load a capability from a markpact.com release: pairing-gated and
+    signature-gated, fetch the release, pull/run its OCI worker, then wire the
+    contract's URI patterns to forward to that worker. This is the glue over
+    resolve_from_release + register_forward_pack."""
+    from .artifact_resolver import fetch_release, run_release
+    from .identity import require_paired
+    from .release_verify import verify_release
+
+    ctx = context or {}
+    contract_id = (contract_id or "").strip()
+    version = (version or "").strip()
+    if not contract_id or not version:
+        return {"ok": False, "stage": "request", "error": "contract and version are required"}
+
+    try:
+        require_paired(ctx)
+    except PermissionError as exc:
+        return {"ok": False, "stage": "pairing", "error": str(exc)}
+
+    try:
+        release = fetch_release(catalog_url, contract_id, version)
+    except Exception as exc:
+        return {"ok": False, "stage": "fetch", "error": str(exc)}
+
+    verdict = verify_release(release, context=ctx)
+    if not verdict.get("ok"):
+        return {"ok": False, "stage": "verify", "error": verdict.get("error"), "signature": verdict}
+
+    fwd_scheme, fwd_patterns = _release_forward_spec(release, scheme, patterns)
+    if not fwd_scheme or not fwd_patterns:
+        return {
+            "ok": False,
+            "stage": "spec",
+            "error": "release does not declare scheme/patterns; pass them explicitly",
+            "signature": verdict,
+        }
+
+    try:
+        run = run_release(release, profile_path, container=container, port=port)
+    except Exception as exc:
+        return {"ok": False, "stage": "run", "error": str(exc), "signature": verdict}
+
+    endpoint = f"http://127.0.0.1:{run['port']}"
+    reg = register_forward_pack(runtime, fwd_scheme, endpoint, fwd_patterns)
+    return {
+        "ok": bool(reg.get("ok")),
+        "stage": "registered" if reg.get("ok") else "register",
+        "contract_id": contract_id,
+        "version": version,
+        "scheme": fwd_scheme,
+        "endpoint": endpoint,
+        "worker": run,
+        "forward": reg,
+        "signature": verdict,
+    }
+
+
 def make_handler(runtime: Runtime):
     allow_pack_load = (
         os.environ.get("URISYS_NODE_ALLOW_PACK_LOAD", "1" if auto_install_enabled() else "0") == "1"
@@ -250,7 +333,7 @@ def make_handler(runtime: Runtime):
 
         def do_GET(self) -> None:
             if self.path == "/health":
-                return self._json(200, health_payload())
+                return self._json(200, health_payload(runtime=runtime))
             if self.path in ("/uri/routes", "/routes"):
                 return self._json(200, {"ok": True, "routes": [r.pattern for r in runtime.routes]})
             if self.path.startswith("/events"):
@@ -272,6 +355,33 @@ def make_handler(runtime: Runtime):
                     })
                 length = int(self.headers.get("Content-Length") or "0")
                 req = json.loads(self.rfile.read(length).decode("utf-8") or "{}")
+                contract = str(req.get("contract") or req.get("contract_id") or "").strip()
+                if contract:
+                    # Release hot-load: resolve a markpact.com release to an OCI
+                    # worker and forward its scheme. Pairing/signature gated.
+                    ctx = req.get("context") if isinstance(req.get("context"), dict) else {}
+                    catalog = str(
+                        req.get("catalog")
+                        or req.get("catalog_url")
+                        or os.environ.get("MARKPACT_CATALOG_URL", "https://markpact.com")
+                    )
+                    profile = str(
+                        req.get("profile")
+                        or os.environ.get("URISYS_NODE_PROFILE", "config/node-profile.json")
+                    )
+                    req_patterns = req.get("patterns")
+                    result = hotload_release_pack(
+                        runtime,
+                        contract,
+                        str(req.get("version") or ""),
+                        catalog_url=catalog,
+                        profile_path=profile,
+                        context=ctx,
+                        scheme=str(req.get("scheme")).strip() if req.get("scheme") else None,
+                        patterns=[str(p) for p in req_patterns] if isinstance(req_patterns, list) else None,
+                    )
+                    status = 200 if result.get("ok") else (403 if result.get("stage") == "pairing" else 400)
+                    return self._json(status, result)
                 install = bool(req.get("install", True))
                 force = bool(req.get("force", False))
                 specs = req.get("specs")

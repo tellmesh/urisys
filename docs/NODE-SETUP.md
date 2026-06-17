@@ -140,3 +140,49 @@ Lazy install (`URISYS_PACK_SOURCE=auto`, domyślnie) pobiera **him/ocr/llm z Git
 ## Stary sposób (dev monorepo)
 
 `bash scripts/install-kvm-packs-editable.sh` — tylko CI/dev z git checkout.
+
+## Rozwiązywanie problemów (lenovo)
+
+### `ModuleNotFoundError: No module named 'uri_control'`
+
+Moduł `uri_control` jest **w pakiecie PyPI `uricore`** (nie instaluj go osobno). Błąd oznacza zwykle:
+
+1. **`urisys` bez zależności** — stara instalacja (`0.1.16` w `~/.local`, Python 3.14) bez `uricore`
+2. **Zły interpreter** — `urisys` z 3.14, a pracujesz w 3.12 (Jupyter/inne)
+3. **Zła komenda** — na slave potrzebujesz **`urisys node serve`**, nie samo `urisys serve`
+
+**Naprawa (zalecany venv Python 3.12):**
+
+```bash
+python3.12 -m venv ~/venv
+source ~/venv/bin/activate
+pip install -U pip
+pip install -U uricore urisysedge "urisys[real]"
+
+# weryfikacja (nowe)
+urisys doctor
+urisys node serve --help
+
+# start node (Wayland)
+export URISYS_ALLOW_REAL=1
+export URISYS_NODE_AUTO_INSTALL=1
+urisys node serve --host 0.0.0.0 --port 8790
+```
+
+`GET /health` zwraca też: `urisys`, `uricore`, `python`, `python_executable`, `packs_loaded`, `him_driver`.
+
+**Upgrade z dev (LAN, gdy node już działa):** [`scripts/deploy-lenovo-node.sh`](../scripts/deploy-lenovo-node.sh)
+
+**Usuń zepsutą instalację 3.14 (opcjonalnie):**
+
+```bash
+python3.14 -m pip uninstall -y urisys urisysedge uricore
+rm -f ~/.local/bin/urisys ~/.local/bin/urisys-node
+```
+
+### `urisys serve` vs `urisys node serve`
+
+| Komenda | Cel |
+|---------|-----|
+| `urisys node serve` | **Slave desktop** — screen, him, lazy packi (:8790) |
+| `urisys serve` | Prosty HTTP server packów (dev); na lenovo zwykle **nie** to |

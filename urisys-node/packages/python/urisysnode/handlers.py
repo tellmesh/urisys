@@ -7,10 +7,10 @@ from urisysnode.pack_resolver import PACK_MODULES, auto_install_enabled
 
 
 def query_health(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
-    del payload, context
+    del payload
     from urisysnode.identity import health_payload
 
-    return health_payload()
+    return health_payload(runtime=context.get("runtime"))
 
 
 def query_identity(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:

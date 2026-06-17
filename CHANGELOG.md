@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added (capability hot-load primitives)
 - `POST /uri/pack` + `load_pack_into_runtime()` — activate an installed pack into a live node (idempotent, secure-by-default behind `URISYS_NODE_ALLOW_PACK_LOAD=1`)
 - `register_forward_pack()` + `urisysnode/forward.py` — route a contract's URI patterns to a resolved out-of-process worker (bridge to `ArtifactResolver` markpact.com→GitHub→worker)
+- `hotload_release_pack()` + `POST /uri/pack {contract,version,catalog}` — full orchestration glue: pairing-gated and signature-gated, `fetch_release`→`verify_release`→`run_release`→`register_forward_pack` in one call; `/uri/pack` dispatches release vs. local-pack by request shape (403 when unpaired)
+- `urisysnode/release_verify.py` — `verify_release()` signature gate (ed25519 over a canonical digest, keyid pinned via `URISYS_NODE_TRUSTED_KEYS`); **fail-closed** when `URISYS_NODE_REQUIRE_SIGNATURE=1` and the release is unsigned, signed by an untrusted key, or no crypto backend is present; pass-through (`verified: false`) until keys are provisioned
+- `artifact_resolver.run_release(release, …)` — extracted from `resolve_from_release` so the glue runs the exact release it verified (no re-fetch)
 
 ### Fixed
 - `markpact_manager.load_pack_block` — removed duplicate (shadowing) definition
@@ -27,6 +30,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Vendored `urisysedge` drift guard (AST-compare vs canonical), node pack hot-load + forward, vision/decide dispatch — new CI lanes `node-unit`, `pack-handlers-unit`
 - `test_uriscreen_auto`/`test_ocr_llm` skip gracefully when Pillow/tesseract absent
 - Host→Docker desktop and host→LAN node (`192.168.188.201:8790`) control verified live (capture + OCR)
+
+## [0.1.28] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+- Update docs/NODE-SETUP.md
+- Update docs/OFFICE-AUTOMATION.md
+
+### Test
+- Update tests/test_doctor.py
+
+### Other
+- Update scripts/deploy-lenovo-node.sh
+- Update scripts/run-office-simulate-lenovo.sh
+- Update scripts/run_test_sessions.py
+- Update urisys-node/packages/python/urisysnode/artifact_resolver.py
+- Update urisys-node/packages/python/urisysnode/cli.py
+- Update urisys-node/packages/python/urisysnode/handlers.py
+- Update urisys-node/packages/python/urisysnode/identity.py
+- Update urisys-node/packages/python/urisysnode/release_verify.py
+- Update urisys-node/packages/python/urisysnode/serve.py
+- Update urisys-node/tests/test_release_hotload.py
+- ... and 2 more files
 
 ## [0.1.27] - 2026-06-17
 

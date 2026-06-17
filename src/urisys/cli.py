@@ -12,6 +12,7 @@ from .defaults import DEFAULT_ENVIRONMENT
 from .controllers.flow_controller import FlowController
 from .controllers.server_controller import ServerController
 from .controllers.uri_controller import UriController
+from .doctor import run_doctor
 from .managers.event_manager import EventManager
 from .managers.markpact_manager import MarkpactManager, MarkpactError
 from .managers.source_manager import SourceManager, SourceError
@@ -63,7 +64,14 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("path")
     _add_runtime_flags(p)
 
-    p = sub.add_parser("serve", help="Run HTTP URI server.")
+    p = sub.add_parser("doctor", help="Check installation, Python env, and dependencies.")
+    p.add_argument(
+        "--min-version",
+        default=os.environ.get("URISYS_MIN_VERSION", "0.1.25"),
+        help="Minimum urisys version (default: 0.1.25).",
+    )
+
+    p = sub.add_parser("serve", help="Run HTTP URI server (dev packs; for desktop slave use: urisys node serve).")
     p.add_argument("--host", default="127.0.0.1")
     p.add_argument("--port", type=int, default=8789)
 
@@ -148,7 +156,18 @@ def main(argv: list[str] | None = None) -> int:
                 print_json(manager.run_tests(local_path, events_path=args.events))
                 return 0
 
+        if args.command == "doctor":
+            report = run_doctor(min_version=args.min_version or None)
+            print_json(report)
+            return 0 if report.get("ok") else 1
+
         if args.command == "serve":
+            import sys
+
+            print(
+                "hint: desktop slave (lenovo) → urisys node serve --host 0.0.0.0 --port 8790",
+                file=sys.stderr,
+            )
             ServerController(host=args.host, port=args.port, packs=args.packs, markpacts=args.markpact, events_path=args.events).serve_forever()
             return 0
 
@@ -201,7 +220,13 @@ def main(argv: list[str] | None = None) -> int:
         print_json({"ok": False, "error": str(exc), "type": type(exc).__name__})
         return 2
     except ModuleNotFoundError as exc:
-        print_json({"ok": False, "error": str(exc), "type": "module_not_found"})
+        hint = None
+        if exc.name in ("uri_control", "uricore"):
+            hint = 'pip install -U uricore urisysedge "urisys[real]" — then run: urisys doctor'
+        payload: dict = {"ok": False, "error": str(exc), "type": "module_not_found"}
+        if hint:
+            payload["hint"] = hint
+        print_json(payload)
         return 2
 
 

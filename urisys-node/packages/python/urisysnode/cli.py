@@ -39,6 +39,9 @@ def main(argv=None) -> int:
     sub.add_parser("identity", help="Show node identity")
     sub.add_parser("pairing", help="Show pairing status")
 
+    doc = sub.add_parser("doctor", help="Check urisys installation and environment")
+    doc.add_argument("--min-version", default=os.environ.get("URISYS_MIN_VERSION", "0.1.25"))
+
     d = sub.add_parser("discover", help="Discover nodes on LAN (requires zeroconf)")
     d.add_argument("--timeout", type=float, default=2.0)
 
@@ -95,6 +98,13 @@ def main(argv=None) -> int:
     if args.cmd == "pairing":
         print(json.dumps(load_pairing(), indent=2, ensure_ascii=False))
         return 0
+
+    if args.cmd == "doctor":
+        from urisys.doctor import run_doctor
+
+        report = run_doctor(min_version=args.min_version or None)
+        print(json.dumps(report, indent=2, ensure_ascii=False))
+        return 0 if report.get("ok") else 1
 
     if args.cmd == "discover":
         nodes = discover_mdns(args.timeout)

@@ -54,6 +54,70 @@ def fetch_json(url: str, *, timeout: int = 60) -> Any:
         return json.loads(resp.read().decode("utf-8"))
 
 
+def fetch_text(url: str, *, timeout: int = 60) -> str:
+    req = urllib.request.Request(url, headers={"Accept": "text/plain, text/markdown, */*"})
+    with _auth_opener(url).open(req, timeout=timeout) as resp:
+        return resp.read().decode("utf-8")
+
+
+def _contract_yaml_block(contract_text: str) -> str:
+    """Extract the ```yaml markpact:contract fenced block from a contract.markpact.md."""
+    lines = contract_text.splitlines()
+    inside = False
+    body: list[str] = []
+    for line in lines:
+        stripped = line.strip()
+        if not inside:
+            if stripped.startswith("```") and "markpact:contract" in stripped:
+                inside = True
+            continue
+        if stripped.startswith("```"):
+            break
+        body.append(line)
+    return "\n".join(body)
+
+
+def parse_contract_spec(contract_text: str) -> dict[str, Any]:
+    """Return {scheme, patterns} from a UriContract markpact. Patterns are every
+    declared query + command pattern — exactly the URIs to forward to the worker."""
+    block = _contract_yaml_block(contract_text)
+    if not block.strip():
+        raise ValueError("contract has no markpact:contract block")
+    data = yaml.safe_load(block) or {}
+    scheme = str(data.get("scheme") or "").strip()
+    patterns: list[str] = []
+    for item in (data.get("queries") or []) + (data.get("commands") or []):
+        pattern = str((item or {}).get("pattern") or "").strip()
+        if pattern:
+            patterns.append(pattern)
+    if not scheme:
+        raise ValueError("contract declares no scheme")
+    if not patterns:
+        raise ValueError("contract declares no query/command patterns")
+    return {"scheme": scheme, "patterns": patterns}
+
+
+def contract_url_from_release(release: dict[str, Any]) -> str:
+    """Locate the contract source URL declared by a release payload."""
+    direct = release.get("contract_url") or release.get("contract_source")
+    if direct:
+        return str(direct)
+    contract = release.get("contract")
+    if isinstance(contract, dict):
+        url = contract.get("url") or contract.get("contract_url")
+        if url:
+            return str(url)
+    return ""
+
+
+def contract_spec_from_release(release: dict[str, Any]) -> dict[str, Any]:
+    """Fetch and parse the contract referenced by a release into {scheme, patterns}."""
+    url = contract_url_from_release(release)
+    if not url:
+        raise ValueError("release has no contract_url to derive scheme/patterns from")
+    return parse_contract_spec(fetch_text(url))
+
+
 def load_node_profile(path: str | Path) -> dict[str, Any]:
     data = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
     return data.get("node") or data
@@ -186,16 +250,16 @@ def resolve_and_run(
     }
 
 
-def resolve_from_release(
-    catalog_url: str,
-    contract_id: str,
-    version: str,
+def run_release(
+    release: dict[str, Any],
     profile_path: str | Path,
     *,
     container: str = "urisys-stepper-worker",
     port: int = 8791,
 ) -> dict[str, Any]:
-    release = fetch_release(catalog_url, contract_id, version)
+    """Pull and run the worker for an already-fetched release. Split out from
+    resolve_from_release so the hot-load glue can verify the exact release it
+    runs without re-fetching it from the catalog."""
     index_url = str(release.get("artifact_index_url") or "")
     if not index_url:
         raise ValueError("release has no artifact_index_url")
@@ -213,8 +277,8 @@ def resolve_from_release(
 
     return {
         "ok": True,
-        "contract_id": contract_id,
-        "version": version,
+        "contract_id": release.get("contract_id"),
+        "version": release.get("version"),
         "release": release,
         "artifact_index_url": index_url,
         "platform": profile.get("platform"),
@@ -223,3 +287,16 @@ def resolve_from_release(
         "container": container,
         "port": port,
     }
+
+
+def resolve_from_release(
+    catalog_url: str,
+    contract_id: str,
+    version: str,
+    profile_path: str | Path,
+    *,
+    container: str = "urisys-stepper-worker",
+    port: int = 8791,
+) -> dict[str, Any]:
+    release = fetch_release(catalog_url, contract_id, version)
+    return run_release(release, profile_path, container=container, port=port)

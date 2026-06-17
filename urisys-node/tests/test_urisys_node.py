@@ -48,3 +48,17 @@ def test_health_payload():
     data = health_payload()
     assert data["ok"] is True
     assert data["service"] == "urisys-node"
+    assert "python" in data
+    assert "python_executable" in data
+    assert "urisys" in data
+
+
+def test_health_payload_with_runtime():
+    from urisysnode.identity import health_payload
+    from urisysnode.serve import build_runtime
+
+    rt = build_runtime()
+    data = health_payload(runtime=rt)
+    assert "packs_loaded" in data
+    assert "node" in data["packs_loaded"]
+    assert "routes_count" in data

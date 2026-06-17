@@ -111,6 +111,30 @@ python3 scripts/office-simulate-loop.py --once --dry-run
 python3 scripts/office-simulate-loop.py --mode llm --interval 60   # phrase-map bez API key
 ```
 
-Packi: `him://…/mouse/command/scroll` (pyautogui / ydotool→Page Down), `llm://…/text/query/plan` (phrase-map + opcjonalnie OpenRouter/OpenAI).
+Packi: `him://…/mouse/command/scroll` (pyautogui / xdotool / ydotool→Page Down), `llm://…/text/query/plan` (phrase-map + opcjonalnie OpenRouter/OpenAI).
 
-Docker lab (RDP + plan jak flow 08): `URISYS_URI_BASE=http://127.0.0.1:8795` — ten sam skrypt.
+Test E2E (Docker Xvfb):
+
+```bash
+bash scripts/run-office-simulate-e2e.sh
+python3 scripts/run_test_sessions.py --sessions office-simulate
+```
+
+W Dockerze HIM używa **xdotool** (Xvfb); na Wayland — **ydotool**; na pulpicie X11 — xdotool jeśli dostępny, inaczej pyautogui.
+
+### Lenovo (192.168.188.201:8790)
+
+```bash
+# na lenovo (jednorazowo, gdy node nie działa):
+systemctl --user enable --now urisys-node.service
+# lub: ~/venv/bin/urisys-node serve --host 0.0.0.0 --port 8790
+
+# z dev (212) — upgrade packi + test:
+bash scripts/deploy-lenovo-node.sh
+bash scripts/run-office-simulate-lenovo.sh              # dry-run
+OFFICE_LENOVO_REAL=1 bash scripts/run-office-simulate-lenovo.sh   # real HIM
+
+python3 scripts/run_test_sessions.py --sessions office-simulate-lenovo
+```
+
+Wheels serwowane z dev: `http://192.168.188.212:8765/` (`urihim-0.1.5`, `urillm-0.1.1`).

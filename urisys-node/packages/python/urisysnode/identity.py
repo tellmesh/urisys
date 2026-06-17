@@ -4,7 +4,9 @@ import hashlib
 import json
 import os
 import secrets
+import shutil
 import socket
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -95,16 +97,66 @@ def require_paired(context: dict[str, Any]) -> None:
         raise PermissionError("node is not paired — run: urisys-node enroll --controller …")
 
 
-def health_payload(version: str = "0.1.0") -> dict[str, Any]:
+def health_payload(version: str | None = None, runtime: Any | None = None) -> dict[str, Any]:
     identity = load_identity()
     pairing = load_pairing()
-    return {
+
+    urisys_version = version
+    if urisys_version is None:
+        try:
+            import urisys
+
+            urisys_version = getattr(urisys, "__version__", None)
+        except Exception:
+            urisys_version = None
+
+    uricore_version = None
+    try:
+        from importlib.metadata import version as pkg_version
+
+        uricore_version = pkg_version("uricore")
+    except Exception:
+        pass
+
+    payload: dict[str, Any] = {
         "ok": True,
         "service": "urisys-node",
         "node_id": identity["node_id"],
         "fingerprint": identity.get("fingerprint"),
-        "version": version,
+        "version": urisys_version or "0.1.0",
+        "urisys": urisys_version,
+        "uricore": uricore_version,
+        "python": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}",
+        "python_executable": sys.executable,
         "paired": bool(pairing.get("paired")),
         "controller": pairing.get("controller"),
         "remote_control_active": bool((pairing.get("remote_control_active"))),
     }
+
+    config = getattr(runtime, "config", None) if runtime is not None else None
+    if isinstance(config, dict):
+        him_cfg = config.get("him") or {}
+        if isinstance(him_cfg, dict) and him_cfg.get("driver"):
+            payload["him_driver"] = him_cfg["driver"]
+    if payload.get("him_driver") is None:
+        payload["him_driver"] = os.environ.get("URISYS_HIM_DRIVER") or _detect_him_driver()
+
+    if runtime is not None:
+        loaded = sorted(getattr(runtime, "_loaded_packs", set()) or [])
+        payload["packs_loaded"] = loaded
+        try:
+            payload["routes_count"] = len(runtime.routes)
+        except Exception:
+            pass
+
+    return payload
+
+
+def _detect_him_driver() -> str:
+    if os.environ.get("WAYLAND_DISPLAY") and shutil.which("ydotool"):
+        return "ydotool"
+    if os.environ.get("DISPLAY") and shutil.which("xdotool"):
+        return "xdotool"
+    if shutil.which("ydotool"):
+        return "ydotool"
+    return "pyautogui"
