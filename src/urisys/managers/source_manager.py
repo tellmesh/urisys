@@ -98,6 +98,15 @@ class SourceManager:
         digest = hashlib.sha256(key.encode("utf-8")).hexdigest()[:24]
         return self.cache_root / digest
 
+    def _http_download(self, url: str, *, timeout: int, error_label: str) -> bytes:
+        """GET ``url`` and return its bytes, mapping URLError to SourceError."""
+        try:
+            request = Request(url, headers={"User-Agent": "urisys-markpact-fetch/0.1"})
+            with urlopen(request, timeout=timeout) as response:
+                return response.read()
+        except URLError as exc:
+            raise SourceError(f"{error_label} {url}: {exc}") from exc
+
     def _fetch_http(self, spec: str, *, force: bool) -> dict[str, Any]:
         url = spec[4:] if spec.startswith("raw+") else spec
         cache_dir = self._cache_dir(url)
@@ -109,12 +118,7 @@ class SourceManager:
             return self._result(spec, local_path, cached=True, extra={"url": url})
 
         cache_dir.mkdir(parents=True, exist_ok=True)
-        try:
-            request = Request(url, headers={"User-Agent": "urisys-markpact-fetch/0.1"})
-            with urlopen(request, timeout=30) as response:
-                data = response.read()
-        except URLError as exc:
-            raise SourceError(f"Failed to fetch {url}: {exc}") from exc
+        data = self._http_download(url, timeout=30, error_label="Failed to fetch")
 
         local_path.write_bytes(data)
         meta_path.write_text(json.dumps({"source": spec, "url": url}, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -139,12 +143,7 @@ class SourceManager:
             return self._result(original, local_path, cached=True, extra={"url": url, "ref": ref})
 
         cache_dir.mkdir(parents=True, exist_ok=True)
-        try:
-            request = Request(url, headers={"User-Agent": "urisys-markpact-fetch/0.1"})
-            with urlopen(request, timeout=30) as response:
-                data = response.read()
-        except URLError as exc:
-            raise SourceError(f"Failed to fetch GitHub raw {url}: {exc}") from exc
+        data = self._http_download(url, timeout=30, error_label="Failed to fetch GitHub raw")
 
         local_path.write_bytes(data)
         meta_path.write_text(
@@ -202,12 +201,7 @@ class SourceManager:
             return self._result(spec, local_path, cached=True, extra={"archive_url": archive_url, "path": in_archive_path})
 
         cache_dir.mkdir(parents=True, exist_ok=True)
-        try:
-            request = Request(archive_url, headers={"User-Agent": "urisys-markpact-fetch/0.1"})
-            with urlopen(request, timeout=60) as response:
-                archive_bytes = response.read()
-        except URLError as exc:
-            raise SourceError(f"Failed to download ZIP {archive_url}: {exc}") from exc
+        archive_bytes = self._http_download(archive_url, timeout=60, error_label="Failed to download ZIP")
 
         normalized_target = in_archive_path.lstrip("/")
         with zipfile.ZipFile(io.BytesIO(archive_bytes)) as zf:

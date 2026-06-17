@@ -1,6 +1,6 @@
 flow:
   id: lenovo-upgrade-playwright
-  description: Pre-flow-07 upgrade — playwright + uribrowser wheel + node restart (runs automatically before flow 07).
+  description: Pre-flow-07 upgrade — playwright + uribrowser wheel + hot-reload browser pack (no node restart).
   target: lenovo
 
 defaults:
@@ -31,25 +31,15 @@ do:
         - urisysedge>=0.1.0
         - "{wheel:uribrowser}"
 
-  - id: restart_node
-    uri: shell://bash
+  - id: hotload_browser
+    uri: node://lenovo/command/install-pack
+    wheel: uribrowser
     payload:
-      args:
-        - -lc
-        - |
-          setsid bash -lc '
-            sleep 3
-            pkill -f "urisys node serve" 2>/dev/null || pkill -f "urisys-node serve" 2>/dev/null || true
-            sleep 2
-            for v in "$HOME/venv" "$HOME/venv312"; do
-              [ -f "$v/bin/activate" ] && . "$v/bin/activate" && break
-            done
-            export URISYS_ALLOW_REAL=1
-            exec urisys node serve --host 0.0.0.0 --port 8790 >> /tmp/urisys-node.log 2>&1
-          ' </dev/null >>/tmp/urisys-restart.log 2>&1 &
-          echo detached_restart=$!
+      pack: browser
+      install: true
+      force: true
+    note: Hot-reload browser handler in-process after pip (no restart)
 
-  - id: wait_restart
-    kind: host_wait_health
-    timeout: 90
-    note: Poll /health from dev host until node returns after setsid restart
+  - id: browser_status
+    uri: browser://linkedin/query/status
+    note: Verify browser routes registered after hotload

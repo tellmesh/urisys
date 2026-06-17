@@ -466,24 +466,8 @@ def main(argv: list[str] | None = None) -> int:
             if not up_rec.get("ok"):
                 append_log(log_path, f"flow {fp.name} skipped (upgrade failed)")
                 continue
-            try:
-                health_data = wait_health(endpoint=args.endpoint, timeout_s=30)
-                node_reachable = bool(health_data.get("ok"))
-            except TimeoutError:
-                node_reachable = False
-            if not node_reachable:
-                rec = {
-                    "flow_id": load_yaml(fp).get("flow", {}).get("id", fp.stem),
-                    "flow_path": str(fp.relative_to(ROOT)),
-                    "ok": False,
-                    "skipped": True,
-                    "reason": "node unreachable after playwright upgrade",
-                    "steps": [],
-                }
-                flow_records.append(rec)
-                save_json(session_dir / "flows" / f"{rec['flow_id']}.json", rec)
-                append_log(log_path, f"flow {fp.name} skipped (node down after upgrade)")
-                continue
+            node_reachable = True
+            meta["node_reachable"] = True
         rec = _run_one(fp)
         flow_records.append(rec)
         append_log(log_path, f"flow {fp.name} ok={rec.get('ok')}")
