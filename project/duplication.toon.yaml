@@ -1,18 +1,18 @@
-# redup/duplication | 2 groups | 43f 4444L | 2026-06-17
+# redup/duplication | 2 groups | 44f 4716L | 2026-06-17
 
 SUMMARY:
-  files_scanned: 43
-  total_lines:   4444
+  files_scanned: 44
+  total_lines:   4716
   dup_groups:    2
   dup_fragments: 4
   saved_lines:   15
-  scan_ms:       2169
+  scan_ms:       4946
 
 HOTSPOTS[4] (files with most duplication):
   scripts/report/run_analysis.py  dup=8L  groups=1  frags=1  (0.2%)
   scripts/report/session_io.py  dup=8L  groups=1  frags=1  (0.2%)
-  src/urisys/doctor.py  dup=7L  groups=1  frags=1  (0.2%)
-  src/urisys/uricore_install.py  dup=7L  groups=1  frags=1  (0.2%)
+  src/urisys/doctor.py  dup=7L  groups=1  frags=1  (0.1%)
+  src/urisys/uricore_install.py  dup=7L  groups=1  frags=1  (0.1%)
 
 DUPLICATES[2] (ranked by impact):
   [bb100fda4da2fc0e]   STRU  write_run_analysis  L=8 N=2 saved=8 sim=1.00

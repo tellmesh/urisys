@@ -1,4 +1,4 @@
-# code2llm/evolution | 587 func | 107f | 2026-06-17
+# code2llm/evolution | 164 func | 26f | 2026-06-17
 # generated in 0.00s
 
 NEXT[10] (ranked by impact):
@@ -6,41 +6,41 @@ NEXT[10] (ranked by impact):
       WHY: CC=36 exceeds 15
       EFFORT: ~1h  IMPACT: 1296
 
-  [2] !  SPLIT-FUNC      main  CC=19  fan=44
-      WHY: CC=19 exceeds 15
-      EFFORT: ~1h  IMPACT: 836
-
-  [3] !  SPLIT-FUNC      MarkpactManager.compile  CC=21  fan=34
+  [2] !  SPLIT-FUNC      MarkpactManager.compile  CC=21  fan=34
       WHY: CC=21 exceeds 15
       EFFORT: ~1h  IMPACT: 714
 
-  [4] !! SPLIT-FUNC      run_init  CC=34  fan=20
+  [3] !! SPLIT-FUNC      run_init  CC=34  fan=20
       WHY: CC=34 exceeds 15
       EFFORT: ~1h  IMPACT: 680
 
-  [5] !  SPLIT-FUNC      text_plan  CC=24  fan=20
-      WHY: CC=24 exceeds 15
-      EFFORT: ~1h  IMPACT: 480
-
-  [6] !  SPLIT-FUNC      load_pack_into_runtime  CC=23  fan=20
-      WHY: CC=23 exceeds 15
-      EFFORT: ~1h  IMPACT: 460
-
-  [7] !  SPLIT-FUNC      MarkpactManager.run_tests  CC=20  fan=21
+  [4] !  SPLIT-FUNC      MarkpactManager.run_tests  CC=20  fan=21
       WHY: CC=20 exceeds 15
       EFFORT: ~1h  IMPACT: 420
 
-  [8] !  SPLIT-FUNC      plan  CC=20  fan=18
-      WHY: CC=20 exceeds 15
-      EFFORT: ~1h  IMPACT: 360
+  [5] !  SPLIT-FUNC      build_lab_runtime  CC=17  fan=19
+      WHY: CC=17 exceeds 15
+      EFFORT: ~1h  IMPACT: 323
 
-  [9] !  SPLIT-FUNC      analyze  CC=18  fan=19
+  [6] !  SPLIT-FUNC      LabHandler.do_POST  CC=23  fan=11
+      WHY: CC=23 exceeds 15
+      EFFORT: ~1h  IMPACT: 253
+
+  [7] !  SPLIT-FUNC      validate_contract  CC=23  fan=10
+      WHY: CC=23 exceeds 15
+      EFFORT: ~1h  IMPACT: 230
+
+  [8] !  SPLIT-FUNC      MarkpactManager._build_route  CC=18  fan=11
       WHY: CC=18 exceeds 15
-      EFFORT: ~1h  IMPACT: 342
+      EFFORT: ~1h  IMPACT: 198
 
-  [10] !! SPLIT-FUNC      _match_office_transcript  CC=31  fan=11
-      WHY: CC=31 exceeds 15
-      EFFORT: ~1h  IMPACT: 341
+  [9] !  SPLIT-FUNC      validate_implementation  CC=18  fan=10
+      WHY: CC=18 exceeds 15
+      EFFORT: ~1h  IMPACT: 180
+
+  [10] !! SPLIT           planfile.yaml
+      WHY: 1319L, 0 classes, max CC=0
+      EFFORT: ~4h  IMPACT: 0
 
 
 RISKS[2]:
@@ -48,10 +48,10 @@ RISKS[2]:
   ⚠ Splitting goal.yaml may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          4.3 → ≤3.0
+  CC̄:          4.4 → ≤3.1
   max-CC:      36 → ≤18
   god-modules: 2 → 0
-  high-CC(≥15): 28 → ≤14
+  high-CC(≥15): 10 → ≤5
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -79,4 +79,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=4.2 → now CC̄=4.3
+  prev CC̄=4.3 → now CC̄=4.4
