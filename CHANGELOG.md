@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `src/urisys/managers/markpact_validation.py` — wydzielone pętle walidacji z trzech walidatorów: `_validate_contract_routes` (contract CC 22→12), `_missing_bundle_imports` (bundle CC 14→9), `_validate_implementation_capabilities` (implementation CC 18→14); byte-identyczne (`tests/test_markpact` + 62 passed)
 - `src/urisys/managers/pack_manager.py` — usunięty 3× zduplikowany split string/iterable → jeden `_split_specs`; `parse_packs` CC 12→7, `parse_markpacts` → 1-liner; byte-identyczne, +4 testy charakteryzacyjne (`tests/test_pack_manager_parse.py`, 73 passed)
 - `src/urisys/managers/source_manager.py` — wydzielony `_http_download` (3× zduplikowany blok `urlopen`/`URLError`→`SourceError` z `_fetch_http`/`_fetch_github_raw`/`_fetch_zip`); identyczne komunikaty błędów, `tests/test_source_manager` + 73 passed
+- `src/urisys/defaults.py` — scentralizowane hardkodowane wartości: `DEFAULT_MIN_VERSION` (było 8× `"0.1.25"`), `MIN_VERSION_ENV`, `NODE_SERVE_CMD` (5×); użyto `DEFAULT_EVENTS_PATH` w cli/http_server/server_controller (4× literał). `bootstrap.py` świadomie mirroruje literały (ładowany standalone — komentarz-guard). Byte-identyczne, 73 passed
 - Migracja 32 packów z `urisys/**/packages/python/*` → `tellmesh/{repo}/` (canonical source)
 - `urisys init` — uricore + urisys-node tylko jako publiczne wheels; core pip bez git credentials
 - Skrypty lenovo/deploy i `publish-pypi-packs.sh` — ścieżki sibling zamiast vendored
@@ -35,6 +36,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `urisys doctor` — `NameError: node_pip_spec` przy sprawdzaniu importu urisysnode
 - PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
 - Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
+
+## [0.1.57] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+
+### Other
+- Update uv.lock
 
 ## [0.1.56] - 2026-06-17
 
