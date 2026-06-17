@@ -39,6 +39,13 @@ python -c "import uri_control; print('OK')"
 
 Opcje: `--dry-run`, `--skip-pip`, `--no-write-env`, `--profile dev`.
 
+**Bootstrap na konsoli lenovo** (gdy SSH niedostępne z dev): [`scripts/bootstrap-lenovo-local.sh`](../scripts/bootstrap-lenovo-local.sh)
+
+```bash
+bash scripts/bootstrap-lenovo-local.sh
+# wheel urisys-node: https://github.com/tellmesh/urisys-node/releases/download/v0.1.3/urisys_node-0.1.3-py3-none-any.whl
+```
+
 ---
 
 Po `pip install urisys` (z pełnymi zależnościami) wystarczy:

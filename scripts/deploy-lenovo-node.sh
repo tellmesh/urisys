@@ -8,6 +8,34 @@ set -euo pipefail
 LENOVO="${LENOVO:-http://192.168.188.201:8790}"
 DEV="${DEV:-http://192.168.188.212:8765}"
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+TELLMESH="$(dirname "$ROOT")"
+DEPLOY_DIR="${DEPLOY_DIR:-/tmp/urisys-deploy}"
+
+pkg_version() {
+  python3 -c "import tomllib; print(tomllib.load(open('$1/pyproject.toml','rb'))['project']['version'])"
+}
+
+wheel_name() {
+  # PEP 427: hyphens in PyPI name → underscores in wheel filename
+  local name="$1" ver="$2"
+  local file="${name//-/_}-${ver}-py3-none-any.whl"
+  echo "$file"
+}
+
+build_wheel() {
+  local dir="$1"
+  local name ver whl
+  name="$(python3 -c "import tomllib; print(tomllib.load(open('$dir/pyproject.toml','rb'))['project']['name'])")"
+  ver="$(pkg_version "$dir")"
+  whl="$(wheel_name "$name" "$ver")"
+  if [ -f "${DEPLOY_DIR}/${whl}" ]; then
+    echo "skip build ${whl} (exists)"
+    return 0
+  fi
+  echo "build ${name} ${ver} → ${whl}"
+  rm -rf "${dir}/build" "${dir}/dist" "${dir}"/*.egg-info 2>/dev/null || true
+  (cd "$dir" && python3 -m pip install -q build && python3 -m build -w -o "$DEPLOY_DIR")
+}
 
 call() {
   local uri="$1" payload="${2:-{}}"
@@ -21,51 +49,65 @@ health() {
 }
 
 echo "== health =="
-health | python3 -m json.tool
-
-echo ""
-echo "== build wheels (if missing) =="
-mkdir -p /tmp/urisys-deploy
-if [ ! -f /tmp/urisys-deploy/urisys-0.1.27-py3-none-any.whl ]; then
-  (cd "$ROOT" && python3 -m build -o /tmp/urisys-deploy 2>/dev/null || python3 -m pip wheel -w /tmp/urisys-deploy . -q)
-fi
-if [ ! -f /tmp/urisys-deploy/urihim-0.1.5-py3-none-any.whl ]; then
-  (cd "$ROOT/../urihim" && python3 -m pip wheel -w /tmp/urisys-deploy . -q)
-fi
-if [ ! -f /tmp/urisys-deploy/urillm-0.1.1-py3-none-any.whl ]; then
-  (cd "$ROOT/../urillm" && python3 -m pip wheel -w /tmp/urisys-deploy . -q)
+if ! health | python3 -m json.tool; then
+  echo "FAIL: lenovo node not reachable at $LENOVO" >&2
+  echo "Start on lenovo: urisys node serve --host 0.0.0.0 --port 8790" >&2
+  exit 1
 fi
 
+URISYS_VER="$(pkg_version "$ROOT")"
+URIHIM_VER="$(pkg_version "$TELLMESH/urihim")"
+URILLM_VER="$(pkg_version "$TELLMESH/urillm")"
+NODE_VER="$(pkg_version "$TELLMESH/urisys-node")"
+
 echo ""
-echo "== HTTP serve wheels on DEV (8765) =="
-if ! pgrep -f "http.server 8765.*192.168.188.212" >/dev/null 2>&1; then
-  python3 -m http.server 8765 --bind 192.168.188.212 --directory /tmp/urisys-deploy &
+echo "== build wheels (urisys ${URISYS_VER}, urisys-node ${NODE_VER}, urihim ${URIHIM_VER}, urillm ${URILLM_VER}) =="
+mkdir -p "$DEPLOY_DIR"
+build_wheel "$ROOT"
+build_wheel "$TELLMESH/urisys-node"
+build_wheel "$TELLMESH/urihim"
+build_wheel "$TELLMESH/urillm"
+
+URISYS_WHL="$(wheel_name urisys "$URISYS_VER")"
+NODE_WHL="$(wheel_name urisys-node "$NODE_VER")"
+URIHIM_WHL="$(wheel_name urihim "$URIHIM_VER")"
+URILLM_WHL="$(wheel_name urillm "$URILLM_VER")"
+
+for whl in "$URISYS_WHL" "$NODE_WHL" "$URIHIM_WHL" "$URILLM_WHL"; do
+  test -f "${DEPLOY_DIR}/${whl}" || { echo "missing ${DEPLOY_DIR}/${whl}" >&2; exit 1; }
+done
+
+echo ""
+echo "== HTTP serve wheels on DEV (${DEV#http://}) =="
+DEV_HOST="${DEV#http://}"
+DEV_HOST="${DEV_HOST%%:*}"
+DEV_PORT="${DEV##*:}"
+if ! pgrep -f "http.server ${DEV_PORT}.*${DEV_HOST}" >/dev/null 2>&1; then
+  python3 -m http.server "$DEV_PORT" --bind "$DEV_HOST" --directory "$DEPLOY_DIR" &
   sleep 1
 fi
 
-URISYS_WHL="$(ls -1 /tmp/urisys-deploy/urisys-*.whl 2>/dev/null | sort -V | tail -1)"
 echo ""
-echo "== pip install urisys on lenovo =="
-call shell://pip "{\"args\":[\"install\",\"-U\",\"$DEV/$(basename "$URISYS_WHL")\"]}" | python3 -m json.tool
+echo "== pip install urisys + urisys-node on lenovo =="
+call shell://pip "{\"args\":[\"install\",\"-U\",\"urisysedge>=0.1.0\",\"$DEV/$URISYS_WHL\",\"$DEV/$NODE_WHL\"]}" | python3 -m json.tool
 
 echo ""
-echo "== install-pack urihim 0.1.5 =="
-call node://local/command/install-pack "{\"pack\":\"him\",\"install\":true,\"force\":true,\"specs\":[\"urisysedge>=0.1.0\",\"$DEV/urihim-0.1.5-py3-none-any.whl\"]}" | python3 -m json.tool
+echo "== install-pack urihim ${URIHIM_VER} =="
+call node://local/command/install-pack "{\"pack\":\"him\",\"install\":true,\"force\":true,\"specs\":[\"urisysedge>=0.1.0\",\"$DEV/$URIHIM_WHL\"]}" | python3 -m json.tool
 
 echo ""
-echo "== install-pack urillm 0.1.1 =="
-call node://local/command/install-pack "{\"pack\":\"llm\",\"install\":true,\"force\":true,\"specs\":[\"urisysedge>=0.1.0\",\"$DEV/urillm-0.1.1-py3-none-any.whl\"]}" | python3 -m json.tool
+echo "== install-pack urillm ${URILLM_VER} =="
+call node://local/command/install-pack "{\"pack\":\"llm\",\"install\":true,\"force\":true,\"specs\":[\"urisysedge>=0.1.0\",\"$DEV/$URILLM_WHL\"]}" | python3 -m json.tool
 
 echo ""
-echo "== restart urisys-node =="
-call shell://bash '{"args":["-lc","pkill -f \"urisys-node serve\" || true; sleep 2; nohup /home/tom/venv/bin/urisys-node serve --host 0.0.0.0 --port 8790 >> /tmp/urisys-node.log 2>&1 & sleep 2; curl -sS http://127.0.0.1:8790/health"]}' | python3 -m json.tool
+echo "== restart urisys node =="
+call shell://bash '{"args":["-lc","pkill -f \"urisys node serve\" || pkill -f \"urisys-node serve\" || true; sleep 2; nohup urisys node serve --host 0.0.0.0 --port 8790 >> /tmp/urisys-node.log 2>&1 & sleep 3; curl -sS http://127.0.0.1:8790/health"]}' | python3 -m json.tool
 
 echo ""
-echo "== probe him driver + scroll route =="
+echo "== probe him driver + routes =="
 sleep 2
-call him://lenovo/mouse/query/status '{}' | python3 -m json.tool
-curl -sS "$LENOVO/uri/routes" | grep -E 'scroll|text/query/plan' || true
+call him://lenovo/mouse/query/status '{}' | python3 -m json.tool || true
+curl -sS "$LENOVO/uri/routes" | grep -E 'scroll|text/query/plan|him://' || true
 
 echo ""
-echo "Done. Wayland: sudo apt install ydotool && sudo systemctl enable --now ydotoold"
-echo "Test: bash scripts/run-office-simulate-lenovo.sh"
+echo "Done. Test: bash scripts/run-office-simulate-lenovo.sh"

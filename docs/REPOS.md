@@ -35,7 +35,7 @@ Organizacja GitHub: **[tellmesh](https://github.com/tellmesh)** (paczki urisys) 
 | `urimail` | [tellmesh/urimail](https://github.com/tellmesh/urimail) | GitHub Releases |
 | `urioffice` | [tellmesh/urioffice](https://github.com/tellmesh/urioffice) | GitHub Releases |
 | `urivql` | [tellmesh/urivql](https://github.com/tellmesh/urivql) | GitHub Releases |
-| urisys-node | *(brak `.git`)* | wheel: `urisys_node-0.1.3-py3-none-any.whl` (PEP 427, **nie** `urisys-node-…`) |
+| `urisys-node` | [tellmesh/urisys-node](https://github.com/tellmesh/urisys-node) | Release v0.1.3: `urisys_node-0.1.3-py3-none-any.whl` |
 | `urirdp` | *(brak `.git`)* | bundle multi-module |
 | `urikvmedge` | *(brak `.git`)* | kvm docker CLI |
 | `uribrowser` | *(brak `.git`)* | |

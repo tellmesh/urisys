@@ -25,7 +25,8 @@ save "03-packs" "$(curl -fsS -m 10 -X POST "$BASE/uri/call" -H 'Content-Type: ap
 
 install_pack() {
   local pack="$1" repo="$2" ver="$3"
-  local wheel="https://github.com/tellmesh/${repo}/releases/download/v${ver}/${repo}-${ver}-py3-none-any.whl"
+  local file="${repo//-/_}-${ver}-py3-none-any.whl"
+  local wheel="https://github.com/tellmesh/${repo}/releases/download/v${ver}/${file}"
   local body
   body="$(python3 - <<PY
 import json
@@ -46,7 +47,7 @@ PY
   echo "$out" | python3 -c "import json,sys; d=json.load(sys.stdin); r=d.get('result',d); print('${pack}:', 'loaded' if r.get('loaded') else 'FAIL', r.get('pip',{}).get('stderr','')[-120:])"
 }
 
-for entry in "him:urihim:0.1.2" "ocr:uriocr:0.1.0" "llm:urillm:0.1.0"; do
+for entry in "him:urihim:0.1.5" "ocr:uriocr:0.1.0" "llm:urillm:0.1.0"; do
   IFS=: read -r pack repo ver <<< "$entry"
   install_pack "$pack" "$repo" "$ver" || true
 done
