@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.55', 'python').
+project_metadata('urisys', '0.1.63', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 49, 'less').
@@ -22,7 +22,7 @@ project_file('scripts/ci-install-siblings.sh', 29, 'shell').
 project_file('scripts/deploy-lenovo-node.sh', 131, 'shell').
 project_file('scripts/install-kvm-packs-editable.sh', 14, 'shell').
 project_file('scripts/lenovo-node-session.sh', 74, 'shell').
-project_file('scripts/lenovo_remote_session.py', 508, 'python').
+project_file('scripts/lenovo_remote_session.py', 695, 'python').
 project_file('scripts/office-simulate-loop.py', 147, 'python').
 project_file('scripts/pack_registry.py', 270, 'python').
 project_file('scripts/pack_sync.py', 348, 'python').
@@ -40,7 +40,7 @@ project_file('scripts/report/run_markdown.py', 43, 'python').
 project_file('scripts/report/session.py', 116, 'python').
 project_file('scripts/report/session_io.py', 20, 'python').
 project_file('scripts/report/session_markdown.py', 121, 'python').
-project_file('scripts/report/util.py', 30, 'python').
+project_file('scripts/report/util.py', 22, 'python').
 project_file('scripts/run-email-mailpit-e2e.sh', 135, 'shell').
 project_file('scripts/run-lab-e2e.sh', 15, 'shell').
 project_file('scripts/run-lab-nightly.sh', 17, 'shell').
@@ -55,7 +55,7 @@ project_file('scripts/run-urisys-node-docker-e2e.sh', 164, 'shell').
 project_file('scripts/run-urisys-node-docker-session.sh', 7, 'shell').
 project_file('scripts/run_test_sessions.py', 784, 'python').
 project_file('scripts/scan-browser-sessions.py', 200, 'python').
-project_file('scripts/session_core.py', 213, 'python').
+project_file('scripts/session_core.py', 277, 'python').
 project_file('scripts/session_report.py', 50, 'python').
 project_file('scripts/sync-vendored-pack.sh', 39, 'shell').
 project_file('scripts/sync-vendored-urisysedge.sh', 18, 'shell').
@@ -65,17 +65,17 @@ project_file('scripts/test_sessions/__init__.py', 101, 'python').
 project_file('scripts/test_sessions/expectations.py', 154, 'python').
 project_file('scripts/test_sessions/lab_flows.py', 321, 'python').
 project_file('scripts/test_sessions/lab_rdp.py', 181, 'python').
-project_file('scripts/test_sessions/util.py', 211, 'python').
+project_file('scripts/test_sessions/util.py', 202, 'python').
 project_file('scripts/validate-all-markpacts.sh', 54, 'shell').
 project_file('scripts/validate-pypi-metadata.sh', 63, 'shell').
 project_file('src/urisys/__init__.py', 4, 'python').
-project_file('src/urisys/bootstrap.py', 112, 'python').
-project_file('src/urisys/cli.py', 311, 'python').
+project_file('src/urisys/bootstrap.py', 117, 'python').
+project_file('src/urisys/cli.py', 319, 'python').
 project_file('src/urisys/controllers/__init__.py', 1, 'python').
 project_file('src/urisys/controllers/flow_controller.py', 34, 'python').
 project_file('src/urisys/controllers/server_controller.py', 20, 'python').
 project_file('src/urisys/controllers/uri_controller.py', 34, 'python').
-project_file('src/urisys/defaults.py', 28, 'python').
+project_file('src/urisys/defaults.py', 29, 'python').
 project_file('src/urisys/doctor.py', 297, 'python').
 project_file('src/urisys/edge_install.py', 79, 'python').
 project_file('src/urisys/flow.py', 26, 'python').
@@ -87,7 +87,7 @@ project_file('src/urisys/managers/event_manager.py', 14, 'python').
 project_file('src/urisys/managers/markpact_manager.py', 413, 'python').
 project_file('src/urisys/managers/markpact_models.py', 93, 'python').
 project_file('src/urisys/managers/markpact_validation.py', 157, 'python').
-project_file('src/urisys/managers/pack_manager.py', 126, 'python').
+project_file('src/urisys/managers/pack_manager.py', 138, 'python').
 project_file('src/urisys/managers/policy_manager.py', 19, 'python').
 project_file('src/urisys/managers/route_manager.py', 24, 'python').
 project_file('src/urisys/managers/runtime_manager.py', 31, 'python').
@@ -117,15 +117,16 @@ project_file('tree.sh', 2, 'shell').
 % ── Python Functions ─────────────────────────────────────
 python_function('scripts/lenovo_remote_session.py', 'load_yaml', 1, 3, 4).
 python_function('scripts/lenovo_remote_session.py', 'http_get', 2, 4, 6).
-python_function('scripts/lenovo_remote_session.py', 'run_step', 1, 17, 12).
-python_function('scripts/lenovo_remote_session.py', 'run_flow', 1, 13, 19).
+python_function('scripts/lenovo_remote_session.py', 'run_step', 1, 48, 17).
+python_function('scripts/lenovo_remote_session.py', 'run_flow', 1, 14, 20).
 python_function('scripts/lenovo_remote_session.py', 'append_log', 2, 1, 4).
-python_function('scripts/lenovo_remote_session.py', 'build_wheels', 1, 3, 4).
+python_function('scripts/lenovo_remote_session.py', 'build_wheels', 1, 4, 6).
 python_function('scripts/lenovo_remote_session.py', 'start_wheel_server', 3, 2, 4).
 python_function('scripts/lenovo_remote_session.py', 'write_session_md', 3, 22, 9).
-python_function('scripts/lenovo_remote_session.py', 'resolve_flow_paths', 2, 6, 4).
+python_function('scripts/lenovo_remote_session.py', 'resolve_flow_paths', 2, 5, 4).
+python_function('scripts/lenovo_remote_session.py', 'resolve_route_map', 2, 8, 8).
 python_function('scripts/lenovo_remote_session.py', 'load_manifest_session', 1, 2, 3).
-python_function('scripts/lenovo_remote_session.py', 'main', 1, 44, 40).
+python_function('scripts/lenovo_remote_session.py', 'main', 1, 58, 46).
 python_function('scripts/office-simulate-loop.py', 'call_uri', 4, 4, 9).
 python_function('scripts/office-simulate-loop.py', 'rules_tick', 3, 3, 5).
 python_function('scripts/office-simulate-loop.py', 'llm_tick', 3, 7, 6).
@@ -188,8 +189,6 @@ python_function('scripts/report/session_markdown.py', '_events_section', 1, 5, 5
 python_function('scripts/report/session_markdown.py', '_log_errors_section', 1, 4, 2).
 python_function('scripts/report/session_markdown.py', '_duplicate_screenshots_section', 1, 7, 3).
 python_function('scripts/report/session_markdown.py', '_log_tail_section', 1, 2, 1).
-python_function('scripts/report/util.py', 'now_iso', 0, 1, 3).
-python_function('scripts/report/util.py', 'host_id', 0, 1, 3).
 python_function('scripts/report/util.py', 'read_json', 1, 3, 3).
 python_function('scripts/report/util.py', 'tail', 2, 2, 0).
 python_function('scripts/run_test_sessions.py', 'session_pytest_urirdp', 1, 3, 5).
@@ -212,15 +211,20 @@ python_function('scripts/scan-browser-sessions.py', 'chrome_profiles', 1, 11, 9)
 python_function('scripts/scan-browser-sessions.py', 'firefox_profiles', 1, 8, 10).
 python_function('scripts/scan-browser-sessions.py', 'discover_browsers', 1, 1, 0).
 python_function('scripts/scan-browser-sessions.py', 'main', 0, 23, 18).
+python_function('scripts/session_core.py', 'default_examples_root', 0, 3, 4).
+python_function('scripts/session_core.py', 'resolve_flow_ref', 1, 5, 5).
 python_function('scripts/session_core.py', 'now_iso', 0, 1, 2).
+python_function('scripts/session_core.py', 'host_id', 0, 1, 3).
+python_function('scripts/session_core.py', 'run_id', 1, 2, 2).
 python_function('scripts/session_core.py', 'save_json', 2, 1, 3).
-python_function('scripts/session_core.py', 'step_ok', 1, 10, 3).
+python_function('scripts/session_core.py', 'step_ok', 1, 16, 3).
 python_function('scripts/session_core.py', 'image_ext', 1, 5, 1).
 python_function('scripts/session_core.py', 'write_base64_image', 2, 1, 4).
 python_function('scripts/session_core.py', 'extract_images_from_dict', 1, 8, 11).
 python_function('scripts/session_core.py', 'extract_step_screenshots', 1, 5, 4).
 python_function('scripts/session_core.py', 'backfill_session_images', 1, 8, 11).
-python_function('scripts/session_core.py', 'find_wheel_file', 2, 2, 2).
+python_function('scripts/session_core.py', '_wheel_version_key', 2, 5, 7).
+python_function('scripts/session_core.py', 'find_wheel_file', 2, 2, 4).
 python_function('scripts/session_core.py', 'wheel_url', 2, 1, 1).
 python_function('scripts/session_core.py', 'expand_step_wheels', 1, 18, 11).
 python_function('scripts/test_sessions/expectations.py', 'flow_expectations', 1, 5, 5).
@@ -245,13 +249,10 @@ python_function('scripts/test_sessions/lab_rdp.py', 'parse_docker_log_errors', 1
 python_function('scripts/test_sessions/lab_rdp.py', 'prepare_ok_target', 3, 1, 2).
 python_function('scripts/test_sessions/lab_rdp.py', 'capture_rdp_screenshot', 1, 5, 4).
 python_function('scripts/test_sessions/lab_rdp.py', 'capture_rdp_screenshot_wait', 1, 9, 5).
-python_function('scripts/test_sessions/util.py', 'now_iso', 0, 1, 3).
 python_function('scripts/test_sessions/util.py', 'run_id', 0, 1, 2).
-python_function('scripts/test_sessions/util.py', 'host_id', 0, 1, 3).
 python_function('scripts/test_sessions/util.py', 'http_json', 4, 9, 11).
 python_function('scripts/test_sessions/util.py', 'wait_health', 3, 3, 5).
 python_function('scripts/test_sessions/util.py', 'compose_cmd', 0, 4, 3).
-python_function('scripts/test_sessions/util.py', 'save_json', 2, 1, 3).
 python_function('scripts/test_sessions/util.py', 'run_cmd', 1, 6, 8).
 python_function('scripts/test_sessions/util.py', 'write_meta', 1, 1, 3).
 python_function('scripts/test_sessions/util.py', 'read_meta', 1, 3, 3).
@@ -480,7 +481,7 @@ python_method('PackManager', 'parse_markpacts', 1, 1, 1).
 python_method('PackManager', 'resolve_package_name', 1, 1, 1).
 python_method('PackManager', '_is_markpact_path', 1, 3, 2).
 python_method('PackManager', '_is_manifest_path', 1, 4, 1).
-python_method('PackManager', 'manifest_paths', 0, 9, 14).
+python_method('PackManager', 'manifest_paths', 0, 11, 15).
 python_method('PackManager', 'create_registry', 0, 1, 2).
 python_method('PackManager', 'capabilities', 0, 2, 1).
 python_method('PackManager', 'close', 0, 1, 1).

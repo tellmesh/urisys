@@ -92,6 +92,160 @@ def http_get(endpoint: str, path: str, *, timeout: float = 30.0) -> dict[str, An
         return {"ok": False, "url": url, "error": str(exc)}
 
 
+def _run_http_get_step(step: dict[str, Any], out: dict[str, Any], endpoint: str) -> None:
+    out["kind"] = "http_get"
+    out["response"] = http_get(endpoint, str(step.get("path") or "/health"))
+
+
+def _run_host_sleep_step(step: dict[str, Any], out: dict[str, Any]) -> None:
+    seconds = float(step.get("seconds") or step.get("sleep") or 5)
+    out["kind"] = "host_sleep"
+    out["seconds"] = seconds
+    time.sleep(seconds)
+    out["response"] = {"ok": True, "slept": seconds}
+
+
+def _run_host_restart_and_wait_step(
+    step: dict[str, Any],
+    out: dict[str, Any],
+    *,
+    endpoint: str,
+    route_map: str,
+) -> dict[str, Any] | None:
+    """Return out early on fatal error, otherwise set out fields in place."""
+    timeout = float(step.get("timeout") or step.get("seconds") or 90)
+    expect = step.get("expect") if isinstance(step.get("expect"), dict) else {}
+    settle_s = float(step.get("settle_s") or 3)
+    out["kind"] = "host_restart_and_wait"
+    out["timeout"] = timeout
+    if expect:
+        out["expect"] = expect
+    baseline_id = None
+    try:
+        baseline = remote_health(endpoint=endpoint)
+        baseline_id = baseline.get("instance_id")
+        out["baseline_instance_id"] = baseline_id
+    except Exception as exc:
+        out["baseline_error"] = str(exc)
+    try:
+        out["restart"] = schedule_restart(endpoint=endpoint, route_map=route_map)
+    except Exception as exc:
+        msg = str(exc)
+        if "Remote end closed connection" not in msg and "Connection reset" not in msg:
+            out["error"] = msg
+            out["response"] = {"ok": False, "error": msg}
+            out["finished_at"] = now_iso()
+            out["ok"] = False
+            return out
+        out["restart"] = {"ok": True, "note": "connection closed during takeover", "error": msg}
+    time.sleep(settle_s)
+    deadline = time.time() + timeout
+    last: dict[str, Any] = {"ok": False, "error": "unreachable"}
+    while time.time() < deadline:
+        try:
+            last = remote_health(endpoint=endpoint)
+        except Exception as exc:
+            last = {"ok": False, "error": str(exc)}
+            time.sleep(2.0)
+            continue
+        if not last.get("ok"):
+            time.sleep(2.0)
+            continue
+        if expect and not all(last.get(k) == v for k, v in expect.items()):
+            time.sleep(2.0)
+            continue
+        new_id = last.get("instance_id")
+        if baseline_id and new_id == baseline_id:
+            time.sleep(2.0)
+            continue
+        out["response"] = last
+        break
+    else:
+        out["error"] = (
+            f"restart wait failed after {timeout}s expect={expect!r} "
+            f"baseline={baseline_id!r} last={last!r}"
+        )
+        out["response"] = last
+    return None
+
+
+def _run_host_schedule_restart_step(
+    step: dict[str, Any], out: dict[str, Any], *, endpoint: str, route_map: str
+) -> None:
+    out["kind"] = "host_schedule_restart"
+    try:
+        out["response"] = schedule_restart(endpoint=endpoint, route_map=route_map)
+    except Exception as exc:
+        msg = str(exc)
+        if "Remote end closed connection" in msg or "Connection reset" in msg:
+            out["response"] = {"ok": True, "note": "connection closed during takeover", "error": msg}
+        else:
+            out["error"] = msg
+            out["response"] = {"ok": False, "error": msg}
+
+
+def _run_host_wait_health_step(step: dict[str, Any], out: dict[str, Any], *, endpoint: str) -> None:
+    timeout = float(step.get("timeout") or step.get("seconds") or 60)
+    expect = step.get("expect") if isinstance(step.get("expect"), dict) else {}
+    out["kind"] = "host_wait_health"
+    out["timeout"] = timeout
+    if expect:
+        out["expect"] = expect
+    deadline = time.time() + timeout
+    last: dict[str, Any] = {"ok": False, "error": "unreachable"}
+    try:
+        while time.time() < deadline:
+            try:
+                last = remote_health(endpoint=endpoint)
+            except Exception as exc:
+                last = {"ok": False, "error": str(exc)}
+                time.sleep(2.0)
+                continue
+            if last.get("ok") and all(last.get(k) == v for k, v in expect.items()):
+                out["response"] = last
+                break
+            time.sleep(2.0)
+        else:
+            out["error"] = f"health expect not met after {timeout}s: {expect!r} last={last!r}"
+            out["response"] = last
+    except TimeoutError as exc:
+        out["error"] = str(exc)
+        out["response"] = {"ok": False, "error": str(exc)}
+
+
+def _run_uri_call_step(
+    step: dict[str, Any],
+    out: dict[str, Any],
+    *,
+    route_map: str,
+    defaults: dict[str, Any],
+) -> None:
+    uri = str(step.get("uri") or "")
+    if not uri:
+        raise ValueError("step requires uri or kind:http_get")
+    payload = dict(step.get("payload") or {})
+    ctx = {
+        "approved": bool(defaults.get("approved", True)),
+        "dry_run": bool(defaults.get("dry_run", False)),
+        "allow_real": bool(defaults.get("allow_real", True)),
+    }
+    for key in ("approved", "dry_run", "allow_real"):
+        if key in step:
+            ctx[key] = bool(step[key])
+    out["kind"] = "uri_call"
+    out["uri"] = uri
+    out["payload"] = payload
+    out["context"] = ctx
+    out["response"] = call_uri(
+        uri,
+        payload=payload,
+        approved=ctx["approved"],
+        dry_run=ctx["dry_run"],
+        allow_real=ctx["allow_real"],
+        route_map=route_map,
+    )
+
+
 def run_step(
     step: dict[str, Any],
     *,
@@ -106,134 +260,19 @@ def run_step(
 
     try:
         if kind == "http_get":
-            out["kind"] = "http_get"
-            out["response"] = http_get(endpoint, str(step.get("path") or "/health"))
+            _run_http_get_step(step, out, endpoint)
         elif kind == "host_sleep":
-            seconds = float(step.get("seconds") or step.get("sleep") or 5)
-            out["kind"] = "host_sleep"
-            out["seconds"] = seconds
-            time.sleep(seconds)
-            out["response"] = {"ok": True, "slept": seconds}
+            _run_host_sleep_step(step, out)
         elif kind == "host_restart_and_wait":
-            timeout = float(step.get("timeout") or step.get("seconds") or 90)
-            expect = step.get("expect") if isinstance(step.get("expect"), dict) else {}
-            settle_s = float(step.get("settle_s") or 3)
-            out["kind"] = "host_restart_and_wait"
-            out["timeout"] = timeout
-            if expect:
-                out["expect"] = expect
-            baseline_id = None
-            try:
-                baseline = remote_health(endpoint=endpoint)
-                baseline_id = baseline.get("instance_id")
-                out["baseline_instance_id"] = baseline_id
-            except Exception as exc:
-                out["baseline_error"] = str(exc)
-            try:
-                out["restart"] = schedule_restart(endpoint=endpoint, route_map=route_map)
-            except Exception as exc:
-                msg = str(exc)
-                if "Remote end closed connection" not in msg and "Connection reset" not in msg:
-                    out["error"] = msg
-                    out["response"] = {"ok": False, "error": msg}
-                    out["finished_at"] = now_iso()
-                    out["ok"] = False
-                    return out
-                out["restart"] = {"ok": True, "note": "connection closed during takeover", "error": msg}
-            time.sleep(settle_s)
-            deadline = time.time() + timeout
-            last: dict[str, Any] = {"ok": False, "error": "unreachable"}
-            while time.time() < deadline:
-                try:
-                    last = remote_health(endpoint=endpoint)
-                except Exception as exc:
-                    last = {"ok": False, "error": str(exc)}
-                    time.sleep(2.0)
-                    continue
-                if not last.get("ok"):
-                    time.sleep(2.0)
-                    continue
-                if expect and not all(last.get(k) == v for k, v in expect.items()):
-                    time.sleep(2.0)
-                    continue
-                new_id = last.get("instance_id")
-                if baseline_id and new_id == baseline_id:
-                    time.sleep(2.0)
-                    continue
-                out["response"] = last
-                break
-            else:
-                out["error"] = (
-                    f"restart wait failed after {timeout}s expect={expect!r} "
-                    f"baseline={baseline_id!r} last={last!r}"
-                )
-                out["response"] = last
+            early = _run_host_restart_and_wait_step(step, out, endpoint=endpoint, route_map=route_map)
+            if early is not None:
+                return early
         elif kind == "host_schedule_restart":
-            out["kind"] = "host_schedule_restart"
-            try:
-                out["response"] = schedule_restart(
-                    endpoint=endpoint,
-                    route_map=route_map,
-                )
-            except Exception as exc:
-                msg = str(exc)
-                if "Remote end closed connection" in msg or "Connection reset" in msg:
-                    out["response"] = {"ok": True, "note": "connection closed during takeover", "error": msg}
-                else:
-                    out["error"] = msg
-                    out["response"] = {"ok": False, "error": msg}
+            _run_host_schedule_restart_step(step, out, endpoint=endpoint, route_map=route_map)
         elif kind == "host_wait_health":
-            timeout = float(step.get("timeout") or step.get("seconds") or 60)
-            expect = step.get("expect") if isinstance(step.get("expect"), dict) else {}
-            out["kind"] = "host_wait_health"
-            out["timeout"] = timeout
-            if expect:
-                out["expect"] = expect
-            deadline = time.time() + timeout
-            last: dict[str, Any] = {"ok": False, "error": "unreachable"}
-            try:
-                while time.time() < deadline:
-                    try:
-                        last = remote_health(endpoint=endpoint)
-                    except Exception as exc:
-                        last = {"ok": False, "error": str(exc)}
-                        time.sleep(2.0)
-                        continue
-                    if last.get("ok") and all(last.get(k) == v for k, v in expect.items()):
-                        out["response"] = last
-                        break
-                    time.sleep(2.0)
-                else:
-                    out["error"] = f"health expect not met after {timeout}s: {expect!r} last={last!r}"
-                    out["response"] = last
-            except TimeoutError as exc:
-                out["error"] = str(exc)
-                out["response"] = {"ok": False, "error": str(exc)}
+            _run_host_wait_health_step(step, out, endpoint=endpoint)
         else:
-            uri = str(step.get("uri") or "")
-            if not uri:
-                raise ValueError("step requires uri or kind:http_get")
-            payload = dict(step.get("payload") or {})
-            ctx = {
-                "approved": bool(defaults.get("approved", True)),
-                "dry_run": bool(defaults.get("dry_run", False)),
-                "allow_real": bool(defaults.get("allow_real", True)),
-            }
-            for key in ("approved", "dry_run", "allow_real"):
-                if key in step:
-                    ctx[key] = bool(step[key])
-            out["kind"] = "uri_call"
-            out["uri"] = uri
-            out["payload"] = payload
-            out["context"] = ctx
-            out["response"] = call_uri(
-                uri,
-                payload=payload,
-                approved=ctx["approved"],
-                dry_run=ctx["dry_run"],
-                allow_real=ctx["allow_real"],
-                route_map=route_map,
-            )
+            _run_uri_call_step(step, out, route_map=route_map, defaults=defaults)
     except Exception as exc:
         out["error"] = str(exc)
         out["response"] = {"ok": False, "error": str(exc)}
@@ -323,6 +362,34 @@ def start_wheel_server(deploy_dir: Path, host: str, port: int) -> subprocess.Pop
     )
     time.sleep(1)
     return proc
+
+
+def _needs_node_upgrade(flow_paths: list[Path]) -> bool:
+    names = {p.name for p in flow_paths}
+    return bool(
+        names
+        & {
+            "02-install-packs.uri.flow.yaml",
+            "07-playwright-linkedin.uri.flow.yaml",
+        }
+        or any("install-packs" in p.name for p in flow_paths)
+    )
+
+
+def _run_upgrade_flow(
+    upgrade_flow: Path,
+    label: str,
+    *,
+    log_path: Path,
+    flow_records: list[dict[str, Any]],
+    _run_one: Any,
+) -> dict[str, Any]:
+    """Execute an upgrade flow, log it, append to records, return the record."""
+    append_log(log_path, f"flow {upgrade_flow.name} start ({label})")
+    rec = _run_one(upgrade_flow)
+    flow_records.append(rec)
+    append_log(log_path, f"flow {upgrade_flow.name} ok={rec.get('ok')}")
+    return rec
 
 
 def write_session_md(session_dir: Path, meta: dict[str, Any], flow_records: list[dict[str, Any]]) -> None:
@@ -558,17 +625,6 @@ def main(argv: list[str] | None = None) -> int:
     kvm_upgrade_ran = False
     node_upgrade_ran = False
 
-    def _needs_node_upgrade(flow_paths: list[Path]) -> bool:
-        names = {p.name for p in flow_paths}
-        return bool(
-            names
-            & {
-                "02-install-packs.uri.flow.yaml",
-                "07-playwright-linkedin.uri.flow.yaml",
-            }
-            or any("install-packs" in p.name for p in flow_paths)
-        )
-
     def _run_one(fp: Path) -> dict[str, Any]:
         return run_flow(
             fp,
@@ -611,17 +667,18 @@ def main(argv: list[str] | None = None) -> int:
             save_json(session_dir / "flows" / f"{rec['flow_id']}.json", rec)
             append_log(log_path, f"flow {fp.name} skipped (node down)")
             continue
+        # --- upgrade flows (deduplicated via _run_upgrade_flow) ---
         if (
             not node_upgrade_ran
             and UPGRADE_NODE_FLOW.exists()
             and _needs_node_upgrade(flow_paths)
             and fp.name != "01-health-probe.uri.flow.yaml"
         ):
-            append_log(log_path, f"flow {UPGRADE_NODE_FLOW.name} start (urisys-node wheel)")
-            node_rec = _run_one(UPGRADE_NODE_FLOW)
-            flow_records.append(node_rec)
+            node_rec = _run_upgrade_flow(
+                UPGRADE_NODE_FLOW, "urisys-node wheel",
+                log_path=log_path, flow_records=flow_records, _run_one=_run_one,
+            )
             node_upgrade_ran = True
-            append_log(log_path, f"flow {UPGRADE_NODE_FLOW.name} ok={node_rec.get('ok')}")
             if not node_rec.get("ok"):
                 append_log(log_path, f"flow {fp.name} skipped (node upgrade failed)")
                 continue
@@ -632,11 +689,11 @@ def main(argv: list[str] | None = None) -> int:
             and UPGRADE_KVM_FLOW.exists()
             and not kvm_upgrade_ran
         ):
-            append_log(log_path, f"flow {UPGRADE_KVM_FLOW.name} start (pre-08 kvm upgrade)")
-            kvm_rec = _run_one(UPGRADE_KVM_FLOW)
-            flow_records.append(kvm_rec)
+            kvm_rec = _run_upgrade_flow(
+                UPGRADE_KVM_FLOW, "pre-08 kvm upgrade",
+                log_path=log_path, flow_records=flow_records, _run_one=_run_one,
+            )
             kvm_upgrade_ran = True
-            append_log(log_path, f"flow {UPGRADE_KVM_FLOW.name} ok={kvm_rec.get('ok')}")
             if not kvm_rec.get("ok"):
                 append_log(log_path, f"flow {fp.name} skipped (kvm upgrade failed)")
                 continue
@@ -645,11 +702,11 @@ def main(argv: list[str] | None = None) -> int:
             and UPGRADE_PLAYWRIGHT_FLOW.exists()
             and not upgrade_ran
         ):
-            append_log(log_path, f"flow {UPGRADE_PLAYWRIGHT_FLOW.name} start (pre-07 upgrade)")
-            up_rec = _run_one(UPGRADE_PLAYWRIGHT_FLOW)
-            flow_records.append(up_rec)
+            up_rec = _run_upgrade_flow(
+                UPGRADE_PLAYWRIGHT_FLOW, "pre-07 upgrade",
+                log_path=log_path, flow_records=flow_records, _run_one=_run_one,
+            )
             upgrade_ran = True
-            append_log(log_path, f"flow {UPGRADE_PLAYWRIGHT_FLOW.name} ok={up_rec.get('ok')}")
             if not up_rec.get("ok"):
                 append_log(log_path, f"flow {fp.name} skipped (upgrade failed)")
                 continue

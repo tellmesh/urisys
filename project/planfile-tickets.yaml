@@ -4,9 +4,9 @@ schema: code2llm.planfile_tickets.v1
 project_root: /home/tom/github/tellmesh/urisys
 tickets:
 - signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: scripts.lenovo_remote_session.main (CC=44)'
-  description: 'code2llm reports `scripts.lenovo_remote_session.main` at `scripts/lenovo_remote_session.py:321`
-    with cyclomatic complexity 44 (limit 15).
+  title: 'Reduce cyclomatic complexity: scripts.lenovo_remote_session.main (CC=58)'
+  description: 'code2llm reports `scripts.lenovo_remote_session.main` at `scripts/lenovo_remote_session.py:509`
+    with cyclomatic complexity 58 (limit 15).
 
 
     Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
@@ -110,10 +110,10 @@ tickets:
     analyze_run'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: build_parser'
-  description: 'code2llm reports `God Function: build_parser` in `src/urisys/cli.py:43`.
+  description: 'code2llm reports `God Function: build_parser` in `src/urisys/cli.py:50`.
 
 
-    Function ''build_parser'' is oversized: CC=1, fan-out=20, mutations=67.
+    Function ''build_parser'' is oversized: CC=1, fan-out=20, mutations=68.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -125,7 +125,7 @@ tickets:
   - god-function
   files:
   - src/urisys/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/urisys/cli.py:43:God Function: build_parser'
+  dedupe_key: 'code2llm:smell:god_function:src/urisys/cli.py:50:God Function: build_parser'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: main'
   description: 'code2llm reports `God Function: main` in `scripts/run_test_sessions.py:736`.
@@ -147,10 +147,10 @@ tickets:
     main'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: run_flow'
-  description: 'code2llm reports `God Function: run_flow` in `scripts/lenovo_remote_session.py:150`.
+  description: 'code2llm reports `God Function: run_flow` in `scripts/lenovo_remote_session.py:285`.
 
 
-    Function ''run_flow'' is oversized: CC=13, fan-out=23, mutations=18.
+    Function ''run_flow'' is oversized: CC=14, fan-out=24, mutations=18.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -162,7 +162,7 @@ tickets:
   - god-function
   files:
   - scripts/lenovo_remote_session.py
-  dedupe_key: 'code2llm:smell:god_function:scripts/lenovo_remote_session.py:150:God
+  dedupe_key: 'code2llm:smell:god_function:scripts/lenovo_remote_session.py:285:God
     Function: run_flow'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: session_lab_10_flows'
@@ -185,7 +185,7 @@ tickets:
     Function: session_lab_10_flows'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: args'
-  description: 'code2llm reports `Shotgun Surgery: args` in `src/urisys/cli.py:252`.
+  description: 'code2llm reports `Shotgun Surgery: args` in `scripts/run_test_sessions.py:736`.
 
 
     Mutation of variable ''args'' spans 9 functions. Changing this logic requires
@@ -200,9 +200,29 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/urisys/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/cli.py:252:Shotgun Surgery:
-    args'
+  - scripts/run_test_sessions.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:736:Shotgun
+    Surgery: args'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: body'
+  description: 'code2llm reports `Shotgun Surgery: body` in `scripts/lenovo_remote_session.py:79`.
+
+
+    Mutation of variable ''body'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - scripts/lenovo_remote_session.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/lenovo_remote_session.py:79:Shotgun
+    Surgery: body'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: cmd'
   description: 'code2llm reports `Shotgun Surgery: cmd` in `src/urisys/init_setup.py:46`.
@@ -225,7 +245,7 @@ tickets:
     Surgery: cmd'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: code'
-  description: 'code2llm reports `Shotgun Surgery: code` in `scripts/run_test_sessions.py:530`.
+  description: 'code2llm reports `Shotgun Surgery: code` in `scripts/run_test_sessions.py:482`.
 
 
     Mutation of variable ''code'' spans 8 functions. Changing this logic requires
@@ -241,11 +261,11 @@ tickets:
   - shotgun-surgery
   files:
   - scripts/run_test_sessions.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:530:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:482:Shotgun
     Surgery: code'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: ctx'
-  description: 'code2llm reports `Shotgun Surgery: ctx` in `scripts/test_sessions/lab_rdp.py:116`.
+  description: 'code2llm reports `Shotgun Surgery: ctx` in `scripts/office-simulate-loop.py:119`.
 
 
     Mutation of variable ''ctx'' spans 7 functions. Changing this logic requires work
@@ -260,55 +280,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/test_sessions/lab_rdp.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/lab_rdp.py:116:Shotgun
+  - scripts/office-simulate-loop.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/office-simulate-loop.py:119:Shotgun
     Surgery: ctx'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: data'
-  description: 'code2llm reports `Shotgun Surgery: data` in `scripts/lenovo_remote_session.py:150`.
+  description: 'code2llm reports `Shotgun Surgery: data` in `scripts/test_sessions/expectations.py:7`.
 
 
-    Mutation of variable ''data'' spans 20 functions. Changing this logic requires
-    work in many places.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - shotgun-surgery
-  files:
-  - scripts/lenovo_remote_session.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/lenovo_remote_session.py:150:Shotgun
-    Surgery: data'
-- signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: env'
-  description: 'code2llm reports `Shotgun Surgery: env` in `scripts/run_test_sessions.py:530`.
-
-
-    Mutation of variable ''env'' spans 7 functions. Changing this logic requires work
-    in many places.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - shotgun-surgery
-  files:
-  - scripts/run_test_sessions.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:530:Shotgun
-    Surgery: env'
-- signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: failures'
-  description: 'code2llm reports `Shotgun Surgery: failures` in `scripts/test_sessions/expectations.py:121`.
-
-
-    Mutation of variable ''failures'' spans 5 functions. Changing this logic requires
+    Mutation of variable ''data'' spans 21 functions. Changing this logic requires
     work in many places.
 
 
@@ -321,8 +301,28 @@ tickets:
   - shotgun-surgery
   files:
   - scripts/test_sessions/expectations.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/expectations.py:121:Shotgun
-    Surgery: failures'
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/expectations.py:7:Shotgun
+    Surgery: data'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: env'
+  description: 'code2llm reports `Shotgun Surgery: env` in `scripts/run_test_sessions.py:482`.
+
+
+    Mutation of variable ''env'' spans 8 functions. Changing this logic requires work
+    in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - scripts/run_test_sessions.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:482:Shotgun
+    Surgery: env'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: findings'
   description: 'code2llm reports `Shotgun Surgery: findings` in `scripts/report/lab_checks.py:177`.
@@ -345,10 +345,10 @@ tickets:
     Surgery: findings'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: key'
-  description: 'code2llm reports `Shotgun Surgery: key` in `scripts/report/session.py:12`.
+  description: 'code2llm reports `Shotgun Surgery: key` in `scripts/test_sessions/lab_rdp.py:68`.
 
 
-    Mutation of variable ''key'' spans 6 functions. Changing this logic requires work
+    Mutation of variable ''key'' spans 7 functions. Changing this logic requires work
     in many places.
 
 
@@ -360,12 +360,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/report/session.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/report/session.py:12:Shotgun
+  - scripts/test_sessions/lab_rdp.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/lab_rdp.py:68:Shotgun
     Surgery: key'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: kind'
-  description: 'code2llm reports `Shotgun Surgery: kind` in `scripts/report/events.py:109`.
+  description: 'code2llm reports `Shotgun Surgery: kind` in `scripts/lenovo_remote_session.py:249`.
 
 
     Mutation of variable ''kind'' spans 8 functions. Changing this logic requires
@@ -380,8 +380,8 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/report/events.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/report/events.py:109:Shotgun
+  - scripts/lenovo_remote_session.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/lenovo_remote_session.py:249:Shotgun
     Surgery: kind'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: lines'
@@ -405,7 +405,7 @@ tickets:
     Surgery: lines'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: log'
-  description: 'code2llm reports `Shotgun Surgery: log` in `scripts/run_test_sessions.py:530`.
+  description: 'code2llm reports `Shotgun Surgery: log` in `scripts/run_test_sessions.py:482`.
 
 
     Mutation of variable ''log'' spans 13 functions. Changing this logic requires
@@ -421,14 +421,14 @@ tickets:
   - shotgun-surgery
   files:
   - scripts/run_test_sessions.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:530:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:482:Shotgun
     Surgery: log'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: name'
-  description: 'code2llm reports `Shotgun Surgery: name` in `src/urisys/uricore_install.py:51`.
+  description: 'code2llm reports `Shotgun Surgery: name` in `scripts/run_test_sessions.py:736`.
 
 
-    Mutation of variable ''name'' spans 6 functions. Changing this logic requires
+    Mutation of variable ''name'' spans 7 functions. Changing this logic requires
     work in many places.
 
 
@@ -440,12 +440,32 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/urisys/uricore_install.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/uricore_install.py:51:Shotgun
+  - scripts/run_test_sessions.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:736:Shotgun
     Surgery: name'
 - signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: names'
+  description: 'code2llm reports `Shotgun Surgery: names` in `scripts/run_test_sessions.py:736`.
+
+
+    Mutation of variable ''names'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - scripts/run_test_sessions.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:736:Shotgun
+    Surgery: names'
+- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: ok'
-  description: 'code2llm reports `Shotgun Surgery: ok` in `scripts/report/session.py:12`.
+  description: 'code2llm reports `Shotgun Surgery: ok` in `scripts/office-simulate-loop.py:119`.
 
 
     Mutation of variable ''ok'' spans 8 functions. Changing this logic requires work
@@ -460,15 +480,35 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/report/session.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/report/session.py:12:Shotgun
+  - scripts/office-simulate-loop.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/office-simulate-loop.py:119:Shotgun
     Surgery: ok'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: out'
-  description: 'code2llm reports `Shotgun Surgery: out` in `scripts/test_sessions/expectations.py:30`.
+  description: 'code2llm reports `Shotgun Surgery: out` in `scripts/report/events.py:63`.
 
 
-    Mutation of variable ''out'' spans 8 functions. Changing this logic requires work
+    Mutation of variable ''out'' spans 14 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - scripts/report/events.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/report/events.py:63:Shotgun
+    Surgery: out'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: p'
+  description: 'code2llm reports `Shotgun Surgery: p` in `scripts/test_sessions/util.py:191`.
+
+
+    Mutation of variable ''p'' spans 5 functions. Changing this logic requires work
     in many places.
 
 
@@ -480,12 +520,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/test_sessions/expectations.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/expectations.py:30:Shotgun
-    Surgery: out'
+  - scripts/test_sessions/util.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/util.py:191:Shotgun
+    Surgery: p'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: parser'
-  description: 'code2llm reports `Shotgun Surgery: parser` in `src/urisys/bootstrap.py:39`.
+  description: 'code2llm reports `Shotgun Surgery: parser` in `scripts/run_test_sessions.py:736`.
 
 
     Mutation of variable ''parser'' spans 10 functions. Changing this logic requires
@@ -500,12 +540,32 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/urisys/bootstrap.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/bootstrap.py:39:Shotgun Surgery:
-    parser'
+  - scripts/run_test_sessions.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:736:Shotgun
+    Surgery: parser'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: path'
+  description: 'code2llm reports `Shotgun Surgery: path` in `scripts/scan-browser-sessions.py:81`.
+
+
+    Mutation of variable ''path'' spans 7 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - scripts/scan-browser-sessions.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/scan-browser-sessions.py:81:Shotgun
+    Surgery: path'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: payload'
-  description: 'code2llm reports `Shotgun Surgery: payload` in `scripts/lenovo_remote_session.py:150`.
+  description: 'code2llm reports `Shotgun Surgery: payload` in `src/urisys/flow.py:17`.
 
 
     Mutation of variable ''payload'' spans 7 functions. Changing this logic requires
@@ -520,12 +580,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/lenovo_remote_session.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/lenovo_remote_session.py:150:Shotgun
-    Surgery: payload'
+  - src/urisys/flow.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/flow.py:17:Shotgun Surgery:
+    payload'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: pkg'
-  description: 'code2llm reports `Shotgun Surgery: pkg` in `scripts/run_test_sessions.py:169`.
+  description: 'code2llm reports `Shotgun Surgery: pkg` in `scripts/run_test_sessions.py:92`.
 
 
     Mutation of variable ''pkg'' spans 5 functions. Changing this logic requires work
@@ -541,11 +601,11 @@ tickets:
   - shotgun-surgery
   files:
   - scripts/run_test_sessions.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:169:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:92:Shotgun
     Surgery: pkg'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: port'
-  description: 'code2llm reports `Shotgun Surgery: port` in `scripts/run_test_sessions.py:530`.
+  description: 'code2llm reports `Shotgun Surgery: port` in `scripts/run_test_sessions.py:482`.
 
 
     Mutation of variable ''port'' spans 7 functions. Changing this logic requires
@@ -561,11 +621,11 @@ tickets:
   - shotgun-surgery
   files:
   - scripts/run_test_sessions.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:530:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:482:Shotgun
     Surgery: port'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: proc'
-  description: 'code2llm reports `Shotgun Surgery: proc` in `scripts/test_sessions/util.py:100`.
+  description: 'code2llm reports `Shotgun Surgery: proc` in `src/urisys/init_setup.py:46`.
 
 
     Mutation of variable ''proc'' spans 18 functions. Changing this logic requires
@@ -580,15 +640,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/test_sessions/util.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/util.py:100:Shotgun
+  - src/urisys/init_setup.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/init_setup.py:46:Shotgun
     Surgery: proc'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: raw'
-  description: 'code2llm reports `Shotgun Surgery: raw` in `src/urisys/http_server.py:19`.
+  title: 'Address code smell: Shotgun Surgery: rel'
+  description: 'code2llm reports `Shotgun Surgery: rel` in `scripts/test_sessions/lab_rdp.py:151`.
 
 
-    Mutation of variable ''raw'' spans 5 functions. Changing this logic requires work
+    Mutation of variable ''rel'' spans 5 functions. Changing this logic requires work
     in many places.
 
 
@@ -600,12 +660,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/urisys/http_server.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/http_server.py:19:Shotgun
-    Surgery: raw'
+  - scripts/test_sessions/lab_rdp.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/lab_rdp.py:151:Shotgun
+    Surgery: rel'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: report'
-  description: 'code2llm reports `Shotgun Surgery: report` in `src/urisys/cli.py:252`.
+  description: 'code2llm reports `Shotgun Surgery: report` in `src/urisys/cli.py:186`.
 
 
     Mutation of variable ''report'' spans 7 functions. Changing this logic requires
@@ -621,11 +681,11 @@ tickets:
   - shotgun-surgery
   files:
   - src/urisys/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/cli.py:252:Shotgun Surgery:
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/cli.py:186:Shotgun Surgery:
     report'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: result'
-  description: 'code2llm reports `Shotgun Surgery: result` in `scripts/lenovo_remote_session.py:150`.
+  description: 'code2llm reports `Shotgun Surgery: result` in `scripts/test_sessions/lab_rdp.py:68`.
 
 
     Mutation of variable ''result'' spans 14 functions. Changing this logic requires
@@ -640,12 +700,32 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/lenovo_remote_session.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/lenovo_remote_session.py:150:Shotgun
+  - scripts/test_sessions/lab_rdp.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/lab_rdp.py:68:Shotgun
     Surgery: result'
 - signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: results'
+  description: 'code2llm reports `Shotgun Surgery: results` in `scripts/run_test_sessions.py:736`.
+
+
+    Mutation of variable ''results'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - scripts/run_test_sessions.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:736:Shotgun
+    Surgery: results'
+- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: started'
-  description: 'code2llm reports `Shotgun Surgery: started` in `scripts/report/session.py:93`.
+  description: 'code2llm reports `Shotgun Surgery: started` in `scripts/run_test_sessions.py:482`.
 
 
     Mutation of variable ''started'' spans 16 functions. Changing this logic requires
@@ -660,12 +740,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/report/session.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/report/session.py:93:Shotgun
+  - scripts/run_test_sessions.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:482:Shotgun
     Surgery: started'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: step'
-  description: 'code2llm reports `Shotgun Surgery: step` in `scripts/lenovo_remote_session.py:150`.
+  description: 'code2llm reports `Shotgun Surgery: step` in `scripts/test_sessions/lab_flows.py:120`.
 
 
     Mutation of variable ''step'' spans 5 functions. Changing this logic requires
@@ -680,12 +760,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/lenovo_remote_session.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/lenovo_remote_session.py:150:Shotgun
+  - scripts/test_sessions/lab_flows.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/test_sessions/lab_flows.py:120:Shotgun
     Surgery: step'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: steps'
-  description: 'code2llm reports `Shotgun Surgery: steps` in `scripts/run_test_sessions.py:661`.
+  description: 'code2llm reports `Shotgun Surgery: steps` in `scripts/run_test_sessions.py:66`.
 
 
     Mutation of variable ''steps'' spans 23 functions. Changing this logic requires
@@ -701,11 +781,11 @@ tickets:
   - shotgun-surgery
   files:
   - scripts/run_test_sessions.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:661:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/run_test_sessions.py:66:Shotgun
     Surgery: steps'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: uri'
-  description: 'code2llm reports `Shotgun Surgery: uri` in `scripts/lenovo_remote_session.py:150`.
+  description: 'code2llm reports `Shotgun Surgery: uri` in `src/urisys/flow.py:17`.
 
 
     Mutation of variable ''uri'' spans 9 functions. Changing this logic requires work
@@ -720,33 +800,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/lenovo_remote_session.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/lenovo_remote_session.py:150:Shotgun
-    Surgery: uri'
-- signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: value'
-  description: 'code2llm reports `Shotgun Surgery: value` in `src/urisys/managers/markpact_models.py:61`.
-
-
-    Mutation of variable ''value'' spans 5 functions. Changing this logic requires
-    work in many places.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - shotgun-surgery
-  files:
-  - src/urisys/managers/markpact_models.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/managers/markpact_models.py:61:Shotgun
-    Surgery: value'
+  - src/urisys/flow.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/urisys/flow.py:17:Shotgun Surgery:
+    uri'
 - signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: scripts.lenovo_remote_session.run_step (CC=17)'
-  description: 'code2llm reports `scripts.lenovo_remote_session.run_step` at `scripts/lenovo_remote_session.py:85`
-    with cyclomatic complexity 17 (limit 15).
+  title: 'Reduce cyclomatic complexity: scripts.lenovo_remote_session._run_host_restart_and_wait_step
+    (CC=19)'
+  description: 'code2llm reports `scripts.lenovo_remote_session._run_host_restart_and_wait_step`
+    at `scripts/lenovo_remote_session.py:108` with cyclomatic complexity 19 (limit
+    15).
 
 
     Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
@@ -759,12 +821,12 @@ tickets:
   - refactor
   files:
   - scripts/lenovo_remote_session.py
-  dedupe_key: code2llm:cc:scripts/lenovo_remote_session.py:scripts.lenovo_remote_session.run_step
+  dedupe_key: code2llm:cc:scripts/lenovo_remote_session.py:scripts.lenovo_remote_session._run_host_restart_and_wait_step
 - signal: code2llm_cc
   title: 'Reduce cyclomatic complexity: scripts.lenovo_remote_session.write_session_md
     (CC=22)'
   description: 'code2llm reports `scripts.lenovo_remote_session.write_session_md`
-    at `scripts/lenovo_remote_session.py:228` with cyclomatic complexity 22 (limit
+    at `scripts/lenovo_remote_session.py:395` with cyclomatic complexity 22 (limit
     15).
 
 
@@ -851,7 +913,7 @@ tickets:
   dedupe_key: code2llm:cc:scripts/scan-browser-sessions.py:scripts.scan-browser-sessions.main
 - signal: code2llm_cc
   title: 'Reduce cyclomatic complexity: scripts.session_core.expand_step_wheels (CC=18)'
-  description: 'code2llm reports `scripts.session_core.expand_step_wheels` at `scripts/session_core.py:168`
+  description: 'code2llm reports `scripts.session_core.expand_step_wheels` at `scripts/session_core.py:232`
     with cyclomatic complexity 18 (limit 15).
 
 
@@ -866,6 +928,23 @@ tickets:
   files:
   - scripts/session_core.py
   dedupe_key: code2llm:cc:scripts/session_core.py:scripts.session_core.expand_step_wheels
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: scripts.session_core.step_ok (CC=16)'
+  description: 'code2llm reports `scripts.session_core.step_ok` at `scripts/session_core.py:73`
+    with cyclomatic complexity 16 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - scripts/session_core.py
+  dedupe_key: code2llm:cc:scripts/session_core.py:scripts.session_core.step_ok
 - signal: code2llm_cc
   title: 'Reduce cyclomatic complexity: src.urisys.managers.markpact_manager.MarkpactManager.compile
     (CC=17)'
@@ -886,11 +965,11 @@ tickets:
   - src/urisys/managers/markpact_manager.py
   dedupe_key: code2llm:cc:src/urisys/managers/markpact_manager.py:src.urisys.managers.markpact_manager.MarkpactManager.compile
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: base, letter, ctx'
-  description: 'code2llm reports `Data Clump: base, letter, ctx` in `scripts/office-simulate-loop.py:53`.
+  title: 'Address code smell: Data Clump: base, ctx, letter'
+  description: 'code2llm reports `Data Clump: base, ctx, letter` in `scripts/office-simulate-loop.py:53`.
 
 
-    Arguments (base, letter, ctx) are used together in multiple functions: scripts.office-simulate-loop.rules_tick,
+    Arguments (base, ctx, letter) are used together in multiple functions: scripts.office-simulate-loop.rules_tick,
     scripts.office-simulate-loop.llm_tick.
 
 
@@ -904,13 +983,13 @@ tickets:
   files:
   - scripts/office-simulate-loop.py
   dedupe_key: 'code2llm:smell:data_clump:scripts/office-simulate-loop.py:53:Data Clump:
-    base, letter, ctx'
+    base, ctx, letter'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: base, letter, ctx'
-  description: 'code2llm reports `Data Clump: base, letter, ctx` in `scripts/office-simulate-loop.py:71`.
+  title: 'Address code smell: Data Clump: base, ctx, letter'
+  description: 'code2llm reports `Data Clump: base, ctx, letter` in `scripts/office-simulate-loop.py:71`.
 
 
-    Arguments (base, letter, ctx) are used together in multiple functions: scripts.office-simulate-loop.rules_tick,
+    Arguments (base, ctx, letter) are used together in multiple functions: scripts.office-simulate-loop.rules_tick,
     scripts.office-simulate-loop.llm_tick.
 
 
@@ -924,53 +1003,13 @@ tickets:
   files:
   - scripts/office-simulate-loop.py
   dedupe_key: 'code2llm:smell:data_clump:scripts/office-simulate-loop.py:71:Data Clump:
-    base, letter, ctx'
+    base, ctx, letter'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: kind, self, blocks'
-  description: 'code2llm reports `Data Clump: kind, self, blocks` in `src/urisys/managers/markpact_manager.py:134`.
+  title: 'Address code smell: Data Clump: data, source_hash, source_path'
+  description: 'code2llm reports `Data Clump: data, source_hash, source_path` in `src/urisys/managers/markpact_validation.py:39`.
 
 
-    Arguments (kind, self, blocks) are used together in multiple functions: src.urisys.managers.markpact_manager.MarkpactManager._yaml_blocks,
-    src.urisys.managers.markpact_manager.MarkpactManager._load_yaml_blocks.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/urisys/managers/markpact_manager.py
-  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_manager.py:134:Data
-    Clump: kind, self, blocks'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: kind, self, blocks'
-  description: 'code2llm reports `Data Clump: kind, self, blocks` in `src/urisys/managers/markpact_manager.py:393`.
-
-
-    Arguments (kind, self, blocks) are used together in multiple functions: src.urisys.managers.markpact_manager.MarkpactManager._yaml_blocks,
-    src.urisys.managers.markpact_manager.MarkpactManager._load_yaml_blocks.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/urisys/managers/markpact_manager.py
-  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_manager.py:393:Data
-    Clump: kind, self, blocks'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: source_hash, data, source_path'
-  description: 'code2llm reports `Data Clump: source_hash, data, source_path` in `src/urisys/managers/markpact_validation.py:39`.
-
-
-    Arguments (source_hash, data, source_path) are used together in multiple functions:
+    Arguments (data, source_hash, source_path) are used together in multiple functions:
     src.urisys.managers.markpact_validation.validate_contract, src.urisys.managers.markpact_validation.validate_bundle,
     src.urisys.managers.markpact_validation.validate_implementation.
 
@@ -985,13 +1024,13 @@ tickets:
   files:
   - src/urisys/managers/markpact_validation.py
   dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_validation.py:39:Data
-    Clump: source_hash, data, source_path'
+    Clump: data, source_hash, source_path'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: source_hash, data, source_path'
-  description: 'code2llm reports `Data Clump: source_hash, data, source_path` in `src/urisys/managers/markpact_validation.py:84`.
+  title: 'Address code smell: Data Clump: data, source_hash, source_path'
+  description: 'code2llm reports `Data Clump: data, source_hash, source_path` in `src/urisys/managers/markpact_validation.py:84`.
 
 
-    Arguments (source_hash, data, source_path) are used together in multiple functions:
+    Arguments (data, source_hash, source_path) are used together in multiple functions:
     src.urisys.managers.markpact_validation.validate_contract, src.urisys.managers.markpact_validation.validate_bundle,
     src.urisys.managers.markpact_validation.validate_implementation.
 
@@ -1006,13 +1045,13 @@ tickets:
   files:
   - src/urisys/managers/markpact_validation.py
   dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_validation.py:84:Data
-    Clump: source_hash, data, source_path'
+    Clump: data, source_hash, source_path'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: source_hash, data, source_path'
-  description: 'code2llm reports `Data Clump: source_hash, data, source_path` in `src/urisys/managers/markpact_validation.py:123`.
+  title: 'Address code smell: Data Clump: data, source_hash, source_path'
+  description: 'code2llm reports `Data Clump: data, source_hash, source_path` in `src/urisys/managers/markpact_validation.py:123`.
 
 
-    Arguments (source_hash, data, source_path) are used together in multiple functions:
+    Arguments (data, source_hash, source_path) are used together in multiple functions:
     src.urisys.managers.markpact_validation.validate_contract, src.urisys.managers.markpact_validation.validate_bundle,
     src.urisys.managers.markpact_validation.validate_implementation.
 
@@ -1027,13 +1066,13 @@ tickets:
   files:
   - src/urisys/managers/markpact_validation.py
   dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_validation.py:123:Data
-    Clump: source_hash, data, source_path'
+    Clump: data, source_hash, source_path'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: tb, exc, self, exc_type'
-  description: 'code2llm reports `Data Clump: tb, exc, self, exc_type` in `src/urisys/managers/runtime_manager.py:29`.
+  title: 'Address code smell: Data Clump: self, exc, tb, exc_type'
+  description: 'code2llm reports `Data Clump: self, exc, tb, exc_type` in `src/urisys/managers/runtime_manager.py:29`.
 
 
-    Arguments (tb, exc, self, exc_type) are used together in multiple functions: src.urisys.managers.runtime_manager.RuntimeManager.__exit__,
+    Arguments (self, exc, tb, exc_type) are used together in multiple functions: src.urisys.managers.runtime_manager.RuntimeManager.__exit__,
     src.urisys.managers.pack_manager.PackManager.__exit__.
 
 
@@ -1047,13 +1086,13 @@ tickets:
   files:
   - src/urisys/managers/runtime_manager.py
   dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/runtime_manager.py:29:Data
-    Clump: tb, exc, self, exc_type'
+    Clump: self, exc, tb, exc_type'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: tb, exc, self, exc_type'
-  description: 'code2llm reports `Data Clump: tb, exc, self, exc_type` in `src/urisys/managers/pack_manager.py:124`.
+  title: 'Address code smell: Data Clump: self, exc, tb, exc_type'
+  description: 'code2llm reports `Data Clump: self, exc, tb, exc_type` in `src/urisys/managers/pack_manager.py:136`.
 
 
-    Arguments (tb, exc, self, exc_type) are used together in multiple functions: src.urisys.managers.runtime_manager.RuntimeManager.__exit__,
+    Arguments (self, exc, tb, exc_type) are used together in multiple functions: src.urisys.managers.runtime_manager.RuntimeManager.__exit__,
     src.urisys.managers.pack_manager.PackManager.__exit__.
 
 
@@ -1066,8 +1105,48 @@ tickets:
   - data-clump
   files:
   - src/urisys/managers/pack_manager.py
-  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/pack_manager.py:124:Data
-    Clump: tb, exc, self, exc_type'
+  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/pack_manager.py:136:Data
+    Clump: self, exc, tb, exc_type'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: self, kind, blocks'
+  description: 'code2llm reports `Data Clump: self, kind, blocks` in `src/urisys/managers/markpact_manager.py:134`.
+
+
+    Arguments (self, kind, blocks) are used together in multiple functions: src.urisys.managers.markpact_manager.MarkpactManager._yaml_blocks,
+    src.urisys.managers.markpact_manager.MarkpactManager._load_yaml_blocks.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/urisys/managers/markpact_manager.py
+  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_manager.py:134:Data
+    Clump: self, kind, blocks'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: self, kind, blocks'
+  description: 'code2llm reports `Data Clump: self, kind, blocks` in `src/urisys/managers/markpact_manager.py:393`.
+
+
+    Arguments (self, kind, blocks) are used together in multiple functions: src.urisys.managers.markpact_manager.MarkpactManager._yaml_blocks,
+    src.urisys.managers.markpact_manager.MarkpactManager._load_yaml_blocks.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/urisys/managers/markpact_manager.py
+  dedupe_key: 'code2llm:smell:data_clump:src/urisys/managers/markpact_manager.py:393:Data
+    Clump: self, kind, blocks'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _build_route'
   description: 'code2llm reports `God Function: _build_route` in `src/urisys/managers/markpact_manager.py:277`.
@@ -1108,7 +1187,7 @@ tickets:
     Function: _capture_flow_screenshot'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _cmd_markpact'
-  description: 'code2llm reports `God Function: _cmd_markpact` in `src/urisys/cli.py:125`.
+  description: 'code2llm reports `God Function: _cmd_markpact` in `src/urisys/cli.py:140`.
 
 
     Function ''_cmd_markpact'' is oversized: CC=9, fan-out=12, mutations=6.
@@ -1123,7 +1202,7 @@ tickets:
   - god-function
   files:
   - src/urisys/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/urisys/cli.py:125:God Function: _cmd_markpact'
+  dedupe_key: 'code2llm:smell:god_function:src/urisys/cli.py:140:God Function: _cmd_markpact'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _fetch_git'
   description: 'code2llm reports `God Function: _fetch_git` in `src/urisys/managers/source_manager.py:155`.
@@ -1221,7 +1300,7 @@ tickets:
     _findings_for_session'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _init_main'
-  description: 'code2llm reports `God Function: _init_main` in `src/urisys/bootstrap.py:54`.
+  description: 'code2llm reports `God Function: _init_main` in `src/urisys/bootstrap.py:59`.
 
 
     Function ''_init_main'' is oversized: CC=6, fan-out=10, mutations=9.
@@ -1236,7 +1315,7 @@ tickets:
   - god-function
   files:
   - src/urisys/bootstrap.py
-  dedupe_key: 'code2llm:smell:god_function:src/urisys/bootstrap.py:54:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/urisys/bootstrap.py:59:God Function:
     _init_main'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _repo_pyproject'
@@ -1258,6 +1337,25 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:scripts/pack_sync.py:163:God Function:
     _repo_pyproject'
 - signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _run_host_wait_health_step'
+  description: 'code2llm reports `God Function: _run_host_wait_health_step` in `scripts/lenovo_remote_session.py:187`.
+
+
+    Function ''_run_host_wait_health_step'' is oversized: CC=12, fan-out=10, mutations=13.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - scripts/lenovo_remote_session.py
+  dedupe_key: 'code2llm:smell:god_function:scripts/lenovo_remote_session.py:187:God
+    Function: _run_host_wait_health_step'
+- signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _run_single_lab_flow'
   description: 'code2llm reports `God Function: _run_single_lab_flow` in `scripts/test_sessions/lab_flows.py:120`.
 
@@ -1276,6 +1374,25 @@ tickets:
   - scripts/test_sessions/lab_flows.py
   dedupe_key: 'code2llm:smell:god_function:scripts/test_sessions/lab_flows.py:120:God
     Function: _run_single_lab_flow'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _run_uri_call_step'
+  description: 'code2llm reports `God Function: _run_uri_call_step` in `scripts/lenovo_remote_session.py:216`.
+
+
+    Function ''_run_uri_call_step'' is oversized: CC=6, fan-out=7, mutations=10.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - scripts/lenovo_remote_session.py
+  dedupe_key: 'code2llm:smell:god_function:scripts/lenovo_remote_session.py:216:God
+    Function: _run_uri_call_step'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _validate_pack'
   description: 'code2llm reports `God Function: _validate_pack` in `src/urisys/managers/markpact_manager.py:103`.
@@ -1297,7 +1414,7 @@ tickets:
     Function: _validate_pack'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: backfill_session_images'
-  description: 'code2llm reports `God Function: backfill_session_images` in `scripts/session_core.py:131`.
+  description: 'code2llm reports `God Function: backfill_session_images` in `scripts/session_core.py:178`.
 
 
     Function ''backfill_session_images'' is oversized: CC=8, fan-out=11, mutations=11.
@@ -1312,7 +1429,7 @@ tickets:
   - god-function
   files:
   - scripts/session_core.py
-  dedupe_key: 'code2llm:smell:god_function:scripts/session_core.py:131:God Function:
+  dedupe_key: 'code2llm:smell:god_function:scripts/session_core.py:178:God Function:
     backfill_session_images'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: capture_rdp_screenshot_wait'
@@ -1373,7 +1490,7 @@ tickets:
     Function: chrome_profiles'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: create_server'
-  description: 'code2llm reports `God Function: create_server` in `src/urisys/http_server.py:31`.
+  description: 'code2llm reports `God Function: create_server` in `src/urisys/http_server.py:32`.
 
 
     Function ''create_server'' is oversized: CC=1, fan-out=15, mutations=1.
@@ -1388,7 +1505,7 @@ tickets:
   - god-function
   files:
   - src/urisys/http_server.py
-  dedupe_key: 'code2llm:smell:god_function:src/urisys/http_server.py:31:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/urisys/http_server.py:32:God Function:
     create_server'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: ensure_urisysedge'
@@ -1411,7 +1528,7 @@ tickets:
     ensure_urisysedge'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: extract_images_from_dict'
-  description: 'code2llm reports `God Function: extract_images_from_dict` in `scripts/session_core.py:71`.
+  description: 'code2llm reports `God Function: extract_images_from_dict` in `scripts/session_core.py:118`.
 
 
     Function ''extract_images_from_dict'' is oversized: CC=8, fan-out=11, mutations=9.
@@ -1426,7 +1543,7 @@ tickets:
   - god-function
   files:
   - scripts/session_core.py
-  dedupe_key: 'code2llm:smell:god_function:scripts/session_core.py:71:God Function:
+  dedupe_key: 'code2llm:smell:god_function:scripts/session_core.py:118:God Function:
     extract_images_from_dict'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: fetch'
@@ -1449,7 +1566,7 @@ tickets:
     Function: fetch'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: finalize_session'
-  description: 'code2llm reports `God Function: finalize_session` in `scripts/test_sessions/util.py:148`.
+  description: 'code2llm reports `God Function: finalize_session` in `scripts/test_sessions/util.py:139`.
 
 
     Function ''finalize_session'' is oversized: CC=5, fan-out=11, mutations=4.
@@ -1464,7 +1581,7 @@ tickets:
   - god-function
   files:
   - scripts/test_sessions/util.py
-  dedupe_key: 'code2llm:smell:god_function:scripts/test_sessions/util.py:148:God Function:
+  dedupe_key: 'code2llm:smell:god_function:scripts/test_sessions/util.py:139:God Function:
     finalize_session'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: firefox_profiles'
@@ -1525,7 +1642,7 @@ tickets:
     generate_report'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: http_json'
-  description: 'code2llm reports `God Function: http_json` in `scripts/test_sessions/util.py:35`.
+  description: 'code2llm reports `God Function: http_json` in `scripts/test_sessions/util.py:25`.
 
 
     Function ''http_json'' is oversized: CC=9, fan-out=12, mutations=9.
@@ -1540,7 +1657,7 @@ tickets:
   - god-function
   files:
   - scripts/test_sessions/util.py
-  dedupe_key: 'code2llm:smell:god_function:scripts/test_sessions/util.py:35:God Function:
+  dedupe_key: 'code2llm:smell:god_function:scripts/test_sessions/util.py:25:God Function:
     http_json'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: init_repo'
@@ -1601,24 +1718,6 @@ tickets:
     load_event_records'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: main'
-  description: 'code2llm reports `God Function: main` in `src/urisys/cli.py:252`.
-
-
-    Function ''main'' is oversized: CC=11, fan-out=18, mutations=3.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - god-function
-  files:
-  - src/urisys/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/urisys/cli.py:252:God Function: main'
-- signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: main'
   description: 'code2llm reports `God Function: main` in `scripts/office-simulate-loop.py:119`.
 
 
@@ -1656,11 +1755,29 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:scripts/report/cli.py:11:God Function:
     main'
 - signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: main'
+  description: 'code2llm reports `God Function: main` in `src/urisys/cli.py:283`.
+
+
+    Function ''main'' is oversized: CC=11, fan-out=18, mutations=3.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/urisys/cli.py
+  dedupe_key: 'code2llm:smell:god_function:src/urisys/cli.py:283:God Function: main'
+- signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: manifest_paths'
   description: 'code2llm reports `God Function: manifest_paths` in `src/urisys/managers/pack_manager.py:71`.
 
 
-    Function ''manifest_paths'' is oversized: CC=9, fan-out=14, mutations=0.
+    Function ''manifest_paths'' is oversized: CC=11, fan-out=15, mutations=0.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -1809,7 +1926,7 @@ tickets:
     Function: run'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: run_doctor'
-  description: 'code2llm reports `God Function: run_doctor` in `src/urisys/doctor.py:238`.
+  description: 'code2llm reports `God Function: run_doctor` in `src/urisys/doctor.py:239`.
 
 
     Function ''run_doctor'' is oversized: CC=12, fan-out=14, mutations=12.
@@ -1824,8 +1941,27 @@ tickets:
   - god-function
   files:
   - src/urisys/doctor.py
-  dedupe_key: 'code2llm:smell:god_function:src/urisys/doctor.py:238:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/urisys/doctor.py:239:God Function:
     run_doctor'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: run_step'
+  description: 'code2llm reports `God Function: run_step` in `scripts/lenovo_remote_session.py:249`.
+
+
+    Function ''run_step'' is oversized: CC=9, fan-out=10, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - scripts/lenovo_remote_session.py
+  dedupe_key: 'code2llm:smell:god_function:scripts/lenovo_remote_session.py:249:God
+    Function: run_step'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: run_tests'
   description: 'code2llm reports `God Function: run_tests` in `src/urisys/managers/markpact_manager.py:232`.

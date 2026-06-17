@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.10] - 2026-06-17
+
+### Fixed
+- Fix duplicate-imports issues (ticket-a97df57d)
+- Fix string-concat issues (ticket-aca27d2b)
+- Fix unused-imports issues (ticket-b0a34c00)
+- Fix magic-numbers issues (ticket-258ccd81)
+- Fix ai-boilerplate issues (ticket-4a5c6d48)
+- Fix string-concat issues (ticket-903bad0d)
+
 ## [Unreleased]
 
 ### Added
@@ -37,6 +47,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `urisys doctor` — `NameError: node_pip_spec` przy sprawdzaniu importu urisysnode
 - PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
 - Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
+
+## [0.1.64] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update app.doql.less
+- Update planfile.yaml
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/compact_flow.mmd
+- Update project/compact_flow.png
+- Update project/duplication.toon.yaml
+- ... and 12 more files
 
 ## [0.1.63] - 2026-06-17
 

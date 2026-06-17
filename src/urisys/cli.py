@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import sys
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -211,7 +212,23 @@ def _cmd_node(args) -> int:
         from urisysnode.serve import build_runtime, serve as node_serve
 
         rt = build_runtime(args.config)
-        node_serve(rt, args.host, args.port, takeover=not args.no_takeover)
+        takeover = not args.no_takeover
+        try:
+            import inspect
+
+            params = inspect.signature(node_serve).parameters
+            if "takeover" in params:
+                node_serve(rt, args.host, args.port, takeover=takeover)
+            else:
+                if takeover:
+                    print(
+                        "warning: urisys-node is too old for port takeover; "
+                        "upgrade urisys-node (pip install -U urisys-node) or use --no-takeover",
+                        file=sys.stderr,
+                    )
+                node_serve(rt, args.host, args.port)
+        except TypeError:
+            node_serve(rt, args.host, args.port)
     return 0
 
 

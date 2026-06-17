@@ -1,12 +1,12 @@
-# urisys | 348 func | 58f | 12065L | python | 2026-06-17
+# urisys | 357 func | 58f | 11894L | python | 2026-06-17
 # generated in 0.00s
 
 HEALTH:
-  CC̄=4.6  critical=49 (limit:10)  dup=0  cycles=1
+  CC̄=4.8  critical=51 (limit:10)  dup=0  cycles=1
 
 ALERTS[20]:
-  !!! high_fan_out     main = 52 (limit:10)
-  !!! cc_exceeded      main = 44 (limit:15)
+  !!! high_fan_out     main = 63 (limit:10)
+  !!! cc_exceeded      main = 58 (limit:15)
   !!! high_fan_out     MarkpactManager.compile = 33 (limit:10)
   !!! cc_exceeded      run_init = 31 (limit:15)
   !!! high_fan_out     session_urirdp_real_docker = 31 (limit:10)
@@ -14,39 +14,39 @@ ALERTS[20]:
   !!! high_fan_out     analyze_run = 29 (limit:10)
   !!! cc_exceeded      main = 28 (limit:15)
   !!! cc_exceeded      infer_steps = 28 (limit:15)
-  !!! high_fan_out     run_flow = 23 (limit:10)
+  !!! high_fan_out     run_flow = 24 (limit:10)
 
-MODULES[116] (top by size):
+MODULES[102] (top by size):
   M[planfile.yaml] 1319L C:0 F:0 CC↑0 D:0 (yaml)
   M[scripts/run_test_sessions.py] 783L C:0 F:14 CC↑30 D:0 (python)
+  M[scripts/lenovo_remote_session.py] 751L C:0 F:20 CC↑58 D:0 (python)
   M[goal.yaml] 514L C:0 F:0 CC↑0 D:0 (yaml)
-  M[scripts/lenovo_remote_session.py] 507L C:0 F:11 CC↑44 D:0 (python)
   M[src/urisys/managers/markpact_manager.py] 412L C:1 F:22 CC↑17 D:0 (python)
   M[scripts/pack_sync.py] 347L C:0 F:13 CC↑28 D:0 (python)
+  M[src/urisys/cli.py] 335L C:0 F:11 CC↑11 D:0 (python)
   M[scripts/test_sessions/lab_flows.py] 320L C:0 F:5 CC↑13 D:0 (python)
-  M[src/urisys/cli.py] 310L C:0 F:11 CC↑11 D:0 (python)
-  M[src/urisys/doctor.py] 295L C:1 F:11 CC↑12 D:3 (python)
+  M[src/urisys/doctor.py] 296L C:1 F:11 CC↑12 D:3 (python)
+  M[scripts/session_core.py] 276L C:0 F:16 CC↑18 D:6 (python)
   M[scripts/pack_registry.py] 269L C:1 F:9 CC↑17 D:1 (python)
   M[src/urisys/init_setup.py] 262L C:0 F:11 CC↑31 D:2 (python)
   M[src/urisys/managers/source_manager.py] 218L C:2 F:12 CC↑11 D:0 (python)
-  M[scripts/session_core.py] 212L C:0 F:11 CC↑18 D:1 (python)
-  M[scripts/test_sessions/util.py] 210L C:0 F:17 CC↑9 D:3 (python)
+  M[scripts/test_sessions/util.py] 201L C:0 F:14 CC↑9 D:3 (python)
   M[scripts/scan-browser-sessions.py] 199L C:0 F:6 CC↑23 D:0 (python)
-  LANGS: python:49/shell:41/yaml:21/javascript:1/other:1/yml:1/toml:1/json:1
+  LANGS: python:49/shell:41/yaml:7/javascript:1/other:1/yml:1/toml:1/json:1
 
 HOTSPOTS[10]:
-  ★ main fan=52  // Orchestrates 52 calls
+  ★ main fan=63  // Orchestrates 63 calls
   ★ MarkpactManager.compile fan=33  // Orchestrates 33 calls
   ★ session_urirdp_real_docker fan=31  // Orchestrates 31 calls
   ★ analyze_run fan=29  // Analysis pipeline, 29 stages
-  ★ run_flow fan=23  // Orchestrates 23 calls
+  ★ run_flow fan=24  // Orchestrates 24 calls
 
 REFACTOR[15]:
   [1] H/L Split run_init (CC=31)
   [2] H/L Split session_urirdp_real_docker (CC=30)
   [3] H/L Split main (CC=28)
-  [4] H/L Split main (CC=44)
-  [5] H/L Split infer_steps (CC=28)
+  [4] H/L Split infer_steps (CC=28)
+  [5] H/L Split main (CC=58)
 
 EVOLUTION:
-  2026-06-17 CC̄=4.6 crit=49 12065L // Automated analysis
+  2026-06-17 CC̄=4.8 crit=51 11894L // Automated analysis

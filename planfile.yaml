@@ -680,84 +680,6 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
-  - id: ticket-58d889e9
-    name: Fix magic-numbers issues
-    description: Resolve 4 magic-numbers issues in output/test-sessions/lenovo-linkedin-post.py
-    task_type: prefactor
-    priority: medium
-    estimate: 2d
-    files:
-    - output/test-sessions/lenovo-linkedin-post.py
-    rule_id: magic-numbers
-    count: 4
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-f81ec0b9
-    name: Fix magic-numbers issues
-    description: Resolve 1 magic-numbers issues in output/test-sessions/lenovo-linkedin-final.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - output/test-sessions/lenovo-linkedin-final.py
-    rule_id: magic-numbers
-    count: 1
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-03573fd4
-    name: Fix smart-return-type issues
-    description: Resolve 1 smart-return-type issues in output/test-sessions/lenovo-linkedin-post-cdp.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - output/test-sessions/lenovo-linkedin-post-cdp.py
-    rule_id: smart-return-type
-    count: 1
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-a13f62f5
-    name: Fix unused-imports issues
-    description: Resolve 8 unused-imports issues in output/test-sessions/lenovo-linkedin-post-cdp.py
-    task_type: prefactor
-    priority: high
-    estimate: 2d
-    files:
-    - output/test-sessions/lenovo-linkedin-post-cdp.py
-    rule_id: unused-imports
-    count: 8
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-c1c93d8b
-    name: Fix magic-numbers issues
-    description: Resolve 5 magic-numbers issues in output/test-sessions/lenovo-linkedin-post-cdp.py
-    task_type: prefactor
-    priority: medium
-    estimate: 2d
-    files:
-    - output/test-sessions/lenovo-linkedin-post-cdp.py
-    rule_id: magic-numbers
-    count: 5
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-da95d0ef
-    name: Fix magic-numbers issues
-    description: Resolve 2 magic-numbers issues in output/test-sessions/lenovo-linkedin-post-cdp2.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - output/test-sessions/lenovo-linkedin-post-cdp2.py
-    rule_id: magic-numbers
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
   - id: ticket-7d2bd2f4
     name: Fix duplicate-imports issues
     description: Resolve 2 duplicate-imports issues in scripts/office-simulate-loop.py
@@ -1314,6 +1236,84 @@ sprints:
     - scripts/test_sessions/lab_rdp.py
     rule_id: relative-imports
     count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a97df57d
+    name: Fix duplicate-imports issues
+    description: Resolve 4 duplicate-imports issues in scripts/lenovo_remote_session.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - scripts/lenovo_remote_session.py
+    rule_id: duplicate-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-aca27d2b
+    name: Fix string-concat issues
+    description: Resolve 6 string-concat issues in scripts/lenovo_remote_session.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - scripts/lenovo_remote_session.py
+    rule_id: string-concat
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b0a34c00
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in scripts/lenovo_remote_session.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/lenovo_remote_session.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-258ccd81
+    name: Fix magic-numbers issues
+    description: Resolve 4 magic-numbers issues in scripts/lenovo_remote_session.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - scripts/lenovo_remote_session.py
+    rule_id: magic-numbers
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4a5c6d48
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in scripts/lenovo_remote_session.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/lenovo_remote_session.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-903bad0d
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in scripts/scan-browser-sessions.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/scan-browser-sessions.py
+    rule_id: string-concat
+    count: 1
     model_hints:
       planning: balanced
       implementation: balanced
