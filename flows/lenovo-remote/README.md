@@ -38,6 +38,22 @@ python3 -m urisysnode.remote call "node://lenovo/command/restart-worker" --paylo
 
 If a worker dies, the router's supervisor respawns it; no node restart is needed.
 
+## Deploy router upgrade (urisys-node >= 0.1.8)
+
+`urisys node serve` now **takes over its port**: it kills the previous instance
+(pidfile first, then any process holding the port), waits for the port to free,
+then binds. Re-running serve is an atomic restart — no external `pkill`. On exit
+it also stops its child workers.
+
+```bash
+# from dev host, with wheel server up:
+python3 -m urisysnode.remote pip-install http://192.168.188.212:8765/urisys_node-0.1.8-py3-none-any.whl
+python3 -m urisysnode.remote restart        # detached `urisys node serve` takes over the port
+python3 -m urisysnode.remote wait --timeout 60
+python3 -m urisysnode.remote spawn-worker browser --force
+python3 -m urisysnode.remote workers
+```
+
 ## Single step
 
 ```bash

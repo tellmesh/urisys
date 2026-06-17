@@ -3,9 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
-import platform
 import shutil
-import socket
 import subprocess
 import sys
 import time
@@ -22,10 +20,6 @@ REPORT_SCRIPT = ROOT / "scripts" / "session_report.py"
 
 def run_id() -> str:
     return datetime.now().strftime("%Y%m%d-%H%M%S")
-
-
-def host_id() -> str:
-    return f"{socket.gethostname()} ({platform.system()} {platform.machine()})"
 
 
 def http_json(
@@ -91,7 +85,7 @@ def compose_cmd(*parts: str, compose_file: Path | None = None) -> list[str]:
 # now_iso + save_json live in the shared session-runner core — one timestamp
 # format ('…Z') and one JSON dump across both stacks. Safe: the only consumer
 # (report/session.py duration calc) normalizes 'Z'→'+00:00' before fromisoformat.
-from session_core import now_iso, save_json  # noqa: E402,F401
+from session_core import host_id, now_iso, save_json  # noqa: E402,F401
 
 
 def run_cmd(

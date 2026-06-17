@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import base64
 import json
+import platform
+import socket
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -25,6 +27,16 @@ PACK_TO_WHEEL: dict[str, str] = {
 
 def now_iso() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def host_id() -> str:
+    return f"{socket.gethostname()} ({platform.system()} {platform.machine()})"
+
+
+def run_id(prefix: str = "", *, utc: bool = False) -> str:
+    """Timestamped session id, e.g. '20260617-141828' or 'lenovo-remote-…' (utc)."""
+    now = datetime.now(timezone.utc) if utc else datetime.now()
+    return f"{prefix}{now.strftime('%Y%m%d-%H%M%S')}"
 
 
 def save_json(path: Path, data: Any) -> None:

@@ -3740,7 +3740,7 @@ source = { editable = "../urioperators" }
 
 [[package]]
 name = "urisys"
-version = "0.1.58"
+version = "0.1.59"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
@@ -3826,7 +3826,7 @@ lab = [{ name = "uri2flow", editable = "../uri2flow" }]
 
 [[package]]
 name = "urisys-node"
-version = "0.1.8"
+version = "0.1.10"
 source = { editable = "../urisys-node" }
 dependencies = [
     { name = "pyyaml" },
