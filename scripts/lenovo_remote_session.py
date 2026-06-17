@@ -392,8 +392,8 @@ def _run_upgrade_flow(
     return rec
 
 
-def write_session_md(session_dir: Path, meta: dict[str, Any], flow_records: list[dict[str, Any]]) -> None:
-    lines = [
+def _md_header(meta: dict[str, Any], session_dir: Path) -> list[str]:
+    return [
         "# Lenovo remote session",
         "",
         f"- **Session ID:** `{meta['session_id']}`",
@@ -416,6 +416,11 @@ def write_session_md(session_dir: Path, meta: dict[str, Any], flow_records: list
         'python3 -m urisysnode.remote call "kv://lenovo/runtime/query/discover"',
         "```",
         "",
+    ]
+
+
+def _md_flow_results(flow_records: list[dict[str, Any]]) -> list[str]:
+    lines = [
         "## Flow results",
         "",
         "| Flow | OK | Steps pass | Notes |",
@@ -428,8 +433,11 @@ def write_session_md(session_dir: Path, meta: dict[str, Any], flow_records: list
         lines.append(
             f"| `{fr['flow_id']}` | {'✅' if fr.get('ok') else '❌'} | {passed}/{total} | {note[:60]} |"
         )
+    return lines
 
-    lines.extend(["", "## Step detail", ""])
+
+def _md_step_detail(flow_records: list[dict[str, Any]]) -> list[str]:
+    lines = ["", "## Step detail", ""]
     for fr in flow_records:
         lines.append(f"### {fr['flow_id']}")
         lines.append("")
@@ -445,11 +453,11 @@ def write_session_md(session_dir: Path, meta: dict[str, Any], flow_records: list
             for shot in step.get("screenshots") or []:
                 lines.append(f"  - screenshot: `{shot}`")
         lines.append("")
+    return lines
 
-    lines.extend([
-        "## Lessons",
-        "",
-    ])
+
+def _md_lessons(meta: dict[str, Any], flow_records: list[dict[str, Any]]) -> list[str]:
+    lines = ["## Lessons", ""]
     if not meta.get("node_reachable"):
         lines.append("- Node was **down** at session start — start on lenovo: `source ~/venv/bin/activate && urisys node serve --host 0.0.0.0 --port 8790`")
     failed = [s for fr in flow_records for s in fr.get("steps", []) if not s.get("ok")]
@@ -458,6 +466,17 @@ def write_session_md(session_dir: Path, meta: dict[str, Any], flow_records: list
     else:
         lines.append("- All steps passed.")
     lines.append("")
+    return lines
+
+
+def write_session_md(session_dir: Path, meta: dict[str, Any], flow_records: list[dict[str, Any]]) -> None:
+    lines = (
+        _md_header(meta, session_dir)
+        + _md_flow_results(flow_records)
+        + _md_step_detail(flow_records)
+        + _md_lessons(meta, flow_records)
+    )
+    (session_dir / "SESSION.md").write_text("\n".join(lines), encoding="utf-8")
     lines.append("## Artifacts")
     lines.append("")
     lines.append(f"- Flow copies: `{session_dir.relative_to(ROOT)}/flows/`")
@@ -499,6 +518,105 @@ def resolve_route_map(manifest_path: Path, cli_route_map: str | None) -> str:
 def load_manifest_session(manifest_path: Path) -> dict[str, Any]:
     data = load_yaml(manifest_path)
     return data.get("session") if isinstance(data.get("session"), dict) else {}
+
+
+def _run_flows(
+    flow_paths: list[Path],
+    *,
+    _run_one: Any,
+    endpoint: str,
+    node_reachable: bool,
+    meta: dict[str, Any],
+    log_path: Path,
+    session_dir: Path,
+    examples_root: Path,
+) -> tuple[list[dict[str, Any]], bool]:
+    """Execute each flow in order, running upgrade flows on demand."""
+    flow_records: list[dict[str, Any]] = []
+    upgrade_ran = False
+    kvm_upgrade_ran = False
+    node_upgrade_ran = False
+
+    for fp in flow_paths:
+        append_log(log_path, f"flow {fp.name} start")
+        if not fp.exists():
+            rec = {"flow_id": fp.stem, "ok": False, "error": "flow file missing", "steps": []}
+            flow_records.append(rec)
+            continue
+        if fp.name != "01-health-probe.uri.flow.yaml":
+            try:
+                health_data = remote_health(endpoint=endpoint)
+                node_reachable = bool(health_data.get("ok"))
+                if node_reachable:
+                    meta["node_reachable"] = True
+                    save_json(session_dir / "responses" / "_00_preflight_health.json", health_data)
+            except Exception as exc:
+                node_reachable = False
+                append_log(log_path, f"health re-check failed: {exc}")
+        if not node_reachable and fp.name != "01-health-probe.uri.flow.yaml":
+            rec = {
+                "flow_id": load_yaml(fp).get("flow", {}).get("id", fp.stem),
+                "flow_path": str(
+                    fp.relative_to(examples_root) if fp.is_relative_to(examples_root) else fp
+                ),
+                "ok": False,
+                "skipped": True,
+                "reason": "node unreachable (see 01-health-probe)",
+                "steps": [],
+            }
+            flow_records.append(rec)
+            save_json(session_dir / "flows" / f"{rec['flow_id']}.json", rec)
+            append_log(log_path, f"flow {fp.name} skipped (node down)")
+            continue
+        if (
+            not node_upgrade_ran
+            and UPGRADE_NODE_FLOW.exists()
+            and _needs_node_upgrade(flow_paths)
+            and fp.name != "01-health-probe.uri.flow.yaml"
+        ):
+            node_rec = _run_upgrade_flow(
+                UPGRADE_NODE_FLOW, "urisys-node wheel",
+                log_path=log_path, flow_records=flow_records, _run_one=_run_one,
+            )
+            node_upgrade_ran = True
+            if not node_rec.get("ok"):
+                append_log(log_path, f"flow {fp.name} skipped (node upgrade failed)")
+                continue
+            node_reachable = True
+            meta["node_reachable"] = True
+        if (
+            fp.name == "08-kvm-linkedin.uri.flow.yaml"
+            and UPGRADE_KVM_FLOW.exists()
+            and not kvm_upgrade_ran
+        ):
+            kvm_rec = _run_upgrade_flow(
+                UPGRADE_KVM_FLOW, "pre-08 kvm upgrade",
+                log_path=log_path, flow_records=flow_records, _run_one=_run_one,
+            )
+            kvm_upgrade_ran = True
+            if not kvm_rec.get("ok"):
+                append_log(log_path, f"flow {fp.name} skipped (kvm upgrade failed)")
+                continue
+        if (
+            fp.name == "07-playwright-linkedin.uri.flow.yaml"
+            and UPGRADE_PLAYWRIGHT_FLOW.exists()
+            and not upgrade_ran
+        ):
+            up_rec = _run_upgrade_flow(
+                UPGRADE_PLAYWRIGHT_FLOW, "pre-07 upgrade",
+                log_path=log_path, flow_records=flow_records, _run_one=_run_one,
+            )
+            upgrade_ran = True
+            if not up_rec.get("ok"):
+                append_log(log_path, f"flow {fp.name} skipped (upgrade failed)")
+                continue
+            node_reachable = True
+            meta["node_reachable"] = True
+        rec = _run_one(fp)
+        flow_records.append(rec)
+        append_log(log_path, f"flow {fp.name} ok={rec.get('ok')}")
+
+    return flow_records, node_reachable
 
 
 UPGRADE_PLAYWRIGHT_FLOW = EXAMPLES_ROOT / "lenovo-remote/_upgrade-playwright.uri.flow.yaml"
@@ -620,11 +738,6 @@ def main(argv: list[str] | None = None) -> int:
     }
     save_json(session_dir / "meta.json", meta)
 
-    flow_records: list[dict[str, Any]] = []
-    upgrade_ran = False
-    kvm_upgrade_ran = False
-    node_upgrade_ran = False
-
     def _run_one(fp: Path) -> dict[str, Any]:
         return run_flow(
             fp,
@@ -636,85 +749,16 @@ def main(argv: list[str] | None = None) -> int:
             examples_root=examples_root,
         )
 
-    for fp in flow_paths:
-        append_log(log_path, f"flow {fp.name} start")
-        if not fp.exists():
-            rec = {"flow_id": fp.stem, "ok": False, "error": "flow file missing", "steps": []}
-            flow_records.append(rec)
-            continue
-        if fp.name != "01-health-probe.uri.flow.yaml":
-            try:
-                health_data = remote_health(endpoint=args.endpoint)
-                node_reachable = bool(health_data.get("ok"))
-                if node_reachable:
-                    meta["node_reachable"] = True
-                    save_json(session_dir / "responses" / "_00_preflight_health.json", health_data)
-            except Exception as exc:
-                node_reachable = False
-                append_log(log_path, f"health re-check failed: {exc}")
-        if not node_reachable and fp.name != "01-health-probe.uri.flow.yaml":
-            rec = {
-                "flow_id": load_yaml(fp).get("flow", {}).get("id", fp.stem),
-                "flow_path": str(
-                    fp.relative_to(examples_root) if fp.is_relative_to(examples_root) else fp
-                ),
-                "ok": False,
-                "skipped": True,
-                "reason": "node unreachable (see 01-health-probe)",
-                "steps": [],
-            }
-            flow_records.append(rec)
-            save_json(session_dir / "flows" / f"{rec['flow_id']}.json", rec)
-            append_log(log_path, f"flow {fp.name} skipped (node down)")
-            continue
-        # --- upgrade flows (deduplicated via _run_upgrade_flow) ---
-        if (
-            not node_upgrade_ran
-            and UPGRADE_NODE_FLOW.exists()
-            and _needs_node_upgrade(flow_paths)
-            and fp.name != "01-health-probe.uri.flow.yaml"
-        ):
-            node_rec = _run_upgrade_flow(
-                UPGRADE_NODE_FLOW, "urisys-node wheel",
-                log_path=log_path, flow_records=flow_records, _run_one=_run_one,
-            )
-            node_upgrade_ran = True
-            if not node_rec.get("ok"):
-                append_log(log_path, f"flow {fp.name} skipped (node upgrade failed)")
-                continue
-            node_reachable = True
-            meta["node_reachable"] = True
-        if (
-            fp.name == "08-kvm-linkedin.uri.flow.yaml"
-            and UPGRADE_KVM_FLOW.exists()
-            and not kvm_upgrade_ran
-        ):
-            kvm_rec = _run_upgrade_flow(
-                UPGRADE_KVM_FLOW, "pre-08 kvm upgrade",
-                log_path=log_path, flow_records=flow_records, _run_one=_run_one,
-            )
-            kvm_upgrade_ran = True
-            if not kvm_rec.get("ok"):
-                append_log(log_path, f"flow {fp.name} skipped (kvm upgrade failed)")
-                continue
-        if (
-            fp.name == "07-playwright-linkedin.uri.flow.yaml"
-            and UPGRADE_PLAYWRIGHT_FLOW.exists()
-            and not upgrade_ran
-        ):
-            up_rec = _run_upgrade_flow(
-                UPGRADE_PLAYWRIGHT_FLOW, "pre-07 upgrade",
-                log_path=log_path, flow_records=flow_records, _run_one=_run_one,
-            )
-            upgrade_ran = True
-            if not up_rec.get("ok"):
-                append_log(log_path, f"flow {fp.name} skipped (upgrade failed)")
-                continue
-            node_reachable = True
-            meta["node_reachable"] = True
-        rec = _run_one(fp)
-        flow_records.append(rec)
-        append_log(log_path, f"flow {fp.name} ok={rec.get('ok')}")
+    flow_records, node_reachable = _run_flows(
+        flow_paths,
+        _run_one=_run_one,
+        endpoint=args.endpoint,
+        node_reachable=node_reachable,
+        meta=meta,
+        log_path=log_path,
+        session_dir=session_dir,
+        examples_root=examples_root,
+    )
 
     meta["steps"] = [
         {

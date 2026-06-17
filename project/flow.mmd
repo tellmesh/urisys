@@ -13,14 +13,14 @@ flowchart TD
         src__urisys__bootstrap___doctor_main["_doctor_main"]
         src__urisys__bootstrap___init_main["_init_main"]
         src__urisys__bootstrap__main["main"]
-        src__urisys__doctor___check_cli_path["_check_cli_path"]
-        src__urisys__init_setup___pre_repair_uricore["_pre_repair_uricore"]
-        src__urisys__init_setup__run_init{{run_init CC=31}}
-        src__urisys__controllers__flow_controller__FlowController__run["run"]
-        src__urisys__controllers__flow_controller__FlowController__close["close"]
-        src__urisys__controllers__server_controller__ServerController__serve_forever["serve_forever"]
-        src__urisys__controllers__uri_controller__UriController__call["call"]
+        src__urisys__cli___json_arg["_json_arg"]
+        src__urisys__cli__print_json["print_json"]
+        src__urisys__cli___add_runtime_flags["_add_runtime_flags"]
+        src__urisys__cli__resolve_markpact_source["resolve_markpact_source"]
+        src__urisys__cli__build_parser["build_parser"]
+        src__urisys__cli___cmd_markpact["_cmd_markpact"]
+        src__urisys__cli___cmd_init["_cmd_init"]
         ...["+72 more"]
     end
 
-    class src__urisys__bootstrap___doctor_main,src__urisys__bootstrap___init_main,src__urisys__bootstrap__main,src__urisys__doctor___check_cli_path,src__urisys__controllers__flow_controller__FlowController__run,src__urisys__controllers__flow_controller__FlowController__close,src__urisys__controllers__server_controller__ServerController__serve_forever,src__urisys__controllers__uri_controller__UriController__call,src__urisys__controllers__uri_controller__UriController__explain,src__urisys__controllers__uri_controller__UriController__routes entry
+    class src__urisys__bootstrap___doctor_main,src__urisys__bootstrap___init_main,src__urisys__bootstrap__main,src__urisys__cli___json_arg,src__urisys__cli__print_json,src__urisys__cli___add_runtime_flags,src__urisys__cli__resolve_markpact_source,src__urisys__cli__build_parser,src__urisys__cli___cmd_markpact,src__urisys__cli___cmd_init entry

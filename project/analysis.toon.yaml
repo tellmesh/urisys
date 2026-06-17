@@ -1,13 +1,12 @@
-# code2llm | 102f 11894L | python:49,shell:41,yaml:7,toml:1,json:1,yml:1,javascript:1 | 2026-06-17
-# generated in 0.03s
-# CC̅=4.8 | critical:14/357 | dups:0 | cycles:1
+# code2llm | 102f 11916L | python:49,shell:41,yaml:7,toml:1,json:1,yml:1,javascript:1 | 2026-06-17
+# generated in 0.02s
+# CC̅=4.7 | critical:13/366 | dups:0 | cycles:0
 
-HEALTH[14]:
+HEALTH[13]:
   🟡 CC    run_init CC=31 (limit:15)
   🟡 CC    compile CC=17 (limit:15)
   🟡 CC    main CC=23 (limit:15)
-  🟡 CC    session_urirdp_real_docker CC=30 (limit:15)
-  🟡 CC    session_automation_lab CC=16 (limit:15)
+  🟡 CC    session_urirdp_real_docker CC=25 (limit:15)
   🟡 CC    step_ok CC=16 (limit:15)
   🟡 CC    expand_step_wheels CC=18 (limit:15)
   🟡 CC    main CC=28 (limit:15)
@@ -15,12 +14,11 @@ HEALTH[14]:
   🟡 CC    load_flow_outcomes CC=15 (limit:15)
   🟡 CC    infer_steps CC=28 (limit:15)
   🟡 CC    _run_host_restart_and_wait_step CC=19 (limit:15)
-  🟡 CC    write_session_md CC=22 (limit:15)
-  🟡 CC    main CC=58 (limit:15)
+  🟡 CC    _run_flows CC=22 (limit:15)
+  🟡 CC    main CC=37 (limit:15)
 
-REFACTOR[2]:
-  1. split 14 high-CC methods  (CC>15)
-  2. break 1 circular dependencies
+REFACTOR[1]:
+  1. split 13 high-CC methods  (CC>15)
 
 PIPELINES[111]:
   [1] Src [registry]: registry
@@ -35,99 +33,99 @@ PIPELINES[111]:
       PURITY: 100% pure
   [6] Src [main]: main → _doctor_main → run_doctor → _check_uricore_authentic → ...(2 more)
       PURITY: 100% pure
-  [7] Src [__init__]: __init__
+  [7] Src [main]: main → _cmd_uri → print_json → print
       PURITY: 100% pure
-  [8] Src [run]: run → load_flow
+  [8] Src [__init__]: __init__
       PURITY: 100% pure
-  [9] Src [close]: close
+  [9] Src [run]: run → load_flow
       PURITY: 100% pure
-  [10] Src [__init__]: __init__ → create_server → _send
+  [10] Src [close]: close
       PURITY: 100% pure
-  [11] Src [serve_forever]: serve_forever → print
+  [11] Src [__init__]: __init__ → create_server → _send
       PURITY: 100% pure
-  [12] Src [__init__]: __init__
+  [12] Src [serve_forever]: serve_forever → print
       PURITY: 100% pure
-  [13] Src [call]: call
+  [13] Src [__init__]: __init__
       PURITY: 100% pure
-  [14] Src [explain]: explain
+  [14] Src [call]: call
       PURITY: 100% pure
-  [15] Src [routes]: routes
+  [15] Src [explain]: explain
       PURITY: 100% pure
-  [16] Src [close]: close
+  [16] Src [routes]: routes
       PURITY: 100% pure
-  [17] Src [to_dict]: to_dict
+  [17] Src [close]: close
       PURITY: 100% pure
-  [18] Src [safe_identifier]: safe_identifier
+  [18] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [19] Src [parse_meta]: parse_meta
+  [19] Src [safe_identifier]: safe_identifier
       PURITY: 100% pure
-  [20] Src [source_hash]: source_hash
+  [20] Src [parse_meta]: parse_meta
       PURITY: 100% pure
-  [21] Src [__init__]: __init__
+  [21] Src [source_hash]: source_hash
       PURITY: 100% pure
-  [22] Src [list_events]: list_events
+  [22] Src [__init__]: __init__
       PURITY: 100% pure
-  [23] Src [build_context]: build_context
+  [23] Src [list_events]: list_events
       PURITY: 100% pure
-  [24] Src [explain]: explain
+  [24] Src [build_context]: build_context
       PURITY: 100% pure
-  [25] Src [__init__]: __init__
+  [25] Src [explain]: explain
       PURITY: 100% pure
-  [26] Src [create_runtime]: create_runtime
+  [26] Src [__init__]: __init__
       PURITY: 100% pure
-  [27] Src [close]: close
+  [27] Src [create_runtime]: create_runtime
       PURITY: 100% pure
-  [28] Src [__exit__]: __exit__
+  [28] Src [close]: close
       PURITY: 100% pure
-  [29] Src [__init__]: __init__
+  [29] Src [__exit__]: __exit__
       PURITY: 100% pure
-  [30] Src [read_blocks]: read_blocks
+  [30] Src [__init__]: __init__
       PURITY: 100% pure
-  [31] Src [source_hash]: source_hash
+  [31] Src [read_blocks]: read_blocks
       PURITY: 100% pure
-  [32] Src [load_pack_block]: load_pack_block
+  [32] Src [source_hash]: source_hash
       PURITY: 100% pure
-  [33] Src [validate]: validate → validate_contract → _validate_contract_routes → scheme_from_uri
+  [33] Src [load_pack_block]: load_pack_block
       PURITY: 100% pure
-  [34] Src [_validate_pack]: _validate_pack
+  [34] Src [validate]: validate → validate_contract → _validate_contract_routes → scheme_from_uri
       PURITY: 100% pure
-  [35] Src [compile]: compile
+  [35] Src [_validate_pack]: _validate_pack
       PURITY: 100% pure
-  [36] Src [_write_handler_modules]: _write_handler_modules
+  [36] Src [compile]: compile
       PURITY: 100% pure
-  [37] Src [manifest_path_for]: manifest_path_for
+  [37] Src [_write_handler_modules]: _write_handler_modules
       PURITY: 100% pure
-  [38] Src [run_tests]: run_tests
+  [38] Src [manifest_path_for]: manifest_path_for
       PURITY: 100% pure
-  [39] Src [_check_expectations]: _check_expectations
+  [39] Src [run_tests]: run_tests
       PURITY: 100% pure
-  [40] Src [_build_route]: _build_route
+  [40] Src [_check_expectations]: _check_expectations
       PURITY: 100% pure
-  [41] Src [_resolve_handler_ref]: _resolve_handler_ref
+  [41] Src [_build_route]: _build_route
       PURITY: 100% pure
-  [42] Src [_compile_manifest]: _compile_manifest
+  [42] Src [_resolve_handler_ref]: _resolve_handler_ref
       PURITY: 100% pure
-  [43] Src [_package_id]: _package_id
+  [43] Src [_compile_manifest]: _compile_manifest
       PURITY: 100% pure
-  [44] Src [_capabilities]: _capabilities
+  [44] Src [_package_id]: _package_id
       PURITY: 100% pure
-  [45] Src [_scheme]: _scheme
+  [45] Src [_capabilities]: _capabilities
       PURITY: 100% pure
-  [46] Src [_handler_blocks]: _handler_blocks
+  [46] Src [_scheme]: _scheme
       PURITY: 100% pure
-  [47] Src [_load_yaml_blocks]: _load_yaml_blocks
+  [47] Src [_handler_blocks]: _handler_blocks
       PURITY: 100% pure
-  [48] Src [_handler_id_from_ref]: _handler_id_from_ref
+  [48] Src [_load_yaml_blocks]: _load_yaml_blocks
       PURITY: 100% pure
-  [49] Src [_ensure_importable]: _ensure_importable
+  [49] Src [_handler_id_from_ref]: _handler_id_from_ref
       PURITY: 100% pure
-  [50] Src [call_http]: call_http
+  [50] Src [_ensure_importable]: _ensure_importable
       PURITY: 100% pure
 
 LAYERS:
-  scripts/                        CC̄=5.3    ←in:32  →out:89  !! split
-  │ !! run_test_sessions          783L  0C   14m  CC=30     ←0
-  │ !! lenovo_remote_session      751L  0C   20m  CC=58     ←0
+  scripts/                        CC̄=5.1    ←in:32  →out:88  !! split
+  │ !! lenovo_remote_session      795L  0C   25m  CC=37     ←0
+  │ !! run_test_sessions          761L  0C   18m  CC=25     ←0
   │ !! pack_sync                  347L  0C   13m  CC=28     ←0
   │ lab_flows                  320L  0C    5m  CC=13     ←0
   │ !! session_core               276L  0C   16m  CC=18     ←6
@@ -246,17 +244,17 @@ LAYERS:
 
 COUPLING:
                                        scripts  scripts.test_sessions         scripts.report             src.urisys
-                scripts                     ──                     89                    ←13                     ←8  hub
+                scripts                     ──                     88                    ←13                     ←8  hub
   scripts.test_sessions                     11                     ──                                                hub
          scripts.report                     13                                            ──                         !! fan-out
              src.urisys                      8                                                                   ──  !! fan-out
-  CYCLES: 1
+  CYCLES: none
   HUB: scripts/ (fan-in=32)
-  HUB: scripts.test_sessions/ (fan-in=89)
+  HUB: scripts.test_sessions/ (fan-in=88)
+  SMELL: scripts/ fan-out=88 → split needed
   SMELL: scripts.report/ fan-out=13 → split needed
-  SMELL: scripts/ fan-out=89 → split needed
-  SMELL: src.urisys/ fan-out=8 → split needed
   SMELL: scripts.test_sessions/ fan-out=11 → split needed
+  SMELL: src.urisys/ fan-out=8 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

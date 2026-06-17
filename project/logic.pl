@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.63', 'python').
+project_metadata('urisys', '0.1.64', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 49, 'less').
@@ -22,7 +22,7 @@ project_file('scripts/ci-install-siblings.sh', 29, 'shell').
 project_file('scripts/deploy-lenovo-node.sh', 131, 'shell').
 project_file('scripts/install-kvm-packs-editable.sh', 14, 'shell').
 project_file('scripts/lenovo-node-session.sh', 74, 'shell').
-project_file('scripts/lenovo_remote_session.py', 695, 'python').
+project_file('scripts/lenovo_remote_session.py', 796, 'python').
 project_file('scripts/office-simulate-loop.py', 147, 'python').
 project_file('scripts/pack_registry.py', 270, 'python').
 project_file('scripts/pack_sync.py', 348, 'python').
@@ -53,7 +53,7 @@ project_file('scripts/run-office-writer-e2e.sh', 114, 'shell').
 project_file('scripts/run-smoke-all.sh', 25, 'shell').
 project_file('scripts/run-urisys-node-docker-e2e.sh', 164, 'shell').
 project_file('scripts/run-urisys-node-docker-session.sh', 7, 'shell').
-project_file('scripts/run_test_sessions.py', 784, 'python').
+project_file('scripts/run_test_sessions.py', 762, 'python').
 project_file('scripts/scan-browser-sessions.py', 200, 'python').
 project_file('scripts/session_core.py', 277, 'python').
 project_file('scripts/session_report.py', 50, 'python').
@@ -70,7 +70,7 @@ project_file('scripts/validate-all-markpacts.sh', 54, 'shell').
 project_file('scripts/validate-pypi-metadata.sh', 63, 'shell').
 project_file('src/urisys/__init__.py', 4, 'python').
 project_file('src/urisys/bootstrap.py', 117, 'python').
-project_file('src/urisys/cli.py', 319, 'python').
+project_file('src/urisys/cli.py', 336, 'python').
 project_file('src/urisys/controllers/__init__.py', 1, 'python').
 project_file('src/urisys/controllers/flow_controller.py', 34, 'python').
 project_file('src/urisys/controllers/server_controller.py', 20, 'python').
@@ -117,16 +117,29 @@ project_file('tree.sh', 2, 'shell').
 % ── Python Functions ─────────────────────────────────────
 python_function('scripts/lenovo_remote_session.py', 'load_yaml', 1, 3, 4).
 python_function('scripts/lenovo_remote_session.py', 'http_get', 2, 4, 6).
-python_function('scripts/lenovo_remote_session.py', 'run_step', 1, 48, 17).
+python_function('scripts/lenovo_remote_session.py', '_run_http_get_step', 3, 2, 3).
+python_function('scripts/lenovo_remote_session.py', '_run_host_sleep_step', 2, 3, 3).
+python_function('scripts/lenovo_remote_session.py', '_run_host_restart_and_wait_step', 2, 19, 11).
+python_function('scripts/lenovo_remote_session.py', '_run_host_schedule_restart_step', 2, 4, 2).
+python_function('scripts/lenovo_remote_session.py', '_run_host_wait_health_step', 2, 12, 9).
+python_function('scripts/lenovo_remote_session.py', '_run_uri_call_step', 2, 6, 6).
+python_function('scripts/lenovo_remote_session.py', 'run_step', 1, 9, 10).
 python_function('scripts/lenovo_remote_session.py', 'run_flow', 1, 14, 20).
 python_function('scripts/lenovo_remote_session.py', 'append_log', 2, 1, 4).
 python_function('scripts/lenovo_remote_session.py', 'build_wheels', 1, 4, 6).
 python_function('scripts/lenovo_remote_session.py', 'start_wheel_server', 3, 2, 4).
-python_function('scripts/lenovo_remote_session.py', 'write_session_md', 3, 22, 9).
+python_function('scripts/lenovo_remote_session.py', '_needs_node_upgrade', 1, 4, 2).
+python_function('scripts/lenovo_remote_session.py', '_run_upgrade_flow', 2, 1, 4).
+python_function('scripts/lenovo_remote_session.py', '_md_header', 2, 1, 3).
+python_function('scripts/lenovo_remote_session.py', '_md_flow_results', 1, 6, 4).
+python_function('scripts/lenovo_remote_session.py', '_md_step_detail', 1, 12, 2).
+python_function('scripts/lenovo_remote_session.py', '_md_lessons', 2, 6, 3).
+python_function('scripts/lenovo_remote_session.py', 'write_session_md', 3, 1, 9).
 python_function('scripts/lenovo_remote_session.py', 'resolve_flow_paths', 2, 5, 4).
 python_function('scripts/lenovo_remote_session.py', 'resolve_route_map', 2, 8, 8).
 python_function('scripts/lenovo_remote_session.py', 'load_manifest_session', 1, 2, 3).
-python_function('scripts/lenovo_remote_session.py', 'main', 1, 58, 46).
+python_function('scripts/lenovo_remote_session.py', '_run_flows', 1, 22, 14).
+python_function('scripts/lenovo_remote_session.py', 'main', 1, 37, 42).
 python_function('scripts/office-simulate-loop.py', 'call_uri', 4, 4, 9).
 python_function('scripts/office-simulate-loop.py', 'rules_tick', 3, 3, 5).
 python_function('scripts/office-simulate-loop.py', 'llm_tick', 3, 7, 6).
@@ -195,9 +208,13 @@ python_function('scripts/run_test_sessions.py', 'session_pytest_urirdp', 1, 3, 5
 python_function('scripts/run_test_sessions.py', 'session_pytest_urisys', 1, 2, 5).
 python_function('scripts/run_test_sessions.py', 'session_pytest_urisys_node', 1, 2, 5).
 python_function('scripts/run_test_sessions.py', 'session_urirdp_mock_docker', 1, 5, 17).
-python_function('scripts/run_test_sessions.py', 'session_urirdp_real_docker', 1, 30, 25).
+python_function('scripts/run_test_sessions.py', '_record_health', 6, 1, 3).
+python_function('scripts/run_test_sessions.py', '_bootstrap_rdp', 4, 4, 3).
+python_function('scripts/run_test_sessions.py', '_read_display_env', 1, 4, 2).
+python_function('scripts/run_test_sessions.py', '_call_and_record', 10, 5, 4).
+python_function('scripts/run_test_sessions.py', 'session_urirdp_real_docker', 1, 25, 27).
 python_function('scripts/run_test_sessions.py', 'session_urirdp_rdp_e2e', 1, 5, 11).
-python_function('scripts/run_test_sessions.py', 'session_automation_lab', 1, 16, 17).
+python_function('scripts/run_test_sessions.py', 'session_automation_lab', 1, 13, 18).
 python_function('scripts/run_test_sessions.py', '_monorepo_root', 0, 4, 1).
 python_function('scripts/run_test_sessions.py', 'session_urisys_node_docker_gui', 1, 7, 11).
 python_function('scripts/run_test_sessions.py', 'session_office_simulate', 1, 7, 11).
@@ -275,7 +292,7 @@ python_function('src/urisys/cli.py', 'resolve_markpact_source', 1, 2, 3).
 python_function('src/urisys/cli.py', 'build_parser', 0, 1, 9).
 python_function('src/urisys/cli.py', '_cmd_markpact', 1, 9, 12).
 python_function('src/urisys/cli.py', '_cmd_init', 1, 6, 5).
-python_function('src/urisys/cli.py', '_cmd_node', 1, 3, 3).
+python_function('src/urisys/cli.py', '_cmd_node', 1, 6, 5).
 python_function('src/urisys/cli.py', '_cmd_uri', 1, 4, 7).
 python_function('src/urisys/cli.py', '_handle_cli_error', 1, 8, 4).
 python_function('src/urisys/cli.py', 'main', 1, 11, 18).

@@ -1,6 +1,6 @@
 flowchart TD
 %% generated in 0.01s
-    scripts__lenovo_remote_session["scripts.lenovo_remote_session<br/>20 funcs"]
+    scripts__lenovo_remote_session["scripts.lenovo_remote_session<br/>25 funcs"]
     scripts__office_simulate_loop["scripts.office-simulate-loop<br/>5 funcs"]
     scripts__pack_registry["scripts.pack_registry<br/>9 funcs"]
     scripts__pack_sync["scripts.pack_sync<br/>13 funcs"]
@@ -8,19 +8,18 @@ flowchart TD
     scripts__run_nl_log_smoke["scripts.run-nl-log-smoke<br/>1 funcs"]
     scripts__run_office_writer_e2e["scripts.run-office-writer-e2e<br/>4 funcs"]
     scripts__run_urisys_node_docker_e2e["scripts.run-urisys-node-docker-e2e<br/>5 funcs"]
-    scripts__run_test_sessions["scripts.run_test_sessions<br/>14 funcs"]
+    scripts__run_test_sessions["scripts.run_test_sessions<br/>18 funcs"]
     scripts__scan_browser_sessions["scripts.scan-browser-sessions<br/>6 funcs"]
     scripts__session_core["scripts.session_core<br/>16 funcs"]
     scripts__test_sessions["scripts.test_sessions<br/>36 funcs"]
     src__urisys["src.urisys<br/>150 funcs"]
-    scripts__run_test_sessions ==>|89| scripts__test_sessions
+    scripts__run_test_sessions ==>|88| scripts__test_sessions
     scripts__run_test_sessions ==>|28| scripts__session_core
-    scripts__run_test_sessions ==>|19| scripts__run_office_writer_e2e
     scripts__pack_sync ==>|15| scripts__run_nl_log_smoke
     scripts__lenovo_remote_session ==>|14| scripts__session_core
     scripts__scan_browser_sessions ==>|10| scripts__run_nl_log_smoke
+    scripts__run_test_sessions ==>|10| scripts__run_office_writer_e2e
     src__urisys ==>|8| scripts__run_nl_log_smoke
-    scripts__run_test_sessions ==>|8| scripts__run_urisys_node_docker_e2e
     scripts__lenovo_remote_session ==>|8| scripts__run_office_writer_e2e
     scripts__office_simulate_loop ==>|7| scripts__run_nl_log_smoke
     scripts__report ==>|7| scripts__session_core
@@ -28,6 +27,7 @@ flowchart TD
     scripts__run_test_sessions ==>|5| scripts__run_nl_log_smoke
     scripts__test_sessions ==>|5| scripts__run_office_writer_e2e
     scripts__lenovo_remote_session ==>|5| scripts__run_nl_log_smoke
+    scripts__run_test_sessions -->|3| scripts__run_urisys_node_docker_e2e
     scripts__test_sessions -->|3| scripts__run_urisys_node_docker_e2e
     scripts__test_sessions -->|3| scripts__session_core
     scripts__pack_sync -->|2| scripts__pack_registry

@@ -20,7 +20,7 @@ URI control system managers/controllers over separate uri* capability packs.
 ## Metadata
 
 - **name**: `urisys`
-- **version**: `0.1.63`
+- **version**: `0.1.64`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -40,7 +40,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: urisys;
-  version: 0.1.63;
+  version: 0.1.64;
 }
 
 dependencies {
@@ -197,7 +197,7 @@ ASSERT[14]{field, operator, expected}:
 ```yaml
 project:
   name: urisys
-  version: 0.1.63
+  version: 0.1.64
   env: local
 ```
 
@@ -260,10 +260,10 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# urisys | 111f 10611L | python:68,shell:41,less:1,javascript:1 | 2026-06-17
-# stats: 298 func | 23 cls | 111 mod | CC̄=5.6 | critical:41 | cycles:0
-# alerts[5]: CC main=58; CC run_step=48; CC run_init=31; CC session_urirdp_real_docker=30; CC main=28
-# hotspots[5]: main fan=46; session_urirdp_real_docker fan=25; analyze_run fan=23; session_lab_10_flows fan=22; run_flow fan=20
+# urisys | 111f 10707L | python:68,shell:41,less:1,javascript:1 | 2026-06-17
+# stats: 315 func | 23 cls | 111 mod | CC̄=5.4 | critical:43 | cycles:0
+# alerts[5]: CC main=37; CC run_init=31; CC main=28; CC infer_steps=28; CC session_urirdp_real_docker=25
+# hotspots[5]: main fan=42; session_urirdp_real_docker fan=27; analyze_run fan=23; session_lab_10_flows fan=22; run_flow fan=20
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
 M[111]:
@@ -287,7 +287,7 @@ M[111]:
   scripts/deploy-lenovo-node.sh,131
   scripts/install-kvm-packs-editable.sh,14
   scripts/lenovo-node-session.sh,74
-  scripts/lenovo_remote_session.py,695
+  scripts/lenovo_remote_session.py,796
   scripts/office-simulate-loop.py,147
   scripts/pack_registry.py,270
   scripts/pack_sync.py,348
@@ -318,7 +318,7 @@ M[111]:
   scripts/run-smoke-all.sh,25
   scripts/run-urisys-node-docker-e2e.sh,164
   scripts/run-urisys-node-docker-session.sh,7
-  scripts/run_test_sessions.py,784
+  scripts/run_test_sessions.py,762
   scripts/scan-browser-sessions.py,200
   scripts/session_core.py,277
   scripts/session_report.py,50
@@ -335,7 +335,7 @@ M[111]:
   scripts/validate-pypi-metadata.sh,63
   src/urisys/__init__.py,4
   src/urisys/bootstrap.py,117
-  src/urisys/cli.py,319
+  src/urisys/cli.py,336
   src/urisys/controllers/__init__.py,1
   src/urisys/controllers/flow_controller.py,34
   src/urisys/controllers/server_controller.py,20
@@ -380,18 +380,31 @@ M[111]:
   tree.sh,2
 D:
   scripts/lenovo_remote_session.py:
-    e: load_yaml,http_get,run_step,run_flow,append_log,build_wheels,start_wheel_server,write_session_md,resolve_flow_paths,resolve_route_map,load_manifest_session,main
+    e: load_yaml,http_get,_run_http_get_step,_run_host_sleep_step,_run_host_restart_and_wait_step,_run_host_schedule_restart_step,_run_host_wait_health_step,_run_uri_call_step,run_step,run_flow,append_log,build_wheels,start_wheel_server,_needs_node_upgrade,_run_upgrade_flow,_md_header,_md_flow_results,_md_step_detail,_md_lessons,write_session_md,resolve_flow_paths,resolve_route_map,load_manifest_session,_run_flows,main
     load_yaml(path)
     http_get(endpoint;path)
+    _run_http_get_step(step;out;endpoint)
+    _run_host_sleep_step(step;out)
+    _run_host_restart_and_wait_step(step;out)
+    _run_host_schedule_restart_step(step;out)
+    _run_host_wait_health_step(step;out)
+    _run_uri_call_step(step;out)
     run_step(step)
     run_flow(flow_path)
     append_log(path;line)
     build_wheels(deploy_dir)
     start_wheel_server(deploy_dir;host;port)
+    _needs_node_upgrade(flow_paths)
+    _run_upgrade_flow(upgrade_flow;label)
+    _md_header(meta;session_dir)
+    _md_flow_results(flow_records)
+    _md_step_detail(flow_records)
+    _md_lessons(meta;flow_records)
     write_session_md(session_dir;meta;flow_records)
     resolve_flow_paths(manifest_path;explicit)
     resolve_route_map(manifest_path;cli_route_map)
     load_manifest_session(manifest_path)
+    _run_flows(flow_paths)
     main(argv)
   scripts/office-simulate-loop.py:
     e: call_uri,rules_tick,llm_tick,parse_args,main
@@ -491,11 +504,15 @@ D:
     read_json(path)
     tail(text;limit)
   scripts/run_test_sessions.py:
-    e: session_pytest_urirdp,session_pytest_urisys,session_pytest_urisys_node,session_urirdp_mock_docker,session_urirdp_real_docker,session_urirdp_rdp_e2e,session_automation_lab,_monorepo_root,session_urisys_node_docker_gui,session_office_simulate,session_office_simulate_lenovo,session_office_writer,session_email_mailpit,main
+    e: session_pytest_urirdp,session_pytest_urisys,session_pytest_urisys_node,session_urirdp_mock_docker,_record_health,_bootstrap_rdp,_read_display_env,_call_and_record,session_urirdp_real_docker,session_urirdp_rdp_e2e,session_automation_lab,_monorepo_root,session_urisys_node_docker_gui,session_office_simulate,session_office_simulate_lenovo,session_office_writer,session_email_mailpit,main
     session_pytest_urirdp(session_dir)
     session_pytest_urisys(session_dir)
     session_pytest_urisys_node(session_dir)
     session_urirdp_mock_docker(session_dir)
+    _record_health(session_dir;steps;seq;name;url;attempts)
+    _bootstrap_rdp(container;log;steps;raise_on_fail)
+    _read_display_env(container)
+    _call_and_record(session_dir;steps;seq;name;uri;payload;ctx;timeout;port;step_name)
     session_urirdp_real_docker(session_dir)
     session_urirdp_rdp_e2e(session_dir)
     session_automation_lab(session_dir)
@@ -835,7 +852,7 @@ D:
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('urisys', '0.1.63', 'python').
+project_metadata('urisys', '0.1.64', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 49, 'less').
@@ -858,7 +875,7 @@ project_file('scripts/ci-install-siblings.sh', 29, 'shell').
 project_file('scripts/deploy-lenovo-node.sh', 131, 'shell').
 project_file('scripts/install-kvm-packs-editable.sh', 14, 'shell').
 project_file('scripts/lenovo-node-session.sh', 74, 'shell').
-project_file('scripts/lenovo_remote_session.py', 695, 'python').
+project_file('scripts/lenovo_remote_session.py', 796, 'python').
 project_file('scripts/office-simulate-loop.py', 147, 'python').
 project_file('scripts/pack_registry.py', 270, 'python').
 project_file('scripts/pack_sync.py', 348, 'python').
@@ -889,7 +906,7 @@ project_file('scripts/run-office-writer-e2e.sh', 114, 'shell').
 project_file('scripts/run-smoke-all.sh', 25, 'shell').
 project_file('scripts/run-urisys-node-docker-e2e.sh', 164, 'shell').
 project_file('scripts/run-urisys-node-docker-session.sh', 7, 'shell').
-project_file('scripts/run_test_sessions.py', 784, 'python').
+project_file('scripts/run_test_sessions.py', 762, 'python').
 project_file('scripts/scan-browser-sessions.py', 200, 'python').
 project_file('scripts/session_core.py', 277, 'python').
 project_file('scripts/session_report.py', 50, 'python').
@@ -906,7 +923,7 @@ project_file('scripts/validate-all-markpacts.sh', 54, 'shell').
 project_file('scripts/validate-pypi-metadata.sh', 63, 'shell').
 project_file('src/urisys/__init__.py', 4, 'python').
 project_file('src/urisys/bootstrap.py', 117, 'python').
-project_file('src/urisys/cli.py', 319, 'python').
+project_file('src/urisys/cli.py', 336, 'python').
 project_file('src/urisys/controllers/__init__.py', 1, 'python').
 project_file('src/urisys/controllers/flow_controller.py', 34, 'python').
 project_file('src/urisys/controllers/server_controller.py', 20, 'python').
@@ -953,16 +970,29 @@ project_file('tree.sh', 2, 'shell').
 % ── Python Functions ─────────────────────────────────────
 python_function('scripts/lenovo_remote_session.py', 'load_yaml', 1, 3, 4).
 python_function('scripts/lenovo_remote_session.py', 'http_get', 2, 4, 6).
-python_function('scripts/lenovo_remote_session.py', 'run_step', 1, 48, 17).
+python_function('scripts/lenovo_remote_session.py', '_run_http_get_step', 3, 2, 3).
+python_function('scripts/lenovo_remote_session.py', '_run_host_sleep_step', 2, 3, 3).
+python_function('scripts/lenovo_remote_session.py', '_run_host_restart_and_wait_step', 2, 19, 11).
+python_function('scripts/lenovo_remote_session.py', '_run_host_schedule_restart_step', 2, 4, 2).
+python_function('scripts/lenovo_remote_session.py', '_run_host_wait_health_step', 2, 12, 9).
+python_function('scripts/lenovo_remote_session.py', '_run_uri_call_step', 2, 6, 6).
+python_function('scripts/lenovo_remote_session.py', 'run_step', 1, 9, 10).
 python_function('scripts/lenovo_remote_session.py', 'run_flow', 1, 14, 20).
 python_function('scripts/lenovo_remote_session.py', 'append_log', 2, 1, 4).
 python_function('scripts/lenovo_remote_session.py', 'build_wheels', 1, 4, 6).
 python_function('scripts/lenovo_remote_session.py', 'start_wheel_server', 3, 2, 4).
-python_function('scripts/lenovo_remote_session.py', 'write_session_md', 3, 22, 9).
+python_function('scripts/lenovo_remote_session.py', '_needs_node_upgrade', 1, 4, 2).
+python_function('scripts/lenovo_remote_session.py', '_run_upgrade_flow', 2, 1, 4).
+python_function('scripts/lenovo_remote_session.py', '_md_header', 2, 1, 3).
+python_function('scripts/lenovo_remote_session.py', '_md_flow_results', 1, 6, 4).
+python_function('scripts/lenovo_remote_session.py', '_md_step_detail', 1, 12, 2).
+python_function('scripts/lenovo_remote_session.py', '_md_lessons', 2, 6, 3).
+python_function('scripts/lenovo_remote_session.py', 'write_session_md', 3, 1, 9).
 python_function('scripts/lenovo_remote_session.py', 'resolve_flow_paths', 2, 5, 4).
 python_function('scripts/lenovo_remote_session.py', 'resolve_route_map', 2, 8, 8).
 python_function('scripts/lenovo_remote_session.py', 'load_manifest_session', 1, 2, 3).
-python_function('scripts/lenovo_remote_session.py', 'main', 1, 58, 46).
+python_function('scripts/lenovo_remote_session.py', '_run_flows', 1, 22, 14).
+python_function('scripts/lenovo_remote_session.py', 'main', 1, 37, 42).
 python_function('scripts/office-simulate-loop.py', 'call_uri', 4, 4, 9).
 python_function('scripts/office-simulate-loop.py', 'rules_tick', 3, 3, 5).
 python_function('scripts/office-simulate-loop.py', 'llm_tick', 3, 7, 6).
@@ -1031,9 +1061,13 @@ python_function('scripts/run_test_sessions.py', 'session_pytest_urirdp', 1, 3, 5
 python_function('scripts/run_test_sessions.py', 'session_pytest_urisys', 1, 2, 5).
 python_function('scripts/run_test_sessions.py', 'session_pytest_urisys_node', 1, 2, 5).
 python_function('scripts/run_test_sessions.py', 'session_urirdp_mock_docker', 1, 5, 17).
-python_function('scripts/run_test_sessions.py', 'session_urirdp_real_docker', 1, 30, 25).
+python_function('scripts/run_test_sessions.py', '_record_health', 6, 1, 3).
+python_function('scripts/run_test_sessions.py', '_bootstrap_rdp', 4, 4, 3).
+python_function('scripts/run_test_sessions.py', '_read_display_env', 1, 4, 2).
+python_function('scripts/run_test_sessions.py', '_call_and_record', 10, 5, 4).
+python_function('scripts/run_test_sessions.py', 'session_urirdp_real_docker', 1, 25, 27).
 python_function('scripts/run_test_sessions.py', 'session_urirdp_rdp_e2e', 1, 5, 11).
-python_function('scripts/run_test_sessions.py', 'session_automation_lab', 1, 16, 17).
+python_function('scripts/run_test_sessions.py', 'session_automation_lab', 1, 13, 18).
 python_function('scripts/run_test_sessions.py', '_monorepo_root', 0, 4, 1).
 python_function('scripts/run_test_sessions.py', 'session_urisys_node_docker_gui', 1, 7, 11).
 python_function('scripts/run_test_sessions.py', 'session_office_simulate', 1, 7, 11).
@@ -1111,7 +1145,7 @@ python_function('src/urisys/cli.py', 'resolve_markpact_source', 1, 2, 3).
 python_function('src/urisys/cli.py', 'build_parser', 0, 1, 9).
 python_function('src/urisys/cli.py', '_cmd_markpact', 1, 9, 12).
 python_function('src/urisys/cli.py', '_cmd_init', 1, 6, 5).
-python_function('src/urisys/cli.py', '_cmd_node', 1, 3, 3).
+python_function('src/urisys/cli.py', '_cmd_node', 1, 6, 5).
 python_function('src/urisys/cli.py', '_cmd_uri', 1, 4, 7).
 python_function('src/urisys/cli.py', '_handle_cli_error', 1, 8, 4).
 python_function('src/urisys/cli.py', 'main', 1, 11, 18).
@@ -1394,78 +1428,81 @@ sumd_interface('cli', '').
 
 ## Call Graph
 
-*194 nodes · 281 edges · 36 modules · CC̄=4.8*
+*205 nodes · 293 edges · 36 modules · CC̄=4.6*
 
 ### Hubs (by degree)
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
-| `run_step` *(in scripts.lenovo_remote_session)* | 48 ⚠ | 1 | 77 | **78** |
-| `session_urirdp_real_docker` *(in scripts.run_test_sessions)* | 30 ⚠ | 0 | 69 | **69** |
 | `build_parser` *(in src.urisys.cli)* | 1 | 1 | 62 | **63** |
-| `print` *(in scripts.run-nl-log-smoke)* | 0 | 55 | 0 | **55** |
-| `session_automation_lab` *(in scripts.run_test_sessions)* | 16 ⚠ | 1 | 43 | **44** |
-| `run_cmd` *(in scripts.test_sessions.util)* | 6 | 31 | 12 | **43** |
+| `session_urirdp_real_docker` *(in scripts.run_test_sessions)* | 25 ⚠ | 0 | 59 | **59** |
+| `print` *(in scripts.run-nl-log-smoke)* | 0 | 56 | 0 | **56** |
+| `run_cmd` *(in scripts.test_sessions.util)* | 6 | 30 | 12 | **42** |
 | `main` *(in scripts.pack_sync)* | 28 ⚠ | 0 | 39 | **39** |
 | `infer_steps` *(in scripts.report.session)* | 28 ⚠ | 1 | 37 | **38** |
+| `analyze_run` *(in scripts.report.run_analysis)* | 13 ⚠ | 2 | 33 | **35** |
+| `run_flow` *(in scripts.lenovo_remote_session)* | 14 ⚠ | 1 | 33 | **34** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
-# generated in 0.10s
-# nodes: 194 | edges: 281 | modules: 36
-# CC̄=4.8
+# generated in 0.11s
+# nodes: 205 | edges: 293 | modules: 36
+# CC̄=4.6
 
 HUBS[20]:
-  scripts.lenovo_remote_session.run_step
-    CC=48  in:1  out:77  total:78
-  scripts.run_test_sessions.session_urirdp_real_docker
-    CC=30  in:0  out:69  total:69
   src.urisys.cli.build_parser
     CC=1  in:1  out:62  total:63
+  scripts.run_test_sessions.session_urirdp_real_docker
+    CC=25  in:0  out:59  total:59
   scripts.run-nl-log-smoke.print
-    CC=0  in:55  out:0  total:55
-  scripts.run_test_sessions.session_automation_lab
-    CC=16  in:1  out:43  total:44
+    CC=0  in:56  out:0  total:56
   scripts.test_sessions.util.run_cmd
-    CC=6  in:31  out:12  total:43
+    CC=6  in:30  out:12  total:42
   scripts.pack_sync.main
     CC=28  in:0  out:39  total:39
   scripts.report.session.infer_steps
     CC=28  in:1  out:37  total:38
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
+  scripts.lenovo_remote_session.run_flow
+    CC=14  in:1  out:33  total:34
   scripts.scan-browser-sessions.main
     CC=23  in:0  out:34  total:34
   scripts.test_sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
-  scripts.lenovo_remote_session.run_flow
-    CC=14  in:1  out:33  total:34
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
   scripts.pack_registry.pack_specs
     CC=17  in:2  out:30  total:32
-  scripts.run_test_sessions.main
-    CC=13  in:0  out:32  total:32
-  src.urisys.http_server.create_server
-    CC=1  in:1  out:31  total:32
   src.urisys.init_setup.run_init
     CC=31  in:2  out:30  total:32
-  scripts.session_core.now_iso
-    CC=1  in:29  out:2  total:31
+  src.urisys.http_server.create_server
+    CC=1  in:1  out:31  total:32
+  scripts.run_test_sessions.main
+    CC=13  in:0  out:32  total:32
+  scripts.run_test_sessions.session_automation_lab
+    CC=13  in:1  out:31  total:32
   scripts.run_test_sessions.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
+  scripts.session_core.now_iso
+    CC=1  in:29  out:2  total:31
   scripts.report.session.generate_report
     CC=9  in:2  out:27  total:29
+  scripts.session_core.step_ok
+    CC=16  in:1  out:27  total:28
 
 MODULES:
-  scripts.lenovo_remote_session  [7 funcs]
+  scripts.lenovo_remote_session  [14 funcs]
+    _md_lessons  CC=6  out:8
+    _run_host_sleep_step  CC=3  out:4
+    _run_http_get_step  CC=2  out:3
+    _run_upgrade_flow  CC=1  out:5
+    _run_uri_call_step  CC=6  out:13
+    append_log  CC=1  out:4
     http_get  CC=4  out:7
     load_manifest_session  CC=2  out:4
     load_yaml  CC=3  out:4
     resolve_flow_paths  CC=5  out:5
-    resolve_route_map  CC=8  out:12
-    run_flow  CC=14  out:33
-    run_step  CC=48  out:77
   scripts.office-simulate-loop  [5 funcs]
     call_uri  CC=4  out:11
     llm_tick  CC=7  out:18
@@ -1527,17 +1564,17 @@ MODULES:
     wait_health  CC=0  out:0
   scripts.run-urisys-node-docker-e2e  [1 funcs]
     http_json  CC=0  out:0
-  scripts.run_test_sessions  [14 funcs]
+  scripts.run_test_sessions  [18 funcs]
+    _bootstrap_rdp  CC=4  out:3
+    _call_and_record  CC=5  out:4
     _monorepo_root  CC=4  out:3
+    _read_display_env  CC=4  out:4
+    _record_health  CC=1  out:3
     main  CC=13  out:32
-    session_automation_lab  CC=16  out:43
+    session_automation_lab  CC=13  out:31
     session_email_mailpit  CC=7  out:13
     session_office_simulate  CC=7  out:13
     session_office_simulate_lenovo  CC=6  out:10
-    session_office_writer  CC=7  out:13
-    session_pytest_urirdp  CC=3  out:5
-    session_pytest_urisys  CC=2  out:5
-    session_pytest_urisys_node  CC=2  out:5
   scripts.scan-browser-sessions  [4 funcs]
     _copy_query  CC=2  out:10
     discover_browsers  CC=1  out:0
@@ -1595,7 +1632,7 @@ MODULES:
     _add_runtime_flags  CC=1  out:4
     _cmd_init  CC=6  out:7
     _cmd_markpact  CC=9  out:20
-    _cmd_node  CC=3  out:4
+    _cmd_node  CC=6  out:8
     _cmd_uri  CC=4  out:9
     _handle_cli_error  CC=8  out:13
     _json_arg  CC=3  out:5
@@ -1691,40 +1728,40 @@ EDGES:
   src.urisys.uricore_install.repair_uricore → src.urisys.uricore_install._module_exists
   src.urisys.uricore_install.repair_uricore → src.urisys.uricore_install.wheel_url
   src.urisys.uricore_install.repair_uricore → src.urisys.uricore_install.diagnose_uricore
-  src.urisys.edge_install.is_broken_install → src.urisys.edge_install._dist_version
-  src.urisys.edge_install.is_broken_install → src.urisys.edge_install.is_importable
-  src.urisys.edge_install.repair_urisysedge → src.urisys.edge_install.is_broken_install
-  src.urisys.edge_install.repair_urisysedge → src.urisys.edge_install.pip_run
-  src.urisys.edge_install.repair_urisysedge → src.urisys.edge_install.is_importable
-  src.urisys.edge_install.repair_urisysedge → src.urisys.edge_install._dist_version
-  src.urisys.edge_install.ensure_urisysedge → src.urisys.edge_install.is_importable
-  src.urisys.edge_install.ensure_urisysedge → src.urisys.edge_install.is_broken_install
-  src.urisys.edge_install.ensure_urisysedge → src.urisys.edge_install.pip_run
-  src.urisys.edge_install.ensure_urisysedge → src.urisys.edge_install.repair_urisysedge
-  src.urisys.edge_install.ensure_urisysedge → src.urisys.edge_install._dist_version
-  src.urisys.node_install.wheel_filename → src.urisys.node_install.github_version
-  src.urisys.node_install.wheel_url → src.urisys.node_install.github_owner
-  src.urisys.node_install.wheel_url → src.urisys.node_install.wheel_filename
-  src.urisys.node_install.wheel_url → src.urisys.node_install.github_version
-  src.urisys.node_install.pip_spec → src.urisys.node_install.wheel_url
-  src.urisys.node_install.install_urisys_node → src.urisys.node_install.pip_run
-  src.urisys.node_install.install_urisys_node → src.urisys.node_install.is_importable
-  src.urisys.node_install.install_urisys_node → src.urisys.node_install.wheel_url
-  src.urisys.node_install.diagnose_urisys_node → src.urisys.node_install.is_importable
-  src.urisys.node_install.diagnose_urisys_node → src.urisys.node_install.pip_spec
-  src.urisys.node_install.diagnose_urisys_node → src.urisys.node_install.wheel_filename
-  src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.load_flow
-  src.urisys.controllers.flow_controller.FlowController.run → src.urisys.flow.iter_steps
-  src.urisys.managers.markpact_validation._validate_contract_routes → src.urisys.managers.markpact_models.scheme_from_uri
-  src.urisys.managers.markpact_validation.validate_contract → src.urisys.managers.markpact_validation._validate_contract_routes
-  src.urisys.managers.markpact_validation.validate_bundle → src.urisys.managers.markpact_validation._missing_bundle_imports
-  src.urisys.managers.markpact_validation.validate_implementation → src.urisys.managers.markpact_validation._validate_implementation_capabilities
-  scripts.office-simulate-loop.rules_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.rules_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.llm_tick → scripts.office-simulate-loop.call_uri
-  scripts.office-simulate-loop.llm_tick → scripts.run-nl-log-smoke.print
-  scripts.office-simulate-loop.main → scripts.office-simulate-loop.parse_args
-  scripts.office-simulate-loop.main → scripts.run-nl-log-smoke.print
+  src.urisys.bootstrap._print_json → scripts.run-nl-log-smoke.print
+  src.urisys.bootstrap._doctor_main → src.urisys.doctor.run_doctor
+  src.urisys.bootstrap._doctor_main → src.urisys.bootstrap._print_json
+  src.urisys.bootstrap._init_main → src.urisys.init_setup.run_init
+  src.urisys.bootstrap._init_main → src.urisys.bootstrap._print_json
+  src.urisys.bootstrap.main → src.urisys.bootstrap._doctor_main
+  src.urisys.bootstrap.main → src.urisys.bootstrap._init_main
+  src.urisys.bootstrap.main → src.urisys.bootstrap._print_json
+  src.urisys.bootstrap.main → src.urisys.bootstrap._missing_uricore_payload
+  src.urisys.cli.print_json → scripts.run-nl-log-smoke.print
+  src.urisys.cli.build_parser → src.urisys.cli._add_runtime_flags
+  src.urisys.cli._cmd_markpact → src.urisys.cli.resolve_markpact_source
+  src.urisys.cli._cmd_markpact → src.urisys.cli.print_json
+  src.urisys.cli._cmd_init → src.urisys.init_setup.run_init
+  src.urisys.cli._cmd_init → src.urisys.cli.print_json
+  src.urisys.cli._cmd_init → scripts.run-nl-log-smoke.print
+  src.urisys.cli._cmd_node → scripts.run-nl-log-smoke.print
+  src.urisys.cli._cmd_uri → src.urisys.cli.print_json
+  src.urisys.cli._cmd_uri → src.urisys.cli._json_arg
+  src.urisys.cli._handle_cli_error → src.urisys.cli.print_json
+  src.urisys.cli.main → src.urisys.cli._cmd_uri
+  src.urisys.cli.main → src.urisys.cli.build_parser
+  src.urisys.cli.main → src.urisys.cli._cmd_markpact
+  src.urisys.cli.main → src.urisys.doctor.run_doctor
+  src.urisys.cli.main → src.urisys.cli.print_json
+  src.urisys.cli.main → src.urisys.cli._cmd_init
+  src.urisys.cli.main → scripts.run-nl-log-smoke.print
+  src.urisys.cli.main → src.urisys.cli._cmd_node
+  src.urisys.doctor._version_lt → src.urisys.doctor._parse_version
+  src.urisys.doctor._check_import → src.urisys.doctor._pkg_version
+  src.urisys.doctor._check_min_version → src.urisys.doctor._pkg_version
+  src.urisys.doctor._check_min_version → src.urisys.doctor._version_lt
+  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.diagnose_uricore
+  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.is_wrong_uricore_installed
 ```
 
 ## Test Contracts

@@ -166,6 +166,71 @@ def session_urirdp_mock_docker(session_dir: Path) -> int:
     return finalize_session(session_dir, started, code, steps)
 
 
+def _record_health(
+    session_dir: Path,
+    steps: list[dict[str, Any]],
+    seq: int,
+    name: str,
+    url: str,
+    attempts: int = 30,
+) -> dict[str, Any]:
+    health = wait_health(url, attempts=attempts)
+    save_json(session_dir / "responses" / f"{seq:02d}-{name}.json", health)
+    steps.append({"name": name, "status": "pass"})
+    return health
+
+
+def _bootstrap_rdp(
+    container: str,
+    log: Path,
+    steps: list[dict[str, Any]],
+    raise_on_fail: bool = False,
+) -> subprocess.CompletedProcess:
+    boot = run_cmd(
+        ["docker", "exec", container, "bash", "/opt/urirdp/docker/bootstrap-rdp-session.sh"],
+        log_file=log,
+    )
+    steps.append({"name": "bootstrap-rdp", "status": "pass" if boot.returncode == 0 else "fail"})
+    if raise_on_fail and boot.returncode != 0:
+        raise RuntimeError("bootstrap-rdp-session failed")
+    return boot
+
+
+def _read_display_env(container: str) -> tuple[str, str]:
+    disp_proc = run_cmd(
+        ["docker", "exec", container, "bash", "-lc", "grep ^DISPLAY= /tmp/urirdp-display.env | cut -d= -f2"],
+    )
+    display = (disp_proc.stdout or ":10").strip() or ":10"
+    xauth_proc = run_cmd(
+        ["docker", "exec", container, "bash", "-lc", "grep ^XAUTHORITY= /tmp/urirdp-display.env | cut -d= -f2"],
+    )
+    xauth = (xauth_proc.stdout or "").strip()
+    return display, xauth
+
+
+def _call_and_record(
+    session_dir: Path,
+    steps: list[dict[str, Any]],
+    seq: int,
+    name: str,
+    uri: str,
+    payload: dict[str, Any] | None = None,
+    ctx: dict[str, Any] | None = None,
+    timeout: float = 120.0,
+    port: int = 8795,
+    step_name: str | None = None,
+) -> dict[str, Any]:
+    resp = http_json(
+        "POST",
+        f"http://127.0.0.1:{port}/uri/call",
+        {"uri": uri, "payload": payload or {}, "context": ctx or {}},
+        timeout=timeout,
+    )
+    save_json(session_dir / "responses" / f"{seq:02d}-{name}.json", resp)
+    steps.append({"name": step_name or name, "status": "pass" if resp.get("ok") else "fail"})
+    return resp
+
+
 def session_urirdp_real_docker(session_dir: Path) -> int:
     started = now_iso()
     port = 8795
@@ -183,8 +248,6 @@ def session_urirdp_real_docker(session_dir: Path) -> int:
     log = session_dir / "session.log"
     steps: list[dict[str, Any]] = []
     code = 0
-    display = ":10"
-    xauth = ""
 
     env = {"URISYS_ALLOW_REAL": "1"}
     prepare_urirdp_data(pkg)
@@ -196,90 +259,46 @@ def session_urirdp_real_docker(session_dir: Path) -> int:
         return finalize_session(session_dir, started, up.returncode, steps)
 
     try:
-        health = wait_health(f"http://127.0.0.1:{port}/health")
-        save_json(session_dir / "responses" / "01-health.json", health)
-        steps.append({"name": "health", "status": "pass"})
+        _record_health(session_dir, steps, 1, "health", f"http://127.0.0.1:{port}/health")
         time.sleep(5)
 
-        boot = run_cmd(
-            ["docker", "exec", container, "bash", "/opt/urirdp/docker/bootstrap-rdp-session.sh"],
-            log_file=log,
-        )
-        steps.append({"name": "bootstrap-rdp", "status": "pass" if boot.returncode == 0 else "fail"})
-        if boot.returncode != 0:
-            raise RuntimeError("bootstrap-rdp-session failed")
+        _bootstrap_rdp(container, log, steps, raise_on_fail=True)
 
-        disp_proc = run_cmd(
-            ["docker", "exec", container, "bash", "-lc", "grep ^DISPLAY= /tmp/urirdp-display.env | cut -d= -f2"],
-        )
-        display = (disp_proc.stdout or ":10").strip() or ":10"
-        xauth_proc = run_cmd(
-            ["docker", "exec", container, "bash", "-lc", "grep ^XAUTHORITY= /tmp/urirdp-display.env | cut -d= -f2"],
-        )
-        xauth = (xauth_proc.stdout or "").strip()
+        display, xauth = _read_display_env(container)
         write_meta(session_dir, display=display, xauthority=xauth)
 
         ctx = {"approved": True, "allow_real": True, "display": display, "xauthority": xauth}
 
-        shot = http_json(
-            "POST",
-            f"http://127.0.0.1:{port}/uri/call",
-            {"uri": "kvm://local/monitor/primary/query/screenshot", "payload": {}, "context": ctx},
-        )
-        save_json(session_dir / "responses" / "02-screenshot.json", shot)
+        shot = _call_and_record(session_dir, steps, 2, "screenshot", "kvm://local/monitor/primary/query/screenshot", {}, ctx, port=port)
         copy_container_file(container, "/opt/urirdp/data/screenshots/latest.png", session_dir / "screenshots" / "02-screenshot.png")
         captured = (shot.get("result") or {}).get("captured")
-        steps.append(
-            {
-                "name": "screenshot",
-                "status": "pass" if shot.get("ok") and captured else "fail",
-                "uri": "kvm://local/monitor/primary/query/screenshot",
-                "metrics": {"captured": captured, "driver": (shot.get("result") or {}).get("driver")},
-                "screenshot": "screenshots/02-screenshot.png" if captured else None,
-            }
-        )
+        steps[-1].update({
+            "uri": "kvm://local/monitor/primary/query/screenshot",
+            "status": "pass" if shot.get("ok") and captured else "fail",
+            "metrics": {"captured": captured, "driver": (shot.get("result") or {}).get("driver")},
+            "screenshot": "screenshots/02-screenshot.png" if captured else None,
+        })
 
-        ocr = http_json(
-            "POST",
-            f"http://127.0.0.1:{port}/uri/call",
-            {"uri": "ocr://local/image/latest/query/text", "payload": {}, "context": ctx},
-        )
-        save_json(session_dir / "responses" / "03-ocr.json", ocr)
+        ocr = _call_and_record(session_dir, steps, 3, "ocr", "ocr://local/image/latest/query/text", {}, ctx, port=port)
         text = ((ocr.get("result") or {}).get("text") or "").upper()
         has_ok = "OK" in text
-        steps.append(
-            {
-                "name": "ocr",
-                "status": "pass" if ocr.get("ok") and has_ok else "fail",
-                "uri": "ocr://local/image/latest/query/text",
-                "metrics": {"engine": (ocr.get("result") or {}).get("engine"), "has_ok": has_ok},
-            }
-        )
+        steps[-1].update({
+            "uri": "ocr://local/image/latest/query/text",
+            "status": "pass" if ocr.get("ok") and has_ok else "fail",
+            "metrics": {"engine": (ocr.get("result") or {}).get("engine"), "has_ok": has_ok},
+        })
 
-        click = http_json(
-            "POST",
-            f"http://127.0.0.1:{port}/uri/call",
-            {
-                "uri": "kvm://local/task/command/click-text",
-                "payload": {"text": "OK"},
-                "context": ctx,
-            },
-            timeout=180.0,
-        )
-        save_json(session_dir / "responses" / "04-click-text.json", click)
+        click = _call_and_record(session_dir, steps, 4, "click-text", "kvm://local/task/command/click-text", {"text": "OK"}, ctx, timeout=180.0, port=port)
         copy_container_file(container, "/opt/urirdp/data/screenshots/latest.png", session_dir / "screenshots" / "04-after-click.png")
         result = click.get("result") or {}
         clicked = result.get("clicked")
         driver = (result.get("click") or {}).get("driver")
-        steps.append(
-            {
-                "name": "click-text",
-                "status": "pass" if click.get("ok") and clicked and driver == "xdotool" else "fail",
-                "uri": "kvm://local/task/command/click-text",
-                "metrics": {"clicked": clicked, "driver": driver, "reason": (result.get("llm") or {}).get("reason")},
-                "screenshot": "screenshots/04-after-click.png",
-            }
-        )
+        steps[-1].update({
+            "uri": "kvm://local/task/command/click-text",
+            "status": "pass" if click.get("ok") and clicked and driver == "xdotool" else "fail",
+            "metrics": {"clicked": clicked, "driver": driver, "reason": (result.get("llm") or {}).get("reason")},
+            "screenshot": "screenshots/04-after-click.png",
+        })
 
         flow = run_cmd(
             [
@@ -392,67 +411,26 @@ def session_automation_lab(session_dir: Path, *, use_existing: bool = False) -> 
             return finalize_session(session_dir, started, up.returncode, steps)
 
     try:
-        lab_health = wait_health(f"http://127.0.0.1:{lab_port}/health", attempts=60)
-        save_json(session_dir / "responses" / "01-lab-health.json", lab_health)
-        steps.append({"name": "lab-health", "status": "pass"})
+        _record_health(session_dir, steps, 1, "lab-health", f"http://127.0.0.1:{lab_port}/health", attempts=60)
+        _record_health(session_dir, steps, 2, "rdp-health", f"http://127.0.0.1:{rdp_port}/health", attempts=60)
 
-        rdp_health = wait_health(f"http://127.0.0.1:{rdp_port}/health", attempts=60)
-        save_json(session_dir / "responses" / "02-rdp-health.json", rdp_health)
-        steps.append({"name": "rdp-health", "status": "pass"})
+        stt = _call_and_record(session_dir, steps, 3, "stt", "stt://local/session/main/query/transcript", {"text": "kliknij OK"}, {"approved": True}, port=lab_port, step_name="stt-mock")
+        steps[-1]["uri"] = stt.get("uri")
 
-        stt = http_json(
-            "POST",
-            f"http://127.0.0.1:{lab_port}/uri/call",
-            {
-                "uri": "stt://local/session/main/query/transcript",
-                "payload": {"text": "kliknij OK"},
-                "context": {"approved": True},
-            },
-        )
-        save_json(session_dir / "responses" / "03-stt.json", stt)
-        steps.append({"name": "stt-mock", "status": "pass" if stt.get("ok") else "fail", "uri": stt.get("uri")})
+        chat_dry = _call_and_record(session_dir, steps, 4, "chat-dry-run", "chat://local/uri/command/execute", {"transcript": "kliknij OK", "dry_run": True, "approved": True}, {"approved": True, "dry_run": True}, port=lab_port)
 
-        chat_dry = http_json(
-            "POST",
-            f"http://127.0.0.1:{lab_port}/uri/call",
-            {
-                "uri": "chat://local/uri/command/execute",
-                "payload": {"transcript": "kliknij OK", "dry_run": True, "approved": True},
-                "context": {"approved": True, "dry_run": True},
-            },
-        )
-        save_json(session_dir / "responses" / "04-chat-dry-run.json", chat_dry)
-        steps.append({"name": "chat-dry-run", "status": "pass" if chat_dry.get("ok") else "fail"})
+        _bootstrap_rdp("urisys-lab-urirdp", log, steps)
 
-        boot = run_cmd(
-            ["docker", "exec", "urisys-lab-urirdp", "bash", "/opt/urirdp/docker/bootstrap-rdp-session.sh"],
-            log_file=log,
-        )
-        steps.append({"name": "bootstrap-rdp", "status": "pass" if boot.returncode == 0 else "fail"})
-
-        chat_real = http_json(
-            "POST",
-            f"http://127.0.0.1:{lab_port}/uri/call",
-            {
-                "uri": "chat://local/uri/command/execute",
-                "payload": {"transcript": "kliknij OK", "approved": True},
-                "context": {"approved": True, "allow_real": True},
-            },
-            timeout=180.0,
-        )
-        save_json(session_dir / "responses" / "05-chat-real.json", chat_real)
+        chat_real = _call_and_record(session_dir, steps, 5, "chat-real", "chat://local/uri/command/execute", {"transcript": "kliknij OK", "approved": True}, {"approved": True, "allow_real": True}, timeout=180.0, port=lab_port, step_name="chat-real-forward")
         copy_container_file("urisys-lab-urirdp", "/opt/urirdp/data/screenshots/latest.png", session_dir / "screenshots" / "05-lab-real-click.png")
         inner = ((chat_real.get("result") or {}).get("result") or {}).get("result") or {}
         clicked = inner.get("clicked")
-        steps.append(
-            {
-                "name": "chat-real-forward",
-                "status": "pass" if chat_real.get("ok") and clicked else "fail",
-                "uri": "chat://local/uri/command/execute",
-                "metrics": {"clicked": clicked},
-                "screenshot": "screenshots/05-lab-real-click.png" if clicked else None,
-            }
-        )
+        steps[-1].update({
+            "status": "pass" if chat_real.get("ok") and clicked else "fail",
+            "uri": "chat://local/uri/command/execute",
+            "metrics": {"clicked": clicked},
+            "screenshot": "screenshots/05-lab-real-click.png" if clicked else None,
+        })
 
         if any(s["status"] == "fail" for s in steps):
             code = 1

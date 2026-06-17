@@ -1,12 +1,12 @@
-# redup/duplication | 3 groups | 44f 5653L | 2026-06-17
+# redup/duplication | 3 groups | 44f 5697L | 2026-06-17
 
 SUMMARY:
   files_scanned: 44
-  total_lines:   5653
+  total_lines:   5697
   dup_groups:    3
   dup_fragments: 7
   saved_lines:   37
-  scan_ms:       2405
+  scan_ms:       2316
 
 HOTSPOTS[6] (files with most duplication):
   src/urisys/uricore_install.py  dup=18L  groups=2  frags=2  (0.3%)

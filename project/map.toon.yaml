@@ -1,9 +1,9 @@
-# urisys | 102f 11894L | yaml:7,toml:1,shell:41,json:1,yml:1,javascript:1,python:49 | 2026-06-17
+# urisys | 102f 11916L | yaml:7,toml:1,shell:41,json:1,yml:1,javascript:1,python:49 | 2026-06-17
 # generated in 0.01s
-# stats: 357 func | 0 cls | 102 mod | CC̄=4.8 | critical:14 | cycles:0
-# alerts[5]: fan-out main=63; CC main=58; fan-out MarkpactManager.compile=33; CC run_init=31; fan-out session_urirdp_real_docker=31
-# hotspots[5]: main fan=63; MarkpactManager.compile fan=33; session_urirdp_real_docker fan=31; analyze_run fan=29; run_flow fan=24
-# evolution: CC̄ 4.2→4.8 (regressed +0.6)
+# stats: 366 func | 0 cls | 102 mod | CC̄=4.7 | critical:13 | cycles:0
+# alerts[5]: fan-out main=50; CC main=37; fan-out MarkpactManager.compile=33; fan-out session_urirdp_real_docker=32; CC run_init=31
+# hotspots[5]: main fan=50; MarkpactManager.compile fan=33; session_urirdp_real_docker fan=32; analyze_run fan=29; run_flow fan=24
+# evolution: CC̄ 4.2→4.7 (regressed +0.5)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
 M[102]:
   examples/frontend/app.js,21
@@ -33,7 +33,7 @@ M[102]:
   scripts/deploy-lenovo-node.sh,130
   scripts/install-kvm-packs-editable.sh,13
   scripts/lenovo-node-session.sh,73
-  scripts/lenovo_remote_session.py,751
+  scripts/lenovo_remote_session.py,795
   scripts/office-simulate-loop.py,146
   scripts/pack_registry.py,269
   scripts/pack_sync.py,347
@@ -64,7 +64,7 @@ M[102]:
   scripts/run-smoke-all.sh,24
   scripts/run-urisys-node-docker-e2e.sh,163
   scripts/run-urisys-node-docker-session.sh,6
-  scripts/run_test_sessions.py,783
+  scripts/run_test_sessions.py,761
   scripts/scan-browser-sessions.py,199
   scripts/session_core.py,276
   scripts/session_report.py,49
@@ -110,7 +110,7 @@ M[102]:
   tree.sh,1
 D:
   scripts/lenovo_remote_session.py:
-    e: load_yaml,http_get,_run_http_get_step,_run_host_sleep_step,_run_host_restart_and_wait_step,_run_host_schedule_restart_step,_run_host_wait_health_step,_run_uri_call_step,run_step,run_flow,append_log,build_wheels,start_wheel_server,_needs_node_upgrade,_run_upgrade_flow,write_session_md,resolve_flow_paths,resolve_route_map,load_manifest_session,main
+    e: load_yaml,http_get,_run_http_get_step,_run_host_sleep_step,_run_host_restart_and_wait_step,_run_host_schedule_restart_step,_run_host_wait_health_step,_run_uri_call_step,run_step,run_flow,append_log,build_wheels,start_wheel_server,_needs_node_upgrade,_run_upgrade_flow,_md_header,_md_flow_results,_md_step_detail,_md_lessons,write_session_md,resolve_flow_paths,resolve_route_map,load_manifest_session,_run_flows,main
     load_yaml(path)
     http_get(endpoint;path)
     _run_http_get_step(step;out;endpoint)
@@ -126,10 +126,15 @@ D:
     start_wheel_server(deploy_dir;host;port)
     _needs_node_upgrade(flow_paths)
     _run_upgrade_flow(upgrade_flow;label)
+    _md_header(meta;session_dir)
+    _md_flow_results(flow_records)
+    _md_step_detail(flow_records)
+    _md_lessons(meta;flow_records)
     write_session_md(session_dir;meta;flow_records)
     resolve_flow_paths(manifest_path;explicit)
     resolve_route_map(manifest_path;cli_route_map)
     load_manifest_session(manifest_path)
+    _run_flows(flow_paths)
     main(argv)
   src/urisys/init_setup.py:
     e: default_pip_specs,default_node_pip_spec,pip_install_specs,verify_uri_control,profile_env,render_env_shell,write_env_file,_pre_repair_uricore,_build_pip_result,_resolve_error_hint,run_init
@@ -144,22 +149,6 @@ D:
     _build_pip_result(specs)
     _resolve_error_hint(ok;verify;doctor)
     run_init()
-  scripts/run_test_sessions.py:
-    e: session_pytest_urirdp,session_pytest_urisys,session_pytest_urisys_node,session_urirdp_mock_docker,session_urirdp_real_docker,session_urirdp_rdp_e2e,session_automation_lab,_monorepo_root,session_urisys_node_docker_gui,session_office_simulate,session_office_simulate_lenovo,session_office_writer,session_email_mailpit,main
-    session_pytest_urirdp(session_dir)
-    session_pytest_urisys(session_dir)
-    session_pytest_urisys_node(session_dir)
-    session_urirdp_mock_docker(session_dir)
-    session_urirdp_real_docker(session_dir)
-    session_urirdp_rdp_e2e(session_dir)
-    session_automation_lab(session_dir)
-    _monorepo_root()
-    session_urisys_node_docker_gui(session_dir)
-    session_office_simulate(session_dir)
-    session_office_simulate_lenovo(session_dir)
-    session_office_writer(session_dir)
-    session_email_mailpit(session_dir)
-    main()
   scripts/pack_sync.py:
     e: repo_module_dir,vendored_module_dir,read_version,file_hash,sync_file,sync_to_repo,check_drift,_check_promoted,remove_vendored,_repo_pyproject,init_repo,promote,main
     repo_module_dir(spec)
@@ -182,6 +171,26 @@ D:
     session_status(steps;meta)
     session_duration(meta)
     generate_report(session_dir)
+  scripts/run_test_sessions.py:
+    e: session_pytest_urirdp,session_pytest_urisys,session_pytest_urisys_node,session_urirdp_mock_docker,_record_health,_bootstrap_rdp,_read_display_env,_call_and_record,session_urirdp_real_docker,session_urirdp_rdp_e2e,session_automation_lab,_monorepo_root,session_urisys_node_docker_gui,session_office_simulate,session_office_simulate_lenovo,session_office_writer,session_email_mailpit,main
+    session_pytest_urirdp(session_dir)
+    session_pytest_urisys(session_dir)
+    session_pytest_urisys_node(session_dir)
+    session_urirdp_mock_docker(session_dir)
+    _record_health(session_dir;steps;seq;name;url;attempts)
+    _bootstrap_rdp(container;log;steps;raise_on_fail)
+    _read_display_env(container)
+    _call_and_record(session_dir;steps;seq;name;uri;payload;ctx;timeout;port;step_name)
+    session_urirdp_real_docker(session_dir)
+    session_urirdp_rdp_e2e(session_dir)
+    session_automation_lab(session_dir)
+    _monorepo_root()
+    session_urisys_node_docker_gui(session_dir)
+    session_office_simulate(session_dir)
+    session_office_simulate_lenovo(session_dir)
+    session_office_writer(session_dir)
+    session_email_mailpit(session_dir)
+    main()
   scripts/scan-browser-sessions.py:
     e: _copy_query,scan_chrome_cookies,chrome_profiles,firefox_profiles,discover_browsers,main
     _copy_query(db_path;sql_chrome;sql_firefox)
@@ -279,6 +288,19 @@ Markpact is...
     _check_uricore_authentic()
     _check_uricore_dist()
     run_doctor()
+  src/urisys/cli.py:
+    e: _json_arg,print_json,_add_runtime_flags,resolve_markpact_source,build_parser,_cmd_markpact,_cmd_init,_cmd_node,_cmd_uri,_handle_cli_error,main
+    _json_arg(value)
+    print_json(data)
+    _add_runtime_flags(parser)
+    resolve_markpact_source(source)
+    build_parser()
+    _cmd_markpact(args)
+    _cmd_init(args)
+    _cmd_node(args)
+    _cmd_uri(args)
+    _handle_cli_error(exc)
+    main(argv)
   src/urisys/managers/pack_manager.py:
     e: PackManager
     PackManager: __init__(1),_split_specs(0),_is_all(0),parse_packs(0),parse_markpacts(0),resolve_package_name(1),_is_markpact_path(1),_is_manifest_path(1),manifest_paths(0),create_registry(0),capabilities(0),close(0),__enter__(0),__exit__(3)  # Loads separate uri* packages, plain manifest.yaml files and ...
@@ -307,19 +329,6 @@ Markpact is...
     prepare_ok_target(rdp_port;display;xauth)
     capture_rdp_screenshot(session_dir)
     capture_rdp_screenshot_wait(session_dir)
-  src/urisys/cli.py:
-    e: _json_arg,print_json,_add_runtime_flags,resolve_markpact_source,build_parser,_cmd_markpact,_cmd_init,_cmd_node,_cmd_uri,_handle_cli_error,main
-    _json_arg(value)
-    print_json(data)
-    _add_runtime_flags(parser)
-    resolve_markpact_source(source)
-    build_parser()
-    _cmd_markpact(args)
-    _cmd_init(args)
-    _cmd_node(args)
-    _cmd_uri(args)
-    _handle_cli_error(exc)
-    main(argv)
   scripts/office-simulate-loop.py:
     e: call_uri,rules_tick,llm_tick,parse_args,main
     call_uri(base;uri;payload;context)
@@ -457,6 +466,7 @@ Markpact is...
     e: EventManager
     EventManager: __init__(1),list_events(0)
   goal.yaml:
+  planfile.yaml:
   pyproject.toml:
   tree.sh:
   prefact.yaml:
@@ -583,4 +593,3 @@ Markpact is...
   testql-scenarios/generated-from-pytests.testql.toon.yaml:
   testql-scenarios/generated-cli-tests.testql.toon.yaml:
   testql-scenarios/generated-api-smoke.testql.toon.yaml:
-  planfile.yaml:

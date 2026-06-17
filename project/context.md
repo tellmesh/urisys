@@ -7,21 +7,25 @@
 - **Primary Language**: python
 - **Languages**: python: 49, shell: 41, yaml: 7, toml: 1, json: 1
 - **Analysis Mode**: static
-- **Total Functions**: 357
+- **Total Functions**: 366
 - **Total Classes**: 22
 - **Modules**: 102
 - **Entry Points**: 158
 
 ## Architecture by Module
 
+### scripts.lenovo_remote_session
+- **Functions**: 25
+- **File**: `lenovo_remote_session.py`
+
 ### src.urisys.managers.markpact_manager
 - **Functions**: 22
 - **Classes**: 1
 - **File**: `markpact_manager.py`
 
-### scripts.lenovo_remote_session
-- **Functions**: 20
-- **File**: `lenovo_remote_session.py`
+### scripts.run_test_sessions
+- **Functions**: 18
+- **File**: `run_test_sessions.py`
 
 ### scripts.session_core
 - **Functions**: 16
@@ -31,10 +35,6 @@
 - **Functions**: 14
 - **Classes**: 1
 - **File**: `pack_manager.py`
-
-### scripts.run_test_sessions
-- **Functions**: 14
-- **File**: `run_test_sessions.py`
 
 ### scripts.test_sessions.util
 - **Functions**: 14
@@ -53,6 +53,10 @@
 - **Functions**: 11
 - **File**: `uricore_install.py`
 
+### src.urisys.cli
+- **Functions**: 11
+- **File**: `cli.py`
+
 ### src.urisys.doctor
 - **Functions**: 11
 - **Classes**: 1
@@ -61,10 +65,6 @@
 ### src.urisys.init_setup
 - **Functions**: 11
 - **File**: `init_setup.py`
-
-### src.urisys.cli
-- **Functions**: 11
-- **File**: `cli.py`
 
 ### src.urisys.node_install
 - **Functions**: 9
@@ -359,6 +359,9 @@ Markpact is an authoring/distribution format. Runti
 
 Key functions that process and transform data:
 
+### src.urisys.cli.build_parser
+- **Output to**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_subparsers
+
 ### src.urisys.doctor._parse_version
 - **Output to**: None.split, tuple, None.strip, ch.isdigit, parts.append
 
@@ -403,9 +406,6 @@ Key functions that process and transform data:
 ### scripts.test_sessions.lab_rdp.parse_docker_log_errors
 - **Output to**: path.read_text, text.count, text.count, text.splitlines, path.is_file
 
-### src.urisys.cli.build_parser
-- **Output to**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_subparsers
-
 ## Behavioral Patterns
 
 ### recursion_extract_images_from_dict
@@ -427,12 +427,10 @@ Key functions that process and transform data:
 
 Functions exposed as public API (no underscore prefix):
 
-- `scripts.lenovo_remote_session.main` - 141 calls
-- `scripts.run_test_sessions.session_urirdp_real_docker` - 69 calls
+- `scripts.lenovo_remote_session.main` - 108 calls
 - `src.urisys.cli.build_parser` - 62 calls
-- `scripts.lenovo_remote_session.write_session_md` - 53 calls
+- `scripts.run_test_sessions.session_urirdp_real_docker` - 59 calls
 - `src.urisys.managers.markpact_manager.MarkpactManager.compile` - 43 calls
-- `scripts.run_test_sessions.session_automation_lab` - 43 calls
 - `scripts.pack_sync.main` - 39 calls
 - `scripts.report.session.infer_steps` - 37 calls
 - `scripts.scan-browser-sessions.main` - 34 calls
@@ -442,6 +440,7 @@ Functions exposed as public API (no underscore prefix):
 - `scripts.run_test_sessions.main` - 32 calls
 - `src.urisys.http_server.create_server` - 31 calls
 - `scripts.run_test_sessions.session_urirdp_mock_docker` - 31 calls
+- `scripts.run_test_sessions.session_automation_lab` - 31 calls
 - `src.urisys.init_setup.run_init` - 30 calls
 - `scripts.pack_registry.pack_specs` - 30 calls
 - `src.urisys.managers.source_manager.SourceManager.fetch` - 29 calls
@@ -461,6 +460,7 @@ Functions exposed as public API (no underscore prefix):
 - `src.urisys.controllers.flow_controller.FlowController.run` - 19 calls
 - `scripts.run_test_sessions.session_urirdp_rdp_e2e` - 19 calls
 - `scripts.pack_sync.check_drift` - 19 calls
+- `scripts.lenovo_remote_session.write_session_md` - 19 calls
 - `scripts.office-simulate-loop.llm_tick` - 18 calls
 - `scripts.test_sessions.lab_rdp.parse_lab_flow` - 18 calls
 - `scripts.test_sessions.util.http_json` - 18 calls
