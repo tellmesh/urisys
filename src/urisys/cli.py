@@ -92,10 +92,18 @@ def build_parser() -> argparse.ArgumentParser:
 
     node = sub.add_parser("node", help="urisys-node slave runtime (bundled; lazy pack install via URI).")
     node_sub = node.add_subparsers(dest="node_command", required=True)
-    ns = node_sub.add_parser("serve", help="Start node HTTP server (:8790); extra packs install on first URI use.")
+    ns = node_sub.add_parser(
+        "serve",
+        help="Start node HTTP server (:8790); kills any prior listener on the port (atomic restart).",
+    )
     ns.add_argument("--host", default=os.environ.get("URISYS_NODE_HOST", "0.0.0.0"))
     ns.add_argument("--port", type=int, default=int(os.environ.get("URISYS_NODE_PORT", "8790")))
     ns.add_argument("--config", default=os.environ.get("URISYS_NODE_CONFIG", "config/node-profile.json"))
+    ns.add_argument(
+        "--no-takeover",
+        action="store_true",
+        help="Do not kill an existing listener on --port.",
+    )
     ns.add_argument(
         "--no-auto-install",
         action="store_true",
@@ -203,7 +211,7 @@ def _cmd_node(args) -> int:
         from urisysnode.serve import build_runtime, serve as node_serve
 
         rt = build_runtime(args.config)
-        node_serve(rt, args.host, args.port)
+        node_serve(rt, args.host, args.port, takeover=not args.no_takeover)
     return 0
 
 

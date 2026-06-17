@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - `scripts/lenovo_remote_session.py` — używa `scripts/session_core.py` zamiast lokalnych kopii (−121L, 560→439); zweryfikowane: `--help` + `--extract-images` na realnej sesji rc=0, `tests/` 69 passed
+- `scripts/test_sessions/util.py` + `scripts/report/util.py` — `now_iso`/`save_json` z `session_core` (3 kopie `now_iso` → 1, format ujednolicony do `…Z`; bezpieczne — konsument `report/session.py` normalizuje `Z`→`+00:00`); usunięte martwe importy `datetime/timezone`; `DEFAULT_WHEEL_SERVER` (3× literał → 1 stała). 73 passed
 - `src/urisys/cli.py` — spłaszczenie god-funkcji `main` (CC 23→10): per-komenda handlery `_cmd_markpact`/`_cmd_init`/`_cmd_node`/`_cmd_uri` + `_handle_cli_error(exc)` (mapowanie wyjątków → JSON/exit-code); `main` jest teraz cienkim dispatcherem; byte-identyczne (`tests/` 62 passed, smoke doctor/init/validate rc=0)
 - `src/urisys/managers/markpact_manager.py` — obniżona złożoność trzech najcięższych metod: `run_tests` (CC 19→11, wydzielone `_check_expectations`), `compile` (CC 14→10, wydzielone `_write_handler_modules`), `_build_route` (CC 16→12, wydzielone `_resolve_handler_ref`); byte-identyczne (`urisys markpact test`/`routes` ok, `tests/` 62 passed)
 - `src/urisys/init_setup.py` — rozbicie god-funkcji `run_init` (CC 29→19, 141→95L): wydzielone `_pre_repair_uricore`, `_build_pip_result`, `_resolve_error_hint`; byte-identyczne (`urisys init --dry-run` ok, `tests/` 62 passed)
@@ -36,6 +37,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `urisys doctor` — `NameError: node_pip_spec` przy sprawdzaniu importu urisysnode
 - PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
 - Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
+
+## [0.1.58] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update flows/lenovo-remote/README.md
+
+### Test
+- Update tests/test_urisys.py
+
+### Other
+- Update flows/lenovo-remote/07-playwright-linkedin.uri.flow.yaml
+- Update flows/lenovo-remote/_upgrade-node.uri.flow.yaml
+- Update flows/lenovo-remote/_upgrade-playwright.uri.flow.yaml
+- Update flows/lenovo-remote/session.manifest.yaml
+- Update scripts/lenovo_remote_session.py
+- Update scripts/report/util.py
+- Update scripts/test_sessions/util.py
+- Update uv.lock
 
 ## [0.1.57] - 2026-06-17
 

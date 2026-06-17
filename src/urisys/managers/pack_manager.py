@@ -100,6 +100,18 @@ class PackManager:
                     f"which is not installed (pip install {package_name})."
                 ) from exc
             manifest = files(package_name).joinpath("manifest.yaml")
+            if not manifest.is_file():
+                if self.expanded_all:
+                    warnings.warn(
+                        f"Skipping uri pack '{spec}': package '{package_name}' "
+                        f"has no manifest.yaml.",
+                        stacklevel=2,
+                    )
+                    continue
+                raise ModuleNotFoundError(
+                    f"uri pack '{spec}' requires package '{package_name}' with manifest.yaml, "
+                    f"but none was found (pip install {package_name})."
+                )
             path = self._stack.enter_context(as_file(manifest))
             paths.append(Path(path))
         for spec in self.markpact_specs:

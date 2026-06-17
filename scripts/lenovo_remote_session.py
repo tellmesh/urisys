@@ -56,6 +56,10 @@ try:
 except ImportError:
     yaml = None  # type: ignore
 
+# Wheel server on the dev host (192.168.188.212) serving locally-built wheels to
+# the lenovo slave; overridable per-session via manifest `wheel_server:`.
+DEFAULT_WHEEL_SERVER = "http://192.168.188.212:8765"
+
 
 def load_yaml(path: Path) -> dict[str, Any]:
     text = path.read_text(encoding="utf-8")
@@ -316,6 +320,7 @@ def load_manifest_session(manifest_path: Path) -> dict[str, Any]:
 
 
 UPGRADE_PLAYWRIGHT_FLOW = ROOT / "flows/lenovo-remote/_upgrade-playwright.uri.flow.yaml"
+UPGRADE_NODE_FLOW = ROOT / "flows/lenovo-remote/_upgrade-node.uri.flow.yaml"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -358,15 +363,17 @@ def main(argv: list[str] | None = None) -> int:
 
     manifest_path = Path(args.manifest)
     session_cfg = load_manifest_session(manifest_path)
-    wheel_server = str(session_cfg.get("wheel_server") or "http://192.168.188.212:8765")
+    wheel_server = str(session_cfg.get("wheel_server") or DEFAULT_WHEEL_SERVER)
     wheel_deploy_dir = Path(str(session_cfg.get("wheel_deploy_dir") or "/tmp/urisys-deploy"))
 
     wheel_proc = None
     if args.build_wheels:
         build_wheels(wheel_deploy_dir)
     if args.serve_wheels:
-        host = urllib.parse.urlparse(wheel_server).hostname or "192.168.188.212"
-        port = urllib.parse.urlparse(wheel_server).port or 8765
+        parsed_ws = urllib.parse.urlparse(wheel_server)
+        default_ws = urllib.parse.urlparse(DEFAULT_WHEEL_SERVER)
+        host = parsed_ws.hostname or default_ws.hostname
+        port = parsed_ws.port or default_ws.port
         wheel_proc = start_wheel_server(wheel_deploy_dir, host, port)
 
     node_reachable = False
@@ -413,6 +420,14 @@ def main(argv: list[str] | None = None) -> int:
 
     flow_records: list[dict[str, Any]] = []
     upgrade_ran = False
+    node_upgrade_ran = False
+
+    def _needs_node_upgrade(flow_paths: list[Path]) -> bool:
+        names = {p.name for p in flow_paths}
+        return bool(
+            names & {"02-install-packs.uri.flow.yaml", "07-playwright-linkedin.uri.flow.yaml"}
+            or any("install-packs" in p.name for p in flow_paths)
+        )
 
     def _run_one(fp: Path) -> dict[str, Any]:
         return run_flow(
@@ -453,6 +468,22 @@ def main(argv: list[str] | None = None) -> int:
             save_json(session_dir / "flows" / f"{rec['flow_id']}.json", rec)
             append_log(log_path, f"flow {fp.name} skipped (node down)")
             continue
+        if (
+            not node_upgrade_ran
+            and UPGRADE_NODE_FLOW.exists()
+            and _needs_node_upgrade(flow_paths)
+            and fp.name != "01-health-probe.uri.flow.yaml"
+        ):
+            append_log(log_path, f"flow {UPGRADE_NODE_FLOW.name} start (urisys-node wheel)")
+            node_rec = _run_one(UPGRADE_NODE_FLOW)
+            flow_records.append(node_rec)
+            node_upgrade_ran = True
+            append_log(log_path, f"flow {UPGRADE_NODE_FLOW.name} ok={node_rec.get('ok')}")
+            if not node_rec.get("ok"):
+                append_log(log_path, f"flow {fp.name} skipped (node upgrade failed)")
+                continue
+            node_reachable = True
+            meta["node_reachable"] = True
         if (
             fp.name == "07-playwright-linkedin.uri.flow.yaml"
             and UPGRADE_PLAYWRIGHT_FLOW.exists()

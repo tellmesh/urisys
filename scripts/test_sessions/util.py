@@ -11,17 +11,13 @@ import sys
 import time
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 TELLMESH = ROOT.parent
 REPORT_SCRIPT = ROOT / "scripts" / "session_report.py"
-
-
-def now_iso() -> str:
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
 
 def run_id() -> str:
@@ -92,9 +88,10 @@ def compose_cmd(*parts: str, compose_file: Path | None = None) -> list[str]:
     return cmd
 
 
-def save_json(path: Path, data: Any) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+# now_iso + save_json live in the shared session-runner core — one timestamp
+# format ('…Z') and one JSON dump across both stacks. Safe: the only consumer
+# (report/session.py duration calc) normalizes 'Z'→'+00:00' before fromisoformat.
+from session_core import now_iso, save_json  # noqa: E402,F401
 
 
 def run_cmd(

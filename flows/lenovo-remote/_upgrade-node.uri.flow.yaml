@@ -1,0 +1,33 @@
+flow:
+  id: lenovo-upgrade-node
+  description: Deploy urisys-node wheel; `urisys node serve` takes over the port (no pkill script).
+  target: lenovo
+
+defaults:
+  approved: true
+  allow_real: true
+
+do:
+  - id: pip_urisys_node
+    uri: shell://pip
+    payload:
+      args:
+        - install
+        - -U
+        - "{wheel:urisys_node}"
+
+  - id: restart_node
+    uri: shell://bash
+    payload:
+      args:
+        - -lc
+        - |
+          source ~/venv/bin/activate 2>/dev/null || true
+          export URISYS_ALLOW_REAL=1
+          nohup setsid urisys node serve --host 0.0.0.0 --port 8790 >> /tmp/urisys-node.log 2>&1 &
+          echo started pid=$!
+
+  - id: wait_restart
+    kind: host_wait_health
+    timeout: 90
+    note: New serve kills the old listener on :8790, then binds

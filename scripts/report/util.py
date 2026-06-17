@@ -3,13 +3,12 @@ from __future__ import annotations
 import json
 import platform
 import socket
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 
-def now_iso() -> str:
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+# Shared timestamp format ('…Z') with the session-runner core (one source).
+from session_core import now_iso  # noqa: E402,F401
 
 
 def host_id() -> str:

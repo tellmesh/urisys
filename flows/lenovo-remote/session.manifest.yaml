@@ -12,6 +12,7 @@ wheels:
   uribrowser: uribrowser
   urioffice: urioffice
   urimail: urimail
+  urisys_node: urisys_node
 
 flows:
   - flows/lenovo-remote/01-health-probe.uri.flow.yaml

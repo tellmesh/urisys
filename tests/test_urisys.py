@@ -31,7 +31,7 @@ def test_all_skips_uninstalled_packs(tmp_path):
     """`--packs all` must degrade gracefully when optional uri* packs are not
     installed, loading whatever is available instead of crashing."""
     with PackManager(packs="all") as pm:
-        with pytest.warns(UserWarning, match="not installed"):
+        with pytest.warns(UserWarning, match="Skipping uri pack"):
             registry = pm.create_registry()
     schemes = {route.scheme for route in registry.routes}
     assert "browser" in schemes
@@ -40,6 +40,6 @@ def test_all_skips_uninstalled_packs(tmp_path):
 
 def test_explicit_missing_pack_raises_helpful_error():
     """A pack named explicitly (not via `all`) must fail loudly with guidance."""
-    with PackManager(packs="desktop") as pm:
-        with pytest.raises(ModuleNotFoundError, match="pip install uridesktop"):
+    with PackManager(packs="not_installed_uri_pack_xyz") as pm:
+        with pytest.raises(ModuleNotFoundError, match="pip install not_installed_uri_pack_xyz"):
             pm.create_registry()

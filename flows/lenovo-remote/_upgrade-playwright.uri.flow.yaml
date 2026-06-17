@@ -1,6 +1,6 @@
 flow:
   id: lenovo-upgrade-playwright
-  description: Pre-flow-07 upgrade — playwright + uribrowser wheel + hot-reload browser pack (no node restart).
+  description: Pre-flow-07 — playwright + uribrowser wheel, then spawn browser worker (out-of-process, no node restart).
   target: lenovo
 
 defaults:
@@ -31,15 +31,14 @@ do:
         - urisysedge>=0.1.0
         - "{wheel:uribrowser}"
 
-  - id: hotload_browser
-    uri: node://lenovo/command/install-pack
-    wheel: uribrowser
+  - id: spawn_browser_worker
+    uri: node://lenovo/command/spawn-worker
     payload:
       pack: browser
       install: true
       force: true
-    note: Hot-reload browser handler in-process after pip (no restart)
+    note: Run browser pack as its own process; router forwards browser:// to it (no node restart)
 
   - id: browser_status
     uri: browser://linkedin/query/status
-    note: Verify browser routes registered after hotload
+    note: Verify router forwards browser:// to the live worker
