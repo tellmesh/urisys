@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `scripts/ci-checkout-siblings.sh` — CI clone sibling repos obok urisys
 
 ### Changed
+- `src/urisys/cli.py` — rozbicie god-funkcji `main` (158→92L): wydzielone `_cmd_markpact(args)` (dispatch sub-komend markpact) i `_handle_cli_error(exc)` (mapowanie wyjątków → JSON/exit-code); zachowanie byte-identyczne (zweryfikowane `tests/` 62 passed + smoke validate/error rc=0/2)
+- `src/urisys/managers/markpact_manager.py` — obniżona złożoność dwóch najcięższych metod: `run_tests` (CC 19→11, wydzielone `_check_expectations`) i `compile` (CC 14→10, wydzielone `_write_handler_modules`); byte-identyczne (`urisys markpact test` → 2/2 ok, `tests/` 62 passed)
 - Migracja 32 packów z `urisys/**/packages/python/*` → `tellmesh/{repo}/` (canonical source)
 - `urisys init` — uricore + urisys-node tylko jako publiczne wheels; core pip bez git credentials
 - Skrypty lenovo/deploy i `publish-pypi-packs.sh` — ścieżki sibling zamiast vendored
@@ -25,6 +27,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `urisys doctor` — `NameError: node_pip_spec` przy sprawdzaniu importu urisysnode
 - PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
 - Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
+
+## [0.1.48] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+
+### Other
+- Update scripts/pack_registry.py
+- Update scripts/scan-browser-sessions.py
+- Update urisys-node/config/node-profile.lenovo.json
+- Update urisys-node/config/route-map.lenovo.yaml
+- Update uv.lock
 
 ## [0.1.47] - 2026-06-17
 

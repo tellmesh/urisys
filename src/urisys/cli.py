@@ -122,53 +122,87 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _cmd_markpact(args) -> int:
+    from uri_control import CapabilityRegistry
+
+    from .managers.markpact_manager import MarkpactManager
+    from .managers.source_manager import SourceManager
+
+    source_manager = SourceManager(cache_root=(Path(args.out) / "sources") if getattr(args, "out", None) else ".urisys/cache/sources")
+    manager = MarkpactManager(cache_root=args.out) if getattr(args, "out", None) else MarkpactManager()
+    if args.markpact_command == "fetch":
+        print_json(source_manager.fetch(args.source, force=args.force))
+        return 0
+    local_path = resolve_markpact_source(args.path, source_manager=source_manager)
+    if args.markpact_command == "validate":
+        print_json(manager.validate(local_path))
+        return 0
+    if args.markpact_command == "compile":
+        compiled = manager.compile(local_path, out_dir=args.out, force=args.force)
+        print_json({"ok": True, "compiled": compiled.to_dict()})
+        return 0
+    if args.markpact_command == "routes":
+        compiled = manager.compile(local_path, out_dir=args.out)
+        registry = CapabilityRegistry.from_manifest_files([compiled.manifest_path])
+        print_json({
+            "ok": True,
+            "compiled": compiled.to_dict(),
+            "routes": [
+                {
+                    "manifest_id": r.manifest_id,
+                    "scheme": r.scheme,
+                    "pattern": r.pattern,
+                    "kind": r.kind,
+                    "operation": r.operation,
+                    "approval": r.approval,
+                    "side_effects": r.side_effects,
+                    "handler_ref": r.handler_ref,
+                }
+                for r in registry.routes
+            ],
+        })
+        return 0
+    if args.markpact_command == "test":
+        print_json(manager.run_tests(local_path, events_path=args.events))
+        return 0
+    return 1
+
+
+def _handle_cli_error(exc: Exception) -> int:
+    """Map a known CLI exception to a JSON error + exit code; re-raise the rest."""
+    from .managers.markpact_manager import MarkpactError
+    from .managers.source_manager import SourceError
+
+    if isinstance(exc, MarkpactError):
+        print_json({"ok": False, "error": str(exc), "type": "markpact_error"})
+        return 2
+    if isinstance(exc, SourceError):
+        print_json({"ok": False, "error": str(exc), "type": "source_error"})
+        return 2
+    try:
+        from uri_control.errors import UriControlError
+    except ModuleNotFoundError:
+        UriControlError = ()  # type: ignore[misc, assignment]
+    if UriControlError and isinstance(exc, UriControlError):
+        print_json({"ok": False, "error": str(exc), "type": type(exc).__name__})
+        return 2
+    if isinstance(exc, ModuleNotFoundError) and exc.name in ("uri_control", "uricore"):
+        print_json({
+            "ok": False,
+            "error": str(exc),
+            "type": "module_not_found",
+            "hint": 'pip install -U uricore urisysedge "urisys[real]" — then run: urisys doctor',
+        })
+        return 2
+    raise exc
+
+
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
 
     try:
         if args.command == "markpact":
-            from uri_control import CapabilityRegistry
-
-            from .managers.markpact_manager import MarkpactError, MarkpactManager
-            from .managers.source_manager import SourceManager, SourceError
-
-            source_manager = SourceManager(cache_root=(Path(args.out) / "sources") if getattr(args, "out", None) else ".urisys/cache/sources")
-            manager = MarkpactManager(cache_root=args.out) if getattr(args, "out", None) else MarkpactManager()
-            if args.markpact_command == "fetch":
-                print_json(source_manager.fetch(args.source, force=args.force))
-                return 0
-            local_path = resolve_markpact_source(args.path, source_manager=source_manager)
-            if args.markpact_command == "validate":
-                print_json(manager.validate(local_path))
-                return 0
-            if args.markpact_command == "compile":
-                compiled = manager.compile(local_path, out_dir=args.out, force=args.force)
-                print_json({"ok": True, "compiled": compiled.to_dict()})
-                return 0
-            if args.markpact_command == "routes":
-                compiled = manager.compile(local_path, out_dir=args.out)
-                registry = CapabilityRegistry.from_manifest_files([compiled.manifest_path])
-                print_json({
-                    "ok": True,
-                    "compiled": compiled.to_dict(),
-                    "routes": [
-                        {
-                            "manifest_id": r.manifest_id,
-                            "scheme": r.scheme,
-                            "pattern": r.pattern,
-                            "kind": r.kind,
-                            "operation": r.operation,
-                            "approval": r.approval,
-                            "side_effects": r.side_effects,
-                            "handler_ref": r.handler_ref,
-                        }
-                        for r in registry.routes
-                    ],
-                })
-                return 0
-            if args.markpact_command == "test":
-                print_json(manager.run_tests(local_path, events_path=args.events))
-                return 0
+            return _cmd_markpact(args)
 
         if args.command == "doctor":
             report = run_doctor(min_version=args.min_version or None)
@@ -251,31 +285,7 @@ def main(argv: list[str] | None = None) -> int:
             ctrl.close()
         return 1
     except Exception as exc:
-        from .managers.markpact_manager import MarkpactError
-        from .managers.source_manager import SourceError
-
-        if isinstance(exc, MarkpactError):
-            print_json({"ok": False, "error": str(exc), "type": "markpact_error"})
-            return 2
-        if isinstance(exc, SourceError):
-            print_json({"ok": False, "error": str(exc), "type": "source_error"})
-            return 2
-        try:
-            from uri_control.errors import UriControlError
-        except ModuleNotFoundError:
-            UriControlError = ()  # type: ignore[misc, assignment]
-        if UriControlError and isinstance(exc, UriControlError):
-            print_json({"ok": False, "error": str(exc), "type": type(exc).__name__})
-            return 2
-        if isinstance(exc, ModuleNotFoundError) and exc.name in ("uri_control", "uricore"):
-            print_json({
-                "ok": False,
-                "error": str(exc),
-                "type": "module_not_found",
-                "hint": 'pip install -U uricore urisysedge "urisys[real]" — then run: urisys doctor',
-            })
-            return 2
-        raise
+        return _handle_cli_error(exc)
 
 
 if __name__ == "__main__":

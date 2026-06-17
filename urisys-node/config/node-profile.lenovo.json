@@ -43,6 +43,16 @@
   "browser": {
     "driver": "system-open"
   },
+  "kv": {
+    "driver": "sqlite",
+    "path": "~/.local/share/urisys/store.db"
+  },
+  "log": {
+    "streams": {
+      "events": "~/.local/share/urisys/events.jsonl",
+      "node": "/tmp/urisys-node.log"
+    }
+  },
   "office": {
     "driver": "mock",
     "output_dir": "data/office"

@@ -186,6 +186,14 @@ def pack_specs() -> dict[str, PackSpec]:
         layout="flat",
     )
 
+    specs["urikv"] = PackSpec(
+        name="urikv",
+        repo=_repo("urikv"),
+        vendored=None,
+        module_files=MODULE_FILES,
+        repo_readme="kv:// and log:// URI packs — shared state and system introspection.",
+    )
+
     for name in ("uristepper", "uristepperedge"):
         specs[name] = PackSpec(
             name=name,
@@ -222,6 +230,7 @@ SIBLING_ONLY = frozenset(
         "urivql",
         "urikvmedge",
         "urienv",
+        "urikv",
     }
 )
 
