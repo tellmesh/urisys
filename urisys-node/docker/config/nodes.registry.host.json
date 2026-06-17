@@ -1,9 +1,0 @@
-{
-  "nodes": {
-    "docker-slave": {
-      "endpoint": "http://127.0.0.1:8790",
-      "capabilities": ["screen", "node", "kvm", "him"],
-      "owner": "host-controller"
-    }
-  }
-}
