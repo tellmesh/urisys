@@ -249,7 +249,11 @@ def run_doctor(*, min_version: str | None = "0.1.25") -> dict[str, Any]:
             _check_import("uricore", "uri_control", pip_hint=f"pip install -U {wheel_url()}"),
             _check_import("urisys", "urisys", pip_hint='pip install -U "urisys[real]"'),
             _check_import("urisysedge", "urisysedge", pip_hint="pip install -U urisysedge"),
-            _check_import("urisysnode", "urisysnode", pip_hint='pip install -U "urisys[real]"'),
+            _check_import(
+                "urisysnode",
+                "urisysnode",
+                pip_hint='pip install "urisys-node"  # or: urisys init',
+            ),
         ]
     )
     extra = _check_min_version(min_version)

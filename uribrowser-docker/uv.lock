@@ -129,9 +129,12 @@ wheels = [
 ]
 
 [[package]]
-name = "uribrowser-docker-example"
+name = "uribrowser"
 version = "0.1.0"
-source = { editable = "." }
+source = { editable = "../../uribrowser" }
+dependencies = [
+    { name = "urisysedge" },
+]
 
 [package.optional-dependencies]
 real = [
@@ -139,5 +142,33 @@ real = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "playwright", marker = "extra == 'real'", specifier = ">=1.40" }]
+requires-dist = [
+    { name = "playwright", marker = "extra == 'real'", specifier = ">=1.40" },
+    { name = "urisysedge", editable = "../../urisysedge" },
+]
 provides-extras = ["real"]
+
+[[package]]
+name = "uribrowser-docker-example"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "uribrowser", extra = ["real"] },
+]
+
+[package.metadata]
+requires-dist = [{ name = "uribrowser", extras = ["real"], editable = "../../uribrowser" }]
+
+[[package]]
+name = "urisysedge"
+version = "0.1.1"
+source = { editable = "../../urisysedge" }
+
+[package.metadata]
+requires-dist = [
+    { name = "costs", marker = "extra == 'dev'", specifier = ">=0.1.20" },
+    { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
+    { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
+]
+provides-extras = ["dev"]

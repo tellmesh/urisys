@@ -7,15 +7,11 @@ name = "uribrowser-docker-example"
 version = "0.1.0"
 description = "Portable browser:// URI example for urisys"
 requires-python = ">=3.10"
+dependencies = ["uribrowser[real]>=0.1.0"]
 
-[project.optional-dependencies]
-real = ["playwright>=1.40"]
-
-[tool.setuptools]
-package-dir = {"" = "packages/python"}
-
-[tool.setuptools.packages.find]
-where = ["packages/python"]
+[tool.uv.sources]
+uribrowser = { path = "../../uribrowser", editable = true }
+urisysedge = { path = "../../urisysedge", editable = true }
 
 [project.scripts]
 urisys-browser = "uribrowseredge.cli:main"

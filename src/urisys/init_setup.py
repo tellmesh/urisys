@@ -33,6 +33,7 @@ def default_pip_specs(*, profile: Profile = "slave") -> list[str]:
         pip_spec(),
         "urisysedge>=0.1.0",
         'urisys[real]>=0.1.25',
+        "urisys-node @ git+https://github.com/tellmesh/urisys-node.git",
     ]
 
 

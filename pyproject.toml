@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "urisys"
-version = "0.1.35"
+version = "0.1.36"
 description = "URI control system managers/controllers over separate uri* capability packs."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -13,7 +13,6 @@ authors = [
   { name = "Tom Sapletta", email = "tom@sapletta.com" },
 ]
 dependencies = [
-  "uricore @ https://github.com/tellmesh/uricore/releases/download/v0.1.8/uricore-0.1.8-py3-none-any.whl",
   "PyYAML>=6.0",
   "urisysedge>=0.1.0",
 ]
@@ -56,6 +55,7 @@ dev = [
   "uricore",
   "uribrowser",
   "uridocker",
+  "urisys-node",
 ]
 lab = [
   "uri2flow>=0.1.2",
@@ -64,6 +64,7 @@ lab = [
 [tool.uv.sources]
 urisysedge = { path = "../urisysedge", editable = true }
 urioperators = { path = "../urioperators", editable = true }
+urisys-node = { path = "../urisys-node", editable = true }
 urikvm = { path = "../urikvm", editable = true }
 urihim = { path = "../urihim", editable = true }
 uriocr = { path = "../uriocr", editable = true }
@@ -83,14 +84,13 @@ default-groups = ["dev"]
 
 [project.scripts]
 urisys = "urisys.bootstrap:main"
-urisys-node = "urisysnode.cli:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
-where = ["src", "urisys-node/packages/python"]
-include = ["urisys*", "urisysnode*", "uriscreen*", "urishell*"]
+where = ["src"]
+include = ["urisys*"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

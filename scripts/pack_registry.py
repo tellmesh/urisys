@@ -128,7 +128,7 @@ def pack_specs() -> dict[str, PackSpec]:
     ):
         module_files = MODULE_FILES if name != "urisysnode" else ("__init__.py", "cli.py", "serve.py", "handlers.py", "routes.py", "runtime.py", "env.py", "forward.py", "forward_config.py", "artifact_resolver.py", "pack_resolver.py", "release_verify.py", "identity.py", "router.py", "client.py", "display_bootstrap.py")
         if name == "uriscreen":
-            module_files = ("__init__.py", "handlers.py", "routes.py", "backends.py")
+            module_files = ("__init__.py", "handlers.py", "routes.py", "backends.py", "portal_capture.py")
         if name == "urishell":
             module_files = ("__init__.py", "handlers.py", "routes.py")
         specs[name] = PackSpec(
@@ -177,7 +177,7 @@ def pack_specs() -> dict[str, PackSpec]:
         name="urienv",
         repo=_repo("urienv"),
         vendored=ROOT / "urienv-docker" / "packages" / "python" / "urienv" / "src" / "urienv",
-        module_files=("__init__.py",),
+        module_files=("__init__.py", "handlers.py", "manifest.yaml"),
         repo_readme="env:// URI capability pack.",
         layout="flat",
     )
@@ -216,6 +216,8 @@ SIBLING_ONLY = frozenset(
         "urimail",
         "urioffice",
         "urivql",
+        "urikvmedge",
+        "urienv",
     }
 )
 
@@ -243,3 +245,12 @@ BUNDLE_REPOS: dict[str, str] = {
     "uristt": "urisys-automation-lab",
     "uriwebrtc": "urisys-automation-lab",
 }
+
+
+def sibling_repo_names() -> frozenset[str]:
+    """Unique tellmesh repo directory names for all promoted packs."""
+    return frozenset(SIBLING_ONLY | frozenset(BUNDLE_REPOS.values()))
+
+
+def all_promoted_packs() -> frozenset[str]:
+    return frozenset(pack_specs().keys())

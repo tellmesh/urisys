@@ -4,32 +4,41 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - "urikvm-docker/packages/python/**"
-      - "urirdp-docker/packages/python/**"
-      - "packages/python/urisysedge/**"
+      - "urikvm-docker/**"
+      - "urirdp-docker/**"
+      - "scripts/pack_registry.py"
       - ".github/workflows/pack-handlers-unit.yml"
 
 jobs:
   handlers-unit:
-    # Docker-free unit tests for the LLM decision handlers (driver dispatch).
-    # Imports need only stdlib + the canonical urisysedge on PYTHONPATH.
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: urisys
+
+      - name: Checkout tellmesh sibling repos
+        env:
+          TELLMESH_ROOT: ${{ github.workspace }}
+          URISYS_ROOT: ${{ github.workspace }}/urisys
+        run: bash urisys/scripts/ci-checkout-siblings.sh
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install test deps
-        run: pip install -q pytest pyyaml
+      - name: Install test deps + sibling packs
+        working-directory: urisys
+        run: |
+          pip install -q pytest pyyaml
+          bash scripts/ci-install-siblings.sh
 
       - name: urikvm vision dispatch
-        working-directory: urikvm-docker
-        run: PYTHONPATH=packages/python:../packages/python python -m pytest tests/test_vision_dispatch.py -q
+        working-directory: urisys/urikvm-docker
+        run: python -m pytest tests/test_vision_dispatch.py -q
 
       - name: urirdp decide dispatch
-        working-directory: urirdp-docker
-        run: PYTHONPATH=packages/python:../packages/python python -m pytest tests/test_decide_dispatch.py -q
+        working-directory: urisys/urirdp-docker
+        run: python -m pytest tests/test_decide_dispatch.py -q

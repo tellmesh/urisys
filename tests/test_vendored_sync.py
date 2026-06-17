@@ -11,9 +11,10 @@ TELLMESH = ROOT.parent
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-from pack_registry import SIBLING_ONLY, pack_specs  # noqa: E402
+from pack_registry import all_promoted_packs, pack_specs, sibling_repo_names  # noqa: E402
 
-PROMOTED_PACKS = tuple(sorted(SIBLING_ONLY))
+PROMOTED_PACKS = tuple(sorted(all_promoted_packs()))
+SIBLING_REPOS = tuple(sorted(sibling_repo_names()))
 
 
 def _run_check(packs: list[str]) -> subprocess.CompletedProcess:
@@ -27,8 +28,8 @@ def test_pack_sync_script_exists():
     assert (ROOT / "scripts" / "sync-vendored-pack.sh").is_file()
 
 
-def test_sibling_repos_exist_for_promoted_packs():
-    missing = [p for p in PROMOTED_PACKS if not (TELLMESH / p).is_dir()]
+def test_sibling_repos_exist():
+    missing = [r for r in SIBLING_REPOS if not (TELLMESH / r).is_dir()]
     assert not missing, f"missing tellmesh repos: {missing}"
 
 
@@ -39,12 +40,12 @@ def test_promoted_packs_not_vendored_in_monorepo():
         spec = specs[name]
         if spec.vendored is not None and spec.vendored.is_dir():
             still_vendored.append(str(spec.vendored))
-    assert not still_vendored, f"run: python3 scripts/pack_sync.py promote {' '.join(PROMOTED_PACKS)}\n{still_vendored}"
+    assert not still_vendored, f"run: python3 scripts/pack_sync.py promote --all\n{still_vendored}"
 
 
-def test_sibling_packs_have_pyproject():
-    for name in PROMOTED_PACKS:
-        path = TELLMESH / name / "pyproject.toml"
+def test_sibling_repos_have_pyproject():
+    for repo in SIBLING_REPOS:
+        path = TELLMESH / repo / "pyproject.toml"
         assert path.is_file(), f"missing {path}"
 
 

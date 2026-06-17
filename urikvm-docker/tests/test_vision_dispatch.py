@@ -8,15 +8,7 @@ of running tesseract, so they are CI-safe.
 
 from __future__ import annotations
 
-import sys
-from pathlib import Path
-
-PKG = Path(__file__).resolve().parents[1] / "packages" / "python"
-CANONICAL = Path(__file__).resolve().parents[2] / "packages" / "python"
-sys.path.insert(0, str(PKG))
-sys.path.insert(0, str(CANONICAL))
-
-import urillm.handlers as h  # noqa: E402
+import urillm.handlers as h
 
 
 def _ctx(driver: str) -> dict:

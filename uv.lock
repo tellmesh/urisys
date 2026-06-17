@@ -3740,11 +3740,10 @@ source = { editable = "../urioperators" }
 
 [[package]]
 name = "urisys"
-version = "0.1.35"
+version = "0.1.36"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
-    { name = "uricore" },
     { name = "urisysedge" },
 ]
 
@@ -3784,6 +3783,7 @@ dev = [
     { name = "uribrowser" },
     { name = "uricore" },
     { name = "uridocker" },
+    { name = "urisys-node" },
 ]
 lab = [
     { name = "uri2flow" },
@@ -3803,7 +3803,6 @@ requires-dist = [
     { name = "pyyaml", specifier = ">=6.0" },
     { name = "uri2flow", marker = "extra == 'lab'", editable = "../uri2flow" },
     { name = "uribrowser", marker = "extra == 'dev'", editable = "../uri-packs/packages/python/uribrowser" },
-    { name = "uricore", editable = "../uricore" },
     { name = "uricore", marker = "extra == 'dev'", editable = "../uricore" },
     { name = "uridocker", marker = "extra == 'dev'", editable = "../uri-packs/packages/python/uridocker" },
     { name = "urihim", extras = ["real"], marker = "extra == 'kvm'", editable = "../urihim" },
@@ -3821,8 +3820,36 @@ dev = [
     { name = "uribrowser", editable = "../uri-packs/packages/python/uribrowser" },
     { name = "uricore", editable = "../uricore" },
     { name = "uridocker", editable = "../uri-packs/packages/python/uridocker" },
+    { name = "urisys-node", editable = "../urisys-node" },
 ]
 lab = [{ name = "uri2flow", editable = "../uri2flow" }]
+
+[[package]]
+name = "urisys-node"
+version = "0.1.3"
+source = { editable = "../urisys-node" }
+dependencies = [
+    { name = "pyyaml" },
+    { name = "urisysedge" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "litellm", marker = "extra == 'real'", specifier = ">=1.40" },
+    { name = "mss", marker = "extra == 'real'", specifier = ">=9.0" },
+    { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
+    { name = "pyautogui", marker = "extra == 'real'", specifier = ">=0.9.54" },
+    { name = "pytesseract", marker = "extra == 'real'", specifier = ">=0.3.10" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
+    { name = "pyyaml", specifier = ">=6.0" },
+    { name = "urihim", extras = ["real"], marker = "extra == 'kvm'", editable = "../urihim" },
+    { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm" },
+    { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "../urillm" },
+    { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "../uriocr" },
+    { name = "urisysedge", editable = "../urisysedge" },
+    { name = "zeroconf", marker = "extra == 'discovery'", specifier = ">=0.131.0" },
+]
+provides-extras = ["real", "kvm", "discovery", "dev"]
 
 [[package]]
 name = "urisysedge"

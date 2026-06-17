@@ -1,41 +1,85 @@
-# Paczki w monorepo urisys
+# Paczki w ekosystemie tellmesh
 
-Ten dokument opisuje **layout paczek**, **duplikaty** i **plan konsolidacji**.  
-Indeks modułów z liczbami linii: [`project/map.toon.yaml`](../project/map.toon.yaml) (sekcja `M[]`).
+Ten dokument opisuje **layout paczek** po migracji z vendored `urisys./*/packages/python/*` do sibling repos `tellmesh/{repo}/`.
+
+Indeks modułów (historyczny, przed migracją): [`project/map.toon.yaml`](../project/map.toon.yaml).
+
+## Zasada: jedno źródło prawdy
+
+| Warstwa | Gdzie | Rola |
+|---------|-------|------|
+| **core** | `urisys/src/urisys/` | CLI, managers, bootstrap |
+| **capability packs** | `tellmesh/{urikvm,urihim,…}/` | handlery URI (`handlers.py`, `routes.py`) |
+| **edge shared** | `tellmesh/urisysedge/` | `Runtime`, `JsonlEventStore`, env policy |
+| **LLM shared** | `tellmesh/urioperators/` | chat, plan, decide, JSON parse |
+| **docker glue** | `urisys/*-docker/` | Dockerfile, config, flow, testy integracyjne |
+
+W monorepo **urisys nie ma już** katalogów `packages/python/{pack}/` — tylko glue Docker i testy.
+
+Synchronizacja / drift guard:
+
+```bash
+cd urisys
+python3 scripts/pack_sync.py check --all
+python3 -m pytest tests/test_vendored_sync.py -q
+```
+
+## Workspace tellmesh (dev)
+
+```text
+tellmesh/
+├── urisys/                 # glue + CLI (repo git)
+├── urisysedge/             # ★ edge runtime
+├── urioperators/           # ★ LLM helpers
+├── urisys-node/            # urisysnode, uriscreen, urishell
+├── urikvm/ urihim/ uriocr/ urillm/
+├── urimail/ urioffice/ urivql/
+├── urikvmedge/             # CLI urisys-kvm
+├── urirdp/                 # urirdp*, urirdpedge
+├── uribrowser/ urienv/ uristepper/
+└── urisys-automation-lab/  # labedge, urichat, uristt, …
+```
+
+```bash
+cd tellmesh/urisys
+uv sync --extra kvm          # [tool.uv.sources] → ../{pack}
+urisys routes --packs all
+```
+
+CI bez lokalnego checkout siblingów:
+
+```bash
+bash scripts/ci-checkout-siblings.sh   # clone tellmesh/* obok urisys
+bash scripts/ci-install-siblings.sh    # pip install -e
+```
 
 ## Legenda ról
 
 | Typ | Opis | Przykład |
 |-----|------|----------|
 | **core** | Centralny controller | `src/urisys/` |
-| **edge-shared** | Wspólny runtime Docker | `packages/python/urisysedge/` |
-| **edge-shim** | Alias kompatybilności | `urirdpedge`, `labedge` |
-| **edge-fork** | Kopia do konsolidacji | _(wszystkie edge → urisysedge)_ |
-| **handlers** | Implementacja schematu URI | `urirdp_kvm`, `uriocr` |
-| **lab-pack** | MVP mock/real w automation-lab | `uristt`, `urichat`, `uriwebrtc` |
+| **edge-shared** | Wspólny runtime Docker | `tellmesh/urisysedge/` |
+| **edge-shim** | Alias kompatybilności | `urirdpedge`, `labedge` w bundle repo |
+| **handlers** | Implementacja schematu URI | `tellmesh/urikvm/`, `tellmesh/urirdp/` |
+| **lab-pack** | MVP w automation-lab | `tellmesh/urisys-automation-lab/` |
 
-## Drzewo katalogów (skrót)
+## Drzewo urisys (glue only)
 
 ```text
 urisys/
-├── src/urisys/                 # pip package urisys (CLI + managers)
-├── packages/python/urisysedge/ # ★ wspólny edge runtime
-├── packages/python/urioperators/ # ★ wspólne helpery LLM (Tor R)
-├── flows/                      # przykładowy flow CLI
-├── examples/                   # shell + frontend
-├── markpacts/                  # → ../markpact-contracts/packs (symlink w tellmesh)
-├── scripts/                    # test sessions, validate
-├── local-lab/                  # chain markpact.com
-├── urirdp-docker/              # RDP + pełny desktop automation
-├── urikvm-docker/              # KVM bez RDP
-├── uribrowser-docker/          # tylko browser://
-├── urienv-docker/              # env:// (uricore z PyPI / ../uricore)
-├── uristepper-docker/          # stepper://
-├── urisys-automation-lab/      # 10 flows + lab UI
-└── urisys-node/                # slave/master node + ArtifactResolver
+├── src/urisys/                 # pip package urisys
+├── scripts/pack_sync.py        # sync / promote / check
+├── scripts/pack_registry.py    # mapowanie pack → tellmesh repo
+├── urikvm-docker/              # Dockerfile + markpacts (port 8794)
+├── urirdp-docker/              # RDP desktop bundle (8795 / 3389)
+├── uribrowser-docker/
+├── urienv-docker/
+├── uristepper-docker/
+├── urisys-automation-lab/      # server + web + flows (8099)
+└── urisys-node/                # integracja slave (testy, docker config)
 ```
 
-## Wspólny pakiet: `urioperators` (2026-06-17)
+## Wspólny pakiet: `urioperators`
 
 Wyodrębnione helpery LLM współdzielone przez `urillm` i `urirdp_llm`:
 
@@ -46,180 +90,76 @@ Wyodrębnione helpery LLM współdzielone przez `urillm` i `urirdp_llm`:
 | `llm_plan.py` | `plan_from_parsed` |
 | `llm_decide.py` | `decision_from_parsed` |
 
-Lokalizacja: `packages/python/urioperators/`. Docker COPY obok `urisysedge`:
-
-```dockerfile
-COPY packages/python/urioperators ./packages/python/urioperators
-```
+Lokalizacja: **`tellmesh/urioperators/`**.
 
 **Faza 2 (plan):** OCR/HIM helpers — ten sam wzorzec.
 
 ## Wspólny pakiet: `urisysedge`
 
-**Wyodrębniony** (2026-06-16) z `urirdpedge`:
-
 | Moduł | Zawartość |
 |-------|-----------|
-| `runtime.py` | `Route`, `Runtime`, `JsonlEventStore`, `run_flow`, HTTP handler |
-| `env.py` | `load_env_policy`, `resolve_env_var`, `load_urisys_env` |
+| `runtime.py` | `Route`, `Runtime`, `JsonlEventStore`, `run_flow` |
+| `env.py` | `load_env_policy`, `resolve_env_var` |
 
-Shimy (tylko re-export):
+Lokalizacja: **`tellmesh/urisysedge/`**.
 
-- `urirdp-docker/packages/python/urirdpedge/{runtime,env}.py`
-- `urisys-automation-lab/packages/python/labedge/runtime.py`
-- `urikvm-docker/packages/python/urikvmedge/{runtime,env}.py`
-- `uribrowser-docker/packages/python/uribrowseredge/runtime.py`
-- `urisys-node/packages/python/urisysnode/{runtime,env}.py`
+Shimy (re-export w bundle repos): `urirdpedge`, `urikvmedge`, `labedge`, `uribrowseredge`, `urisysnode/runtime.py`.
 
-Stepper (osobny pakiet, współdzieli tylko `JsonlEventStore`):
+## Fork lineage urikvm ↔ urirdp
 
-- `uristepper-docker/packages/python/uristepperedge/` — `StepperRuntime`, nie duplikuje `Runtime`
+| Domena | tellmesh repo | Uwagi |
+|--------|---------------|-------|
+| KVM | `urikvm` / `urirdp_kvm` | RDP display vs czysty KVM |
+| HIM | `urihim` / `urirdp_him` | xdotool |
+| OCR | `uriocr` / `urirdp_ocr` | `latest.png` convention |
+| LLM | `urillm` / `urirdp_llm` | helpery → `urioperators` |
+| Browser | `uribrowser` / `urirdp_browser` | Chromium w RDP |
+| Env | `urienv` / `urirdp_env` | alias |
 
-Docker COPY (build context = katalog `urisys/`):
+Konwencja danych: `data/screenshots/latest.png`, `runtime.state`.
 
-```dockerfile
-COPY packages/python/urisysedge ./packages/python/urisysedge
-```
+## Paczki PyPI i dystrybucja
 
-## Duplikaty — runtime / edge
+Pełny opis: **[`docs/DISTRIBUTION.md`](DISTRIBUTION.md)**.
 
-| Pakiet | Lokalizacja | Linie | Status |
-|--------|-------------|-------|--------|
-| **urisysedge** | `packages/python/urisysedge/` | ~255 | ★ canonical |
-| urirdpedge | `urirdp-docker/.../urirdpedge/` | shim | ✅ migrowany |
-| labedge | `urisys-automation-lab/.../labedge/` | shim | ✅ migrowany |
-| urikvmedge | `urikvm-docker/.../urikvmedge/` | shim | ✅ migrowany |
-| uribrowseredge | `uribrowser-docker/.../` | shim | ✅ migrowany |
-| urisysnode | `urisys-node/.../urisysnode/runtime.py` | shim | ✅ migrowany |
-| uristepperedge | `uristepper-docker/.../uristepperedge/` | ~170 | ✅ StepperRuntime; `JsonlEventStore` → urisysedge |
+| Pakiet | Canonical repo | Monorepo urisys |
+|--------|----------------|-----------------|
+| `urisys` | `tellmesh/urisys` | root `pyproject.toml` |
+| `urisys-node` | `tellmesh/urisys-node` | glue w `urisys/urisys-node/` |
+| `urisysedge` | `tellmesh/urisysedge` | brak vendored |
+| `urioperators` | `tellmesh/urioperators` | brak vendored |
+| `urikvm` … `urivql` | `tellmesh/{pack}/` | brak vendored |
+| `urikvmedge` | `tellmesh/urikvmedge` | `urikvm-docker/` = glue only |
 
-## Duplikaty — handlery (fork lineage urikvm → urirdp)
-
-| Domena | urikvm-docker | urirdp-docker | Uwagi |
-|--------|---------------|---------------|-------|
-| KVM | `urikvm` | `urirdp_kvm` | RDP display vs czysty KVM |
-| HIM | `urihim` | `urirdp_him` | xdotool |
-| OCR | `uriocr` | `urirdp_ocr` | `latest.png` convention |
-| LLM | `urillm` | `urirdp_llm` | vision analyze; **helpery → `urioperators`** |
-| Browser | `uribrowserdocker` | `urirdp_browser` | Chromium w RDP |
-| Env | — | `urirdp_env` | alias do urienv |
-
-**Konwencja danych między krokami** (bez explicit edge w YAML): `data/screenshots/latest.png`, `runtime.state`.
-
-## Duplikaty — env policy
-
-| Plik | Pakiet |
-|------|--------|
-| `packages/python/urisysedge/env.py` | ★ canonical |
-| `urirdpedge/env.py` | shim |
-| `urikvmedge/env.py` | shim |
-
-## Paczki PyPI i dystrybucja (stan 2026-06-17)
-
-Pełny opis: **[`docs/DISTRIBUTION.md`](DISTRIBUTION.md)** · rozszerzenia: **[`docs/PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md)**.
-
-| Pakiet | PyPI | Monorepo |
-|--------|------|----------|
-| `urisys` | 🔲 0.1.33 | ✅ |
-| `urisys-node` | bundled | ✅ |
-| `urisysedge` | ✅ 0.1.1 | `packages/python/urisysedge/` |
-| `urikvm` | ✅ 0.1.1 | vendored |
-| `urihim`, `uriocr`, `urillm` | 🔲 / ✅ GitHub | vendored |
-| `urioperators` | 🔲 0.1.0 | `packages/python/urioperators/` |
-| `urimail`, `urioffice`, `urivql` | 🔲 / ✅ GitHub | vendored w urikvm-docker |
-
-### Dev — monorepo (gdy PyPI nie ma packa)
+### Dev
 
 ```bash
-cd urisys
+cd tellmesh/urisys
 uv sync --extra kvm
 ```
 
-Slave (lenovo): **pip one-liners** lub **`shell://` flow** — [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md).  
-Nie używaj `bash scripts/install-kvm-packs-editable.sh` na maszynie slave.
+Slave (lenovo): [`docs/NODE-SETUP.md`](NODE-SETUP.md).
 
-### PyPI — publikacja z repo tellmesh
-
-```bash
-# pojedynczo
-cd ~/github/tellmesh/urihim && goal -a -y
-
-# wszystkie packi (kolejność: urisysedge → urikvm → …)
-bash ~/github/tellmesh/scripts/publish-kvm-packs-goal.sh
-```
-
-Build tylko lokalnie (monorepo):
+### Docker build (kontekst = root tellmesh)
 
 ```bash
-bash scripts/publish-pypi-packs.sh   # bez PYPI_TOKEN = tylko dist/
+docker build -f urisys/urikvm-docker/Dockerfile /path/to/tellmesh
+docker build -f urisys/urirdp-docker/Dockerfile /path/to/tellmesh
 ```
 
-### Po pełnej publikacji PyPI
+## Plan konsolidacji
 
-```bash
-pip install "urisys-node[real,kvm]"
-URISYS_NODE_ALLOW_PACK_LOAD=1 URISYS_NODE_PACKS=node,screen,kvm,him urisys-node serve --port 8790
-```
-
-### Bez PyPI — Markpact + GitHub OCI
-
-Kontrakty kvm: ✅ w `markpact-contracts/packs/` (11/11 validate).  
-Runtime: `hotload_release_pack()` + `release_forwards` — [`DISTRIBUTION.md`](DISTRIBUTION.md), [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md).
-
-## Ekosystem zewnętrzny (imgl / vql)
-
-Packi spoza monorepo — integracja przez **forward worker** lub nowy moduł w `PACK_MODULES`:
-
-| Repo | Schemat docelowy | Rola w pipeline | Integracja |
-|------|------------------|-----------------|------------|
-| [`semcod/imgl`](https://github.com/semcod/imgl) | `imgl://` | layout/OCR/targets, ydotool execute | forward `rest2imgl` lub `uriimgl` pack; **po** `screen://`, nie duplikować capture |
-| [`oqlos/vql`](https://github.com/oqlos/vql) | `vql://` | UI detect, fingerprint, compare | warstwa weryfikacji między `screen://` a `him://` |
-
-Docelowy pipeline na Wayland slave (lenovo):
-
-```text
-screen://…/query/frame  →  vql://…/compare  →  imgl://…/execute  →  him://…/click
-```
-
-Szczegóły implementacji: [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md), stan lenovo: [`NODE-SETUP.md`](NODE-SETUP.md).
-
-
-| Pakiet | Gdzie używany |
-|--------|---------------|
-| `uri_control` (uricore) | `../uricore` (tellmesh) lub PyPI |
-| `uri-packs/*` | `urisys --packs browser,docker,...` |
-| `uri2flow`, `uri3` | expand/execute workflow (osobne repo) |
-
-## Plan konsolidacji (kolejność)
-
-1. ✅ **`urisysedge`** — runtime + env; shimy urirdpedge/labedge/urikvmedge/uribrowseredge/**urisysnode**
-2. ✅ **`flow_runner`** — uri2flow + uri3 (`LabCallAdapter`)
-3. ✅ **`JsonlEventStore`/`Runtime` dedup** — urisys-node + uristepper → urisysedge ([`MIGRATION-STEP3.md`](MIGRATION-STEP3.md))
-4. ✅ **PyPI layout packów** — vendored w monorepo + osobne repo `tellmesh/{urisysedge,urikvm,urihim,uriocr,urillm}`; [`DISTRIBUTION.md`](DISTRIBUTION.md)
-5. 🔲 **`uriimgl` / `urivql`** — forward lub in-process pack; [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md)
-6. ✅ **`urioperators/` (LLM)** — `parse_json_response`, chat, plan, decide; wired w `urillm` + `urirdp_llm`
-7. 🔲 **`urioperators/` (OCR/HIM)** — faza 2 dedup
-8. 🔲 **`FlowController`** — dodać `after`/`depends_on` (parity z uri2flow)
-9. 🔲 **Pełny `uri3 run-workflow`** w lab (schema root w kontenerze)
-
-## Zależności importów (z map.toon.yaml)
-
-Hotspoty fan-out (refactor candidates):
-
-- `scripts/run_test_sessions.session_lab_10_flows` — 31
-- `src/urisys/cli.main` — 41
-- `MarkpactManager.compile` — 34
-
-Pełny call graph: `project/calls.mmd`, `project/calls.yaml`.
+1. ✅ **`urisysedge`** — runtime + env; shimy edge
+2. ✅ **`urioperators` (LLM)** — wired w `urillm` + `urirdp_llm`
+3. ✅ **PyPI layout** — osobne repo `tellmesh/{pack}/`
+4. ✅ **Migracja vendored → sibling** — `pack_sync promote --all`
+5. 🔲 **`urioperators` (OCR/HIM)** — faza 2 dedup
+6. 🔲 **`uriimgl` / `urivql`** — forward lub in-process pack
 
 ## Instalacja dev
 
 ```bash
-cd urisys
+cd tellmesh/urisys
 uv sync
-urisys routes --packs all
-
-# edge lokalnie (PYTHONPATH)
-export PYTHONPATH="packages/python:urirdp-docker/packages/python"
 python3 -c "from urisysedge.runtime import Runtime; print(Runtime)"
 ```

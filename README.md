@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.35-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$10.69-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-16.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.36-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$10.83-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-16.1h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $10.6863 (50 commits)
-- 👤 **Human dev:** ~$1598 (16.0h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $10.8256 (51 commits)
+- 👤 **Human dev:** ~$1608 (16.1h @ $100/h, 30min dedup)
 
 Generated on 2026-06-17 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -23,21 +23,15 @@ pip install urisys
 
 ### Dev (checkout tellmesh)
 
-Wymaga checkout **tellmesh** (urisys obok `uricore/`, `uri-packs/`, opcjonalnie `nl2uri/`, `uri2flow/`).
+Wymaga checkout **tellmesh workspace** — `urisys` obok sibling repos (`urisysedge/`, `urisys-node/`, `urikvm/`, …).
 
 ```bash
 cd tellmesh/urisys
 
-# wirtualne środowisko (poprawna składnia — NIE komenda `venv`)
 python3 -m venv .venv
 source .venv/bin/activate
 
-# zalecane: uv (lockfile)
-uv sync
-
-# alternatywa bez uv:
-pip install -e ".[dev]"
-pip install -e ../uricore          # sibling w tellmesh workspace
+uv sync --extra kvm    # [tool.uv.sources] → ../{pack}
 ```
 
 Po instalacji CLI:
@@ -117,19 +111,18 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 | [`project/MAP.md`](project/MAP.md) | Przewodnik po `map.toon.yaml` (code2llm) |
 | [`project/PACKAGES.md`](project/PACKAGES.md) | Indeks paczek sync z mapą |
 
-## Struktura monorepo
+## Struktura (po migracji packów)
 
 ```text
-src/urisys/              pip package — CLI + managers
-packages/python/urisysedge/   wspólny edge runtime (canonical)
-urirdp-docker/           RDP + KVM/HIM/OCR/LLM/shell/browser
-urisys-automation-lab/   10 flows, lab UI :8099
-urisys-node/             slave node + ArtifactResolver
-local-lab/               markpact.com release chain
-flows/                   przykład flow dla CLI
-examples/                shell + frontend
-markpacts/packs/         Markpact do walidacji
-scripts/                 test sessions, validate-all-markpacts
+tellmesh/
+├── urisys/              pip package — CLI + managers + docker glue
+├── urisysedge/          wspólny edge runtime (canonical)
+├── urioperators/        wspólne helpery LLM
+├── urisys-node/         urisysnode, uriscreen, urishell
+├── urikvm/ urihim/ uriocr/ urillm/ …   capability packs
+├── urikvmedge/          CLI urisys-kvm
+├── urirdp/              RDP desktop bundle
+└── urisys/urisys-node/  integracja slave (testy, docker config)
 ```
 
 ## Managers

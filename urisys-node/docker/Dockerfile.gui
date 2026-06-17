@@ -1,5 +1,5 @@
-# urisys-node GUI slave — pip install urisys (bundles urisys + urisys-node), serve :8790
-# Build context: tellmesh monorepo root (urisys + uricore + urikvm-docker siblings)
+# urisys-node GUI slave — pip install urisys + tellmesh sibling packs, serve :8790
+# Build context: tellmesh workspace root
 FROM debian:bookworm-slim
 
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -19,21 +19,28 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zenity fonts-dejavu \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /opt/urisys
-
-COPY urisys/pyproject.toml ./
-RUN printf '# urisys\n' > README.md
-
-COPY urisys/src ./src
-COPY urisys/urisys-node/packages/python ./urisys-node/packages/python
-COPY urisys/packages/python/urisysedge ./packages/python/urisysedge
-COPY urisys/urikvm-docker/packages/python /opt/urisys/vendor/kvm
-COPY uricore /opt/urisys/vendor/uricore
-
-RUN python3 -m pip install --break-system-packages -e /opt/urisys/vendor/uricore \
-    && python3 -m pip install --break-system-packages -e ".[real]"
-
-ENV PYTHONPATH="/opt/urisys/vendor/kvm:${PYTHONPATH}"
+WORKDIR /build
+COPY uricore /build/uricore
+COPY urisysedge /build/urisysedge
+COPY urioperators /build/urioperators
+COPY urisys-node /build/urisys-node
+COPY urikvm /build/urikvm
+COPY urihim /build/urihim
+COPY uriocr /build/uriocr
+COPY urillm /build/urillm
+COPY urisys/pyproject.toml /build/urisys/pyproject.toml
+COPY urisys/src /build/urisys/src
+RUN printf '# urisys\n' > /build/urisys/README.md \
+    && python3 -m pip install --break-system-packages -e /build/uricore \
+    && python3 -m pip install --break-system-packages \
+       -e /build/urisysedge \
+       -e /build/urioperators \
+       -e /build/urisys-node \
+       -e /build/urikvm \
+       -e /build/urihim \
+       -e /build/uriocr \
+       -e /build/urillm \
+       -e "/build/urisys[real]"
 
 COPY urisys/urisys-node/docker/config /opt/urisys-node/config
 COPY urisys/urisys-node/docker/entrypoint.sh /usr/local/bin/urisys-node-gui-entrypoint

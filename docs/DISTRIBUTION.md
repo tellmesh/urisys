@@ -1,6 +1,6 @@
 # Dystrybucja capability packów (PyPI · Markpact · GitHub)
 
-Trzy **równoległe ścieżki** dostarczania packów kvm/him/ocr/llm (i rozszerzeń office) do `urisys-node`.
+Trzy **równoległe ścieżki** dostarczania packów do `urisys-node`.
 
 Powiązane: [`README.md`](README.md) · [`PACKAGES.md`](PACKAGES.md) · [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md) · [`MARKPACT.md`](MARKPACT.md) · [`NODE-SETUP.md`](NODE-SETUP.md).
 
@@ -8,8 +8,7 @@ Powiązane: [`README.md`](README.md) · [`PACKAGES.md`](PACKAGES.md) · [`PACK-E
 
 ```text
                     ┌─────────────────┐
-                    │  UriContract    │  markpact.com — schemat URI, wersja, metadata
-                    │  (*.markpact.md)│
+                    │  UriContract    │  markpact.com
                     └────────┬────────┘
                              │
 ┌──────────────┐    ┌────────▼────────┐    ┌──────────────────┐
@@ -25,131 +24,135 @@ Powiązane: [`README.md`](README.md) · [`PACKAGES.md`](PACKAGES.md) · [`PACK-E
            urisys-node serve :8790
 ```
 
-| Ścieżka | Artefakt | Konsument | Wymaga |
-|---------|----------|-----------|--------|
-| **A — PyPI / GitHub wheel** | wheel (`urikvm`, `urihim`, …) | `pip install`, hot-load `POST /uri/pack {"pack":"kvm"}` | `urisysedge` |
-| **B — Markpact** | kontrakt + wpis w katalogu | walidacja, rejestr release | plik `.markpact.md` |
-| **C — GitHub OCI** | obraz + `artifact-index.json` | `ArtifactResolver`, release hot-load | kontrakt + build obrazu |
+| Ścieżka | Artefakt | Konsument |
+|---------|----------|-----------|
+| **A — PyPI / GitHub wheel** | wheel (`urikvm`, …) | `pip install`, `POST /uri/pack {"pack":"kvm"}` |
+| **B — Markpact** | kontrakt + katalog | walidacja, rejestr release |
+| **C — GitHub OCI** | obraz + `artifact-index.json` | `ArtifactResolver`, release hot-load |
 
-Ścieżki **B i C** są niezależne od PyPI. Łączą się na node: `artifact-index` wskazuje obraz, kontrakt podaje wzorce URI → `register_forward_pack()`.
+## Canonical source: tellmesh sibling repos
 
-## Stan publikacji (2026-06-17)
+Po migracji (2026-06-17) kod packów **nie jest vendored** w `urisys/` — każdy pack ma repo:
 
-### Sync vendored ↔ tellmesh repos
+```text
+tellmesh/urisysedge/  tellmesh/urioperators/
+tellmesh/urikvm/      tellmesh/urihim/      tellmesh/uriocr/      tellmesh/urillm/
+tellmesh/urimail/     tellmesh/urioffice/   tellmesh/urivql/
+tellmesh/urikvmedge/  tellmesh/urirdp/      tellmesh/urisys-node/
+tellmesh/uribrowser/  tellmesh/urienv/      tellmesh/uristepper/
+tellmesh/urisys-automation-lab/
+```
+
+Monorepo `urisys` trzyma: Dockerfile, config, flows, markpacts, testy integracyjne.
+
+### Drift guard
 
 ```bash
 cd urisys
-python3 scripts/pack_sync.py check --all
-python3 -m pytest tests/test_vendored_sync.py -q
-bash scripts/sync-vendored-pack.sh --all   # monorepo → tellmesh/{pack}
+python3 scripts/pack_sync.py check --all      # 32 packi
+python3 -m pytest tests/test_vendored_sync.py tests/test_kvm_pack_pyprojects.py -q
+bash scripts/sync-vendored-pack.sh --check --all
 ```
 
-Packi office: `tellmesh/urimail`, `urioffice`, `urivql` (GitHub Releases + lazy install na node).
-
-### PyPI / wheels
-
-| Pakiet | PyPI | GitHub Releases | Monorepo |
-|--------|------|-----------------|----------|
-| `urisys` | 🔲 0.1.33 (init, uricore wheel) | — | root `pyproject.toml` |
-| `urisysedge` | ✅ 0.1.1 | ✅ v0.1.1 | `packages/python/urisysedge/` |
-| `urikvm` | ✅ 0.1.1 | ✅ v0.1.1 | `urikvm-docker/packages/python/urikvm/` |
-| `urihim` | 🔲 | ✅ v0.1.3+ | vendored; wheel `twine check` PASS |
-| `uriocr` | 🔲 | ✅ v0.1.0 | vendored; wheel PASS |
-| `urillm` | 🔲 | ✅ v0.1.0 | vendored; wheel PASS |
-| `urioperators` | 🔲 0.1.0 | 🔲 | `packages/python/urioperators/` (shared LLM helpers) |
-| `urimail` / `urioffice` / `urivql` | 🔲 | ✅ | vendored w `urikvm-docker/` |
-
-> **Uricore:** PyPI pakiet `uricore` to **inny projekt** (moduł `uricore/`, nie `uri_control/`).
-> `urisys>=0.1.33` instaluje tellmesh uricore z **GitHub wheel** (`v0.1.8`). Zobacz [`NODE-SETUP.md`](NODE-SETUP.md).
-
-**Build lokalny (bez upload):**
+Promote (sync + usuń vendored — już wykonane):
 
 ```bash
-bash scripts/publish-pypi-packs.sh          # dist/ w katalogach packów
+python3 scripts/pack_sync.py promote --all
+```
+
+### Dev workspace
+
+```bash
+# lokalnie: checkout tellmesh z sibling repos
+cd tellmesh/urisys && uv sync --extra kvm
+
+# CI / świeży clone bez siblingów:
+bash scripts/ci-checkout-siblings.sh
+bash scripts/ci-install-siblings.sh
+pip install -e .
+```
+
+`[tool.uv.sources]` w `pyproject.toml` wskazuje `../{pack}`.
+
+## Stan publikacji
+
+| Pakiet | PyPI | GitHub Releases | Canonical |
+|--------|------|-----------------|-----------|
+| `urisys` | 🔲 0.1.35 | — | `tellmesh/urisys` |
+| `urisys-node` | 🔲 | — | `tellmesh/urisys-node` |
+| `urisysedge` | ✅ 0.1.1 | ✅ | `tellmesh/urisysedge` |
+| `urioperators` | 🔲 0.1.0 | 🔲 | `tellmesh/urioperators` |
+| `urikvm` | ✅ 0.1.1 | ✅ | `tellmesh/urikvm` |
+| `urihim`, `uriocr`, `urillm` | 🔲 | ✅ | `tellmesh/{pack}/` |
+| `urimail`, `urioffice`, `urivql` | 🔲 | ✅ | `tellmesh/{pack}/` |
+| `urikvmedge`, `urirdp` | 🔲 | 🔲 | bundle CLI repos |
+
+> **Uricore:** PyPI `uricore` to **inny projekt**. Wheel `urisys` nie może mieć `uricore @ https://…` w metadanych (PyPI → HTTP 400). Po `pip install urisys` uruchom **`urisys init`** — instaluje tellmesh uricore + urisys-node z GitHub.
+
+**Build + walidacja przed upload:**
+
+```bash
+python -m build
+bash scripts/validate-pypi-metadata.sh
+PYPI_TOKEN=... twine upload dist/urisys-*
+```
+
+**Build lokalny (packi kvm):**
+
+```bash
+bash scripts/publish-pypi-packs.sh
 PYPI_TOKEN=... bash scripts/publish-pypi-packs.sh
 ```
 
-**GitHub Releases (działa bez PyPI):**
+**GitHub Releases (packi kvm):**
 
 ```bash
 bash scripts/publish-kvm-packs-github.sh
-# PACKS_OVERRIDE=urihim bash scripts/publish-kvm-packs-github.sh
 ```
 
-Lazy install na node (`URISYS_PACK_SOURCE=auto`): him/ocr/llm z GitHub, reszta z PyPI.
+## Markpact (kontrakty kvm)
 
-### Markpact (kontrakty)
-
-| Kontrakt | Lokalizacja | `markpact-contracts/packs/` |
-|----------|-------------|----------------------------|
+| Kontrakt | W urisys (glue) | `markpact-contracts/packs/` |
+|----------|-----------------|----------------------------|
 | `urikvm.contract` | `urikvm-docker/markpacts/` | ✅ |
-| `urihim.contract` | j.w. | ✅ |
-| `uriocr.contract` | j.w. | ✅ |
-| `urillm.vision.contract` | j.w. | ✅ |
+| `urihim`, `uriocr`, `urillm.vision` | j.w. | ✅ |
 
-Walidacja: **11/11 PASS** w `markpact-contracts`. Portal publish (odblokowuje rejestrację release w CI):
-
-```bash
-cd ~/github/tellmesh/markpact-contracts
-MARKPACT_TOKEN=... bash scripts/publish-all.sh
-```
-
-Lokalna walidacja bez portalu:
+Walidacja lokalna:
 
 ```bash
 urisys markpact validate urikvm-docker/markpacts/urikvm.contract.markpact.md
 ```
 
-### GitHub OCI + artifact-index (kvm bundle)
+## GitHub OCI (kvm bundle)
 
 Workflow: [`.github/workflows/kvm-release.yml`](../.github/workflows/kvm-release.yml)  
-Trigger: tag **`urikvm-v*`** (osobny namespace od `uristepper` `v*`).
+Tag: **`urikvm-v*`** · opublikowany: **`urikvm-v0.1.5`**
 
-**Opublikowany release:** `urikvm-v0.1.5` ✅
+**Build context:** root workspace tellmesh (sibling repos wymagane):
+
+```bash
+docker build -f urisys/urikvm-docker/Dockerfile /path/to/tellmesh
+```
+
+CI: `scripts/ci-checkout-siblings.sh` klonuje `tellmesh/{urisysedge,urikvm,…}` obok `urisys/`.
 
 | Deliverable | Wartość |
 |-------------|---------|
-| OCI image | `ghcr.io/tellmesh/urikvm:0.1.5-linux-amd64` |
-| Release assets | 4× `artifact-index-*.json` + 4× `contract-*.md` |
-| Register markpact.com | best-effort (HTTP 422 dopóki kontrakt nie na portalu) |
+| OCI | `ghcr.io/tellmesh/urikvm:0.1.5-linux-amd64` |
+| Release assets | 4× artifact-index + 4× contract |
+| Register markpact.com | best-effort (HTTP 422 bez portal publish) |
 
-Flow:
-
-1. Tag `urikvm-v*` → walidacja 4 kontraktów → build+push obrazu `urikvm-docker` (port **8794**)
-2. Upload **GitHub Release assets** (immutable URLs — bez commitów na `main`)
-3. Matrix `register`: POST `/api/releases` na markpact.com (wymaga `MARKPACT_API_TOKEN` + kontrakt na portalu)
-
-Node-side (zaimplementowane):
-
-- `run_release()` honoruje `artifact.port` (8794)
-- `hotload_release_pack()` wyciąga `{scheme, patterns}` z `contract_url` release'a
-- `release_forwards` w config / `URISYS_NODE_RELEASE_FORWARDS` — auto-provisioning przy starcie node
-
-Przykład release hot-load:
-
-```bash
-curl -X POST http://127.0.0.1:8790/uri/pack \
-  -H 'Content-Type: application/json' \
-  -d '{"contract":"urikvm.contract","version":"0.1.5","catalog":"https://markpact.com"}'
-```
-
-Wymaga: node sparowany (`require_paired`), opcjonalnie `URISYS_NODE_REQUIRE_SIGNATURE=1` + `URISYS_NODE_TRUSTED_KEYS`.
+Node-side: `hotload_release_pack()`, `release_forwards` — [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md).
 
 ## Instalacja na node
 
-### Bootstrap lenovo (zalecane)
-
 ```bash
-python3.12 -m venv ~/venv && source ~/venv/bin/activate
-pip install -U "urisys>=0.1.33"
+pip install -U "urisys>=0.1.35"
 urisys init
-source ~/.config/urisys/node.env
 urisys node serve --host 0.0.0.0 --port 8790
 ```
 
-Szczegóły: [`NODE-SETUP.md`](NODE-SETUP.md).
-
-### Hot-load lokalnego packa (PyPI / wheel)
+Hot-load:
 
 ```bash
 curl -X POST http://127.0.0.1:8790/uri/pack \
@@ -157,37 +160,23 @@ curl -X POST http://127.0.0.1:8790/uri/pack \
   -d '{"pack":"kvm"}'
 ```
 
-### Worker OCI (forward, bez PyPI)
+## Co zostało
 
-1. `ArtifactResolver` pobiera `artifact-index.json` z GitHub Release asset URL
-2. Start workera (docker) → endpoint HTTP
-3. `register_forward_pack(runtime, scheme, endpoint, patterns)`
-
-Forward: `urisysnode/forward.py` → `remote_call()` do workera.
-
-## Co zostało (priorytet)
-
-| # | Zadanie | Blokuje |
-|---|---------|---------|
-| 1 | Portal publish kvm kontraktów (`MARKPACT_TOKEN`) | catalog register 422 |
-| 2 | PyPI upload: `urihim`, `uriocr`, `urillm`, `urioperators` | `pip install` bez GitHub |
-| 3 | Publikacja `urisys` 0.1.33 na PyPI | lenovo `pip install -U urisys` z init fix |
-| 4 | Reusable CI workflow: `uribrowser`, `urirdp` bundle | — |
-| 5 | Tor R faza 2: OCR/HIM → `urioperators` | dedup ~280L |
-| 6 | Shared-container hot-load (1 obraz → 4 schematy bez 4× restart) | E2E multi-contract |
-| 7 | `uriimgl` / `urivql` packi | Wayland pipeline |
+| # | Zadanie |
+|---|---------|
+| 1 | Portal publish kvm kontraktów |
+| 2 | PyPI: `urihim`, `uriocr`, `urillm`, `urioperators`, `urisys-node` |
+| 3 | Reusable CI: `urirdp`, `uribrowser` bundle release |
+| 4 | Tor R faza 2: OCR/HIM → `urioperators` |
 
 ## Pliki kluczowe
 
 | Plik | Rola |
 |------|------|
-| `packages/python/urisysedge/` | canonical edge runtime |
-| `packages/python/urioperators/` | wspólne helpery LLM (chat, plan, decide, JSON parse) |
-| `urikvm-docker/packages/python/{urikvm,urihim,uriocr,urillm}/` | handlery + pyproject |
-| `urisys-node/.../artifact_resolver.py` | resolve OCI, `run_release`, `contract_spec_from_release` |
-| `urisys-node/.../release_verify.py` | gate podpisów release (ed25519) |
-| `urisys-node/.../serve.py` | `load_pack_into_runtime`, `hotload_release_pack`, `register_forward_pack` |
-| `urisys-node/.../forward_config.py` | `release_forwards` boot wiring |
-| `scripts/publish-pypi-packs.sh` | build wheeli |
-| `scripts/pack_sync.py` | drift guard vendored ↔ tellmesh repos |
-| `.github/workflows/kvm-release.yml` | OCI + release assets + register |
+| `tellmesh/urisysedge/` | canonical edge runtime |
+| `tellmesh/urioperators/` | wspólne helpery LLM |
+| `tellmesh/urisys-node/urisysnode/` | ArtifactResolver, hot-load, forward |
+| `urisys/scripts/pack_sync.py` | drift guard, promote |
+| `urisys/scripts/pack_registry.py` | pack → repo mapping |
+| `urisys/scripts/ci-checkout-siblings.sh` | CI: clone tellmesh siblings |
+| `urisys/.github/workflows/kvm-release.yml` | OCI + release assets |

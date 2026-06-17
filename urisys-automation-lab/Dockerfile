@@ -3,7 +3,6 @@ FROM python:3.12-slim
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PYTHONPATH=/opt/lab/packages/python \
     URISYS_LAB_HOST=0.0.0.0 \
     URISYS_LAB_PORT=8099 \
     URISYS_LAB_PACKS=stt,chat,message,webrtc \
@@ -16,9 +15,9 @@ RUN apt-get update \
 
 WORKDIR /opt/lab
 
-# Build context: tellmesh repo root (see docker-compose.lab.yml).
-COPY urisys/packages/python/urisysedge /opt/lab/packages/python/urisysedge
-COPY urisys/urisys-automation-lab/packages/python ./packages/python
+# Build context: tellmesh workspace root
+COPY urisysedge /opt/lab/vendor/urisysedge
+COPY urisys-automation-lab /opt/lab/vendor/urisys-automation-lab
 COPY urisys/urisys-automation-lab/server ./server
 COPY urisys/urisys-automation-lab/web ./web
 COPY urisys/urisys-automation-lab/flows ./flows
@@ -29,7 +28,10 @@ COPY uri2flow /tmp/uri2flow
 
 RUN chmod +x /usr/local/bin/lab-entrypoint \
     && mkdir -p /opt/lab/data \
-    && pip install --no-cache-dir /tmp/uri2ops /tmp/uri3 /tmp/uri2flow \
+    && pip install --no-cache-dir \
+       -e /opt/lab/vendor/urisysedge \
+       -e /opt/lab/vendor/urisys-automation-lab \
+       /tmp/uri2ops /tmp/uri3 /tmp/uri2flow \
     && rm -rf /tmp/uri2ops /tmp/uri3 /tmp/uri2flow
 
 EXPOSE 8099

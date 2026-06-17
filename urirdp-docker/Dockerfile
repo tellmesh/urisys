@@ -1,3 +1,8 @@
+# urirdp-docker OCI image
+#
+# Build from tellmesh workspace root:
+#   docker build -f urisys/urirdp-docker/Dockerfile /home/tom/github/tellmesh
+#
 FROM debian:bookworm-slim
 
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -18,27 +23,29 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     fonts-dejavu xauth chromium \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /opt/urirdp
-COPY urirdp-docker/pyproject.toml ./
-COPY packages/python/urisysedge ./packages/python/urisysedge
-COPY packages/python/urioperators ./packages/python/urioperators
-COPY urirdp-docker/packages ./packages
-COPY urirdp-docker/config ./config
-COPY urirdp-docker/flows ./flows
-COPY urirdp-docker/docker/startwm.sh /etc/xrdp/startwm.sh
-COPY urirdp-docker/docker/bootstrap-rdp-session.sh /opt/urirdp/docker/bootstrap-rdp-session.sh
-COPY urirdp-docker/docker/supervisord.conf /etc/supervisor/conf.d/urirdp.conf
-COPY urirdp-docker/docker/entrypoint.sh /usr/local/bin/urirdp-entrypoint
-COPY urienv-docker/packages/python/urienv /tmp/vendor/urienv
-COPY uribrowser-docker /tmp/vendor/uribrowser-docker
+WORKDIR /build
+COPY urisysedge /build/urisysedge
+COPY urioperators /build/urioperators
+COPY urirdp /build/urirdp
+COPY urienv /build/urienv
+COPY uribrowser /build/uribrowser
+COPY urisys/urirdp-docker /build/urirdp-docker
+COPY urisys/urirdp-docker/config /opt/urirdp/config
+COPY urisys/urirdp-docker/flows /opt/urirdp/flows
+COPY urisys/urirdp-docker/docker/startwm.sh /etc/xrdp/startwm.sh
+COPY urisys/urirdp-docker/docker/bootstrap-rdp-session.sh /opt/urirdp/docker/bootstrap-rdp-session.sh
+COPY urisys/urirdp-docker/docker/supervisord.conf /etc/supervisor/conf.d/urirdp.conf
+COPY urisys/urirdp-docker/docker/entrypoint.sh /usr/local/bin/urirdp-entrypoint
 RUN chmod +x /etc/xrdp/startwm.sh /opt/urirdp/docker/bootstrap-rdp-session.sh /usr/local/bin/urirdp-entrypoint \
-    && python3 -m pip install --break-system-packages "uricore>=0.1.2" \
-    && python3 -m pip install --break-system-packages -e ".[real]" \
-       -e /tmp/vendor/urienv \
-       -e /tmp/vendor/uribrowser-docker
+    && python3 -m pip install --break-system-packages \
+       -e /build/urisysedge \
+       -e /build/urioperators \
+       -e /build/urirdp \
+       -e /build/urienv \
+       -e /build/uribrowser \
+       -e /build/urirdp-docker
 
-ENV PYTHONPATH="/opt/urirdp/packages/python"
-
+WORKDIR /opt/urirdp
 EXPOSE 3389 8795
 ENTRYPOINT ["/usr/local/bin/urirdp-entrypoint"]
 CMD ["supervisord", "-n", "-c", "/etc/supervisor/conf.d/urirdp.conf"]

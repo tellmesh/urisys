@@ -11,6 +11,7 @@ COPY urikvm /build/urikvm
 COPY urihim /build/urihim
 COPY uriocr /build/uriocr
 COPY urillm /build/urillm
+COPY urikvmedge /build/urikvmedge
 COPY urisys/urikvm-docker /build/urikvm-docker
 RUN pip install --no-cache-dir \
     -e /build/urisysedge \
@@ -19,6 +20,7 @@ RUN pip install --no-cache-dir \
     -e /build/urihim \
     -e /build/uriocr \
     -e /build/urillm \
+    -e /build/urikvmedge \
     -e /build/urikvm-docker
 WORKDIR /build/urikvm-docker
 EXPOSE 8794

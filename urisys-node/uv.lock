@@ -3568,9 +3568,37 @@ source = { editable = "../../urioperators" }
 [[package]]
 name = "urisys-node"
 version = "0.1.3"
+source = { editable = "../../urisys-node" }
+dependencies = [
+    { name = "pyyaml" },
+    { name = "urisysedge" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "litellm", marker = "extra == 'real'", specifier = ">=1.40" },
+    { name = "mss", marker = "extra == 'real'", specifier = ">=9.0" },
+    { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
+    { name = "pyautogui", marker = "extra == 'real'", specifier = ">=0.9.54" },
+    { name = "pytesseract", marker = "extra == 'real'", specifier = ">=0.3.10" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
+    { name = "pyyaml", specifier = ">=6.0" },
+    { name = "urihim", extras = ["real"], marker = "extra == 'kvm'", editable = "../../urihim" },
+    { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "../../urikvm" },
+    { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "../../urillm" },
+    { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "../../uriocr" },
+    { name = "urisysedge", editable = "../../urisysedge" },
+    { name = "zeroconf", marker = "extra == 'discovery'", specifier = ">=0.131.0" },
+]
+provides-extras = ["real", "kvm", "discovery", "dev"]
+
+[[package]]
+name = "urisys-node-integration"
+version = "0.1.3"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
+    { name = "urisys-node" },
     { name = "urisysedge" },
 ]
 
@@ -3622,6 +3650,7 @@ requires-dist = [
     { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "../../urikvm" },
     { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "../../urillm" },
     { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "../../uriocr" },
+    { name = "urisys-node", editable = "../../urisys-node" },
     { name = "urisysedge", editable = "../../urisysedge" },
     { name = "zeroconf", marker = "extra == 'discovery'", specifier = ">=0.131.0" },
 ]

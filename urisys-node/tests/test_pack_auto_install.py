@@ -2,14 +2,9 @@
 
 from __future__ import annotations
 
-import sys
-from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-
-PKG = Path(__file__).resolve().parents[1] / "packages" / "python"
-sys.path.insert(0, str(PKG))
 
 from urisysedge.runtime import Runtime  # noqa: E402
 import urisysnode.routes as node_routes  # noqa: E402

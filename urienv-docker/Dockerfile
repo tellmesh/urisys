@@ -1,25 +1,29 @@
+# urienv-docker OCI image
+#
+# Build from tellmesh workspace root:
+#   docker build -f urisys/urienv-docker/Dockerfile /home/tom/github/tellmesh
+#
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1
 
-WORKDIR /app
-
-COPY packages/python/urisysedge /app/packages/python/urisysedge
-COPY packages/python/urienv /app/packages/python/urienv
-COPY docker/config /app/docker/config
-COPY flows /app/flows
-COPY tests /app/tests
+WORKDIR /build
+COPY urisysedge /build/urisysedge
+COPY urienv /build/urienv
+COPY urisys/urienv-docker /build/urienv-docker
+COPY urisys/urienv-docker/docker/config /app/docker/config
+COPY urisys/urienv-docker/flows /app/flows
+COPY urisys/urienv-docker/tests /app/tests
 
 RUN pip install --upgrade pip \
-    && pip install "PyYAML>=6.0" "uricore>=0.1.2" \
+    && pip install -e /build/urisysedge -e /build/urienv -e /build/urienv-docker \
     && printf '%s\n' '#!/usr/bin/env sh' 'exec python -m urisysedge.cli "$@"' > /usr/local/bin/urisys \
     && chmod +x /usr/local/bin/urisys \
     && ln -s /usr/local/bin/urisys /usr/local/bin/urisys-edge
 
-ENV PYTHONPATH="/app/packages/python/urisysedge/src:/app/packages/python/urienv/src"
-
+WORKDIR /app
 EXPOSE 8790
 
 HEALTHCHECK --interval=10s --timeout=3s --retries=10 CMD python - <<'PY'

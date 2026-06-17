@@ -46,8 +46,14 @@ def vendored_module_dir(spec: PackSpec) -> Path:
 
 
 def read_version(path: Path) -> str:
-    data = tomllib.loads((path / "pyproject.toml").read_text(encoding="utf-8"))
-    return str(data["project"]["version"]).strip()
+    pyproject = path / "pyproject.toml"
+    if pyproject.is_file():
+        data = tomllib.loads(pyproject.read_text(encoding="utf-8"))
+        return str(data["project"]["version"]).strip()
+    version_file = path / "VERSION"
+    if version_file.is_file():
+        return version_file.read_text(encoding="utf-8").strip()
+    return "0.1.0"
 
 
 def file_hash(path: Path) -> str:

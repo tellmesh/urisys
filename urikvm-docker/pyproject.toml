@@ -5,22 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "urikvm-docker-example"
 version = "0.1.0"
-description = "Local dev bundle: KVM/HIM/OCR/LLM packs + urikvmedge CLI (NOT published as urikvm on PyPI)"
+description = "Docker glue for urikvm bundle — installs tellmesh sibling packs"
 requires-python = ">=3.10"
-dependencies = [
-  "urisysedge>=0.1.0",
-  "urioperators>=0.1.0",
-  "urikvm>=0.1.0",
-  "urihim>=0.1.0",
-  "uriocr>=0.1.0",
-  "urillm[vision]>=0.1.0",
-]
-
-[project.optional-dependencies]
-real = ["pyautogui>=0.9.54", "mss>=9.0", "pytesseract>=0.3.10", "Pillow>=10.0", "litellm>=1.40"]
-vision = ["litellm>=1.40"]
+dependencies = ["urikvmedge[real]>=0.1.0"]
 
 [tool.uv.sources]
+urikvmedge = { path = "../../urikvmedge", editable = true }
 urisysedge = { path = "../../urisysedge", editable = true }
 urioperators = { path = "../../urioperators", editable = true }
 urikvm = { path = "../../urikvm", editable = true }
@@ -28,16 +18,26 @@ urihim = { path = "../../urihim", editable = true }
 uriocr = { path = "../../uriocr", editable = true }
 urillm = { path = "../../urillm", editable = true }
 
-[tool.setuptools]
-package-dir = {"" = "packages/python"}
-
-[tool.setuptools.packages.find]
-where = ["packages/python"]
-
 [project.scripts]
 urisys-kvm = "urikvmedge.cli:main"
 
+[tool.pytest.ini_options]
+pythonpath = [
+  "../..",
+  "../../urillm",
+  "../../urikvm",
+  "../../urihim",
+  "../../uriocr",
+  "../../urisysedge",
+  "../../urikvmedge",
+  "../../urimail",
+  "../../urioffice",
+  "../../urivql",
+]
+testpaths = ["tests"]
+
 [tool.pfix]
+# Self-healing Python configuration
 model = "openrouter/qwen/qwen3-coder-next"
 auto_apply = true
 auto_install_deps = true
@@ -53,6 +53,7 @@ min_severity = "low"
 deduplicate = true
 
 [tool.costs]
+# AI Cost tracking configuration
 badge = true
 update_readme = true
 readme_path = "README.md"
@@ -60,4 +61,6 @@ default_model = "openrouter/qwen/qwen3-coder-next"
 analysis_mode = "byok"
 full_history = true
 max_commits = 500
+
+# Cost thresholds for badge colors (USD)
 badge_color_thresholds = { low = 1.0, medium = 5.0, high = 10.0, critical = 50.0 }

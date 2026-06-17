@@ -5,24 +5,41 @@ on:
   pull_request:
     paths:
       - "urisys-node/**"
-      - "packages/python/urisysedge/**"
+      - "tests/test_vendored_sync.py"
+      - "scripts/pack_sync.py"
+      - "scripts/pack_registry.py"
       - ".github/workflows/node-unit.yml"
 
 jobs:
   node-unit:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: urisys
+
+      - name: Checkout tellmesh sibling repos
+        env:
+          TELLMESH_ROOT: ${{ github.workspace }}
+          URISYS_ROOT: ${{ github.workspace }}/urisys
+        run: bash urisys/scripts/ci-checkout-siblings.sh
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install test deps
-        run: pip install -q pytest pyyaml
+      - name: Install deps + sibling packs
+        working-directory: urisys
+        run: |
+          pip install -q pytest pyyaml
+          bash scripts/ci-install-siblings.sh
 
-      - name: urisys-node unit tests (incl. vendored urisysedge drift guard)
-        working-directory: urisys-node
-        run: PYTHONPATH=packages/python python -m pytest -q
+      - name: urisys-node unit tests
+        working-directory: urisys/urisys-node
+        run: python -m pytest -q
+
+      - name: vendored sync drift guard
+        working-directory: urisys
+        run: python -m pytest tests/test_vendored_sync.py tests/test_kvm_pack_pyprojects.py -q

@@ -60,6 +60,9 @@ def test_vendored_kvm_pack_dirs_removed():
         assert not vendored.is_dir(), f"vendored copy still present: {vendored}"
 
 
-def test_urikvmedge_remains_in_monorepo():
-    path = ROOT / "urikvm-docker" / "packages" / "python" / "urikvmedge"
-    assert path.is_dir(), "urikvmedge CLI glue stays in urikvm-docker until promoted"
+def test_urikvmedge_promoted_to_sibling():
+    path = TELLMESH / "urikvmedge" / "pyproject.toml"
+    assert path.is_file()
+    assert _name(path) == "urikvmedge"
+    vendored = ROOT / "urikvm-docker" / "packages" / "python" / "urikvmedge"
+    assert not vendored.is_dir(), f"vendored copy still present: {vendored}"

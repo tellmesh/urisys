@@ -1,6 +1,6 @@
 # Dokumentacja urisys
 
-Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-17).
+Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-17, packi w sibling repos).
 
 ## Start
 
@@ -48,7 +48,7 @@ Kroki deduplikacji runtime — **zakończone**; zostawione jako referencja:
 | Katalog | Schematy | Port |
 |---------|----------|------|
 | [`../urisys-node/`](../urisys-node/) | `node://`, `screen://`, lazy kvm/him/ocr/llm | **8790** |
-| [`../urikvm-docker/`](../urikvm-docker/) | kvm, him, ocr, llm (+ office packi vendored) | **8794** |
+| [`../urikvm-docker/`](../urikvm-docker/) | kvm, him, ocr, llm (packi z `tellmesh/urikvm`…) | **8794** |
 | [`../urirdp-docker/`](../urirdp-docker/) | rdp, kvm, him, ocr, llm, shell, browser, env | **8795** / 3389 |
 | [`../uribrowser-docker/`](../uribrowser-docker/) | browser | 8797 |
 | [`../urienv-docker/`](../urienv-docker/) | env | 8798 |
@@ -66,12 +66,12 @@ Kroki deduplikacji runtime — **zakończone**; zostawione jako referencja:
 ## Stan projektu (skrót)
 
 ```text
-urisys 0.1.33          CLI + init + doctor (uricore z GitHub wheel, nie PyPI)
-urisys-node            64 passed / 6 skipped (unit)
-kvm-release            tag urikvm-v0.1.5 — OCI ghcr + 8 release assets
+urisys 0.1.35          CLI + init; packi w tellmesh/{repo}/
+pack_sync check --all  32 packi — brak vendored w urisys
+kvm-release            tag urikvm-v0.1.5 — OCI ghcr + release assets
 hot-load               POST /uri/pack {pack} | {contract,version,catalog}
-urioperators 0.1.0     wspólne helpery LLM (urillm ↔ urirdp_llm)
-markpact-contracts     11/11 validate; portal publish wymaga MARKPACT_TOKEN
+urioperators 0.1.0     tellmesh/urioperators (LLM helpers)
+markpact-contracts     11/11 validate
 ```
 
 ## Co dalej (otwarte)

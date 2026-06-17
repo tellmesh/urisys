@@ -1,17 +1,3 @@
-# Publish the urikvm capability bundle (kvm/him/ocr/llm) as Markpact releases.
-#
-# One OCI image (urikvm-docker) serves all four schemes, so we build it ONCE and
-# then register one release per contract, each artifact-index pointing at the same
-# image (port 8794). Registration is a side-effect-free POST, so it runs as a
-# matrix that does NOT touch git — the build job is the only writer.
-#
-# Trigger: tags urikvm-v0.1.0, urikvm-v1.2.3, ...
-# Required secrets:
-#   GITHUB_TOKEN (default) — packages:write for ghcr.io
-#   MARKPACT_API_TOKEN — Bearer token for markpact.com POST /api/releases
-# Optional vars:
-#   MARKPACT_URL — default https://markpact.com
-
 name: kvm-release
 
 on:
@@ -38,6 +24,14 @@ jobs:
       image_tag: ${{ steps.image.outputs.image_tag }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: urisys
+
+      - name: Checkout tellmesh sibling repos
+        env:
+          TELLMESH_ROOT: ${{ github.workspace }}
+          URISYS_ROOT: ${{ github.workspace }}/urisys
+        run: bash urisys/scripts/ci-checkout-siblings.sh
 
       - name: Parse version from tag
         id: ver
@@ -52,13 +46,14 @@ jobs:
           python-version: "3.12"
 
       - name: Install urisys
+        working-directory: urisys
         run: |
-          # uri_control ships inside uricore; the PyPI build (<=0.1.2) lacks it,
-          # so install uricore 0.1.7 from its public repo, then urisys editable.
           pip install "uricore @ git+https://github.com/tellmesh/uricore.git@v0.1.7"
+          bash scripts/ci-install-siblings.sh
           pip install -e .
 
       - name: Validate kvm contracts
+        working-directory: urisys
         run: |
           for c in urikvm urihim uriocr urillm-vision; do
             urisys markpact validate "urikvm-docker/markpacts/${c}.contract.markpact.md"
@@ -77,13 +72,14 @@ jobs:
           VERSION: ${{ steps.ver.outputs.version }}
         run: |
           IMAGE_TAG="ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:${VERSION}-${IMAGE_TARGET}"
-          docker build -f urikvm-docker/Dockerfile -t "$IMAGE_TAG" .
+          docker build -f urisys/urikvm-docker/Dockerfile -t "$IMAGE_TAG" .
           docker push "$IMAGE_TAG"
           DIGEST="$(docker inspect --format='{{index .RepoDigests 0}}' "$IMAGE_TAG")"
           echo "image_ref=${DIGEST}" >> "$GITHUB_OUTPUT"
           echo "image_tag=${IMAGE_TAG}" >> "$GITHUB_OUTPUT"
 
       - name: Generate artifact-index + contract per scheme
+        working-directory: urisys
         env:
           VERSION: ${{ steps.ver.outputs.version }}
           IMAGE_REF: ${{ steps.image.outputs.image_ref }}
@@ -99,15 +95,12 @@ jobs:
           target = os.environ["IMAGE_TARGET"]
           port = int(os.environ["WORKER_PORT"])
 
-          # One image, four contracts. Each release advertises its scheme's
-          # capability tags so a node's profile selects the right artifact.
           contracts = [
               ("urikvm.contract",        "urikvm",         "kvm", ["kvm", "screen-control"]),
               ("urihim.contract",        "urihim",         "him", ["him", "input-control"]),
               ("uriocr.contract",        "uriocr",         "ocr", ["ocr", "text-extract"]),
               ("urillm.vision.contract", "urillm-vision",  "llm", ["llm", "vision-analyze"]),
           ]
-          # Flat, uniquely-named assets so all four fit in one GitHub Release.
           dist = Path("dist-release")
           dist.mkdir(exist_ok=True)
           for contract_id, file_stem, scheme, caps in contracts:
@@ -139,13 +132,12 @@ jobs:
           GIT_REF: ${{ steps.ver.outputs.git_ref }}
           VERSION: ${{ steps.ver.outputs.version }}
         run: |
-          # Attach metadata as immutable release assets — no git writes, so this
-          # never races with the fast-moving main branch.
           gh release view "$GIT_REF" >/dev/null 2>&1 || \
             gh release create "$GIT_REF" --verify-tag \
+              --repo "${{ github.repository }}" \
               --title "urikvm bundle $VERSION" \
               --notes "kvm/him/ocr/llm capability bundle — one OCI image (port 8794), four contracts."
-          gh release upload "$GIT_REF" dist-release/* --clobber
+          gh release upload "$GIT_REF" urisys/dist-release/* --clobber --repo "${{ github.repository }}"
 
   register:
     needs: build
@@ -175,7 +167,7 @@ jobs:
           BASE="https://github.com/${{ github.repository }}/releases/download/${GIT_REF}"
           INDEX_URL="${BASE}/artifact-index-${CONTRACT_ID}.json"
           CONTRACT_URL="${BASE}/contract-${CONTRACT_ID}.md"
-          curl -fsSL -o /tmp/idx.json "$INDEX_URL"  # also asserts the asset is published
+          curl -fsSL -o /tmp/idx.json "$INDEX_URL"
           CONTRACT_SHA="$(python3 -c "import json; print(json.load(open('/tmp/idx.json'))['contract']['digest'])")"
           ARTIFACTS="$(python3 -c "import json; print(json.dumps(json.load(open('/tmp/idx.json'))['artifacts']))")"
           echo "assets published for ${CONTRACT_ID}:"
@@ -185,9 +177,6 @@ jobs:
             echo "MARKPACT_API_TOKEN not set; skipping markpact.com catalog register."
             exit 0
           fi
-          # Catalog registration is best-effort: the OCI image + release assets
-          # above are the real deliverable. A failed POST (e.g. the contract is
-          # not yet published on the portal) warns but does not fail the release.
           MARKPACT_URL="${MARKPACT_URL:-https://markpact.com}"
           HTTP=$(curl -sS -o /tmp/resp.txt -w "%{http_code}" -X POST "${MARKPACT_URL}/api/releases" \
             -H "Authorization: Bearer ${MARKPACT_API_TOKEN}" \

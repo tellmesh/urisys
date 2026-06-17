@@ -3,26 +3,15 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "urirdp-docker-example"
+name = "uristepper-docker-example"
 version = "0.1.0"
-description = "Docker glue for RDP desktop automation — installs tellmesh/urirdp bundle"
+description = "Docker glue for stepper:// URI capability pack"
 requires-python = ">=3.10"
-dependencies = ["urirdp[real]>=0.1.0"]
-
-[project.optional-dependencies]
-real = ["litellm>=1.40"]
+dependencies = ["uristepper>=0.1.0", "urisysedge>=0.1.0"]
 
 [tool.uv.sources]
-urirdp = { path = "../../urirdp", editable = true }
+uristepper = { path = "../../uristepper", editable = true }
 urisysedge = { path = "../../urisysedge", editable = true }
-urioperators = { path = "../../urioperators", editable = true }
-
-[project.scripts]
-urisys-rdp = "urirdpedge.cli:main"
-
-[tool.pytest.ini_options]
-pythonpath = ["../..", "../../urirdp", "../../urisysedge"]
-testpaths = ["tests"]
 
 [tool.pfix]
 # Self-healing Python configuration
