@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent.parent
+TELLMESH = ROOT.parent
 REPORT_SCRIPT = ROOT / "scripts" / "session_report.py"
 
 

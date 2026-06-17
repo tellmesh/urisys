@@ -168,6 +168,58 @@ def _cmd_markpact(args) -> int:
     return 1
 
 
+def _cmd_init(args) -> int:
+    from .init_setup import run_init
+
+    report = run_init(
+        profile=args.profile,
+        min_version=args.min_version or None,
+        install=not args.skip_pip,
+        dry_run=args.dry_run,
+        write_env=not args.no_write_env,
+        env_file=Path(args.env_file),
+    )
+    print_json(report)
+    if report.get("ok") and report.get("shell_env") and not args.dry_run:
+        import sys
+
+        print(report["shell_env"], file=sys.stderr)
+    return 0 if report.get("ok") else 1
+
+
+def _cmd_node(args) -> int:
+    if args.node_command == "serve":
+        if args.no_auto_install:
+            os.environ["URISYS_NODE_AUTO_INSTALL"] = "0"
+        else:
+            os.environ.setdefault("URISYS_NODE_AUTO_INSTALL", "1")
+        os.environ.setdefault("URISYS_NODE_ALLOW_PACK_LOAD", "1")
+        from urisysnode.serve import build_runtime, serve as node_serve
+
+        rt = build_runtime(args.config)
+        node_serve(rt, args.host, args.port)
+    return 0
+
+
+def _cmd_uri(args) -> int:
+    from .controllers.uri_controller import UriController
+
+    ctrl = UriController(packs=args.packs, markpacts=args.markpact, events_path=args.events)
+    try:
+        if args.command == "call":
+            print_json(ctrl.call(args.uri, _json_arg(args.payload), approved=args.approve, dry_run=args.dry_run, allow_real=args.allow_real, environment=args.environment))
+            return 0
+        if args.command == "explain":
+            print_json({"ok": True, "explain": ctrl.explain(args.uri)})
+            return 0
+        if args.command == "routes":
+            print_json({"ok": True, "routes": ctrl.routes()})
+            return 0
+    finally:
+        ctrl.close()
+    return 1
+
+
 def _handle_cli_error(exc: Exception) -> int:
     """Map a known CLI exception to a JSON error + exit code; re-raise the rest."""
     from .managers.markpact_manager import MarkpactError
@@ -210,22 +262,7 @@ def main(argv: list[str] | None = None) -> int:
             return 0 if report.get("ok") else 1
 
         if args.command == "init":
-            from .init_setup import run_init
-
-            report = run_init(
-                profile=args.profile,
-                min_version=args.min_version or None,
-                install=not args.skip_pip,
-                dry_run=args.dry_run,
-                write_env=not args.no_write_env,
-                env_file=Path(args.env_file),
-            )
-            print_json(report)
-            if report.get("ok") and report.get("shell_env") and not args.dry_run:
-                import sys
-
-                print(report["shell_env"], file=sys.stderr)
-            return 0 if report.get("ok") else 1
+            return _cmd_init(args)
 
         if args.command == "serve":
             import sys
@@ -240,17 +277,7 @@ def main(argv: list[str] | None = None) -> int:
             return 0
 
         if args.command == "node":
-            if args.node_command == "serve":
-                if args.no_auto_install:
-                    os.environ["URISYS_NODE_AUTO_INSTALL"] = "0"
-                else:
-                    os.environ.setdefault("URISYS_NODE_AUTO_INSTALL", "1")
-                os.environ.setdefault("URISYS_NODE_ALLOW_PACK_LOAD", "1")
-                from urisysnode.serve import build_runtime, serve as node_serve
-
-                rt = build_runtime(args.config)
-                node_serve(rt, args.host, args.port)
-            return 0
+            return _cmd_node(args)
 
         if args.command == "flow":
             from .controllers.flow_controller import FlowController
@@ -268,22 +295,7 @@ def main(argv: list[str] | None = None) -> int:
             print_json({"ok": True, "events": EventManager(args.events).list_events()})
             return 0
 
-        from .controllers.uri_controller import UriController
-
-        ctrl = UriController(packs=args.packs, markpacts=args.markpact, events_path=args.events)
-        try:
-            if args.command == "call":
-                print_json(ctrl.call(args.uri, _json_arg(args.payload), approved=args.approve, dry_run=args.dry_run, allow_real=args.allow_real, environment=args.environment))
-                return 0
-            if args.command == "explain":
-                print_json({"ok": True, "explain": ctrl.explain(args.uri)})
-                return 0
-            if args.command == "routes":
-                print_json({"ok": True, "routes": ctrl.routes()})
-                return 0
-        finally:
-            ctrl.close()
-        return 1
+        return _cmd_uri(args)
     except Exception as exc:
         return _handle_cli_error(exc)
 

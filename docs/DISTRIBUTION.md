@@ -131,7 +131,7 @@ Tag: **`urikvm-v*`** · opublikowany: **`urikvm-v0.1.5`**
 **Build context:** root workspace tellmesh (sibling repos wymagane):
 
 ```bash
-docker build -f urisys/urikvm-docker/Dockerfile /path/to/tellmesh
+docker build -f urikvm-docker/Dockerfile /path/to/tellmesh
 ```
 
 CI: `scripts/ci-checkout-siblings.sh` klonuje `tellmesh/{urisysedge,urikvm,…}` obok `urisys/`.

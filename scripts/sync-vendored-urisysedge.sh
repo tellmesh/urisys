@@ -3,8 +3,9 @@
 # Tellmesh repo sync: bash scripts/sync-vendored-pack.sh urisysedge
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+TELLMESH="$(cd "$ROOT/.." && pwd)"
 SRC="${ROOT}/packages/python/urisysedge"
-DST="${ROOT}/urisys-node/packages/python/urisysedge"
+DST="${TELLMESH}/urisys-node/packages/python/urisysedge"
 if [ ! -d "${SRC}" ]; then
   echo "error: canonical urisysedge missing at ${SRC}" >&2
   exit 1

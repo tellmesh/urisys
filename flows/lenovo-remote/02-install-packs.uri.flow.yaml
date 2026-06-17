@@ -1,0 +1,56 @@
+flow:
+  id: lenovo-02-install-packs
+  description: Hot-load capability packs on lenovo (kv, browser, office, mail) from dev wheel server.
+  target: lenovo
+  endpoint: http://192.168.188.201:8790
+  requires:
+    - wheel_server: http://192.168.188.212:8765
+
+defaults:
+  approved: true
+  allow_real: true
+
+do:
+  - id: install_kv
+    uri: node://lenovo/command/install-pack
+    payload:
+      pack: kv
+      install: true
+      force: true
+      specs:
+        - urisysedge>=0.1.0
+        - http://192.168.188.212:8765/urikv-0.1.0-py3-none-any.whl
+    note: urikv — kv:// + log:// introspection
+
+  - id: install_browser
+    uri: node://lenovo/command/install-pack
+    payload:
+      pack: browser
+      install: true
+      force: true
+      specs:
+        - urisysedge>=0.1.0
+        - http://192.168.188.212:8765/uribrowser-0.1.1-py3-none-any.whl
+
+  - id: install_office
+    uri: node://lenovo/command/install-pack
+    payload:
+      pack: office
+      install: true
+      force: true
+      specs:
+        - urisysedge>=0.1.0
+        - http://192.168.188.212:8765/urioffice-0.1.1-py3-none-any.whl
+
+  - id: install_mail
+    uri: node://lenovo/command/install-pack
+    payload:
+      pack: mail
+      install: true
+      force: true
+      specs:
+        - urisysedge>=0.1.0
+        - http://192.168.188.212:8765/urimail-0.1.3-py3-none-any.whl
+
+  - id: packs_after
+    uri: node://lenovo/query/packs

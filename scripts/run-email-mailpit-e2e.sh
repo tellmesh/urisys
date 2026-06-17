@@ -3,7 +3,8 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-COMPOSE="${ROOT}/urisys-node/docker/docker-compose.gui.yml"
+TELLMESH="$(cd "$ROOT/.." && pwd)"
+COMPOSE="${TELLMESH}/urisys-node/docker/docker-compose.gui.yml"
 MAILPIT_COMPOSE="${ROOT}/urimail-docker/docker-compose.yml"
 PORT="${URISYS_NODE_HOST_PORT:-8790}"
 BASE="http://127.0.0.1:${PORT}"

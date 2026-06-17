@@ -1,0 +1,28 @@
+flow:
+  id: lenovo-03-system-introspect
+  description: System state discovery — kv discover, log summarize, env health (if loaded).
+  target: lenovo
+
+defaults:
+  approved: true
+  allow_real: false
+
+do:
+  - id: kv_health
+    uri: kv://lenovo/runtime/query/health
+
+  - id: kv_discover
+    uri: kv://lenovo/runtime/query/discover
+    note: Snapshot — node_id, packs, data files, runtime.state keys
+
+  - id: log_streams
+    uri: log://lenovo/runtime/query/streams
+
+  - id: log_events_summary
+    uri: log://lenovo/events/query/summarize
+    payload:
+      limit: 30
+      tail: true
+
+  - id: screen_status
+    uri: screen://lenovo/monitor/primary/query/status

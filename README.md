@@ -124,7 +124,7 @@ tellmesh/
 ├── urikvm/ urihim/ uriocr/ urillm/ …   capability packs
 ├── urikvmedge/          CLI urisys-kvm
 ├── urirdp/              RDP desktop bundle
-└── urisys/urisys-node/  integracja slave (testy, docker config)
+└── urisys-node/  integracja slave (testy, docker config)
 ```
 
 ## Managers

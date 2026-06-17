@@ -125,11 +125,11 @@ Pełny opis: **[`docs/DISTRIBUTION.md`](DISTRIBUTION.md)**.
 | Pakiet | Canonical repo | Monorepo urisys |
 |--------|----------------|-----------------|
 | `urisys` | `tellmesh/urisys` | root `pyproject.toml` |
-| `urisys-node` | `tellmesh/urisys-node` | glue w `urisys/urisys-node/` |
+| `urisys-node` | `tellmesh/urisys-node` | config/docker w `tellmesh/urisys-node/` |
 | `urisysedge` | `tellmesh/urisysedge` | brak vendored |
 | `urioperators` | `tellmesh/urioperators` | brak vendored |
 | `urikvm` … `urivql` | `tellmesh/{pack}/` | brak vendored |
-| `urikvmedge` | `tellmesh/urikvmedge` | `urikvm-docker/` = glue only |
+| `urikvmedge` | `tellmesh/urikvmedge` | `tellmesh/urikvm-docker/` glue |
 
 ### Dev
 
@@ -143,8 +143,8 @@ Slave (lenovo): [`docs/NODE-SETUP.md`](NODE-SETUP.md).
 ### Docker build (kontekst = root tellmesh)
 
 ```bash
-docker build -f urisys/urikvm-docker/Dockerfile /path/to/tellmesh
-docker build -f urisys/urirdp-docker/Dockerfile /path/to/tellmesh
+docker build -f urikvm-docker/Dockerfile /path/to/tellmesh
+docker build -f urirdp-docker/Dockerfile /path/to/tellmesh
 ```
 
 ## Plan konsolidacji

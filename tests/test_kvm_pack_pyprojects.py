@@ -56,7 +56,7 @@ def test_urisys_root_uv_sources_point_to_siblings():
 
 def test_vendored_kvm_pack_dirs_removed():
     for pkg in PACKS:
-        vendored = ROOT / "urikvm-docker" / "packages" / "python" / pkg
+        vendored = TELLMESH / "urikvm-docker" / "packages" / "python" / pkg
         assert not vendored.is_dir(), f"vendored copy still present: {vendored}"
 
 
@@ -64,5 +64,5 @@ def test_urikvmedge_promoted_to_sibling():
     path = TELLMESH / "urikvmedge" / "pyproject.toml"
     assert path.is_file()
     assert _name(path) == "urikvmedge"
-    vendored = ROOT / "urikvm-docker" / "packages" / "python" / "urikvmedge"
+    vendored = TELLMESH / "urikvm-docker" / "packages" / "python" / "urikvmedge"
     assert not vendored.is_dir(), f"vendored copy still present: {vendored}"

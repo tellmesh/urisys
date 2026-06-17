@@ -36,9 +36,9 @@ jobs:
           bash scripts/ci-install-siblings.sh
 
       - name: urikvm vision dispatch
-        working-directory: urisys/urikvm-docker
+        working-directory: urikvm-docker
         run: python -m pytest tests/test_vision_dispatch.py -q
 
       - name: urirdp decide dispatch
-        working-directory: urisys/urirdp-docker
+        working-directory: urirdp-docker
         run: python -m pytest tests/test_decide_dispatch.py -q

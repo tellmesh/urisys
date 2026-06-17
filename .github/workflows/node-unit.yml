@@ -37,7 +37,7 @@ jobs:
           bash scripts/ci-install-siblings.sh
 
       - name: urisys-node unit tests
-        working-directory: urisys/urisys-node
+        working-directory: urisys-node
         run: python -m pytest -q
 
       - name: vendored sync drift guard

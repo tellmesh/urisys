@@ -13,22 +13,9 @@ from typing import Any
 from .markpact_models import MarkpactError, scheme_from_uri
 
 
-def validate_contract(source_path: Path, data: dict[str, Any], source_hash: str) -> dict[str, Any]:
-    if not isinstance(data, dict):
-        raise MarkpactError(f"{source_path}: markpact:contract block must contain a YAML mapping.")
-    metadata = data.get("metadata") or {}
-    contract_id = str(metadata.get("id") or "").strip()
-    if not contract_id:
-        raise MarkpactError(f"{source_path}: contract metadata.id is required.")
-    kind = str(data.get("kind") or "UriContract")
-    if kind != "UriContract":
-        raise MarkpactError(f"{source_path}: expected kind UriContract, got {kind!r}.")
-    scheme = str(data.get("scheme") or "").strip()
-    if not scheme:
-        raise MarkpactError(f"{source_path}: contract scheme is required.")
-
+def _validate_contract_routes(source_path: Path, data: dict[str, Any], scheme: str) -> list[dict[str, Any]]:
+    """Validate every query/command entry and return them; scheme must match."""
     routes: list[dict[str, Any]] = []
-    warnings: list[str] = []
     for section in ("queries", "commands"):
         items = data.get(section) or []
         if not isinstance(items, list):
@@ -46,6 +33,25 @@ def validate_contract(source_path: Path, data: dict[str, Any], source_hash: str)
                     f"{source_path}: pattern {pattern!r} scheme {item_scheme!r} != contract scheme {scheme!r}."
                 )
             routes.append(item)
+    return routes
+
+
+def validate_contract(source_path: Path, data: dict[str, Any], source_hash: str) -> dict[str, Any]:
+    if not isinstance(data, dict):
+        raise MarkpactError(f"{source_path}: markpact:contract block must contain a YAML mapping.")
+    metadata = data.get("metadata") or {}
+    contract_id = str(metadata.get("id") or "").strip()
+    if not contract_id:
+        raise MarkpactError(f"{source_path}: contract metadata.id is required.")
+    kind = str(data.get("kind") or "UriContract")
+    if kind != "UriContract":
+        raise MarkpactError(f"{source_path}: expected kind UriContract, got {kind!r}.")
+    scheme = str(data.get("scheme") or "").strip()
+    if not scheme:
+        raise MarkpactError(f"{source_path}: contract scheme is required.")
+
+    routes = _validate_contract_routes(source_path, data, scheme)
+    warnings: list[str] = []
 
     resources = data.get("resources") or []
     if not routes and not resources:
@@ -64,6 +70,17 @@ def validate_contract(source_path: Path, data: dict[str, Any], source_hash: str)
     }
 
 
+def _missing_bundle_imports(source_path: Path, imports: Any) -> list[str]:
+    """Return referenced import files (contracts/implementations) that don't exist."""
+    missing: list[str] = []
+    if isinstance(imports, dict):
+        for section in ("contracts", "implementations"):
+            for rel in imports.get(section) or []:
+                if not (source_path.parent / str(rel)).is_file():
+                    missing.append(str(rel))
+    return missing
+
+
 def validate_bundle(source_path: Path, data: dict[str, Any], source_hash: str) -> dict[str, Any]:
     if not isinstance(data, dict):
         raise MarkpactError(f"{source_path}: markpact:bundle block must contain a YAML mapping.")
@@ -77,13 +94,7 @@ def validate_bundle(source_path: Path, data: dict[str, Any], source_hash: str) -
 
     imports = data.get("imports") or {}
     warnings: list[str] = []
-    missing: list[str] = []
-    if isinstance(imports, dict):
-        for section in ("contracts", "implementations"):
-            for rel in imports.get(section) or []:
-                ref = source_path.parent / str(rel)
-                if not ref.is_file():
-                    missing.append(str(rel))
+    missing = _missing_bundle_imports(source_path, imports)
     if missing:
         warnings.append(f"Missing import files: {', '.join(missing)}")
 
@@ -96,6 +107,17 @@ def validate_bundle(source_path: Path, data: dict[str, Any], source_hash: str) -
         "source_hash": source_hash,
         "warnings": warnings,
     }
+
+
+def _validate_implementation_capabilities(source_path: Path, capabilities: list) -> list[str]:
+    """Validate each capability entry; warn on ones missing a handler reference."""
+    warnings: list[str] = []
+    for item in capabilities:
+        if not isinstance(item, dict):
+            raise MarkpactError(f"{source_path}: invalid implementation capability entry.")
+        if not str(item.get("handler") or "").strip():
+            warnings.append("Capability without handler reference.")
+    return warnings
 
 
 def validate_implementation(source_path: Path, data: dict[str, Any], source_hash: str) -> dict[str, Any]:
@@ -120,13 +142,7 @@ def validate_implementation(source_path: Path, data: dict[str, Any], source_hash
     if not isinstance(capabilities, list) or not capabilities:
         raise MarkpactError(f"{source_path}: implementation must declare capabilities.")
 
-    warnings: list[str] = []
-    for item in capabilities:
-        if not isinstance(item, dict):
-            raise MarkpactError(f"{source_path}: invalid implementation capability entry.")
-        handler = str(item.get("handler") or "").strip()
-        if not handler:
-            warnings.append("Capability without handler reference.")
+    warnings = _validate_implementation_capabilities(source_path, capabilities)
 
     return {
         "ok": True,

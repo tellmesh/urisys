@@ -72,7 +72,7 @@ jobs:
           VERSION: ${{ steps.ver.outputs.version }}
         run: |
           IMAGE_TAG="ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:${VERSION}-${IMAGE_TARGET}"
-          docker build -f urisys/urikvm-docker/Dockerfile -t "$IMAGE_TAG" .
+          docker build -f urikvm-docker/Dockerfile -t "$IMAGE_TAG" .
           docker push "$IMAGE_TAG"
           DIGEST="$(docker inspect --format='{{index .RepoDigests 0}}' "$IMAGE_TAG")"
           echo "image_ref=${DIGEST}" >> "$GITHUB_OUTPUT"

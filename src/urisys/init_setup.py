@@ -97,6 +97,74 @@ def write_env_file(path: Path, env: dict[str, str], *, dry_run: bool = False) ->
     return {"ok": True, "path": str(path), "bytes": len(content)}
 
 
+def _pre_repair_uricore(
+    install: bool, dry_run: bool, steps: list[dict[str, Any]], profile: str
+) -> dict[str, Any] | None:
+    """Remove a wrong PyPI uricore before install. Returns an abort-result dict
+    if repair failed, else None to continue."""
+    if not (install and not dry_run and is_wrong_uricore_installed()):
+        return None
+    pre_repair = repair_uricore()
+    steps.append(
+        {
+            "name": "pre_repair_uricore",
+            "status": "pass" if pre_repair.get("ok") else "fail",
+            "detail": pre_repair,
+        }
+    )
+    if pre_repair.get("ok"):
+        return None
+    return {
+        "ok": False,
+        "profile": profile,
+        "steps": steps,
+        "error": "could not remove wrong PyPI uricore before install",
+        "hint": f"Run: pip uninstall -y uricore && pip install -U {wheel_url()}",
+    }
+
+
+def _build_pip_result(specs: list[str], *, dry_run: bool) -> dict[str, Any]:
+    """Run (or describe, when dry_run) the pip install of core + edge + node."""
+    if dry_run:
+        return {
+            "ok": True,
+            "dry_run": True,
+            "command": f"{sys.executable} -m pip install -U {' '.join(specs)}",
+            "specs": specs,
+            "node_spec": default_node_pip_spec(),
+        }
+    pip_result = pip_install_specs(specs)
+    edge_result = ensure_urisysedge()
+    node_result = install_urisys_node()
+    pip_result = {
+        **pip_result,
+        "urisysedge_install": edge_result,
+        "node_spec": default_node_pip_spec(),
+        "node_install": node_result,
+    }
+    if not edge_result.get("ok"):
+        pip_result["edge_warning"] = "urisysedge missing after pip — retry: pip install -U urisysedge"
+    if not node_result.get("ok"):
+        pip_result["node_warning"] = (
+            "urisys-node install failed — publish GitHub Release "
+            f"({node_result.get('spec')}) or set URISYS_NODE_WHEEL_URL / URISYS_NODE_PIP_SPEC"
+        )
+    return pip_result
+
+
+def _resolve_error_hint(
+    ok: bool, verify: dict[str, Any], doctor: dict[str, Any]
+) -> tuple[str | None, str | None]:
+    """Pick the user-facing error + hint when init did not fully succeed."""
+    if ok:
+        return None, None
+    if not verify.get("ok"):
+        return "uri_control not importable after init", verify.get("pip_hint") or f"pip install -U {wheel_url()}"
+    if doctor.get("ok") is False:
+        return "urisys doctor reported failures", "urisys doctor"
+    return None, None
+
+
 def run_init(
     *,
     profile: Profile = "slave",
@@ -113,50 +181,12 @@ def run_init(
         specs.extend(extra_specs)
 
     pip_result: dict[str, Any] | None = None
-    if install and not dry_run and is_wrong_uricore_installed():
-        pre_repair = repair_uricore()
-        steps.append(
-            {
-                "name": "pre_repair_uricore",
-                "status": "pass" if pre_repair.get("ok") else "fail",
-                "detail": pre_repair,
-            }
-        )
-        if not pre_repair.get("ok"):
-            return {
-                "ok": False,
-                "profile": profile,
-                "steps": steps,
-                "error": "could not remove wrong PyPI uricore before install",
-                "hint": f"Run: pip uninstall -y uricore && pip install -U {wheel_url()}",
-            }
+    abort = _pre_repair_uricore(install, dry_run, steps, profile)
+    if abort is not None:
+        return abort
 
     if install:
-        if dry_run:
-            pip_result = {
-                "ok": True,
-                "dry_run": True,
-                "command": f"{sys.executable} -m pip install -U {' '.join(specs)}",
-                "specs": specs,
-                "node_spec": default_node_pip_spec(),
-            }
-        else:
-            pip_result = pip_install_specs(specs)
-            edge_result = ensure_urisysedge()
-            node_result = install_urisys_node()
-            pip_result = {
-                **pip_result,
-                "urisysedge_install": edge_result,
-                "node_spec": default_node_pip_spec(),
-                "node_install": node_result,
-            }
-            if not edge_result.get("ok"):
-                pip_result["edge_warning"] = "urisysedge missing after pip — retry: pip install -U urisysedge"
-            if not node_result.get("ok"):
-                pip_result["node_warning"] = (
-                    "urisys-node install failed — publish GitHub Release "
-                    f"({node_result.get('spec')}) or set URISYS_NODE_WHEEL_URL / URISYS_NODE_PIP_SPEC"
-                )
+        pip_result = _build_pip_result(specs, dry_run=dry_run)
         steps.append({"name": "pip_install", "status": "pass" if pip_result.get("ok") else "fail", "detail": pip_result})
         if not pip_result.get("ok"):
             return {
@@ -198,8 +228,6 @@ def run_init(
         steps.append({"name": "write_env", "status": "pass", "detail": env_written})
 
     ok = all(step["status"] == "pass" for step in steps)
-    error = None
-    hint = None
     node_diag = diagnose_urisys_node() if not dry_run else {}
     if not dry_run and install and not node_diag.get("urisysnode_importable"):
         node_detail = (pip_result or {}).get("node_install") if pip_result else None
@@ -210,13 +238,7 @@ def run_init(
                 "detail": {**node_diag, "pip": node_detail},
             }
         )
-    if not ok:
-        if not verify.get("ok"):
-            error = "uri_control not importable after init"
-            hint = verify.get("pip_hint") or f"pip install -U {wheel_url()}"
-        elif doctor.get("ok") is False:
-            error = "urisys doctor reported failures"
-            hint = "urisys doctor"
+    error, hint = _resolve_error_hint(ok, verify, doctor)
 
     next_steps = [
         f"source {env_path}" if env_written and env else "",

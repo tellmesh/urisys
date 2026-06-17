@@ -6,6 +6,7 @@ from urisys.controllers.uri_controller import UriController
 from urisys.managers.markpact_manager import MarkpactManager
 
 ROOT = Path(__file__).resolve().parents[1]
+TELLMESH = ROOT.parent
 BROWSER_MARKPACT = ROOT / "markpacts" / "packs" / "uribrowser.markpact.md"
 SYSTEMD_MARKPACT = ROOT / "markpacts" / "packs" / "urisystemd.markpact.md"
 
@@ -19,7 +20,7 @@ def test_markpact_validate():
 
 
 def test_markpact_validate_contract():
-    path = ROOT / "urirdp-docker" / "markpacts" / "urikvm.contract.markpact.md"
+    path = TELLMESH / "urirdp-docker" / "markpacts" / "urikvm.contract.markpact.md"
     info = MarkpactManager().validate(path)
     assert info["ok"] is True
     assert info["kind"] == "contract"
@@ -28,7 +29,7 @@ def test_markpact_validate_contract():
 
 
 def test_markpact_validate_implementation():
-    path = ROOT / "urienv-docker" / "markpacts" / "urienv-python.markpact.md"
+    path = TELLMESH / "urienv-docker" / "markpacts" / "urienv-python.markpact.md"
     info = MarkpactManager().validate(path)
     assert info["ok"] is True
     assert info["kind"] == "implementation"
@@ -36,7 +37,7 @@ def test_markpact_validate_implementation():
 
 
 def test_markpact_validate_bundle():
-    path = ROOT / "urirdp-docker" / "markpacts" / "urikvm-rdp.contract.markpact.md"
+    path = TELLMESH / "urirdp-docker" / "markpacts" / "urikvm-rdp.contract.markpact.md"
     info = MarkpactManager().validate(path)
     assert info["ok"] is True
     assert info["kind"] == "bundle"

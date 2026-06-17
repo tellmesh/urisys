@@ -98,7 +98,7 @@ Node proxy’uje do workera (`urisysnode/forward.py`). Worker startuje osobno (s
 }
 ```
 
-Alternatywy: env `URISYS_NODE_FORWARDS` (JSON array) lub `URISYS_NODE_FORWARDS_FILE`. Przykład lenovo: [`urisys-node/config/node-profile.lenovo.json`](../urisys-node/config/node-profile.lenovo.json).
+Alternatywy: env `URISYS_NODE_FORWARDS` (JSON array) lub `URISYS_NODE_FORWARDS_FILE`. Przykład lenovo: [`urisys-node/config/node-profile.lenovo.json`](../../urisys-node/config/node-profile.lenovo.json).
 
 **Release auto-wire** (Markpact + OCI) — wpis w config:
 

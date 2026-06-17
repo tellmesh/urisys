@@ -10,8 +10,9 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-COMPOSE="${ROOT}/urisys-node/docker/docker-compose.gui.yml"
-CFG="${ROOT}/urisys-node/docker/config"
+TELLMESH="$(cd "$ROOT/.." && pwd)"
+COMPOSE="${TELLMESH}/urisys-node/docker/docker-compose.gui.yml"
+CFG="${TELLMESH}/urisys-node/docker/config"
 PORT="${URISYS_NODE_HOST_PORT:-8790}"
 BASE="http://127.0.0.1:${PORT}"
 CONTAINER="${URISYS_NODE_CONTAINER:-urisys-node-gui}"
@@ -101,7 +102,7 @@ echo "${ROUTES}" | grep -q 'screen://' || fail "screen routes missing"
 echo "${ROUTES}" | grep -q 'node://' || fail "node routes missing"
 
 log "host route-map call → node identity"
-export PYTHONPATH="${ROOT}/urisys-node/packages/python:${ROOT}/src:${PYTHONPATH:-}"
+export PYTHONPATH="${TELLMESH}/urisys-node/packages/python:${ROOT}/src:${PYTHONPATH:-}"
 IDENTITY="$(
   python3 -m urisysnode.cli call "node://${NODE_ID}/query/identity" \
     --route-map "${CFG}/route-map.host.yaml" \

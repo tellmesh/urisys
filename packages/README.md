@@ -20,7 +20,7 @@ Canonical **edge runtime** for Docker-based URI servers.
 ### Local dev
 
 ```bash
-export PYTHONPATH="/path/to/urisys/packages/python:/path/to/urisys/urirdp-docker/packages/python"
+export PYTHONPATH="/path/to/urisys/packages/python:/path/to/tellmesh/urirdp-docker/packages/python"
 python3 -c "from urisysedge.runtime import Runtime; r=Runtime(); print(r)"
 ```
 

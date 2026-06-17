@@ -95,7 +95,7 @@ def sync_to_repo(spec: PackSpec, *, dry_run: bool = False, tests: bool = True) -
 
     if tests and spec.test_files:
         tests_dst = spec.repo / "tests"
-        tests_src = ROOT / "urikvm-docker" / "tests"
+        tests_src = TELLMESH / "urikvm-docker" / "tests"
         for test_name in spec.test_files:
             src = tests_src / test_name
             if sync_file(src, tests_dst / test_name, dry_run=dry_run):

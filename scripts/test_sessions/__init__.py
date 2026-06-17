@@ -16,6 +16,7 @@ from .lab_rdp import (
 )
 from .util import (
     ROOT,
+    TELLMESH,
     REPORT_SCRIPT,
     compose_cmd,
     copy_container_file,
@@ -38,6 +39,7 @@ from .util import (
 
 __all__ = [
     "ROOT",
+    "TELLMESH",
     "REPORT_SCRIPT",
     "capture_rdp_screenshot",
     "capture_rdp_screenshot_wait",

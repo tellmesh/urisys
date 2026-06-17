@@ -37,15 +37,15 @@ def _repo(name: str) -> Path:
 
 
 def _vendored_kvm(name: str) -> Path:
-    return ROOT / "urikvm-docker" / "packages" / "python" / name
+    return TELLMESH / "urikvm-docker" / "packages" / "python" / name
 
 
 def _vendored_rdp(name: str) -> Path:
-    return ROOT / "urirdp-docker" / "packages" / "python" / name
+    return TELLMESH / "urirdp-docker" / "packages" / "python" / name
 
 
 def _vendored_node(name: str) -> Path:
-    return ROOT / "urisys-node" / "packages" / "python" / name
+    return TELLMESH / "urisys-node" / "packages" / "python" / name
 
 
 def sibling_uv_path(name: str) -> str:
@@ -166,8 +166,8 @@ def pack_specs() -> dict[str, PackSpec]:
         )
 
     for name, vendored_base in (
-        ("uribrowserdocker", ROOT / "uribrowser-docker" / "packages" / "python" / "uribrowserdocker"),
-        ("uribrowseredge", ROOT / "uribrowser-docker" / "packages" / "python" / "uribrowseredge"),
+        ("uribrowserdocker", TELLMESH / "uribrowser-docker" / "packages" / "python" / "uribrowserdocker"),
+        ("uribrowseredge", TELLMESH / "uribrowser-docker" / "packages" / "python" / "uribrowseredge"),
     ):
         specs[name] = PackSpec(
             name=name,
@@ -180,7 +180,7 @@ def pack_specs() -> dict[str, PackSpec]:
     specs["urienv"] = PackSpec(
         name="urienv",
         repo=_repo("urienv"),
-        vendored=ROOT / "urienv-docker" / "packages" / "python" / "urienv" / "src" / "urienv",
+        vendored=TELLMESH / "urienv-docker" / "packages" / "python" / "urienv" / "src" / "urienv",
         module_files=("__init__.py", "handlers.py", "manifest.yaml"),
         repo_readme="env:// URI capability pack.",
         layout="flat",
@@ -198,7 +198,7 @@ def pack_specs() -> dict[str, PackSpec]:
         specs[name] = PackSpec(
             name=name,
             repo=_repo("uristepper"),
-            vendored=ROOT / "uristepper-docker" / "packages" / "python" / name,
+            vendored=TELLMESH / "uristepper-docker" / "packages" / "python" / name,
             module_files=EDGE_FILES if name == "uristepperedge" else MODULE_FILES,
             repo_readme="stepper:// URI capability pack.",
         )
@@ -208,7 +208,7 @@ def pack_specs() -> dict[str, PackSpec]:
         specs[name] = PackSpec(
             name=name,
             repo=_repo("urisys-automation-lab"),
-            vendored=ROOT / "urisys-automation-lab" / "packages" / "python" / name,
+            vendored=TELLMESH / "urisys-automation-lab" / "packages" / "python" / name,
             module_files=EDGE_FILES if name == "labedge" else MODULE_FILES,
             repo_readme="urisys automation lab MVP packs.",
         )

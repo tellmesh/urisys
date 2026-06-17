@@ -23,6 +23,7 @@ from typing import Any, Callable
 
 from test_sessions import (
     ROOT,
+    TELLMESH,
     REPORT_SCRIPT,
     compose_cmd,
     copy_container_file,
@@ -73,7 +74,7 @@ def session_pytest_urirdp(session_dir: Path) -> int:
         host=host_id(),
     )
     log = session_dir / "session.log"
-    pkg = ROOT / "urirdp-docker"
+    pkg = TELLMESH / "urirdp-docker"
     proc = run_cmd([sys.executable, "-m", "pytest", "-q"], cwd=pkg, log_file=log)
     steps = [{"name": "pytest", "status": "pass" if proc.returncode == 0 else "fail", "detail": proc.stderr[-500:] if proc.returncode else ""}]
     return finalize_session(session_dir, started, proc.returncode, steps)
@@ -92,7 +93,7 @@ def session_pytest_urisys_node(session_dir: Path) -> int:
     started = now_iso()
     write_meta(session_dir, session_id=session_dir.name, session_name="pytest-urisys-node", suite="unit", started_at=started, host=host_id())
     log = session_dir / "session.log"
-    pkg = ROOT / "urisys-node"
+    pkg = TELLMESH / "urisys-node"
     proc = run_cmd([sys.executable, "-m", "pytest", "-q"], cwd=pkg, log_file=log)
     steps = [{"name": "pytest", "status": "pass" if proc.returncode == 0 else "fail"}]
     return finalize_session(session_dir, started, proc.returncode, steps)
@@ -101,7 +102,7 @@ def session_pytest_urisys_node(session_dir: Path) -> int:
 def session_urirdp_mock_docker(session_dir: Path) -> int:
     started = now_iso()
     port = 8795
-    pkg = ROOT / "urirdp-docker"
+    pkg = TELLMESH / "urirdp-docker"
     write_meta(
         session_dir,
         session_id=session_dir.name,
@@ -168,7 +169,7 @@ def session_urirdp_mock_docker(session_dir: Path) -> int:
 def session_urirdp_real_docker(session_dir: Path) -> int:
     started = now_iso()
     port = 8795
-    pkg = ROOT / "urirdp-docker"
+    pkg = TELLMESH / "urirdp-docker"
     container = "urirdp-gui"
     write_meta(
         session_dir,
@@ -319,7 +320,7 @@ def session_urirdp_real_docker(session_dir: Path) -> int:
 
 def session_urirdp_rdp_e2e(session_dir: Path) -> int:
     started = now_iso()
-    pkg = ROOT / "urirdp-docker"
+    pkg = TELLMESH / "urirdp-docker"
     compose = pkg / "docker-compose.rdp-e2e.yml"
     write_meta(
         session_dir,
@@ -366,7 +367,7 @@ def session_urirdp_rdp_e2e(session_dir: Path) -> int:
 
 def session_automation_lab(session_dir: Path, *, use_existing: bool = False) -> int:
     started = now_iso()
-    lab = ROOT / "urisys-automation-lab"
+    lab = TELLMESH / "urisys-automation-lab"
     lab_port = 8099
     rdp_port = 8795
     write_meta(
@@ -471,7 +472,7 @@ def session_automation_lab(session_dir: Path, *, use_existing: bool = False) -> 
 
 def _monorepo_root() -> Path | None:
     candidate = ROOT.parent
-    if (candidate / "uricore").is_dir() and (ROOT / "urisys-automation-lab").is_dir():
+    if (candidate / "uricore").is_dir() and (TELLMESH / "urisys-automation-lab").is_dir():
         return candidate
     if (ROOT / "uricore").is_dir():
         return ROOT
@@ -748,7 +749,7 @@ def main() -> int:
     save_json(run_dir / "manifest.json", manifest)
 
     if any(n in names for n in ("urirdp-mock-docker", "urirdp-real-docker", "urirdp-rdp-e2e")):
-        lab = ROOT / "urisys-automation-lab"
+        lab = TELLMESH / "urisys-automation-lab"
         run_cmd(["bash", "scripts/docker-down.sh"], cwd=lab, log_file=run_dir / "preflight.log")
 
     results: dict[str, int] = {}

@@ -12,6 +12,7 @@ from .lab_rdp import (
 )
 from .util import (
     ROOT,
+    TELLMESH,
     copy_container_file,
     docker_logs,
     file_md5,
@@ -229,7 +230,7 @@ def _run_single_lab_flow(
 def session_lab_10_flows(session_dir: Path) -> int:
     """Run all 10 automation-lab flows; capture one RDP screenshot per flow."""
     started = now_iso()
-    lab = ROOT / "urisys-automation-lab"
+    lab = TELLMESH / "urisys-automation-lab"
     flows_dir = lab / "flows"
     lab_port = 8099
     rdp_port = 8795

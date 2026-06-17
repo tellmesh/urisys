@@ -14,8 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `scripts/ci-checkout-siblings.sh` — CI clone sibling repos obok urisys
 
 ### Changed
-- `src/urisys/cli.py` — rozbicie god-funkcji `main` (158→92L): wydzielone `_cmd_markpact(args)` (dispatch sub-komend markpact) i `_handle_cli_error(exc)` (mapowanie wyjątków → JSON/exit-code); zachowanie byte-identyczne (zweryfikowane `tests/` 62 passed + smoke validate/error rc=0/2)
+- `src/urisys/cli.py` — spłaszczenie god-funkcji `main` (CC 23→10): per-komenda handlery `_cmd_markpact`/`_cmd_init`/`_cmd_node`/`_cmd_uri` + `_handle_cli_error(exc)` (mapowanie wyjątków → JSON/exit-code); `main` jest teraz cienkim dispatcherem; byte-identyczne (`tests/` 62 passed, smoke doctor/init/validate rc=0)
 - `src/urisys/managers/markpact_manager.py` — obniżona złożoność trzech najcięższych metod: `run_tests` (CC 19→11, wydzielone `_check_expectations`), `compile` (CC 14→10, wydzielone `_write_handler_modules`), `_build_route` (CC 16→12, wydzielone `_resolve_handler_ref`); byte-identyczne (`urisys markpact test`/`routes` ok, `tests/` 62 passed)
+- `src/urisys/init_setup.py` — rozbicie god-funkcji `run_init` (CC 29→19, 141→95L): wydzielone `_pre_repair_uricore`, `_build_pip_result`, `_resolve_error_hint`; byte-identyczne (`urisys init --dry-run` ok, `tests/` 62 passed)
+- `src/urisys/managers/markpact_validation.py` — wydzielone pętle walidacji z trzech walidatorów: `_validate_contract_routes` (contract CC 22→12), `_missing_bundle_imports` (bundle CC 14→9), `_validate_implementation_capabilities` (implementation CC 18→14); byte-identyczne (`tests/test_markpact` + 62 passed)
 - Migracja 32 packów z `urisys/**/packages/python/*` → `tellmesh/{repo}/` (canonical source)
 - `urisys init` — uricore + urisys-node tylko jako publiczne wheels; core pip bez git credentials
 - Skrypty lenovo/deploy i `publish-pypi-packs.sh` — ścieżki sibling zamiast vendored

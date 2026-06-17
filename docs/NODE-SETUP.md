@@ -119,8 +119,8 @@ Z mastera przez route-map:
 urisys-node call "shell://pip" \
   --payload '{"args":["install","-U","https://github.com/tellmesh/urihim/releases/download/v0.1.3/urihim-0.1.3-py3-none-any.whl"]}' \
   --approve --allow-real \
-  --route-map urisys-node/config/route-map.lenovo.yaml \
-  --nodes-registry urisys-node/config/nodes.registry.json
+  --route-map ../../urisys-node/config/route-map.lenovo.yaml \
+  --nodes-registry ../../urisys-node/config/nodes.registry.json
 ```
 
 Po `pip install` packów zrób hot-load (bez restartu):
