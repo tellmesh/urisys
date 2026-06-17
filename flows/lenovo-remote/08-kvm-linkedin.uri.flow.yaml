@@ -21,12 +21,17 @@ do:
     note: kv:// for session record (idempotent)
 
   - id: browser_open_feed
-    uri: browser://linkedin/social/command/publish-post
+    uri: shell://bash
     payload:
-      platform: linkedin
-      driver: system-open
-      text: ""
-    note: Native browser on lenovo desktop — human-visible window
+      args:
+        - -lc
+        - |
+          xdg-open 'https://www.linkedin.com/feed/' 2>/dev/null \
+            || sensible-browser 'https://www.linkedin.com/feed/' 2>/dev/null \
+            || google-chrome 'https://www.linkedin.com/feed/' 2>/dev/null &
+          sleep 2
+          echo opened
+    note: Open LinkedIn in native browser (KVM-visible desktop, no browser:// pack)
 
   - id: screen_feed
     uri: screen://lenovo/monitor/1/query/frame
@@ -47,20 +52,26 @@ do:
     uri: screen://lenovo/monitor/1/query/frame
 
   - id: him_type_draft
-    uri: him://lenovo/keyboard/command/type
+    uri: shell://bash
     payload:
-      text: "urisys lenovo flow-08 — KVM-URI draft (screen + him, manual Post click)"
-    note: Hands — keyboard typing into compose editor
+      args:
+        - -lc
+        - |
+          TEXT='urisys lenovo flow-08 — KVM-URI draft (screen + him, manual Post click)'
+          if command -v ydotool >/dev/null; then ydotool type "$TEXT"; echo ydotool-typed
+          elif command -v wtype >/dev/null; then wtype "$TEXT"; echo wtype-typed
+          else echo 'SKIP: install ydotool on lenovo for him:// on Wayland'; exit 0
+          fi
+    note: Hands via ydotool/wtype until him:// has display session (Wayland); prefer him:// when ydotool installed
 
   - id: screen_after_type
     uri: screen://lenovo/monitor/1/query/frame
 
   - id: img2nl_find_post
-    uri: img2nl://lenovo/image/latest/command/click
+    uri: img2nl://lenovo/image/latest/query/targets
     payload:
-      label: Post
-      execute_click: false
-    note: Eyes — locate Post button (dry-run click); submit manually on lenovo
+      goal: find
+    note: Uses latest screen:// PNG from runtime state
 
   - id: kv_record_kvm
     uri: kv://session/key/linkedin-kvm/command/set

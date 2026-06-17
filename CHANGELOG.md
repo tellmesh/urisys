@@ -38,6 +38,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
 - Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
 
+## [0.1.61] - 2026-06-17
+
+### Docs
+- Update README.md
+
+### Other
+- Update flows/lenovo-remote/07-playwright-linkedin.uri.flow.yaml
+- Update flows/lenovo-remote/08-kvm-linkedin.uri.flow.yaml
+- Update flows/lenovo-remote/_upgrade-kvm.uri.flow.yaml
+- Update flows/lenovo-remote/_upgrade-node.uri.flow.yaml
+- Update uv.lock
+
 ## [0.1.60] - 2026-06-17
 
 ### Docs

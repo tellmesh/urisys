@@ -24,6 +24,7 @@ do:
         - |
           source ~/venv/bin/activate 2>/dev/null || true
           export URISYS_ALLOW_REAL=1
+          export URISYS_NODE_CONFIG="${URISYS_NODE_CONFIG:-config/node-profile.lenovo.json}"
           nohup setsid urisys node serve --host 0.0.0.0 --port 8790 >> /tmp/urisys-node.log 2>&1 &
           echo started pid=$!
 

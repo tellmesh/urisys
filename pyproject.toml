@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "urisys"
-version = "0.1.60"
+version = "0.1.61"
 description = "URI control system managers/controllers over separate uri* capability packs."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -34,7 +34,6 @@ dev = [
   "uridocker",
   "goal>=2.1.0",
   "costs>=0.1.20",
-  "pfix>=0.1.60",
 ]
 lab = [
   "uri2flow>=0.1.2",
@@ -96,6 +95,19 @@ include = ["urisys*"]
 pythonpath = ["src"]
 testpaths = ["tests"]
 
+[tool.costs]
+# AI Cost tracking configuration
+badge = true
+update_readme = true
+readme_path = "README.md"
+default_model = "openrouter/qwen/qwen3-coder-next"
+analysis_mode = "byok"
+full_history = true
+max_commits = 500
+
+# Cost thresholds for badge colors (USD)
+badge_color_thresholds = { low = 1.0, medium = 5.0, high = 10.0, critical = 50.0 }
+
 [tool.pfix]
 # Self-healing Python configuration
 model = "openrouter/qwen/qwen3-coder-next"
@@ -111,16 +123,3 @@ enabled = true
 todo_file = "TODO.md"
 min_severity = "low"
 deduplicate = true
-
-[tool.costs]
-# AI Cost tracking configuration
-badge = true
-update_readme = true
-readme_path = "README.md"
-default_model = "openrouter/qwen/qwen3-coder-next"
-analysis_mode = "byok"
-full_history = true
-max_commits = 500
-
-# Cost thresholds for badge colors (USD)
-badge_color_thresholds = { low = 1.0, medium = 5.0, high = 10.0, critical = 50.0 }
