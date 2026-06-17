@@ -39,9 +39,9 @@ Powiązane: [`PACKAGES.md`](PACKAGES.md) (layout monorepo), [`PACK-EXTENSIBILITY
 
 | Pakiet | PyPI | Repo tellmesh | W monorepo urisys |
 |--------|------|---------------|-------------------|
-| `urisys` | 🔲 0.1.24 (fix hot-load) | `tellmesh/urisys` | root `pyproject.toml` |
-| `urisysedge` | ✅ [0.1.1](https://pypi.org/project/urisysedge/) | `tellmesh/urisysedge` | `packages/python/urisysedge/` |
-| `urikvm` | ✅ [0.1.1](https://pypi.org/project/urikvm/) | `tellmesh/urikvm` | `urikvm-docker/packages/python/urikvm/` |
+| `urisys` | 🔲 0.1.25 (fix hot-load, forward) | `tellmesh/urisys` | root `pyproject.toml` |
+| `urisysedge` | ✅ [0.1.1 PyPI](https://pypi.org/project/urisysedge/) / ✅ [GitHub v0.1.1](https://github.com/tellmesh/urisysedge/releases/tag/v0.1.1) | `tellmesh/urisysedge` | `packages/python/urisysedge/` |
+| `urikvm` | ✅ [0.1.1 PyPI](https://pypi.org/project/urikvm/) / ✅ [GitHub v0.1.1](https://github.com/tellmesh/urikvm/releases/tag/v0.1.1) | `tellmesh/urikvm` | `urikvm-docker/packages/python/urikvm/` |
 | `urihim` | 🔲 PyPI / ✅ [GitHub v0.1.3](https://github.com/tellmesh/urihim/releases/tag/v0.1.3) | `tellmesh/urihim` | vendored |
 | `uriocr` | 🔲 PyPI / ✅ [GitHub v0.1.0](https://github.com/tellmesh/uriocr/releases/tag/v0.1.0) | `tellmesh/uriocr` | vendored |
 | `urillm` | 🔲 PyPI / ✅ [GitHub v0.1.0](https://github.com/tellmesh/urillm/releases/tag/v0.1.0) | `tellmesh/urillm` | vendored |

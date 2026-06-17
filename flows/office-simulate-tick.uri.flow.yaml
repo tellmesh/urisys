@@ -1,0 +1,27 @@
+flow:
+  id: office-simulate-tick
+  description: One safe office-like tick — move mouse, type one letter, scroll down.
+
+defaults:
+  approved: true
+  dry_run: false
+  allow_real: true
+
+do:
+  - id: move
+    uri: him://local/mouse/command/move
+    payload:
+      x: 480
+      y: 320
+
+  - id: type_letter
+    uri: him://local/keyboard/command/type
+    after: move
+    payload:
+      text: "x"
+
+  - id: scroll
+    uri: him://local/mouse/command/scroll
+    after: type_letter
+    payload:
+      amount: -3

@@ -62,6 +62,10 @@ _YDOTOOL_KEY = {
     'alt': 56,
     'super': 125,
     'meta': 125,
+    'page_down': 109,
+    'pagedown': 109,
+    'page_up': 104,
+    'pageup': 104,
 }
 
 
@@ -161,6 +165,33 @@ def keyboard_type(payload, context):
         _run_ydotool(context, 'type', text)
     _state(context)['keys'].append({'type': 'text', 'text': text})
     return {'typed': text, 'chars': len(text), 'driver': driver}
+
+
+def mouse_scroll(payload, context):
+    amount = int(payload.get('amount', payload.get('clicks', -3)))
+    x = payload.get('x')
+    y = payload.get('y')
+    driver = _driver(context)
+    if driver == 'pyautogui':
+        if context.get('dry_run'):
+            return {'dry_run': True, 'amount': amount, 'x': x, 'y': y}
+        pg = _pyautogui(context)
+        if x is not None and y is not None:
+            pg.moveTo(int(x), int(y))
+        pg.scroll(amount)
+    elif driver == 'ydotool':
+        if context.get('dry_run'):
+            return {'dry_run': True, 'amount': amount, 'x': x, 'y': y, 'driver': driver}
+        if x is not None and y is not None:
+            _run_ydotool(context, 'mousemove', '--absolute', str(int(x)), str(int(y)))
+        key = 'page_down' if amount < 0 else 'page_up'
+        steps = max(1, abs(amount) // 3)
+        for _ in range(steps):
+            _run_ydotool(context, 'key', *_ydotool_key_sequence([key]))
+    st = _state(context)
+    if x is not None and y is not None:
+        st['mouse'].update({'x': int(x), 'y': int(y)})
+    return {'scrolled': True, 'amount': amount, 'x': st['mouse']['x'], 'y': st['mouse']['y'], 'driver': driver}
 
 
 def keyboard_hotkey(payload, context):

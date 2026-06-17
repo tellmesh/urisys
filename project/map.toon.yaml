@@ -1,16 +1,17 @@
-# urisys | 277f 16767L | shell:56,yaml:39,json:14,yml:10,python:130,javascript:2,toml:13,conf:1,txt:2,gui:1 | 2026-06-17
-# generated in 0.03s
-# stats: 615 func | 0 cls | 277 mod | CC̄=4.1 | critical:24 | cycles:0
+# urisys | 279f 17396L | yaml:40,shell:57,json:14,yml:10,python:130,toml:13,javascript:2,conf:1,txt:2,gui:1 | 2026-06-17
+# generated in 0.02s
+# stats: 639 func | 0 cls | 279 mod | CC̄=4.2 | critical:27 | cycles:0
 # alerts[5]: fan-out main=41; fan-out MarkpactManager.compile=34; fan-out main=31; fan-out session_urirdp_real_docker=31; CC session_urirdp_real_docker=30
-# hotspots[5]: main fan=41; MarkpactManager.compile fan=34; session_urirdp_real_docker fan=31; main fan=31; analyze_run fan=29
-# evolution: CC̄ 3.8→4.1 (regressed +0.3)
+# hotspots[5]: main fan=41; MarkpactManager.compile fan=34; main fan=31; session_urirdp_real_docker fan=31; analyze_run fan=29
+# evolution: CC̄ 3.9→4.2 (regressed +0.3)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[277]:
+M[279]:
   examples/frontend/app.js,21
   examples/markpact/browser-call.sh,12
   examples/shell/call-uri.sh,6
   examples/shell/server-curl.sh,8
   flows/device-maintenance.uri.flow.yaml,17
+  flows/office-simulate-tick.uri.flow.yaml,27
   goal.yaml,514
   local-lab/builder/Dockerfile,11
   local-lab/docker-compose.yml,72
@@ -35,6 +36,7 @@ M[277]:
   scripts/deploy-lenovo-node.sh,58
   scripts/install-kvm-packs-editable.sh,15
   scripts/lenovo-node-session.sh,72
+  scripts/office-simulate-loop.py,146
   scripts/paths.sh,54
   scripts/publish-pypi-packs.sh,64
   scripts/remote-node-smoke.sh,99
@@ -53,16 +55,17 @@ M[277]:
   scripts/run-lab-nightly.sh,16
   scripts/run-lab-unit-ci.sh,20
   scripts/run-nl-log-smoke.sh,43
+  scripts/run-office-simulate-e2e.sh,123
   scripts/run-smoke-all.sh,24
   scripts/run-urisys-node-docker-e2e.sh,162
   scripts/run-urisys-node-docker-session.sh,6
-  scripts/run_test_sessions.py,599
+  scripts/run_test_sessions.py,648
   scripts/session_report.py,49
   scripts/sync-vendored-urisysedge.sh,15
   scripts/test-goal.sh,11
   scripts/test_sessions/__init__.py,98
   scripts/test_sessions/expectations.py,153
-  scripts/test_sessions/lab_flows.py,317
+  scripts/test_sessions/lab_flows.py,319
   scripts/test_sessions/lab_rdp.py,180
   scripts/test_sessions/util.py,209
   scripts/validate-all-markpacts.sh,53
@@ -128,16 +131,16 @@ M[277]:
   urikvm-docker/config/kvm-profile.real.json,24
   urikvm-docker/docker-compose.yml,10
   urikvm-docker/flows/kvm-click-ok.uri.flow.yaml,20
-  urikvm-docker/packages/python/urihim/handlers.py,181
+  urikvm-docker/packages/python/urihim/handlers.py,212
   urikvm-docker/packages/python/urihim/pyproject.toml,22
-  urikvm-docker/packages/python/urihim/routes.py,6
+  urikvm-docker/packages/python/urihim/routes.py,7
   urikvm-docker/packages/python/urikvm/handlers.py,103
   urikvm-docker/packages/python/urikvm/pyproject.toml,22
   urikvm-docker/packages/python/urikvm/routes.py,5
   urikvm-docker/packages/python/urikvmedge/cli.py,56
-  urikvm-docker/packages/python/urillm/handlers.py,216
+  urikvm-docker/packages/python/urillm/handlers.py,397
   urikvm-docker/packages/python/urillm/pyproject.toml,22
-  urikvm-docker/packages/python/urillm/routes.py,2
+  urikvm-docker/packages/python/urillm/routes.py,3
   urikvm-docker/packages/python/uriocr/handlers.py,115
   urikvm-docker/packages/python/uriocr/pyproject.toml,22
   urikvm-docker/packages/python/uriocr/routes.py,3
@@ -177,8 +180,8 @@ M[277]:
   urirdp-docker/packages/python/urirdp_ocr/handlers.py,79
   urirdp-docker/packages/python/urirdp_ocr/routes.py,3
   urirdp-docker/packages/python/urirdp_shell/__init__.py,4
-  urirdp-docker/packages/python/urirdp_shell/handlers.py,3
-  urirdp-docker/packages/python/urirdp_shell/routes.py,3
+  urirdp-docker/packages/python/urirdp_shell/handlers.py,68
+  urirdp-docker/packages/python/urirdp_shell/routes.py,9
   urirdp-docker/packages/python/urirdpedge/cli.py,98
   urirdp-docker/packages/python/urirdpedge/env.py,19
   urirdp-docker/packages/python/urirdpedge/runtime.py,23
@@ -264,7 +267,6 @@ M[277]:
   urisys-node/packages/python/uriscreen/handlers.py,94
   urisys-node/packages/python/uriscreen/portal_capture.py,110
   urisys-node/packages/python/uriscreen/routes.py,23
-  urisys-node/packages/python/urishell/__init__.py,3
   urisys-node/packages/python/urishell/handlers.py,70
   urisys-node/packages/python/urishell/routes.py,9
   urisys-node/packages/python/urisysnode/artifact_resolver.py,225
@@ -285,7 +287,7 @@ M[277]:
   urisys-node/scripts/install-linux.sh,16
 D:
   scripts/run_test_sessions.py:
-    e: session_pytest_urirdp,session_pytest_urisys,session_pytest_urisys_node,session_urirdp_mock_docker,session_urirdp_real_docker,session_urirdp_rdp_e2e,session_automation_lab,_monorepo_root,session_urisys_node_docker_gui,main
+    e: session_pytest_urirdp,session_pytest_urisys,session_pytest_urisys_node,session_urirdp_mock_docker,session_urirdp_real_docker,session_urirdp_rdp_e2e,session_automation_lab,_monorepo_root,session_urisys_node_docker_gui,session_office_simulate,main
     session_pytest_urirdp(session_dir)
     session_pytest_urisys(session_dir)
     session_pytest_urisys_node(session_dir)
@@ -295,7 +297,44 @@ D:
     session_automation_lab(session_dir)
     _monorepo_root()
     session_urisys_node_docker_gui(session_dir)
+    session_office_simulate(session_dir)
     main()
+  urikvm-docker/packages/python/urillm/handlers.py:
+    e: _llm_cfg,_driver,_goal_text,_target_from_goal,_box_center,_click_box,_find_target_box,_find_goal_box,_heuristic_analyze,_parse_json_response,_openai_chat,_litellm_chat,_vision_messages,_normalize_action,_analyze_openai,_analyze_litellm,_vision_analyze,vision_analyze,_real_allowed,_env,_openai_compatible_chat,_litellm_plan_chat,_match_office_transcript,_plan_messages,_plan_from_parsed,text_plan
+    _llm_cfg(context)
+    _driver(context)
+    _goal_text(payload)
+    _target_from_goal(goal)
+    _box_center(box)
+    _click_box(box;confidence;source)
+    _find_target_box(boxes;target)
+    _find_goal_box(boxes;goal)
+    _heuristic_analyze(payload;source)
+    _parse_json_response(text)
+    _openai_chat(messages;model;api_key;base_url)
+    _litellm_chat(messages;model)
+    _vision_messages(goal;target;shot;ocr)
+    _normalize_action(parsed;source)
+    _analyze_openai(payload;context)
+    _analyze_litellm(payload;context)
+    _vision_analyze(payload;context)
+    vision_analyze(payload;context)
+    _real_allowed(context)
+    _env(name;cfg;context;default)
+    _openai_compatible_chat(messages;model;api_key;base_url;temperature;max_tokens)
+    _litellm_plan_chat(messages;model;temperature;max_tokens)
+    _match_office_transcript(text)
+    _plan_messages(transcript;allowed)
+    _plan_from_parsed(parsed;model;transcript)
+    text_plan(payload;context)
+  src/urisys/cli.py:
+    e: _json_arg,print_json,_add_runtime_flags,resolve_markpact_source,build_parser,main
+    _json_arg(value)
+    print_json(data)
+    _add_runtime_flags(parser)
+    resolve_markpact_source(source)
+    build_parser()
+    main(argv)
   src/urisys/managers/markpact_validation.py:
     e: validate_contract,validate_bundle,validate_implementation
     validate_contract(source_path;data;source_hash)
@@ -307,14 +346,6 @@ D:
     build_lab_runtime(config_path)
     forward_uri_call(base_url;uri;payload;context)
     serve(host;port)
-  src/urisys/cli.py:
-    e: _json_arg,print_json,_add_runtime_flags,resolve_markpact_source,build_parser,main
-    _json_arg(value)
-    print_json(data)
-    _add_runtime_flags(parser)
-    resolve_markpact_source(source)
-    build_parser()
-    main(argv)
   urisys-node/packages/python/urisysnode/serve.py:
     e: _extend_pack_paths,_register_pack,build_runtime,load_pack_into_runtime,ensure_pack_for_uri,call_uri,register_forward_pack,make_handler,serve
     _extend_pack_paths()
@@ -371,6 +402,12 @@ Markpact is...
     _detect_display(context)
     _mock(command;payload;context)
     shell_run(payload;context)
+  urirdp-docker/packages/python/urirdp_shell/handlers.py:
+    e: _allow_real,_detect_display,_mock,shell_run
+    _allow_real(context)
+    _detect_display(context)
+    _mock(command;payload;context)
+    shell_run(payload;context)
   src/urisys/managers/pack_manager.py:
     e: PackManager
     PackManager: __init__(1),_is_all(0),parse_packs(0),parse_markpacts(0),resolve_package_name(1),_is_markpact_path(1),_is_manifest_path(1),manifest_paths(0),create_registry(0),capabilities(0),close(0),__enter__(0),__exit__(3)  # Loads separate uri* packages, plain manifest.yaml files and ...
@@ -400,6 +437,11 @@ Markpact is...
     _forward_uri(uri;payload;context;base_url)
     message_send(payload;context)
     uri_execute(payload;context)
+  urisys-node/packages/python/urisysnode/forward_config.py:
+    e: _normalize_entry,load_forward_entries,wire_forward_packs
+    _normalize_entry(raw)
+    load_forward_entries()
+    wire_forward_packs(runtime;entries)
   urisys-node/packages/python/urisysnode/artifact_resolver.py:
     e: _GitHubHeaderAuth,is_url,_auth_opener,fetch_json,load_node_profile,load_artifact_index,release_api_url,fetch_release,select_artifact,docker_pull,docker_run_worker,wait_health,resolve_and_run,resolve_from_release
     _GitHubHeaderAuth(urllib.request.BaseHandler): __init__(1),https_request(1)
@@ -416,11 +458,6 @@ Markpact is...
     wait_health(port;attempts;container)
     resolve_and_run(index_source;profile_path)
     resolve_from_release(catalog_url;contract_id;version;profile_path)
-  urisys-node/packages/python/urisysnode/forward_config.py:
-    e: _normalize_entry,load_forward_entries,wire_forward_packs
-    _normalize_entry(raw)
-    load_forward_entries()
-    wire_forward_packs(runtime;entries)
   packages/python/urisysedge/runtime.py:
     e: Route,JsonlEventStore,Runtime,_result_ok,load_json,load_yaml_flow,run_flow,make_handler,serve
     Route: compile(0),match(1)
@@ -475,16 +512,6 @@ Markpact is...
     capture_portal(path)
     capture_with_fallback(path;monitor;context;payload)
     _capture_mss(path;monitor)
-  uristepper-docker/packages/python/uristepperedge/cli.py:
-    e: _json_arg,cmd_call,cmd_explain,cmd_routes,cmd_events,cmd_flow,cmd_serve,main
-    _json_arg(value)
-    cmd_call(args)
-    cmd_explain(args)
-    cmd_routes(args)
-    cmd_events(args)
-    cmd_flow(args)
-    cmd_serve(args)
-    main(argv)
   scripts/test_sessions/lab_flows.py:
     e: _lab_bootstrap,_capture_flow_screenshot,_flow_step_detail,_run_single_lab_flow,session_lab_10_flows
     _lab_bootstrap(session_dir)
@@ -492,35 +519,8 @@ Markpact is...
     _flow_step_detail()
     _run_single_lab_flow(session_dir)
     session_lab_10_flows(session_dir)
-  urikvm-docker/packages/python/urillm/handlers.py:
-    e: _llm_cfg,_driver,_goal_text,_target_from_goal,_box_center,_click_box,_find_target_box,_find_goal_box,_heuristic_analyze,_parse_json_response,_openai_chat,_litellm_chat,_vision_messages,_normalize_action,_analyze_openai,_analyze_litellm,_vision_analyze,vision_analyze
-    _llm_cfg(context)
-    _driver(context)
-    _goal_text(payload)
-    _target_from_goal(goal)
-    _box_center(box)
-    _click_box(box;confidence;source)
-    _find_target_box(boxes;target)
-    _find_goal_box(boxes;goal)
-    _heuristic_analyze(payload;source)
-    _parse_json_response(text)
-    _openai_chat(messages;model;api_key;base_url)
-    _litellm_chat(messages;model)
-    _vision_messages(goal;target;shot;ocr)
-    _normalize_action(parsed;source)
-    _analyze_openai(payload;context)
-    _analyze_litellm(payload;context)
-    _vision_analyze(payload;context)
-    vision_analyze(payload;context)
-  urisys-automation-lab/server/lab_uri_adapter.py:
-    e: LabCallAdapter,step_ok
-    LabCallAdapter: execute(2),_execute_log(4)
-    step_ok(response)
-  urienv-docker/packages/python/urisysedge/src/urisysedge/flow.py:
-    e: run_flow
-    run_flow(path;runtime)
   urikvm-docker/packages/python/urihim/handlers.py:
-    e: _state,_real_allowed,_wayland_session,_ydotool_available,_driver,_pyautogui,_run_ydotool,_ydotool_key_sequence,mouse_status,mouse_move,mouse_click,keyboard_type,keyboard_hotkey
+    e: _state,_real_allowed,_wayland_session,_ydotool_available,_driver,_pyautogui,_run_ydotool,_ydotool_key_sequence,mouse_status,mouse_move,mouse_click,keyboard_type,mouse_scroll,keyboard_hotkey
     _state(context)
     _real_allowed(context)
     _wayland_session()
@@ -533,7 +533,25 @@ Markpact is...
     mouse_move(payload;context)
     mouse_click(payload;context)
     keyboard_type(payload;context)
+    mouse_scroll(payload;context)
     keyboard_hotkey(payload;context)
+  uristepper-docker/packages/python/uristepperedge/cli.py:
+    e: _json_arg,cmd_call,cmd_explain,cmd_routes,cmd_events,cmd_flow,cmd_serve,main
+    _json_arg(value)
+    cmd_call(args)
+    cmd_explain(args)
+    cmd_routes(args)
+    cmd_events(args)
+    cmd_flow(args)
+    cmd_serve(args)
+    main(argv)
+  urisys-automation-lab/server/lab_uri_adapter.py:
+    e: LabCallAdapter,step_ok
+    LabCallAdapter: execute(2),_execute_log(4)
+    step_ok(response)
+  urienv-docker/packages/python/urisysedge/src/urisysedge/flow.py:
+    e: run_flow
+    run_flow(path;runtime)
   packages/python/urisysedge/env.py:
     e: _urisys_root,load_urisys_env,_env_policy_candidates,load_env_policy,_env_config,resolve_env_var,is_secret_env
     _urisys_root()
@@ -621,6 +639,13 @@ Markpact is...
   urienv-docker/packages/python/urisysedge/src/urisysedge/cli.py:
     e: _packs,main
     _packs(value)
+    main(argv)
+  scripts/office-simulate-loop.py:
+    e: call_uri,rules_tick,llm_tick,parse_args,main
+    call_uri(base;uri;payload;context)
+    rules_tick(base;ctx;letter)
+    llm_tick(base;ctx;letter)
+    parse_args(argv)
     main(argv)
   scripts/test_sessions/util.py:
     e: now_iso,run_id,host_id,http_json,wait_health,compose_cmd,save_json,run_cmd,write_meta,read_meta,finalize_session,docker_logs,copy_container_file,copy_host_screenshot,file_md5,sleep_ports,prepare_urirdp_data
@@ -730,6 +755,24 @@ Markpact is...
     secret_value(payload;context)
     var_set(payload;context)
     var_unset(payload;context)
+  urisys-node/packages/python/urisysnode/handlers.py:
+    e: query_health,query_identity,command_indicator_on,command_indicator_off,query_packs,command_install_pack,command_register_forward
+    query_health(payload;context)
+    query_identity(payload;context)
+    command_indicator_on(payload;context)
+    command_indicator_off(payload;context)
+    query_packs(payload;context)
+    command_install_pack(payload;context)
+    command_register_forward(payload;context)
+  urisys-node/packages/python/urisysnode/display_bootstrap.py:
+    e: _ensure_session_env,_agent_url,_agent_up,_screencast_ready,_start_agent,_start_screencast,bootstrap_wayland_capture
+    _ensure_session_env()
+    _agent_url()
+    _agent_up()
+    _screencast_ready()
+    _start_agent(port)
+    _start_screencast()
+    bootstrap_wayland_capture()
   urisys-node/packages/python/urisysnode/pack_resolver.py:
     e: auto_install_enabled,pack_install_source,github_owner,github_wheel_url,resolve_pack_spec,pack_module,scheme_for_uri,pack_for_scheme,_pip_install,ensure_pip_specs,pack_install_specs,ensure_pack_pypi,ensure_real_deps,github_wheel_urls,import_pack_module,pack_importable
     auto_install_enabled()
@@ -748,24 +791,6 @@ Markpact is...
     github_wheel_urls()
     import_pack_module(pack)
     pack_importable(pack)
-  urisys-node/packages/python/urisysnode/display_bootstrap.py:
-    e: _ensure_session_env,_agent_url,_agent_up,_screencast_ready,_start_agent,_start_screencast,bootstrap_wayland_capture
-    _ensure_session_env()
-    _agent_url()
-    _agent_up()
-    _screencast_ready()
-    _start_agent(port)
-    _start_screencast()
-    bootstrap_wayland_capture()
-  urisys-node/packages/python/urisysnode/handlers.py:
-    e: query_health,query_identity,command_indicator_on,command_indicator_off,query_packs,command_install_pack,command_register_forward
-    query_health(payload;context)
-    query_identity(payload;context)
-    command_indicator_on(payload;context)
-    command_indicator_off(payload;context)
-    query_packs(payload;context)
-    command_install_pack(payload;context)
-    command_register_forward(payload;context)
   src/urisys/controllers/flow_controller.py:
     e: FlowController
     FlowController: __init__(1),run(1),close(0)
@@ -777,6 +802,17 @@ Markpact is...
     StepperRuntime: __init__(3),explain(1),list_routes(0),call(3),_match(1)
     load_json(path)
     build_runtime(device_profile_path;events_path)
+  urisys-node/packages/python/uriscreen/handlers.py:
+    e: _screen_cfg,_backend,_output_dir,_monitor_index,_store_latest,_mock_png,capture,frame,capture_loop
+    _screen_cfg(context)
+    _backend(context;payload)
+    _output_dir(payload;context)
+    _monitor_index(payload;context;monitor_param)
+    _store_latest(context;entry)
+    _mock_png(label)
+    capture(payload;context)
+    frame(payload;context)
+    capture_loop(payload;context)
   urisys-node/packages/python/urisysnode/client.py:
     e: discover_mdns,remote_call,call_via_route_map
     discover_mdns(timeout_s)
@@ -789,17 +825,6 @@ Markpact is...
     resolve_remote_route(uri;route_map)
     rewrite_uri_for_slave(uri;node_id;target_node)
     node_endpoint(route;nodes_registry)
-  urisys-node/packages/python/uriscreen/handlers.py:
-    e: _screen_cfg,_backend,_output_dir,_monitor_index,_store_latest,_mock_png,capture,frame,capture_loop
-    _screen_cfg(context)
-    _backend(context;payload)
-    _output_dir(payload;context)
-    _monitor_index(payload;context;monitor_param)
-    _store_latest(context;entry)
-    _mock_png(label)
-    capture(payload;context)
-    frame(payload;context)
-    capture_loop(payload;context)
   urisys-automation-lab/packages/python/uristt/handlers.py:
     e: _session_id,session_start,session_transcript,audio_transcribe
     _session_id(context)
@@ -961,12 +986,6 @@ Markpact is...
   urikvm-docker/packages/python/uriocr/routes.py:
     e: register
     register(runtime)
-  urikvm-docker/packages/python/urihim/routes.py:
-    e: register
-    register(runtime)
-  urikvm-docker/packages/python/urillm/routes.py:
-    e: register
-    register(runtime)
   urisys-automation-lab/packages/python/uriwebrtc/routes.py:
     e: register
     register(rt)
@@ -991,6 +1010,17 @@ Markpact is...
   urisys-node/packages/python/urishell/routes.py:
     e: register
     register(rt)
+  urirdp-docker/packages/python/urirdp_shell/routes.py:
+    e: register
+    register(rt)
+  urikvm-docker/packages/python/urihim/routes.py:
+    e: register
+    register(runtime)
+  urikvm-docker/packages/python/urillm/routes.py:
+    e: register
+    register(runtime)
+  goal.yaml:
+  planfile.yaml:
   tree.sh:
   prefact.yaml:
   project.sh:
@@ -1007,6 +1037,7 @@ Markpact is...
   local-lab/scripts/06-register-release.sh:
   local-lab/scripts/04-smoke.sh:
   packages/python/urisysedge/__init__.py:
+  packages/python/urisysedge/pyproject.toml:
   examples/markpact/browser-call.sh:
   examples/shell/call-uri.sh:
   examples/shell/server-curl.sh:
@@ -1024,6 +1055,10 @@ Markpact is...
   uristepper-docker/config/device-profile.rpi3.example.json:
   uristepper-docker/flows/move-test.uri.flow.yaml:
   uristepper-docker/flows/safety-denied.uri.flow.yaml:
+  scripts/lenovo-node-session.sh:
+    e: install_pack
+    install_pack()
+  scripts/install-kvm-packs-editable.sh:
   scripts/test-goal.sh:
   scripts/run-lab-nightly.sh:
   scripts/run-lab-e2e.sh:
@@ -1034,6 +1069,7 @@ Markpact is...
     print()
   scripts/validate-all-markpacts.sh:
   scripts/run-urisys-node-docker-session.sh:
+  scripts/publish-pypi-packs.sh:
   scripts/run-urisys-node-docker-e2e.sh:
     e: save_json,cleanup,http_json,remote_call,wait_health
     save_json()
@@ -1049,7 +1085,15 @@ Markpact is...
     uricore_root()
     uricore_pythonpath()
     releases_dir()
+  scripts/remote-node-smoke.sh:
+    e: http_get,http_post
+    http_get()
+    http_post()
   scripts/run-lab-unit-ci.sh:
+  scripts/deploy-lenovo-node.sh:
+    e: call,health
+    call()
+    health()
   scripts/session_report.py:
   scripts/sync-vendored-urisysedge.sh:
   scripts/run-smoke-all.sh:
@@ -1111,6 +1155,8 @@ Markpact is...
   urikvm-docker/docker-compose.yml:
   urikvm-docker/pyproject.toml:
   urikvm-docker/Dockerfile:
+  urikvm-docker/packages/python/urikvm/pyproject.toml:
+  urikvm-docker/packages/python/uriocr/pyproject.toml:
   urikvm-docker/scripts/call-http.sh:
   urikvm-docker/scripts/test-local.sh:
   urikvm-docker/scripts/test-real.sh:
@@ -1133,7 +1179,6 @@ Markpact is...
   urisys-automation-lab/scripts/docker-smoke.sh:
   urisys-automation-lab/scripts/docker-up.sh:
   urisys-automation-lab/server/static_server.py:
-  urisys-automation-lab/flows/04_browser_download_file.uri.flow.yaml:
   urisys-automation-lab/flows/02_update_system_tui.uri.flow.yaml:
   urisys-automation-lab/flows/01_install_browser.uri.flow.yaml:
   urisys-automation-lab/flows/05_fill_form_gui.uri.flow.yaml:
@@ -1158,6 +1203,7 @@ Markpact is...
   urienv-docker/flows/startup-env-check.uri.flow.yaml:
   urienv-docker/flows/mutate-process-env.uri.flow.yaml:
   flows/device-maintenance.uri.flow.yaml:
+  urisys-node/pyproject.toml:
   urisys-node/packages/python/urisysnode/runtime.py:
   urisys-node/packages/python/urisysnode/env.py:
   urisys-node/docker/entrypoint.sh:
@@ -1171,43 +1217,29 @@ Markpact is...
   urisys-node/docker/config/route-map.host.yaml:
   urisys-node/docker/config/node-profile.docker.json:
   urisys-node/scripts/install-linux.sh:
+  urisys-node/config/nodes.registry.json:
   urisys-node/config/node-profile.json:
+  urisys-node/config/node-profile.lenovo.json:
+  urisys-node/config/route-map.lenovo.yaml:
   urisys-node/config/route-map.master.yaml:
   urisys-node/config/route-map.slave.yaml:
-  urisys-node/flows/slave-kvm-demo.uri.flow.yaml:
-  urisys-node/flows/screen-capture-mss.uri.flow.yaml:
-  planfile.yaml:
-  goal.yaml:
-  packages/python/urisysedge/pyproject.toml:
-  pyproject.toml:
-  scripts/lenovo-node-session.sh:
-    e: install_pack
-    install_pack()
-  scripts/install-kvm-packs-editable.sh:
-  urikvm-docker/packages/python/uriocr/pyproject.toml:
-  scripts/publish-pypi-packs.sh:
-  scripts/deploy-lenovo-node.sh:
-    e: call,health
-    call()
-    health()
-  urikvm-docker/packages/python/urihim/pyproject.toml:
-  urikvm-docker/packages/python/urikvm/pyproject.toml:
-  urikvm-docker/packages/python/urillm/pyproject.toml:
-  urisys-node/pyproject.toml:
-  scripts/remote-node-smoke.sh:
-    e: http_get,http_post
-    http_get()
-    http_post()
-  uristepper-docker/packages/python/uristepper/__init__.py:
-  urisys-node/packages/python/urishell/__init__.py:
-  urisys-node/config/nodes.registry.json:
-  urisys-node/config/node-profile.lenovo.json:
-  urirdp-docker/packages/python/urirdp_shell/handlers.py:
   urisys-node/flows/remote-probe.uri.flow.yaml:
-  urisys-node/config/route-map.lenovo.yaml:
-  urisys-node/flows/bootstrap-kvm-pypi.uri.flow.yaml:
   urisys-node/flows/bootstrap-kvm-github.uri.flow.yaml:
-  uristepper-docker/packages/python/uristepperedge/__init__.py:
+  urisys-node/flows/slave-kvm-demo.uri.flow.yaml:
+  urisys-node/flows/bootstrap-kvm-pypi.uri.flow.yaml:
+  urisys-node/flows/screen-capture-mss.uri.flow.yaml:
+  pyproject.toml:
   src/urisys/__init__.py:
+  uristepper-docker/packages/python/uristepperedge/__init__.py:
+  uristepper-docker/packages/python/uristepper/__init__.py:
+  scripts/run-office-simulate-e2e.sh:
+    e: cleanup,uri_call,wait_health,save_json
+    cleanup()
+    uri_call()
+    wait_health()
+    save_json()
+  urikvm-docker/packages/python/urihim/pyproject.toml:
+  urikvm-docker/packages/python/urillm/pyproject.toml:
+  urisys-automation-lab/flows/04_browser_download_file.uri.flow.yaml:
   urienv-docker/packages/python/urienv/src/urienv/__init__.py:
-  urirdp-docker/packages/python/urirdp_shell/routes.py:
+  flows/office-simulate-tick.uri.flow.yaml:

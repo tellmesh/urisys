@@ -63,7 +63,9 @@ def _capture_flow_screenshot(
     container: str,
     screenshot_hashes: dict[str, str],
 ) -> tuple[bool, str | None, str | None, str | None]:
-    if expect.get("screen_changed") or "browser" in flow_id or "gui" in flow_id:
+    if expect.get("screen_changed_since_previous"):
+        time.sleep(5.0)
+    elif expect.get("screen_changed") or "browser" in flow_id or "gui" in flow_id:
         time.sleep(3.0)
     png_name = f"{idx:02d}-{flow_id}.png"
     avoid = {digest for digest in screenshot_hashes.values() if digest}

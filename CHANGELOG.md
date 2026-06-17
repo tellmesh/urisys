@@ -33,6 +33,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Published (GitHub Releases)
 - `urihim` [v0.1.3](https://github.com/tellmesh/urihim/releases/tag/v0.1.3) — ydotool driver (Wayland)
 
+### Fixed (2026-06-17, Docker E2E)
+- `urirdp_shell` — przywrócony lokalny handler (shim `urishell` nie był w obrazie urirdp)
+
+### Verified (Docker lab, host nvidia)
+- `urisys-node-docker-gui` — `screen://` capture PASS
+- `lab-10-flows` — 10 flow, 11/12 kroków (flow 04: expect screenshot)
+- `urirdp-real-docker` — screenshot + OCR + click PASS
+
 ### Verified (lenovo 192.168.188.201)
 - hot-load `him` bez restartu node po `shell://pip` + `install-pack`
 - `screen://` capture via Wayland portal
@@ -222,6 +230,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix unused-imports issues (ticket-c2e8d82c)
 
 ## [Unreleased]
+
+## [0.1.26] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update docs/DISTRIBUTION.md
+- Update docs/OFFICE-AUTOMATION.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update app.doql.less
+- Update flows/office-simulate-tick.uri.flow.yaml
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/compact_flow.mmd
+- Update project/compact_flow.png
+- Update project/duplication.toon.yaml
+- ... and 30 more files
 
 ## [0.1.25] - 2026-06-17
 

@@ -9,7 +9,7 @@ defaults:
 do:
   - rdp://local/session/command/dismiss-target: {}
   - browser://chrome/page/open:
-      url: http://automation-lab:8099/
+      url: https://example.com/
   - browser://chrome/page/active/dom
   - browser://chrome/page/active/screenshot
 
@@ -19,4 +19,4 @@ do:
 expect:
   screen_changed: true
   screen_changed_since_previous: true
-  opened_url_contains: automation-lab:8099
+  opened_url_contains: example.com

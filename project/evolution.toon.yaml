@@ -1,4 +1,4 @@
-# code2llm/evolution | 499 func | 90f | 2026-06-17
+# code2llm/evolution | 513 func | 92f | 2026-06-17
 # generated in 0.00s
 
 NEXT[10] (ranked by impact):
@@ -14,33 +14,33 @@ NEXT[10] (ranked by impact):
       WHY: CC=16 exceeds 15
       EFFORT: ~1h  IMPACT: 656
 
-  [4] !  SPLIT-FUNC      load_pack_into_runtime  CC=23  fan=20
+  [4] !  SPLIT-FUNC      text_plan  CC=24  fan=20
+      WHY: CC=24 exceeds 15
+      EFFORT: ~1h  IMPACT: 480
+
+  [5] !  SPLIT-FUNC      load_pack_into_runtime  CC=23  fan=20
       WHY: CC=23 exceeds 15
       EFFORT: ~1h  IMPACT: 460
 
-  [5] !  SPLIT-FUNC      MarkpactManager.run_tests  CC=20  fan=21
+  [6] !  SPLIT-FUNC      MarkpactManager.run_tests  CC=20  fan=21
       WHY: CC=20 exceeds 15
       EFFORT: ~1h  IMPACT: 420
 
-  [6] !  SPLIT-FUNC      plan  CC=20  fan=18
+  [7] !  SPLIT-FUNC      plan  CC=20  fan=18
       WHY: CC=20 exceeds 15
       EFFORT: ~1h  IMPACT: 360
 
-  [7] !  SPLIT-FUNC      analyze  CC=18  fan=19
+  [8] !  SPLIT-FUNC      analyze  CC=18  fan=19
       WHY: CC=18 exceeds 15
       EFFORT: ~1h  IMPACT: 342
 
-  [8] !  SPLIT-FUNC      open_page  CC=15  fan=22
+  [9] !  SPLIT-FUNC      open_page  CC=15  fan=22
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 330
 
-  [9] !  SPLIT-FUNC      build_lab_runtime  CC=17  fan=19
+  [10] !  SPLIT-FUNC      build_lab_runtime  CC=17  fan=19
       WHY: CC=17 exceeds 15
       EFFORT: ~1h  IMPACT: 323
-
-  [10] !  SPLIT-FUNC      call_uri  CC=20  fan=15
-      WHY: CC=20 exceeds 15
-      EFFORT: ~1h  IMPACT: 300
 
 
 RISKS[2]:
@@ -48,10 +48,10 @@ RISKS[2]:
   ⚠ Splitting goal.yaml may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          3.9 → ≤2.7
-  max-CC:      23 → ≤11
+  CC̄:          4.0 → ≤2.8
+  max-CC:      24 → ≤12
   god-modules: 2 → 0
-  high-CC(≥15): 20 → ≤10
+  high-CC(≥15): 23 → ≤11
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -79,4 +79,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=3.8 → now CC̄=3.9
+  prev CC̄=3.9 → now CC̄=4.0

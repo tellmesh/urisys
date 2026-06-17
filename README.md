@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.25-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$6.94-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-13.9h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.26-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$7.46-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-14.6h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $6.9425 (35 commits)
-- 👤 **Human dev:** ~$1390 (13.9h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $7.4639 (36 commits)
+- 👤 **Human dev:** ~$1464 (14.6h @ $100/h, 30min dedup)
 
 Generated on 2026-06-17 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -98,6 +98,7 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Jak działa urisys — warstwy, runtime, testy |
 | [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md) | **Slave bez `.sh`** — pip, lazy install, hot-load, systemd |
 | [`docs/PACK-EXTENSIBILITY.md`](docs/PACK-EXTENSIBILITY.md) | **Nowe schematy URI** — `imgl://`, forward pack, lifecycle |
+| [`docs/OFFICE-AUTOMATION.md`](docs/OFFICE-AUTOMATION.md) | **Automatyzacja biurowa** — browser, office, email, roadmap testów Docker |
 | [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md) | **PyPI · Markpact · GitHub** — packi kvm, publikacja |
 | [`docs/PACKAGES.md`](docs/PACKAGES.md) | Layout monorepo, duplikaty, plan konsolidacji |
 | [`docs/FLOWS.md`](docs/FLOWS.md) | URI flows, zależności, walidacja |

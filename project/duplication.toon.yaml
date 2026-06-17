@@ -1,16 +1,16 @@
-# redup/duplication | 1 groups | 37f 3153L | 2026-06-16
+# redup/duplication | 1 groups | 38f 3299L | 2026-06-17
 
 SUMMARY:
-  files_scanned: 37
-  total_lines:   3153
+  files_scanned: 38
+  total_lines:   3299
   dup_groups:    1
   dup_fragments: 2
   saved_lines:   8
-  scan_ms:       3557
+  scan_ms:       2230
 
 HOTSPOTS[2] (files with most duplication):
-  scripts/report/run_analysis.py  dup=8L  groups=1  frags=1  (0.3%)
-  scripts/report/session_io.py  dup=8L  groups=1  frags=1  (0.3%)
+  scripts/report/run_analysis.py  dup=8L  groups=1  frags=1  (0.2%)
+  scripts/report/session_io.py  dup=8L  groups=1  frags=1  (0.2%)
 
 DUPLICATES[1] (ranked by impact):
   [bb100fda4da2fc0e]   STRU  write_run_analysis  L=8 N=2 saved=8 sim=1.00

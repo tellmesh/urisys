@@ -24,7 +24,9 @@ def test_resolve_backend_auto_wayland(monkeypatch):
 
 
 def test_is_black_png(tmp_path):
-    from PIL import Image
+    import pytest
+
+    Image = pytest.importorskip("PIL.Image", reason="Pillow not installed")
 
     p = tmp_path / "black.png"
     Image.new("RGB", (10, 10), (0, 0, 0)).save(p)
