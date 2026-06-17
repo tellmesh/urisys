@@ -34,7 +34,6 @@ jobs:
     outputs:
       version: ${{ steps.ver.outputs.version }}
       git_ref: ${{ steps.ver.outputs.git_ref }}
-      release_sha: ${{ steps.commit.outputs.release_sha }}
       image_ref: ${{ steps.image.outputs.image_ref }}
       image_tag: ${{ steps.image.outputs.image_tag }}
     steps:
@@ -108,11 +107,12 @@ jobs:
               ("uriocr.contract",        "uriocr",         "ocr", ["ocr", "text-extract"]),
               ("urillm.vision.contract", "urillm-vision",  "llm", ["llm", "vision-analyze"]),
           ]
+          # Flat, uniquely-named assets so all four fit in one GitHub Release.
+          dist = Path("dist-release")
+          dist.mkdir(exist_ok=True)
           for contract_id, file_stem, scheme, caps in contracts:
               contract_file = f"urikvm-docker/markpacts/{file_stem}.contract.markpact.md"
               digest = "sha256:" + hashlib.sha256(Path(contract_file).read_bytes()).hexdigest()
-              release_dir = Path("releases") / contract_id / version
-              release_dir.mkdir(parents=True, exist_ok=True)
               payload = {
                   "schema": "markpact.artifact-index.v1",
                   "contract": {"id": contract_id, "version": version, "digest": digest, "file": contract_file},
@@ -128,33 +128,24 @@ jobs:
                       "port": port,
                   }],
               }
-              (release_dir / "artifact-index.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-              (release_dir / "contract.markpact.md").write_text(Path(contract_file).read_text(encoding="utf-8"), encoding="utf-8")
-              print("generated", release_dir)
+              (dist / f"artifact-index-{contract_id}.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+              (dist / f"contract-{contract_id}.md").write_text(Path(contract_file).read_text(encoding="utf-8"), encoding="utf-8")
+              print("generated", contract_id)
           PY
 
-      - name: Commit release metadata (single writer)
-        id: commit
+      - name: Publish GitHub Release + assets
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_REF: ${{ steps.ver.outputs.git_ref }}
           VERSION: ${{ steps.ver.outputs.version }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add releases/
-          git diff --staged --quiet || git commit -m "release: urikvm bundle ${VERSION} [skip ci]"
-          # main is a fast-moving branch (other tooling pushes constantly), so
-          # rebase-and-retry instead of a single push that races to a rejection.
-          pushed=0
-          for _ in 1 2 3 4 5; do
-            if git push origin "HEAD:main"; then pushed=1; break; fi
-            git fetch origin main
-            git rebase origin/main || git rebase --abort
-            sleep 3
-          done
-          [ "$pushed" = 1 ] || { echo "could not push release metadata to main"; exit 1; }
-          # Pin downstream to the immutable commit that actually carries the
-          # release files, so the register job and markpact.com fetch the right blob.
-          echo "release_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          # Attach metadata as immutable release assets — no git writes, so this
+          # never races with the fast-moving main branch.
+          gh release view "$GIT_REF" >/dev/null 2>&1 || \
+            gh release create "$GIT_REF" --verify-tag \
+              --title "urikvm bundle $VERSION" \
+              --notes "kvm/him/ocr/llm capability bundle — one OCI image (port 8794), four contracts."
+          gh release upload "$GIT_REF" dist-release/* --clobber
 
   register:
     needs: build
@@ -173,28 +164,27 @@ jobs:
           - contract_id: urillm.vision.contract
             file_stem: urillm-vision
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ needs.build.outputs.release_sha }}
-
       - name: Register release on markpact.com
         env:
           VERSION: ${{ needs.build.outputs.version }}
-          RELEASE_SHA: ${{ needs.build.outputs.release_sha }}
+          GIT_REF: ${{ needs.build.outputs.git_ref }}
           CONTRACT_ID: ${{ matrix.contract_id }}
           MARKPACT_URL: ${{ vars.MARKPACT_URL }}
           MARKPACT_API_TOKEN: ${{ secrets.MARKPACT_API_TOKEN }}
         run: |
+          BASE="https://github.com/${{ github.repository }}/releases/download/${GIT_REF}"
+          INDEX_URL="${BASE}/artifact-index-${CONTRACT_ID}.json"
+          CONTRACT_URL="${BASE}/contract-${CONTRACT_ID}.md"
+          curl -fsSL -o /tmp/idx.json "$INDEX_URL"  # also asserts the asset is published
+          CONTRACT_SHA="$(python3 -c "import json; print(json.load(open('/tmp/idx.json'))['contract']['digest'])")"
+          ARTIFACTS="$(python3 -c "import json; print(json.dumps(json.load(open('/tmp/idx.json'))['artifacts']))")"
           if [ -z "${MARKPACT_API_TOKEN:-}" ]; then
-            echo "MARKPACT_API_TOKEN not set; skipping markpact.com register for ${CONTRACT_ID}"
+            echo "MARKPACT_API_TOKEN not set; assets published, skipping markpact.com register for ${CONTRACT_ID}"
+            echo "  index:    ${INDEX_URL}"
+            echo "  contract: ${CONTRACT_URL}"
             exit 0
           fi
           MARKPACT_URL="${MARKPACT_URL:-https://markpact.com}"
-          RELEASE_DIR="releases/${CONTRACT_ID}/${VERSION}"
-          INDEX_URL="https://raw.githubusercontent.com/${{ github.repository }}/${RELEASE_SHA}/${RELEASE_DIR}/artifact-index.json"
-          CONTRACT_URL="https://raw.githubusercontent.com/${{ github.repository }}/${RELEASE_SHA}/${RELEASE_DIR}/contract.markpact.md"
-          CONTRACT_SHA="$(python3 -c "import json; print(json.load(open('${RELEASE_DIR}/artifact-index.json'))['contract']['digest'])")"
-          ARTIFACTS="$(python3 -c "import json; print(json.dumps(json.load(open('${RELEASE_DIR}/artifact-index.json'))['artifacts']))")"
           curl -fsS -X POST "${MARKPACT_URL}/api/releases" \
             -H "Authorization: Bearer ${MARKPACT_API_TOKEN}" \
             -H "Content-Type: application/json" \
