@@ -53,7 +53,9 @@ jobs:
 
       - name: Install urisys
         run: |
-          pip install "uricore>=0.1.2"
+          # uri_control ships inside uricore; the PyPI build (<=0.1.2) lacks it,
+          # so install uricore 0.1.7 from its public repo, then urisys editable.
+          pip install "uricore @ git+https://github.com/tellmesh/uricore.git@v0.1.7"
           pip install -e .
 
       - name: Validate kvm contracts
