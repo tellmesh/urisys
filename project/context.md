@@ -5,12 +5,12 @@
 
 - **Project**: /home/tom/github/tellmesh/urisys
 - **Primary Language**: python
-- **Languages**: python: 134, shell: 58, yaml: 40, json: 14, toml: 13
+- **Languages**: python: 141, shell: 60, yaml: 46, toml: 16, json: 14
 - **Analysis Mode**: static
-- **Total Functions**: 675
+- **Total Functions**: 711
 - **Total Classes**: 35
-- **Modules**: 284
-- **Entry Points**: 325
+- **Modules**: 303
+- **Entry Points**: 349
 
 ## Architecture by Module
 
@@ -54,13 +54,17 @@
 - **Classes**: 3
 - **File**: `runtime.py`
 
+### urikvm-docker.packages.python.urihim.handlers
+- **Functions**: 16
+- **File**: `handlers.py`
+
 ### urisys-node.packages.python.urisysnode.pack_resolver
 - **Functions**: 16
 - **File**: `pack_resolver.py`
 
-### urikvm-docker.packages.python.urihim.handlers
-- **Functions**: 16
-- **File**: `handlers.py`
+### scripts.run_test_sessions
+- **Functions**: 14
+- **File**: `run_test_sessions.py`
 
 ### src.urisys.managers.pack_manager
 - **Functions**: 13
@@ -75,10 +79,6 @@
 - **Functions**: 12
 - **File**: `backends.py`
 
-### scripts.run_test_sessions
-- **Functions**: 12
-- **File**: `run_test_sessions.py`
-
 ### src.urisys.managers.source_manager
 - **Functions**: 11
 - **Classes**: 2
@@ -92,14 +92,13 @@
 - **Functions**: 11
 - **File**: `serve.py`
 
-### urikvm-docker.packages.python.uriocr.handlers
-- **Functions**: 10
+### urikvm-docker.packages.python.urioffice.handlers
+- **Functions**: 11
 - **File**: `handlers.py`
 
-### uristepper-docker.packages.python.uristepperedge.runtime
-- **Functions**: 9
-- **Classes**: 4
-- **File**: `runtime.py`
+### urikvm-docker.packages.python.urimail.handlers
+- **Functions**: 11
+- **File**: `handlers.py`
 
 ## Key Entry Points
 
@@ -158,7 +157,7 @@ Main execution flows into the system:
 - **Calls**: argparse.ArgumentParser, p.add_argument, p.add_argument, p.add_argument, p.add_subparsers, sub.add_parser, c.add_argument, c.add_argument
 
 ### scripts.run_test_sessions.main
-- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, run_dir.mkdir, scripts.run-urisys-node-docker-e2e.save_json
+- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, run_dir.mkdir, scripts.run-office-simulate-lenovo.save_json
 
 ### uristepper-docker.packages.python.uristepperedge.cli.main
 - **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_subparsers, sub.add_parser, p.add_argument, p.add_argument, p.add_argument
@@ -172,6 +171,9 @@ Main execution flows into the system:
 ### src.urisys.managers.source_manager.SourceManager.fetch
 - **Calls**: source.strip, spec.startswith, spec.startswith, spec.startswith, _GITHUB_SHORT.match, spec.startswith, spec.startswith, None.expanduser
 
+### urikvm-docker.packages.python.urimail.handlers.message_send
+- **Calls**: urikvm-docker.packages.python.urimail.handlers._draft_state, str, str, str, context.get, payload.get, urikvm-docker.packages.python.urimail.handlers._driver, urikvm-docker.packages.python.urimail.handlers._real_allowed
+
 ### urirdp-docker.packages.python.urirdp_llm.handlers.plan
 - **Calls**: None.strip, payload.get, urirdp-docker.packages.python.urirdp_llm.handlers._llm_cfg, cfg.get, urirdp-docker.packages.python.urirdp_llm.handlers._match_transcript, isinstance, urirdp-docker.packages.python.urirdp_kvm.display.allow_real, urirdp-docker.packages.python.urirdp_llm.handlers._env
 
@@ -181,20 +183,17 @@ Main execution flows into the system:
 ### src.urisys.managers.source_manager.SourceManager._fetch_git
 - **Calls**: body.split, urlsplit, parse_qs, urlunsplit, self._cache_dir, cache_dir.mkdir, checkout_dir.exists, checkout_dir.mkdir
 
-### uribrowser-docker.packages.python.uribrowserdocker.handlers.open_page
-- **Calls**: uribrowser-docker.packages.python.uribrowserdocker.handlers._profile, payload.get, uribrowser-docker.packages.python.uribrowserdocker.handlers._session_state, context.get, sess.update, payload.get, profile.get, ValueError
-
 ### urisys-automation-lab.packages.python.urichat.handlers.uri_execute
 - **Calls**: str, dict, bool, bool, urisys-automation-lab.packages.python.urichat.handlers._forward_uri, None.get, cfg.get, context.get
+
+### uribrowser-docker.packages.python.uribrowserdocker.handlers.open_page
+- **Calls**: uribrowser-docker.packages.python.uribrowserdocker.handlers._profile, payload.get, uribrowser-docker.packages.python.uribrowserdocker.handlers._session_state, context.get, sess.update, payload.get, profile.get, ValueError
 
 ### urikvm-docker.packages.python.urikvm.handlers.click_text
 - **Calls**: None.get, payload.get, runtime.call, runtime.call, runtime.call, payload.get, payload.get, ValueError
 
 ### urikvm-docker.scripts.real_pipeline.main
 - **Calls**: argparse.ArgumentParser, p.add_argument, p.add_argument, p.add_argument, p.add_argument, p.add_argument, p.parse_args, urikvm-docker.scripts.real_pipeline.build_runtime
-
-### src.urisys.managers.markpact_manager.MarkpactManager.validate
-- **Calls**: Path, self.read_blocks, self._yaml_blocks, self._yaml_blocks, self._yaml_blocks, self._yaml_blocks, self.source_hash, MarkpactError
 
 ## Process Flows
 
@@ -365,6 +364,12 @@ Markpact is an authoring/distribution format. Runti
 
 Key functions that process and transform data:
 
+### src.urisys.cli.build_parser
+- **Output to**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_subparsers
+
+### src.urisys.doctor._parse_version
+- **Output to**: None.split, tuple, None.strip, ch.isdigit, parts.append
+
 ### src.urisys.managers.markpact_validation.validate_contract
 - **Output to**: None.strip, str, None.strip, isinstance, MarkpactError
 
@@ -410,22 +415,16 @@ Key functions that process and transform data:
 ### urirdp-docker.packages.python.urirdp_llm.handlers._plan_from_parsed
 - **Output to**: None.strip, isinstance, parsed.get, ValueError, str
 
+### urisys-node.packages.python.urisysnode.artifact_resolver.parse_contract_spec
+> Return {scheme, patterns} from a UriContract markpact. Patterns are every
+declared query + command p
+- **Output to**: urisys-node.packages.python.urisysnode.artifact_resolver._contract_yaml_block, None.strip, block.strip, ValueError, yaml.safe_load
+
 ### urikvm-docker.packages.python.urillm.handlers._parse_json_response
 - **Output to**: None.strip, json.loads, re.search, json.loads, match.group
 
 ### urikvm-docker.packages.python.urillm.handlers._plan_from_parsed
 - **Output to**: None.strip, isinstance, parsed.get, ValueError, str
-
-### src.urisys.cli.build_parser
-- **Output to**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_subparsers
-
-### src.urisys.doctor._parse_version
-- **Output to**: None.split, tuple, None.strip, ch.isdigit, parts.append
-
-### urisys-node.packages.python.urisysnode.artifact_resolver.parse_contract_spec
-> Return {scheme, patterns} from a UriContract markpact. Patterns are every
-declared query + command p
-- **Output to**: urisys-node.packages.python.urisysnode.artifact_resolver._contract_yaml_block, None.strip, block.strip, ValueError, yaml.safe_load
 
 ## Behavioral Patterns
 
@@ -484,15 +483,15 @@ Functions exposed as public API (no underscore prefix):
 - `scripts.run_test_sessions.session_urirdp_mock_docker` - 31 calls
 - `src.urisys.managers.source_manager.SourceManager.fetch` - 29 calls
 - `urisys-node.packages.python.urisysnode.serve.call_uri` - 29 calls
+- `urikvm-docker.packages.python.urimail.handlers.message_send` - 29 calls
 - `urirdp-docker.packages.python.urirdp_llm.handlers.plan` - 28 calls
 - `urisys-node.packages.python.urisysnode.serve.build_runtime` - 28 calls
 - `src.urisys.managers.markpact_validation.validate_implementation` - 27 calls
 - `scripts.report.session.generate_report` - 27 calls
-- `uribrowser-docker.packages.python.uribrowserdocker.handlers.open_page` - 27 calls
 - `urisys-automation-lab.packages.python.urichat.handlers.uri_execute` - 27 calls
+- `uribrowser-docker.packages.python.uribrowserdocker.handlers.open_page` - 27 calls
 - `urikvm-docker.packages.python.urikvm.handlers.click_text` - 26 calls
 - `urikvm-docker.scripts.real_pipeline.main` - 26 calls
-- `scripts.report.session.infer_steps` - 25 calls
 
 ## System Interactions
 

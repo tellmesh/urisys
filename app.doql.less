@@ -2,11 +2,11 @@
 
 app {
   name: urisys;
-  version: 0.1.29;
+  version: 0.1.30;
 }
 
 dependencies {
-  runtime: "uricore>=0.1.0, PyYAML>=6.0, urisysedge>=0.1.0";
+  runtime: "uricore>=0.1.2, PyYAML>=6.0, urisysedge>=0.1.0";
   dev: "pytest>=8.0, uricore, uribrowser, uridocker, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60";
   lab: uri2flow>=0.1.2;
   real: "mss>=9.0, Pillow>=10.0, pyautogui>=0.9.54, pytesseract>=0.3.10, litellm>=1.40";
@@ -18,7 +18,7 @@ interface[type="cli"] {
   framework: argparse;
 }
 interface[type="cli"] page[name="urisys"] {
-  entry: urisys.cli:main;
+  entry: urisys.bootstrap:main;
 }
 interface[type="cli"] page[name="urisys-node"] {
   entry: urisysnode.cli:main;

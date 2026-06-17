@@ -167,10 +167,41 @@ def _check_wayland_him() -> Check | None:
     )
 
 
+def _check_uricore_dist() -> Check:
+    """urisys declares uricore dependency; a missing dist usually means broken user install."""
+    urisys_ver = _pkg_version("urisys")
+    uricore_ver = _pkg_version("uricore")
+    if uricore_ver:
+        return Check(
+            id="dist_uricore",
+            status="ok",
+            message=f"uricore {uricore_ver} installed",
+            detail={"urisys": urisys_ver, "uricore": uricore_ver},
+        )
+    if urisys_ver:
+        return Check(
+            id="dist_uricore",
+            status="fail",
+            message="urisys is installed but uricore package is missing (broken pip install)",
+            detail={
+                "urisys": urisys_ver,
+                "pip_hint": 'pip install -U uricore urisysedge "urisys[real]"',
+                "note": "uri_control lives inside uricore — do not pip install uri_control",
+            },
+        )
+    return Check(
+        id="dist_uricore",
+        status="warn",
+        message="uricore not found in site-packages (editable/dev install?)",
+        detail={"pip_hint": "pip install -U uricore"},
+    )
+
+
 def run_doctor(*, min_version: str | None = "0.1.25") -> dict[str, Any]:
     checks: list[Check] = [
         _check_python(),
         _check_cli_path(),
+        _check_uricore_dist(),
         _check_import("uricore", "uri_control", pip_hint="pip install -U uricore"),
         _check_import("urisys", "urisys", pip_hint='pip install -U "urisys[real]"'),
         _check_import("urisysedge", "urisysedge", pip_hint="pip install -U urisysedge"),

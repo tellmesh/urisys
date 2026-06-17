@@ -1,4 +1,4 @@
-# code2llm/evolution | 542 func | 95f | 2026-06-17
+# code2llm/evolution | 568 func | 100f | 2026-06-17
 # generated in 0.00s
 
 NEXT[10] (ranked by impact):
@@ -34,13 +34,13 @@ NEXT[10] (ranked by impact):
       WHY: CC=18 exceeds 15
       EFFORT: ~1h  IMPACT: 342
 
-  [9] !  SPLIT-FUNC      open_page  CC=15  fan=22
+  [9] !! SPLIT-FUNC      _match_office_transcript  CC=31  fan=11
+      WHY: CC=31 exceeds 15
+      EFFORT: ~1h  IMPACT: 341
+
+  [10] !  SPLIT-FUNC      open_page  CC=15  fan=22
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 330
-
-  [10] !  SPLIT-FUNC      build_lab_runtime  CC=17  fan=19
-      WHY: CC=17 exceeds 15
-      EFFORT: ~1h  IMPACT: 323
 
 
 RISKS[2]:
@@ -49,9 +49,9 @@ RISKS[2]:
 
 METRICS-TARGET:
   CC̄:          4.2 → ≤2.9
-  max-CC:      28 → ≤14
+  max-CC:      31 → ≤15
   god-modules: 2 → 0
-  high-CC(≥15): 26 → ≤13
+  high-CC(≥15): 27 → ≤13
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -79,4 +79,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=4.0 → now CC̄=4.2
+  prev CC̄=4.2 → now CC̄=4.2

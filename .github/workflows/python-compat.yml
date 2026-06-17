@@ -1,0 +1,56 @@
+name: python-compat
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "src/urisys/**"
+      - "pyproject.toml"
+      - "tests/test_bootstrap.py"
+      - "tests/test_python_compat.py"
+      - "tests/test_doctor.py"
+      - ".github/workflows/python-compat.yml"
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uricore (sibling or PyPI)
+        run: |
+          if [ -d ../uricore ]; then pip install -q -e ../uricore; else pip install -q "uricore>=0.1.2"; fi
+          pip install -q -e ".[real]"
+
+      - name: Bootstrap + doctor + compat tests
+        run: python -m pytest tests/test_bootstrap.py tests/test_python_compat.py tests/test_doctor.py -q
+
+  matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install urisys stack
+        run: |
+          if [ -d ../uricore ]; then pip install -q -e ../uricore; else pip install -q "uricore>=0.1.2"; fi
+          pip install -q -e ".[real]"
+
+      - name: doctor + imports
+        run: |
+          python -m urisys.bootstrap doctor --min-version 0.1.0
+          python -c "import uri_control; import urisys"
+          python -m urisys.bootstrap routes >/dev/null

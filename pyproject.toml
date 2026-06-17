@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "urisys"
-version = "0.1.30"
+version = "0.1.31"
 description = "URI control system managers/controllers over separate uri* capability packs."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -12,7 +12,7 @@ license = "Apache-2.0"
 authors = [
   { name = "Tom Sapletta", email = "tom@sapletta.com" },
 ]
-dependencies = ["uricore>=0.1.0", "PyYAML>=6.0", "urisysedge>=0.1.0"]
+dependencies = ["uricore>=0.1.2", "PyYAML>=6.0", "urisysedge>=0.1.0"]
 keywords = ["uri", "control-plane", "controllers", "managers", "devices", "services"]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -20,6 +20,7 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
 ]
 
 [project.optional-dependencies]
@@ -73,7 +74,7 @@ uri3 = { path = "../uri3", editable = true }
 default-groups = ["dev"]
 
 [project.scripts]
-urisys = "urisys.cli:main"
+urisys = "urisys.bootstrap:main"
 urisys-node = "urisysnode.cli:main"
 
 [tool.setuptools]

@@ -4,18 +4,13 @@ import argparse
 import json
 import os
 from pathlib import Path
-
-from uri_control import CapabilityRegistry
-from uri_control.errors import UriControlError
+from typing import TYPE_CHECKING
 
 from .defaults import DEFAULT_ENVIRONMENT
-from .controllers.flow_controller import FlowController
-from .controllers.server_controller import ServerController
-from .controllers.uri_controller import UriController
 from .doctor import run_doctor
-from .managers.event_manager import EventManager
-from .managers.markpact_manager import MarkpactManager, MarkpactError
-from .managers.source_manager import SourceManager, SourceError
+
+if TYPE_CHECKING:
+    from .managers.source_manager import SourceManager
 
 
 def _json_arg(value: str | None) -> dict:
@@ -38,8 +33,11 @@ def _add_runtime_flags(parser: argparse.ArgumentParser) -> None:
 
 
 def resolve_markpact_source(source: str, *, source_manager: SourceManager | None = None) -> str:
-    manager = source_manager or SourceManager()
-    return str(manager.resolve(source))
+    if source_manager is None:
+        from .managers.source_manager import SourceManager
+
+        source_manager = SourceManager()
+    return str(source_manager.resolve(source))
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -118,6 +116,11 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         if args.command == "markpact":
+            from uri_control import CapabilityRegistry
+
+            from .managers.markpact_manager import MarkpactError, MarkpactManager
+            from .managers.source_manager import SourceManager, SourceError
+
             source_manager = SourceManager(cache_root=(Path(args.out) / "sources") if getattr(args, "out", None) else ".urisys/cache/sources")
             manager = MarkpactManager(cache_root=args.out) if getattr(args, "out", None) else MarkpactManager()
             if args.markpact_command == "fetch":
@@ -164,6 +167,8 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "serve":
             import sys
 
+            from .controllers.server_controller import ServerController
+
             print(
                 "hint: desktop slave (lenovo) → urisys node serve --host 0.0.0.0 --port 8790",
                 file=sys.stderr,
@@ -185,6 +190,8 @@ def main(argv: list[str] | None = None) -> int:
             return 0
 
         if args.command == "flow":
+            from .controllers.flow_controller import FlowController
+
             ctrl = FlowController(packs=args.packs, markpacts=args.markpact, events_path=args.events)
             try:
                 print_json(ctrl.run(args.path, approved=args.approve, dry_run=args.dry_run, allow_real=args.allow_real, environment=args.environment))
@@ -193,8 +200,12 @@ def main(argv: list[str] | None = None) -> int:
             return 0
 
         if args.command == "events":
+            from .managers.event_manager import EventManager
+
             print_json({"ok": True, "events": EventManager(args.events).list_events()})
             return 0
+
+        from .controllers.uri_controller import UriController
 
         ctrl = UriController(packs=args.packs, markpacts=args.markpact, events_path=args.events)
         try:
@@ -210,24 +221,32 @@ def main(argv: list[str] | None = None) -> int:
         finally:
             ctrl.close()
         return 1
-    except MarkpactError as exc:
-        print_json({"ok": False, "error": str(exc), "type": "markpact_error"})
-        return 2
-    except SourceError as exc:
-        print_json({"ok": False, "error": str(exc), "type": "source_error"})
-        return 2
-    except UriControlError as exc:
-        print_json({"ok": False, "error": str(exc), "type": type(exc).__name__})
-        return 2
-    except ModuleNotFoundError as exc:
-        hint = None
-        if exc.name in ("uri_control", "uricore"):
-            hint = 'pip install -U uricore urisysedge "urisys[real]" — then run: urisys doctor'
-        payload: dict = {"ok": False, "error": str(exc), "type": "module_not_found"}
-        if hint:
-            payload["hint"] = hint
-        print_json(payload)
-        return 2
+    except Exception as exc:
+        from .managers.markpact_manager import MarkpactError
+        from .managers.source_manager import SourceError
+
+        if isinstance(exc, MarkpactError):
+            print_json({"ok": False, "error": str(exc), "type": "markpact_error"})
+            return 2
+        if isinstance(exc, SourceError):
+            print_json({"ok": False, "error": str(exc), "type": "source_error"})
+            return 2
+        try:
+            from uri_control.errors import UriControlError
+        except ModuleNotFoundError:
+            UriControlError = ()  # type: ignore[misc, assignment]
+        if UriControlError and isinstance(exc, UriControlError):
+            print_json({"ok": False, "error": str(exc), "type": type(exc).__name__})
+            return 2
+        if isinstance(exc, ModuleNotFoundError) and exc.name in ("uri_control", "uricore"):
+            print_json({
+                "ok": False,
+                "error": str(exc),
+                "type": "module_not_found",
+                "hint": 'pip install -U uricore urisysedge "urisys[real]" — then run: urisys doctor',
+            })
+            return 2
+        raise
 
 
 if __name__ == "__main__":

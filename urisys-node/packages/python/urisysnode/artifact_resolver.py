@@ -271,8 +271,10 @@ def run_release(
     if not ref:
         raise ValueError("selected artifact has no ref or tag")
 
+    container_port = int(art.get("port") or art.get("container_port") or 8790)
+
     docker_pull(ref)
-    docker_run_worker(ref, container=container, host_port=port, container_port=8790)
+    docker_run_worker(ref, container=container, host_port=port, container_port=container_port)
     wait_health(port=port, container=container)
 
     return {
@@ -286,6 +288,7 @@ def run_release(
         "ref": ref,
         "container": container,
         "port": port,
+        "container_port": container_port,
     }
 
 

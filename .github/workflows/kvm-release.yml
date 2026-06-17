@@ -1,0 +1,186 @@
+# Publish the urikvm capability bundle (kvm/him/ocr/llm) as Markpact releases.
+#
+# One OCI image (urikvm-docker) serves all four schemes, so we build it ONCE and
+# then register one release per contract, each artifact-index pointing at the same
+# image (port 8794). Registration is a side-effect-free POST, so it runs as a
+# matrix that does NOT touch git — the build job is the only writer.
+#
+# Trigger: tags urikvm-v0.1.0, urikvm-v1.2.3, ...
+# Required secrets:
+#   GITHUB_TOKEN (default) — packages:write for ghcr.io
+#   MARKPACT_API_TOKEN — Bearer token for markpact.com POST /api/releases
+# Optional vars:
+#   MARKPACT_URL — default https://markpact.com
+
+name: kvm-release
+
+on:
+  push:
+    tags:
+      - "urikvm-v*"
+
+permissions:
+  contents: write
+  packages: write
+
+env:
+  IMAGE_NAME: urikvm
+  IMAGE_TARGET: linux-amd64
+  WORKER_PORT: "8794"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.ver.outputs.version }}
+      git_ref: ${{ steps.ver.outputs.git_ref }}
+      image_ref: ${{ steps.image.outputs.image_ref }}
+      image_tag: ${{ steps.image.outputs.image_tag }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Parse version from tag
+        id: ver
+        run: |
+          VERSION="${GITHUB_REF_NAME#urikvm-v}"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "git_ref=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install urisys
+        run: |
+          pip install "uricore>=0.1.2"
+          pip install -e .
+
+      - name: Validate kvm contracts
+        run: |
+          for c in urikvm urihim uriocr urillm-vision; do
+            urisys markpact validate "urikvm-docker/markpacts/${c}.contract.markpact.md"
+          done
+
+      - name: Log in to ghcr.io
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push OCI image (once)
+        id: image
+        env:
+          VERSION: ${{ steps.ver.outputs.version }}
+        run: |
+          IMAGE_TAG="ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:${VERSION}-${IMAGE_TARGET}"
+          docker build -f urikvm-docker/Dockerfile -t "$IMAGE_TAG" .
+          docker push "$IMAGE_TAG"
+          DIGEST="$(docker inspect --format='{{index .RepoDigests 0}}' "$IMAGE_TAG")"
+          echo "image_ref=${DIGEST}" >> "$GITHUB_OUTPUT"
+          echo "image_tag=${IMAGE_TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Generate artifact-index + contract per scheme
+        env:
+          VERSION: ${{ steps.ver.outputs.version }}
+          IMAGE_REF: ${{ steps.image.outputs.image_ref }}
+          IMAGE_TAG: ${{ steps.image.outputs.image_tag }}
+        run: |
+          python3 - <<'PY'
+          import json, os, hashlib
+          from pathlib import Path
+
+          version = os.environ["VERSION"]
+          image_ref = os.environ["IMAGE_REF"]
+          image_tag = os.environ["IMAGE_TAG"]
+          target = os.environ["IMAGE_TARGET"]
+          port = int(os.environ["WORKER_PORT"])
+
+          # One image, four contracts. Each release advertises its scheme's
+          # capability tags so a node's profile selects the right artifact.
+          contracts = [
+              ("urikvm.contract",        "urikvm",         "kvm", ["kvm", "screen-control"]),
+              ("urihim.contract",        "urihim",         "him", ["him", "input-control"]),
+              ("uriocr.contract",        "uriocr",         "ocr", ["ocr", "text-extract"]),
+              ("urillm.vision.contract", "urillm-vision",  "llm", ["llm", "vision-analyze"]),
+          ]
+          for contract_id, file_stem, scheme, caps in contracts:
+              contract_file = f"urikvm-docker/markpacts/{file_stem}.contract.markpact.md"
+              digest = "sha256:" + hashlib.sha256(Path(contract_file).read_bytes()).hexdigest()
+              release_dir = Path("releases") / contract_id / version
+              release_dir.mkdir(parents=True, exist_ok=True)
+              payload = {
+                  "schema": "markpact.artifact-index.v1",
+                  "contract": {"id": contract_id, "version": version, "digest": digest, "file": contract_file},
+                  "artifacts": [{
+                      "target": target,
+                      "kind": "oci-image",
+                      "platform": "linux/amd64",
+                      "runtime": "docker",
+                      "scheme": scheme,
+                      "capabilities": caps,
+                      "ref": image_ref,
+                      "tag": image_tag,
+                      "port": port,
+                  }],
+              }
+              (release_dir / "artifact-index.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+              (release_dir / "contract.markpact.md").write_text(Path(contract_file).read_text(encoding="utf-8"), encoding="utf-8")
+              print("generated", release_dir)
+          PY
+
+      - name: Commit release metadata (single writer)
+        env:
+          VERSION: ${{ steps.ver.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add releases/
+          git diff --staged --quiet || git commit -m "release: urikvm bundle ${VERSION} [skip ci]"
+          git push origin "HEAD:main"
+          git push origin "HEAD:${{ steps.ver.outputs.git_ref }}" --force
+
+  register:
+    needs: build
+    if: ${{ needs.build.outputs.version != '' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - contract_id: urikvm.contract
+            file_stem: urikvm
+          - contract_id: urihim.contract
+            file_stem: urihim
+          - contract_id: uriocr.contract
+            file_stem: uriocr
+          - contract_id: urillm.vision.contract
+            file_stem: urillm-vision
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.build.outputs.git_ref }}
+
+      - name: Register release on markpact.com
+        env:
+          VERSION: ${{ needs.build.outputs.version }}
+          GIT_REF: ${{ needs.build.outputs.git_ref }}
+          CONTRACT_ID: ${{ matrix.contract_id }}
+          MARKPACT_URL: ${{ vars.MARKPACT_URL }}
+          MARKPACT_API_TOKEN: ${{ secrets.MARKPACT_API_TOKEN }}
+        run: |
+          if [ -z "${MARKPACT_API_TOKEN:-}" ]; then
+            echo "MARKPACT_API_TOKEN not set; skipping markpact.com register for ${CONTRACT_ID}"
+            exit 0
+          fi
+          MARKPACT_URL="${MARKPACT_URL:-https://markpact.com}"
+          RELEASE_DIR="releases/${CONTRACT_ID}/${VERSION}"
+          INDEX_URL="https://raw.githubusercontent.com/${{ github.repository }}/${GIT_REF}/${RELEASE_DIR}/artifact-index.json"
+          CONTRACT_URL="https://raw.githubusercontent.com/${{ github.repository }}/${GIT_REF}/${RELEASE_DIR}/contract.markpact.md"
+          CONTRACT_SHA="$(python3 -c "import json; print(json.load(open('${RELEASE_DIR}/artifact-index.json'))['contract']['digest'])")"
+          ARTIFACTS="$(python3 -c "import json; print(json.dumps(json.load(open('${RELEASE_DIR}/artifact-index.json'))['artifacts']))")"
+          curl -fsS -X POST "${MARKPACT_URL}/api/releases" \
+            -H "Authorization: Bearer ${MARKPACT_API_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d "{\"contract_id\":\"${CONTRACT_ID}\",\"version\":\"${VERSION}\",\"contract_digest\":\"${CONTRACT_SHA}\",\"contract_url\":\"${CONTRACT_URL}\",\"artifact_index_url\":\"${INDEX_URL}\",\"artifacts\":${ARTIFACTS},\"source_git_commit\":\"${GITHUB_SHA}\"}"

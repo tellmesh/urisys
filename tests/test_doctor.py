@@ -11,6 +11,7 @@ def test_doctor_ok_in_dev_env():
     assert report["summary"]["fail"] == 0
     ids = {c["id"] for c in report["checks"]}
     assert "import_uri_control" in ids
+    assert "dist_uricore" in ids
     assert "import_urisys" in ids
     assert report["ok"] is True
 
