@@ -66,6 +66,9 @@ urivql = { path = "../../urivql", editable = true }
 [tool.uv]
 default-groups = ["dev"]
 
+[tool.setuptools]
+packages = []
+
 [tool.pytest.ini_options]
 pythonpath = [
   "../..",

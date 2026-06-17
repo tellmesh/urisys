@@ -37,6 +37,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `test_uriscreen_auto`/`test_ocr_llm` skip gracefully when Pillow/tesseract absent
 - Host→Docker desktop and host→LAN node (`192.168.188.201:8790`) control verified live (capture + OCR)
 
+## [0.1.37] - 2026-06-17
+
+### Docs
+- Update README.md
+
+### Other
+- Update scripts/deploy-lenovo-node.sh
+- Update scripts/install-kvm-packs-editable.sh
+- Update scripts/pack_registry.py
+- Update scripts/publish-pypi-packs.sh
+- Update scripts/run-office-simulate-lenovo.sh
+- Update urisys-node/data/events.jsonl
+- Update urisys-node/pyproject.toml
+- Update uv.lock
+
 ## [0.1.36] - 2026-06-17
 
 ### Docs

@@ -30,10 +30,10 @@ if [ ! -f /tmp/urisys-deploy/urisys-0.1.27-py3-none-any.whl ]; then
   (cd "$ROOT" && python3 -m build -o /tmp/urisys-deploy 2>/dev/null || python3 -m pip wheel -w /tmp/urisys-deploy . -q)
 fi
 if [ ! -f /tmp/urisys-deploy/urihim-0.1.5-py3-none-any.whl ]; then
-  (cd "$ROOT/urikvm-docker/packages/python/urihim" && python3 -m pip wheel -w /tmp/urisys-deploy . -q)
+  (cd "$ROOT/../urihim" && python3 -m pip wheel -w /tmp/urisys-deploy . -q)
 fi
 if [ ! -f /tmp/urisys-deploy/urillm-0.1.1-py3-none-any.whl ]; then
-  (cd "$ROOT/urikvm-docker/packages/python/urillm" && python3 -m pip wheel -w /tmp/urisys-deploy . -q)
+  (cd "$ROOT/../urillm" && python3 -m pip wheel -w /tmp/urisys-deploy . -q)
 fi
 
 echo ""

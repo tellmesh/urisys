@@ -152,6 +152,10 @@ def pack_specs() -> dict[str, PackSpec]:
     )
     for name in rdp_packs:
         files = EDGE_FILES if name == "urirdpedge" else MODULE_FILES
+        if name == "urirdp_kvm":
+            files = ("__init__.py", "handlers.py", "routes.py", "display.py")
+        if name == "urirdp_env":
+            files = ("__init__.py", "routes.py")
         specs[name] = PackSpec(
             name=name,
             repo=_repo("urirdp"),

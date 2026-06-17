@@ -71,7 +71,7 @@ serve_wheels() {
   mkdir -p /tmp/urisys-deploy
   if [ ! -f /tmp/urisys-deploy/urihim-0.1.5-py3-none-any.whl ]; then
     log "building urihim 0.1.5 wheel"
-    (cd "${ROOT}/urikvm-docker/packages/python/urihim" && python3 -m pip wheel -w /tmp/urisys-deploy . -q)
+    (cd "${ROOT}/../urihim" && python3 -m pip wheel -w /tmp/urisys-deploy . -q)
   fi
   if ! pgrep -f "http.server ${DEV_PORT}.*${DEV_IP}" >/dev/null 2>&1; then
     log "HTTP serve wheels on ${DEV_IP}:${DEV_PORT}"
@@ -110,7 +110,7 @@ upgrade_llm() {
     local wheel="http://${DEV_IP}:${DEV_PORT}/urillm-0.1.1-py3-none-any.whl"
   else
     log "building urillm 0.1.1 wheel"
-    (cd "${ROOT}/urikvm-docker/packages/python/urillm" && python3 -m pip wheel -w /tmp/urisys-deploy . -q)
+    (cd "${ROOT}/../urillm" && python3 -m pip wheel -w /tmp/urisys-deploy . -q)
     local wheel="http://${DEV_IP}:${DEV_PORT}/urillm-0.1.1-py3-none-any.whl"
   fi
   log "install-pack llm from ${wheel}"
