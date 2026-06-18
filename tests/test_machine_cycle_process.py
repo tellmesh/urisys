@@ -52,6 +52,31 @@ def test_machine_cycle_requires_approval_without_deps(tmp_path):
 
     denied = rt.call("process://machine-cycle/command/run", {}, {"approved": False, "dry_run": True})
     assert denied["ok"] is False
+    assert denied["type"] == "policy_denied"
+
+
+@pytest.mark.skipif(not PROCESS_MARKPACT.is_file(), reason="machine-cycle process markpact missing")
+def test_machine_cycle_risk_requires_dry_run_and_audit(tmp_path):
+    """High-risk capability blocks execution until dry_run and audit.reason are present."""
+    compiled = MarkpactManager(cache_root=tmp_path / ".markpact").compile(PROCESS_MARKPACT, force=True)
+
+    from uri_control.edge.manifest import register_manifest_file
+    from uri_control.edge.runtime import Runtime
+
+    rt = Runtime(events_path=str(tmp_path / "events.jsonl"), config={})
+    register_manifest_file(rt, compiled.manifest_path)
+
+    dry_denied = rt.call("process://machine-cycle/command/run", {}, {"approved": True})
+    assert dry_denied["ok"] is False
+    assert dry_denied["type"] == "risk_dry_run_required"
+
+    audit_denied = rt.call(
+        "process://machine-cycle/command/run",
+        {},
+        {"approved": True, "dry_run": True},
+    )
+    assert audit_denied["ok"] is False
+    assert audit_denied["type"] == "risk_audit_required"
 
 
 @pytest.mark.skipif(not PROCESS_MARKPACT.is_file(), reason="machine-cycle process markpact missing")

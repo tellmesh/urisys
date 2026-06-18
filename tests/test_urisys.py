@@ -24,7 +24,7 @@ def test_call_browser_open(tmp_path):
     try:
         result = ctrl.call("browser://default/page/open", {"url": "https://example.com"}, approved=True)
         assert result["ok"] is True
-        assert result["operation"] == "open_page"
+        assert result["operation"] == "browser.page.open"
     finally:
         ctrl.close()
 

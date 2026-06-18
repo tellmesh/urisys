@@ -58,7 +58,7 @@ def test_markpact_compile_and_call(tmp_path):
             environment="mock",
         )
         assert result["ok"] is True
-        assert result["operation"] == "open_page"
+        assert result["operation"] == "browser.page.open"
         assert result["result"]["url"] == "https://example.com"
     finally:
         ctrl.close()
@@ -69,7 +69,7 @@ def test_uri_controller_loads_markpact_directly(tmp_path):
     try:
         result = ctrl.call("systemd://unit/docker.service/query/status")
         assert result["ok"] is True
-        assert result["operation"] == "status"
+        assert result["operation"] == "systemd.status"
         assert result["result"]["unit"] == "docker.service"
     finally:
         ctrl.close()
