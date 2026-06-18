@@ -38,7 +38,22 @@ def wheel_url(version: str | None = None) -> str:
 
 
 def pip_spec() -> str:
-    return wheel_url()
+    """Newest urisys-node GitHub release wheel (auto-discovered, so a stale pinned
+    DEFAULT_GITHUB_VERSION never points at a missing release). URISYS_NODE_WHEEL_URL or
+    URISYS_NODE_PIP_SPEC pin it explicitly; urisys-node is GitHub-only (not on PyPI)."""
+    override = os.environ.get("URISYS_NODE_WHEEL_URL", "").strip()
+    if override:
+        return override
+    spec_override = os.environ.get("URISYS_NODE_PIP_SPEC", "").strip()
+    if spec_override:
+        return spec_override
+    from .version_resolve import resolve_install_spec
+
+    spec, _ = resolve_install_spec(
+        dist="urisys-node", repo="urisys-node", wheel_url_builder=wheel_url,
+        fallback_version=github_version(), owner=github_owner(),
+    )
+    return spec
 
 
 def is_importable() -> bool:
