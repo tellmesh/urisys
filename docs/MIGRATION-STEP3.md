@@ -1,5 +1,7 @@
 # Migracja krok 3 — deduplikacja runtime (JsonlEventStore, Runtime)
 
+> **Dokument historyczny** (2026-06). Cel osiągnięty: canonical runtime w **`uri_control.edge`** (uricore). Repo **urisysedge** usunięte.
+
 ## Cel
 
 Usunięcie 2 zduplikowanych klas wskazanych w `project/analysis.toon.yaml`:

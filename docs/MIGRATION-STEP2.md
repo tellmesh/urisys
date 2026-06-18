@@ -1,5 +1,7 @@
 # Migracja krok 2 — uri2flow/uri3, edge shims, releases
 
+> **Dokument historyczny** (2026-06). Aktualny model edge: `uri_control.edge` w **uricore**; legacy **urisysedge** usunięty. Zob. [ECOSYSTEM.md](ECOSYSTEM.md) · [MESH.md](MESH.md).
+
 ## 1. `flow_runner.py` → uri2flow + uri3
 
 | Było | Jest |
