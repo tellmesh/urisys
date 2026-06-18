@@ -78,7 +78,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = sub.add_parser(
         "init",
-        help="Install uricore/urisysedge/urisys[real], doctor, write slave env (~/.config/urisys/node.env).",
+        help="Install urirouter/uricore/urisys[real], doctor, write slave env (~/.config/urisys/node.env).",
     )
     p.add_argument("--profile", choices=("slave", "dev"), default=os.environ.get("URISYS_INIT_PROFILE", "slave"))
     p.add_argument("--min-version", default=os.environ.get(MIN_VERSION_ENV, DEFAULT_MIN_VERSION))
@@ -137,6 +137,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_gen = msub.add_parser("gen-contract", help="Generate a UriContract Markpact from a runtime manifest.yaml.")
     p_gen.add_argument("manifest", help="Path to a pack manifest.yaml.")
     p_gen.add_argument("--out", default=None, help="Write contract to this file (default: print to stdout).")
+    p_gen.add_argument("--stdout", action="store_true", help="Print to stdout (default when --out is omitted).")
     p_gen.add_argument("--force", action="store_true", help="Overwrite --out if it already exists.")
 
     p_drift = msub.add_parser("check-drift", help="Compare a manifest.yaml against an existing UriContract Markpact.")
@@ -145,10 +146,20 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_analyze = msub.add_parser("analyze", help="Summarise a showcase Markpact: definitions, embedded flows (use_case/integration), protos.")
     p_analyze.add_argument("path")
+    p_analyze.add_argument(
+        "--strict",
+        action="store_true",
+        help="Treat profile v1alpha warnings as errors (CI for UriProcess packs).",
+    )
+    p_analyze.add_argument(
+        "--strict-operations",
+        action="store_true",
+        help="Treat non-namespaced operation warnings as errors.",
+    )
 
     p_run_flow = msub.add_parser(
         "run-flow",
-        help="Compile Markpact, build urisysedge runtime (manifest + uses: packs) and run an embedded flow.",
+        help="Compile Markpact, build uri_control.edge runtime (manifest + uses: packs) and run an embedded flow.",
     )
     p_run_flow.add_argument(
         "path",
@@ -175,6 +186,28 @@ def build_parser() -> argparse.ArgumentParser:
     p_mat.add_argument("path", help="Markpact path (optional #flow.id ignored).")
     p_mat.add_argument("--root", default=".markpact", help="Output root directory (default: .markpact).")
     p_mat.add_argument("--force", action="store_true")
+    p_mat.add_argument(
+        "--platforms",
+        default="linux,server,esp32",
+        help="Comma-separated platforms for generated/{platform}/ resolver (default: linux,server,esp32).",
+    )
+    p_mat.add_argument(
+        "--no-platform-export",
+        action="store_true",
+        help="Skip writing generated/{linux,server,esp32}/ under materialized dir.",
+    )
+
+    p_export = msub.add_parser(
+        "export-platform",
+        help="Generate generated/{platform}/urisys.runtime.yaml (+ esp32 uri_routes.h) from a process Markpact.",
+    )
+    p_export.add_argument("path", help="UriProcess Markpact path.")
+    p_export.add_argument("--out", default="generated", help="Output root (default: generated).")
+    p_export.add_argument(
+        "--platforms",
+        default="linux,server,esp32",
+        help="Comma-separated: linux, server, esp32.",
+    )
 
     p_run = msub.add_parser(
         "run",
@@ -248,7 +281,26 @@ def _cmd_markpact(args) -> int:
 
         base, _ = split_flow_ref(args.path)
         local = resolve_markpact_source(base, source_manager=source_manager)
-        print_json(materialize_markpact(local, root=args.root, manager=manager, force=args.force))
+        platforms = [p.strip() for p in str(args.platforms).split(",") if p.strip()]
+        print_json(
+            materialize_markpact(
+                local,
+                root=args.root,
+                manager=manager,
+                force=args.force,
+                platforms=platforms,
+                export_platforms=not args.no_platform_export,
+            )
+        )
+        return 0
+    if args.markpact_command == "export-platform":
+        from .managers.markpact_run_flow import split_flow_ref
+        from .managers.platform_export import export_platform_artifacts
+
+        base, _ = split_flow_ref(args.path)
+        local = resolve_markpact_source(base, source_manager=source_manager)
+        platforms = [p.strip() for p in str(args.platforms).split(",") if p.strip()]
+        print_json(export_platform_artifacts(local, out_dir=args.out, platforms=platforms))
         return 0
     if args.markpact_command == "run":
         from .managers.markpact_run import run_markpact
@@ -306,6 +358,27 @@ def _cmd_markpact(args) -> int:
         return 0
     if args.markpact_command == "analyze":
         result = manager.analyze(local_path)
+        warnings = list(result.get("warnings") or [])
+        if getattr(args, "strict_operations", False):
+            op_warnings = [w for w in warnings if "should be namespaced" in w]
+            if op_warnings:
+                result = {
+                    **result,
+                    "ok": False,
+                    "strict_operations": True,
+                    "errors": list(result.get("errors") or [])
+                    + [f"warning: {w}" for w in op_warnings],
+                }
+                warnings = [w for w in warnings if w not in op_warnings]
+                result["warnings"] = warnings
+        if getattr(args, "strict", False) and warnings:
+            result = {
+                **result,
+                "ok": False,
+                "strict": True,
+                "errors": list(result.get("errors") or [])
+                + [f"warning: {w}" for w in result.get("warnings") or []],
+            }
         print_json(result)
         return 0 if result.get("ok") else 1
     return 1
@@ -454,7 +527,7 @@ def _handle_cli_error(exc: Exception) -> int:
             "ok": False,
             "error": str(exc),
             "type": "module_not_found",
-            "hint": 'pip install -U uricore urisysedge "urisys[real]" — then run: urisys doctor',
+            "hint": 'pip install -U urirouter uricore "urisys[real]" — then run: urisys doctor',
         })
         return 2
     raise exc

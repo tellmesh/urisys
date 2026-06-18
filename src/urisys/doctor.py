@@ -237,14 +237,7 @@ def _check_uricore_dist() -> Check:
 
 
 def run_doctor(*, min_version: str | None = DEFAULT_MIN_VERSION) -> dict[str, Any]:
-    from .edge_install import is_broken_install
     from .uricore_install import wheel_url
-
-    edge_hint = (
-        "pip install --force-reinstall urisysedge>=0.1.0"
-        if is_broken_install()
-        else "pip install -U urisysedge"
-    )
 
     checks: list[Check] = [
         _check_python(),
@@ -257,8 +250,12 @@ def run_doctor(*, min_version: str | None = DEFAULT_MIN_VERSION) -> dict[str, An
     checks.extend(
         [
             _check_import("uricore", "uri_control", pip_hint=f"pip install -U {wheel_url()}"),
+            _check_import(
+                "uricore.edge",
+                "uri_control.edge.runtime",
+                pip_hint=f"pip install -U {wheel_url()}",
+            ),
             _check_import("urisys", "urisys", pip_hint='pip install -U "urisys[real]"'),
-            _check_import("urisysedge", "urisysedge", pip_hint=edge_hint),
             _check_import(
                 "urisysnode",
                 "urisysnode",

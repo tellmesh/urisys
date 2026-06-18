@@ -89,7 +89,7 @@ if PACK="$(curl -sS -m 10 -X POST "${BASE}/uri/pack" -H 'Content-Type: applicati
   elif echo "${PACK}" | grep -q '"ok": true'; then
     ok "hot-load kvm pack"
   elif echo "${PACK}" | grep -q 'not installed'; then
-    note "hot-load kvm failed — pip install urikvm urisysedge on node"
+    note "hot-load kvm failed — pip install urikvm uricore on node"
   else
     note "hot-load kvm: ${PACK}"
   fi

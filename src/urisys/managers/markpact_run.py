@@ -35,15 +35,49 @@ def read_run_config(path: str | Path) -> dict[str, Any]:
     return data if isinstance(data, dict) else {}
 
 
-def _build_runtime(compiled, *, events_path: str, config: dict[str, Any] | None, anchor: Path | None = None):
-    from urisysedge.manifest import register_manifest_file
-    from urisysedge.runtime import Runtime
+def _apply_resolver_config(rt, config: dict[str, Any] | None, *, config_anchor: Path | None = None) -> None:
+    import os
+
+    cfg = config or {}
+    resolver_path = cfg.get("resolver_path") or os.environ.get("URISYS_RESOLVER_CONFIG")
+    if resolver_path:
+        from uri_router.resolver import load_resolver_into_runtime
+
+        path = Path(resolver_path)
+        if not path.is_absolute() and config_anchor is not None:
+            path = (config_anchor.parent / path).resolve()
+        elif not path.is_absolute():
+            path = (Path.cwd() / path).resolve()
+        load_resolver_into_runtime(rt, path)
+
+
+def _load_run_config(config_path: str | None) -> tuple[dict[str, Any], Path | None]:
+    if not config_path:
+        return {}, None
+    anchor = Path(config_path).resolve()
+    config = yaml.safe_load(anchor.read_text(encoding="utf-8")) or {}
+    return (config if isinstance(config, dict) else {}), anchor
+
+
+def _build_runtime(
+    compiled,
+    *,
+    events_path: str,
+    config: dict[str, Any] | None,
+    source_anchor: Path | None = None,
+    config_anchor: Path | None = None,
+):
+    from uri_control.edge.manifest import register_manifest_file
+    from uri_control.edge.runtime import Runtime
 
     from .markpact_pack_deps import extend_tellmesh_paths
 
-    extend_tellmesh_paths(anchor=anchor or compiled.source_path)
-    rt = Runtime(events_path=events_path, config=config or {})
+    extend_tellmesh_paths(anchor=source_anchor or compiled.source_path)
+    cfg = dict(config or {})
+    rt = Runtime(events_path=events_path, config=cfg)
     register_manifest_file(rt, compiled.manifest_path)
+
+    _apply_resolver_config(rt, cfg, config_anchor=config_anchor)
     return rt
 
 
@@ -85,9 +119,7 @@ def run_markpact(
 
     scheme = run_cfg.get("scheme")
     events_path = str(Path(compiled.cache_dir) / "events.jsonl")
-    config: dict[str, Any] = {}
-    if config_path:
-        config = yaml.safe_load(Path(config_path).read_text(encoding="utf-8")) or {}
+    config, config_anchor = _load_run_config(config_path)
 
     base = {"ok": True, "mode": mode, "package_id": compiled.package_id, "cache_dir": str(compiled.cache_dir)}
 
@@ -95,13 +127,21 @@ def run_markpact(
         return {
             **base,
             "scheme": scheme,
-            "routes": _routes_summary(_build_runtime(compiled, events_path=events_path, config=config, anchor=compiled.source_path)),
+            "routes": _routes_summary(
+                _build_runtime(
+                    compiled,
+                    events_path=events_path,
+                    config=config,
+                    source_anchor=compiled.source_path,
+                    config_anchor=config_anchor,
+                )
+            ),
             "uses": run_cfg.get("uses") or [],
             "wire": (run_cfg.get("adapter") or {"call": "POST /uri/call", "events": "GET /events"}),
         }
 
     if mode == "flow":
-        from urisysedge.runtime import run_flow
+        from uri_control.edge.runtime import run_flow
 
         from .markpact_models import safe_identifier
         from .markpact_run_flow import packs_for_flow, pick_flow_id
@@ -132,7 +172,7 @@ def run_markpact(
             flow_uses.update(uses)
 
         if flow_uses:
-            from urisysedge.compose import build_runtime
+            from uri_control.edge.compose import build_runtime
 
             from .markpact_pack_deps import ensure_flow_packs
 
@@ -143,9 +183,14 @@ def run_markpact(
                 events_path=events_path,
                 config=config,
             )
+            _apply_resolver_config(rt, config, config_anchor=config_anchor)
         else:
             rt = _build_runtime(
-                compiled, events_path=events_path, config=config, anchor=compiled.source_path
+                compiled,
+                events_path=events_path,
+                config=config,
+                source_anchor=compiled.source_path,
+                config_anchor=config_anchor,
             )
 
         for fid in ids:
@@ -156,7 +201,13 @@ def run_markpact(
             results.append({"id": fid, "ok": all(r.get("ok") for r in res), "results": res})
         return {**base, "ok": all(f["ok"] for f in results) if results else True, "flows": results}
 
-    rt = _build_runtime(compiled, events_path=events_path, config=config, anchor=compiled.source_path)
+    rt = _build_runtime(
+        compiled,
+        events_path=events_path,
+        config=config,
+        source_anchor=compiled.source_path,
+        config_anchor=config_anchor,
+    )
 
     if mode == "pack":
         return {**base, "routes": _routes_summary(rt)}
@@ -178,7 +229,7 @@ def run_markpact(
     if mode == "service":
         serve = serve_fn
         if serve is None:
-            from urisysedge.http import serve as serve  # noqa: PLW0127
+            from uri_control.edge.http import serve as serve  # noqa: PLW0127
         eff_port = port or (run_cfg.get("service") or {}).get("port") or 8790
         serve(rt, host, int(eff_port), service=str(scheme or compiled.package_id))
         return {**base, "served": True, "host": host, "port": int(eff_port)}

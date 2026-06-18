@@ -92,7 +92,7 @@ print(json.dumps({
         "pack": "him",
         "install": True,
         "force": True,
-        "specs": ["urisysedge>=0.1.0", "${wheel}"],
+        "specs": ["uricore>=0.1.0", "${wheel}"],
     },
     "context": {"approved": True, "allow_real": True},
 }))
@@ -119,7 +119,7 @@ upgrade_llm() {
 import json
 print(json.dumps({
     "uri": "node://local/command/install-pack",
-    "payload": {"pack": "llm", "install": True, "force": True, "specs": ["urisysedge>=0.1.0", "${wheel}"]},
+    "payload": {"pack": "llm", "install": True, "force": True, "specs": ["uricore>=0.1.0", "${wheel}"]},
     "context": {"approved": True},
 }))
 PY

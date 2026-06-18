@@ -26,7 +26,7 @@ Wheel **musi** nazywać się `urisys_node-{ver}-py3-none-any.whl` (podkreślnik)
 
 `urisys init` wykonuje:
 
-1. `pip install -U pip` + tellmesh uricore wheel + `urisysedge` + `urisys[real]`
+1. `pip install -U pip` + tellmesh **urirouter** + **uricore** wheels + `urisys[real]`
 2. opcjonalnie urisys-node wheel z GitHub Releases (osobny krok; warn jeśli brak release)
 3. jeśli wykryje zły PyPI `uricore` → `pip uninstall` + wheel z GitHub
 3. weryfikację `import uri_control`
@@ -174,7 +174,7 @@ curl -sS -X POST http://127.0.0.1:8790/uri/call \
 Pierwsze `kvm://…` (z `approved`) uruchomi w tle:
 
 ```text
-pip install -U urisysedge urikvm
+pip install -U uricore urikvm
 ```
 
 Pierwsze `screen://…/capture` z `allow_real: true` doinstaluje `mss` i `Pillow`.
@@ -183,7 +183,7 @@ Pierwsze `screen://…/capture` z `allow_real: true` doinstaluje `mss` i `Pillow
 
 | Pack | PyPI | GitHub Releases |
 |------|------|-----------------|
-| urisysedge, urikvm | ✅ | opcjonalnie |
+| urirouter, uricore, urikvm | ✅ | opcjonalnie |
 | urihim | 🔲 | ✅ [v0.1.2](https://github.com/tellmesh/urihim/releases/tag/v0.1.2) |
 | uriocr | 🔲 | ✅ [v0.1.0](https://github.com/tellmesh/uriocr/releases/tag/v0.1.0) |
 | urillm | 🔲 | ✅ [v0.1.0](https://github.com/tellmesh/urillm/releases/tag/v0.1.0) |
@@ -218,7 +218,7 @@ Moduł `uri_control` jest **w pakiecie PyPI `uricore`** (nie instaluj go osobno)
 **Szybka naprawa (ten sam Python 3.14, bez venv):**
 
 ```bash
-python3.14 -m pip install -U uricore urisysedge "urisys[real]"
+python3.14 -m pip install -U urirouter uricore "urisys[real]"
 urisys doctor    # od urisys ≥0.1.30 działa nawet gdy coś dalej brakuje
 urisys serve --help
 ```
@@ -229,7 +229,7 @@ urisys serve --help
 python3.12 -m venv ~/venv
 source ~/venv/bin/activate
 pip install -U pip
-pip install -U uricore urisysedge "urisys[real]"
+pip install -U urirouter uricore "urisys[real]"
 
 # weryfikacja (nowe)
 urisys doctor
@@ -248,7 +248,7 @@ urisys node serve --host 0.0.0.0 --port 8790
 **Usuń zepsutą instalację 3.14 (opcjonalnie):**
 
 ```bash
-python3.14 -m pip uninstall -y urisys urisysedge uricore
+python3.14 -m pip uninstall -y urisys uricore urirouter
 rm -f ~/.local/bin/urisys ~/.local/bin/urisys-node
 ```
 

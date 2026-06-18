@@ -21,6 +21,8 @@ def materialize_markpact(
     root: str | Path | None = None,
     manager: MarkpactManager | None = None,
     force: bool = False,
+    platforms: list[str] | tuple[str, ...] | None = None,
+    export_platforms: bool = True,
 ) -> dict[str, Any]:
     """Compile *path* and copy cache output to ``.markpact/{package_id}/``."""
     mgr = manager or MarkpactManager()
@@ -45,7 +47,23 @@ def materialize_markpact(
         "flow_ids": list(compiled.flow_ids),
     }
     (dest / "materialize.json").write_text(json.dumps(index, indent=2), encoding="utf-8")
-    return {"ok": True, "materialized": index, "compiled": compiled.to_dict()}
+
+    platform_index = None
+    if export_platforms and compiled.flow_ids:
+        from .platform_export import export_platform_artifacts
+
+        platform_index = export_platform_artifacts(
+            path,
+            out_dir=dest / "generated",
+            platforms=platforms,
+            materialized_dir=dest,
+        )
+    return {
+        "ok": True,
+        "materialized": index,
+        "platform_export": platform_index,
+        "compiled": compiled.to_dict(),
+    }
 
 
 __all__ = ["default_materialize_root", "materialize_markpact"]

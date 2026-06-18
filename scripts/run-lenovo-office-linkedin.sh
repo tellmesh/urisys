@@ -77,7 +77,7 @@ PY
 import json
 print(json.dumps({
     "uri": "node://local/command/install-pack",
-    "payload": {"pack": "${pack}", "install": True, "force": True, "specs": ["urisysedge>=0.1.0", "${wheel}"]},
+    "payload": {"pack": "${pack}", "install": True, "force": True, "specs": ["uricore>=0.1.0", "${wheel}"]},
     "context": {"approved": True, "allow_real": True},
 }))
 PY

@@ -12,7 +12,7 @@ REPO="${PYPI_REPOSITORY:-pypi}"
 DRY_RUN="${DRY_RUN:-0}"
 
 PACK_DIRS=(
-  "${TELLMESH}/urisysedge"
+  "${TELLMESH}/uricore"
   "${TELLMESH}/urikvm"
   "${TELLMESH}/urihim"
   "${TELLMESH}/uriocr"

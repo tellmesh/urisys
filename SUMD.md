@@ -642,13 +642,13 @@ D:
     _check_uricore_dist()
     run_doctor()
   src/urisys/edge_install.py:
-    e: is_importable,_dist_version,is_broken_install,pip_run,repair_urisysedge,ensure_urisysedge
+    e: is_importable,_dist_version,is_broken_install,pip_run,repair_urisysedge,verify_uri_control_edge
     is_importable()
     _dist_version()
     is_broken_install()
     pip_run(args)
     repair_urisysedge()
-    ensure_urisysedge()
+    verify_uri_control_edge()
   src/urisys/flow.py:
     e: load_flow,iter_steps
     load_flow(path)
@@ -1165,7 +1165,7 @@ python_function('src/urisys/edge_install.py', '_dist_version', 0, 2, 1).
 python_function('src/urisys/edge_install.py', 'is_broken_install', 0, 2, 2).
 python_function('src/urisys/edge_install.py', 'pip_run', 1, 4, 2).
 python_function('src/urisys/edge_install.py', 'repair_urisysedge', 0, 7, 5).
-python_function('src/urisys/edge_install.py', 'ensure_urisysedge', 0, 5, 6).
+python_function('src/urisys/edge_install.py', 'verify_uri_control_edge', 0, 5, 6).
 python_function('src/urisys/flow.py', 'load_flow', 1, 3, 5).
 python_function('src/urisys/flow.py', 'iter_steps', 1, 7, 7).
 python_function('src/urisys/http_server.py', '_read_json', 1, 3, 5).
@@ -1657,7 +1657,7 @@ MODULES:
     _version_lt  CC=2  out:2
   src.urisys.edge_install  [6 funcs]
     _dist_version  CC=2  out:1
-    ensure_urisysedge  CC=5  out:8
+    verify_uri_control_edge  CC=5  out:8
     is_broken_install  CC=2  out:2
     is_importable  CC=1  out:1
     pip_run  CC=4  out:2

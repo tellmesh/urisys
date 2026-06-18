@@ -106,11 +106,33 @@ uri3 run-workflow /tmp/graph.yaml --approve
 |-----------|---------|------|
 | Kolejność w `do:` | Wszystkie | Domyślna sekwencja |
 | `after:` / `depends_on` | uri2flow, flow_runner, uri3 | Jawny DAG |
-| `if:` | uri3 | Gałąź warunkowa |
-| `latest.png`, `runtime.state` | Handlery urirdp | Implicit data coupling |
+| `if:` | uri3, **run_flow** | Gałąź warunkowa (`step.ok == true/false`) |
+| `save_as` / `${ref}` | **run_flow** | Wyniki kroków zamiast implicit `latest` |
+| `payload_from` | **run_flow**, uri3 | Merge `result` z poprzedniego kroku |
+| `latest.png`, `runtime.state` | Handlery urirdp | Legacy implicit coupling |
 | `context` HTTP | Lab/urirdp | display, xauthority, approved |
 
-**Brak** automatycznego `${step_id.result}` w compact flow (uri3 ma `resolve_ref` w adapterach).
+### `save_as` i `${ref}` (run_flow)
+
+```yaml
+do:
+  - id: screenshot
+    uri: kvm://local/monitor/primary/query/screenshot
+    save_as: screenshot
+  - llm://local/vision/query/analyze:
+      target_text: ${screenshot.result.label}
+  - id: retry
+    uri: kvm://local/task/command/click-text
+    if: screenshot.ok == false
+    payload_from: screenshot
+```
+
+- `${step_id}` — cały zapisany wynik kroku
+- `${step_id.result.field}` — pole z `result` handlera
+- `save_as` — alias zapisu (domyślnie `id` lub `step_N`)
+- `step_outputs` trafia też do `context` przy `runtime.call`
+
+Przykład: `tellmesh/examples/39_system_automations/11-ref-chain.uri.flow.yaml`
 
 ## Walidacja sukcesu
 
@@ -174,3 +196,19 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 ```
 
 Opis flow 01–10: [`urisys-automation-lab/docs/10_AUTOMATIONS.md`](../urisys-automation-lab/docs/10_AUTOMATIONS.md).
+
+## Flow w UriProcess (Markpact)
+
+Procesowe flow (`markpact:flow`) kompilują się do `flows/*.uri.flow.yaml` w cache / `.markpact/`.
+Wykonanie: `process://…/command/run` → `urisys://flow/<id>` → kroki przez `Runtime.call`.
+
+Flow opisuje **abstrakcyjne URI** (np. `kvm://local/…`, `stepper://machine-01/…`).
+Mapowanie hostów na platformę i transport — w resolverze (`urisys.runtime.yaml`), nie w flow.
+
+```bash
+urisys markpact materialize markpact-contracts/packs/desktop-automation-processes.markpact.md
+export URISYS_RESOLVER_CONFIG=.markpact/desktop_automation_processes/generated/linux/urisys.runtime.yaml
+urisys markpact run markpact-contracts/packs/desktop-automation-processes.markpact.md --as flow --approve --dry-run
+```
+
+Architektura: [`PROCESS-ARCHITECTURE.md`](PROCESS-ARCHITECTURE.md).

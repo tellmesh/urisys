@@ -34,7 +34,7 @@ run_one() {
   else
     pip install -q "uricore>=0.1.2"
   fi
-  pip install -q -e "$ROOT/packages/python/urisysedge" 2>/dev/null || pip install -q "urisysedge>=0.1.0"
+  pip install -q -e "$ROOT/packages/python/uricore" 2>/dev/null || pip install -q "uricore>=0.1.0"
   pip install -q -e "$ROOT[real]"
   python -m urisys.bootstrap doctor --min-version 0.1.0 >/dev/null
   python -c "import uri_control; import urisys; print('imports ok', uri_control.__name__)"

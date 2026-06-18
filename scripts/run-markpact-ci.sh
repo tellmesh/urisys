@@ -12,8 +12,21 @@ export TELLMESH_ROOT="${TELLMESH_ROOT:-$(tellmesh_root 2>/dev/null || cd "$ROOT/
 echo "== generate_pack_markpacts --check =="
 python3 scripts/generate_pack_markpacts.py --check
 
+echo "== check_contract_drift =="
+python3 scripts/check_contract_drift.py
+
 echo "== validate-all-markpacts =="
 bash scripts/validate-all-markpacts.sh
+
+echo "== analyze-process-markpacts (strict v1alpha) =="
+bash scripts/analyze-process-markpacts.sh
+
+echo "== analyze-thin-markpacts (strict-operations) =="
+export TELLMESH_ROOT="${TELLMESH_ROOT:-$(cd "$ROOT/.." && pwd)}"
+bash scripts/analyze-thin-markpacts.sh
+
+echo "== analyze-legacy-contract-packs (strict-operations) =="
+bash scripts/analyze-legacy-contract-packs.sh
 
 echo "== markpact pytest =="
 python -m pytest \
@@ -22,6 +35,18 @@ python -m pytest \
   tests/test_markpact_run_flow.py \
   tests/test_markpact_materialize.py \
   tests/test_markpact_pack_deps.py \
+  tests/test_markpact_contract_materialize.py \
+  tests/test_markpact_session_isolation.py \
+  tests/test_pack_gen.py \
+  tests/test_contract_gen.py \
+  tests/test_pack_manager_sibling.py \
+  tests/test_urisys_flow_handler.py \
+  tests/test_machine_cycle_process.py \
+  tests/test_desktop_automation_processes.py \
+  tests/test_markpact_profile.py \
+  tests/test_platform_export.py \
+  tests/test_analyze_strict.py \
+  tests/test_process_conformance.py \
   tests/test_showcase.py \
   -q
 

@@ -10,9 +10,12 @@ GET  /uri/routes
 
 Mapa modułów: [`project/map.toon.yaml`](../project/map.toon.yaml).  
 Indeks dokumentacji: [`docs/README.md`](README.md).  
+**Mapa mesh (paczki → urisys):** [`docs/MESH.md`](MESH.md).  
 Katalog paczek: [`docs/PACKAGES.md`](PACKAGES.md), [`project/PACKAGES.md`](../project/PACKAGES.md).
 
 ## Warstwy
+
+Szczegółowy podział **proces / resolver / marksync**: [`docs/PROCESS-ARCHITECTURE.md`](PROCESS-ARCHITECTURE.md).
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
@@ -21,14 +24,24 @@ Katalog paczek: [`docs/PACKAGES.md`](PACKAGES.md), [`project/PACKAGES.md`](../pr
 └───────────────────────────┬─────────────────────────────────┘
                             │ BridgeManager / HTTP
 ┌───────────────────────────▼─────────────────────────────────┐
+│  urirouter (uri_router)   resolve → transport delegate       │
+│  uricore (uri_control)    registry, policy, local handlers   │
+└───────────────────────────┬─────────────────────────────────┘
+                            │
+┌───────────────────────────▼─────────────────────────────────┐
 │  *-docker/            Edge runtime + handlery per domena     │
 │  urirdp / urikvm / uribrowser / urienv / uristepper / lab    │
+│  + resolver config (targets) — Etap 3 ✅                      │
+│    uri_router + URISYS_RESOLVER_CONFIG                        │
 └───────────────────────────┬─────────────────────────────────┘
                             │ *.uri.flow.yaml
 ┌───────────────────────────▼─────────────────────────────────┐
 │  uri2flow → uri3        Graf workflow (depends_on, if:)       │
 │  flow_runner (lab)      Uproszczony executor sekwencyjny      │
 └─────────────────────────────────────────────────────────────┘
+
+marksync (osobne repo) — sync Markpactów + plugin `urisys` → generated/{platform}/… (Etap 4 ✅)
+urisys platform_export — materialize / export-platform → urisys.runtime.yaml, uri_routes.h
 ```
 
 ## Centralny runtime (`src/urisys/`)
@@ -37,6 +50,7 @@ Katalog paczek: [`docs/PACKAGES.md`](PACKAGES.md), [`project/PACKAGES.md`](../pr
 |-----------|------|
 | `PackManager` | Ładuje paczki `uri*` z PyPI/path, `manifest.yaml`, Markpact |
 | `MarkpactManager` | Walidacja/kompilacja/test jednoplikowych `*.markpact.md` |
+| `platform_export` | `export_platform_artifacts` → `generated/{linux,server,esp32}/` (Etap 4) |
 | `RuntimeManager` | Buduje `uri_control.UriControlRuntime` (uricore) |
 | `UriController` | `call`, `explain`, `routes` |
 | `FlowController` | Sekwencyjne wykonanie `do:` z pliku flow (bez `after`) |
@@ -57,7 +71,8 @@ Szczegóły CLI: [`docs/CLI.md`](CLI.md), Markpact: [`docs/MARKPACT.md`](MARKPAC
 
 Wspólne biblioteki:
 
-- **`tellmesh/urisysedge/`** — `Runtime`, JSONL events, env policy, `http.serve`
+- **`tellmesh/uricore/`** — `uri_control.edge`: `Runtime`, JSONL events, env policy, `http.serve`
+- **`tellmesh/urirouter/`** — intent router: resolve, transport delegate, operation/shell policy
 - **`tellmesh/urioperators/`** — helpery LLM dla `urillm`
 
 Edge CLIs (rejestrują standalone packi):
@@ -147,6 +162,7 @@ cd local-lab && bash scripts/run-all.sh
 | `uri2flow` | Compact flow → workflow_graph |
 | `uri3` | Executor grafu |
 | `markpact-contracts` | Packs publikowane na markpact.com |
+| `markpact/marksync` | Sync Markpactów, pipeline deploy, export K8s/ESP32/… ([PROCESS-ARCHITECTURE.md](PROCESS-ARCHITECTURE.md)) |
 
 ## `project/` — analiza code2llm
 

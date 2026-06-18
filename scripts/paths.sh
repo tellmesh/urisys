@@ -10,7 +10,7 @@ urisys_root() {
   _urisys_root
 }
 
-# tellmesh workspace root (urisys + urisysedge siblings), or TELLMESH_ROOT env.
+# tellmesh workspace root (urisys + uricore siblings), or TELLMESH_ROOT env.
 tellmesh_root() {
   local root
   root="$(_urisys_root)"
@@ -18,7 +18,7 @@ tellmesh_root() {
     echo "$TELLMESH_ROOT"
     return 0
   fi
-  if [ -d "$root/../urisysedge" ] && [ -d "$root/../uricore" ]; then
+  if [ -d "$root/../uricore" ] && [ -d "$root/../uricore" ]; then
     cd "$root/.." && pwd
     return 0
   fi

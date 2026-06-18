@@ -7,11 +7,50 @@ from importlib.resources import as_file, files
 from pathlib import Path
 from typing import Iterable
 
+import yaml
 from uri_control import CapabilityRegistry
 
 from ..defaults import DEFAULT_PACKAGES
 from .markpact_manager import MarkpactManager
+from .markpact_pack_deps import extend_tellmesh_paths, tellmesh_root
 from .source_manager import SourceManager
+
+
+def _repo_for_package(package_name: str, root: Path) -> Path:
+    if package_name in ("uribrowserdocker", "uribrowseredge"):
+        return root / "uribrowser"
+    return root / package_name
+
+
+def _sibling_manifest_path(package_name: str) -> Path | None:
+    root = tellmesh_root()
+    if root is None:
+        return None
+    repo = _repo_for_package(package_name, root)
+    if not repo.is_dir():
+        return None
+    candidates = [
+        repo / package_name / "manifest.yaml",
+        repo / package_name / package_name / "manifest.yaml",
+        repo / "manifest.yaml",
+    ]
+    for path in candidates:
+        if path.is_file():
+            return path
+    for path in sorted(repo.glob("*/manifest.yaml")):
+        if path.is_file() and path.parent.name == package_name:
+            return path
+    return None
+
+
+def _manifest_is_loadable(path: Path) -> bool:
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    except OSError:
+        return False
+    if not isinstance(data, dict):
+        return False
+    return bool(str(data.get("scheme") or "").strip())
 
 
 class PackManager:
@@ -71,6 +110,7 @@ class PackManager:
     def manifest_paths(self) -> list[Path]:
         if self._manifest_paths:
             return self._manifest_paths
+        extend_tellmesh_paths()
         paths: list[Path] = []
         for spec in self.pack_specs:
             if self._is_markpact_path(spec):
@@ -81,39 +121,47 @@ class PackManager:
                 paths.append(Path(spec))
                 continue
             package_name = self.resolve_package_name(spec)
+            manifest_path: Path | None = None
             try:
                 import_module(package_name)
             except ModuleNotFoundError as exc:
-                # The package itself is not installed (vs. a broken dependency
-                # of an installed package, which we must not swallow).
                 if exc.name != package_name:
                     raise
+            else:
+                manifest = files(package_name).joinpath("manifest.yaml")
+                if manifest.is_file():
+                    manifest_path = Path(self._stack.enter_context(as_file(manifest)))
+
+            if manifest_path is None:
+                manifest_path = _sibling_manifest_path(package_name)
+
+            if manifest_path is not None and not _manifest_is_loadable(manifest_path):
                 if self.expanded_all:
                     warnings.warn(
-                        f"Skipping uri pack '{spec}': package '{package_name}' "
-                        f"is not installed (pip install {package_name}).",
+                        f"Skipping uri pack '{spec}': manifest {manifest_path} "
+                        f"has no single scheme (multi-scheme bundles need split manifests).",
                         stacklevel=2,
                     )
                     continue
                 raise ModuleNotFoundError(
-                    f"uri pack '{spec}' requires package '{package_name}', "
-                    f"which is not installed (pip install {package_name})."
-                ) from exc
-            manifest = files(package_name).joinpath("manifest.yaml")
-            if not manifest.is_file():
+                    f"uri pack '{spec}' manifest {manifest_path} is not loadable "
+                    f"(expected a single scheme: field)."
+                )
+
+            if manifest_path is None:
                 if self.expanded_all:
                     warnings.warn(
                         f"Skipping uri pack '{spec}': package '{package_name}' "
-                        f"has no manifest.yaml.",
+                        f"is not installed and no sibling manifest was found "
+                        f"(pip install {package_name} or set TELLMESH_ROOT).",
                         stacklevel=2,
                     )
                     continue
                 raise ModuleNotFoundError(
                     f"uri pack '{spec}' requires package '{package_name}' with manifest.yaml, "
-                    f"but none was found (pip install {package_name})."
+                    f"but none was found (pip install {package_name} or set TELLMESH_ROOT)."
                 )
-            path = self._stack.enter_context(as_file(manifest))
-            paths.append(Path(path))
+            paths.append(manifest_path)
         for spec in self.markpact_specs:
             local = self.source_manager.resolve(spec)
             paths.append(self.markpact_manager.manifest_path_for(local))

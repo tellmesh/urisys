@@ -5,6 +5,7 @@ project_metadata('urisys', '0.1.66', 'python').
 project_file('app.doql.less', 49, 'less').
 project_file('examples/frontend/app.js', 22, 'javascript').
 project_file('examples/markpact/browser-call.sh', 13, 'shell').
+project_file('examples/markpact/showcase-run-flow.sh', 30, 'shell').
 project_file('examples/shell/call-uri.sh', 7, 'shell').
 project_file('examples/shell/server-curl.sh', 9, 'shell').
 project_file('local-lab/scripts/01-validate-markpact.sh', 25, 'shell').
@@ -16,18 +17,27 @@ project_file('local-lab/scripts/06-register-release.sh', 63, 'shell').
 project_file('local-lab/scripts/install-urisys.sh', 21, 'shell').
 project_file('local-lab/scripts/run-all.sh', 26, 'shell').
 project_file('project.sh', 63, 'shell').
+project_file('scripts/analyze-legacy-contract-packs.sh', 44, 'shell').
+project_file('scripts/analyze-process-markpacts.sh', 40, 'shell').
+project_file('scripts/analyze-thin-markpacts.sh', 49, 'shell').
 project_file('scripts/bootstrap-lenovo-local.sh', 58, 'shell').
-project_file('scripts/ci-checkout-siblings.sh', 52, 'shell').
+project_file('scripts/check_contract_drift.py', 96, 'python').
+project_file('scripts/ci-checkout-siblings.sh', 57, 'shell').
 project_file('scripts/ci-install-siblings.sh', 29, 'shell').
 project_file('scripts/deploy-lenovo-node.sh', 131, 'shell').
+project_file('scripts/generate_pack_markpacts.py', 358, 'python').
+project_file('scripts/generate_showcase_markpacts.py', 7, 'python').
 project_file('scripts/install-kvm-packs-editable.sh', 14, 'shell').
 project_file('scripts/lenovo-node-session.sh', 74, 'shell').
 project_file('scripts/lenovo_remote_session.py', 796, 'python').
+project_file('scripts/marksync-materialize.sh', 32, 'shell').
+project_file('scripts/materialize-all-showcases.sh', 54, 'shell').
 project_file('scripts/office-simulate-loop.py', 147, 'python').
-project_file('scripts/pack_registry.py', 270, 'python').
-project_file('scripts/pack_sync.py', 348, 'python').
-project_file('scripts/paths.sh', 55, 'shell').
+project_file('scripts/pack_registry.py', 261, 'python').
+project_file('scripts/pack_sync.py', 350, 'python').
+project_file('scripts/paths.sh', 70, 'shell').
 project_file('scripts/publish-pypi-packs.sh', 54, 'shell').
+project_file('scripts/publish-tellmesh-wheels.sh', 84, 'shell').
 project_file('scripts/publish-urisys-node-release.sh', 20, 'shell').
 project_file('scripts/remote-node-smoke.sh', 100, 'shell').
 project_file('scripts/report/__init__.py', 62, 'python').
@@ -42,10 +52,12 @@ project_file('scripts/report/session_io.py', 20, 'python').
 project_file('scripts/report/session_markdown.py', 121, 'python').
 project_file('scripts/report/util.py', 22, 'python').
 project_file('scripts/run-email-mailpit-e2e.sh', 135, 'shell').
+project_file('scripts/run-full-regression.sh', 27, 'shell').
 project_file('scripts/run-lab-e2e.sh', 15, 'shell').
 project_file('scripts/run-lab-nightly.sh', 17, 'shell').
 project_file('scripts/run-lab-unit-ci.sh', 22, 'shell').
 project_file('scripts/run-lenovo-office-linkedin.sh', 119, 'shell').
+project_file('scripts/run-markpact-ci.sh', 59, 'shell').
 project_file('scripts/run-nl-log-smoke.sh', 44, 'shell').
 project_file('scripts/run-office-simulate-e2e.sh', 131, 'shell').
 project_file('scripts/run-office-simulate-lenovo.sh', 183, 'shell').
@@ -58,7 +70,6 @@ project_file('scripts/scan-browser-sessions.py', 200, 'python').
 project_file('scripts/session_core.py', 277, 'python').
 project_file('scripts/session_report.py', 50, 'python').
 project_file('scripts/sync-vendored-pack.sh', 39, 'shell').
-project_file('scripts/sync-vendored-urisysedge.sh', 18, 'shell').
 project_file('scripts/test-goal.sh', 12, 'shell').
 project_file('scripts/test-python-matrix.sh', 59, 'shell').
 project_file('scripts/test_sessions/__init__.py', 101, 'python').
@@ -66,55 +77,104 @@ project_file('scripts/test_sessions/expectations.py', 154, 'python').
 project_file('scripts/test_sessions/lab_flows.py', 321, 'python').
 project_file('scripts/test_sessions/lab_rdp.py', 181, 'python').
 project_file('scripts/test_sessions/util.py', 202, 'python').
-project_file('scripts/validate-all-markpacts.sh', 54, 'shell').
+project_file('scripts/update-ecosystem-readmes.py', 164, 'python').
+project_file('scripts/validate-all-markpacts.sh', 66, 'shell').
 project_file('scripts/validate-pypi-metadata.sh', 63, 'shell').
 project_file('src/urisys/__init__.py', 4, 'python').
 project_file('src/urisys/bootstrap.py', 117, 'python').
-project_file('src/urisys/cli.py', 336, 'python').
+project_file('src/urisys/cli.py', 578, 'python').
 project_file('src/urisys/controllers/__init__.py', 1, 'python').
 project_file('src/urisys/controllers/flow_controller.py', 34, 'python').
 project_file('src/urisys/controllers/server_controller.py', 20, 'python').
 project_file('src/urisys/controllers/uri_controller.py', 34, 'python').
-project_file('src/urisys/defaults.py', 29, 'python').
-project_file('src/urisys/doctor.py', 297, 'python').
-project_file('src/urisys/edge_install.py', 79, 'python').
+project_file('src/urisys/defaults.py', 41, 'python').
+project_file('src/urisys/doctor.py', 294, 'python').
 project_file('src/urisys/flow.py', 26, 'python').
-project_file('src/urisys/http_server.py', 80, 'python').
-project_file('src/urisys/init_setup.py', 263, 'python').
+project_file('src/urisys/http_server.py', 77, 'python').
+project_file('src/urisys/init_setup.py', 258, 'python').
 project_file('src/urisys/managers/__init__.py', 1, 'python').
 project_file('src/urisys/managers/bridge_manager.py', 15, 'python').
+project_file('src/urisys/managers/contract_gen.py', 190, 'python').
 project_file('src/urisys/managers/event_manager.py', 14, 'python').
-project_file('src/urisys/managers/markpact_manager.py', 413, 'python').
-project_file('src/urisys/managers/markpact_models.py', 93, 'python').
+project_file('src/urisys/managers/markpact_flows.py', 134, 'python').
+project_file('src/urisys/managers/markpact_manager.py', 573, 'python').
+project_file('src/urisys/managers/markpact_materialize.py', 70, 'python').
+project_file('src/urisys/managers/markpact_models.py', 103, 'python').
+project_file('src/urisys/managers/markpact_pack_deps.py', 186, 'python').
+project_file('src/urisys/managers/markpact_pack_gen.py', 243, 'python').
+project_file('src/urisys/managers/markpact_profile.py', 236, 'python').
+project_file('src/urisys/managers/markpact_run.py', 242, 'python').
+project_file('src/urisys/managers/markpact_run_flow.py', 160, 'python').
 project_file('src/urisys/managers/markpact_validation.py', 157, 'python').
-project_file('src/urisys/managers/pack_manager.py', 138, 'python').
+project_file('src/urisys/managers/pack_manager.py', 191, 'python').
+project_file('src/urisys/managers/platform_export.py', 299, 'python').
 project_file('src/urisys/managers/policy_manager.py', 19, 'python').
 project_file('src/urisys/managers/route_manager.py', 24, 'python').
 project_file('src/urisys/managers/runtime_manager.py', 31, 'python').
 project_file('src/urisys/managers/source_manager.py', 219, 'python').
 project_file('src/urisys/node_install.py', 107, 'python').
 project_file('src/urisys/uricore_install.py', 131, 'python').
+project_file('src/urisys/urirouter_install.py', 47, 'python').
+project_file('tests/conftest.py', 52, 'python').
+project_file('tests/pack_import_isolation.py', 44, 'python').
+project_file('tests/test_analyze_strict.py', 41, 'python').
 project_file('tests/test_bootstrap.py', 61, 'python').
+project_file('tests/test_contract_gen.py', 74, 'python').
+project_file('tests/test_desktop_automation_processes.py', 76, 'python').
 project_file('tests/test_doctor.py', 29, 'python').
 project_file('tests/test_doctor_uricore.py', 27, 'python').
-project_file('tests/test_edge_install.py', 33, 'python').
+project_file('tests/test_http_server.py', 69, 'python').
 project_file('tests/test_init.py', 61, 'python').
-project_file('tests/test_kvm_pack_pyprojects.py', 69, 'python').
-project_file('tests/test_markpact.py', 100, 'python').
+project_file('tests/test_kvm_pack_pyprojects.py', 71, 'python').
+project_file('tests/test_machine_cycle_process.py', 110, 'python').
+project_file('tests/test_markpact.py', 105, 'python').
+project_file('tests/test_markpact_contract_materialize.py', 106, 'python').
+project_file('tests/test_markpact_materialize.py', 22, 'python').
+project_file('tests/test_markpact_pack_deps.py', 33, 'python').
+project_file('tests/test_markpact_profile.py', 69, 'python').
+project_file('tests/test_markpact_run.py', 98, 'python').
+project_file('tests/test_markpact_run_flow.py', 103, 'python').
+project_file('tests/test_markpact_session_isolation.py', 63, 'python').
 project_file('tests/test_node_install.py', 39, 'python').
+project_file('tests/test_pack_gen.py', 83, 'python').
 project_file('tests/test_pack_manager_parse.py', 45, 'python').
+project_file('tests/test_pack_manager_sibling.py', 39, 'python').
+project_file('tests/test_platform_export.py', 64, 'python').
+project_file('tests/test_process_conformance.py', 53, 'python').
 project_file('tests/test_pypi_metadata.py', 35, 'python').
 project_file('tests/test_python_compat.py', 53, 'python').
 project_file('tests/test_run_expectations.py', 56, 'python').
 project_file('tests/test_session_core.py', 82, 'python').
 project_file('tests/test_session_report_events.py', 59, 'python').
+project_file('tests/test_showcase.py', 51, 'python').
 project_file('tests/test_source_manager.py', 36, 'python').
 project_file('tests/test_uricore_install.py', 38, 'python').
-project_file('tests/test_urisys.py', 46, 'python').
+project_file('tests/test_urirouter_install.py', 18, 'python').
+project_file('tests/test_urisys.py', 65, 'python').
+project_file('tests/test_urisys_flow_handler.py', 72, 'python').
 project_file('tests/test_vendored_sync.py', 58, 'python').
 project_file('tree.sh', 2, 'shell').
 
 % ── Python Functions ─────────────────────────────────────
+python_function('scripts/check_contract_drift.py', 'manifest_path', 1, 3, 1).
+python_function('scripts/check_contract_drift.py', 'contract_paths', 1, 2, 3).
+python_function('scripts/check_contract_drift.py', 'check_pair', 2, 1, 3).
+python_function('scripts/check_contract_drift.py', 'main', 0, 15, 16).
+python_function('scripts/generate_pack_markpacts.py', 'repo_module_dir', 1, 2, 0).
+python_function('scripts/generate_pack_markpacts.py', '_extra_specs', 0, 3, 2).
+python_function('scripts/generate_pack_markpacts.py', '_scheme', 1, 2, 1).
+python_function('scripts/generate_pack_markpacts.py', '_fill_pattern', 1, 1, 3).
+python_function('scripts/generate_pack_markpacts.py', '_capabilities', 2, 7, 5).
+python_function('scripts/generate_pack_markpacts.py', '_tests', 1, 5, 4).
+python_function('scripts/generate_pack_markpacts.py', '_use_case_flow', 2, 6, 4).
+python_function('scripts/generate_pack_markpacts.py', '_run_block', 4, 1, 0).
+python_function('scripts/generate_pack_markpacts.py', '_default_port', 1, 1, 1).
+python_function('scripts/generate_pack_markpacts.py', '_render', 0, 14, 14).
+python_function('scripts/generate_pack_markpacts.py', '_split_by_scheme', 1, 13, 9).
+python_function('scripts/generate_pack_markpacts.py', 'manifest_files', 1, 3, 4).
+python_function('scripts/generate_pack_markpacts.py', '_file_stem', 3, 4, 3).
+python_function('scripts/generate_pack_markpacts.py', 'generate_for_spec', 1, 4, 7).
+python_function('scripts/generate_pack_markpacts.py', 'main', 0, 16, 19).
 python_function('scripts/lenovo_remote_session.py', 'load_yaml', 1, 3, 4).
 python_function('scripts/lenovo_remote_session.py', 'http_get', 2, 4, 6).
 python_function('scripts/lenovo_remote_session.py', '_run_http_get_step', 3, 2, 3).
@@ -146,15 +206,13 @@ python_function('scripts/office-simulate-loop.py', 'llm_tick', 3, 7, 6).
 python_function('scripts/office-simulate-loop.py', 'parse_args', 1, 1, 4).
 python_function('scripts/office-simulate-loop.py', 'main', 1, 10, 9).
 python_function('scripts/pack_registry.py', '_repo', 1, 1, 0).
-python_function('scripts/pack_registry.py', '_vendored_kvm', 1, 1, 0).
-python_function('scripts/pack_registry.py', '_vendored_rdp', 1, 1, 0).
-python_function('scripts/pack_registry.py', '_vendored_node', 1, 1, 0).
 python_function('scripts/pack_registry.py', 'sibling_uv_path', 1, 1, 0).
 python_function('scripts/pack_registry.py', 'sibling_repo', 1, 1, 1).
-python_function('scripts/pack_registry.py', 'pack_specs', 0, 17, 7).
+python_function('scripts/pack_registry.py', '_pack', 1, 3, 2).
+python_function('scripts/pack_registry.py', 'pack_specs', 0, 7, 3).
 python_function('scripts/pack_registry.py', 'sibling_repo_names', 0, 1, 2).
 python_function('scripts/pack_registry.py', 'all_promoted_packs', 0, 1, 3).
-python_function('scripts/pack_sync.py', 'repo_module_dir', 1, 2, 0).
+python_function('scripts/pack_sync.py', 'repo_module_dir', 1, 3, 0).
 python_function('scripts/pack_sync.py', 'vendored_module_dir', 1, 2, 1).
 python_function('scripts/pack_sync.py', 'read_version', 1, 3, 5).
 python_function('scripts/pack_sync.py', 'file_hash', 1, 1, 3).
@@ -280,6 +338,10 @@ python_function('scripts/test_sessions/util.py', 'copy_host_screenshot', 3, 2, 5
 python_function('scripts/test_sessions/util.py', 'file_md5', 1, 2, 4).
 python_function('scripts/test_sessions/util.py', 'sleep_ports', 0, 1, 1).
 python_function('scripts/test_sessions/util.py', 'prepare_urirdp_data', 1, 4, 5).
+python_function('scripts/update-ecosystem-readmes.py', 'build_section', 1, 1, 1).
+python_function('scripts/update-ecosystem-readmes.py', 'strip_old_section', 1, 2, 2).
+python_function('scripts/update-ecosystem-readmes.py', 'fix_urisysedge_refs', 1, 2, 1).
+python_function('scripts/update-ecosystem-readmes.py', 'main', 0, 4, 10).
 python_function('src/urisys/bootstrap.py', '_print_json', 1, 1, 2).
 python_function('src/urisys/bootstrap.py', '_missing_uricore_payload', 1, 1, 1).
 python_function('src/urisys/bootstrap.py', '_doctor_main', 1, 3, 6).
@@ -290,12 +352,27 @@ python_function('src/urisys/cli.py', 'print_json', 1, 1, 2).
 python_function('src/urisys/cli.py', '_add_runtime_flags', 1, 1, 1).
 python_function('src/urisys/cli.py', 'resolve_markpact_source', 1, 2, 3).
 python_function('src/urisys/cli.py', 'build_parser', 0, 1, 9).
-python_function('src/urisys/cli.py', '_cmd_markpact', 1, 9, 12).
+python_function('src/urisys/cli.py', '_cmd_run_flow', 3, 3, 5).
+python_function('src/urisys/cli.py', '_cmd_materialize', 3, 3, 7).
+python_function('src/urisys/cli.py', '_cmd_export_platform', 2, 3, 7).
+python_function('src/urisys/cli.py', '_cmd_run_markpact', 2, 2, 5).
+python_function('src/urisys/cli.py', '_cmd_validate', 2, 1, 2).
+python_function('src/urisys/cli.py', '_cmd_compile', 3, 1, 3).
+python_function('src/urisys/cli.py', '_cmd_routes', 3, 2, 4).
+python_function('src/urisys/cli.py', '_cmd_test', 3, 1, 2).
+python_function('src/urisys/cli.py', '_cmd_analyze', 3, 16, 5).
+python_function('src/urisys/cli.py', '_cmd_markpact', 1, 15, 18).
+python_function('src/urisys/cli.py', '_cmd_pack', 1, 6, 9).
+python_function('src/urisys/cli.py', '_cmd_contract', 2, 6, 12).
 python_function('src/urisys/cli.py', '_cmd_init', 1, 6, 5).
 python_function('src/urisys/cli.py', '_cmd_node', 1, 6, 5).
 python_function('src/urisys/cli.py', '_cmd_uri', 1, 4, 7).
 python_function('src/urisys/cli.py', '_handle_cli_error', 1, 8, 4).
-python_function('src/urisys/cli.py', 'main', 1, 11, 18).
+python_function('src/urisys/cli.py', '_cmd_doctor', 1, 3, 3).
+python_function('src/urisys/cli.py', '_cmd_serve', 1, 1, 3).
+python_function('src/urisys/cli.py', '_cmd_flow', 1, 1, 4).
+python_function('src/urisys/cli.py', '_cmd_events', 1, 1, 3).
+python_function('src/urisys/cli.py', 'main', 1, 9, 11).
 python_function('src/urisys/doctor.py', '_pkg_version', 1, 2, 1).
 python_function('src/urisys/doctor.py', '_parse_version', 1, 7, 6).
 python_function('src/urisys/doctor.py', '_version_lt', 2, 2, 1).
@@ -306,19 +383,12 @@ python_function('src/urisys/doctor.py', '_check_min_version', 1, 6, 4).
 python_function('src/urisys/doctor.py', '_check_wayland_him', 0, 3, 3).
 python_function('src/urisys/doctor.py', '_check_uricore_authentic', 0, 6, 5).
 python_function('src/urisys/doctor.py', '_check_uricore_dist', 0, 3, 3).
-python_function('src/urisys/doctor.py', 'run_doctor', 0, 12, 14).
-python_function('src/urisys/edge_install.py', 'is_importable', 0, 1, 1).
-python_function('src/urisys/edge_install.py', '_dist_version', 0, 2, 1).
-python_function('src/urisys/edge_install.py', 'is_broken_install', 0, 2, 2).
-python_function('src/urisys/edge_install.py', 'pip_run', 1, 4, 2).
-python_function('src/urisys/edge_install.py', 'repair_urisysedge', 0, 7, 5).
-python_function('src/urisys/edge_install.py', 'ensure_urisysedge', 0, 5, 6).
+python_function('src/urisys/doctor.py', 'run_doctor', 0, 11, 13).
 python_function('src/urisys/flow.py', 'load_flow', 1, 3, 5).
 python_function('src/urisys/flow.py', 'iter_steps', 1, 7, 7).
 python_function('src/urisys/http_server.py', '_read_json', 1, 3, 5).
-python_function('src/urisys/http_server.py', '_send', 3, 1, 8).
-python_function('src/urisys/http_server.py', 'create_server', 2, 1, 13).
-python_function('src/urisys/init_setup.py', 'default_pip_specs', 0, 1, 1).
+python_function('src/urisys/http_server.py', 'create_server', 2, 1, 10).
+python_function('src/urisys/init_setup.py', 'default_pip_specs', 0, 1, 2).
 python_function('src/urisys/init_setup.py', 'default_node_pip_spec', 0, 1, 1).
 python_function('src/urisys/init_setup.py', 'pip_install_specs', 1, 4, 2).
 python_function('src/urisys/init_setup.py', 'verify_uri_control', 0, 2, 3).
@@ -326,19 +396,110 @@ python_function('src/urisys/init_setup.py', 'profile_env', 1, 2, 1).
 python_function('src/urisys/init_setup.py', 'render_env_shell', 1, 2, 4).
 python_function('src/urisys/init_setup.py', 'write_env_file', 2, 2, 5).
 python_function('src/urisys/init_setup.py', '_pre_repair_uricore', 4, 6, 5).
-python_function('src/urisys/init_setup.py', '_build_pip_result', 1, 4, 6).
+python_function('src/urisys/init_setup.py', '_build_pip_result', 1, 5, 7).
 python_function('src/urisys/init_setup.py', '_resolve_error_hint', 3, 5, 2).
-python_function('src/urisys/init_setup.py', 'run_init', 0, 31, 17).
+python_function('src/urisys/init_setup.py', '_run_pip_install', 2, 2, 1).
+python_function('src/urisys/init_setup.py', '_verify_after_install', 3, 8, 5).
+python_function('src/urisys/init_setup.py', '_run_doctor_check', 3, 3, 3).
+python_function('src/urisys/init_setup.py', '_write_profile_env', 5, 4, 3).
+python_function('src/urisys/init_setup.py', '_check_node_after_install', 4, 6, 3).
+python_function('src/urisys/init_setup.py', 'run_init', 0, 13, 14).
+python_function('src/urisys/managers/contract_gen.py', 'load_manifest', 1, 3, 5).
+python_function('src/urisys/managers/contract_gen.py', 'normalize_version', 1, 6, 8).
+python_function('src/urisys/managers/contract_gen.py', 'contract_id', 1, 4, 5).
+python_function('src/urisys/managers/contract_gen.py', '_routes', 1, 5, 3).
+python_function('src/urisys/managers/contract_gen.py', '_entry', 1, 8, 5).
+python_function('src/urisys/managers/contract_gen.py', 'manifest_to_contract', 1, 11, 11).
+python_function('src/urisys/managers/contract_gen.py', 'render_contract_markpact', 1, 2, 4).
+python_function('src/urisys/managers/contract_gen.py', 'load_contract_block', 1, 7, 6).
+python_function('src/urisys/managers/contract_gen.py', '_by_pattern', 1, 5, 3).
+python_function('src/urisys/managers/contract_gen.py', '_diff_scheme_and_metadata', 3, 5, 3).
+python_function('src/urisys/managers/contract_gen.py', '_diff_section', 4, 8, 6).
+python_function('src/urisys/managers/contract_gen.py', '_diff_uses', 3, 7, 4).
+python_function('src/urisys/managers/contract_gen.py', 'diff_manifest_contract', 2, 2, 4).
+python_function('src/urisys/managers/markpact_flows.py', 'extract_protos', 1, 7, 5).
+python_function('src/urisys/managers/markpact_flows.py', 'extract_modules', 1, 7, 7).
+python_function('src/urisys/managers/markpact_flows.py', 'extract_flows', 1, 11, 6).
+python_function('src/urisys/managers/markpact_flows.py', 'flow_uris', 1, 8, 6).
+python_function('src/urisys/managers/markpact_flows.py', '_scheme', 1, 1, 1).
+python_function('src/urisys/managers/markpact_flows.py', '_provider_scheme', 1, 1, 1).
+python_function('src/urisys/managers/markpact_flows.py', 'classify_flow', 1, 11, 6).
+python_function('src/urisys/managers/markpact_flows.py', 'declared_uses', 1, 1, 1).
+python_function('src/urisys/managers/markpact_materialize.py', 'default_materialize_root', 0, 1, 1).
+python_function('src/urisys/managers/markpact_materialize.py', 'materialize_markpact', 1, 8, 19).
 python_function('src/urisys/managers/markpact_models.py', 'safe_identifier', 1, 3, 4).
 python_function('src/urisys/managers/markpact_models.py', 'parse_meta', 1, 4, 2).
 python_function('src/urisys/managers/markpact_models.py', 'scheme_from_uri', 1, 2, 2).
 python_function('src/urisys/managers/markpact_models.py', 'source_hash', 1, 1, 4).
+python_function('src/urisys/managers/markpact_pack_deps.py', 'tellmesh_root', 0, 7, 6).
+python_function('src/urisys/managers/markpact_pack_deps.py', '_is_capability_pack_repo', 1, 4, 1).
+python_function('src/urisys/managers/markpact_pack_deps.py', '_register_flat_pack', 2, 4, 5).
+python_function('src/urisys/managers/markpact_pack_deps.py', '_is_flat_pack_repo', 1, 3, 1).
+python_function('src/urisys/managers/markpact_pack_deps.py', '_discover_pack_modules', 1, 12, 6).
+python_function('src/urisys/managers/markpact_pack_deps.py', '_register_sibling_packs', 3, 17, 15).
+python_function('src/urisys/managers/markpact_pack_deps.py', '_register_uricore_utils', 2, 3, 5).
+python_function('src/urisys/managers/markpact_pack_deps.py', '_register_urioperators', 2, 6, 7).
+python_function('src/urisys/managers/markpact_pack_deps.py', 'extend_tellmesh_paths', 0, 2, 5).
+python_function('src/urisys/managers/markpact_pack_deps.py', '_pack_resolver', 0, 2, 0).
+python_function('src/urisys/managers/markpact_pack_deps.py', 'ensure_pack_importable', 1, 5, 6).
+python_function('src/urisys/managers/markpact_pack_deps.py', 'ensure_flow_packs', 1, 2, 3).
+python_function('src/urisys/managers/markpact_pack_gen.py', 'find_package_dir', 1, 8, 5).
+python_function('src/urisys/managers/markpact_pack_gen.py', '_load_manifest', 1, 3, 4).
+python_function('src/urisys/managers/markpact_pack_gen.py', 'package_schemes', 1, 11, 5).
+python_function('src/urisys/managers/markpact_pack_gen.py', '_build_capability', 4, 11, 4).
+python_function('src/urisys/managers/markpact_pack_gen.py', '_pack_block', 3, 9, 7).
+python_function('src/urisys/managers/markpact_pack_gen.py', '_run_block', 3, 1, 0).
+python_function('src/urisys/managers/markpact_pack_gen.py', '_module_blocks', 2, 3, 7).
+python_function('src/urisys/managers/markpact_pack_gen.py', '_proto_blocks', 2, 3, 7).
+python_function('src/urisys/managers/markpact_pack_gen.py', '_sanitize_docs', 1, 1, 1).
+python_function('src/urisys/managers/markpact_pack_gen.py', '_embedded_flows', 3, 9, 9).
+python_function('src/urisys/managers/markpact_pack_gen.py', '_resolve_repo_root', 2, 6, 3).
+python_function('src/urisys/managers/markpact_pack_gen.py', 'generate_pack_markpact', 1, 10, 18).
+python_function('src/urisys/managers/markpact_profile.py', 'declared_schemes', 1, 11, 9).
+python_function('src/urisys/managers/markpact_profile.py', 'declared_packs', 1, 5, 4).
+python_function('src/urisys/managers/markpact_profile.py', '_cap_uri', 1, 3, 2).
+python_function('src/urisys/managers/markpact_profile.py', '_flow_features', 2, 18, 8).
+python_function('src/urisys/managers/markpact_profile.py', '_required_features', 1, 4, 5).
+python_function('src/urisys/managers/markpact_profile.py', '_validate_scheme_requirements', 2, 10, 6).
+python_function('src/urisys/managers/markpact_profile.py', '_validate_undeclared_schemes', 2, 3, 1).
+python_function('src/urisys/managers/markpact_profile.py', '_validate_capability_operations', 2, 5, 4).
+python_function('src/urisys/managers/markpact_profile.py', '_validate_capability_uris', 3, 19, 6).
+python_function('src/urisys/managers/markpact_profile.py', '_build_flow_profiles', 3, 10, 6).
+python_function('src/urisys/managers/markpact_profile.py', '_cross_check_schemes', 4, 9, 6).
+python_function('src/urisys/managers/markpact_profile.py', 'lint_markpact', 0, 4, 9).
+python_function('src/urisys/managers/markpact_run.py', 'read_run_config', 1, 7, 4).
+python_function('src/urisys/managers/markpact_run.py', '_apply_resolver_config', 2, 7, 6).
+python_function('src/urisys/managers/markpact_run.py', '_load_run_config', 1, 4, 5).
+python_function('src/urisys/managers/markpact_run.py', '_build_runtime', 1, 3, 5).
+python_function('src/urisys/managers/markpact_run.py', '_routes_summary', 1, 2, 0).
+python_function('src/urisys/managers/markpact_run.py', '_run_adapter_mode', 6, 3, 3).
+python_function('src/urisys/managers/markpact_run.py', '_run_flow_mode', 10, 17, 25).
+python_function('src/urisys/managers/markpact_run.py', '_run_pack_mode', 5, 1, 2).
+python_function('src/urisys/managers/markpact_run.py', '_run_interface_mode', 6, 2, 1).
+python_function('src/urisys/managers/markpact_run.py', '_run_service_mode', 10, 6, 5).
+python_function('src/urisys/managers/markpact_run.py', 'run_markpact', 1, 10, 13).
+python_function('src/urisys/managers/markpact_run_flow.py', 'split_flow_ref', 1, 3, 2).
+python_function('src/urisys/managers/markpact_run_flow.py', 'pick_flow_id', 2, 5, 4).
+python_function('src/urisys/managers/markpact_run_flow.py', 'flow_path_for', 2, 3, 3).
+python_function('src/urisys/managers/markpact_run_flow.py', 'packs_for_flow', 2, 4, 7).
+python_function('src/urisys/managers/markpact_run_flow.py', '_split_extra', 1, 7, 4).
+python_function('src/urisys/managers/markpact_run_flow.py', 'run_markpact_flow', 1, 14, 21).
 python_function('src/urisys/managers/markpact_validation.py', '_validate_contract_routes', 3, 11, 7).
 python_function('src/urisys/managers/markpact_validation.py', 'validate_contract', 3, 13, 7).
 python_function('src/urisys/managers/markpact_validation.py', '_missing_bundle_imports', 2, 6, 5).
 python_function('src/urisys/managers/markpact_validation.py', 'validate_bundle', 3, 9, 8).
 python_function('src/urisys/managers/markpact_validation.py', '_validate_implementation_capabilities', 2, 5, 6).
 python_function('src/urisys/managers/markpact_validation.py', 'validate_implementation', 3, 14, 7).
+python_function('src/urisys/managers/pack_manager.py', '_repo_for_package', 2, 2, 0).
+python_function('src/urisys/managers/pack_manager.py', '_sibling_manifest_path', 1, 8, 6).
+python_function('src/urisys/managers/pack_manager.py', '_manifest_is_loadable', 1, 5, 7).
+python_function('src/urisys/managers/platform_export.py', '_authorities_from_flow', 1, 17, 11).
+python_function('src/urisys/managers/platform_export.py', 'collect_process_uris', 1, 6, 16).
+python_function('src/urisys/managers/platform_export.py', '_target_stub', 3, 11, 1).
+python_function('src/urisys/managers/platform_export.py', 'build_resolver_yaml', 0, 5, 3).
+python_function('src/urisys/managers/platform_export.py', '_esp32_routes_header', 2, 6, 7).
+python_function('src/urisys/managers/platform_export.py', '_server_compose_snippet', 1, 1, 0).
+python_function('src/urisys/managers/platform_export.py', 'export_platform_artifacts', 1, 7, 13).
 python_function('src/urisys/node_install.py', 'github_owner', 0, 1, 2).
 python_function('src/urisys/node_install.py', 'github_version', 0, 1, 3).
 python_function('src/urisys/node_install.py', 'wheel_filename', 1, 2, 2).
@@ -359,28 +520,63 @@ python_function('src/urisys/uricore_install.py', 'is_wrong_uricore_installed', 0
 python_function('src/urisys/uricore_install.py', 'diagnose_uricore', 0, 4, 4).
 python_function('src/urisys/uricore_install.py', 'pip_run', 1, 4, 2).
 python_function('src/urisys/uricore_install.py', 'repair_uricore', 0, 6, 7).
+python_function('src/urisys/urirouter_install.py', 'github_owner', 0, 1, 2).
+python_function('src/urisys/urirouter_install.py', 'github_version', 0, 1, 3).
+python_function('src/urisys/urirouter_install.py', 'wheel_url', 1, 3, 5).
+python_function('src/urisys/urirouter_install.py', 'pip_spec', 0, 1, 1).
+python_function('src/urisys/urirouter_install.py', '_module_exists', 1, 1, 1).
+python_function('src/urisys/urirouter_install.py', 'diagnose_urirouter', 0, 2, 2).
+python_function('tests/conftest.py', '_tellmesh_root', 0, 6, 5).
+python_function('tests/conftest.py', '_ensure_siblings', 0, 5, 5).
+python_function('tests/conftest.py', '_cleanup_markpact_embedded_imports', 0, 1, 2).
+python_function('tests/pack_import_isolation.py', '_is_embedded_pack_module', 1, 3, 2).
+python_function('tests/pack_import_isolation.py', '_is_ephemeral_path', 1, 2, 1).
+python_function('tests/pack_import_isolation.py', 'reset_embedded_pack_imports', 0, 8, 5).
+python_function('tests/test_analyze_strict.py', '_analyze_strict', 1, 5, 4).
+python_function('tests/test_analyze_strict.py', 'test_machine_cycle_analyze_strict_passes', 0, 2, 4).
+python_function('tests/test_analyze_strict.py', 'test_extend_tellmesh_includes_urioperators', 0, 1, 3).
 python_function('tests/test_bootstrap.py', '_load_module', 2, 2, 3).
 python_function('tests/test_bootstrap.py', 'test_bootstrap_import_does_not_require_uri_control', 0, 2, 2).
 python_function('tests/test_bootstrap.py', 'test_cli_import_does_not_require_uri_control', 0, 3, 1).
 python_function('tests/test_bootstrap.py', 'test_missing_uricore_payload', 0, 4, 2).
 python_function('tests/test_bootstrap.py', 'test_doctor_subcommand_via_bootstrap', 0, 6, 4).
+python_function('tests/test_contract_gen.py', 'test_manifest_to_contract_maps_kinds_and_approval', 0, 12, 2).
+python_function('tests/test_contract_gen.py', 'test_generated_contract_validates', 1, 4, 5).
+python_function('tests/test_contract_gen.py', 'test_self_drift_is_clean', 0, 2, 3).
+python_function('tests/test_contract_gen.py', 'test_drift_detected', 0, 5, 5).
+python_function('tests/test_contract_gen.py', 'test_existing_repo_contract_has_no_core_drift', 0, 2, 3).
+python_function('tests/test_desktop_automation_processes.py', 'test_desktop_automation_validates_and_analyzes', 0, 6, 6).
+python_function('tests/test_desktop_automation_processes.py', 'test_desktop_automation_embedded_approval_test', 1, 3, 4).
+python_function('tests/test_desktop_automation_processes.py', 'test_desktop_gui_flow_dry_run', 2, 2, 5).
+python_function('tests/test_desktop_automation_processes.py', 'test_desktop_install_flow_dry_run_with_resolver', 2, 2, 6).
 python_function('tests/test_doctor.py', 'test_doctor_ok_in_dev_env', 0, 8, 1).
 python_function('tests/test_doctor.py', 'test_doctor_fails_high_min_version', 0, 3, 2).
 python_function('tests/test_doctor.py', 'test_doctor_hints_include_node_serve', 0, 2, 2).
 python_function('tests/test_doctor_uricore.py', 'test_check_uricore_authentic_fails_on_squatter', 0, 7, 4).
-python_function('tests/test_edge_install.py', 'test_repair_calls_force_reinstall_when_broken', 0, 4, 4).
-python_function('tests/test_edge_install.py', 'test_ensure_short_circuits_when_importable', 0, 3, 2).
+python_function('tests/test_http_server.py', '_start', 0, 1, 5).
+python_function('tests/test_http_server.py', '_get', 2, 1, 4).
+python_function('tests/test_http_server.py', 'test_health_exact_shape_and_cors', 0, 4, 4).
+python_function('tests/test_http_server.py', 'test_routes_are_full_dicts_not_flattened', 0, 5, 4).
+python_function('tests/test_http_server.py', 'test_options_preflight_204', 0, 2, 4).
+python_function('tests/test_http_server.py', 'test_events_endpoint', 0, 2, 3).
 python_function('tests/test_init.py', 'test_init_dry_run_via_bootstrap', 0, 8, 4).
 python_function('tests/test_init.py', 'test_run_init_skip_pip_writes_env', 1, 5, 4).
 python_function('tests/test_init.py', 'test_pip_install_failure', 0, 3, 2).
 python_function('tests/test_kvm_pack_pyprojects.py', '_name', 1, 1, 2).
-python_function('tests/test_kvm_pack_pyprojects.py', 'test_urisysedge_sibling_pyproject', 0, 3, 2).
+python_function('tests/test_kvm_pack_pyprojects.py', '_deps', 1, 1, 2).
+python_function('tests/test_kvm_pack_pyprojects.py', 'test_uricore_sibling_pyproject', 0, 3, 2).
 python_function('tests/test_kvm_pack_pyprojects.py', 'test_each_kvm_pack_has_sibling_pyproject', 0, 4, 2).
-python_function('tests/test_kvm_pack_pyprojects.py', 'test_sibling_pack_pyprojects_depend_on_urisysedge', 0, 3, 4).
-python_function('tests/test_kvm_pack_pyprojects.py', 'test_urillm_imports_urisysedge_not_urikvmedge', 0, 4, 2).
+python_function('tests/test_kvm_pack_pyprojects.py', 'test_sibling_pack_pyprojects_depend_on_uricore', 0, 3, 3).
+python_function('tests/test_kvm_pack_pyprojects.py', 'test_urillm_imports_uri_control_env_not_urikvmedge', 0, 4, 2).
 python_function('tests/test_kvm_pack_pyprojects.py', 'test_urisys_root_uv_sources_point_to_siblings', 0, 4, 4).
 python_function('tests/test_kvm_pack_pyprojects.py', 'test_vendored_kvm_pack_dirs_removed', 0, 3, 1).
 python_function('tests/test_kvm_pack_pyprojects.py', 'test_urikvmedge_promoted_to_sibling', 0, 4, 3).
+python_function('tests/test_machine_cycle_process.py', 'test_machine_cycle_process_validates_and_analyzes', 0, 7, 5).
+python_function('tests/test_machine_cycle_process.py', 'test_machine_cycle_compiles_urisys_flow_handler', 1, 5, 6).
+python_function('tests/test_machine_cycle_process.py', 'test_machine_cycle_requires_approval_without_deps', 1, 3, 8).
+python_function('tests/test_machine_cycle_process.py', 'test_machine_cycle_risk_requires_dry_run_and_audit', 1, 5, 8).
+python_function('tests/test_machine_cycle_process.py', 'test_machine_cycle_embedded_markpact_test_policy_only', 1, 4, 5).
+python_function('tests/test_machine_cycle_process.py', 'test_machine_cycle_flow_dry_run_with_tellmesh', 2, 6, 5).
 python_function('tests/test_markpact.py', 'test_markpact_validate', 0, 5, 2).
 python_function('tests/test_markpact.py', 'test_markpact_validate_contract', 0, 5, 2).
 python_function('tests/test_markpact.py', 'test_markpact_validate_implementation', 0, 4, 2).
@@ -389,14 +585,53 @@ python_function('tests/test_markpact.py', 'test_markpact_compile_and_call', 1, 5
 python_function('tests/test_markpact.py', 'test_uri_controller_loads_markpact_directly', 1, 4, 4).
 python_function('tests/test_markpact.py', 'test_markpact_embedded_tests', 1, 3, 3).
 python_function('tests/test_markpact.py', 'test_build_route_shape', 0, 7, 2).
+python_function('tests/test_markpact_contract_materialize.py', 'test_gen_contract_matches_manifest_no_drift', 0, 4, 6).
+python_function('tests/test_markpact_contract_materialize.py', 'test_contract_validates_but_does_not_compile', 0, 3, 6).
+python_function('tests/test_markpact_contract_materialize.py', 'test_thin_pack_materializes_to_markpact_tree', 2, 4, 6).
+python_function('tests/test_markpact_contract_materialize.py', 'test_thin_pack_routes_via_tellmesh_and_uricore', 2, 4, 11).
+python_function('tests/test_markpact_contract_materialize.py', 'test_full_pack_embedded_source_runs_without_tellmesh', 1, 12, 17).
+python_function('tests/test_markpact_materialize.py', 'test_materialize_unpacks_markpact_tree', 1, 6, 5).
+python_function('tests/test_markpact_pack_deps.py', 'test_tellmesh_root_from_env', 1, 2, 3).
+python_function('tests/test_markpact_pack_deps.py', 'test_extend_tellmesh_paths_adds_siblings', 1, 2, 5).
+python_function('tests/test_markpact_pack_deps.py', 'test_extend_tellmesh_imports_uribrowserdocker', 1, 1, 5).
+python_function('tests/test_markpact_profile.py', 'test_declared_schemes_from_requires', 0, 3, 2).
+python_function('tests/test_markpact_profile.py', 'test_declared_schemes_legacy_flat_uses', 0, 2, 1).
+python_function('tests/test_markpact_profile.py', 'test_lint_rejects_query_kind_mismatch', 0, 3, 2).
+python_function('tests/test_markpact_profile.py', 'test_machine_cycle_analyze_v1alpha_profile', 0, 6, 4).
+python_function('tests/test_markpact_profile.py', 'test_desktop_automation_analyze_has_expect_warnings_only', 0, 4, 6).
+python_function('tests/test_markpact_run.py', 'test_run_pack_mode', 2, 5, 6).
+python_function('tests/test_markpact_run.py', 'test_run_interface_mode', 2, 4, 5).
+python_function('tests/test_markpact_run.py', 'test_run_flow_mode', 2, 4, 5).
+python_function('tests/test_markpact_run.py', 'test_run_flow_fragment', 2, 5, 6).
+python_function('tests/test_markpact_run.py', 'test_run_integration_flow_local_siblings', 2, 7, 8).
+python_function('tests/test_markpact_run_flow.py', 'test_split_flow_ref', 0, 3, 1).
+python_function('tests/test_markpact_run_flow.py', 'test_pick_flow_id_requires_fragment_when_many', 1, 1, 4).
+python_function('tests/test_markpact_run_flow.py', 'test_compile_cache_hit_preserves_flow_ids', 1, 4, 2).
+python_function('tests/test_markpact_run_flow.py', 'test_run_flow_use_case', 1, 6, 4).
+python_function('tests/test_markpact_run_flow.py', 'test_run_flow_via_fragment', 1, 3, 1).
+python_function('tests/test_markpact_run_flow.py', 'test_flow_path_for', 1, 3, 4).
+python_function('tests/test_markpact_run_flow.py', 'test_run_integration_flow_local_siblings', 2, 5, 9).
+python_function('tests/test_markpact_session_isolation.py', 'test_embedded_urikvm_does_not_break_integration_flow', 2, 10, 16).
 python_function('tests/test_node_install.py', 'test_default_pip_specs_no_git_urls', 0, 3, 2).
 python_function('tests/test_node_install.py', 'test_urisys_node_uses_release_wheel', 0, 6, 3).
 python_function('tests/test_node_install.py', 'test_urisys_node_wheel_filename_pep427', 0, 3, 1).
 python_function('tests/test_node_install.py', 'test_urisys_node_wheel_url_override', 0, 2, 2).
+python_function('tests/test_pack_gen.py', 'test_generate_embeds_full_source', 1, 6, 4).
+python_function('tests/test_pack_gen.py', 'test_unpack_and_execute_embedded_handler', 1, 11, 12).
+python_function('tests/test_pack_gen.py', 'test_multi_scheme_requires_scheme_selection', 0, 2, 1).
+python_function('tests/test_pack_gen.py', 'test_run_modes_interface_and_adapter', 1, 4, 4).
 python_function('tests/test_pack_manager_parse.py', 'test_parse_packs_default_set', 0, 6, 1).
 python_function('tests/test_pack_manager_parse.py', 'test_parse_packs_explicit_and_none_filter', 0, 7, 1).
 python_function('tests/test_pack_manager_parse.py', 'test_is_all', 0, 5, 1).
 python_function('tests/test_pack_manager_parse.py', 'test_parse_markpacts', 0, 6, 1).
+python_function('tests/test_pack_manager_sibling.py', 'test_sibling_manifest_path_finds_nested_pack', 1, 4, 5).
+python_function('tests/test_pack_manager_sibling.py', 'test_sibling_manifest_path_finds_browser_docker', 1, 3, 5).
+python_function('tests/test_pack_manager_sibling.py', 'test_pack_manager_all_loads_sibling_manifests', 1, 5, 7).
+python_function('tests/test_platform_export.py', 'test_collect_process_uris_machine_cycle', 0, 5, 3).
+python_function('tests/test_platform_export.py', 'test_collect_process_uris_desktop', 0, 4, 4).
+python_function('tests/test_platform_export.py', 'test_build_resolver_yaml_has_v1_metadata', 0, 4, 1).
+python_function('tests/test_platform_export.py', 'test_export_platform_artifacts_writes_files', 1, 6, 5).
+python_function('tests/test_process_conformance.py', 'test_process_flow_conformance_dry_run', 5, 4, 8).
 python_function('tests/test_pypi_metadata.py', 'test_validate_pypi_metadata_script_exists', 0, 2, 1).
 python_function('tests/test_pypi_metadata.py', 'test_built_wheel_has_no_direct_url_requires_dist', 0, 3, 6).
 python_function('tests/test_pypi_metadata.py', 'test_pyproject_runtime_deps_have_no_direct_urls', 0, 4, 2).
@@ -414,16 +649,24 @@ python_function('tests/test_session_core.py', 'test_extract_ignores_non_image_re
 python_function('tests/test_session_core.py', 'test_backfill_session_images', 1, 3, 5).
 python_function('tests/test_session_report_events.py', 'test_summarize_events_api_json', 1, 4, 3).
 python_function('tests/test_session_report_events.py', 'test_summarize_events_jsonl', 1, 4, 5).
+python_function('tests/test_showcase.py', 'test_showcase_validates', 0, 4, 2).
+python_function('tests/test_showcase.py', 'test_analyze_classifies_use_case_and_integration', 0, 8, 3).
+python_function('tests/test_showcase.py', 'test_compile_extracts_flows_and_protos', 1, 6, 4).
+python_function('tests/test_showcase.py', 'test_classify_flow_reports_undeclared_uses', 0, 4, 2).
+python_function('tests/test_showcase.py', 'test_declared_uses_strips_scheme_suffix', 0, 2, 1).
 python_function('tests/test_source_manager.py', 'test_fetch_local_file', 1, 4, 5).
 python_function('tests/test_source_manager.py', 'test_fetch_github_raw', 2, 3, 4).
 python_function('tests/test_uricore_install.py', 'test_wheel_url_default', 0, 3, 3).
 python_function('tests/test_uricore_install.py', 'test_wrong_uricore_detected_when_squatter_present', 0, 2, 2).
 python_function('tests/test_uricore_install.py', 'test_not_wrong_when_uri_control_present', 0, 2, 2).
 python_function('tests/test_uricore_install.py', 'test_diagnose_includes_wheel_url', 0, 3, 2).
-python_function('tests/test_urisys.py', 'test_call_browser_open', 1, 3, 4).
-python_function('tests/test_urisys.py', 'test_routes_load', 1, 3, 5).
-python_function('tests/test_urisys.py', 'test_all_skips_uninstalled_packs', 1, 4, 3).
+python_function('tests/test_urirouter_install.py', 'test_wheel_url_default', 0, 3, 3).
+python_function('tests/test_urirouter_install.py', 'test_diagnose_includes_wheel_url', 0, 3, 1).
+python_function('tests/test_urisys.py', 'test_call_browser_open', 1, 4, 6).
+python_function('tests/test_urisys.py', 'test_routes_load', 1, 5, 7).
+python_function('tests/test_urisys.py', 'test_all_skips_uninstalled_packs', 2, 3, 6).
 python_function('tests/test_urisys.py', 'test_explicit_missing_pack_raises_helpful_error', 0, 1, 3).
+python_function('tests/test_urisys_flow_handler.py', 'test_process_capability_runs_embedded_flow_via_urisys_handler', 1, 6, 9).
 python_function('tests/test_vendored_sync.py', '_run_check', 1, 1, 2).
 python_function('tests/test_vendored_sync.py', 'test_pack_sync_script_exists', 0, 4, 1).
 python_function('tests/test_vendored_sync.py', 'test_sibling_repos_exist', 0, 4, 1).
@@ -457,6 +700,9 @@ python_method('UriController', 'explain', 1, 1, 1).
 python_method('UriController', 'routes', 0, 1, 1).
 python_method('UriController', 'close', 0, 1, 1).
 python_class('src/urisys/doctor.py', 'Check').
+python_class('src/urisys/http_server.py', '_ControllerRuntime').
+python_method('_ControllerRuntime', '__init__', 1, 1, 0).
+python_method('_ControllerRuntime', 'call', 3, 3, 4).
 python_class('src/urisys/managers/bridge_manager.py', 'BridgeManager').
 python_method('BridgeManager', 'call_http', 5, 3, 7).
 python_class('src/urisys/managers/event_manager.py', 'EventManager').
@@ -470,14 +716,25 @@ python_method('MarkpactManager', 'load_pack_block', 1, 4, 6).
 python_method('MarkpactManager', 'validate', 1, 12, 12).
 python_method('MarkpactManager', '_validate_pack', 3, 11, 16).
 python_method('MarkpactManager', '_yaml_blocks', 2, 4, 0).
-python_method('MarkpactManager', 'compile', 1, 17, 25).
+python_method('MarkpactManager', '_compile_context', 1, 2, 6).
+python_method('MarkpactManager', '_compile_from_cache', 2, 4, 6).
+python_method('MarkpactManager', '_write_manifest_flows', 3, 3, 7).
+python_method('MarkpactManager', '_write_compile_metadata', 1, 1, 4).
+python_method('MarkpactManager', 'compile', 1, 15, 23).
+python_method('MarkpactManager', '_write_modules', 2, 2, 5).
+python_method('MarkpactManager', '_flows_from_cache', 2, 3, 3).
+python_method('MarkpactManager', '_protos_from_cache', 2, 3, 3).
+python_method('MarkpactManager', '_modules_from_cache', 2, 4, 3).
+python_method('MarkpactManager', '_write_flows', 2, 3, 6).
+python_method('MarkpactManager', '_write_protos', 2, 3, 5).
+python_method('MarkpactManager', 'analyze', 1, 8, 16).
 python_method('MarkpactManager', '_write_handler_modules', 2, 5, 4).
 python_method('MarkpactManager', 'manifest_path_for', 1, 1, 1).
 python_method('MarkpactManager', 'run_tests', 1, 12, 15).
 python_method('MarkpactManager', '_check_expectations', 2, 9, 4).
-python_method('MarkpactManager', '_build_route', 1, 14, 8).
-python_method('MarkpactManager', '_resolve_handler_ref', 4, 5, 4).
-python_method('MarkpactManager', '_compile_manifest', 1, 11, 5).
+python_method('MarkpactManager', '_build_route', 1, 16, 9).
+python_method('MarkpactManager', '_resolve_handler_ref', 5, 7, 4).
+python_method('MarkpactManager', '_compile_manifest', 1, 12, 5).
 python_method('MarkpactManager', '_package_id', 2, 5, 5).
 python_method('MarkpactManager', '_capabilities', 1, 6, 3).
 python_method('MarkpactManager', '_scheme', 2, 8, 5).
@@ -487,7 +744,7 @@ python_method('MarkpactManager', '_handler_id_from_ref', 1, 2, 2).
 python_method('MarkpactManager', '_ensure_importable', 1, 2, 3).
 python_class('src/urisys/managers/markpact_models.py', 'MarkpactBlock').
 python_class('src/urisys/managers/markpact_models.py', 'CompiledMarkpact').
-python_method('CompiledMarkpact', 'to_dict', 0, 4, 1).
+python_method('CompiledMarkpact', 'to_dict', 0, 6, 2).
 python_class('src/urisys/managers/markpact_models.py', 'MarkpactError').
 python_class('src/urisys/managers/pack_manager.py', 'PackManager').
 python_method('PackManager', '__init__', 1, 1, 6).
@@ -498,7 +755,9 @@ python_method('PackManager', 'parse_markpacts', 1, 1, 1).
 python_method('PackManager', 'resolve_package_name', 1, 1, 1).
 python_method('PackManager', '_is_markpact_path', 1, 3, 2).
 python_method('PackManager', '_is_manifest_path', 1, 4, 1).
-python_method('PackManager', 'manifest_paths', 0, 11, 15).
+python_method('PackManager', '_resolve_importable_manifest', 1, 5, 7).
+python_method('PackManager', '_handle_missing_manifest', 3, 6, 3).
+python_method('PackManager', 'manifest_paths', 0, 8, 11).
 python_method('PackManager', 'create_registry', 0, 1, 2).
 python_method('PackManager', 'capabilities', 0, 2, 1).
 python_method('PackManager', 'close', 0, 1, 1).

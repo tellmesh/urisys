@@ -1,5 +1,7 @@
 # Migracja krok 2 — uri2flow/uri3, edge shims, releases
 
+> **Dokument historyczny** (2026-06). Aktualny model edge: `uri_control.edge` w **uricore**; legacy **urisysedge** usunięty. Zob. [ECOSYSTEM.md](ECOSYSTEM.md) · [MESH.md](MESH.md).
+
 ## 1. `flow_runner.py` → uri2flow + uri3
 
 | Było | Jest |
@@ -28,9 +30,9 @@ API `POST /uri/flow` — bez zmian (ten sam kształt odpowiedzi: `ok`, `graph`, 
 
 | Pakiet | Było | Jest |
 |--------|------|------|
-| `urikvmedge/runtime.py` | ~228 L fork | re-export z `urisysedge.runtime` |
-| `urikvmedge/env.py` | ~116 L fork | re-export z `urisysedge.env` |
-| `uribrowseredge/runtime.py` | ~222 L fork | re-export z `urisysedge.runtime` |
+| `urikvmedge/runtime.py` | ~228 L fork | re-export z `uri_control.edge.runtime` |
+| `urikvmedge/env.py` | ~116 L fork | re-export z `uri_control.edge.env` |
+| `uribrowseredge/runtime.py` | ~222 L fork | re-export z `uri_control.edge.runtime` |
 
 Docker build context = katalog `urisys/` (jak `urirdp-docker`):
 

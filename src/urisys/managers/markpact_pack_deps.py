@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from urisysedge.compose import resolve_pack_module
+from uri_control.edge.compose import resolve_pack_module
 
 from .markpact_models import MarkpactError
 
@@ -22,7 +22,7 @@ def tellmesh_root(*, anchor: Path | None = None) -> Path | None:
             return root
     start = (anchor or Path.cwd()).resolve()
     for candidate in (start, *start.parents):
-        if (candidate / "urisys").is_dir() and (candidate / "urisysedge").is_dir():
+        if (candidate / "urisys").is_dir() and (candidate / "uricore").is_dir():
             return candidate
     return None
 
@@ -50,33 +50,83 @@ def _register_flat_pack(root: Path, name: str) -> bool:
     return True
 
 
+def _is_flat_pack_repo(child: Path) -> bool:
+    """Repo root is the importable package (``package-dir = {{name = \".\"}}``)."""
+    name = child.name
+    return (
+        (child / "manifest.yaml").is_file()
+        and (child / "__init__.py").is_file()
+        and not (child / name / "manifest.yaml").is_file()
+    )
+
+
+def _discover_pack_modules(child: Path) -> list[tuple[Path, str]]:
+    """Return ``(repo_root_on_sys_path, import_module_name)`` for packs under *child*."""
+    found: list[tuple[Path, str]] = []
+    name = child.name
+    nested = child / name
+    if nested.is_dir() and (nested / "manifest.yaml").is_file():
+        found.append((child, name))
+    for sub in sorted(child.iterdir()):
+        if not sub.is_dir():
+            continue
+        if (sub / "manifest.yaml").is_file() and ((sub / "routes.py").is_file() or (sub / "__init__.py").is_file()):
+            found.append((child, sub.name))
+    if (child / "manifest.yaml").is_file() and (child / "routes.py").is_file():
+        if not any(mod == name for _, mod in found):
+            found.append((child, name))
+    return found
+
+
 def extend_tellmesh_paths(*, anchor: Path | None = None) -> list[str]:
     """Register sibling tellmesh capability packs (nested path or flat import)."""
     root = tellmesh_root(anchor=anchor)
     if root is None:
         return []
     added: list[str] = []
+    seen_paths: set[str] = set()
     for child in sorted(root.iterdir()):
         if not child.is_dir() or not child.name.startswith("uri"):
             continue
         if child.name.endswith("-docker") or child.name.endswith("edge"):
             continue
-        if not _is_capability_pack_repo(child):
+        if not _is_capability_pack_repo(child) and not _discover_pack_modules(child):
             continue
-        nested = child / child.name
-        if nested.is_dir():
-            path = str(child.resolve())
-            if path not in sys.path:
+        if _is_flat_pack_repo(child):
+            if child.name not in sys.modules and _register_flat_pack(child, child.name):
+                added.append(f"flat:{child}")
+            continue
+        for repo_path, module_name in _discover_pack_modules(child):
+            path = str(repo_path.resolve())
+            if path not in sys.path and path not in seen_paths:
                 sys.path.insert(0, path)
+                seen_paths.add(path)
                 added.append(path)
-        elif _register_flat_pack(child, child.name):
-            added.append(f"flat:{child}")
+            if module_name in sys.modules:
+                continue
+            try:
+                importlib.import_module(module_name)
+            except ModuleNotFoundError:
+                if _register_flat_pack(repo_path / module_name, module_name):
+                    added.append(f"flat:{repo_path / module_name}")
     uricore = root / "uricore" / "core" / "python"
     if uricore.is_dir():
         path = str(uricore.resolve())
         if path not in sys.path:
             sys.path.insert(0, path)
             added.append(path)
+    # urioperators — shared LLM helpers (no manifest.yaml; required by urillm handlers)
+    ops = root / "urioperators"
+    if ops.is_dir() and (ops / "__init__.py").is_file():
+        path = str(ops.resolve())
+        if path not in sys.path:
+            sys.path.insert(0, path)
+            added.append(path)
+        if "urioperators" not in sys.modules:
+            try:
+                importlib.import_module("urioperators")
+            except ModuleNotFoundError:
+                pass
     return added
 
 

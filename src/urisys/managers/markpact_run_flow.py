@@ -1,15 +1,15 @@
-"""Compile a showcase Markpact and run an embedded ``markpact:flow`` on urisysedge."""
+"""Compile a showcase Markpact and run an embedded ``markpact:flow`` on uri_control.edge."""
 
 from __future__ import annotations
 
 from pathlib import Path
 from typing import Any, Iterable
 
-from urisysedge.compose import build_runtime
-from urisysedge.runtime import run_flow
+from uri_control.edge.compose import build_runtime
+from uri_control.edge.runtime import run_flow
 
 from ..defaults import DEFAULT_ENVIRONMENT
-from .markpact_flows import classify_flow, declared_uses
+from .markpact_flows import classify_flow, declared_uses, _provider_scheme
 from .markpact_pack_deps import ensure_flow_packs
 from .markpact_manager import MarkpactManager
 from .markpact_models import CompiledMarkpact, MarkpactError, safe_identifier
@@ -62,7 +62,7 @@ def packs_for_flow(
     """Return (pack aliases to load, undeclared foreign schemes) for one flow."""
     declared = declared_uses(pack)
     info = classify_flow(flow_data, pack_scheme=pack_scheme, declared_uses=declared)
-    names = list(info["foreign_schemes"])
+    names = sorted({_provider_scheme(s) for s in info["foreign_schemes"]})
     for item in _split_extra(extra):
         if item not in names:
             names.append(item)
@@ -92,7 +92,7 @@ def run_markpact_flow(
     allow_real: bool = False,
     environment: str = DEFAULT_ENVIRONMENT,
 ) -> dict[str, Any]:
-    """Compile *path*, build urisysedge runtime (manifest + flow deps), run one flow."""
+    """Compile *path*, build edge runtime (manifest + flow deps), run one flow."""
     mgr = manager or MarkpactManager()
     path_text, inline_flow = split_flow_ref(str(path))
     if flow_id is None:

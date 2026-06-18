@@ -16,7 +16,7 @@ install_editable() {
 }
 
 # Core stack for urisys + node tests
-for repo in uricore urisysedge urioperators urisys-node; do
+for repo in uricore uricore urioperators urisys-node; do
   install_editable "${repo}"
 done
 

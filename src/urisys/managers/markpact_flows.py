@@ -90,6 +90,16 @@ def _scheme(uri: str) -> str:
     return urlsplit(uri).scheme
 
 
+# Domain URI schemes (resolved via ``uri_aliases``) borrow another pack at runtime.
+DOMAIN_SCHEME_PROVIDERS: dict[str, str] = {
+    "package": "shell",
+}
+
+
+def _provider_scheme(scheme: str) -> str:
+    return DOMAIN_SCHEME_PROVIDERS.get(scheme, scheme)
+
+
 def classify_flow(flow_data: dict[str, Any], *, pack_scheme: str, declared_uses: set[str]) -> dict[str, Any]:
     """Classify a flow as ``use_case`` or ``integration`` and report missing deps.
 
@@ -101,25 +111,23 @@ def classify_flow(flow_data: dict[str, Any], *, pack_scheme: str, declared_uses:
     schemes = [s for s in (_scheme(u) for u in uris) if s]
     foreign = sorted({s for s in schemes if s and s != pack_scheme})
     kind = "use_case" if not foreign else "integration"
-    undeclared = sorted(s for s in foreign if s not in declared_uses)
+    undeclared = sorted(
+        s
+        for s in foreign
+        if s not in declared_uses and _provider_scheme(s) not in declared_uses
+    )
     return {
         "kind": kind,
         "schemes": sorted(set(schemes)),
         "foreign_schemes": foreign,
         "undeclared_uses": undeclared,
         "steps": len(uris),
+        "requires": {"schemes": sorted(set(schemes))},
     }
 
 
 def declared_uses(pack: dict[str, Any]) -> set[str]:
-    """Schemes a pack declares it integrates with (``uses``/``dependencies``)."""
-    raw: list[Any] = []
-    for key in ("uses", "dependencies"):
-        value = pack.get(key)
-        if isinstance(value, list):
-            raw.extend(value)
-    out: set[str] = set()
-    for item in raw:
-        text = str(item).strip()
-        out.add(text.split("://", 1)[0] if "://" in text else text)
-    return out
+    """Schemes a pack declares it integrates with (``requires.schemes`` or legacy ``uses``)."""
+    from .markpact_profile import declared_schemes
+
+    return declared_schemes(pack)

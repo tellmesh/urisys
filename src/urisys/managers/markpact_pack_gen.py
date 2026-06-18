@@ -169,12 +169,30 @@ def _embedded_flows(repo_root: Path, scheme: str, limit: int = 2) -> list[tuple[
     return found
 
 
+def _resolve_repo_root(package_dir: Path, repo_root: Path | None = None) -> Path:
+    if repo_root is not None:
+        return repo_root
+    from .markpact_pack_deps import tellmesh_root
+
+    tm = tellmesh_root(anchor=package_dir)
+    if tm is not None:
+        return tm
+    # Nested layout: tellmesh/urikvm/urikvm/manifest.yaml
+    if len(package_dir.parents) > 2 and (package_dir.parents[1] / "uricore").is_dir():
+        return package_dir.parents[1]
+    # Package dir passed directly under tellmesh/{repo}/
+    parent = package_dir.parent
+    if (parent / "uricore").is_dir():
+        return parent
+    return parent
+
+
 def generate_pack_markpact(
     target: str | Path, *, repo_root: Path | None = None, port: int = DEFAULT_PORT, scheme: str | None = None
 ) -> str:
     package_dir = find_package_dir(target, repo_root=repo_root)
     pkg_name = package_dir.name
-    repo_root = repo_root or package_dir.parents[1]
+    repo_root = _resolve_repo_root(package_dir, repo_root)
     manifest = _load_manifest(package_dir)
     schemes = package_schemes(manifest)
     if not schemes:

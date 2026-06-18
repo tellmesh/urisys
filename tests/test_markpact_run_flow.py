@@ -12,6 +12,8 @@ from urisys.managers.markpact_run_flow import (
     split_flow_ref,
 )
 
+from pack_import_isolation import reset_embedded_pack_imports
+
 ROOT = Path(__file__).resolve().parents[1]
 TELLMESH = ROOT.parent
 SHOWCASE = TELLMESH / "markpact-contracts" / "packs" / "uribrowser.showcase.markpact.md"
@@ -76,6 +78,7 @@ def test_flow_path_for(tmp_path):
 @pytest.mark.skipif(not SHOWCASE.is_file(), reason="showcase markpact missing")
 def test_run_integration_flow_local_siblings(tmp_path, monkeypatch):
     monkeypatch.setenv("TELLMESH_ROOT", str(TELLMESH))
+    reset_embedded_pack_imports()
     from urisys.managers.markpact_pack_deps import extend_tellmesh_paths
 
     try:

@@ -23,7 +23,7 @@ pip install urisys
 
 ### Dev (checkout tellmesh)
 
-Wymaga checkout **tellmesh workspace** — `urisys` obok sibling repos (`urisysedge/`, `urisys-node/`, `urikvm/`, …).
+Wymaga checkout **tellmesh workspace** — `urisys` obok sibling repos (`urirouter/`, `uricore/`, `urisys-node/`, `urikvm/`, …).
 
 ```bash
 cd tellmesh/urisys
@@ -41,7 +41,9 @@ urisys --help
 which urisys   # → .venv/bin/urisys
 ```
 
-Zależności runtime: **`uricore`** (tellmesh wheel z GitHub — **nie** PyPI `uricore`), paczki URI z **`uri-packs`** (dev group w `pyproject.toml`).
+Zależności runtime: **`uricore`** (tellmesh wheel z GitHub), **`urirouter`** (resolve + transport delegate), paczki URI z **`uri-packs`** (dev group w `pyproject.toml`).
+
+**Mapa wszystkich paczek (diagramy, linki):** [`docs/MESH.md`](docs/MESH.md).
 
 Capability packi **kvm/him/ocr/llm** doinstalowują się **lazy przy pierwszym URI** — [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md).
 
@@ -59,7 +61,7 @@ uv sync --extra kvm
 ```
 
 Każdy capability pack ma własny `pyproject.toml` (samodzielnie publikowalny na PyPI;
-zależy od `urisysedge`). Po publikacji: `pip install urikvm urihim uriocr urillm`.
+zależy od `uricore`). Po publikacji: `pip install urikvm urihim uriocr urillm`.
 Na działającym node dogrywasz po połączeniu: `POST /uri/pack {"pack":"kvm"}` (wymaga
 `URISYS_NODE_ALLOW_PACK_LOAD=1`). Szczegóły: [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md).
 
@@ -97,6 +99,8 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 
 | Dokument | Temat |
 |----------|--------|
+| [`docs/ECOSYSTEM.md`](docs/ECOSYSTEM.md) | Model warstw TellMesh |
+| [`docs/MESH.md`](docs/MESH.md) | **Mapa TellMesh** — paczki → urisys, diagramy Mermaid |
 | [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md) | **Slave** — `urisys init`, lazy install, hot-load, systemd |
 | [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md) | **PyPI · Markpact · GitHub OCI** — packi, kvm-release |
 | [`docs/PACKAGES.md`](docs/PACKAGES.md) | Layout tellmesh sibling repos, `urioperators` |
@@ -104,6 +108,7 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 | [`docs/PACK-EXTENSIBILITY.md`](docs/PACK-EXTENSIBILITY.md) | Nowe schematy URI, forward, `release_forwards` |
 | [`docs/OFFICE-AUTOMATION.md`](docs/OFFICE-AUTOMATION.md) | Automatyzacja biurowa — roadmap |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Warstwy, runtime, porty Docker |
+| [`docs/PROCESS-ARCHITECTURE.md`](docs/PROCESS-ARCHITECTURE.md) | UriProcess: Markpact → resolver → marksync |
 | [`docs/FLOWS.md`](docs/FLOWS.md) | URI flows, uri2flow / uri3 |
 | [`docs/CLI.md`](docs/CLI.md) | Komendy CLI |
 | [`docs/MARKPACT.md`](docs/MARKPACT.md) | Markpact validate/compile/test |
@@ -117,9 +122,9 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 
 ```text
 tellmesh/
-├── urisys/              pip package — CLI + managers + docker glue
-├── uricore/             control-plane engine (uri_control)
-├── urisysedge/          wspólny edge runtime (canonical)
+├── urisys/              pip package — CLI + managers + docker glue ★
+├── urirouter/           intent router (resolve + transport)
+├── uricore/             uri_control + uri_control.edge
 ├── urioperators/        wspólne helpery LLM
 ├── urisys-node/         urisysnode (bundled); uriscreen/urishell via pip
 ├── urikvm/ urihim/ uriocr/ urillm/ urirdp/ urishell/ urienv/ …
@@ -153,9 +158,19 @@ urisys markpact run markpacts/urishell.markpact.md --as flow --approve --dry-run
 
 bash scripts/validate-all-markpacts.sh
 bash examples/markpact/showcase-run-flow.sh          # uribrowser integration demo
+
+# UriProcess: materialize + resolver per platform
+export TELLMESH_ROOT=~/github/tellmesh
+bash scripts/marksync-materialize.sh ../markpact-contracts/packs/desktop-automation-processes.markpact.md
 ```
 
-Docs: [`docs/MARKPACT.md`](docs/MARKPACT.md) · layout: [`markpacts/README.md`](markpacts/README.md)
+Docs: [`docs/MARKPACT.md`](docs/MARKPACT.md) · [`docs/PROCESS-ARCHITECTURE.md`](docs/PROCESS-ARCHITECTURE.md) · layout: [`markpacts/README.md`](markpacts/README.md)
+
+Pełna regresja (tellmesh workspace):
+
+```bash
+bash scripts/run-full-regression.sh
+```
 
 ## Analiza projektu (code2llm)
 
@@ -163,6 +178,22 @@ Docs: [`docs/MARKPACT.md`](docs/MARKPACT.md) · layout: [`markpacts/README.md`](
 code2llm ./ -f all -o ./project
 # → project/map.toon.yaml, calls.mmd, context.md
 ```
+
+## Ekosystem TellMesh
+
+Orchestrator: **[urisys](https://github.com/tellmesh/urisys)** · Mapa: **[MESH.md](https://github.com/tellmesh/urisys/blob/main/docs/MESH.md)** · Model: **[ECOSYSTEM.md](https://github.com/tellmesh/urisys/blob/main/../docs/ECOSYSTEM.md)**
+
+| Pole | Wartość |
+|------|---------|
+| **Warstwa** | Orchestrator (centrum mesh) |
+| **Moduł** | `urisys` |
+| **Zależności** | `uricore`, `urirouter` |
+| **Rola** | CLI, Markpact, flow runner, PackManager, `urisys init` |
+
+Runtime edge: **`uri_control.edge`** w pakiecie **`uricore`** (legacy `urisysedge` usunięty 2026-06).
+Router intencji: **`urirouter`** (`uri_router`) — resolve + HTTP/MQTT delegate.
+
+<!-- end-ecosystem -->
 
 ## License
 

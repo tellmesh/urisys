@@ -30,7 +30,8 @@ Grupy logiczne (wg prefiksów):
 | Prefix | Moduły | Rola |
 |--------|--------|------|
 | `src/urisys/` | cli, managers, controllers | Centralny controller |
-| `packages/python/urisysedge/` | runtime, env | ★ Wspólny edge runtime |
+| `../uricore/` | `uri_control.edge` | ★ Wspólny edge runtime |
+| `../urirouter/` | `uri_router` | ★ Intent router + policy |
 | `urirdp-docker/` | urirdp_*, urirdpedge | RDP desktop automation |
 | `urikvm-docker/` | urikvm, uriocr, urillm | KVM stack |
 | `urisys-automation-lab/` | flows, server, lab packs | Lab 10 flows |
@@ -73,7 +74,7 @@ cd urisys
 code2llm ./ -f all -o ./project
 ```
 
-Po dodaniu `packages/python/urisysedge/` uruchom ponownie, żeby zaktualizować `M[]`.
+Po migracji edge runtime do `uricore` + `urirouter` uruchom ponownie, żeby zaktualizować `M[]`.
 
 ## Hotspoty do refactoru (2026-06-16)
 

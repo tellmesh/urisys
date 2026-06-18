@@ -1,6 +1,6 @@
 # Dokumentacja urisys
 
-Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-17, packi w sibling repos).
+Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-18, packi w sibling repos).
 
 ## Start
 
@@ -16,8 +16,15 @@ Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-17, packi w sibl
 
 | Dokument | Opis |
 |----------|------|
+| [`ECOSYSTEM.md`](ECOSYSTEM.md) | **Model warstw** — urisys / urirouter / uricore / packi (aktualny stan 2026-06) |
+| [`MESH.md`](MESH.md) | **Mapa TellMesh** — wszystkie paczki podlinkowane do urisys, diagramy |
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Warstwy: CLI → edge Docker → flows; porty obrazów |
-| [`PACKAGES.md`](PACKAGES.md) | Layout monorepo, `urisysedge`, duplikaty, `urioperators` |
+| [`PROCESS-ARCHITECTURE.md`](PROCESS-ARCHITECTURE.md) | Proces Markpact vs resolver vs marksync (Etapy 1–4 ✅) |
+| [`MARKPACT-PROFILE.md`](MARKPACT-PROFILE.md) | **Profil v1alpha** — requires/uses, analyze lint, UriFlow levels |
+| [`RESOLVER-SCHEMA.md`](RESOLVER-SCHEMA.md) | Kontrakt `urisys.runtime.yaml` (UriRuntime Resolver v1) |
+| [`SECURITY.md`](SECURITY.md) | Risk, shell allowlist, sandbox, context envelope |
+| [`CONFORMANCE.md`](CONFORMANCE.md) | Macierz dry-run procesów referencyjnych |
+| [`PACKAGES.md`](PACKAGES.md) | Layout monorepo, `uricore`, `urirouter`, `urioperators` |
 | [`REPOS.md`](REPOS.md) | Mapowanie tellmesh/* → GitHub (tellmesh vs semcod), brak duplikatów |
 | [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md) | Nowe schematy URI, hot-load, forward, `release_forwards` |
 | [`FLOWS.md`](FLOWS.md) | Format `*.uri.flow.yaml`, uri2flow / uri3 |
@@ -27,7 +34,7 @@ Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-17, packi w sibl
 | Dokument | Opis |
 |----------|------|
 | [`DISTRIBUTION.md`](DISTRIBUTION.md) | PyPI · Markpact · GitHub OCI — trzy ścieżki packów |
-| [`MARKPACT.md`](MARKPACT.md) | Format `*.markpact.md`, validate / compile / test |
+| [`MARKPACT.md`](MARKPACT.md) | Format `*.markpact.md`, validate / compile / test / analyze --strict |
 
 ## Automatyzacja biurowa
 
@@ -41,9 +48,9 @@ Kroki deduplikacji runtime — **zakończone**; zostawione jako referencja:
 
 | Dokument | Temat |
 |----------|-------|
-| [`MIGRATION-STEP1.md`](MIGRATION-STEP1.md) | `urisysedge` wyodrębniony z `urirdpedge` |
-| [`MIGRATION-STEP2.md`](MIGRATION-STEP2.md) | Shimy edge w obrazach Docker |
-| [`MIGRATION-STEP3.md`](MIGRATION-STEP3.md) | `JsonlEventStore` / `Runtime` → `urisysedge` |
+| [`MIGRATION-STEP1.md`](MIGRATION-STEP1.md) | Historyczne: wyodrębnienie edge z `urirdpedge` → później `uricore` |
+| [`MIGRATION-STEP2.md`](MIGRATION-STEP2.md) | Historyczne: shimy edge CLI |
+| [`MIGRATION-STEP3.md`](MIGRATION-STEP3.md) | Historyczne: konsolidacja `Runtime` → dziś `uri_control.edge` |
 
 ## Dokumentacja per obraz Docker
 
@@ -76,7 +83,8 @@ urisys init            uricore + urisys-node wheel z GitHub Releases
 kvm-release            tag urikvm-v0.1.5 — OCI ghcr + release assets
 hot-load               POST /uri/pack {pack} | {contract,version,catalog}
 urioperators 0.1.0     tellmesh/urioperators (LLM helpers)
-markpact-contracts     11/11 validate
+markpact-contracts     validate + UriProcess (machine-cycle, desktop-automation)
+UriProcess Etap 3–4    resolver loader + generated/{linux,server,esp32}/
 ```
 
 ## Co dalej (otwarte)

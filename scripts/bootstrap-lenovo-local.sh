@@ -29,15 +29,15 @@ python -m pip install -U pip
 URICORE_WHL="${URISYS_URICORE_WHEEL_URL:-https://github.com/tellmesh/uricore/releases/download/v${URICORE_VER}/uricore-${URICORE_VER}-py3-none-any.whl}"
 NODE_WHL="${URISYS_NODE_WHEEL_URL:-https://github.com/tellmesh/urisys-node/releases/download/v${NODE_VER}/urisys_node-${NODE_VER}-py3-none-any.whl}"
 
-log "install uricore + urisysedge + urisys[real]"
-python -m pip install -U "$URICORE_WHL" "urisysedge>=0.1.0" "urisys[real]>=${URISYS_MIN}"
+log "install uricore + uricore + urisys[real]"
+python -m pip install -U "$URICORE_WHL" "uricore>=0.1.0" "urisys[real]>=${URISYS_MIN}"
 
 log "install urisys-node wheel"
 if ! python -m pip install -U "$NODE_WHL"; then
   log "WARN: GitHub wheel failed — try: export URISYS_NODE_WHEEL_URL=file:///path/to/urisys_node-${NODE_VER}-py3-none-any.whl"
 fi
 
-python -c "import uri_control, urisysedge, urisysnode; print('imports OK')" || {
+python -c "import uri_control, urisysnode; print('imports OK')" || {
   log "FAIL: missing imports — run: urisys doctor"
   exit 1
 }
