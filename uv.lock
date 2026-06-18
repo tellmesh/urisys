@@ -3813,7 +3813,7 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "urisys"
-version = "0.1.72"
+version = "0.1.74"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
