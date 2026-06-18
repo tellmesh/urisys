@@ -1,6 +1,6 @@
 # Repozytoria tellmesh — mapowanie paczek
 
-Stan: 2026-06-17. Po migracji **kod packów** żyje w sibling repos obok `urisys/`; monorepo `urisys` trzyma tylko docker glue, testy i skrypty.
+Stan: 2026-06-18. Po migracji **kod packów** żyje w sibling repos obok `urisys/`; monorepo `urisys` trzyma tylko docker glue, testy i skrypty. **Centrum orchestracji:** `urisys`. **Router intencji:** `urirouter`.
 
 Organizacja GitHub: **[tellmesh](https://github.com/tellmesh)** (paczki urisys) · **[semcod](https://github.com/semcod)** (narzędzia dev: goal, code2logic, costs — **nie** duplikaty packów URI).
 
@@ -8,7 +8,9 @@ Organizacja GitHub: **[tellmesh](https://github.com/tellmesh)** (paczki urisys) 
 
 ```text
 /home/tom/github/tellmesh/
-├── urisys/                 glue + CLI (git: tellmesh/urisys)
+├── urisys/                 glue + CLI (git: tellmesh/urisys) ★
+├── urirouter/              URI intent router (resolve + transport)
+├── uricore/                capability dispatch (uri_control)
 ├── urisysedge/             edge runtime
 ├── urioperators/           LLM helpers
 ├── urisys-node/            urisysnode (bundled); uriscreen/urishell → pip
@@ -25,7 +27,8 @@ Organizacja GitHub: **[tellmesh](https://github.com/tellmesh)** (paczki urisys) 
 
 | Katalog tellmesh | Repo GitHub | Uwagi |
 |------------------|-------------|--------|
-| `urisys` | [tellmesh/urisys](https://github.com/tellmesh/urisys) | monorepo glue |
+| `urisys` | [tellmesh/urisys](https://github.com/tellmesh/urisys) | monorepo glue ★ orchestrator |
+| `urirouter` | [tellmesh/urirouter](https://github.com/tellmesh/urirouter) | resolve + transport delegate |
 | `urisysedge` | [tellmesh/urisysedge](https://github.com/tellmesh/urisysedge) | PyPI ✅ |
 | `urioperators` | *(brak `.git` lokalnie)* | utwórz `tellmesh/urioperators` |
 | `uricore` | [tellmesh/uricore](https://github.com/tellmesh/uricore) | wheel z Releases, nie PyPI squatter |
@@ -61,6 +64,7 @@ find urisys -path '*/packages/python/*' -name handlers.py   # brak wyników
 | Składnik | Źródło |
 |----------|--------|
 | uricore | `https://github.com/tellmesh/uricore/releases/download/v0.1.8/...whl` |
+| urirouter | editable sibling / PyPI (plan) |
 | urisysedge | PyPI |
 | urisys-node | `https://github.com/tellmesh/urisys-node/releases/download/v0.1.3/urisys_node-0.1.3-py3-none-any.whl` |
 

@@ -41,7 +41,7 @@ def _apply_resolver_config(rt, config: dict[str, Any] | None, *, config_anchor: 
     cfg = config or {}
     resolver_path = cfg.get("resolver_path") or os.environ.get("URISYS_RESOLVER_CONFIG")
     if resolver_path:
-        from uri_control.resolver import load_resolver_into_runtime
+        from uri_router.resolver import load_resolver_into_runtime
 
         path = Path(resolver_path)
         if not path.is_absolute() and config_anchor is not None:

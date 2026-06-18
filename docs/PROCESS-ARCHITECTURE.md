@@ -166,7 +166,8 @@ resolver_path: urisys.runtime.hybrid.yaml   # relative to profiles/
 ```
 
 Przykład UriRouter + generator resolverów: [tellmesh/markpact-pololu `docs/URI-ROUTER.md`](https://github.com/tellmesh/markpact-pololu/blob/main/docs/URI-ROUTER.md).  
-Spec transportu: `markpact-contracts/packs/examples/uri-transport-binding.stepper.yaml`.
+Pakiet Python: [tellmesh/urirouter](https://github.com/tellmesh/urirouter) (`uri_router`).  
+Mapa mesh: [`docs/MESH.md`](MESH.md).
 
 ## 3. marksync — **synchronizacja i generowanie**
 

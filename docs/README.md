@@ -16,7 +16,9 @@ Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-17, packi w sibl
 
 | Dokument | Opis |
 |----------|------|
+| [`MESH.md`](MESH.md) | **Mapa TellMesh** — wszystkie paczki podlinkowane do urisys, diagramy |
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Warstwy: CLI → edge Docker → flows; porty obrazów |
+| [`PROCESS-ARCHITECTURE.md`](PROCESS-ARCHITECTURE.md) | Proces Markpact vs resolver vs marksync (Etapy 1–4 ✅) |
 | [`PACKAGES.md`](PACKAGES.md) | Layout monorepo, `urisysedge`, duplikaty, `urioperators` |
 | [`REPOS.md`](REPOS.md) | Mapowanie tellmesh/* → GitHub (tellmesh vs semcod), brak duplikatów |
 | [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md) | Nowe schematy URI, hot-load, forward, `release_forwards` |
@@ -76,7 +78,8 @@ urisys init            uricore + urisys-node wheel z GitHub Releases
 kvm-release            tag urikvm-v0.1.5 — OCI ghcr + release assets
 hot-load               POST /uri/pack {pack} | {contract,version,catalog}
 urioperators 0.1.0     tellmesh/urioperators (LLM helpers)
-markpact-contracts     11/11 validate
+markpact-contracts     validate + UriProcess (machine-cycle, desktop-automation)
+UriProcess Etap 3–4    resolver loader + generated/{linux,server,esp32}/
 ```
 
 ## Co dalej (otwarte)

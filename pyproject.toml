@@ -15,6 +15,7 @@ authors = [
 dependencies = [
   "PyYAML>=6.0",
   "urisysedge>=0.1.0",
+  "urirouter>=0.1.0",
 ]
 keywords = ["uri", "control-plane", "controllers", "managers", "devices", "services"]
 classifiers = [
@@ -63,6 +64,7 @@ lab = [
 [tool.uv.sources]
 urisysedge = { path = "../urisysedge", editable = true }
 urioperators = { path = "../urioperators", editable = true }
+urirouter = { path = "../urirouter", editable = true }
 urisys-node = { path = "../urisys-node", editable = true }
 urikvm = { path = "../urikvm", editable = true }
 urihim = { path = "../urihim", editable = true }

@@ -41,7 +41,9 @@ urisys --help
 which urisys   # → .venv/bin/urisys
 ```
 
-Zależności runtime: **`uricore`** (tellmesh wheel z GitHub — **nie** PyPI `uricore`), paczki URI z **`uri-packs`** (dev group w `pyproject.toml`).
+Zależności runtime: **`uricore`** (tellmesh wheel z GitHub), **`urirouter`** (resolve + transport delegate), paczki URI z **`uri-packs`** (dev group w `pyproject.toml`).
+
+**Mapa wszystkich paczek (diagramy, linki):** [`docs/MESH.md`](docs/MESH.md).
 
 Capability packi **kvm/him/ocr/llm** doinstalowują się **lazy przy pierwszym URI** — [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md).
 
@@ -97,6 +99,7 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 
 | Dokument | Temat |
 |----------|--------|
+| [`docs/MESH.md`](docs/MESH.md) | **Mapa TellMesh** — paczki → urisys, diagramy Mermaid |
 | [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md) | **Slave** — `urisys init`, lazy install, hot-load, systemd |
 | [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md) | **PyPI · Markpact · GitHub OCI** — packi, kvm-release |
 | [`docs/PACKAGES.md`](docs/PACKAGES.md) | Layout tellmesh sibling repos, `urioperators` |
@@ -104,6 +107,7 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 | [`docs/PACK-EXTENSIBILITY.md`](docs/PACK-EXTENSIBILITY.md) | Nowe schematy URI, forward, `release_forwards` |
 | [`docs/OFFICE-AUTOMATION.md`](docs/OFFICE-AUTOMATION.md) | Automatyzacja biurowa — roadmap |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Warstwy, runtime, porty Docker |
+| [`docs/PROCESS-ARCHITECTURE.md`](docs/PROCESS-ARCHITECTURE.md) | UriProcess: Markpact → resolver → marksync |
 | [`docs/FLOWS.md`](docs/FLOWS.md) | URI flows, uri2flow / uri3 |
 | [`docs/CLI.md`](docs/CLI.md) | Komendy CLI |
 | [`docs/MARKPACT.md`](docs/MARKPACT.md) | Markpact validate/compile/test |
@@ -153,9 +157,19 @@ urisys markpact run markpacts/urishell.markpact.md --as flow --approve --dry-run
 
 bash scripts/validate-all-markpacts.sh
 bash examples/markpact/showcase-run-flow.sh          # uribrowser integration demo
+
+# UriProcess: materialize + resolver per platform
+export TELLMESH_ROOT=~/github/tellmesh
+bash scripts/marksync-materialize.sh ../markpact-contracts/packs/desktop-automation-processes.markpact.md
 ```
 
-Docs: [`docs/MARKPACT.md`](docs/MARKPACT.md) · layout: [`markpacts/README.md`](markpacts/README.md)
+Docs: [`docs/MARKPACT.md`](docs/MARKPACT.md) · [`docs/PROCESS-ARCHITECTURE.md`](docs/PROCESS-ARCHITECTURE.md) · layout: [`markpacts/README.md`](markpacts/README.md)
+
+Pełna regresja (tellmesh workspace):
+
+```bash
+bash scripts/run-full-regression.sh
+```
 
 ## Analiza projektu (code2llm)
 

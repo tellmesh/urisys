@@ -9,6 +9,8 @@ Indeks modułów (historyczny, przed migracją): [`project/map.toon.yaml`](../pr
 | Warstwa | Gdzie | Rola |
 |---------|-------|------|
 | **core** | `urisys/src/urisys/` | CLI, managers, bootstrap |
+| **uri router** | `tellmesh/urirouter/` | resolve, transport delegate, envelope (`uri_router`) |
+| **control plane** | `tellmesh/uricore/` | registry, policy, handlers (`uri_control`) |
 | **capability packs** | `tellmesh/{urikvm,urihim,…}/` | handlery URI (`handlers.py`, `routes.py`) |
 | **edge shared** | `tellmesh/urisysedge/` | `Runtime`, `JsonlEventStore`, env policy |
 | **LLM shared** | `tellmesh/urioperators/` | chat, plan, decide, JSON parse |
@@ -28,7 +30,9 @@ python3 -m pytest tests/test_vendored_sync.py -q
 
 ```text
 tellmesh/
-├── urisys/                 # glue + CLI (repo git)
+├── urisys/                 # glue + CLI (repo git) ★ orchestrator
+├── urirouter/              # ★ URI intent router (resolve + transport)
+├── uricore/                # ★ capability dispatch (uri_control)
 ├── urisysedge/             # ★ edge runtime
 ├── urioperators/           # ★ LLM helpers
 ├── urisys-node/            # urisysnode (bundled); uriscreen/urishell → pip
@@ -113,7 +117,7 @@ Shimy usunięte — edge CLIs importują `urisysedge` bezpośrednio: `urirdpedge
 | `kvm/him/ocr/llm` | `urikvm`, `urihim`, `uriocr`, `urillm` | `urikvmedge` / `urirdpedge` |
 | `screen://` | `uriscreen` | bundled in `urisys-node` via pip |
 | `shell://` | `urishell` | `urirdpedge` / `urisys-node` pip dep |
-| `stt/webrtc/message/chat` | `uristt`, `uriwebrtc`, `urimessage`, `urichat` | lab / lazy-install |
+| `stt/webrtc/message/chat` | `uristt`, `uriwebrtc`, `urimessage`, `urichat` | lazy-install on `urisys-node`; ifURI duplex: [if-uri/docs/WEBRTC.md](https://github.com/if-uri/app/blob/main/docs/WEBRTC.md) |
 | `env://` | `urienv` | `urirdpedge` |
 | `browser://` | `uribrowser` | `urirdpedge` (+ lab aliases) |
 | `stepper://` | `uristepper` | `uristepperedge` |
@@ -129,6 +133,8 @@ Pełny opis: **[`docs/DISTRIBUTION.md`](DISTRIBUTION.md)**.
 | Pakiet | Canonical repo | Monorepo urisys |
 |--------|----------------|-----------------|
 | `urisys` | `tellmesh/urisys` | root `pyproject.toml` |
+| `urirouter` | `tellmesh/urirouter` | resolve + transport (zależność urisys) |
+| `uricore` | `tellmesh/uricore` | GitHub Releases wheel |
 | `urisys-node` | `tellmesh/urisys-node` | config/docker w `tellmesh/urisys-node/` |
 | `urisysedge` | `tellmesh/urisysedge` | brak vendored |
 | `urioperators` | `tellmesh/urioperators` | brak vendored |
@@ -159,8 +165,9 @@ docker build -f urirdp-docker/Dockerfile /path/to/tellmesh
 3. ✅ **PyPI layout** — osobne repo `tellmesh/{pack}/`
 4. ✅ **Migracja monolitu `urirdp`** → `urirdp` + `urirdpedge` + standalone packi
 5. ✅ **Voice packs** — `uristt`, `uriwebrtc`, `urimessage` poza automation-lab
-6. 🔲 **`urioperators` (OCR/HIM)** — faza 2 dedup
-7. 🔲 **`uriimgl` / `urivql`** — forward lub in-process pack
+6. ✅ **`urirouter`** — wyodrębniony z `uricore` (resolver + transport + envelope)
+7. 🔲 **`urioperators` (OCR/HIM)** — faza 2 dedup
+8. 🔲 **`uriimgl` / `urivql`** — forward lub in-process pack
 
 ## Instalacja dev
 
