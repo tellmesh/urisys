@@ -15,7 +15,7 @@ authors = [
 dependencies = [
   "PyYAML>=6.0",
   "uricontrol>=0.1.11",
-  "urirouter>=0.1.0",
+  "uriresolver>=0.1.0",
 ]
 keywords = ["uri", "control-plane", "controllers", "managers", "devices", "services"]
 classifiers = [

@@ -1,4 +1,6 @@
-"""Install tellmesh urirouter (uri_router) from GitHub Release wheel."""
+"""Install tellmesh uriguard (uri_guard) — the control-plane policy gate that uricontrol
+requires. (Was urirouter/uri_router before the 2026-06 split into
+uriguard/uriresolver/uritransport; function names kept for init_setup compatibility.)"""
 
 from __future__ import annotations
 
@@ -8,6 +10,8 @@ from typing import Any
 
 DEFAULT_GITHUB_OWNER = "tellmesh"
 DEFAULT_GITHUB_VERSION = "0.1.0"
+DIST_NAME = "uriguard"
+MODULE_NAME = "uri_guard"
 
 
 def github_owner() -> str:
@@ -24,12 +28,16 @@ def wheel_url(version: str | None = None) -> str:
     if override:
         return override
     return (
-        f"https://github.com/{github_owner()}/urirouter/releases/download/v{ver}/"
-        f"urirouter-{ver}-py3-none-any.whl"
+        f"https://github.com/{github_owner()}/{DIST_NAME}/releases/download/v{ver}/"
+        f"{DIST_NAME}-{ver}-py3-none-any.whl"
     )
 
 
 def pip_spec() -> str:
+    """Install uriguard from the GitHub release wheel (new names hit PyPI 429);
+    set URISYS_URIGUARD_PYPI=1 to use the PyPI spec instead."""
+    if os.environ.get("URISYS_URIGUARD_PYPI", "").strip():
+        return f"{DIST_NAME}>={github_version()}"
     return wheel_url()
 
 
@@ -38,9 +46,9 @@ def _module_exists(name: str) -> bool:
 
 
 def diagnose_urirouter() -> dict[str, Any]:
-    uri_router_ok = _module_exists("uri_router")
+    ok = _module_exists(MODULE_NAME)
     return {
-        "uri_router_importable": uri_router_ok,
+        "uri_guard_importable": ok,
         "wheel_url": pip_spec(),
-        "note": None if uri_router_ok else "Install tellmesh urirouter before uricore (resolver dependency).",
+        "note": None if ok else "Install tellmesh uriguard (uri_guard) — uricontrol policy gate.",
     }
