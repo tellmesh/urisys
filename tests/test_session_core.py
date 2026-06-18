@@ -1,20 +1,12 @@
-"""Characterization tests for the shared scripts/session_core helpers.
-
-Pins the behaviour extracted from lenovo_remote_session.py so both runners can
-share one implementation without drift.
-"""
+"""Characterization tests for the shared urisys_lab.core helpers."""
 
 from __future__ import annotations
 
 import base64
 import json
-import sys
 from pathlib import Path
 
-PKG = Path(__file__).resolve().parents[1] / "scripts"
-sys.path.insert(0, str(PKG))
-
-import session_core as sc  # noqa: E402
+import urisys_lab.core as sc
 
 _PNG_B64 = base64.b64encode(b"\x89PNG\r\n" + b"x" * 200).decode("ascii")
 
@@ -48,7 +40,6 @@ def test_extract_step_screenshots_strips_base64(tmp_path):
     saved = sc.extract_step_screenshots(step, session_dir=tmp_path, flow_id="flowA")
     assert saved == ["screenshots/flowA__frame.png"]
     assert (tmp_path / saved[0]).exists()
-    # base64 stripped, replaced by a file pointer
     result = step["response"]["result"]
     assert "base64" not in result
     assert result["screenshot_file"] == saved[0]

@@ -1,58 +1,34 @@
-# code2llm/evolution | 253 func | 31f | 2026-06-18
-# generated in 0.01s
+# code2llm/evolution | 417 func | 66f | 2026-06-18
+# generated in 0.00s
 
-NEXT[10] (ranked by impact):
-  [1] !! SPLIT           src/urisys/cli.py
-      WHY: 588L, 0 classes, max CC=38
-      EFFORT: ~4h  IMPACT: 22344
+NEXT[4] (ranked by impact):
+  [1] !! SPLIT           src/urisys_lab/lenovo/cli.py
+      WHY: 965L, 0 classes, max CC=15
+      EFFORT: ~4h  IMPACT: 14475
 
-  [2] !! SPLIT           src/urisys/managers/markpact_manager.py
-      WHY: 582L, 1 classes, max CC=21
-      EFFORT: ~4h  IMPACT: 12222
+  [2] !! SPLIT           src/urisys_lab/sessions/runners.py
+      WHY: 665L, 0 classes, max CC=13
+      EFFORT: ~4h  IMPACT: 8645
 
-  [3] !! SPLIT-FUNC      _cmd_markpact  CC=38  fan=25
-      WHY: CC=38 exceeds 15
-      EFFORT: ~1h  IMPACT: 950
+  [3] !  SPLIT-FUNC      main  CC=15  fan=37
+      WHY: CC=15 exceeds 15
+      EFFORT: ~1h  IMPACT: 555
 
-  [4] !  SPLIT-FUNC      MarkpactManager.compile  CC=21  fan=43
-      WHY: CC=21 exceeds 15
-      EFFORT: ~1h  IMPACT: 903
-
-  [5] !  SPLIT-FUNC      _run_flow_mode  CC=17  fan=27
-      WHY: CC=17 exceeds 15
-      EFFORT: ~1h  IMPACT: 459
-
-  [6] !  SPLIT-FUNC      _register_sibling_packs  CC=17  fan=15
-      WHY: CC=17 exceeds 15
-      EFFORT: ~1h  IMPACT: 255
-
-  [7] !  SPLIT-FUNC      _authorities_from_flow  CC=17  fan=12
-      WHY: CC=17 exceeds 15
-      EFFORT: ~1h  IMPACT: 204
-
-  [8] !  SPLIT-FUNC      _flow_features  CC=18  fan=9
-      WHY: CC=18 exceeds 15
-      EFFORT: ~1h  IMPACT: 162
-
-  [9] !  SPLIT-FUNC      MarkpactManager._build_route  CC=16  fan=9
-      WHY: CC=16 exceeds 15
-      EFFORT: ~1h  IMPACT: 144
-
-  [10] !! SPLIT           planfile.yaml
+  [4] !! SPLIT           planfile.yaml
       WHY: 1319L, 0 classes, max CC=0
       EFFORT: ~4h  IMPACT: 0
 
 
 RISKS[3]:
   ⚠ Splitting planfile.yaml may break 0 import paths
-  ⚠ Splitting src/urisys/cli.py may break 13 import paths
-  ⚠ Splitting src/urisys/managers/markpact_manager.py may break 29 import paths
+  ⚠ Splitting src/urisys_lab/lenovo/cli.py may break 40 import paths
+  ⚠ Splitting src/urisys_lab/sessions/runners.py may break 22 import paths
 
 METRICS-TARGET:
-  CC̄:          4.9 → ≤3.4
-  max-CC:      38 → ≤19
+  CC̄:          4.4 → ≤3.1
+  max-CC:      15 → ≤7
   god-modules: 4 → 0
-  high-CC(≥15): 8 → ≤4
+  high-CC(≥15): 1 → ≤0
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -80,4 +56,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=5.3 → now CC̄=4.9
+  prev CC̄=4.5 → now CC̄=4.4

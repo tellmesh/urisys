@@ -95,58 +95,6 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
-  - id: ticket-2793a7d8
-    name: Fix relative-imports issues
-    description: Resolve 14 relative-imports issues in src/urisys/cli.py
-    task_type: prefactor
-    priority: high
-    estimate: 3d
-    files:
-    - src/urisys/cli.py
-    rule_id: relative-imports
-    count: 14
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-39409545
-    name: Fix unused-imports issues
-    description: Resolve 2 unused-imports issues in src/urisys/cli.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - src/urisys/cli.py
-    rule_id: unused-imports
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-29f16a71
-    name: Fix magic-numbers issues
-    description: Resolve 1 magic-numbers issues in src/urisys/cli.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - src/urisys/cli.py
-    rule_id: magic-numbers
-    count: 1
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-6553487a
-    name: Fix ai-boilerplate issues
-    description: Resolve 1 ai-boilerplate issues in src/urisys/cli.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - src/urisys/cli.py
-    rule_id: ai-boilerplate
-    count: 1
-    model_hints:
-      planning: balanced
-      implementation: balanced
   - id: ticket-96f9891c
     name: Fix unused-imports issues
     description: Resolve 2 unused-imports issues in src/urisys/defaults.py
@@ -222,19 +170,6 @@ sprints:
     - src/urisys/http_server.py
     rule_id: relative-imports
     count: 6
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-fef6705c
-    name: Fix smart-return-type issues
-    description: Resolve 4 smart-return-type issues in src/urisys/http_server.py
-    task_type: prefactor
-    priority: medium
-    estimate: 2d
-    files:
-    - src/urisys/http_server.py
-    rule_id: smart-return-type
-    count: 4
     model_hints:
       planning: balanced
       implementation: balanced
@@ -365,19 +300,6 @@ sprints:
     - src/urisys/managers/markpact_manager.py
     rule_id: relative-imports
     count: 4
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-96b9c612
-    name: Fix string-concat issues
-    description: Resolve 3 string-concat issues in src/urisys/managers/markpact_manager.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - src/urisys/managers/markpact_manager.py
-    rule_id: string-concat
-    count: 3
     model_hints:
       planning: balanced
       implementation: balanced
@@ -534,45 +456,6 @@ sprints:
     - tests/test_urisys.py
     rule_id: unused-imports
     count: 6
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-230cdaab
-    name: Fix string-concat issues
-    description: Resolve 5 string-concat issues in scripts/run_test_sessions.py
-    task_type: prefactor
-    priority: medium
-    estimate: 2d
-    files:
-    - scripts/run_test_sessions.py
-    rule_id: string-concat
-    count: 5
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-f9fba7fb
-    name: Fix unused-imports issues
-    description: Resolve 2 unused-imports issues in scripts/run_test_sessions.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - scripts/run_test_sessions.py
-    rule_id: unused-imports
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-307efa54
-    name: Fix magic-numbers issues
-    description: Resolve 21 magic-numbers issues in scripts/run_test_sessions.py
-    task_type: prefactor
-    priority: high
-    estimate: 3d
-    files:
-    - scripts/run_test_sessions.py
-    rule_id: magic-numbers
-    count: 21
     model_hints:
       planning: balanced
       implementation: balanced
@@ -1148,19 +1031,6 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
-  - id: ticket-eb858e59
-    name: Fix relative-imports issues
-    description: Resolve 8 relative-imports issues in scripts/test_sessions/__init__.py
-    task_type: prefactor
-    priority: high
-    estimate: 2d
-    files:
-    - scripts/test_sessions/__init__.py
-    rule_id: relative-imports
-    count: 8
-    model_hints:
-      planning: balanced
-      implementation: balanced
   - id: ticket-142f6917
     name: Fix unused-imports issues
     description: Resolve 2 unused-imports issues in scripts/test_sessions/__init__.py
@@ -1239,58 +1109,6 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
-  - id: ticket-a97df57d
-    name: Fix duplicate-imports issues
-    description: Resolve 4 duplicate-imports issues in scripts/lenovo_remote_session.py
-    task_type: prefactor
-    priority: medium
-    estimate: 2d
-    files:
-    - scripts/lenovo_remote_session.py
-    rule_id: duplicate-imports
-    count: 4
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-aca27d2b
-    name: Fix string-concat issues
-    description: Resolve 6 string-concat issues in scripts/lenovo_remote_session.py
-    task_type: prefactor
-    priority: high
-    estimate: 2d
-    files:
-    - scripts/lenovo_remote_session.py
-    rule_id: string-concat
-    count: 6
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-b0a34c00
-    name: Fix unused-imports issues
-    description: Resolve 2 unused-imports issues in scripts/lenovo_remote_session.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - scripts/lenovo_remote_session.py
-    rule_id: unused-imports
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-258ccd81
-    name: Fix magic-numbers issues
-    description: Resolve 4 magic-numbers issues in scripts/lenovo_remote_session.py
-    task_type: prefactor
-    priority: medium
-    estimate: 2d
-    files:
-    - scripts/lenovo_remote_session.py
-    rule_id: magic-numbers
-    count: 4
-    model_hints:
-      planning: balanced
-      implementation: balanced
   - id: ticket-4a5c6d48
     name: Fix ai-boilerplate issues
     description: Resolve 1 ai-boilerplate issues in scripts/lenovo_remote_session.py
@@ -1314,6 +1132,188 @@ sprints:
     - scripts/scan-browser-sessions.py
     rule_id: string-concat
     count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-794f040b
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in .markpact/uribrowser_showcase/9f23559e5659d709/urisys_markpact_uribrowser_showcase_9f23559e56/get_dom.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - .markpact/uribrowser_showcase/9f23559e5659d709/urisys_markpact_uribrowser_showcase_9f23559e56/get_dom.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8ee331ce
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in .markpact/uribrowser_showcase/9f23559e5659d709/urisys_markpact_uribrowser_showcase_9f23559e56/get_dom.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - .markpact/uribrowser_showcase/9f23559e5659d709/urisys_markpact_uribrowser_showcase_9f23559e56/get_dom.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8e624262
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in .markpact/uribrowser_showcase/9f23559e5659d709/urisys_markpact_uribrowser_showcase_9f23559e56/open_page.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - .markpact/uribrowser_showcase/9f23559e5659d709/urisys_markpact_uribrowser_showcase_9f23559e56/open_page.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d1a714d6
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in .markpact/uribrowser_showcase/9f23559e5659d709/urisys_markpact_uribrowser_showcase_9f23559e56/open_page.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - .markpact/uribrowser_showcase/9f23559e5659d709/urisys_markpact_uribrowser_showcase_9f23559e56/open_page.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2e363402
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in scripts/check_contract_drift.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/check_contract_drift.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-cce8a207
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in scripts/check_contract_drift.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/check_contract_drift.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d44e97b2
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in scripts/generate_pack_markpacts.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/generate_pack_markpacts.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0c59c2da
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in scripts/generate_pack_markpacts.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/generate_pack_markpacts.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3affbb88
+    name: Fix magic-numbers issues
+    description: Resolve 7 magic-numbers issues in scripts/generate_pack_markpacts.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - scripts/generate_pack_markpacts.py
+    rule_id: magic-numbers
+    count: 7
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-96f7531f
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in scripts/generate_pack_markpacts.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/generate_pack_markpacts.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d8fd8cc3
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in scripts/generate_showcase_markpacts.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/generate_showcase_markpacts.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-f6542b6b
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in scripts/pack_registry.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/pack_registry.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d3aebcce
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in scripts/scan-browser-sessions.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/scan-browser-sessions.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-192d2348
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in scripts/scan-browser-sessions.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/scan-browser-sessions.py
+    rule_id: magic-numbers
+    count: 2
     model_hints:
       planning: balanced
       implementation: balanced

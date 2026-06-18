@@ -165,6 +165,47 @@ def _resolve_error_hint(
     return None, None
 
 
+def _run_pip_install(specs: list[str], dry_run: bool) -> dict[str, Any] | None:
+    if not dry_run:
+        return _build_pip_result(specs, dry_run=False)
+    return _build_pip_result(specs, dry_run=True)
+
+
+def _verify_after_install(dry_run: bool, install: bool, steps: list[dict[str, Any]]) -> dict[str, Any]:
+    verify = verify_uri_control() if not dry_run else {"ok": True, "dry_run": True}
+    if not dry_run and not verify.get("ok") and (is_wrong_uricore_installed() or install):
+        repair = repair_uricore()
+        steps.append({"name": "repair_uricore", "status": "pass" if repair.get("ok") else "fail", "detail": repair})
+        verify = verify_uri_control()
+    steps.append({"name": "verify_uri_control", "status": "pass" if verify.get("ok") else "fail", "detail": verify})
+    return verify
+
+
+def _run_doctor_check(min_version: str | None, dry_run: bool, steps: list[dict[str, Any]]) -> dict[str, Any]:
+    doctor = run_doctor(min_version=min_version) if not dry_run else {"ok": True, "dry_run": True, "checks": []}
+    steps.append({"name": "doctor", "status": "pass" if doctor.get("ok") else "fail", "detail": doctor})
+    return doctor
+
+
+def _write_profile_env(profile: Profile, write_env: bool, dry_run: bool, env_file: Path | None, steps: list[dict[str, Any]]) -> tuple[dict[str, str], Path | None, dict[str, Any] | None]:
+    env = profile_env(profile)
+    env_path = env_file or DEFAULT_ENV_FILE
+    env_written = None
+    if write_env and env:
+        env_written = write_env_file(env_path, env, dry_run=dry_run)
+        steps.append({"name": "write_env", "status": "pass", "detail": env_written})
+    return env, env_path, env_written
+
+
+def _check_node_after_install(dry_run: bool, install: bool, pip_result: dict[str, Any] | None, steps: list[dict[str, Any]]) -> None:
+    if dry_run or not install:
+        return
+    node_diag = diagnose_urisys_node()
+    if not node_diag.get("urisysnode_importable"):
+        node_detail = (pip_result or {}).get("node_install") if pip_result else None
+        steps.append({"name": "verify_urisysnode", "status": "warn", "detail": {**node_diag, "pip": node_detail}})
+
+
 def run_init(
     *,
     profile: Profile = "slave",
@@ -186,66 +227,20 @@ def run_init(
         return abort
 
     if install:
-        pip_result = _build_pip_result(specs, dry_run=dry_run)
+        pip_result = _run_pip_install(specs, dry_run=False)
         steps.append({"name": "pip_install", "status": "pass" if pip_result.get("ok") else "fail", "detail": pip_result})
         if not pip_result.get("ok"):
-            return {
-                "ok": False,
-                "profile": profile,
-                "steps": steps,
-                "error": "pip install failed",
-                "pip": pip_result,
-                "hint": "Fix pip/network, then rerun: urisys init",
-            }
+            return {"ok": False, "profile": profile, "steps": steps, "error": "pip install failed", "pip": pip_result, "hint": "Fix pip/network, then rerun: urisys init"}
 
-    verify = verify_uri_control() if not dry_run else {"ok": True, "dry_run": True}
-    if not dry_run and not verify.get("ok") and (is_wrong_uricore_installed() or install):
-        repair = repair_uricore()
-        steps.append(
-            {
-                "name": "repair_uricore",
-                "status": "pass" if repair.get("ok") else "fail",
-                "detail": repair,
-            }
-        )
-        verify = verify_uri_control()
-    steps.append({"name": "verify_uri_control", "status": "pass" if verify.get("ok") else "fail", "detail": verify})
-
-    doctor = run_doctor(min_version=min_version) if not dry_run else {"ok": True, "dry_run": True, "checks": []}
-    steps.append(
-        {
-            "name": "doctor",
-            "status": "pass" if doctor.get("ok") else "fail",
-            "detail": doctor,
-        }
-    )
-
-    env = profile_env(profile)
-    env_path = env_file or DEFAULT_ENV_FILE
-    env_written: dict[str, Any] | None = None
-    if write_env and env:
-        env_written = write_env_file(env_path, env, dry_run=dry_run)
-        steps.append({"name": "write_env", "status": "pass", "detail": env_written})
+    verify = _verify_after_install(dry_run, install, steps)
+    doctor = _run_doctor_check(min_version, dry_run, steps)
+    env, env_path, env_written = _write_profile_env(profile, write_env, dry_run, env_file, steps)
 
     ok = all(step["status"] == "pass" for step in steps)
-    node_diag = diagnose_urisys_node() if not dry_run else {}
-    if not dry_run and install and not node_diag.get("urisysnode_importable"):
-        node_detail = (pip_result or {}).get("node_install") if pip_result else None
-        steps.append(
-            {
-                "name": "verify_urisysnode",
-                "status": "warn",
-                "detail": {**node_diag, "pip": node_detail},
-            }
-        )
+    _check_node_after_install(dry_run, install, pip_result, steps)
     error, hint = _resolve_error_hint(ok, verify, doctor)
 
-    next_steps = [
-        f"source {env_path}" if env_written and env else "",
-        "urisys doctor",
-        NODE_SERVE_CMD,
-    ]
-    next_steps = [s for s in next_steps if s]
+    next_steps = [s for s in [f"source {env_path}" if env_written and env else "", "urisys doctor", NODE_SERVE_CMD] if s]
 
     return {
         "ok": ok,

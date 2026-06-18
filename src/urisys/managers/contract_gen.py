@@ -139,42 +139,51 @@ def _by_pattern(entries: Any) -> dict[str, dict[str, Any]]:
     return out
 
 
-def diff_manifest_contract(manifest: dict[str, Any], contract: dict[str, Any]) -> list[str]:
-    """Return a list of drift messages; empty list means manifest and contract agree."""
-    expected = manifest_to_contract(manifest)
-    issues: list[str] = []
-
+def _diff_scheme_and_metadata(expected: dict[str, Any], contract: dict[str, Any], issues: list[str]) -> None:
     if expected["scheme"] != contract.get("scheme"):
         issues.append(f"scheme: manifest {expected['scheme']!r} != contract {contract.get('scheme')!r}")
-
     exp_meta, got_meta = expected["metadata"], contract.get("metadata") or {}
     if exp_meta["id"] != got_meta.get("id"):
         issues.append(f"metadata.id: expected {exp_meta['id']!r}, got {got_meta.get('id')!r}")
     if exp_meta["version"] != normalize_version(got_meta.get("version")):
         issues.append(f"metadata.version: manifest {exp_meta['version']!r} != contract {got_meta.get('version')!r}")
 
-    for section in ("queries", "commands"):
-        exp = _by_pattern(expected.get(section))
-        got = _by_pattern(contract.get(section))
-        for pattern in sorted(set(exp) - set(got)):
-            issues.append(f"{section}: pattern {pattern!r} present in manifest but missing in contract")
-        for pattern in sorted(set(got) - set(exp)):
-            issues.append(f"{section}: pattern {pattern!r} present in contract but missing in manifest")
-        for pattern in sorted(set(exp) & set(got)):
-            e, g = exp[pattern], got[pattern]
-            if e["id"] != g.get("id"):
-                issues.append(f"{section} {pattern!r}: id manifest {e['id']!r} != contract {g.get('id')!r}")
-            if section == "commands":
-                if bool(e.get("side_effects")) != bool(g.get("side_effects")):
-                    issues.append(f"commands {pattern!r}: side_effects manifest {e.get('side_effects')} != contract {g.get('side_effects')}")
-                if bool(e.get("requires_approval")) != bool(g.get("requires_approval")):
-                    issues.append(f"commands {pattern!r}: requires_approval manifest {e.get('requires_approval')} != contract {g.get('requires_approval')}")
 
+def _diff_section(section: str, expected: dict[str, Any], contract: dict[str, Any], issues: list[str]) -> None:
+    exp = _by_pattern(expected.get(section))
+    got = _by_pattern(contract.get(section))
+    for pattern in sorted(set(exp) - set(got)):
+        issues.append(f"{section}: pattern {pattern!r} present in manifest but missing in contract")
+    for pattern in sorted(set(got) - set(exp)):
+        issues.append(f"{section}: pattern {pattern!r} present in contract but missing in manifest")
+    for pattern in sorted(set(exp) & set(got)):
+        e, g = exp[pattern], got[pattern]
+        if e["id"] != g.get("id"):
+            issues.append(f"{section} {pattern!r}: id manifest {e['id']!r} != contract {g.get('id')!r}")
+        if section == "commands":
+            if bool(e.get("side_effects")) != bool(g.get("side_effects")):
+                issues.append(f"commands {pattern!r}: side_effects manifest {e.get('side_effects')} != contract {g.get('side_effects')}")
+            if bool(e.get("requires_approval")) != bool(g.get("requires_approval")):
+                issues.append(f"commands {pattern!r}: requires_approval manifest {e.get('requires_approval')} != contract {g.get('requires_approval')}")
+
+
+def _diff_uses(expected: dict[str, Any], contract: dict[str, Any], issues: list[str]) -> None:
     exp_uses = set(expected.get("uses") or [])
     got_uses = set(contract.get("uses") or [])
-    if exp_uses != got_uses:
-        if exp_uses - got_uses:
-            issues.append(f"uses: manifest declares {sorted(exp_uses - got_uses)} missing in contract")
-        if got_uses - exp_uses and exp_uses:
-            issues.append(f"uses: contract declares {sorted(got_uses - exp_uses)} missing in manifest")
+    if exp_uses == got_uses:
+        return
+    if exp_uses - got_uses:
+        issues.append(f"uses: manifest declares {sorted(exp_uses - got_uses)} missing in contract")
+    if got_uses - exp_uses and exp_uses:
+        issues.append(f"uses: contract declares {sorted(got_uses - exp_uses)} missing in manifest")
+
+
+def diff_manifest_contract(manifest: dict[str, Any], contract: dict[str, Any]) -> list[str]:
+    """Return a list of drift messages; empty list means manifest and contract agree."""
+    expected = manifest_to_contract(manifest)
+    issues: list[str] = []
+    _diff_scheme_and_metadata(expected, contract, issues)
+    for section in ("queries", "commands"):
+        _diff_section(section, expected, contract, issues)
+    _diff_uses(expected, contract, issues)
     return issues

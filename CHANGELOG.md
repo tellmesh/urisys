@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.10] - 2026-06-18
+
+### Fixed
+- Fix string-concat issues (ticket-d44e97b2)
+- Fix unused-imports issues (ticket-0c59c2da)
+- Fix magic-numbers issues (ticket-3affbb88)
+- Fix ai-boilerplate issues (ticket-96f7531f)
+- Fix ai-boilerplate issues (ticket-d8fd8cc3)
+- Fix string-concat issues (ticket-f6542b6b)
+- Fix unused-imports issues (ticket-d3aebcce)
+- Fix magic-numbers issues (ticket-192d2348)
+
+## [0.1.10] - 2026-06-18
+
+### Fixed
+- Fix unused-imports issues (ticket-8ee331ce)
+- Fix smart-return-type issues (ticket-8e624262)
+- Fix unused-imports issues (ticket-d1a714d6)
+- Fix unused-imports issues (ticket-2e363402)
+- Fix ai-boilerplate issues (ticket-cce8a207)
+
+## [0.1.10] - 2026-06-18
+
+### Fixed
+- Fix smart-return-type issues (ticket-794f040b)
+
 ## [0.1.10] - 2026-06-17
 
 ### Fixed

@@ -67,29 +67,35 @@ def package_schemes(manifest: dict[str, Any]) -> list[str]:
     return seen
 
 
+def _build_capability(item: dict[str, Any], pkg_name: str, scheme: str, handlers: dict[str, str]) -> dict[str, Any] | None:
+    operation = str(item.get("operation") or "")
+    pattern = str(item.get("pattern") or "")
+    if "://" in pattern and pattern.split("://", 1)[0] != scheme:
+        return None
+    kind = str(item.get("kind") or ("command" if "/command/" in pattern else "query"))
+    handler = handlers.get(operation) or f"python://{pkg_name}.handlers:{operation.split('.')[-1]}"
+    cap: dict[str, Any] = {
+        "id": operation,
+        "uri": pattern,
+        "kind": kind,
+        "operation": operation,
+        "handler": handler,
+        "side_effects": bool(item.get("side_effects", kind == "command")),
+        "approval": str(item.get("approval", "required" if kind == "command" else "not_required")),
+    }
+    for opt in ("command_type", "query_type", "result_type", "success_event_type", "description"):
+        if opt in item:
+            cap[opt] = item[opt]
+    return cap
+
+
 def _pack_block(manifest: dict[str, Any], pkg_name: str, scheme: str) -> dict[str, Any]:
     handlers = (manifest.get("handlers") or {}).get("python") or {}
     capabilities = []
     for item in manifest.get("uri_patterns") or []:
-        operation = str(item.get("operation") or "")
-        pattern = str(item.get("pattern") or "")
-        if "://" in pattern and pattern.split("://", 1)[0] != scheme:
-            continue  # one scheme per pack file
-        kind = str(item.get("kind") or ("command" if "/command/" in pattern else "query"))
-        handler = handlers.get(operation) or f"python://{pkg_name}.handlers:{operation.split('.')[-1]}"
-        cap = {
-            "id": operation,
-            "uri": pattern,
-            "kind": kind,
-            "operation": operation,
-            "handler": handler,
-            "side_effects": bool(item.get("side_effects", kind == "command")),
-            "approval": str(item.get("approval", "required" if kind == "command" else "not_required")),
-        }
-        for opt in ("command_type", "query_type", "result_type", "success_event_type", "description"):
-            if opt in item:
-                cap[opt] = item[opt]
-        capabilities.append(cap)
+        cap = _build_capability(item, pkg_name, scheme, handlers)
+        if cap is not None:
+            capabilities.append(cap)
 
     pack: dict[str, Any] = {
         "apiVersion": API_VERSION,

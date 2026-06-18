@@ -2,13 +2,7 @@
 
 from __future__ import annotations
 
-import sys
-from pathlib import Path
-
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
-
-from run_test_sessions import evaluate_expectations  # noqa: E402
+from urisys_lab.sessions import evaluate_expectations
 
 
 def test_screen_changed_uses_baseline_not_previous_flow():

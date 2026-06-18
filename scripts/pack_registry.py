@@ -30,6 +30,7 @@ class PackSpec:
     repo_readme: str = ""
     layout: str = "nested"  # nested: repo/{name}/; flat: repo root is the package
     extra_deps: tuple[str, ...] = ()  # extra pip deps for repo pyproject
+    module_dir: str | None = None  # override module path under repo (e.g. "core/python/uri_control/edge")
 
 
 def _repo(name: str) -> Path:
@@ -56,6 +57,7 @@ def _pack(
     repo_readme: str = "",
     layout: str = "nested",
     extra_deps: tuple[str, ...] = (),
+    module_dir: str | None = None,
 ) -> PackSpec:
     return PackSpec(
         name=name,
@@ -67,6 +69,7 @@ def _pack(
         repo_readme=repo_readme,
         layout=layout,
         extra_deps=extra_deps,
+        module_dir=module_dir,
     )
 
 
@@ -75,6 +78,7 @@ def pack_specs() -> dict[str, PackSpec]:
 
     specs["uricore"] = _pack(
         "uricore",
+        module_dir="core/python/uri_control/edge",
         module_files=("__init__.py", "runtime.py", "env.py"),
         repo_readme="Shared URI edge runtime for urisys capability packs.",
     )

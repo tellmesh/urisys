@@ -1,5 +1,5 @@
 flowchart TD
-%% generated in 0.02s
+%% generated in 0.01s
 
     %% Entry points (blue)
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
@@ -12,19 +12,19 @@ flowchart TD
         src__urisys__bootstrap___doctor_main["_doctor_main"]
         src__urisys__bootstrap___init_main["_init_main"]
         src__urisys__bootstrap__main["main"]
-        src__urisys__cli___json_arg["_json_arg"]
-        src__urisys__cli__print_json["print_json"]
-        src__urisys__cli___add_runtime_flags["_add_runtime_flags"]
-        src__urisys__cli__resolve_markpact_source["resolve_markpact_source"]
-        src__urisys__cli__build_parser["build_parser"]
-        src__urisys__cli___cmd_markpact["_cmd_markpact"]
-        src__urisys__cli___cmd_pack["_cmd_pack"]
-        src__urisys__cli___cmd_contract["_cmd_contract"]
-        ...["+93 more"]
+        src__urisys__doctor___check_cli_path["_check_cli_path"]
+        src__urisys__doctor___check_uricore_authentic["_check_uricore_authentic"]
+        src__urisys__doctor__run_doctor("run_doctor CC=11")
+        src__urisys__init_setup___run_doctor_check["_run_doctor_check"]
+        src__urisys__init_setup__run_init("run_init CC=13")
+        src__urisys__urirouter_install__diagnose_urirouter["diagnose_urirouter"]
+        src__urisys__http_server___ControllerRuntime__call["call"]
+        src__urisys__cli__errors__handle_cli_error["handle_cli_error"]
+        ...["+160 more"]
     end
 
     subgraph Exporters
-        src__urisys__managers__platform_export___authorities_from_flow{{_authorities_from_flow CC=17}}
+        src__urisys__cli__commands__markpact__cmd_export_platform["cmd_export_platform"]
     end
 
-    class src__urisys__bootstrap___doctor_main,src__urisys__bootstrap___init_main,src__urisys__bootstrap__main,src__urisys__cli___json_arg,src__urisys__cli__print_json,src__urisys__cli___add_runtime_flags,src__urisys__cli__resolve_markpact_source,src__urisys__cli__build_parser,src__urisys__cli___cmd_markpact,src__urisys__cli___cmd_pack entry
+    class src__urisys__bootstrap___doctor_main,src__urisys__bootstrap___init_main,src__urisys__bootstrap__main,src__urisys__doctor___check_cli_path,src__urisys__urirouter_install__diagnose_urirouter,src__urisys__http_server___ControllerRuntime__call,src__urisys__cli__errors__handle_cli_error,src__urisys__cli__helpers__json_arg,src__urisys__cli__helpers__print_json,src__urisys__cli__helpers__resolve_markpact_source entry

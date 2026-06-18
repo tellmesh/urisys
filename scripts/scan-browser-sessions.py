@@ -137,12 +137,7 @@ def discover_browsers(home: Path) -> list[tuple[str, Path, str]]:
     ]
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--linkedin-only", action="store_true")
-    parser.add_argument("--json", action="store_true")
-    args = parser.parse_args()
-
+def _scan_profiles(args: argparse.Namespace) -> list[dict]:
     home = Path.home()
     report: list[dict] = []
     for label, base, kind in discover_browsers(home):
@@ -158,29 +153,30 @@ def main() -> int:
             logged = [d for d, info in sessions.items() if info.get("logged_in")]
             if not sessions:
                 continue
-            report.append(
-                {
-                    "browser": label,
-                    "profile_id": prof_id,
-                    "profile_name": prof_name,
-                    "cookie_db": str(cookie_db),
-                    "logged_in_domains": logged,
-                    "sessions": sessions,
-                }
-            )
+            report.append({
+                "browser": label,
+                "profile_id": prof_id,
+                "profile_name": prof_name,
+                "cookie_db": str(cookie_db),
+                "logged_in_domains": logged,
+                "sessions": sessions,
+            })
+    return report
 
+
+def _output_json(report: list[dict]) -> None:
     bins = {cmd: shutil.which(cmd) for cmd in ("firefox", "google-chrome", "chromium", "brave-browser", "microsoft-edge")}
+    print(json.dumps({"host": os.uname().nodename, "browsers": bins, "profiles": report}, indent=2))
 
-    if args.json:
-        print(json.dumps({"host": os.uname().nodename, "browsers": bins, "profiles": report}, indent=2))
-        return 0
 
+def _output_text(report: list[dict], args: argparse.Namespace) -> None:
+    bins = {cmd: shutil.which(cmd) for cmd in ("firefox", "google-chrome", "chromium", "brave-browser", "microsoft-edge")}
     print(f"Host: {os.uname().nodename}")
     print("Installed:", ", ".join(f"{k}={v}" for k, v in bins.items() if v) or "(none)")
     print()
     if not report:
         print("No login session cookies found.")
-        return 0
+        return
     for item in report:
         status = "LOGGED IN" if item["logged_in_domains"] else "stale/anonymous only"
         print(f"{item['browser']} / {item['profile_name']} ({item['profile_id']}) — {status}")
@@ -192,6 +188,19 @@ def main() -> int:
             if li:
                 print(f"  linkedin cookies (no auth): {', '.join(li['cookies'])}")
         print()
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--linkedin-only", action="store_true")
+    parser.add_argument("--json", action="store_true")
+    args = parser.parse_args()
+
+    report = _scan_profiles(args)
+    if args.json:
+        _output_json(report)
+    else:
+        _output_text(report, args)
     return 0
 
 

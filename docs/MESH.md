@@ -52,12 +52,18 @@ flowchart TB
 ## Zasada podziału
 
 ```text
-Markpact     → CO (capability, flow, policy)
-urisys       → wykonanie, approval, flow runner, events, CLI
-urirouter    → GDZIE + JAK (resolve → transport → koperta wire)
-uricore      → registry, policy, dispatch, handlers, event store
+Markpact     → CO (capability, flow, policy declaration, risk)
+urisys       → wykonanie, approval, flow runner, events, CLI, analyze/lint
+urirouter    → GDZIE + JAK (resolve → transport → koperta wire → operation/shell policy)
+uricore      → registry, dispatch, handlers, approval/scheme policy, event store
 *-edge/host  → runtime fizyczny (HTTP/MQTT /uri/call)
 ```
+
+Dwa poziomy policy:
+- **uricore** (dispatch-gate): approval, allowed/denied schemes — per route.
+- **urirouter** (`uri_router.policy`): deklaratywne limity payloadu i shell allowlist
+  z `policy:` w resolverze, egzekwowane w `uri_control.edge` **przed** handlerem
+  (i dla dry-run), więc bezpieczeństwo nie zależy od implementacji handlera/firmware.
 
 UriRouter **nie routuje pakietów** — routuje **intencje** (`operation` z URI).
 
@@ -179,6 +185,30 @@ router.load("profiles/urisys.runtime.hybrid.yaml")
 router.delegate("stepper://tic-t249/axis/x/query/status", {}, {"dry_run": True})
 ```
 
+## Policy (urirouter `uri_router.policy`)
+
+Resolver może deklarować centralne reguły egzekwowane przez `uri_control.edge`
+przed handlerem — niezależne od implementacji urządzenia:
+
+```yaml
+policy:
+  operations:                       # limity numeryczne payloadu per operacja
+    stepper.move_relative:
+      max: { steps: 10000, speed_sps: 1200 }
+      min: { steps: -10000 }
+    "*": { max: { speed_sps: 2000 } }   # default; reguła per-op nadpisuje pole
+  shell:                            # allowlist/deny dla shell.run
+    allowlist: [echo, apt-get, systemctl]
+    deny:      [rm, curl, nc, ssh]
+    timeout_ms: 10000
+```
+
+Naruszenie → `Runtime.call` zwraca `{ok:false, type: policy_limit_exceeded | policy_shell_denied}`
+i emituje event `*.policy_denied`; handler nie jest wywoływany. Działa też dla
+delegacji transportowej (PC/ESP32 i tak walidują u siebie — defence in depth).
+
+Przykład: [urisys.runtime.resolver.yaml](https://github.com/tellmesh/markpact-contracts/blob/main/packs/examples/urisys.runtime.resolver.yaml).
+
 ## Dystrybucja (skrót)
 
 | Paczka | Instalacja slave |
@@ -208,6 +238,9 @@ Szczegóły: [`DISTRIBUTION.md`](DISTRIBUTION.md) · [`REPOS.md`](REPOS.md) · [
 | Usunięcie legacy `urisysedge` | ✅ → `uri_control.edge` w uricore |
 | Shimy `uri_control.resolver/transport/envelope` | ✅ |
 | `urisys` zależność bezpośrednia | ✅ |
+| Centralna `policy.operations` (limity payloadu w runtime) | ✅ `uri_router.policy` |
+| `policy.shell` allowlist/deny dla `shell.run` | ✅ `uri_router.policy` |
+| Markpact profil v1alpha (analyze/lint: requires.schemes vs uses.packs) | ✅ `markpact_profile` |
 | PyPI publish `urirouter` | 📋 |
 | `urirouter-embedded` / `uri_routes.h` (marksync) | 📋 |
-| Centralna `policy.operations` | 📋 |
+| `analyze --json` jako stabilny kontrakt CI + risk preflight | 📋 |

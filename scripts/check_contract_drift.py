@@ -49,6 +49,28 @@ def check_pair(manifest: Path, contract: Path) -> list[str]:
     return contract_gen.diff_manifest_contract(m, c)
 
 
+def _check_spec(name: str, spec) -> tuple[int, int, int]:
+    mf = manifest_path(spec)
+    contracts = contract_paths(spec)
+    if not mf or not contracts:
+        return 0, 0, 1
+
+    ok = 0
+    drift = 0
+    for contract in contracts:
+        label = contract.relative_to(TELLMESH) if contract.is_relative_to(TELLMESH) else contract
+        issues = check_pair(mf, contract)
+        if issues:
+            print(f"DRIFT {label}")
+            for item in issues:
+                print(f"  - {item}")
+            drift += 1
+        else:
+            print(f"OK   {label}")
+            ok += 1
+    return ok, drift, 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check manifest vs UriContract Markpact drift.")
     parser.add_argument("--pack", action="append", default=[], help="Only these pack names.")
@@ -70,22 +92,10 @@ def main() -> int:
     for name, spec in sorted(specs.items()):
         if selected and name not in selected:
             continue
-        mf = manifest_path(spec)
-        contracts = contract_paths(spec)
-        if not mf or not contracts:
-            skip += 1
-            continue
-        for contract in contracts:
-            label = contract.relative_to(TELLMESH) if contract.is_relative_to(TELLMESH) else contract
-            issues = check_pair(mf, contract)
-            if issues:
-                print(f"DRIFT {label}")
-                for item in issues:
-                    print(f"  - {item}")
-                drift += 1
-            else:
-                print(f"OK   {label}")
-                ok += 1
+        s_ok, s_drift, s_skip = _check_spec(name, spec)
+        ok += s_ok
+        drift += s_drift
+        skip += s_skip
 
     print(f"\nDone: ok={ok} drift={drift} skip={skip}")
     return 1 if drift else 0

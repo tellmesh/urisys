@@ -310,6 +310,33 @@ def generate_for_spec(spec: PackSpec) -> list[tuple[Path, str]]:
     return outputs
 
 
+def _process_spec(
+    spec: PackSpec,
+    *,
+    check: bool,
+    aggregate: bool,
+    changed: int,
+    written: int,
+) -> tuple[int, int]:
+    for out_path, content in generate_for_spec(spec):
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        label = out_path.relative_to(TELLMESH) if out_path.is_relative_to(TELLMESH) else out_path
+        if out_path.is_file() and out_path.read_text(encoding="utf-8") == content:
+            print(f"OK  {label}")
+        elif check:
+            print(f"DRIFT {label}")
+            changed += 1
+        else:
+            out_path.write_text(content, encoding="utf-8")
+            written += 1
+            print(f"WROTE {label}")
+        if aggregate and not check:
+            AGGREGATE_DIR.mkdir(parents=True, exist_ok=True)
+            agg = AGGREGATE_DIR / out_path.name
+            shutil.copy2(out_path, agg)
+    return changed, written
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate thin pack Markpacts from manifest.yaml.")
     parser.add_argument("--pack", action="append", default=[], help="Only these pack names.")
@@ -330,22 +357,9 @@ def main() -> int:
         if not repo_module_dir(spec).is_dir():
             print(f"SKIP {name}: no module dir")
             continue
-        for out_path, content in generate_for_spec(spec):
-            out_path.parent.mkdir(parents=True, exist_ok=True)
-            label = out_path.relative_to(TELLMESH) if out_path.is_relative_to(TELLMESH) else out_path
-            if out_path.is_file() and out_path.read_text(encoding="utf-8") == content:
-                print(f"OK  {label}")
-            elif args.check:
-                print(f"DRIFT {label}")
-                changed += 1
-            else:
-                out_path.write_text(content, encoding="utf-8")
-                written += 1
-                print(f"WROTE {label}")
-            if args.aggregate and not args.check:
-                AGGREGATE_DIR.mkdir(parents=True, exist_ok=True)
-                agg = AGGREGATE_DIR / out_path.name
-                shutil.copy2(out_path, agg)
+        changed, written = _process_spec(
+            spec, check=args.check, aggregate=args.aggregate, changed=changed, written=written
+        )
 
     if args.check and changed:
         return 1

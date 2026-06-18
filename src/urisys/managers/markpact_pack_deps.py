@@ -78,13 +78,22 @@ def _discover_pack_modules(child: Path) -> list[tuple[Path, str]]:
     return found
 
 
-def extend_tellmesh_paths(*, anchor: Path | None = None) -> list[str]:
-    """Register sibling tellmesh capability packs (nested path or flat import)."""
-    root = tellmesh_root(anchor=anchor)
-    if root is None:
-        return []
-    added: list[str] = []
-    seen_paths: set[str] = set()
+def _register_existing_pack(repo_path: Path, module_name: str, added: list[str], seen_paths: set[str]) -> None:
+    path = str(repo_path.resolve())
+    if path not in sys.path and path not in seen_paths:
+        sys.path.insert(0, path)
+        seen_paths.add(path)
+        added.append(path)
+    if module_name in sys.modules:
+        return
+    try:
+        importlib.import_module(module_name)
+    except ModuleNotFoundError:
+        if _register_flat_pack(repo_path / module_name, module_name):
+            added.append(f"flat:{repo_path / module_name}")
+
+
+def _register_sibling_packs(root: Path, added: list[str], seen_paths: set[str]) -> None:
     for child in sorted(root.iterdir()):
         if not child.is_dir() or not child.name.startswith("uri"):
             continue
@@ -97,25 +106,19 @@ def extend_tellmesh_paths(*, anchor: Path | None = None) -> list[str]:
                 added.append(f"flat:{child}")
             continue
         for repo_path, module_name in _discover_pack_modules(child):
-            path = str(repo_path.resolve())
-            if path not in sys.path and path not in seen_paths:
-                sys.path.insert(0, path)
-                seen_paths.add(path)
-                added.append(path)
-            if module_name in sys.modules:
-                continue
-            try:
-                importlib.import_module(module_name)
-            except ModuleNotFoundError:
-                if _register_flat_pack(repo_path / module_name, module_name):
-                    added.append(f"flat:{repo_path / module_name}")
+            _register_existing_pack(repo_path, module_name, added, seen_paths)
+
+
+def _register_uricore_utils(root: Path, added: list[str]) -> None:
     uricore = root / "uricore" / "core" / "python"
     if uricore.is_dir():
         path = str(uricore.resolve())
         if path not in sys.path:
             sys.path.insert(0, path)
             added.append(path)
-    # urioperators — shared LLM helpers (no manifest.yaml; required by urillm handlers)
+
+
+def _register_urioperators(root: Path, added: list[str]) -> None:
     ops = root / "urioperators"
     if ops.is_dir() and (ops / "__init__.py").is_file():
         path = str(ops.resolve())
@@ -127,6 +130,18 @@ def extend_tellmesh_paths(*, anchor: Path | None = None) -> list[str]:
                 importlib.import_module("urioperators")
             except ModuleNotFoundError:
                 pass
+
+
+def extend_tellmesh_paths(*, anchor: Path | None = None) -> list[str]:
+    """Register sibling tellmesh capability packs (nested path or flat import)."""
+    root = tellmesh_root(anchor=anchor)
+    if root is None:
+        return []
+    added: list[str] = []
+    seen_paths: set[str] = set()
+    _register_sibling_packs(root, added, seen_paths)
+    _register_uricore_utils(root, added)
+    _register_urioperators(root, added)
     return added
 
 

@@ -1,45 +1,31 @@
 flowchart TD
-%% generated in 0.02s
+%% generated in 0.01s
     scripts__analyze_thin_markpacts["scripts.analyze-thin-markpacts<br/>1 funcs"]
-    scripts__check_contract_drift["scripts.check_contract_drift<br/>4 funcs"]
-    scripts__generate_pack_markpacts["scripts.generate_pack_markpacts<br/>15 funcs"]
-    scripts__lenovo_remote_session["scripts.lenovo_remote_session<br/>25 funcs"]
+    scripts__check_contract_drift["scripts.check_contract_drift<br/>5 funcs"]
+    scripts__generate_pack_markpacts["scripts.generate_pack_markpacts<br/>16 funcs"]
     scripts__office_simulate_loop["scripts.office-simulate-loop<br/>5 funcs"]
     scripts__pack_registry["scripts.pack_registry<br/>7 funcs"]
-    scripts__pack_sync["scripts.pack_sync<br/>13 funcs"]
-    scripts__paths["scripts.paths<br/>7 funcs"]
-    scripts__report["scripts.report<br/>37 funcs"]
-    scripts__run_office_writer_e2e["scripts.run-office-writer-e2e<br/>4 funcs"]
-    scripts__run_urisys_node_docker_e2e["scripts.run-urisys-node-docker-e2e<br/>5 funcs"]
-    scripts__run_test_sessions["scripts.run_test_sessions<br/>18 funcs"]
-    scripts__scan_browser_sessions["scripts.scan-browser-sessions<br/>6 funcs"]
-    scripts__session_core["scripts.session_core<br/>16 funcs"]
+    scripts__pack_sync["scripts.pack_sync<br/>19 funcs"]
+    scripts__report["scripts.report<br/>41 funcs"]
+    scripts__scan_browser_sessions["scripts.scan-browser-sessions<br/>9 funcs"]
     scripts__test_sessions["scripts.test_sessions<br/>36 funcs"]
     scripts__update_ecosystem_readmes["scripts.update-ecosystem-readmes<br/>4 funcs"]
-    src__urisys["src.urisys<br/>253 funcs"]
-    scripts__run_test_sessions ==>|88| scripts__test_sessions
-    scripts__run_test_sessions ==>|28| scripts__session_core
-    scripts__pack_sync ==>|15| scripts__analyze_thin_markpacts
-    scripts__lenovo_remote_session ==>|14| scripts__session_core
+    src__urisys["src.urisys<br/>317 funcs"]
+    src__urisys_lab["src.urisys_lab<br/>100 funcs"]
+    scripts__test_sessions ==>|29| src__urisys_lab
+    scripts__pack_sync ==>|16| scripts__analyze_thin_markpacts
     src__urisys ==>|10| scripts__analyze_thin_markpacts
+    src__urisys_lab ==>|10| scripts__analyze_thin_markpacts
     scripts__scan_browser_sessions ==>|10| scripts__analyze_thin_markpacts
-    scripts__run_test_sessions ==>|10| scripts__run_office_writer_e2e
-    scripts__lenovo_remote_session ==>|8| scripts__run_office_writer_e2e
     scripts__office_simulate_loop ==>|7| scripts__analyze_thin_markpacts
-    scripts__report ==>|7| scripts__session_core
+    scripts__report ==>|7| src__urisys_lab
     scripts__report ==>|6| scripts__analyze_thin_markpacts
     scripts__generate_pack_markpacts ==>|5| scripts__analyze_thin_markpacts
-    scripts__run_test_sessions ==>|5| scripts__analyze_thin_markpacts
-    scripts__lenovo_remote_session ==>|5| scripts__analyze_thin_markpacts
-    scripts__test_sessions ==>|5| scripts__run_office_writer_e2e
     scripts__check_contract_drift ==>|4| scripts__analyze_thin_markpacts
-    scripts__run_test_sessions -->|3| scripts__run_urisys_node_docker_e2e
-    scripts__test_sessions -->|3| scripts__run_urisys_node_docker_e2e
-    scripts__test_sessions -->|3| scripts__session_core
-    src__urisys -->|2| scripts__lenovo_remote_session
+    src__urisys -->|2| src__urisys_lab
     scripts__generate_pack_markpacts -->|2| scripts__pack_registry
-    scripts__check_contract_drift -->|2| scripts__pack_registry
     scripts__update_ecosystem_readmes -->|2| scripts__analyze_thin_markpacts
     scripts__pack_sync -->|2| scripts__pack_registry
-    src__urisys -->|2| scripts__paths
-    scripts__lenovo_remote_session -->|1| scripts__office_simulate_loop
+    scripts__check_contract_drift -->|2| scripts__pack_registry
+    src__urisys_lab -->|1| scripts__office_simulate_loop
+    scripts__report -->|1| src__urisys

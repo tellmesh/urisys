@@ -1,22 +1,33 @@
-# redup/duplication | 4 groups | 57f 8517L | 2026-06-18
+# redup/duplication | 7 groups | 108f 11349L | 2026-06-18
 
 SUMMARY:
-  files_scanned: 57
-  total_lines:   8517
-  dup_groups:    4
-  dup_fragments: 8
-  saved_lines:   35
-  scan_ms:       5210
+  files_scanned: 108
+  total_lines:   11349
+  dup_groups:    7
+  dup_fragments: 15
+  saved_lines:   162
+  scan_ms:       2846
 
-HOTSPOTS[6] (files with most duplication):
-  src/urisys/uricore_install.py  dup=27L  groups=3  frags=3  (0.3%)
+HOTSPOTS[7] (files with most duplication):
+  src/urisys_lab/sessions/runners.py  dup=138L  groups=1  frags=3  (1.2%)
+  src/urisys_lab/sessions/expectations.py  dup=40L  groups=1  frags=2  (0.4%)
+  src/urisys/markpact/analyzer/rules/capabilities.py  dup=30L  groups=1  frags=2  (0.3%)
+  src/urisys/uricore_install.py  dup=27L  groups=3  frags=3  (0.2%)
   src/urisys/node_install.py  dup=11L  groups=1  frags=1  (0.1%)
   src/urisys/urirouter_install.py  dup=9L  groups=1  frags=1  (0.1%)
   scripts/report/run_analysis.py  dup=8L  groups=1  frags=1  (0.1%)
-  scripts/report/session_io.py  dup=8L  groups=1  frags=1  (0.1%)
-  src/urisys/doctor.py  dup=7L  groups=1  frags=1  (0.1%)
 
-DUPLICATES[4] (ranked by impact):
+DUPLICATES[7] (ranked by impact):
+  [68032876d180e62e] ! STRU  session_urisys_node_docker_gui  L=46 N=3 saved=92 sim=1.00
+      src/urisys_lab/sessions/runners.py:440-485  (session_urisys_node_docker_gui)
+      src/urisys_lab/sessions/runners.py:488-533  (session_office_simulate)
+      src/urisys_lab/sessions/runners.py:571-616  (session_office_writer)
+  [5053c450ed7255b6]   STRU  _screen_changed  L=20 N=2 saved=20 sim=1.00
+      src/urisys_lab/sessions/expectations.py:41-60  (_screen_changed)
+      src/urisys_lab/sessions/expectations.py:63-82  (_screen_changed_since_previous)
+  [4ebe2e0e30d6012c]   STRU  check  L=15 N=2 saved=15 sim=1.00
+      src/urisys/markpact/analyzer/rules/capabilities.py:30-44  (check)
+      src/urisys/markpact/analyzer/rules/capabilities.py:50-64  (check)
   [3f18ae8c291ee1c9]   EXAC  pip_run  L=11 N=2 saved=11 sim=1.00
       src/urisys/node_install.py:48-58  (pip_run)
       src/urisys/uricore_install.py:99-109  (pip_run)
@@ -30,36 +41,54 @@ DUPLICATES[4] (ranked by impact):
       src/urisys/doctor.py:23-29  (_pkg_version)
       src/urisys/uricore_install.py:38-44  (_pkg_version)
 
-REFACTOR[4] (ranked by priority):
-  [1] ○ extract_function   → src/urisys/utils/pip_run.py
+REFACTOR[7] (ranked by priority):
+  [1] ○ extract_function   → src/urisys_lab/sessions/utils/session_urisys_node_docker_gui.py
+      WHY: 3 occurrences of 46-line block across 1 files — saves 92 lines
+      FILES: src/urisys_lab/sessions/runners.py
+  [2] ○ extract_function   → src/urisys_lab/sessions/utils/_screen_changed.py
+      WHY: 2 occurrences of 20-line block across 1 files — saves 20 lines
+      FILES: src/urisys_lab/sessions/expectations.py
+  [3] ○ extract_function   → src/urisys/markpact/analyzer/rules/utils/check.py
+      WHY: 2 occurrences of 15-line block across 1 files — saves 15 lines
+      FILES: src/urisys/markpact/analyzer/rules/capabilities.py
+  [4] ○ extract_function   → src/urisys/utils/pip_run.py
       WHY: 2 occurrences of 11-line block across 2 files — saves 11 lines
       FILES: src/urisys/node_install.py, src/urisys/uricore_install.py
-  [2] ○ extract_function   → src/urisys/utils/wheel_url.py
+  [5] ○ extract_function   → src/urisys/utils/wheel_url.py
       WHY: 2 occurrences of 9-line block across 2 files — saves 9 lines
       FILES: src/urisys/uricore_install.py, src/urisys/urirouter_install.py
-  [3] ○ extract_function   → scripts/report/utils/write_run_analysis.py
+  [6] ○ extract_function   → scripts/report/utils/write_run_analysis.py
       WHY: 2 occurrences of 8-line block across 2 files — saves 8 lines
       FILES: scripts/report/run_analysis.py, scripts/report/session_io.py
-  [4] ○ extract_function   → src/urisys/utils/_pkg_version.py
+  [7] ○ extract_function   → src/urisys/utils/_pkg_version.py
       WHY: 2 occurrences of 7-line block across 2 files — saves 7 lines
       FILES: src/urisys/doctor.py, src/urisys/uricore_install.py
 
-QUICK_WINS[4] (low risk, high savings — do first):
-  [1] extract_function   saved=11L  → src/urisys/utils/pip_run.py
+QUICK_WINS[7] (low risk, high savings — do first):
+  [1] extract_function   saved=92L  → src/urisys_lab/sessions/utils/session_urisys_node_docker_gui.py
+      FILES: runners.py
+  [2] extract_function   saved=20L  → src/urisys_lab/sessions/utils/_screen_changed.py
+      FILES: expectations.py
+  [3] extract_function   saved=15L  → src/urisys/markpact/analyzer/rules/utils/check.py
+      FILES: capabilities.py
+  [4] extract_function   saved=11L  → src/urisys/utils/pip_run.py
       FILES: node_install.py, uricore_install.py
-  [2] extract_function   saved=9L  → src/urisys/utils/wheel_url.py
+  [5] extract_function   saved=9L  → src/urisys/utils/wheel_url.py
       FILES: uricore_install.py, urirouter_install.py
-  [3] extract_function   saved=8L  → scripts/report/utils/write_run_analysis.py
+  [6] extract_function   saved=8L  → scripts/report/utils/write_run_analysis.py
       FILES: run_analysis.py, session_io.py
-  [4] extract_function   saved=7L  → src/urisys/utils/_pkg_version.py
+  [7] extract_function   saved=7L  → src/urisys/utils/_pkg_version.py
       FILES: doctor.py, uricore_install.py
 
-EFFORT_ESTIMATE (total ≈ 1.2h):
+EFFORT_ESTIMATE (total ≈ 6.9h):
+  hard   session_urisys_node_docker_gui      saved=92L  ~276min
+  medium _screen_changed                     saved=20L  ~40min
+  medium check                               saved=15L  ~30min
   easy   pip_run                             saved=11L  ~22min
   easy   wheel_url                           saved=9L  ~18min
   easy   write_run_analysis                  saved=8L  ~16min
   easy   _pkg_version                        saved=7L  ~14min
 
 METRICS-TARGET:
-  dup_groups:  4 → 0
-  saved_lines: 35 lines recoverable
+  dup_groups:  7 → 0
+  saved_lines: 162 lines recoverable

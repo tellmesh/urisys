@@ -48,6 +48,19 @@ def test_lint_rejects_query_kind_mismatch():
     assert any("/query/" in e for e in result["errors"])
 
 
+def test_lint_emits_mp001_for_flat_operation():
+    result = lint_markpact(
+        pack={"schemes": ["stepper"]},
+        scheme="stepper",
+        capabilities=[{"uri": "stepper://d/axis/x/query/status", "kind": "query", "operation": "status"}],
+        flows=[],
+        undeclared_schemes=[],
+    )
+    codes = [i["code"] for i in result["issues"]]
+    assert "MP001" in codes
+    assert any("MP001:" in w for w in result["warnings"])
+
+
 @pytest.mark.skipif(not MACHINE_CYCLE.is_file(), reason="machine-cycle markpact missing")
 def test_machine_cycle_analyze_v1alpha_profile():
     analysis = MarkpactManager().analyze(MACHINE_CYCLE)

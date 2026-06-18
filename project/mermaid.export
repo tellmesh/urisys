@@ -1,5 +1,5 @@
 flowchart TD
-%% generated in 0.03s
+%% generated in 0.01s
     subgraph examples__frontend
         examples__frontend__app__registry["registry"]
         examples__frontend__app__runtime["runtime"]
@@ -14,7 +14,8 @@ flowchart TD
         scripts__check_contract_drift__manifest_path["manifest_path"]
         scripts__check_contract_drift__contract_paths["contract_paths"]
         scripts__check_contract_drift__check_pair["check_pair"]
-        scripts__check_contract_drift__main{{main CC=15}}
+        scripts__check_contract_drift___check_spec["_check_spec"]
+        scripts__check_contract_drift__main("main CC=9")
     end
     subgraph scripts__ci_checkout_siblings
         scripts__ci_checkout_siblings__clone_repo["clone_repo"]
@@ -44,37 +45,11 @@ flowchart TD
         scripts__generate_pack_markpacts__manifest_files["manifest_files"]
         scripts__generate_pack_markpacts___file_stem["_file_stem"]
         scripts__generate_pack_markpacts__generate_for_spec["generate_for_spec"]
-        scripts__generate_pack_markpacts__main{{main CC=16}}
+        scripts__generate_pack_markpacts___process_spec("_process_spec CC=8")
+        scripts__generate_pack_markpacts__main("main CC=9")
     end
     subgraph scripts__lenovo_node_session
         scripts__lenovo_node_session__install_pack["install_pack"]
-    end
-    subgraph scripts__lenovo_remote_session
-        scripts__lenovo_remote_session__load_yaml["load_yaml"]
-        scripts__lenovo_remote_session__http_get["http_get"]
-        scripts__lenovo_remote_session___run_http_get_step["_run_http_get_step"]
-        scripts__lenovo_remote_session___run_host_sleep_step["_run_host_sleep_step"]
-        scripts__lenovo_remote_session___run_host_restart_and_wait_step{{_run_host_restart_and_wait_step CC=19}}
-        scripts__lenovo_remote_session___run_host_schedule_restart_step["_run_host_schedule_restart_step"]
-        scripts__lenovo_remote_session___run_host_wait_health_step("_run_host_wait_health_step CC=12")
-        scripts__lenovo_remote_session___run_uri_call_step["_run_uri_call_step"]
-        scripts__lenovo_remote_session__run_step("run_step CC=9")
-        scripts__lenovo_remote_session__run_flow("run_flow CC=14")
-        scripts__lenovo_remote_session__append_log["append_log"]
-        scripts__lenovo_remote_session__build_wheels["build_wheels"]
-        scripts__lenovo_remote_session__start_wheel_server["start_wheel_server"]
-        scripts__lenovo_remote_session___needs_node_upgrade["_needs_node_upgrade"]
-        scripts__lenovo_remote_session___run_upgrade_flow["_run_upgrade_flow"]
-        scripts__lenovo_remote_session___md_header["_md_header"]
-        scripts__lenovo_remote_session___md_flow_results["_md_flow_results"]
-        scripts__lenovo_remote_session___md_step_detail("_md_step_detail CC=12")
-        scripts__lenovo_remote_session___md_lessons["_md_lessons"]
-        scripts__lenovo_remote_session__write_session_md["write_session_md"]
-        scripts__lenovo_remote_session__resolve_flow_paths["resolve_flow_paths"]
-        scripts__lenovo_remote_session__resolve_route_map("resolve_route_map CC=8")
-        scripts__lenovo_remote_session__load_manifest_session["load_manifest_session"]
-        scripts__lenovo_remote_session___run_flows{{_run_flows CC=22}}
-        scripts__lenovo_remote_session__main{{main CC=37}}
     end
     subgraph scripts__materialize_all_showcases
         scripts__materialize_all_showcases__collect_thin["collect_thin"]
@@ -108,7 +83,13 @@ flowchart TD
         scripts__pack_sync___repo_pyproject("_repo_pyproject CC=14")
         scripts__pack_sync__init_repo("init_repo CC=12")
         scripts__pack_sync__promote["promote"]
-        scripts__pack_sync__main{{main CC=28}}
+        scripts__pack_sync___validate_packs["_validate_packs"]
+        scripts__pack_sync___cmd_to_repo["_cmd_to_repo"]
+        scripts__pack_sync___cmd_promote["_cmd_promote"]
+        scripts__pack_sync___cmd_check["_cmd_check"]
+        scripts__pack_sync___cmd_init_repo["_cmd_init_repo"]
+        scripts__pack_sync___cmd_print_uv_sources["_cmd_print_uv_sources"]
+        scripts__pack_sync__main("main CC=9")
     end
     subgraph scripts__paths
         scripts__paths___urisys_root["_urisys_root"]
@@ -138,16 +119,10 @@ flowchart TD
         scripts__report__run_analysis___run_recommendations("_run_recommendations CC=10")
         scripts__report__run_analysis__analyze_run("analyze_run CC=13")
         scripts__report__run_analysis__write_run_analysis["write_run_analysis"]
-        scripts__report__lab_checks__iter_step_results("iter_step_results CC=9")
-        scripts__report__lab_checks__load_flow_outcomes{{load_flow_outcomes CC=15}}
-        scripts__report__lab_checks__check_declared_expectations["check_declared_expectations"]
-        scripts__report__lab_checks__check_gui_no_effect["check_gui_no_effect"]
-        scripts__report__lab_checks__check_vision_never_decides("check_vision_never_decides CC=8")
-        scripts__report__lab_checks___duplicate_recommendation["_duplicate_recommendation"]
-        scripts__report__lab_checks__check_duplicate_screenshots["check_duplicate_screenshots"]
-        scripts__report__lab_checks__check_shell_baseline_duplicate["check_shell_baseline_duplicate"]
-        scripts__report__lab_checks__analyze_lab_flows["analyze_lab_flows"]
-        scripts__report__session__infer_steps{{infer_steps CC=28}}
+        scripts__report__session___extract_metrics["_extract_metrics"]
+        scripts__report__session___resolve_screenshot["_resolve_screenshot"]
+        scripts__report__session___response_to_step_result("_response_to_step_result CC=12")
+        scripts__report__session__infer_steps["infer_steps"]
         scripts__report__session__collect_artifacts["collect_artifacts"]
         scripts__report__session__session_status("session_status CC=9")
         scripts__report__session__session_duration["session_duration"]
@@ -164,6 +139,16 @@ flowchart TD
         scripts__report__session_io__write_session_report["write_session_report"]
         scripts__report__util__read_json["read_json"]
         scripts__report__util__tail["tail"]
+        scripts__report__lab_checks__iter_step_results("iter_step_results CC=9")
+        scripts__report__lab_checks___response_to_outcome("_response_to_outcome CC=13")
+        scripts__report__lab_checks__load_flow_outcomes["load_flow_outcomes"]
+        scripts__report__lab_checks__check_declared_expectations["check_declared_expectations"]
+        scripts__report__lab_checks__check_gui_no_effect["check_gui_no_effect"]
+        scripts__report__lab_checks__check_vision_never_decides("check_vision_never_decides CC=8")
+        scripts__report__lab_checks___duplicate_recommendation["_duplicate_recommendation"]
+        scripts__report__lab_checks__check_duplicate_screenshots["check_duplicate_screenshots"]
+        scripts__report__lab_checks__check_shell_baseline_duplicate["check_shell_baseline_duplicate"]
+        scripts__report__lab_checks__analyze_lab_flows["analyze_lab_flows"]
     end
     subgraph scripts__run_email_mailpit_e2e
         scripts__run_email_mailpit_e2e__cleanup["cleanup"]
@@ -206,51 +191,16 @@ flowchart TD
         scripts__run_urisys_node_docker_e2e__remote_call["remote_call"]
         scripts__run_urisys_node_docker_e2e__wait_health["wait_health"]
     end
-    subgraph scripts__run_test_sessions
-        scripts__run_test_sessions__session_pytest_urirdp["session_pytest_urirdp"]
-        scripts__run_test_sessions__session_pytest_urisys["session_pytest_urisys"]
-        scripts__run_test_sessions__session_pytest_urisys_node["session_pytest_urisys_node"]
-        scripts__run_test_sessions__session_urirdp_mock_docker["session_urirdp_mock_docker"]
-        scripts__run_test_sessions___record_health["_record_health"]
-        scripts__run_test_sessions___bootstrap_rdp["_bootstrap_rdp"]
-        scripts__run_test_sessions___read_display_env["_read_display_env"]
-        scripts__run_test_sessions___call_and_record["_call_and_record"]
-        scripts__run_test_sessions__session_urirdp_real_docker{{session_urirdp_real_docker CC=25}}
-        scripts__run_test_sessions__session_urirdp_rdp_e2e["session_urirdp_rdp_e2e"]
-        scripts__run_test_sessions__session_automation_lab("session_automation_lab CC=13")
-        scripts__run_test_sessions___monorepo_root["_monorepo_root"]
-        scripts__run_test_sessions__session_urisys_node_docker_gui["session_urisys_node_docker_gui"]
-        scripts__run_test_sessions__session_office_simulate["session_office_simulate"]
-        scripts__run_test_sessions__session_office_simulate_lenovo["session_office_simulate_lenovo"]
-        scripts__run_test_sessions__session_office_writer["session_office_writer"]
-        scripts__run_test_sessions__session_email_mailpit["session_email_mailpit"]
-        scripts__run_test_sessions__main("main CC=13")
-    end
     subgraph scripts__scan_browser_sessions
         scripts__scan_browser_sessions___copy_query["_copy_query"]
         scripts__scan_browser_sessions__scan_chrome_cookies("scan_chrome_cookies CC=13")
         scripts__scan_browser_sessions__chrome_profiles("chrome_profiles CC=11")
         scripts__scan_browser_sessions__firefox_profiles("firefox_profiles CC=8")
         scripts__scan_browser_sessions__discover_browsers["discover_browsers"]
-        scripts__scan_browser_sessions__main{{main CC=23}}
-    end
-    subgraph scripts__session_core
-        scripts__session_core__default_examples_root["default_examples_root"]
-        scripts__session_core__resolve_flow_ref["resolve_flow_ref"]
-        scripts__session_core__now_iso["now_iso"]
-        scripts__session_core__host_id["host_id"]
-        scripts__session_core__run_id["run_id"]
-        scripts__session_core__save_json["save_json"]
-        scripts__session_core__step_ok{{step_ok CC=16}}
-        scripts__session_core__image_ext["image_ext"]
-        scripts__session_core__write_base64_image["write_base64_image"]
-        scripts__session_core__extract_images_from_dict("extract_images_from_dict CC=8")
-        scripts__session_core__extract_step_screenshots["extract_step_screenshots"]
-        scripts__session_core__backfill_session_images("backfill_session_images CC=8")
-        scripts__session_core___wheel_version_key["_wheel_version_key"]
-        scripts__session_core__find_wheel_file["find_wheel_file"]
-        scripts__session_core__wheel_url["wheel_url"]
-        scripts__session_core__expand_step_wheels{{expand_step_wheels CC=18}}
+        scripts__scan_browser_sessions___scan_profiles("_scan_profiles CC=12")
+        scripts__scan_browser_sessions___output_json["_output_json"]
+        scripts__scan_browser_sessions___output_text("_output_text CC=11")
+        scripts__scan_browser_sessions__main["main"]
     end
     subgraph scripts__test_python_matrix
         scripts__test_python_matrix__run_one["run_one"]
@@ -323,19 +273,6 @@ flowchart TD
         src__urisys__bootstrap___doctor_main["_doctor_main"]
         src__urisys__bootstrap___init_main["_init_main"]
         src__urisys__bootstrap__main("main CC=8")
-        src__urisys__cli___json_arg["_json_arg"]
-        src__urisys__cli__print_json["print_json"]
-        src__urisys__cli___add_runtime_flags["_add_runtime_flags"]
-        src__urisys__cli__resolve_markpact_source["resolve_markpact_source"]
-        src__urisys__cli__build_parser["build_parser"]
-        src__urisys__cli___cmd_markpact{{_cmd_markpact CC=38}}
-        src__urisys__cli___cmd_pack["_cmd_pack"]
-        src__urisys__cli___cmd_contract["_cmd_contract"]
-        src__urisys__cli___cmd_init["_cmd_init"]
-        src__urisys__cli___cmd_node["_cmd_node"]
-        src__urisys__cli___cmd_uri["_cmd_uri"]
-        src__urisys__cli___handle_cli_error("_handle_cli_error CC=8")
-        src__urisys__cli__main("main CC=11")
         src__urisys__doctor___pkg_version["_pkg_version"]
         src__urisys__doctor___parse_version["_parse_version"]
         src__urisys__doctor___version_lt["_version_lt"]
@@ -347,6 +284,22 @@ flowchart TD
         src__urisys__doctor___check_uricore_authentic["_check_uricore_authentic"]
         src__urisys__doctor___check_uricore_dist["_check_uricore_dist"]
         src__urisys__doctor__run_doctor("run_doctor CC=11")
+        src__urisys__init_setup__default_pip_specs["default_pip_specs"]
+        src__urisys__init_setup__default_node_pip_spec["default_node_pip_spec"]
+        src__urisys__init_setup__pip_install_specs["pip_install_specs"]
+        src__urisys__init_setup__verify_uri_control["verify_uri_control"]
+        src__urisys__init_setup__profile_env["profile_env"]
+        src__urisys__init_setup__render_env_shell["render_env_shell"]
+        src__urisys__init_setup__write_env_file["write_env_file"]
+        src__urisys__init_setup___pre_repair_uricore["_pre_repair_uricore"]
+        src__urisys__init_setup___build_pip_result["_build_pip_result"]
+        src__urisys__init_setup___resolve_error_hint["_resolve_error_hint"]
+        src__urisys__init_setup___run_pip_install["_run_pip_install"]
+        src__urisys__init_setup___verify_after_install("_verify_after_install CC=8")
+        src__urisys__init_setup___run_doctor_check["_run_doctor_check"]
+        src__urisys__init_setup___write_profile_env["_write_profile_env"]
+        src__urisys__init_setup___check_node_after_install["_check_node_after_install"]
+        src__urisys__init_setup__run_init("run_init CC=13")
         src__urisys__urirouter_install__github_owner["github_owner"]
         src__urisys__urirouter_install__github_version["github_version"]
         src__urisys__urirouter_install__wheel_url["wheel_url"]
@@ -364,9 +317,68 @@ flowchart TD
         src__urisys__node_install__diagnose_urisys_node["diagnose_urisys_node"]
         src__urisys__http_server___ControllerRuntime____init__["__init__"]
         src__urisys__http_server___ControllerRuntime__call["call"]
-        src__urisys__http_server___read_json["_read_json"]
-        src__urisys__http_server__create_server["create_server"]
-        src__urisys__flow__load_flow["load_flow"]
+    end
+    subgraph src__urisys_lab
+        src__urisys_lab__core__default_examples_root["default_examples_root"]
+        src__urisys_lab__core__resolve_flow_ref["resolve_flow_ref"]
+        src__urisys_lab__core__now_iso["now_iso"]
+        src__urisys_lab__core__host_id["host_id"]
+        src__urisys_lab__core__run_id["run_id"]
+        src__urisys_lab__core__save_json["save_json"]
+        src__urisys_lab__core___step_ok_http_get["_step_ok_http_get"]
+        src__urisys_lab__core___step_ok_host_restart_and_wait["_step_ok_host_restart_and_wait"]
+        src__urisys_lab__core___step_ok_host_schedule_restart["_step_ok_host_schedule_restart"]
+        src__urisys_lab__core___step_ok_default["_step_ok_default"]
+        src__urisys_lab__core__step_ok["step_ok"]
+        src__urisys_lab__core__image_ext["image_ext"]
+        src__urisys_lab__core__write_base64_image["write_base64_image"]
+        src__urisys_lab__core__extract_images_from_dict("extract_images_from_dict CC=8")
+        src__urisys_lab__core__extract_step_screenshots["extract_step_screenshots"]
+        src__urisys_lab__core__backfill_session_images("backfill_session_images CC=8")
+        src__urisys_lab__core___wheel_version_key["_wheel_version_key"]
+        src__urisys_lab__core__find_wheel_file["find_wheel_file"]
+        src__urisys_lab__core__wheel_url["wheel_url"]
+        src__urisys_lab__core___resolve_wheel_name["_resolve_wheel_name"]
+        src__urisys_lab__core___apply_wheel_refspec["_apply_wheel_refspec"]
+        src__urisys_lab__core___resolve_wheel_args["_resolve_wheel_args"]
+        src__urisys_lab__core__expand_step_wheels["expand_step_wheels"]
+        src__urisys_lab__sessions__cli__main("main CC=13")
+        src__urisys_lab__sessions__runners__session_pytest_urirdp["session_pytest_urirdp"]
+        src__urisys_lab__sessions__runners__session_pytest_urisys["session_pytest_urisys"]
+        src__urisys_lab__sessions__runners__session_pytest_urisys_node["session_pytest_urisys_node"]
+        src__urisys_lab__sessions__runners__session_urirdp_mock_docker["session_urirdp_mock_docker"]
+        src__urisys_lab__sessions__runners___record_health["_record_health"]
+        src__urisys_lab__sessions__runners___bootstrap_rdp["_bootstrap_rdp"]
+        src__urisys_lab__sessions__runners___read_display_env["_read_display_env"]
+        src__urisys_lab__sessions__runners___call_and_record["_call_and_record"]
+        src__urisys_lab__sessions__runners___session_compose_up["_session_compose_up"]
+        src__urisys_lab__sessions__runners___record_screenshot_step["_record_screenshot_step"]
+        src__urisys_lab__sessions__runners___record_ocr_step["_record_ocr_step"]
+        src__urisys_lab__sessions__runners___record_click_step["_record_click_step"]
+        src__urisys_lab__sessions__runners___record_flow_step["_record_flow_step"]
+        src__urisys_lab__sessions__runners__session_urirdp_real_docker["session_urirdp_real_docker"]
+        src__urisys_lab__sessions__runners__session_urirdp_rdp_e2e["session_urirdp_rdp_e2e"]
+        src__urisys_lab__sessions__runners__session_automation_lab("session_automation_lab CC=13")
+        src__urisys_lab__sessions__runners___monorepo_root["_monorepo_root"]
+        src__urisys_lab__sessions__runners__session_urisys_node_docker_gui["session_urisys_node_docker_gui"]
+        src__urisys_lab__sessions__runners__session_office_simulate["session_office_simulate"]
+        src__urisys_lab__sessions__runners__session_office_simulate_lenovo["session_office_simulate_lenovo"]
+        src__urisys_lab__sessions__runners__session_office_writer["session_office_writer"]
+        src__urisys_lab__sessions__runners__session_email_mailpit["session_email_mailpit"]
+        src__urisys_lab__sessions__util__run_id["run_id"]
+        src__urisys_lab__sessions__util__http_json("http_json CC=9")
+        src__urisys_lab__sessions__util__wait_health["wait_health"]
+        src__urisys_lab__sessions__util__compose_cmd["compose_cmd"]
+        src__urisys_lab__sessions__util__run_cmd["run_cmd"]
+        src__urisys_lab__sessions__util__write_meta["write_meta"]
+        src__urisys_lab__sessions__util__read_meta["read_meta"]
+        src__urisys_lab__sessions__util__finalize_session["finalize_session"]
+        src__urisys_lab__sessions__util__docker_logs["docker_logs"]
+        src__urisys_lab__sessions__util__copy_container_file["copy_container_file"]
+        src__urisys_lab__sessions__util__copy_host_screenshot["copy_host_screenshot"]
+        src__urisys_lab__sessions__util__file_md5["file_md5"]
+        src__urisys_lab__sessions__util__sleep_ports["sleep_ports"]
+        src__urisys_lab__sessions__util__prepare_urirdp_data["prepare_urirdp_data"]
     end
     src__urisys__uricore_install__wheel_url --> src__urisys__uricore_install__github_owner
     src__urisys__uricore_install__wheel_url --> src__urisys__uricore_install__github_version
@@ -394,36 +406,6 @@ flowchart TD
     src__urisys__bootstrap__main --> src__urisys__bootstrap___init_main
     src__urisys__bootstrap__main --> src__urisys__bootstrap___print_json
     src__urisys__bootstrap__main --> src__urisys__bootstrap___missing_uricore_payload
-    src__urisys__cli__print_json --> scripts__analyze_thin_markpacts__print
-    src__urisys__cli__build_parser --> src__urisys__cli___add_runtime_flags
-    src__urisys__cli___cmd_markpact --> src__urisys__cli__resolve_markpact_source
-    src__urisys__cli___cmd_markpact --> src__urisys__cli__print_json
-    src__urisys__cli___cmd_markpact --> src__urisys__cli___cmd_contract
-    src__urisys__cli___cmd_markpact --> src__urisys__managers__markpact_run_flow__split_flow_ref
-    src__urisys__cli___cmd_markpact --> src__urisys__managers__markpact_run_flow__run_markpact_flow
-    src__urisys__cli___cmd_pack --> src__urisys__managers__markpact_pack_gen__generate_pack_markpact
-    src__urisys__cli___cmd_pack --> src__urisys__cli__print_json
-    src__urisys__cli___cmd_pack --> scripts__analyze_thin_markpacts__print
-    src__urisys__cli___cmd_pack --> src__urisys__managers__markpact_pack_gen__find_package_dir
-    src__urisys__cli___cmd_contract --> src__urisys__cli__resolve_markpact_source
-    src__urisys__cli___cmd_contract --> src__urisys__cli__print_json
-    src__urisys__cli___cmd_contract --> scripts__analyze_thin_markpacts__print
-    src__urisys__cli___cmd_init --> src__urisys__init_setup__run_init
-    src__urisys__cli___cmd_init --> src__urisys__cli__print_json
-    src__urisys__cli___cmd_init --> scripts__analyze_thin_markpacts__print
-    src__urisys__cli___cmd_node --> scripts__analyze_thin_markpacts__print
-    src__urisys__cli___cmd_uri --> src__urisys__cli__print_json
-    src__urisys__cli___cmd_uri --> src__urisys__cli___json_arg
-    src__urisys__cli___handle_cli_error --> src__urisys__cli__print_json
-    src__urisys__cli__main --> src__urisys__cli___cmd_uri
-    src__urisys__cli__main --> src__urisys__cli__build_parser
-    src__urisys__cli__main --> src__urisys__cli___cmd_markpact
-    src__urisys__cli__main --> src__urisys__doctor__run_doctor
-    src__urisys__cli__main --> src__urisys__cli__print_json
-    src__urisys__cli__main --> src__urisys__cli___cmd_init
-    src__urisys__cli__main --> scripts__analyze_thin_markpacts__print
-    src__urisys__cli__main --> src__urisys__cli___cmd_node
-    src__urisys__cli__main --> src__urisys__cli___handle_cli_error
     src__urisys__doctor___version_lt --> src__urisys__doctor___parse_version
     src__urisys__doctor___check_import --> src__urisys__doctor___pkg_version
     src__urisys__doctor___check_min_version --> src__urisys__doctor___pkg_version
@@ -440,327 +422,6 @@ flowchart TD
     src__urisys__doctor__run_doctor --> src__urisys__doctor___check_cli_path
     src__urisys__doctor__run_doctor --> src__urisys__doctor___check_uricore_dist
     src__urisys__doctor__run_doctor --> src__urisys__doctor___check_import
-    src__urisys__urirouter_install__wheel_url --> src__urisys__urirouter_install__github_owner
-    src__urisys__urirouter_install__wheel_url --> src__urisys__urirouter_install__github_version
-    src__urisys__urirouter_install__pip_spec --> src__urisys__urirouter_install__wheel_url
-    src__urisys__urirouter_install__diagnose_urirouter --> src__urisys__urirouter_install___module_exists
-    src__urisys__urirouter_install__diagnose_urirouter --> src__urisys__urirouter_install__pip_spec
-    src__urisys__node_install__wheel_filename --> src__urisys__node_install__github_version
-    src__urisys__node_install__wheel_url --> src__urisys__node_install__github_owner
-    src__urisys__node_install__wheel_url --> src__urisys__node_install__wheel_filename
-    src__urisys__node_install__wheel_url --> src__urisys__node_install__github_version
-    src__urisys__node_install__pip_spec --> src__urisys__node_install__wheel_url
-    src__urisys__node_install__install_urisys_node --> src__urisys__node_install__pip_run
-    src__urisys__node_install__install_urisys_node --> src__urisys__node_install__is_importable
-    src__urisys__node_install__install_urisys_node --> src__urisys__node_install__wheel_url
-    src__urisys__node_install__diagnose_urisys_node --> src__urisys__node_install__is_importable
-    src__urisys__node_install__diagnose_urisys_node --> src__urisys__node_install__pip_spec
-    src__urisys__node_install__diagnose_urisys_node --> src__urisys__node_install__wheel_filename
-    src__urisys__http_server__create_server --> src__urisys__http_server___read_json
-    src__urisys__controllers__flow_controller__FlowController__run --> src__urisys__flow__load_flow
-    src__urisys__controllers__flow_controller__FlowController__run --> src__urisys__flow__iter_steps
-    src__urisys__controllers__server_controller__ServerController____init__ --> src__urisys__http_server__create_server
-    src__urisys__controllers__server_controller__ServerController__serve_forever --> scripts__analyze_thin_markpacts__print
-    src__urisys__managers__markpact_validation___validate_contract_routes --> src__urisys__managers__markpact_models__scheme_from_uri
-    src__urisys__managers__markpact_validation__validate_contract --> src__urisys__managers__markpact_validation___validate_contract_routes
-    src__urisys__managers__markpact_validation__validate_bundle --> src__urisys__managers__markpact_validation___missing_bundle_imports
-    src__urisys__managers__markpact_validation__validate_implementation --> src__urisys__managers__markpact_validation___validate_implementation_capabilities
-    src__urisys__managers__markpact_manager__MarkpactManager__validate --> src__urisys__managers__markpact_validation__validate_contract
-    src__urisys__managers__markpact_manager__MarkpactManager___write_modules --> src__urisys__managers__markpact_flows__extract_modules
-    src__urisys__managers__markpact_manager__MarkpactManager___flows_from_cache --> src__urisys__managers__markpact_flows__extract_flows
-    src__urisys__managers__markpact_manager__MarkpactManager___protos_from_cache --> src__urisys__managers__markpact_flows__extract_protos
-    src__urisys__managers__markpact_manager__MarkpactManager___modules_from_cache --> src__urisys__managers__markpact_flows__extract_modules
-    src__urisys__managers__markpact_manager__MarkpactManager___write_flows --> src__urisys__managers__markpact_flows__extract_flows
-    src__urisys__managers__markpact_manager__MarkpactManager___write_protos --> src__urisys__managers__markpact_flows__extract_protos
-    src__urisys__managers__markpact_manager__MarkpactManager__analyze --> src__urisys__managers__markpact_flows__declared_uses
-    src__urisys__managers__markpact_manager__MarkpactManager__analyze --> src__urisys__managers__markpact_flows__extract_flows
-    src__urisys__managers__markpact_manager__MarkpactManager__analyze --> src__urisys__managers__markpact_profile__lint_markpact
-    src__urisys__managers__markpact_manager__MarkpactManager__analyze --> src__urisys__managers__markpact_flows__classify_flow
-    src__urisys__managers__markpact_materialize__materialize_markpact --> src__urisys__managers__markpact_materialize__default_materialize_root
-    src__urisys__managers__markpact_materialize__materialize_markpact --> src__urisys__managers__markpact_models__safe_identifier
-    src__urisys__managers__markpact_run_flow__flow_path_for --> src__urisys__managers__markpact_models__safe_identifier
-    src__urisys__managers__markpact_run_flow__packs_for_flow --> src__urisys__managers__markpact_flows__declared_uses
-    src__urisys__managers__markpact_run_flow__packs_for_flow --> src__urisys__managers__markpact_flows__classify_flow
-    src__urisys__managers__markpact_run_flow__packs_for_flow --> src__urisys__managers__markpact_run_flow___split_extra
-    src__urisys__managers__markpact_run_flow__packs_for_flow --> src__urisys__managers__markpact_flows___provider_scheme
-    src__urisys__managers__markpact_run_flow__run_markpact_flow --> src__urisys__managers__markpact_run_flow__split_flow_ref
-    src__urisys__managers__markpact_run_flow__run_markpact_flow --> src__urisys__managers__markpact_run_flow__pick_flow_id
-    src__urisys__managers__markpact_run_flow__run_markpact_flow --> src__urisys__managers__markpact_run_flow__flow_path_for
-    src__urisys__managers__markpact_run_flow__run_markpact_flow --> src__urisys__managers__markpact_run_flow__packs_for_flow
-    src__urisys__managers__markpact_run_flow__run_markpact_flow --> scripts__lenovo_remote_session__run_flow
-    src__urisys__managers__platform_export___authorities_from_flow --> src__urisys__managers__markpact_flows__flow_uris
-    src__urisys__managers__platform_export__collect_process_uris --> src__urisys__managers__markpact_flows__extract_flows
-    src__urisys__managers__platform_export__collect_process_uris --> src__urisys__managers__platform_export___authorities_from_flow
-    src__urisys__managers__platform_export__collect_process_uris --> src__urisys__managers__markpact_flows__flow_uris
-    src__urisys__managers__platform_export__build_resolver_yaml --> src__urisys__managers__platform_export___target_stub
-    src__urisys__managers__platform_export__export_platform_artifacts --> src__urisys__managers__platform_export__collect_process_uris
-    src__urisys__managers__platform_export__export_platform_artifacts --> src__urisys__managers__platform_export__build_resolver_yaml
-    src__urisys__managers__markpact_flows__extract_protos --> src__urisys__managers__markpact_models__safe_identifier
-    src__urisys__managers__markpact_flows__classify_flow --> src__urisys__managers__markpact_flows__flow_uris
-    src__urisys__managers__markpact_flows__classify_flow --> src__urisys__managers__markpact_flows___scheme
-    src__urisys__managers__markpact_flows__classify_flow --> src__urisys__managers__markpact_flows___provider_scheme
-    src__urisys__managers__markpact_flows__declared_uses --> src__urisys__managers__markpact_profile__declared_schemes
-    scripts__generate_pack_markpacts___extra_specs --> scripts__pack_registry___pack
-    scripts__generate_pack_markpacts___tests --> scripts__generate_pack_markpacts___fill_pattern
-    scripts__generate_pack_markpacts___use_case_flow --> scripts__generate_pack_markpacts___fill_pattern
-    scripts__generate_pack_markpacts___use_case_flow --> scripts__generate_pack_markpacts___scheme
-    scripts__generate_pack_markpacts___render --> scripts__generate_pack_markpacts___capabilities
-    scripts__generate_pack_markpacts___render --> scripts__generate_pack_markpacts___tests
-    scripts__generate_pack_markpacts___render --> scripts__generate_pack_markpacts___use_case_flow
-    scripts__generate_pack_markpacts___render --> scripts__generate_pack_markpacts___run_block
-    scripts__generate_pack_markpacts___render --> scripts__generate_pack_markpacts___default_port
-    scripts__generate_pack_markpacts___split_by_scheme --> scripts__generate_pack_markpacts___scheme
-    scripts__generate_pack_markpacts__manifest_files --> scripts__generate_pack_markpacts__repo_module_dir
-    scripts__generate_pack_markpacts__generate_for_spec --> scripts__generate_pack_markpacts__manifest_files
-    scripts__generate_pack_markpacts__generate_for_spec --> scripts__generate_pack_markpacts___split_by_scheme
-    scripts__generate_pack_markpacts__generate_for_spec --> scripts__generate_pack_markpacts___file_stem
-    scripts__generate_pack_markpacts__generate_for_spec --> scripts__generate_pack_markpacts___render
-    scripts__generate_pack_markpacts__main --> scripts__analyze_thin_markpacts__print
-    scripts__generate_pack_markpacts__main --> scripts__pack_registry__pack_specs
-    scripts__generate_pack_markpacts__main --> scripts__generate_pack_markpacts___extra_specs
-    scripts__generate_pack_markpacts__main --> scripts__generate_pack_markpacts__generate_for_spec
-    scripts__office_simulate_loop__rules_tick --> scripts__office_simulate_loop__call_uri
-    scripts__office_simulate_loop__rules_tick --> scripts__analyze_thin_markpacts__print
-    scripts__office_simulate_loop__llm_tick --> scripts__office_simulate_loop__call_uri
-    scripts__office_simulate_loop__llm_tick --> scripts__analyze_thin_markpacts__print
-    scripts__office_simulate_loop__main --> scripts__office_simulate_loop__parse_args
-    scripts__office_simulate_loop__main --> scripts__analyze_thin_markpacts__print
-    scripts__office_simulate_loop__main --> scripts__office_simulate_loop__rules_tick
-    scripts__office_simulate_loop__main --> scripts__office_simulate_loop__llm_tick
-    scripts__check_contract_drift__main --> scripts__analyze_thin_markpacts__print
-    scripts__check_contract_drift__main --> scripts__pack_registry__pack_specs
-    scripts__check_contract_drift__main --> scripts__check_contract_drift__manifest_path
-    scripts__check_contract_drift__main --> scripts__check_contract_drift__contract_paths
-    scripts__check_contract_drift__main --> scripts__pack_registry___pack
-    scripts__check_contract_drift__main --> scripts__check_contract_drift__check_pair
-    scripts__scan_browser_sessions__scan_chrome_cookies --> scripts__scan_browser_sessions___copy_query
-    scripts__scan_browser_sessions__main --> scripts__scan_browser_sessions__discover_browsers
-    scripts__scan_browser_sessions__main --> scripts__analyze_thin_markpacts__print
-    scripts__run_test_sessions__session_pytest_urirdp --> scripts__session_core__now_iso
-    scripts__run_test_sessions__session_pytest_urirdp --> scripts__test_sessions__util__write_meta
-    scripts__run_test_sessions__session_pytest_urirdp --> scripts__test_sessions__util__run_cmd
-    scripts__run_test_sessions__session_pytest_urirdp --> scripts__test_sessions__util__finalize_session
-    scripts__run_test_sessions__session_pytest_urirdp --> scripts__session_core__host_id
-    scripts__run_test_sessions__session_pytest_urisys --> scripts__session_core__now_iso
-    scripts__run_test_sessions__session_pytest_urisys --> scripts__test_sessions__util__write_meta
-    scripts__run_test_sessions__session_pytest_urisys --> scripts__test_sessions__util__run_cmd
-    scripts__run_test_sessions__session_pytest_urisys --> scripts__test_sessions__util__finalize_session
-    scripts__run_test_sessions__session_pytest_urisys --> scripts__session_core__host_id
-    scripts__run_test_sessions__session_pytest_urisys_node --> scripts__session_core__now_iso
-    scripts__run_test_sessions__session_pytest_urisys_node --> scripts__test_sessions__util__write_meta
-    scripts__run_test_sessions__session_pytest_urisys_node --> scripts__test_sessions__util__run_cmd
-    scripts__run_test_sessions__session_pytest_urisys_node --> scripts__test_sessions__util__finalize_session
-    scripts__run_test_sessions__session_pytest_urisys_node --> scripts__session_core__host_id
-    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__session_core__now_iso
-    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__test_sessions__util__write_meta
-    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__test_sessions__util__prepare_urirdp_data
-    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__test_sessions__util__sleep_ports
-    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__test_sessions__util__run_cmd
-    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__test_sessions__util__finalize_session
-    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__test_sessions__util__compose_cmd
-    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__test_sessions__util__docker_logs
-    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__run_office_writer_e2e__wait_health
-    scripts__run_test_sessions__session_urirdp_mock_docker --> scripts__run_office_writer_e2e__save_json
-    scripts__run_test_sessions___record_health --> scripts__run_office_writer_e2e__wait_health
-    scripts__run_test_sessions___record_health --> scripts__run_office_writer_e2e__save_json
-    scripts__run_test_sessions___bootstrap_rdp --> scripts__test_sessions__util__run_cmd
-    scripts__run_test_sessions___read_display_env --> scripts__test_sessions__util__run_cmd
-    scripts__run_test_sessions___call_and_record --> scripts__run_urisys_node_docker_e2e__http_json
-    scripts__run_test_sessions___call_and_record --> scripts__run_office_writer_e2e__save_json
-    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__session_core__now_iso
-    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__test_sessions__util__write_meta
-    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__test_sessions__util__prepare_urirdp_data
-    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__test_sessions__util__sleep_ports
-    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__test_sessions__util__run_cmd
-    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__test_sessions__util__finalize_session
-    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__test_sessions__util__compose_cmd
-    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__run_test_sessions___record_health
-    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__run_test_sessions___bootstrap_rdp
-    scripts__run_test_sessions__session_urirdp_real_docker --> scripts__run_test_sessions___read_display_env
-    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__session_core__now_iso
-    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__test_sessions__util__write_meta
-    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__test_sessions__util__prepare_urirdp_data
-    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__test_sessions__util__sleep_ports
-    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__test_sessions__util__run_cmd
-    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__test_sessions__util__docker_logs
-    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__test_sessions__util__copy_container_file
-    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__test_sessions__util__finalize_session
-    scripts__run_test_sessions__session_urirdp_rdp_e2e --> scripts__test_sessions__util__compose_cmd
-    scripts__run_test_sessions__session_automation_lab --> scripts__session_core__now_iso
-    scripts__run_test_sessions__session_automation_lab --> scripts__test_sessions__util__write_meta
-    scripts__run_test_sessions__session_automation_lab --> scripts__test_sessions__util__finalize_session
-    scripts__run_test_sessions__session_automation_lab --> scripts__test_sessions__util__sleep_ports
-    scripts__run_test_sessions__session_automation_lab --> scripts__test_sessions__util__run_cmd
-    scripts__run_test_sessions__session_automation_lab --> scripts__run_test_sessions___record_health
-    scripts__run_test_sessions__session_automation_lab --> scripts__run_test_sessions___call_and_record
-    scripts__run_test_sessions__session_automation_lab --> scripts__run_test_sessions___bootstrap_rdp
-    scripts__run_test_sessions__session_automation_lab --> scripts__test_sessions__util__copy_container_file
-    scripts__run_test_sessions__session_urisys_node_docker_gui --> scripts__session_core__now_iso
-    scripts__run_test_sessions__session_urisys_node_docker_gui --> scripts__test_sessions__util__write_meta
-    scripts__run_test_sessions__session_urisys_node_docker_gui --> scripts__test_sessions__util__run_cmd
-    scripts__run_test_sessions__session_urisys_node_docker_gui --> scripts__test_sessions__util__finalize_session
-    scripts__run_test_sessions__session_urisys_node_docker_gui --> scripts__run_test_sessions___monorepo_root
-    scripts__run_test_sessions__session_urisys_node_docker_gui --> scripts__session_core__host_id
-    scripts__run_test_sessions__session_office_simulate --> scripts__session_core__now_iso
-    scripts__run_test_sessions__session_office_simulate --> scripts__test_sessions__util__write_meta
-    scripts__run_test_sessions__session_office_simulate --> scripts__test_sessions__util__run_cmd
-    scripts__run_test_sessions__session_office_simulate --> scripts__test_sessions__util__finalize_session
-    scripts__run_test_sessions__session_office_simulate --> scripts__run_test_sessions___monorepo_root
-    scripts__run_test_sessions__session_office_simulate --> scripts__session_core__host_id
-    scripts__run_test_sessions__session_office_simulate_lenovo --> scripts__session_core__now_iso
-    scripts__run_test_sessions__session_office_simulate_lenovo --> scripts__test_sessions__util__write_meta
-    scripts__run_test_sessions__session_office_simulate_lenovo --> scripts__test_sessions__util__run_cmd
-    scripts__run_test_sessions__session_office_simulate_lenovo --> scripts__test_sessions__util__finalize_session
-    scripts__run_test_sessions__session_office_simulate_lenovo --> scripts__session_core__host_id
-    scripts__run_test_sessions__session_office_writer --> scripts__session_core__now_iso
-    scripts__run_test_sessions__session_office_writer --> scripts__test_sessions__util__write_meta
-    scripts__run_test_sessions__session_office_writer --> scripts__test_sessions__util__run_cmd
-    scripts__run_test_sessions__session_office_writer --> scripts__test_sessions__util__finalize_session
-    scripts__run_test_sessions__session_office_writer --> scripts__run_test_sessions___monorepo_root
-    scripts__run_test_sessions__session_office_writer --> scripts__session_core__host_id
-    scripts__run_test_sessions__session_email_mailpit --> scripts__session_core__now_iso
-    scripts__run_test_sessions__session_email_mailpit --> scripts__test_sessions__util__write_meta
-    scripts__run_test_sessions__session_email_mailpit --> scripts__test_sessions__util__run_cmd
-    scripts__run_test_sessions__session_email_mailpit --> scripts__test_sessions__util__finalize_session
-    scripts__run_test_sessions__session_email_mailpit --> scripts__run_test_sessions___monorepo_root
-    scripts__run_test_sessions__session_email_mailpit --> scripts__session_core__host_id
-    scripts__run_test_sessions__main --> scripts__run_office_writer_e2e__save_json
-    scripts__run_test_sessions__main --> scripts__session_core__now_iso
-    scripts__run_test_sessions__main --> scripts__analyze_thin_markpacts__print
-    scripts__lenovo_remote_session___run_http_get_step --> scripts__lenovo_remote_session__http_get
-    scripts__lenovo_remote_session___run_uri_call_step --> scripts__office_simulate_loop__call_uri
-    scripts__lenovo_remote_session__run_step --> scripts__session_core__now_iso
-    scripts__lenovo_remote_session__run_step --> scripts__session_core__step_ok
-    scripts__lenovo_remote_session__run_step --> scripts__lenovo_remote_session___run_http_get_step
-    scripts__lenovo_remote_session__run_step --> scripts__lenovo_remote_session___run_host_sleep_step
-    scripts__lenovo_remote_session__run_step --> scripts__lenovo_remote_session___run_host_restart_and_wait_step
-    scripts__lenovo_remote_session__run_step --> scripts__lenovo_remote_session___run_host_schedule_restart_step
-    scripts__lenovo_remote_session__run_step --> scripts__lenovo_remote_session___run_host_wait_health_step
-    scripts__lenovo_remote_session__run_step --> scripts__lenovo_remote_session___run_uri_call_step
-    scripts__lenovo_remote_session__run_flow --> scripts__lenovo_remote_session__load_yaml
-    scripts__lenovo_remote_session__run_flow --> scripts__session_core__now_iso
-    scripts__lenovo_remote_session__run_flow --> scripts__run_office_writer_e2e__save_json
-    scripts__lenovo_remote_session__run_flow --> scripts__session_core__expand_step_wheels
-    scripts__lenovo_remote_session__run_flow --> scripts__lenovo_remote_session__run_step
-    scripts__lenovo_remote_session__run_flow --> scripts__session_core__extract_step_screenshots
-    scripts__lenovo_remote_session___run_upgrade_flow --> scripts__lenovo_remote_session__append_log
-    scripts__lenovo_remote_session__write_session_md --> scripts__lenovo_remote_session___md_lessons
-    scripts__lenovo_remote_session__write_session_md --> scripts__lenovo_remote_session___md_step_detail
-    scripts__lenovo_remote_session__write_session_md --> scripts__lenovo_remote_session___md_header
-    scripts__lenovo_remote_session__write_session_md --> scripts__lenovo_remote_session___md_flow_results
-    scripts__lenovo_remote_session__resolve_flow_paths --> scripts__lenovo_remote_session__load_yaml
-    scripts__lenovo_remote_session__resolve_flow_paths --> scripts__session_core__resolve_flow_ref
-    scripts__lenovo_remote_session__resolve_route_map --> scripts__lenovo_remote_session__load_yaml
-    scripts__lenovo_remote_session__load_manifest_session --> scripts__lenovo_remote_session__load_yaml
-    scripts__lenovo_remote_session___run_flows --> scripts__lenovo_remote_session__append_log
-    scripts__lenovo_remote_session___run_flows --> scripts__run_office_writer_e2e__save_json
-    scripts__lenovo_remote_session___run_flows --> scripts__lenovo_remote_session___needs_node_upgrade
-    scripts__lenovo_remote_session___run_flows --> scripts__lenovo_remote_session___run_upgrade_flow
-    scripts__update_ecosystem_readmes__main --> scripts__analyze_thin_markpacts__print
-    scripts__update_ecosystem_readmes__main --> scripts__update_ecosystem_readmes__fix_urisysedge_refs
-    scripts__update_ecosystem_readmes__main --> scripts__update_ecosystem_readmes__strip_old_section
-    scripts__update_ecosystem_readmes__main --> scripts__update_ecosystem_readmes__build_section
-    scripts__session_core__extract_images_from_dict --> scripts__session_core__write_base64_image
-    scripts__session_core__extract_images_from_dict --> scripts__session_core__image_ext
-    scripts__session_core__extract_step_screenshots --> scripts__session_core__extract_images_from_dict
-    scripts__session_core__backfill_session_images --> scripts__session_core__extract_step_screenshots
-    scripts__session_core__backfill_session_images --> scripts__session_core__save_json
-    scripts__session_core__find_wheel_file --> scripts__session_core___wheel_version_key
-    scripts__session_core__expand_step_wheels --> scripts__session_core__find_wheel_file
-    scripts__pack_sync__sync_file --> scripts__pack_sync__file_hash
-    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__vendored_module_dir
-    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__repo_module_dir
-    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__read_version
-    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__sync_file
-    scripts__pack_sync__check_drift --> scripts__pack_sync__vendored_module_dir
-    scripts__pack_sync__check_drift --> scripts__pack_sync__repo_module_dir
-    scripts__pack_sync__check_drift --> scripts__pack_sync___check_promoted
-    scripts__pack_sync__check_drift --> scripts__pack_sync__read_version
-    scripts__pack_sync__check_drift --> scripts__pack_sync__file_hash
-    scripts__pack_sync___check_promoted --> scripts__pack_sync__repo_module_dir
-    scripts__pack_sync__remove_vendored --> scripts__analyze_thin_markpacts__print
-    scripts__pack_sync___repo_pyproject --> scripts__pack_sync__read_version
-    scripts__pack_sync___repo_pyproject --> scripts__pack_sync__repo_module_dir
-    scripts__pack_sync__init_repo --> scripts__pack_sync__sync_to_repo
-    scripts__pack_sync__init_repo --> scripts__analyze_thin_markpacts__print
-    scripts__pack_sync__promote --> scripts__pack_sync__sync_to_repo
-    scripts__pack_sync__promote --> scripts__pack_sync__remove_vendored
-    scripts__pack_sync__main --> scripts__pack_registry__pack_specs
-    scripts__pack_registry__sibling_repo --> scripts__pack_registry___repo
-    scripts__pack_registry___pack --> scripts__pack_registry___repo
-    scripts__pack_registry__pack_specs --> scripts__pack_registry___pack
-    scripts__pack_registry__all_promoted_packs --> scripts__pack_registry__pack_specs
-    scripts__report__cli__main --> scripts__report__run_analysis__analyze_run
-    scripts__report__cli__main --> scripts__report__run_analysis__write_run_analysis
-    scripts__report__cli__main --> scripts__analyze_thin_markpacts__print
-    scripts__report__cli__main --> scripts__report__session__generate_report
-    scripts__report__cli__main --> scripts__report__session_io__write_session_report
-    scripts__report__events__summarize_events --> scripts__report__events__load_event_records
-    scripts__report__events__summarize_events --> scripts__report__events__summarize_event_records
-    scripts__report__events__merge_event_summaries --> scripts__report__events__summarize_events
-    scripts__report__run_analysis__analyze_run --> scripts__report__util__read_json
-    scripts__report__run_analysis__analyze_run --> scripts__report__lab_checks__analyze_lab_flows
-    scripts__report__run_analysis__analyze_run --> scripts__report__run_analysis___run_recommendations
-    scripts__report__run_analysis__write_run_analysis --> scripts__report__run_analysis__analyze_run
-    scripts__report__run_analysis__write_run_analysis --> scripts__report__run_markdown__render_run_analysis_markdown
-    scripts__report__lab_checks__load_flow_outcomes --> scripts__report__util__read_json
-    scripts__report__lab_checks__load_flow_outcomes --> scripts__report__lab_checks__iter_step_results
-    scripts__report__lab_checks__check_duplicate_screenshots --> scripts__report__lab_checks___duplicate_recommendation
-    scripts__report__lab_checks__analyze_lab_flows --> scripts__report__lab_checks__load_flow_outcomes
-    scripts__report__session__infer_steps --> scripts__report__util__read_json
-    scripts__report__session__session_duration --> scripts__session_core__now_iso
-    scripts__report__session__generate_report --> scripts__report__session__infer_steps
-    scripts__report__session__generate_report --> scripts__report__util__read_json
-    scripts__report__session__generate_report --> scripts__report__util__tail
-    scripts__report__session__generate_report --> scripts__session_core__now_iso
-    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___environment_section
-    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___steps_section
-    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___screenshots_section
-    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___events_section
-    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___log_errors_section
-    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___duplicate_screenshots_section
-    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___log_tail_section
-    scripts__report__session_io__write_session_report --> scripts__report__session__generate_report
-    scripts__report__session_io__write_session_report --> scripts__report__session_markdown__render_session_markdown
-    scripts__test_sessions__expectations___ocr_contains --> scripts__test_sessions__expectations__ocr_texts
-    scripts__test_sessions__expectations___min_vision_confidence --> scripts__test_sessions__expectations__vision_confidences
-    scripts__test_sessions__expectations__evaluate_expectations --> scripts__test_sessions__expectations___screen_changed
-    scripts__test_sessions__expectations__evaluate_expectations --> scripts__test_sessions__expectations___screen_changed_since_previous
-    scripts__test_sessions__expectations__evaluate_expectations --> scripts__test_sessions__expectations___opened_url_contains
-    scripts__test_sessions__expectations__evaluate_expectations --> scripts__test_sessions__expectations___ocr_contains
-    scripts__test_sessions__expectations__evaluate_expectations --> scripts__test_sessions__expectations___min_vision_confidence
-    scripts__test_sessions__lab_flows___lab_bootstrap --> scripts__test_sessions__util__run_cmd
-    scripts__test_sessions__lab_flows___lab_bootstrap --> scripts__test_sessions__util__write_meta
-    scripts__test_sessions__lab_flows___capture_flow_screenshot --> scripts__test_sessions__lab_rdp__capture_rdp_screenshot_wait
-    scripts__test_sessions__lab_flows___capture_flow_screenshot --> scripts__test_sessions__lab_rdp__capture_rdp_screenshot
-    scripts__test_sessions__lab_flows___capture_flow_screenshot --> scripts__test_sessions__util__file_md5
-    scripts__test_sessions__lab_flows___run_single_lab_flow --> scripts__test_sessions__expectations__flow_expectations
-    scripts__test_sessions__lab_flows___run_single_lab_flow --> scripts__test_sessions__lab_flows___capture_flow_screenshot
-    scripts__test_sessions__lab_flows___run_single_lab_flow --> scripts__test_sessions__expectations__evaluate_expectations
-    scripts__test_sessions__lab_flows___run_single_lab_flow --> scripts__run_office_writer_e2e__save_json
-    scripts__test_sessions__lab_flows___run_single_lab_flow --> scripts__run_urisys_node_docker_e2e__http_json
-    scripts__test_sessions__lab_flows___run_single_lab_flow --> scripts__test_sessions__lab_flows___flow_step_detail
-    scripts__test_sessions__lab_flows__session_lab_10_flows --> scripts__session_core__now_iso
-    scripts__test_sessions__lab_flows__session_lab_10_flows --> scripts__test_sessions__util__write_meta
-    scripts__test_sessions__lab_flows__session_lab_10_flows --> scripts__test_sessions__util__sleep_ports
-    scripts__test_sessions__lab_flows__session_lab_10_flows --> scripts__test_sessions__util__run_cmd
-    scripts__test_sessions__lab_flows__session_lab_10_flows --> scripts__test_sessions__util__finalize_session
-    scripts__test_sessions__lab_flows__session_lab_10_flows --> scripts__run_office_writer_e2e__wait_health
-    scripts__test_sessions__lab_flows__session_lab_10_flows --> scripts__test_sessions__lab_flows___lab_bootstrap
-    scripts__test_sessions__lab_flows__session_lab_10_flows --> scripts__test_sessions__lab_rdp__capture_rdp_screenshot
-    scripts__test_sessions__lab_flows__session_lab_10_flows --> scripts__test_sessions__util__file_md5
-    scripts__test_sessions__lab_rdp__prepare_ok_target --> scripts__run_urisys_node_docker_e2e__http_json
-    scripts__test_sessions__lab_rdp__capture_rdp_screenshot --> scripts__run_urisys_node_docker_e2e__http_json
-    scripts__test_sessions__lab_rdp__capture_rdp_screenshot --> scripts__test_sessions__util__copy_container_file
-    scripts__test_sessions__lab_rdp__capture_rdp_screenshot_wait --> scripts__test_sessions__lab_rdp__capture_rdp_screenshot
-    scripts__test_sessions__lab_rdp__capture_rdp_screenshot_wait --> scripts__test_sessions__util__file_md5
-    scripts__test_sessions__util__wait_health --> scripts__test_sessions__util__http_json
-    scripts__test_sessions__util__write_meta --> scripts__test_sessions__util__read_meta
-    scripts__test_sessions__util__write_meta --> scripts__run_office_writer_e2e__save_json
-    scripts__test_sessions__util__finalize_session --> scripts__session_core__now_iso
-    scripts__test_sessions__util__finalize_session --> scripts__test_sessions__util__write_meta
-    scripts__test_sessions__util__docker_logs --> scripts__test_sessions__util__compose_cmd
-    scripts__test_sessions__util__docker_logs --> scripts__test_sessions__util__run_cmd
     src__urisys__init_setup__default_pip_specs --> src__urisys__uricore_install__pip_spec
     src__urisys__init_setup__verify_uri_control --> src__urisys__uricore_install__diagnose_uricore
     src__urisys__init_setup__verify_uri_control --> src__urisys__uricore_install__wheel_url
@@ -791,27 +452,104 @@ flowchart TD
     src__urisys__init_setup__run_init --> src__urisys__init_setup___resolve_error_hint
     src__urisys__init_setup__run_init --> src__urisys__init_setup___run_pip_install
     src__urisys__init_setup__run_init --> src__urisys__init_setup__render_env_shell
-    src__urisys__managers__markpact_run___build_runtime --> src__urisys__managers__markpact_pack_deps__extend_tellmesh_paths
-    src__urisys__managers__markpact_run___build_runtime --> src__urisys__managers__markpact_run___apply_resolver_config
-    src__urisys__managers__markpact_run___run_adapter_mode --> src__urisys__managers__markpact_run___routes_summary
-    src__urisys__managers__markpact_run___run_adapter_mode --> src__urisys__managers__markpact_run___build_runtime
-    src__urisys__managers__markpact_run___run_flow_mode --> src__urisys__managers__markpact_run_flow__packs_for_flow
-    src__urisys__managers__markpact_run___run_flow_mode --> src__urisys__managers__markpact_pack_deps__ensure_flow_packs
-    src__urisys__managers__markpact_run___run_flow_mode --> src__urisys__managers__markpact_run___apply_resolver_config
-    src__urisys__managers__markpact_run___run_flow_mode --> src__urisys__managers__markpact_run___build_runtime
-    src__urisys__managers__markpact_run___run_flow_mode --> scripts__lenovo_remote_session__run_flow
-    src__urisys__managers__markpact_run___run_pack_mode --> src__urisys__managers__markpact_run___build_runtime
-    src__urisys__managers__markpact_run___run_pack_mode --> src__urisys__managers__markpact_run___routes_summary
-    src__urisys__managers__markpact_run___run_interface_mode --> src__urisys__managers__markpact_run___build_runtime
-    src__urisys__managers__markpact_run___run_service_mode --> src__urisys__managers__markpact_run___build_runtime
-    src__urisys__managers__markpact_run__run_markpact --> src__urisys__managers__markpact_run__read_run_config
-    src__urisys__managers__markpact_run__run_markpact --> src__urisys__managers__markpact_run___load_run_config
-    src__urisys__managers__markpact_run__run_markpact --> src__urisys__managers__markpact_run___run_adapter_mode
-    src__urisys__managers__markpact_run__run_markpact --> src__urisys__managers__markpact_run___run_flow_mode
-    src__urisys__managers__markpact_run__run_markpact --> src__urisys__managers__markpact_run___run_pack_mode
-    src__urisys__managers__markpact_run__run_markpact --> src__urisys__managers__markpact_run___run_interface_mode
+    src__urisys__urirouter_install__wheel_url --> src__urisys__urirouter_install__github_owner
+    src__urisys__urirouter_install__wheel_url --> src__urisys__urirouter_install__github_version
+    src__urisys__urirouter_install__pip_spec --> src__urisys__urirouter_install__wheel_url
+    src__urisys__urirouter_install__diagnose_urirouter --> src__urisys__urirouter_install___module_exists
+    src__urisys__urirouter_install__diagnose_urirouter --> src__urisys__urirouter_install__pip_spec
+    src__urisys__node_install__wheel_filename --> src__urisys__node_install__github_version
+    src__urisys__node_install__wheel_url --> src__urisys__node_install__github_owner
+    src__urisys__node_install__wheel_url --> src__urisys__node_install__wheel_filename
+    src__urisys__node_install__wheel_url --> src__urisys__node_install__github_version
+    src__urisys__node_install__pip_spec --> src__urisys__node_install__wheel_url
+    src__urisys__node_install__install_urisys_node --> src__urisys__node_install__pip_run
+    src__urisys__node_install__install_urisys_node --> src__urisys__node_install__is_importable
+    src__urisys__node_install__install_urisys_node --> src__urisys__node_install__wheel_url
+    src__urisys__node_install__diagnose_urisys_node --> src__urisys__node_install__is_importable
+    src__urisys__node_install__diagnose_urisys_node --> src__urisys__node_install__pip_spec
+    src__urisys__node_install__diagnose_urisys_node --> src__urisys__node_install__wheel_filename
+    src__urisys__http_server__create_server --> src__urisys__http_server___read_json
+    src__urisys__cli__errors__handle_cli_error --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__helpers__print_json --> scripts__analyze_thin_markpacts__print
+    src__urisys__cli__parser__build_parser --> src__urisys__cli__parser__add_runtime_flags
+    src__urisys__cli__main__main --> src__urisys__cli__parser__build_parser
+    src__urisys__cli__main__main --> src__urisys__cli__errors__handle_cli_error
+    src__urisys__cli__commands__runtime__cmd_uri --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__runtime__cmd_uri --> src__urisys__cli__helpers__json_arg
+    src__urisys__cli__commands__runtime__cmd_serve --> scripts__analyze_thin_markpacts__print
+    src__urisys__cli__commands__runtime__cmd_flow --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__runtime__cmd_events --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__setup__cmd_doctor --> src__urisys__doctor__run_doctor
+    src__urisys__cli__commands__setup__cmd_doctor --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__setup__cmd_init --> src__urisys__init_setup__run_init
+    src__urisys__cli__commands__setup__cmd_init --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__setup__cmd_init --> scripts__analyze_thin_markpacts__print
+    src__urisys__cli__commands__node__cmd_node --> src__urisys__markpact__run__runtime_build__build_runtime
+    src__urisys__cli__commands__node__cmd_node --> scripts__analyze_thin_markpacts__print
+    src__urisys__markpact__artifacts__write_modules --> src__urisys__managers__markpact_flows__extract_modules
+    src__urisys__markpact__artifacts__flows_from_cache --> src__urisys__managers__markpact_flows__extract_flows
+    src__urisys__markpact__artifacts__protos_from_cache --> src__urisys__managers__markpact_flows__extract_protos
+    src__urisys__markpact__artifacts__modules_from_cache --> src__urisys__managers__markpact_flows__extract_modules
+    src__urisys__markpact__artifacts__write_flows --> src__urisys__managers__markpact_flows__extract_flows
+    src__urisys__markpact__artifacts__write_flows --> src__urisys__managers__markpact_models__safe_identifier
+    src__urisys__markpact__artifacts__write_protos --> src__urisys__managers__markpact_flows__extract_protos
+    src__urisys__markpact__blocks__read_blocks --> src__urisys__managers__markpact_models__parse_meta
+    src__urisys__markpact__validate_pack__validate_pack --> src__urisys__markpact__pack__package_id
+    src__urisys__markpact__validate_pack__validate_pack --> src__urisys__markpact__pack__capabilities
+    src__urisys__markpact__validate_pack__validate_pack --> src__urisys__markpact__blocks__handler_blocks
+    src__urisys__markpact__validate_pack__validate_pack --> src__urisys__markpact__pack__scheme_for_pack
+    src__urisys__markpact__validate_pack__validate_pack --> src__urisys__markpact__handlers__handler_id_from_ref
+    src__urisys__markpact__validate_pack__validate_pack --> src__urisys__managers__markpact_models__source_hash
+    src__urisys__markpact__validate_pack__validate_markpact_file --> src__urisys__markpact__blocks__read_blocks
+    src__urisys__markpact__validate_pack__validate_markpact_file --> src__urisys__markpact__blocks__yaml_blocks
+    src__urisys__markpact__validate_pack__validate_markpact_file --> src__urisys__managers__markpact_models__source_hash
+    src__urisys__markpact__validate_pack__validate_markpact_file --> src__urisys__markpact__validate_pack__validate_pack
+    src__urisys__markpact__validate_pack__validate_markpact_file --> src__urisys__managers__markpact_validation__validate_contract
+    src__urisys__markpact__tests__run_markpact_tests --> src__urisys__markpact__tests__check_expectations
+    src__urisys__markpact__tests__run_tests_for_path --> src__urisys__markpact__tests__run_markpact_tests
+    src__urisys__markpact__manifest___validate_scheme --> src__urisys__managers__markpact_models__scheme_from_uri
+    src__urisys__markpact__manifest__build_route --> src__urisys__markpact__manifest___resolve_pattern
+    src__urisys__markpact__manifest__build_route --> src__urisys__markpact__manifest___validate_scheme
+    src__urisys__markpact__manifest__build_route --> src__urisys__markpact__manifest___resolve_operation
+    src__urisys__markpact__manifest__build_route --> src__urisys__markpact__manifest___resolve_kind
+    src__urisys__markpact__manifest__build_route --> src__urisys__markpact__handlers__resolve_handler_ref
+    src__urisys__markpact__manifest__build_route --> src__urisys__markpact__manifest___build_route_dict
+    src__urisys__markpact__manifest__compile_manifest --> src__urisys__markpact__pack__capabilities
+    src__urisys__markpact__manifest__compile_manifest --> src__urisys__markpact__pack__scheme_for_pack
+    src__urisys__markpact__manifest__compile_manifest --> src__urisys__markpact__manifest__build_route
+    src__urisys__markpact__handlers__resolve_handler_ref --> src__urisys__markpact__handlers__handler_id_from_ref
+    src__urisys__markpact__handlers__resolve_handler_ref --> src__urisys__managers__markpact_models__safe_identifier
+    src__urisys__markpact__handlers__write_handler_modules --> src__urisys__managers__markpact_models__safe_identifier
+    src__urisys__markpact__pack__load_pack_block --> src__urisys__markpact__blocks__yaml_blocks
+    src__urisys__markpact__pack__load_pack_block --> src__urisys__markpact__blocks__read_blocks
+    src__urisys__markpact__pack__scheme_for_pack --> src__urisys__managers__markpact_models__scheme_from_uri
+    src__urisys__markpact__cache__compile_context --> src__urisys__markpact__blocks__read_blocks
+    src__urisys__markpact__cache__compile_context --> src__urisys__markpact__pack__load_pack_block
+    src__urisys__markpact__cache__compile_context --> src__urisys__managers__markpact_models__source_hash
+    src__urisys__markpact__cache__compile_context --> src__urisys__markpact__pack__package_id
+    src__urisys__markpact__cache__compile_context --> src__urisys__managers__markpact_models__safe_identifier
+    src__urisys__markpact__cache__compiled_from_cache --> src__urisys__markpact__cache__ensure_importable
+    src__urisys__markpact__cache__compiled_from_cache --> src__urisys__markpact__artifacts__flows_from_cache
+    src__urisys__markpact__cache__compiled_from_cache --> src__urisys__markpact__artifacts__protos_from_cache
+    src__urisys__markpact__cache__compiled_from_cache --> src__urisys__markpact__artifacts__modules_from_cache
+    src__urisys__markpact__cache__write_manifest_flows --> src__urisys__managers__markpact_models__safe_identifier
+    src__urisys__controllers__flow_controller__FlowController__run --> src__urisys__flow__load_flow
+    src__urisys__controllers__flow_controller__FlowController__run --> src__urisys__flow__iter_steps
+    src__urisys__controllers__server_controller__ServerController____init__ --> src__urisys__http_server__create_server
+    src__urisys__controllers__server_controller__ServerController__serve_forever --> scripts__analyze_thin_markpacts__print
+    src__urisys__managers__markpact_validation___validate_contract_routes --> src__urisys__managers__markpact_models__scheme_from_uri
+    src__urisys__managers__markpact_validation__validate_contract --> src__urisys__managers__markpact_validation___validate_contract_routes
+    src__urisys__managers__markpact_validation__validate_bundle --> src__urisys__managers__markpact_validation___missing_bundle_imports
+    src__urisys__managers__markpact_validation__validate_implementation --> src__urisys__managers__markpact_validation___validate_implementation_capabilities
+    src__urisys__managers__markpact_manager__MarkpactManager__validate --> src__urisys__markpact__validate_pack__validate_markpact_file
+    src__urisys__managers__markpact_manager__MarkpactManager__analyze --> src__urisys__markpact__analyzer__report__analyze_markpact
+    src__urisys__managers__markpact_manager__MarkpactManager__run_tests --> src__urisys__markpact__tests__run_tests_for_path
+    src__urisys__managers__markpact_manager__MarkpactManager___build_route --> src__urisys__markpact__manifest__build_route
+    src__urisys__managers__markpact_manager__MarkpactManager___compile_manifest --> src__urisys__markpact__manifest__compile_manifest
+    src__urisys__managers__markpact_pack_deps___register_existing_pack --> src__urisys__managers__markpact_pack_deps___register_flat_pack
     src__urisys__managers__markpact_pack_deps___register_sibling_packs --> src__urisys__managers__markpact_pack_deps___is_flat_pack_repo
     src__urisys__managers__markpact_pack_deps___register_sibling_packs --> src__urisys__managers__markpact_pack_deps___discover_pack_modules
+    src__urisys__managers__markpact_pack_deps___register_sibling_packs --> src__urisys__managers__markpact_pack_deps___register_existing_pack
     src__urisys__managers__markpact_pack_deps___register_sibling_packs --> src__urisys__managers__markpact_pack_deps___is_capability_pack_repo
     src__urisys__managers__markpact_pack_deps___register_sibling_packs --> src__urisys__managers__markpact_pack_deps___register_flat_pack
     src__urisys__managers__markpact_pack_deps__extend_tellmesh_paths --> src__urisys__managers__markpact_pack_deps__tellmesh_root
@@ -821,14 +559,16 @@ flowchart TD
     src__urisys__managers__markpact_pack_deps__ensure_pack_importable --> src__urisys__managers__markpact_pack_deps___pack_resolver
     src__urisys__managers__markpact_pack_deps__ensure_flow_packs --> src__urisys__managers__markpact_pack_deps__extend_tellmesh_paths
     src__urisys__managers__markpact_pack_deps__ensure_flow_packs --> src__urisys__managers__markpact_pack_deps__ensure_pack_importable
-    src__urisys__managers__pack_manager___sibling_manifest_path --> scripts__paths__tellmesh_root
+    src__urisys__managers__pack_manager___sibling_manifest_path --> src__urisys__managers__markpact_pack_deps__tellmesh_root
     src__urisys__managers__pack_manager___sibling_manifest_path --> src__urisys__managers__pack_manager___repo_for_package
     src__urisys__managers__pack_manager__PackManager___handle_missing_manifest --> src__urisys__managers__pack_manager___manifest_is_loadable
     src__urisys__managers__pack_manager__PackManager__manifest_paths --> src__urisys__managers__markpact_pack_deps__extend_tellmesh_paths
     src__urisys__managers__pack_manager__PackManager__manifest_paths --> src__urisys__managers__pack_manager___sibling_manifest_path
+    src__urisys__managers__markpact_materialize__materialize_markpact --> src__urisys__managers__markpact_materialize__default_materialize_root
+    src__urisys__managers__markpact_materialize__materialize_markpact --> src__urisys__managers__markpact_models__safe_identifier
     src__urisys__managers__markpact_pack_gen___pack_block --> src__urisys__managers__markpact_pack_gen___build_capability
     src__urisys__managers__markpact_pack_gen___pack_block --> src__urisys__managers__contract_gen__normalize_version
-    src__urisys__managers__markpact_pack_gen___resolve_repo_root --> scripts__paths__tellmesh_root
+    src__urisys__managers__markpact_pack_gen___resolve_repo_root --> src__urisys__managers__markpact_pack_deps__tellmesh_root
     src__urisys__managers__markpact_pack_gen__generate_pack_markpact --> src__urisys__managers__markpact_pack_gen__find_package_dir
     src__urisys__managers__markpact_pack_gen__generate_pack_markpact --> src__urisys__managers__markpact_pack_gen___resolve_repo_root
     src__urisys__managers__markpact_pack_gen__generate_pack_markpact --> src__urisys__managers__markpact_pack_gen___load_manifest
@@ -849,22 +589,399 @@ flowchart TD
     src__urisys__managers__contract_gen__diff_manifest_contract --> src__urisys__managers__contract_gen___diff_scheme_and_metadata
     src__urisys__managers__contract_gen__diff_manifest_contract --> src__urisys__managers__contract_gen___diff_uses
     src__urisys__managers__contract_gen__diff_manifest_contract --> src__urisys__managers__contract_gen___diff_section
-    src__urisys__managers__markpact_profile___flow_features --> src__urisys__managers__markpact_flows__flow_uris
-    src__urisys__managers__markpact_profile___validate_scheme_requirements --> src__urisys__managers__markpact_profile__declared_schemes
-    src__urisys__managers__markpact_profile___validate_scheme_requirements --> src__urisys__managers__markpact_profile__declared_packs
-    src__urisys__managers__markpact_profile___validate_capability_uris --> src__urisys__managers__markpact_profile___cap_uri
-    src__urisys__managers__markpact_profile___build_flow_profiles --> src__urisys__managers__markpact_profile___flow_features
-    src__urisys__managers__markpact_profile___build_flow_profiles --> src__urisys__managers__markpact_profile___required_features
-    src__urisys__managers__markpact_profile___build_flow_profiles --> src__urisys__managers__markpact_flows__flow_uris
-    src__urisys__managers__markpact_profile___cross_check_schemes --> src__urisys__managers__markpact_flows__flow_uris
-    src__urisys__managers__markpact_profile__lint_markpact --> src__urisys__managers__markpact_profile___validate_scheme_requirements
-    src__urisys__managers__markpact_profile__lint_markpact --> src__urisys__managers__markpact_profile___validate_undeclared_schemes
-    src__urisys__managers__markpact_profile__lint_markpact --> src__urisys__managers__markpact_profile___validate_capability_operations
-    src__urisys__managers__markpact_profile__lint_markpact --> src__urisys__managers__markpact_profile___validate_capability_uris
-    src__urisys__managers__markpact_profile__lint_markpact --> src__urisys__managers__markpact_profile___build_flow_profiles
-    src__urisys__managers__markpact_profile__lint_markpact --> src__urisys__managers__markpact_profile___cross_check_schemes
+    src__urisys__managers__markpact_run_flow__flow_path_for --> src__urisys__managers__markpact_models__safe_identifier
+    src__urisys__managers__markpact_run_flow__packs_for_flow --> src__urisys__managers__markpact_flows__declared_uses
+    src__urisys__managers__markpact_run_flow__packs_for_flow --> src__urisys__managers__markpact_flows__classify_flow
+    src__urisys__managers__markpact_run_flow__packs_for_flow --> src__urisys__managers__markpact_run_flow___split_extra
+    src__urisys__managers__markpact_run_flow__packs_for_flow --> src__urisys__managers__markpact_flows___provider_scheme
+    src__urisys__managers__markpact_run_flow__run_markpact_flow --> src__urisys__managers__markpact_run_flow__split_flow_ref
+    src__urisys__managers__markpact_run_flow__run_markpact_flow --> src__urisys__markpact__pack__load_pack_block
+    src__urisys__managers__markpact_run_flow__run_markpact_flow --> src__urisys__managers__markpact_run_flow__pick_flow_id
+    src__urisys__managers__markpact_run_flow__run_markpact_flow --> src__urisys__managers__markpact_run_flow__flow_path_for
+    src__urisys__managers__markpact_run_flow__run_markpact_flow --> src__urisys__markpact__pack__scheme_for_pack
+    src__urisys__managers__markpact_run_flow__run_markpact_flow --> src__urisys__managers__markpact_run_flow__packs_for_flow
+    src__urisys__managers__markpact_run_flow__run_markpact_flow --> src__urisys_lab__lenovo__cli__run_flow
+    src__urisys__managers__markpact_run_flow__run_markpact_flow --> src__urisys__markpact__pack__capabilities
+    src__urisys__managers__platform_export___authorities_from_flow --> src__urisys__managers__markpact_flows__flow_uris
+    src__urisys__managers__platform_export___authorities_from_flow --> src__urisys__managers__platform_export___resolve_authority
+    src__urisys__managers__platform_export__collect_process_uris --> src__urisys__markpact__blocks__read_blocks
+    src__urisys__managers__platform_export__collect_process_uris --> src__urisys__markpact__pack__load_pack_block
+    src__urisys__managers__platform_export__collect_process_uris --> src__urisys__managers__markpact_flows__extract_flows
+    src__urisys__managers__platform_export__collect_process_uris --> src__urisys__managers__platform_export___authorities_from_flow
+    src__urisys__managers__platform_export__collect_process_uris --> src__urisys__managers__markpact_flows__flow_uris
+    src__urisys__managers__platform_export__collect_process_uris --> src__urisys__markpact__pack__package_id
+    src__urisys__managers__platform_export__build_resolver_yaml --> src__urisys__managers__platform_export___target_stub
+    src__urisys__managers__platform_export__export_platform_artifacts --> src__urisys__managers__platform_export__collect_process_uris
+    src__urisys__managers__platform_export__export_platform_artifacts --> src__urisys__managers__platform_export__build_resolver_yaml
+    src__urisys__managers__markpact_flows__extract_protos --> src__urisys__managers__markpact_models__safe_identifier
+    src__urisys__managers__markpact_flows__classify_flow --> src__urisys__managers__markpact_flows__flow_uris
+    src__urisys__managers__markpact_flows__classify_flow --> src__urisys__managers__markpact_flows___scheme
+    src__urisys__managers__markpact_flows__classify_flow --> src__urisys__managers__markpact_flows___provider_scheme
+    src__urisys__managers__markpact_flows__declared_uses --> src__urisys__managers__markpact_profile__declared_schemes
+    src__urisys_lab__core__step_ok --> src__urisys_lab__core___step_ok_default
+    src__urisys_lab__core__extract_images_from_dict --> src__urisys_lab__core__write_base64_image
+    src__urisys_lab__core__extract_images_from_dict --> src__urisys_lab__core__image_ext
+    src__urisys_lab__core__extract_step_screenshots --> src__urisys_lab__core__extract_images_from_dict
+    src__urisys_lab__core__backfill_session_images --> src__urisys_lab__core__extract_step_screenshots
+    src__urisys_lab__core__backfill_session_images --> src__urisys_lab__core__save_json
+    src__urisys_lab__core__find_wheel_file --> src__urisys_lab__core___wheel_version_key
+    src__urisys_lab__core___apply_wheel_refspec --> src__urisys_lab__core__find_wheel_file
+    src__urisys_lab__core___apply_wheel_refspec --> src__urisys_lab__core__wheel_url
+    src__urisys_lab__core___resolve_wheel_args --> src__urisys_lab__core__find_wheel_file
+    src__urisys_lab__core___resolve_wheel_args --> src__urisys_lab__core__wheel_url
+    src__urisys_lab__core__expand_step_wheels --> src__urisys_lab__core___resolve_wheel_name
+    src__urisys_lab__core__expand_step_wheels --> src__urisys_lab__core___resolve_wheel_args
+    src__urisys_lab__core__expand_step_wheels --> src__urisys_lab__core___apply_wheel_refspec
+    src__urisys_lab__sessions__cli__main --> src__urisys_lab__core__save_json
+    src__urisys_lab__sessions__cli__main --> src__urisys_lab__core__now_iso
+    src__urisys_lab__sessions__cli__main --> scripts__analyze_thin_markpacts__print
+    src__urisys_lab__sessions__runners__session_pytest_urirdp --> src__urisys_lab__core__now_iso
+    src__urisys_lab__sessions__runners__session_pytest_urirdp --> src__urisys_lab__sessions__util__write_meta
+    src__urisys_lab__sessions__runners__session_pytest_urirdp --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__sessions__runners__session_pytest_urirdp --> src__urisys_lab__sessions__util__finalize_session
+    src__urisys_lab__sessions__runners__session_pytest_urirdp --> src__urisys_lab__core__host_id
+    src__urisys_lab__sessions__runners__session_pytest_urisys --> src__urisys_lab__core__now_iso
+    src__urisys_lab__sessions__runners__session_pytest_urisys --> src__urisys_lab__sessions__util__write_meta
+    src__urisys_lab__sessions__runners__session_pytest_urisys --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__sessions__runners__session_pytest_urisys --> src__urisys_lab__sessions__util__finalize_session
+    src__urisys_lab__sessions__runners__session_pytest_urisys --> src__urisys_lab__core__host_id
+    src__urisys_lab__sessions__runners__session_pytest_urisys_node --> src__urisys_lab__core__now_iso
+    src__urisys_lab__sessions__runners__session_pytest_urisys_node --> src__urisys_lab__sessions__util__write_meta
+    src__urisys_lab__sessions__runners__session_pytest_urisys_node --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__sessions__runners__session_pytest_urisys_node --> src__urisys_lab__sessions__util__finalize_session
+    src__urisys_lab__sessions__runners__session_pytest_urisys_node --> src__urisys_lab__core__host_id
+    src__urisys_lab__sessions__runners__session_urirdp_mock_docker --> src__urisys_lab__core__now_iso
+    src__urisys_lab__sessions__runners__session_urirdp_mock_docker --> src__urisys_lab__sessions__util__write_meta
+    src__urisys_lab__sessions__runners__session_urirdp_mock_docker --> src__urisys_lab__sessions__util__prepare_urirdp_data
+    src__urisys_lab__sessions__runners__session_urirdp_mock_docker --> src__urisys_lab__sessions__util__sleep_ports
+    src__urisys_lab__sessions__runners__session_urirdp_mock_docker --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__sessions__runners__session_urirdp_mock_docker --> src__urisys_lab__sessions__util__finalize_session
+    src__urisys_lab__sessions__runners__session_urirdp_mock_docker --> src__urisys_lab__sessions__util__compose_cmd
+    src__urisys_lab__sessions__runners__session_urirdp_mock_docker --> src__urisys_lab__sessions__util__docker_logs
+    src__urisys_lab__sessions__runners__session_urirdp_mock_docker --> src__urisys_lab__sessions__util__wait_health
+    src__urisys_lab__sessions__runners__session_urirdp_mock_docker --> src__urisys_lab__core__save_json
+    src__urisys_lab__sessions__runners___record_health --> src__urisys_lab__sessions__util__wait_health
+    src__urisys_lab__sessions__runners___record_health --> src__urisys_lab__core__save_json
+    src__urisys_lab__sessions__runners___bootstrap_rdp --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__sessions__runners___read_display_env --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__sessions__runners___call_and_record --> src__urisys_lab__sessions__util__http_json
+    src__urisys_lab__sessions__runners___call_and_record --> src__urisys_lab__core__save_json
+    src__urisys_lab__sessions__runners___session_compose_up --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__sessions__runners___session_compose_up --> src__urisys_lab__sessions__util__compose_cmd
+    src__urisys_lab__sessions__runners___record_screenshot_step --> src__urisys_lab__sessions__runners___call_and_record
+    src__urisys_lab__sessions__runners___record_screenshot_step --> src__urisys_lab__sessions__util__copy_container_file
+    src__urisys_lab__sessions__runners___record_ocr_step --> src__urisys_lab__sessions__runners___call_and_record
+    src__urisys_lab__sessions__runners___record_click_step --> src__urisys_lab__sessions__runners___call_and_record
+    src__urisys_lab__sessions__runners___record_click_step --> src__urisys_lab__sessions__util__copy_container_file
+    src__urisys_lab__sessions__runners___record_flow_step --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__sessions__runners___record_flow_step --> src__urisys_lab__core__save_json
+    src__urisys_lab__sessions__runners__session_urirdp_real_docker --> src__urisys_lab__core__now_iso
+    src__urisys_lab__sessions__runners__session_urirdp_real_docker --> src__urisys_lab__sessions__util__write_meta
+    src__urisys_lab__sessions__runners__session_urirdp_real_docker --> src__urisys_lab__sessions__util__prepare_urirdp_data
+    src__urisys_lab__sessions__runners__session_urirdp_real_docker --> src__urisys_lab__sessions__util__sleep_ports
+    src__urisys_lab__sessions__runners__session_urirdp_real_docker --> src__urisys_lab__sessions__runners___session_compose_up
+    src__urisys_lab__sessions__runners__session_urirdp_real_docker --> src__urisys_lab__sessions__util__finalize_session
+    src__urisys_lab__sessions__runners__session_urirdp_real_docker --> src__urisys_lab__sessions__runners___record_health
+    src__urisys_lab__sessions__runners__session_urirdp_real_docker --> src__urisys_lab__sessions__runners___bootstrap_rdp
+    src__urisys_lab__sessions__runners__session_urirdp_real_docker --> src__urisys_lab__sessions__runners___read_display_env
+    src__urisys_lab__sessions__runners__session_urirdp_real_docker --> src__urisys_lab__sessions__runners___record_screenshot_step
+    src__urisys_lab__sessions__runners__session_urirdp_real_docker --> src__urisys_lab__sessions__runners___record_ocr_step
+    src__urisys_lab__sessions__runners__session_urirdp_real_docker --> src__urisys_lab__sessions__runners___record_click_step
+    src__urisys_lab__sessions__runners__session_urirdp_rdp_e2e --> src__urisys_lab__core__now_iso
+    src__urisys_lab__sessions__runners__session_urirdp_rdp_e2e --> src__urisys_lab__sessions__util__write_meta
+    src__urisys_lab__sessions__runners__session_urirdp_rdp_e2e --> src__urisys_lab__sessions__util__prepare_urirdp_data
+    src__urisys_lab__sessions__runners__session_urirdp_rdp_e2e --> src__urisys_lab__sessions__util__sleep_ports
+    src__urisys_lab__sessions__runners__session_urirdp_rdp_e2e --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__sessions__runners__session_urirdp_rdp_e2e --> src__urisys_lab__sessions__util__docker_logs
+    src__urisys_lab__sessions__runners__session_urirdp_rdp_e2e --> src__urisys_lab__sessions__util__copy_container_file
+    src__urisys_lab__sessions__runners__session_urirdp_rdp_e2e --> src__urisys_lab__sessions__util__finalize_session
+    src__urisys_lab__sessions__runners__session_urirdp_rdp_e2e --> src__urisys_lab__sessions__util__compose_cmd
+    src__urisys_lab__sessions__runners__session_automation_lab --> src__urisys_lab__core__now_iso
+    src__urisys_lab__sessions__runners__session_automation_lab --> src__urisys_lab__sessions__util__write_meta
+    src__urisys_lab__sessions__runners__session_automation_lab --> src__urisys_lab__sessions__util__finalize_session
+    src__urisys_lab__sessions__runners__session_automation_lab --> src__urisys_lab__sessions__util__sleep_ports
+    src__urisys_lab__sessions__runners__session_automation_lab --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__sessions__runners__session_automation_lab --> src__urisys_lab__sessions__runners___record_health
+    src__urisys_lab__sessions__runners__session_automation_lab --> src__urisys_lab__sessions__runners___call_and_record
+    src__urisys_lab__sessions__runners__session_automation_lab --> src__urisys_lab__sessions__runners___bootstrap_rdp
+    src__urisys_lab__sessions__runners__session_automation_lab --> src__urisys_lab__sessions__util__copy_container_file
+    src__urisys_lab__sessions__runners__session_urisys_node_docker_gui --> src__urisys_lab__core__now_iso
+    src__urisys_lab__sessions__runners__session_urisys_node_docker_gui --> src__urisys_lab__sessions__util__write_meta
+    src__urisys_lab__sessions__runners__session_urisys_node_docker_gui --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__sessions__runners__session_urisys_node_docker_gui --> src__urisys_lab__sessions__util__finalize_session
+    src__urisys_lab__sessions__runners__session_urisys_node_docker_gui --> src__urisys_lab__sessions__runners___monorepo_root
+    src__urisys_lab__sessions__runners__session_urisys_node_docker_gui --> src__urisys_lab__core__host_id
+    src__urisys_lab__sessions__runners__session_office_simulate --> src__urisys_lab__core__now_iso
+    src__urisys_lab__sessions__runners__session_office_simulate --> src__urisys_lab__sessions__util__write_meta
+    src__urisys_lab__sessions__runners__session_office_simulate --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__sessions__runners__session_office_simulate --> src__urisys_lab__sessions__util__finalize_session
+    src__urisys_lab__sessions__runners__session_office_simulate --> src__urisys_lab__sessions__runners___monorepo_root
+    src__urisys_lab__sessions__runners__session_office_simulate --> src__urisys_lab__core__host_id
+    src__urisys_lab__sessions__runners__session_office_simulate_lenovo --> src__urisys_lab__core__now_iso
+    src__urisys_lab__sessions__runners__session_office_simulate_lenovo --> src__urisys_lab__sessions__util__write_meta
+    src__urisys_lab__sessions__runners__session_office_simulate_lenovo --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__sessions__runners__session_office_simulate_lenovo --> src__urisys_lab__sessions__util__finalize_session
+    src__urisys_lab__sessions__runners__session_office_simulate_lenovo --> src__urisys_lab__core__host_id
+    src__urisys_lab__sessions__runners__session_office_writer --> src__urisys_lab__core__now_iso
+    src__urisys_lab__sessions__runners__session_office_writer --> src__urisys_lab__sessions__util__write_meta
+    src__urisys_lab__sessions__runners__session_office_writer --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__sessions__runners__session_office_writer --> src__urisys_lab__sessions__util__finalize_session
+    src__urisys_lab__sessions__runners__session_office_writer --> src__urisys_lab__sessions__runners___monorepo_root
+    src__urisys_lab__sessions__runners__session_office_writer --> src__urisys_lab__core__host_id
+    src__urisys_lab__sessions__runners__session_email_mailpit --> src__urisys_lab__core__now_iso
+    src__urisys_lab__sessions__runners__session_email_mailpit --> src__urisys_lab__sessions__util__write_meta
+    src__urisys_lab__sessions__runners__session_email_mailpit --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__sessions__runners__session_email_mailpit --> src__urisys_lab__sessions__util__finalize_session
+    src__urisys_lab__sessions__runners__session_email_mailpit --> src__urisys_lab__sessions__runners___monorepo_root
+    src__urisys_lab__sessions__runners__session_email_mailpit --> src__urisys_lab__core__host_id
+    scripts__test_sessions__expectations___ocr_contains --> scripts__test_sessions__expectations__ocr_texts
+    scripts__test_sessions__expectations___min_vision_confidence --> scripts__test_sessions__expectations__vision_confidences
+    scripts__test_sessions__expectations__evaluate_expectations --> scripts__test_sessions__expectations___screen_changed
+    scripts__test_sessions__expectations__evaluate_expectations --> scripts__test_sessions__expectations___screen_changed_since_previous
+    scripts__test_sessions__expectations__evaluate_expectations --> scripts__test_sessions__expectations___opened_url_contains
+    scripts__test_sessions__expectations__evaluate_expectations --> scripts__test_sessions__expectations___ocr_contains
+    scripts__test_sessions__expectations__evaluate_expectations --> scripts__test_sessions__expectations___min_vision_confidence
+    scripts__test_sessions__lab_flows___lab_bootstrap --> src__urisys_lab__sessions__util__run_cmd
+    scripts__test_sessions__lab_flows___lab_bootstrap --> src__urisys_lab__sessions__util__write_meta
+    scripts__test_sessions__lab_flows___capture_flow_screenshot --> scripts__test_sessions__lab_rdp__capture_rdp_screenshot_wait
+    scripts__test_sessions__lab_flows___capture_flow_screenshot --> scripts__test_sessions__lab_rdp__capture_rdp_screenshot
+    scripts__test_sessions__lab_flows___capture_flow_screenshot --> src__urisys_lab__sessions__util__file_md5
+    scripts__test_sessions__lab_flows___run_single_lab_flow --> scripts__test_sessions__expectations__flow_expectations
+    scripts__test_sessions__lab_flows___run_single_lab_flow --> scripts__test_sessions__lab_flows___capture_flow_screenshot
+    scripts__test_sessions__lab_flows___run_single_lab_flow --> scripts__test_sessions__expectations__evaluate_expectations
+    scripts__test_sessions__lab_flows___run_single_lab_flow --> src__urisys_lab__core__save_json
+    scripts__test_sessions__lab_flows___run_single_lab_flow --> src__urisys_lab__sessions__util__http_json
+    scripts__test_sessions__lab_flows___run_single_lab_flow --> scripts__test_sessions__lab_flows___flow_step_detail
+    scripts__test_sessions__lab_flows__session_lab_10_flows --> src__urisys_lab__core__now_iso
+    scripts__test_sessions__lab_flows__session_lab_10_flows --> src__urisys_lab__sessions__util__write_meta
+    scripts__test_sessions__lab_flows__session_lab_10_flows --> src__urisys_lab__sessions__util__sleep_ports
+    scripts__test_sessions__lab_flows__session_lab_10_flows --> src__urisys_lab__sessions__util__run_cmd
+    scripts__test_sessions__lab_flows__session_lab_10_flows --> src__urisys_lab__sessions__util__finalize_session
+    scripts__test_sessions__lab_flows__session_lab_10_flows --> src__urisys_lab__sessions__util__wait_health
+    scripts__test_sessions__lab_flows__session_lab_10_flows --> scripts__test_sessions__lab_flows___lab_bootstrap
+    scripts__test_sessions__lab_flows__session_lab_10_flows --> scripts__test_sessions__lab_rdp__capture_rdp_screenshot
+    scripts__test_sessions__lab_flows__session_lab_10_flows --> src__urisys_lab__sessions__util__file_md5
+    scripts__test_sessions__lab_rdp__prepare_ok_target --> src__urisys_lab__sessions__util__http_json
+    scripts__test_sessions__lab_rdp__capture_rdp_screenshot --> src__urisys_lab__sessions__util__http_json
+    scripts__test_sessions__lab_rdp__capture_rdp_screenshot --> src__urisys_lab__sessions__util__copy_container_file
+    scripts__test_sessions__lab_rdp__capture_rdp_screenshot_wait --> scripts__test_sessions__lab_rdp__capture_rdp_screenshot
+    scripts__test_sessions__lab_rdp__capture_rdp_screenshot_wait --> src__urisys_lab__sessions__util__file_md5
+    src__urisys_lab__sessions__util__wait_health --> src__urisys_lab__sessions__util__http_json
+    src__urisys_lab__sessions__util__write_meta --> src__urisys_lab__sessions__util__read_meta
+    src__urisys_lab__sessions__util__write_meta --> src__urisys_lab__core__save_json
+    src__urisys_lab__sessions__util__finalize_session --> src__urisys_lab__core__now_iso
+    src__urisys_lab__sessions__util__finalize_session --> src__urisys_lab__sessions__util__write_meta
+    src__urisys_lab__sessions__util__docker_logs --> src__urisys_lab__sessions__util__compose_cmd
+    src__urisys_lab__sessions__util__docker_logs --> src__urisys_lab__sessions__util__run_cmd
+    src__urisys_lab__lenovo__cli___run_http_get_step --> src__urisys_lab__lenovo__cli__http_get
+    src__urisys_lab__lenovo__cli___run_host_restart_and_wait_step --> src__urisys_lab__lenovo__cli___schedule_restart_safely
+    src__urisys_lab__lenovo__cli___run_host_restart_and_wait_step --> src__urisys_lab__lenovo__cli___poll_health_after_restart
+    src__urisys_lab__lenovo__cli___run_uri_call_step --> scripts__office_simulate_loop__call_uri
+    src__urisys_lab__lenovo__cli__run_step --> src__urisys_lab__core__now_iso
+    src__urisys_lab__lenovo__cli__run_step --> src__urisys_lab__core__step_ok
+    src__urisys_lab__lenovo__cli__run_step --> src__urisys_lab__lenovo__cli___run_http_get_step
+    src__urisys_lab__lenovo__cli__run_step --> src__urisys_lab__lenovo__cli___run_host_sleep_step
+    src__urisys_lab__lenovo__cli__run_step --> src__urisys_lab__lenovo__cli___run_host_restart_and_wait_step
+    src__urisys_lab__lenovo__cli__run_step --> src__urisys_lab__lenovo__cli___run_host_schedule_restart_step
+    src__urisys_lab__lenovo__cli__run_step --> src__urisys_lab__lenovo__cli___run_host_wait_health_step
+    src__urisys_lab__lenovo__cli__run_step --> src__urisys_lab__lenovo__cli___run_uri_call_step
+    src__urisys_lab__lenovo__cli__run_flow --> src__urisys_lab__lenovo__cli__load_yaml
+    src__urisys_lab__lenovo__cli__run_flow --> src__urisys_lab__core__now_iso
+    src__urisys_lab__lenovo__cli__run_flow --> src__urisys_lab__core__save_json
+    src__urisys_lab__lenovo__cli__run_flow --> src__urisys_lab__core__expand_step_wheels
+    src__urisys_lab__lenovo__cli__run_flow --> src__urisys_lab__lenovo__cli__run_step
+    src__urisys_lab__lenovo__cli__run_flow --> src__urisys_lab__core__extract_step_screenshots
+    src__urisys_lab__lenovo__cli___run_upgrade_flow --> src__urisys_lab__lenovo__cli__append_log
+    src__urisys_lab__lenovo__cli__write_session_md --> src__urisys_lab__lenovo__cli___md_lessons
+    src__urisys_lab__lenovo__cli__write_session_md --> src__urisys_lab__lenovo__cli___md_step_detail
+    src__urisys_lab__lenovo__cli__write_session_md --> src__urisys_lab__lenovo__cli___md_header
+    src__urisys_lab__lenovo__cli__write_session_md --> src__urisys_lab__lenovo__cli___md_flow_results
+    src__urisys_lab__lenovo__cli__resolve_flow_paths --> src__urisys_lab__lenovo__cli__load_yaml
+    src__urisys_lab__lenovo__cli__resolve_flow_paths --> src__urisys_lab__core__resolve_flow_ref
+    src__urisys_lab__lenovo__cli__resolve_route_map --> src__urisys_lab__lenovo__cli__load_yaml
+    src__urisys_lab__lenovo__cli__load_manifest_session --> src__urisys_lab__lenovo__cli__load_yaml
+    src__urisys_lab__lenovo__cli___check_and_restore_health --> src__urisys_lab__core__save_json
+    src__urisys_lab__lenovo__cli___check_and_restore_health --> src__urisys_lab__lenovo__cli__append_log
+    src__urisys_lab__lenovo__cli___skip_node_down --> src__urisys_lab__core__save_json
+    src__urisys_lab__lenovo__cli___skip_node_down --> src__urisys_lab__lenovo__cli__append_log
+    src__urisys_lab__lenovo__cli___skip_node_down --> src__urisys_lab__lenovo__cli__load_yaml
+    src__urisys_lab__lenovo__cli___maybe_run_node_upgrade --> src__urisys_lab__lenovo__cli___run_upgrade_flow
+    src__urisys_lab__lenovo__cli___maybe_run_node_upgrade --> src__urisys_lab__lenovo__cli__append_log
+    src__urisys_lab__lenovo__cli___maybe_run_node_upgrade --> src__urisys_lab__lenovo__cli___needs_node_upgrade
+    src__urisys_lab__lenovo__cli___maybe_run_kvm_upgrade --> src__urisys_lab__lenovo__cli___run_upgrade_flow
+    src__urisys_lab__lenovo__cli___maybe_run_kvm_upgrade --> src__urisys_lab__lenovo__cli__append_log
+    src__urisys_lab__lenovo__cli___maybe_run_playwright_upgrade --> src__urisys_lab__lenovo__cli___run_upgrade_flow
+    src__urisys_lab__lenovo__cli___maybe_run_playwright_upgrade --> src__urisys_lab__lenovo__cli__append_log
+    src__urisys_lab__lenovo__cli___run_flows --> src__urisys_lab__lenovo__cli__append_log
+    src__urisys_lab__lenovo__cli___run_flows --> src__urisys_lab__lenovo__cli___check_and_restore_health
+    src__urisys_lab__lenovo__cli___run_flows --> src__urisys_lab__lenovo__cli___skip_node_down
+    src__urisys_lab__lenovo__cli___run_flows --> src__urisys_lab__lenovo__cli___maybe_run_node_upgrade
+    src__urisys_lab__lenovo__cli___run_flows --> src__urisys_lab__lenovo__cli___maybe_run_kvm_upgrade
+    src__urisys_lab__lenovo__cli___run_flows --> src__urisys_lab__lenovo__cli___maybe_run_playwright_upgrade
+    src__urisys_lab__lenovo__cli___run_extract_images --> src__urisys_lab__core__backfill_session_images
+    src__urisys_lab__lenovo__cli___run_extract_images --> scripts__analyze_thin_markpacts__print
+    src__urisys_lab__lenovo__cli___ensure_pyyaml --> scripts__analyze_thin_markpacts__print
+    src__urisys_lab__lenovo__cli___setup_wheels --> src__urisys_lab__lenovo__cli__build_wheels
+    src__urisys_lab__lenovo__cli___setup_wheels --> src__urisys_lab__lenovo__cli__start_wheel_server
+    src__urisys_lab__lenovo__cli___check_initial_health --> src__urisys_lab__lenovo__cli__append_log
+    src__urisys_lab__lenovo__cli___check_initial_health --> src__urisys_lab__sessions__util__wait_health
+    src__urisys_lab__lenovo__cli___check_initial_health --> src__urisys_lab__core__now_iso
+    src__urisys_lab__lenovo__cli___build_meta --> src__urisys_lab__core__now_iso
+    src__urisys_lab__lenovo__cli__main --> src__urisys_lab__lenovo__cli___init_session
+    scripts__generate_pack_markpacts___extra_specs --> scripts__pack_registry___pack
+    scripts__generate_pack_markpacts___tests --> scripts__generate_pack_markpacts___fill_pattern
+    scripts__generate_pack_markpacts___use_case_flow --> scripts__generate_pack_markpacts___fill_pattern
+    scripts__generate_pack_markpacts___use_case_flow --> scripts__generate_pack_markpacts___scheme
+    scripts__generate_pack_markpacts___render --> scripts__generate_pack_markpacts___capabilities
+    scripts__generate_pack_markpacts___render --> scripts__generate_pack_markpacts___tests
+    scripts__generate_pack_markpacts___render --> scripts__generate_pack_markpacts___use_case_flow
+    scripts__generate_pack_markpacts___render --> scripts__generate_pack_markpacts___run_block
+    scripts__generate_pack_markpacts___render --> scripts__generate_pack_markpacts___default_port
+    scripts__generate_pack_markpacts___split_by_scheme --> scripts__generate_pack_markpacts___scheme
+    scripts__generate_pack_markpacts__manifest_files --> scripts__generate_pack_markpacts__repo_module_dir
+    scripts__generate_pack_markpacts__generate_for_spec --> scripts__generate_pack_markpacts__manifest_files
+    scripts__generate_pack_markpacts__generate_for_spec --> scripts__generate_pack_markpacts___split_by_scheme
+    scripts__generate_pack_markpacts__generate_for_spec --> scripts__generate_pack_markpacts___file_stem
+    scripts__generate_pack_markpacts__generate_for_spec --> scripts__generate_pack_markpacts___render
+    scripts__generate_pack_markpacts___process_spec --> scripts__generate_pack_markpacts__generate_for_spec
+    scripts__generate_pack_markpacts___process_spec --> scripts__analyze_thin_markpacts__print
+    scripts__generate_pack_markpacts__main --> scripts__analyze_thin_markpacts__print
+    scripts__generate_pack_markpacts__main --> scripts__pack_registry__pack_specs
+    scripts__generate_pack_markpacts__main --> scripts__generate_pack_markpacts___extra_specs
+    scripts__generate_pack_markpacts__main --> scripts__generate_pack_markpacts___process_spec
+    scripts__generate_pack_markpacts__main --> scripts__generate_pack_markpacts__repo_module_dir
+    scripts__office_simulate_loop__rules_tick --> scripts__office_simulate_loop__call_uri
+    scripts__office_simulate_loop__rules_tick --> scripts__analyze_thin_markpacts__print
+    scripts__office_simulate_loop__llm_tick --> scripts__office_simulate_loop__call_uri
+    scripts__office_simulate_loop__llm_tick --> scripts__analyze_thin_markpacts__print
+    scripts__office_simulate_loop__main --> scripts__office_simulate_loop__parse_args
+    scripts__office_simulate_loop__main --> scripts__analyze_thin_markpacts__print
+    scripts__office_simulate_loop__main --> scripts__office_simulate_loop__rules_tick
+    scripts__office_simulate_loop__main --> scripts__office_simulate_loop__llm_tick
+    scripts__scan_browser_sessions__scan_chrome_cookies --> scripts__scan_browser_sessions___copy_query
+    scripts__scan_browser_sessions___scan_profiles --> scripts__scan_browser_sessions__discover_browsers
+    scripts__scan_browser_sessions___scan_profiles --> scripts__scan_browser_sessions__firefox_profiles
+    scripts__scan_browser_sessions___scan_profiles --> scripts__scan_browser_sessions__chrome_profiles
+    scripts__scan_browser_sessions___scan_profiles --> scripts__scan_browser_sessions__scan_chrome_cookies
+    scripts__scan_browser_sessions___output_json --> scripts__analyze_thin_markpacts__print
+    scripts__scan_browser_sessions___output_text --> scripts__analyze_thin_markpacts__print
+    scripts__scan_browser_sessions__main --> scripts__scan_browser_sessions___scan_profiles
+    scripts__scan_browser_sessions__main --> scripts__scan_browser_sessions___output_json
+    scripts__scan_browser_sessions__main --> scripts__scan_browser_sessions___output_text
+    scripts__update_ecosystem_readmes__main --> scripts__analyze_thin_markpacts__print
+    scripts__update_ecosystem_readmes__main --> scripts__update_ecosystem_readmes__fix_urisysedge_refs
+    scripts__update_ecosystem_readmes__main --> scripts__update_ecosystem_readmes__strip_old_section
+    scripts__update_ecosystem_readmes__main --> scripts__update_ecosystem_readmes__build_section
+    scripts__pack_sync__sync_file --> scripts__pack_sync__file_hash
+    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__vendored_module_dir
+    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__repo_module_dir
+    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__read_version
+    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__sync_file
+    scripts__pack_sync__check_drift --> scripts__pack_sync__vendored_module_dir
+    scripts__pack_sync__check_drift --> scripts__pack_sync__repo_module_dir
+    scripts__pack_sync__check_drift --> scripts__pack_sync___check_promoted
+    scripts__pack_sync__check_drift --> scripts__pack_sync__read_version
+    scripts__pack_sync__check_drift --> scripts__pack_sync__file_hash
+    scripts__pack_sync___check_promoted --> scripts__pack_sync__repo_module_dir
+    scripts__pack_sync__remove_vendored --> scripts__analyze_thin_markpacts__print
+    scripts__pack_sync___repo_pyproject --> scripts__pack_sync__read_version
+    scripts__pack_sync___repo_pyproject --> scripts__pack_sync__repo_module_dir
+    scripts__pack_sync__init_repo --> scripts__pack_sync__sync_to_repo
+    scripts__pack_sync__init_repo --> scripts__analyze_thin_markpacts__print
+    scripts__pack_sync__promote --> scripts__pack_sync__sync_to_repo
+    scripts__pack_sync__promote --> scripts__pack_sync__remove_vendored
+    scripts__pack_sync___validate_packs --> scripts__analyze_thin_markpacts__print
+    scripts__pack_sync___cmd_to_repo --> scripts__pack_sync__sync_to_repo
+    scripts__pack_sync___cmd_to_repo --> scripts__analyze_thin_markpacts__print
+    scripts__pack_sync___cmd_promote --> scripts__pack_sync__promote
+    scripts__pack_sync___cmd_promote --> scripts__analyze_thin_markpacts__print
+    scripts__pack_sync___cmd_check --> scripts__analyze_thin_markpacts__print
+    scripts__pack_sync___cmd_check --> scripts__pack_sync__check_drift
+    scripts__pack_sync___cmd_init_repo --> scripts__pack_sync__init_repo
+    scripts__pack_sync___cmd_init_repo --> scripts__analyze_thin_markpacts__print
+    scripts__pack_sync___cmd_print_uv_sources --> scripts__analyze_thin_markpacts__print
+    scripts__pack_sync___cmd_print_uv_sources --> scripts__pack_registry__sibling_uv_path
+    scripts__pack_sync__main --> scripts__pack_registry__pack_specs
+    scripts__pack_registry__sibling_repo --> scripts__pack_registry___repo
+    scripts__pack_registry___pack --> scripts__pack_registry___repo
+    scripts__pack_registry__pack_specs --> scripts__pack_registry___pack
+    scripts__pack_registry__all_promoted_packs --> scripts__pack_registry__pack_specs
+    scripts__report__cli__main --> scripts__report__run_analysis__analyze_run
+    scripts__report__cli__main --> scripts__report__run_analysis__write_run_analysis
+    scripts__report__cli__main --> scripts__analyze_thin_markpacts__print
+    scripts__report__cli__main --> scripts__report__session__generate_report
+    scripts__report__cli__main --> scripts__report__session_io__write_session_report
+    scripts__report__events__summarize_events --> scripts__report__events__load_event_records
+    scripts__report__events__summarize_events --> scripts__report__events__summarize_event_records
+    scripts__report__events__merge_event_summaries --> scripts__report__events__summarize_events
+    scripts__report__run_analysis__analyze_run --> scripts__report__util__read_json
+    scripts__report__run_analysis__analyze_run --> scripts__report__lab_checks__analyze_lab_flows
+    scripts__report__run_analysis__analyze_run --> scripts__report__run_analysis___run_recommendations
+    scripts__report__run_analysis__write_run_analysis --> scripts__report__run_analysis__analyze_run
+    scripts__report__run_analysis__write_run_analysis --> scripts__report__run_markdown__render_run_analysis_markdown
+    scripts__report__session___response_to_step_result --> scripts__report__session___resolve_screenshot
+    scripts__report__session___response_to_step_result --> scripts__report__util__read_json
+    scripts__report__session___response_to_step_result --> scripts__report__session___extract_metrics
+    scripts__report__session__infer_steps --> scripts__report__session___response_to_step_result
+    scripts__report__session__session_duration --> src__urisys_lab__core__now_iso
+    scripts__report__session__generate_report --> scripts__report__session__infer_steps
+    scripts__report__session__generate_report --> scripts__report__util__read_json
+    scripts__report__session__generate_report --> scripts__report__util__tail
+    scripts__report__session__generate_report --> src__urisys_lab__core__now_iso
+    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___environment_section
+    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___steps_section
+    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___screenshots_section
+    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___events_section
+    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___log_errors_section
+    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___duplicate_screenshots_section
+    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___log_tail_section
+    scripts__report__session_io__write_session_report --> scripts__report__session__generate_report
+    scripts__report__session_io__write_session_report --> scripts__report__session_markdown__render_session_markdown
+    scripts__test_sessions__util__wait_health --> scripts__test_sessions__util__http_json
+    scripts__test_sessions__util__write_meta --> scripts__test_sessions__util__read_meta
+    scripts__test_sessions__util__write_meta --> src__urisys_lab__core__save_json
+    scripts__test_sessions__util__finalize_session --> src__urisys_lab__core__now_iso
+    scripts__test_sessions__util__finalize_session --> scripts__test_sessions__util__write_meta
+    scripts__test_sessions__util__docker_logs --> scripts__test_sessions__util__compose_cmd
+    scripts__test_sessions__util__docker_logs --> scripts__test_sessions__util__run_cmd
+    src__urisys__cli__commands__markpact__cmd_run_flow --> src__urisys__managers__markpact_run_flow__split_flow_ref
+    src__urisys__cli__commands__markpact__cmd_run_flow --> src__urisys__cli__helpers__resolve_markpact_source
+    src__urisys__cli__commands__markpact__cmd_run_flow --> src__urisys__managers__markpact_run_flow__run_markpact_flow
+    src__urisys__cli__commands__markpact__cmd_run_flow --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_materialize --> src__urisys__managers__markpact_run_flow__split_flow_ref
+    src__urisys__cli__commands__markpact__cmd_materialize --> src__urisys__cli__helpers__resolve_markpact_source
+    src__urisys__cli__commands__markpact__cmd_materialize --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_materialize --> src__urisys__managers__markpact_materialize__materialize_markpact
+    src__urisys__cli__commands__markpact__cmd_export_platform --> src__urisys__managers__markpact_run_flow__split_flow_ref
+    src__urisys__cli__commands__markpact__cmd_export_platform --> src__urisys__cli__helpers__resolve_markpact_source
+    src__urisys__cli__commands__markpact__cmd_export_platform --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_export_platform --> src__urisys__managers__platform_export__export_platform_artifacts
+    src__urisys__cli__commands__markpact__cmd_run_markpact --> src__urisys__managers__markpact_run_flow__split_flow_ref
+    src__urisys__cli__commands__markpact__cmd_run_markpact --> src__urisys__cli__helpers__resolve_markpact_source
+    src__urisys__cli__commands__markpact__cmd_run_markpact --> src__urisys__markpact__run__run_markpact
+    src__urisys__cli__commands__markpact__cmd_run_markpact --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_validate --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_compile --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_routes --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_test --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_analyze --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_analyze --> src__urisys__cli__commands__markpact___apply_strict_operations
+    src__urisys__cli__commands__markpact__cmd_analyze --> src__urisys__cli__commands__markpact___apply_strict_profile
+    src__urisys__cli__commands__markpact__cmd_pack --> src__urisys__managers__markpact_pack_gen__generate_pack_markpact
+    src__urisys__cli__commands__markpact__cmd_pack --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_pack --> scripts__analyze_thin_markpacts__print
+    src__urisys__cli__commands__markpact__cmd_pack --> src__urisys__managers__markpact_pack_gen__find_package_dir
+    src__urisys__cli__commands__markpact__cmd_contract --> src__urisys__cli__helpers__resolve_markpact_source
+    src__urisys__cli__commands__markpact__cmd_contract --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_contract --> scripts__analyze_thin_markpacts__print
+    src__urisys__cli__commands__markpact___run_path_command --> src__urisys__cli__commands__markpact__cmd_validate
+    src__urisys__cli__commands__markpact___run_path_command --> src__urisys__cli__commands__markpact__cmd_compile
+    src__urisys__cli__commands__markpact___run_path_command --> src__urisys__cli__commands__markpact__cmd_routes
+    src__urisys__cli__commands__markpact___run_path_command --> src__urisys__cli__commands__markpact__cmd_test
+    src__urisys__cli__commands__markpact___run_path_command --> src__urisys__cli__commands__markpact__cmd_analyze
+    src__urisys__cli__commands__markpact__cmd_markpact --> src__urisys__cli__helpers__resolve_markpact_source
 
     classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
     classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
-    class src__urisys__cli___cmd_markpact,src__urisys__managers__markpact_manager__MarkpactManager__compile,src__urisys__managers__markpact_manager__MarkpactManager___build_route,src__urisys__managers__platform_export___authorities_from_flow,scripts__generate_pack_markpacts__main,scripts__check_contract_drift__main,scripts__scan_browser_sessions__main,scripts__run_test_sessions__session_urirdp_real_docker,scripts__lenovo_remote_session___run_host_restart_and_wait_step,scripts__lenovo_remote_session___run_flows,scripts__lenovo_remote_session__main,scripts__session_core__step_ok,scripts__session_core__expand_step_wheels,scripts__pack_sync__main,scripts__report__lab_checks__load_flow_outcomes,scripts__report__session__infer_steps,src__urisys__managers__markpact_run___run_flow_mode,src__urisys__managers__markpact_pack_deps___register_sibling_packs,src__urisys__managers__markpact_profile___flow_features,src__urisys__managers__markpact_profile___validate_capability_uris highCC
-    class src__urisys__bootstrap__main,src__urisys__cli___handle_cli_error,src__urisys__cli__main,src__urisys__doctor__run_doctor,src__urisys__managers__markpact_validation___validate_contract_routes,src__urisys__managers__markpact_validation__validate_contract,src__urisys__managers__markpact_validation__validate_bundle,src__urisys__managers__markpact_validation__validate_implementation,src__urisys__managers__markpact_manager__MarkpactManager__validate,src__urisys__managers__markpact_manager__MarkpactManager___validate_pack,src__urisys__managers__markpact_manager__MarkpactManager__analyze,src__urisys__managers__markpact_manager__MarkpactManager__run_tests,src__urisys__managers__markpact_manager__MarkpactManager___check_expectations,src__urisys__managers__markpact_manager__MarkpactManager___compile_manifest,src__urisys__managers__markpact_manager__MarkpactManager___scheme,src__urisys__managers__markpact_materialize__materialize_markpact,src__urisys__managers__markpact_run_flow__run_markpact_flow,src__urisys__managers__source_manager__SourceManager__fetch,src__urisys__managers__source_manager__SourceManager___fetch_git,src__urisys__managers__source_manager__SourceManager___fetch_zip,src__urisys__managers__platform_export___target_stub,src__urisys__managers__markpact_flows__extract_flows,src__urisys__managers__markpact_flows__flow_uris,src__urisys__managers__markpact_flows__classify_flow,scripts__generate_pack_markpacts___render,scripts__generate_pack_markpacts___split_by_scheme,scripts__office_simulate_loop__main,scripts__scan_browser_sessions__scan_chrome_cookies,scripts__scan_browser_sessions__chrome_profiles,scripts__scan_browser_sessions__firefox_profiles medCC
+    class src__urisys_lab__lenovo__cli__main highCC
+    class src__urisys__bootstrap__main,src__urisys__doctor__run_doctor,src__urisys__init_setup___verify_after_install,src__urisys__init_setup__run_init,src__urisys__cli__errors__handle_cli_error,src__urisys__markpact__validate_pack__validate_pack,src__urisys__markpact__validate_pack__validate_markpact_file,src__urisys__markpact__tests__check_expectations,src__urisys__markpact__tests__run_markpact_tests,src__urisys__markpact__manifest__compile_manifest,src__urisys__markpact__pack__scheme_for_pack,src__urisys__managers__markpact_validation___validate_contract_routes,src__urisys__managers__markpact_validation__validate_contract,src__urisys__managers__markpact_validation__validate_bundle,src__urisys__managers__markpact_validation__validate_implementation,src__urisys__managers__markpact_pack_deps___discover_pack_modules,src__urisys__managers__markpact_pack_deps___register_sibling_packs,src__urisys__managers__pack_manager___sibling_manifest_path,src__urisys__managers__pack_manager__PackManager__parse_packs,src__urisys__managers__pack_manager__PackManager__manifest_paths,src__urisys__managers__markpact_materialize__materialize_markpact,src__urisys__managers__markpact_pack_gen__find_package_dir,src__urisys__managers__markpact_pack_gen__package_schemes,src__urisys__managers__markpact_pack_gen___build_capability,src__urisys__managers__markpact_pack_gen___pack_block,src__urisys__managers__markpact_pack_gen___embedded_flows,src__urisys__managers__markpact_pack_gen__generate_pack_markpact,src__urisys__managers__contract_gen___entry,src__urisys__managers__contract_gen__manifest_to_contract,src__urisys__managers__contract_gen___diff_section medCC

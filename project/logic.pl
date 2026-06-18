@@ -21,20 +21,20 @@ project_file('scripts/analyze-legacy-contract-packs.sh', 44, 'shell').
 project_file('scripts/analyze-process-markpacts.sh', 40, 'shell').
 project_file('scripts/analyze-thin-markpacts.sh', 49, 'shell').
 project_file('scripts/bootstrap-lenovo-local.sh', 58, 'shell').
-project_file('scripts/check_contract_drift.py', 96, 'python').
+project_file('scripts/check_contract_drift.py', 106, 'python').
 project_file('scripts/ci-checkout-siblings.sh', 57, 'shell').
 project_file('scripts/ci-install-siblings.sh', 29, 'shell').
 project_file('scripts/deploy-lenovo-node.sh', 131, 'shell').
-project_file('scripts/generate_pack_markpacts.py', 358, 'python').
+project_file('scripts/generate_pack_markpacts.py', 372, 'python').
 project_file('scripts/generate_showcase_markpacts.py', 7, 'python').
 project_file('scripts/install-kvm-packs-editable.sh', 14, 'shell').
 project_file('scripts/lenovo-node-session.sh', 74, 'shell').
-project_file('scripts/lenovo_remote_session.py', 796, 'python').
+project_file('scripts/lenovo_remote_session.py', 8, 'python').
 project_file('scripts/marksync-materialize.sh', 32, 'shell').
 project_file('scripts/materialize-all-showcases.sh', 54, 'shell').
 project_file('scripts/office-simulate-loop.py', 147, 'python').
 project_file('scripts/pack_registry.py', 261, 'python').
-project_file('scripts/pack_sync.py', 350, 'python').
+project_file('scripts/pack_sync.py', 372, 'python').
 project_file('scripts/paths.sh', 70, 'shell').
 project_file('scripts/publish-pypi-packs.sh', 54, 'shell').
 project_file('scripts/publish-tellmesh-wheels.sh', 84, 'shell').
@@ -43,11 +43,11 @@ project_file('scripts/remote-node-smoke.sh', 100, 'shell').
 project_file('scripts/report/__init__.py', 62, 'python').
 project_file('scripts/report/cli.py', 42, 'python').
 project_file('scripts/report/events.py', 139, 'python').
-project_file('scripts/report/lab_checks.py', 189, 'python').
+project_file('scripts/report/lab_checks.py', 188, 'python').
 project_file('scripts/report/models.py', 87, 'python').
 project_file('scripts/report/run_analysis.py', 130, 'python').
 project_file('scripts/report/run_markdown.py', 43, 'python').
-project_file('scripts/report/session.py', 116, 'python').
+project_file('scripts/report/session.py', 125, 'python').
 project_file('scripts/report/session_io.py', 20, 'python').
 project_file('scripts/report/session_markdown.py', 121, 'python').
 project_file('scripts/report/util.py', 22, 'python').
@@ -65,14 +65,14 @@ project_file('scripts/run-office-writer-e2e.sh', 114, 'shell').
 project_file('scripts/run-smoke-all.sh', 25, 'shell').
 project_file('scripts/run-urisys-node-docker-e2e.sh', 164, 'shell').
 project_file('scripts/run-urisys-node-docker-session.sh', 7, 'shell').
-project_file('scripts/run_test_sessions.py', 762, 'python').
-project_file('scripts/scan-browser-sessions.py', 200, 'python').
-project_file('scripts/session_core.py', 277, 'python').
+project_file('scripts/run_test_sessions.py', 8, 'python').
+project_file('scripts/scan-browser-sessions.py', 209, 'python').
+project_file('scripts/session_core.py', 5, 'python').
 project_file('scripts/session_report.py', 50, 'python').
 project_file('scripts/sync-vendored-pack.sh', 39, 'shell').
 project_file('scripts/test-goal.sh', 12, 'shell').
 project_file('scripts/test-python-matrix.sh', 59, 'shell').
-project_file('scripts/test_sessions/__init__.py', 101, 'python').
+project_file('scripts/test_sessions/__init__.py', 6, 'python').
 project_file('scripts/test_sessions/expectations.py', 154, 'python').
 project_file('scripts/test_sessions/lab_flows.py', 321, 'python').
 project_file('scripts/test_sessions/lab_rdp.py', 181, 'python').
@@ -82,7 +82,17 @@ project_file('scripts/validate-all-markpacts.sh', 66, 'shell').
 project_file('scripts/validate-pypi-metadata.sh', 63, 'shell').
 project_file('src/urisys/__init__.py', 4, 'python').
 project_file('src/urisys/bootstrap.py', 117, 'python').
-project_file('src/urisys/cli.py', 578, 'python').
+project_file('src/urisys/cli/__init__.py', 11, 'python').
+project_file('src/urisys/cli/__main__.py', 5, 'python').
+project_file('src/urisys/cli/commands/__init__.py', 20, 'python').
+project_file('src/urisys/cli/commands/markpact.py', 208, 'python').
+project_file('src/urisys/cli/commands/node.py', 35, 'python').
+project_file('src/urisys/cli/commands/runtime.py', 52, 'python').
+project_file('src/urisys/cli/commands/setup.py', 32, 'python').
+project_file('src/urisys/cli/errors.py', 33, 'python').
+project_file('src/urisys/cli/helpers.py', 29, 'python').
+project_file('src/urisys/cli/main.py', 18, 'python').
+project_file('src/urisys/cli/parser.py', 214, 'python').
 project_file('src/urisys/controllers/__init__.py', 1, 'python').
 project_file('src/urisys/controllers/flow_controller.py', 34, 'python').
 project_file('src/urisys/controllers/server_controller.py', 20, 'python').
@@ -97,25 +107,69 @@ project_file('src/urisys/managers/bridge_manager.py', 15, 'python').
 project_file('src/urisys/managers/contract_gen.py', 190, 'python').
 project_file('src/urisys/managers/event_manager.py', 14, 'python').
 project_file('src/urisys/managers/markpact_flows.py', 134, 'python').
-project_file('src/urisys/managers/markpact_manager.py', 573, 'python').
+project_file('src/urisys/managers/markpact_manager.py', 73, 'python').
 project_file('src/urisys/managers/markpact_materialize.py', 70, 'python').
 project_file('src/urisys/managers/markpact_models.py', 103, 'python').
-project_file('src/urisys/managers/markpact_pack_deps.py', 186, 'python').
+project_file('src/urisys/managers/markpact_pack_deps.py', 190, 'python').
 project_file('src/urisys/managers/markpact_pack_gen.py', 243, 'python').
-project_file('src/urisys/managers/markpact_profile.py', 236, 'python').
-project_file('src/urisys/managers/markpact_run.py', 242, 'python').
-project_file('src/urisys/managers/markpact_run_flow.py', 160, 'python').
+project_file('src/urisys/managers/markpact_profile.py', 270, 'python').
+project_file('src/urisys/managers/markpact_run.py', 16, 'python').
+project_file('src/urisys/managers/markpact_run_flow.py', 161, 'python').
 project_file('src/urisys/managers/markpact_validation.py', 157, 'python').
 project_file('src/urisys/managers/pack_manager.py', 191, 'python').
-project_file('src/urisys/managers/platform_export.py', 299, 'python').
+project_file('src/urisys/managers/platform_export.py', 14, 'python').
 project_file('src/urisys/managers/policy_manager.py', 19, 'python').
 project_file('src/urisys/managers/route_manager.py', 24, 'python').
 project_file('src/urisys/managers/runtime_manager.py', 31, 'python').
 project_file('src/urisys/managers/source_manager.py', 219, 'python').
+project_file('src/urisys/markpact/__init__.py', 25, 'python').
+project_file('src/urisys/markpact/analyzer/__init__.py', 5, 'python').
+project_file('src/urisys/markpact/analyzer/context.py', 16, 'python').
+project_file('src/urisys/markpact/analyzer/lint.py', 67, 'python').
+project_file('src/urisys/markpact/analyzer/report.py', 53, 'python').
+project_file('src/urisys/markpact/analyzer/rules/__init__.py', 28, 'python').
+project_file('src/urisys/markpact/analyzer/rules/base.py', 18, 'python').
+project_file('src/urisys/markpact/analyzer/rules/capabilities.py', 108, 'python').
+project_file('src/urisys/markpact/analyzer/rules/flows.py', 47, 'python').
+project_file('src/urisys/markpact/analyzer/rules/pack.py', 46, 'python').
+project_file('src/urisys/markpact/analyzer/rules/schemes.py', 20, 'python').
+project_file('src/urisys/markpact/artifacts.py', 81, 'python').
+project_file('src/urisys/markpact/blocks.py', 64, 'python').
+project_file('src/urisys/markpact/cache.py', 119, 'python').
+project_file('src/urisys/markpact/compiler.py', 119, 'python').
+project_file('src/urisys/markpact/handlers.py', 52, 'python').
+project_file('src/urisys/markpact/manifest.py', 128, 'python').
+project_file('src/urisys/markpact/pack.py', 55, 'python').
+project_file('src/urisys/markpact/platform_export.py', 304, 'python').
+project_file('src/urisys/markpact/run/__init__.py', 67, 'python').
+project_file('src/urisys/markpact/run/config.py', 26, 'python').
+project_file('src/urisys/markpact/run/context.py', 26, 'python').
+project_file('src/urisys/markpact/run/modes/__init__.py', 18, 'python').
+project_file('src/urisys/markpact/run/modes/adapter.py', 29, 'python').
+project_file('src/urisys/markpact/run/modes/base.py', 14, 'python').
+project_file('src/urisys/markpact/run/modes/flow.py', 87, 'python').
+project_file('src/urisys/markpact/run/modes/interface.py', 29, 'python').
+project_file('src/urisys/markpact/run/modes/pack.py', 19, 'python').
+project_file('src/urisys/markpact/run/modes/service.py', 25, 'python').
+project_file('src/urisys/markpact/run/runtime_build.py', 54, 'python').
+project_file('src/urisys/markpact/tests.py', 79, 'python').
+project_file('src/urisys/markpact/validate_pack.py', 93, 'python').
 project_file('src/urisys/node_install.py', 107, 'python').
 project_file('src/urisys/uricore_install.py', 131, 'python').
 project_file('src/urisys/urirouter_install.py', 47, 'python').
-project_file('tests/conftest.py', 52, 'python').
+project_file('src/urisys_lab/__init__.py', 6, 'python').
+project_file('src/urisys_lab/core.py', 314, 'python').
+project_file('src/urisys_lab/lenovo/__init__.py', 6, 'python').
+project_file('src/urisys_lab/lenovo/cli.py', 966, 'python').
+project_file('src/urisys_lab/paths.py', 11, 'python').
+project_file('src/urisys_lab/sessions/__init__.py', 75, 'python').
+project_file('src/urisys_lab/sessions/cli.py', 107, 'python').
+project_file('src/urisys_lab/sessions/expectations.py', 154, 'python').
+project_file('src/urisys_lab/sessions/lab_flows.py', 321, 'python').
+project_file('src/urisys_lab/sessions/lab_rdp.py', 181, 'python').
+project_file('src/urisys_lab/sessions/runners.py', 666, 'python').
+project_file('src/urisys_lab/sessions/util.py', 198, 'python').
+project_file('tests/conftest.py', 54, 'python').
 project_file('tests/pack_import_isolation.py', 44, 'python').
 project_file('tests/test_analyze_strict.py', 41, 'python').
 project_file('tests/test_bootstrap.py', 61, 'python').
@@ -128,10 +182,11 @@ project_file('tests/test_init.py', 61, 'python').
 project_file('tests/test_kvm_pack_pyprojects.py', 71, 'python').
 project_file('tests/test_machine_cycle_process.py', 110, 'python').
 project_file('tests/test_markpact.py', 105, 'python').
+project_file('tests/test_markpact_analyzer_rules.py', 87, 'python').
 project_file('tests/test_markpact_contract_materialize.py', 106, 'python').
 project_file('tests/test_markpact_materialize.py', 22, 'python').
 project_file('tests/test_markpact_pack_deps.py', 33, 'python').
-project_file('tests/test_markpact_profile.py', 69, 'python').
+project_file('tests/test_markpact_profile.py', 82, 'python').
 project_file('tests/test_markpact_run.py', 98, 'python').
 project_file('tests/test_markpact_run_flow.py', 103, 'python').
 project_file('tests/test_markpact_session_isolation.py', 63, 'python').
@@ -143,8 +198,8 @@ project_file('tests/test_platform_export.py', 64, 'python').
 project_file('tests/test_process_conformance.py', 53, 'python').
 project_file('tests/test_pypi_metadata.py', 35, 'python').
 project_file('tests/test_python_compat.py', 53, 'python').
-project_file('tests/test_run_expectations.py', 56, 'python').
-project_file('tests/test_session_core.py', 82, 'python').
+project_file('tests/test_run_expectations.py', 50, 'python').
+project_file('tests/test_session_core.py', 73, 'python').
 project_file('tests/test_session_report_events.py', 59, 'python').
 project_file('tests/test_showcase.py', 51, 'python').
 project_file('tests/test_source_manager.py', 36, 'python').
@@ -159,7 +214,8 @@ project_file('tree.sh', 2, 'shell').
 python_function('scripts/check_contract_drift.py', 'manifest_path', 1, 3, 1).
 python_function('scripts/check_contract_drift.py', 'contract_paths', 1, 2, 3).
 python_function('scripts/check_contract_drift.py', 'check_pair', 2, 1, 3).
-python_function('scripts/check_contract_drift.py', 'main', 0, 15, 16).
+python_function('scripts/check_contract_drift.py', '_check_spec', 2, 7, 6).
+python_function('scripts/check_contract_drift.py', 'main', 0, 9, 12).
 python_function('scripts/generate_pack_markpacts.py', 'repo_module_dir', 1, 2, 0).
 python_function('scripts/generate_pack_markpacts.py', '_extra_specs', 0, 3, 2).
 python_function('scripts/generate_pack_markpacts.py', '_scheme', 1, 2, 1).
@@ -174,32 +230,8 @@ python_function('scripts/generate_pack_markpacts.py', '_split_by_scheme', 1, 13,
 python_function('scripts/generate_pack_markpacts.py', 'manifest_files', 1, 3, 4).
 python_function('scripts/generate_pack_markpacts.py', '_file_stem', 3, 4, 3).
 python_function('scripts/generate_pack_markpacts.py', 'generate_for_spec', 1, 4, 7).
-python_function('scripts/generate_pack_markpacts.py', 'main', 0, 16, 19).
-python_function('scripts/lenovo_remote_session.py', 'load_yaml', 1, 3, 4).
-python_function('scripts/lenovo_remote_session.py', 'http_get', 2, 4, 6).
-python_function('scripts/lenovo_remote_session.py', '_run_http_get_step', 3, 2, 3).
-python_function('scripts/lenovo_remote_session.py', '_run_host_sleep_step', 2, 3, 3).
-python_function('scripts/lenovo_remote_session.py', '_run_host_restart_and_wait_step', 2, 19, 11).
-python_function('scripts/lenovo_remote_session.py', '_run_host_schedule_restart_step', 2, 4, 2).
-python_function('scripts/lenovo_remote_session.py', '_run_host_wait_health_step', 2, 12, 9).
-python_function('scripts/lenovo_remote_session.py', '_run_uri_call_step', 2, 6, 6).
-python_function('scripts/lenovo_remote_session.py', 'run_step', 1, 9, 10).
-python_function('scripts/lenovo_remote_session.py', 'run_flow', 1, 14, 20).
-python_function('scripts/lenovo_remote_session.py', 'append_log', 2, 1, 4).
-python_function('scripts/lenovo_remote_session.py', 'build_wheels', 1, 4, 6).
-python_function('scripts/lenovo_remote_session.py', 'start_wheel_server', 3, 2, 4).
-python_function('scripts/lenovo_remote_session.py', '_needs_node_upgrade', 1, 4, 2).
-python_function('scripts/lenovo_remote_session.py', '_run_upgrade_flow', 2, 1, 4).
-python_function('scripts/lenovo_remote_session.py', '_md_header', 2, 1, 3).
-python_function('scripts/lenovo_remote_session.py', '_md_flow_results', 1, 6, 4).
-python_function('scripts/lenovo_remote_session.py', '_md_step_detail', 1, 12, 2).
-python_function('scripts/lenovo_remote_session.py', '_md_lessons', 2, 6, 3).
-python_function('scripts/lenovo_remote_session.py', 'write_session_md', 3, 1, 9).
-python_function('scripts/lenovo_remote_session.py', 'resolve_flow_paths', 2, 5, 4).
-python_function('scripts/lenovo_remote_session.py', 'resolve_route_map', 2, 8, 8).
-python_function('scripts/lenovo_remote_session.py', 'load_manifest_session', 1, 2, 3).
-python_function('scripts/lenovo_remote_session.py', '_run_flows', 1, 22, 14).
-python_function('scripts/lenovo_remote_session.py', 'main', 1, 37, 42).
+python_function('scripts/generate_pack_markpacts.py', '_process_spec', 1, 8, 9).
+python_function('scripts/generate_pack_markpacts.py', 'main', 0, 9, 12).
 python_function('scripts/office-simulate-loop.py', 'call_uri', 4, 4, 9).
 python_function('scripts/office-simulate-loop.py', 'rules_tick', 3, 3, 5).
 python_function('scripts/office-simulate-loop.py', 'llm_tick', 3, 7, 6).
@@ -224,7 +256,13 @@ python_function('scripts/pack_sync.py', 'remove_vendored', 1, 4, 3).
 python_function('scripts/pack_sync.py', '_repo_pyproject', 1, 14, 7).
 python_function('scripts/pack_sync.py', 'init_repo', 1, 12, 8).
 python_function('scripts/pack_sync.py', 'promote', 1, 1, 2).
-python_function('scripts/pack_sync.py', 'main', 1, 28, 18).
+python_function('scripts/pack_sync.py', '_validate_packs', 2, 3, 1).
+python_function('scripts/pack_sync.py', '_cmd_to_repo', 3, 5, 3).
+python_function('scripts/pack_sync.py', '_cmd_promote', 3, 3, 2).
+python_function('scripts/pack_sync.py', '_cmd_check', 3, 5, 4).
+python_function('scripts/pack_sync.py', '_cmd_init_repo', 3, 3, 2).
+python_function('scripts/pack_sync.py', '_cmd_print_uv_sources', 3, 4, 2).
+python_function('scripts/pack_sync.py', 'main', 1, 9, 12).
 python_function('scripts/report/cli.py', 'main', 0, 4, 13).
 python_function('scripts/report/events.py', 'summarize_event_records', 1, 14, 5).
 python_function('scripts/report/events.py', 'load_event_records', 1, 14, 7).
@@ -232,7 +270,8 @@ python_function('scripts/report/events.py', 'summarize_events', 1, 8, 8).
 python_function('scripts/report/events.py', 'resolve_events_paths', 1, 7, 2).
 python_function('scripts/report/events.py', 'merge_event_summaries', 1, 10, 9).
 python_function('scripts/report/lab_checks.py', 'iter_step_results', 1, 9, 3).
-python_function('scripts/report/lab_checks.py', 'load_flow_outcomes', 1, 15, 15).
+python_function('scripts/report/lab_checks.py', '_response_to_outcome', 1, 13, 11).
+python_function('scripts/report/lab_checks.py', 'load_flow_outcomes', 1, 3, 4).
 python_function('scripts/report/lab_checks.py', 'check_declared_expectations', 1, 3, 2).
 python_function('scripts/report/lab_checks.py', 'check_gui_no_effect', 1, 5, 2).
 python_function('scripts/report/lab_checks.py', 'check_vision_never_decides', 1, 8, 3).
@@ -246,7 +285,10 @@ python_function('scripts/report/run_analysis.py', '_run_recommendations', 2, 10,
 python_function('scripts/report/run_analysis.py', 'analyze_run', 1, 13, 23).
 python_function('scripts/report/run_analysis.py', 'write_run_analysis', 2, 2, 6).
 python_function('scripts/report/run_markdown.py', 'render_run_analysis_markdown', 1, 7, 4).
-python_function('scripts/report/session.py', 'infer_steps', 2, 28, 14).
+python_function('scripts/report/session.py', '_extract_metrics', 1, 7, 4).
+python_function('scripts/report/session.py', '_resolve_screenshot', 2, 5, 3).
+python_function('scripts/report/session.py', '_response_to_step_result', 2, 12, 9).
+python_function('scripts/report/session.py', 'infer_steps', 2, 7, 8).
 python_function('scripts/report/session.py', 'collect_artifacts', 1, 7, 8).
 python_function('scripts/report/session.py', 'session_status', 2, 9, 4).
 python_function('scripts/report/session.py', 'session_duration', 1, 5, 8).
@@ -262,46 +304,15 @@ python_function('scripts/report/session_markdown.py', '_duplicate_screenshots_se
 python_function('scripts/report/session_markdown.py', '_log_tail_section', 1, 2, 1).
 python_function('scripts/report/util.py', 'read_json', 1, 3, 3).
 python_function('scripts/report/util.py', 'tail', 2, 2, 0).
-python_function('scripts/run_test_sessions.py', 'session_pytest_urirdp', 1, 3, 5).
-python_function('scripts/run_test_sessions.py', 'session_pytest_urisys', 1, 2, 5).
-python_function('scripts/run_test_sessions.py', 'session_pytest_urisys_node', 1, 2, 5).
-python_function('scripts/run_test_sessions.py', 'session_urirdp_mock_docker', 1, 5, 17).
-python_function('scripts/run_test_sessions.py', '_record_health', 6, 1, 3).
-python_function('scripts/run_test_sessions.py', '_bootstrap_rdp', 4, 4, 3).
-python_function('scripts/run_test_sessions.py', '_read_display_env', 1, 4, 2).
-python_function('scripts/run_test_sessions.py', '_call_and_record', 10, 5, 4).
-python_function('scripts/run_test_sessions.py', 'session_urirdp_real_docker', 1, 25, 27).
-python_function('scripts/run_test_sessions.py', 'session_urirdp_rdp_e2e', 1, 5, 11).
-python_function('scripts/run_test_sessions.py', 'session_automation_lab', 1, 13, 18).
-python_function('scripts/run_test_sessions.py', '_monorepo_root', 0, 4, 1).
-python_function('scripts/run_test_sessions.py', 'session_urisys_node_docker_gui', 1, 7, 11).
-python_function('scripts/run_test_sessions.py', 'session_office_simulate', 1, 7, 11).
-python_function('scripts/run_test_sessions.py', 'session_office_simulate_lenovo', 1, 6, 10).
-python_function('scripts/run_test_sessions.py', 'session_office_writer', 1, 7, 11).
-python_function('scripts/run_test_sessions.py', 'session_email_mailpit', 1, 7, 11).
-python_function('scripts/run_test_sessions.py', 'main', 0, 13, 19).
 python_function('scripts/scan-browser-sessions.py', '_copy_query', 3, 2, 8).
 python_function('scripts/scan-browser-sessions.py', 'scan_chrome_cookies', 1, 13, 12).
 python_function('scripts/scan-browser-sessions.py', 'chrome_profiles', 1, 11, 9).
 python_function('scripts/scan-browser-sessions.py', 'firefox_profiles', 1, 8, 10).
 python_function('scripts/scan-browser-sessions.py', 'discover_browsers', 1, 1, 0).
-python_function('scripts/scan-browser-sessions.py', 'main', 0, 23, 18).
-python_function('scripts/session_core.py', 'default_examples_root', 0, 3, 4).
-python_function('scripts/session_core.py', 'resolve_flow_ref', 1, 5, 5).
-python_function('scripts/session_core.py', 'now_iso', 0, 1, 2).
-python_function('scripts/session_core.py', 'host_id', 0, 1, 3).
-python_function('scripts/session_core.py', 'run_id', 1, 2, 2).
-python_function('scripts/session_core.py', 'save_json', 2, 1, 3).
-python_function('scripts/session_core.py', 'step_ok', 1, 16, 3).
-python_function('scripts/session_core.py', 'image_ext', 1, 5, 1).
-python_function('scripts/session_core.py', 'write_base64_image', 2, 1, 4).
-python_function('scripts/session_core.py', 'extract_images_from_dict', 1, 8, 11).
-python_function('scripts/session_core.py', 'extract_step_screenshots', 1, 5, 4).
-python_function('scripts/session_core.py', 'backfill_session_images', 1, 8, 11).
-python_function('scripts/session_core.py', '_wheel_version_key', 2, 5, 7).
-python_function('scripts/session_core.py', 'find_wheel_file', 2, 2, 4).
-python_function('scripts/session_core.py', 'wheel_url', 2, 1, 1).
-python_function('scripts/session_core.py', 'expand_step_wheels', 1, 18, 11).
+python_function('scripts/scan-browser-sessions.py', '_scan_profiles', 1, 12, 10).
+python_function('scripts/scan-browser-sessions.py', '_output_json', 1, 2, 4).
+python_function('scripts/scan-browser-sessions.py', '_output_text', 2, 11, 6).
+python_function('scripts/scan-browser-sessions.py', 'main', 0, 2, 6).
 python_function('scripts/test_sessions/expectations.py', 'flow_expectations', 1, 5, 5).
 python_function('scripts/test_sessions/expectations.py', 'ocr_texts', 1, 11, 4).
 python_function('scripts/test_sessions/expectations.py', 'vision_confidences', 1, 11, 6).
@@ -347,32 +358,35 @@ python_function('src/urisys/bootstrap.py', '_missing_uricore_payload', 1, 1, 1).
 python_function('src/urisys/bootstrap.py', '_doctor_main', 1, 3, 6).
 python_function('src/urisys/bootstrap.py', '_init_main', 1, 6, 9).
 python_function('src/urisys/bootstrap.py', 'main', 1, 8, 6).
-python_function('src/urisys/cli.py', '_json_arg', 1, 3, 4).
-python_function('src/urisys/cli.py', 'print_json', 1, 1, 2).
-python_function('src/urisys/cli.py', '_add_runtime_flags', 1, 1, 1).
-python_function('src/urisys/cli.py', 'resolve_markpact_source', 1, 2, 3).
-python_function('src/urisys/cli.py', 'build_parser', 0, 1, 9).
-python_function('src/urisys/cli.py', '_cmd_run_flow', 3, 3, 5).
-python_function('src/urisys/cli.py', '_cmd_materialize', 3, 3, 7).
-python_function('src/urisys/cli.py', '_cmd_export_platform', 2, 3, 7).
-python_function('src/urisys/cli.py', '_cmd_run_markpact', 2, 2, 5).
-python_function('src/urisys/cli.py', '_cmd_validate', 2, 1, 2).
-python_function('src/urisys/cli.py', '_cmd_compile', 3, 1, 3).
-python_function('src/urisys/cli.py', '_cmd_routes', 3, 2, 4).
-python_function('src/urisys/cli.py', '_cmd_test', 3, 1, 2).
-python_function('src/urisys/cli.py', '_cmd_analyze', 3, 16, 5).
-python_function('src/urisys/cli.py', '_cmd_markpact', 1, 15, 18).
-python_function('src/urisys/cli.py', '_cmd_pack', 1, 6, 9).
-python_function('src/urisys/cli.py', '_cmd_contract', 2, 6, 12).
-python_function('src/urisys/cli.py', '_cmd_init', 1, 6, 5).
-python_function('src/urisys/cli.py', '_cmd_node', 1, 6, 5).
-python_function('src/urisys/cli.py', '_cmd_uri', 1, 4, 7).
-python_function('src/urisys/cli.py', '_handle_cli_error', 1, 8, 4).
-python_function('src/urisys/cli.py', '_cmd_doctor', 1, 3, 3).
-python_function('src/urisys/cli.py', '_cmd_serve', 1, 1, 3).
-python_function('src/urisys/cli.py', '_cmd_flow', 1, 1, 4).
-python_function('src/urisys/cli.py', '_cmd_events', 1, 1, 3).
-python_function('src/urisys/cli.py', 'main', 1, 9, 11).
+python_function('src/urisys/cli/commands/markpact.py', 'cmd_run_flow', 3, 3, 5).
+python_function('src/urisys/cli/commands/markpact.py', 'cmd_materialize', 3, 3, 7).
+python_function('src/urisys/cli/commands/markpact.py', 'cmd_export_platform', 2, 3, 7).
+python_function('src/urisys/cli/commands/markpact.py', 'cmd_run_markpact', 2, 2, 5).
+python_function('src/urisys/cli/commands/markpact.py', 'cmd_validate', 2, 1, 2).
+python_function('src/urisys/cli/commands/markpact.py', 'cmd_compile', 3, 1, 3).
+python_function('src/urisys/cli/commands/markpact.py', 'cmd_routes', 3, 2, 4).
+python_function('src/urisys/cli/commands/markpact.py', 'cmd_test', 3, 1, 2).
+python_function('src/urisys/cli/commands/markpact.py', '_apply_strict_operations', 2, 8, 2).
+python_function('src/urisys/cli/commands/markpact.py', '_apply_strict_profile', 2, 4, 2).
+python_function('src/urisys/cli/commands/markpact.py', 'cmd_analyze', 3, 5, 7).
+python_function('src/urisys/cli/commands/markpact.py', 'cmd_pack', 1, 6, 9).
+python_function('src/urisys/cli/commands/markpact.py', 'cmd_contract', 2, 6, 12).
+python_function('src/urisys/cli/commands/markpact.py', '_run_path_command', 4, 6, 5).
+python_function('src/urisys/cli/commands/markpact.py', 'cmd_markpact', 1, 11, 14).
+python_function('src/urisys/cli/commands/node.py', 'cmd_node', 1, 6, 5).
+python_function('src/urisys/cli/commands/runtime.py', 'cmd_uri', 1, 4, 7).
+python_function('src/urisys/cli/commands/runtime.py', 'cmd_serve', 1, 1, 3).
+python_function('src/urisys/cli/commands/runtime.py', 'cmd_flow', 1, 1, 4).
+python_function('src/urisys/cli/commands/runtime.py', 'cmd_events', 1, 1, 3).
+python_function('src/urisys/cli/commands/setup.py', 'cmd_doctor', 1, 3, 3).
+python_function('src/urisys/cli/commands/setup.py', 'cmd_init', 1, 6, 5).
+python_function('src/urisys/cli/errors.py', 'handle_cli_error', 1, 8, 4).
+python_function('src/urisys/cli/helpers.py', 'json_arg', 1, 3, 4).
+python_function('src/urisys/cli/helpers.py', 'print_json', 1, 1, 2).
+python_function('src/urisys/cli/helpers.py', 'resolve_markpact_source', 1, 2, 3).
+python_function('src/urisys/cli/main.py', 'main', 1, 3, 5).
+python_function('src/urisys/cli/parser.py', 'add_runtime_flags', 1, 1, 1).
+python_function('src/urisys/cli/parser.py', 'build_parser', 0, 1, 9).
 python_function('src/urisys/doctor.py', '_pkg_version', 1, 2, 1).
 python_function('src/urisys/doctor.py', '_parse_version', 1, 7, 6).
 python_function('src/urisys/doctor.py', '_version_lt', 2, 2, 1).
@@ -436,7 +450,8 @@ python_function('src/urisys/managers/markpact_pack_deps.py', '_is_capability_pac
 python_function('src/urisys/managers/markpact_pack_deps.py', '_register_flat_pack', 2, 4, 5).
 python_function('src/urisys/managers/markpact_pack_deps.py', '_is_flat_pack_repo', 1, 3, 1).
 python_function('src/urisys/managers/markpact_pack_deps.py', '_discover_pack_modules', 1, 12, 6).
-python_function('src/urisys/managers/markpact_pack_deps.py', '_register_sibling_packs', 3, 17, 15).
+python_function('src/urisys/managers/markpact_pack_deps.py', '_register_existing_pack', 4, 6, 7).
+python_function('src/urisys/managers/markpact_pack_deps.py', '_register_sibling_packs', 3, 12, 11).
 python_function('src/urisys/managers/markpact_pack_deps.py', '_register_uricore_utils', 2, 3, 5).
 python_function('src/urisys/managers/markpact_pack_deps.py', '_register_urioperators', 2, 6, 7).
 python_function('src/urisys/managers/markpact_pack_deps.py', 'extend_tellmesh_paths', 0, 2, 5).
@@ -455,29 +470,26 @@ python_function('src/urisys/managers/markpact_pack_gen.py', '_sanitize_docs', 1,
 python_function('src/urisys/managers/markpact_pack_gen.py', '_embedded_flows', 3, 9, 9).
 python_function('src/urisys/managers/markpact_pack_gen.py', '_resolve_repo_root', 2, 6, 3).
 python_function('src/urisys/managers/markpact_pack_gen.py', 'generate_pack_markpact', 1, 10, 18).
+python_function('src/urisys/managers/markpact_profile.py', '_issue', 4, 1, 1).
+python_function('src/urisys/managers/markpact_profile.py', '_issue_message', 1, 1, 0).
 python_function('src/urisys/managers/markpact_profile.py', 'declared_schemes', 1, 11, 9).
 python_function('src/urisys/managers/markpact_profile.py', 'declared_packs', 1, 5, 4).
 python_function('src/urisys/managers/markpact_profile.py', '_cap_uri', 1, 3, 2).
-python_function('src/urisys/managers/markpact_profile.py', '_flow_features', 2, 18, 8).
+python_function('src/urisys/managers/markpact_profile.py', '_step_features', 2, 7, 3).
+python_function('src/urisys/managers/markpact_profile.py', '_flow_level_features', 2, 3, 2).
+python_function('src/urisys/managers/markpact_profile.py', '_text_pattern_features', 2, 4, 3).
+python_function('src/urisys/managers/markpact_profile.py', '_flow_features', 2, 6, 8).
 python_function('src/urisys/managers/markpact_profile.py', '_required_features', 1, 4, 5).
-python_function('src/urisys/managers/markpact_profile.py', '_validate_scheme_requirements', 2, 10, 6).
+python_function('src/urisys/managers/markpact_profile.py', '_validate_scheme_requirements', 2, 1, 2).
 python_function('src/urisys/managers/markpact_profile.py', '_validate_undeclared_schemes', 2, 3, 1).
-python_function('src/urisys/managers/markpact_profile.py', '_validate_capability_operations', 2, 5, 4).
-python_function('src/urisys/managers/markpact_profile.py', '_validate_capability_uris', 3, 19, 6).
-python_function('src/urisys/managers/markpact_profile.py', '_build_flow_profiles', 3, 10, 6).
+python_function('src/urisys/managers/markpact_profile.py', '_validate_capability_operations', 3, 6, 7).
+python_function('src/urisys/managers/markpact_profile.py', '_validate_uri_kind', 5, 5, 2).
+python_function('src/urisys/managers/markpact_profile.py', '_validate_command_approval', 6, 7, 4).
+python_function('src/urisys/managers/markpact_profile.py', '_validate_process_handler', 5, 5, 5).
+python_function('src/urisys/managers/markpact_profile.py', '_validate_capability_uris', 4, 6, 7).
+python_function('src/urisys/managers/markpact_profile.py', '_build_flow_profiles', 4, 6, 5).
 python_function('src/urisys/managers/markpact_profile.py', '_cross_check_schemes', 4, 9, 6).
-python_function('src/urisys/managers/markpact_profile.py', 'lint_markpact', 0, 4, 9).
-python_function('src/urisys/managers/markpact_run.py', 'read_run_config', 1, 7, 4).
-python_function('src/urisys/managers/markpact_run.py', '_apply_resolver_config', 2, 7, 6).
-python_function('src/urisys/managers/markpact_run.py', '_load_run_config', 1, 4, 5).
-python_function('src/urisys/managers/markpact_run.py', '_build_runtime', 1, 3, 5).
-python_function('src/urisys/managers/markpact_run.py', '_routes_summary', 1, 2, 0).
-python_function('src/urisys/managers/markpact_run.py', '_run_adapter_mode', 6, 3, 3).
-python_function('src/urisys/managers/markpact_run.py', '_run_flow_mode', 10, 17, 25).
-python_function('src/urisys/managers/markpact_run.py', '_run_pack_mode', 5, 1, 2).
-python_function('src/urisys/managers/markpact_run.py', '_run_interface_mode', 6, 2, 1).
-python_function('src/urisys/managers/markpact_run.py', '_run_service_mode', 10, 6, 5).
-python_function('src/urisys/managers/markpact_run.py', 'run_markpact', 1, 10, 13).
+python_function('src/urisys/managers/markpact_profile.py', 'lint_markpact', 0, 1, 1).
 python_function('src/urisys/managers/markpact_run_flow.py', 'split_flow_ref', 1, 3, 2).
 python_function('src/urisys/managers/markpact_run_flow.py', 'pick_flow_id', 2, 5, 4).
 python_function('src/urisys/managers/markpact_run_flow.py', 'flow_path_for', 2, 3, 3).
@@ -493,13 +505,64 @@ python_function('src/urisys/managers/markpact_validation.py', 'validate_implemen
 python_function('src/urisys/managers/pack_manager.py', '_repo_for_package', 2, 2, 0).
 python_function('src/urisys/managers/pack_manager.py', '_sibling_manifest_path', 1, 8, 6).
 python_function('src/urisys/managers/pack_manager.py', '_manifest_is_loadable', 1, 5, 7).
-python_function('src/urisys/managers/platform_export.py', '_authorities_from_flow', 1, 17, 11).
-python_function('src/urisys/managers/platform_export.py', 'collect_process_uris', 1, 6, 16).
-python_function('src/urisys/managers/platform_export.py', '_target_stub', 3, 11, 1).
-python_function('src/urisys/managers/platform_export.py', 'build_resolver_yaml', 0, 5, 3).
-python_function('src/urisys/managers/platform_export.py', '_esp32_routes_header', 2, 6, 7).
-python_function('src/urisys/managers/platform_export.py', '_server_compose_snippet', 1, 1, 0).
-python_function('src/urisys/managers/platform_export.py', 'export_platform_artifacts', 1, 7, 13).
+python_function('src/urisys/markpact/analyzer/lint.py', '_issue_message', 1, 1, 0).
+python_function('src/urisys/markpact/analyzer/lint.py', 'run_lint', 0, 8, 11).
+python_function('src/urisys/markpact/analyzer/report.py', 'analyze_markpact', 1, 8, 16).
+python_function('src/urisys/markpact/analyzer/rules/base.py', 'cap_uri', 1, 3, 2).
+python_function('src/urisys/markpact/artifacts.py', 'write_modules', 2, 2, 5).
+python_function('src/urisys/markpact/artifacts.py', 'flows_from_cache', 2, 3, 3).
+python_function('src/urisys/markpact/artifacts.py', 'protos_from_cache', 2, 3, 3).
+python_function('src/urisys/markpact/artifacts.py', 'modules_from_cache', 2, 4, 3).
+python_function('src/urisys/markpact/artifacts.py', 'write_flows', 2, 3, 6).
+python_function('src/urisys/markpact/artifacts.py', 'write_protos', 2, 3, 5).
+python_function('src/urisys/markpact/blocks.py', 'read_blocks', 1, 3, 8).
+python_function('src/urisys/markpact/blocks.py', 'yaml_blocks', 2, 4, 0).
+python_function('src/urisys/markpact/blocks.py', 'handler_blocks', 1, 5, 2).
+python_function('src/urisys/markpact/blocks.py', 'load_yaml_blocks', 2, 6, 4).
+python_function('src/urisys/markpact/cache.py', 'compile_context', 1, 2, 6).
+python_function('src/urisys/markpact/cache.py', 'compiled_from_cache', 2, 4, 6).
+python_function('src/urisys/markpact/cache.py', 'write_manifest_flows', 3, 3, 7).
+python_function('src/urisys/markpact/cache.py', 'write_compile_metadata', 1, 1, 4).
+python_function('src/urisys/markpact/cache.py', 'ensure_importable', 1, 2, 3).
+python_function('src/urisys/markpact/compiler.py', '_write_tests_block', 2, 2, 3).
+python_function('src/urisys/markpact/compiler.py', '_write_docs_block', 2, 4, 3).
+python_function('src/urisys/markpact/compiler.py', '_existing_path', 1, 3, 2).
+python_function('src/urisys/markpact/handlers.py', 'handler_id_from_ref', 1, 2, 2).
+python_function('src/urisys/markpact/handlers.py', 'resolve_handler_ref', 5, 7, 4).
+python_function('src/urisys/markpact/handlers.py', 'write_handler_modules', 2, 5, 4).
+python_function('src/urisys/markpact/manifest.py', '_resolve_pattern', 1, 4, 3).
+python_function('src/urisys/markpact/manifest.py', '_validate_scheme', 1, 2, 2).
+python_function('src/urisys/markpact/manifest.py', '_resolve_operation', 1, 5, 5).
+python_function('src/urisys/markpact/manifest.py', '_resolve_kind', 1, 3, 2).
+python_function('src/urisys/markpact/manifest.py', '_build_route_dict', 5, 5, 2).
+python_function('src/urisys/markpact/manifest.py', 'build_route', 1, 2, 8).
+python_function('src/urisys/markpact/manifest.py', 'compile_manifest', 1, 12, 5).
+python_function('src/urisys/markpact/pack.py', 'load_pack_block', 1, 4, 7).
+python_function('src/urisys/markpact/pack.py', 'package_id', 2, 5, 5).
+python_function('src/urisys/markpact/pack.py', 'capabilities', 1, 6, 3).
+python_function('src/urisys/markpact/pack.py', 'scheme_for_pack', 2, 8, 5).
+python_function('src/urisys/markpact/platform_export.py', '_resolve_authority', 2, 9, 5).
+python_function('src/urisys/markpact/platform_export.py', '_authorities_from_flow', 1, 10, 10).
+python_function('src/urisys/markpact/platform_export.py', 'collect_process_uris', 1, 6, 15).
+python_function('src/urisys/markpact/platform_export.py', '_target_stub', 3, 11, 1).
+python_function('src/urisys/markpact/platform_export.py', 'build_resolver_yaml', 0, 5, 3).
+python_function('src/urisys/markpact/platform_export.py', '_esp32_routes_header', 2, 6, 7).
+python_function('src/urisys/markpact/platform_export.py', '_server_compose_snippet', 1, 1, 0).
+python_function('src/urisys/markpact/platform_export.py', 'export_platform_artifacts', 1, 7, 13).
+python_function('src/urisys/markpact/run/__init__.py', 'run_markpact', 1, 6, 10).
+python_function('src/urisys/markpact/run/config.py', 'read_run_config', 1, 7, 4).
+python_function('src/urisys/markpact/run/config.py', 'load_run_config', 1, 4, 5).
+python_function('src/urisys/markpact/run/modes/flow.py', '_resolve_flow_ids', 2, 5, 3).
+python_function('src/urisys/markpact/run/modes/flow.py', '_resolve_flow_uses', 3, 5, 11).
+python_function('src/urisys/markpact/run/modes/flow.py', '_build_flow_runtime', 2, 2, 7).
+python_function('src/urisys/markpact/run/runtime_build.py', 'apply_resolver_config', 2, 7, 6).
+python_function('src/urisys/markpact/run/runtime_build.py', 'build_runtime', 1, 3, 5).
+python_function('src/urisys/markpact/run/runtime_build.py', 'routes_summary', 1, 2, 0).
+python_function('src/urisys/markpact/tests.py', 'check_expectations', 2, 9, 4).
+python_function('src/urisys/markpact/tests.py', 'run_markpact_tests', 1, 12, 14).
+python_function('src/urisys/markpact/tests.py', 'run_tests_for_path', 1, 1, 3).
+python_function('src/urisys/markpact/validate_pack.py', 'validate_pack', 3, 11, 16).
+python_function('src/urisys/markpact/validate_pack.py', 'validate_markpact_file', 1, 12, 12).
 python_function('src/urisys/node_install.py', 'github_owner', 0, 1, 2).
 python_function('src/urisys/node_install.py', 'github_version', 0, 1, 3).
 python_function('src/urisys/node_install.py', 'wheel_filename', 1, 2, 2).
@@ -526,8 +589,130 @@ python_function('src/urisys/urirouter_install.py', 'wheel_url', 1, 3, 5).
 python_function('src/urisys/urirouter_install.py', 'pip_spec', 0, 1, 1).
 python_function('src/urisys/urirouter_install.py', '_module_exists', 1, 1, 1).
 python_function('src/urisys/urirouter_install.py', 'diagnose_urirouter', 0, 2, 2).
+python_function('src/urisys_lab/core.py', 'default_examples_root', 0, 3, 4).
+python_function('src/urisys_lab/core.py', 'resolve_flow_ref', 1, 5, 5).
+python_function('src/urisys_lab/core.py', 'now_iso', 0, 1, 2).
+python_function('src/urisys_lab/core.py', 'host_id', 0, 1, 3).
+python_function('src/urisys_lab/core.py', 'run_id', 1, 2, 2).
+python_function('src/urisys_lab/core.py', 'save_json', 2, 1, 3).
+python_function('src/urisys_lab/core.py', '_step_ok_http_get', 1, 1, 2).
+python_function('src/urisys_lab/core.py', '_step_ok_host_restart_and_wait', 1, 2, 2).
+python_function('src/urisys_lab/core.py', '_step_ok_host_schedule_restart', 1, 4, 1).
+python_function('src/urisys_lab/core.py', '_step_ok_default', 1, 7, 2).
+python_function('src/urisys_lab/core.py', 'step_ok', 1, 3, 3).
+python_function('src/urisys_lab/core.py', 'image_ext', 1, 5, 1).
+python_function('src/urisys_lab/core.py', 'write_base64_image', 2, 1, 4).
+python_function('src/urisys_lab/core.py', 'extract_images_from_dict', 1, 8, 11).
+python_function('src/urisys_lab/core.py', 'extract_step_screenshots', 1, 5, 4).
+python_function('src/urisys_lab/core.py', 'backfill_session_images', 1, 8, 11).
+python_function('src/urisys_lab/core.py', '_wheel_version_key', 2, 5, 7).
+python_function('src/urisys_lab/core.py', 'find_wheel_file', 2, 2, 4).
+python_function('src/urisys_lab/core.py', 'wheel_url', 2, 1, 1).
+python_function('src/urisys_lab/core.py', '_resolve_wheel_name', 2, 6, 4).
+python_function('src/urisys_lab/core.py', '_apply_wheel_refspec', 2, 4, 4).
+python_function('src/urisys_lab/core.py', '_resolve_wheel_args', 1, 7, 8).
+python_function('src/urisys_lab/core.py', 'expand_step_wheels', 1, 4, 5).
+python_function('src/urisys_lab/lenovo/cli.py', 'load_yaml', 1, 3, 4).
+python_function('src/urisys_lab/lenovo/cli.py', 'http_get', 2, 4, 6).
+python_function('src/urisys_lab/lenovo/cli.py', '_run_http_get_step', 3, 2, 3).
+python_function('src/urisys_lab/lenovo/cli.py', '_run_host_sleep_step', 2, 3, 3).
+python_function('src/urisys_lab/lenovo/cli.py', '_schedule_restart_safely', 2, 4, 2).
+python_function('src/urisys_lab/lenovo/cli.py', '_poll_health_after_restart', 1, 9, 7).
+python_function('src/urisys_lab/lenovo/cli.py', '_run_host_restart_and_wait_step', 2, 11, 8).
+python_function('src/urisys_lab/lenovo/cli.py', '_run_host_schedule_restart_step', 2, 4, 2).
+python_function('src/urisys_lab/lenovo/cli.py', '_run_host_wait_health_step', 2, 12, 9).
+python_function('src/urisys_lab/lenovo/cli.py', '_run_uri_call_step', 2, 6, 6).
+python_function('src/urisys_lab/lenovo/cli.py', 'run_step', 1, 9, 10).
+python_function('src/urisys_lab/lenovo/cli.py', 'run_flow', 1, 14, 20).
+python_function('src/urisys_lab/lenovo/cli.py', 'append_log', 2, 1, 4).
+python_function('src/urisys_lab/lenovo/cli.py', 'build_wheels', 1, 4, 6).
+python_function('src/urisys_lab/lenovo/cli.py', 'start_wheel_server', 3, 2, 4).
+python_function('src/urisys_lab/lenovo/cli.py', '_needs_node_upgrade', 1, 4, 2).
+python_function('src/urisys_lab/lenovo/cli.py', '_run_upgrade_flow', 2, 1, 4).
+python_function('src/urisys_lab/lenovo/cli.py', '_md_header', 2, 1, 3).
+python_function('src/urisys_lab/lenovo/cli.py', '_md_flow_results', 1, 6, 4).
+python_function('src/urisys_lab/lenovo/cli.py', '_md_step_detail', 1, 12, 2).
+python_function('src/urisys_lab/lenovo/cli.py', '_md_lessons', 2, 6, 3).
+python_function('src/urisys_lab/lenovo/cli.py', 'write_session_md', 3, 1, 9).
+python_function('src/urisys_lab/lenovo/cli.py', 'resolve_flow_paths', 2, 5, 4).
+python_function('src/urisys_lab/lenovo/cli.py', 'resolve_route_map', 2, 8, 8).
+python_function('src/urisys_lab/lenovo/cli.py', 'load_manifest_session', 1, 2, 3).
+python_function('src/urisys_lab/lenovo/cli.py', '_check_and_restore_health', 1, 4, 5).
+python_function('src/urisys_lab/lenovo/cli.py', '_skip_node_down', 1, 4, 8).
+python_function('src/urisys_lab/lenovo/cli.py', '_maybe_run_node_upgrade', 2, 6, 5).
+python_function('src/urisys_lab/lenovo/cli.py', '_maybe_run_kvm_upgrade', 1, 5, 4).
+python_function('src/urisys_lab/lenovo/cli.py', '_maybe_run_playwright_upgrade', 1, 5, 4).
+python_function('src/urisys_lab/lenovo/cli.py', '_run_flows', 1, 7, 10).
+python_function('src/urisys_lab/lenovo/cli.py', '_run_extract_images', 1, 2, 6).
+python_function('src/urisys_lab/lenovo/cli.py', '_ensure_pyyaml', 0, 2, 1).
+python_function('src/urisys_lab/lenovo/cli.py', '_init_session', 2, 3, 4).
+python_function('src/urisys_lab/lenovo/cli.py', '_setup_wheels', 2, 7, 6).
+python_function('src/urisys_lab/lenovo/cli.py', '_check_initial_health', 1, 4, 7).
+python_function('src/urisys_lab/lenovo/cli.py', '_copy_flow_sources', 3, 3, 3).
+python_function('src/urisys_lab/lenovo/cli.py', '_build_meta', 8, 4, 6).
+python_function('src/urisys_lab/lenovo/cli.py', '_collect_step_summaries', 2, 8, 2).
+python_function('src/urisys_lab/lenovo/cli.py', 'main', 1, 15, 35).
+python_function('src/urisys_lab/sessions/cli.py', 'main', 0, 13, 19).
+python_function('src/urisys_lab/sessions/expectations.py', 'flow_expectations', 1, 5, 5).
+python_function('src/urisys_lab/sessions/expectations.py', 'ocr_texts', 1, 11, 4).
+python_function('src/urisys_lab/sessions/expectations.py', 'vision_confidences', 1, 11, 6).
+python_function('src/urisys_lab/sessions/expectations.py', '_screen_changed', 1, 5, 1).
+python_function('src/urisys_lab/sessions/expectations.py', '_screen_changed_since_previous', 1, 5, 1).
+python_function('src/urisys_lab/sessions/expectations.py', '_opened_url_contains', 2, 11, 6).
+python_function('src/urisys_lab/sessions/expectations.py', '_ocr_contains', 2, 5, 5).
+python_function('src/urisys_lab/sessions/expectations.py', '_min_vision_confidence', 2, 4, 3).
+python_function('src/urisys_lab/sessions/expectations.py', 'evaluate_expectations', 1, 3, 6).
+python_function('src/urisys_lab/sessions/lab_flows.py', '_lab_bootstrap', 1, 5, 4).
+python_function('src/urisys_lab/sessions/lab_flows.py', '_capture_flow_screenshot', 1, 13, 7).
+python_function('src/urisys_lab/sessions/lab_flows.py', '_flow_step_detail', 0, 4, 2).
+python_function('src/urisys_lab/sessions/lab_flows.py', '_run_single_lab_flow', 1, 10, 11).
+python_function('src/urisys_lab/sessions/lab_flows.py', 'session_lab_10_flows', 1, 7, 22).
+python_function('src/urisys_lab/sessions/lab_rdp.py', 'parse_lab_flow', 1, 10, 10).
+python_function('src/urisys_lab/sessions/lab_rdp.py', 'flow_step_context', 2, 6, 3).
+python_function('src/urisys_lab/sessions/lab_rdp.py', 'step_pause', 1, 6, 2).
+python_function('src/urisys_lab/sessions/lab_rdp.py', 'summarize_uri_response', 1, 11, 3).
+python_function('src/urisys_lab/sessions/lab_rdp.py', 'parse_docker_log_errors', 1, 10, 8).
+python_function('src/urisys_lab/sessions/lab_rdp.py', 'prepare_ok_target', 3, 1, 2).
+python_function('src/urisys_lab/sessions/lab_rdp.py', 'capture_rdp_screenshot', 1, 5, 4).
+python_function('src/urisys_lab/sessions/lab_rdp.py', 'capture_rdp_screenshot_wait', 1, 9, 5).
+python_function('src/urisys_lab/sessions/runners.py', 'session_pytest_urirdp', 1, 3, 5).
+python_function('src/urisys_lab/sessions/runners.py', 'session_pytest_urisys', 1, 2, 5).
+python_function('src/urisys_lab/sessions/runners.py', 'session_pytest_urisys_node', 1, 2, 5).
+python_function('src/urisys_lab/sessions/runners.py', 'session_urirdp_mock_docker', 1, 5, 17).
+python_function('src/urisys_lab/sessions/runners.py', '_record_health', 6, 1, 3).
+python_function('src/urisys_lab/sessions/runners.py', '_bootstrap_rdp', 4, 4, 3).
+python_function('src/urisys_lab/sessions/runners.py', '_read_display_env', 1, 4, 2).
+python_function('src/urisys_lab/sessions/runners.py', '_call_and_record', 10, 5, 4).
+python_function('src/urisys_lab/sessions/runners.py', '_session_compose_up', 4, 2, 3).
+python_function('src/urisys_lab/sessions/runners.py', '_record_screenshot_step', 6, 6, 4).
+python_function('src/urisys_lab/sessions/runners.py', '_record_ocr_step', 5, 6, 4).
+python_function('src/urisys_lab/sessions/runners.py', '_record_click_step', 6, 7, 4).
+python_function('src/urisys_lab/sessions/runners.py', '_record_flow_step', 6, 5, 9).
+python_function('src/urisys_lab/sessions/runners.py', 'session_urirdp_real_docker', 1, 5, 22).
+python_function('src/urisys_lab/sessions/runners.py', 'session_urirdp_rdp_e2e', 1, 5, 11).
+python_function('src/urisys_lab/sessions/runners.py', 'session_automation_lab', 1, 13, 18).
+python_function('src/urisys_lab/sessions/runners.py', '_monorepo_root', 0, 4, 1).
+python_function('src/urisys_lab/sessions/runners.py', 'session_urisys_node_docker_gui', 1, 7, 11).
+python_function('src/urisys_lab/sessions/runners.py', 'session_office_simulate', 1, 7, 11).
+python_function('src/urisys_lab/sessions/runners.py', 'session_office_simulate_lenovo', 1, 6, 10).
+python_function('src/urisys_lab/sessions/runners.py', 'session_office_writer', 1, 7, 11).
+python_function('src/urisys_lab/sessions/runners.py', 'session_email_mailpit', 1, 7, 11).
+python_function('src/urisys_lab/sessions/util.py', 'run_id', 0, 1, 2).
+python_function('src/urisys_lab/sessions/util.py', 'http_json', 4, 9, 11).
+python_function('src/urisys_lab/sessions/util.py', 'wait_health', 3, 3, 5).
+python_function('src/urisys_lab/sessions/util.py', 'compose_cmd', 0, 4, 3).
+python_function('src/urisys_lab/sessions/util.py', 'run_cmd', 1, 6, 8).
+python_function('src/urisys_lab/sessions/util.py', 'write_meta', 1, 1, 3).
+python_function('src/urisys_lab/sessions/util.py', 'read_meta', 1, 3, 3).
+python_function('src/urisys_lab/sessions/util.py', 'finalize_session', 4, 5, 10).
+python_function('src/urisys_lab/sessions/util.py', 'docker_logs', 4, 3, 3).
+python_function('src/urisys_lab/sessions/util.py', 'copy_container_file', 3, 2, 4).
+python_function('src/urisys_lab/sessions/util.py', 'copy_host_screenshot', 3, 2, 5).
+python_function('src/urisys_lab/sessions/util.py', 'file_md5', 1, 2, 4).
+python_function('src/urisys_lab/sessions/util.py', 'sleep_ports', 0, 1, 1).
+python_function('src/urisys_lab/sessions/util.py', 'prepare_urirdp_data', 1, 4, 5).
 python_function('tests/conftest.py', '_tellmesh_root', 0, 6, 5).
-python_function('tests/conftest.py', '_ensure_siblings', 0, 5, 5).
+python_function('tests/conftest.py', '_ensure_siblings', 0, 6, 5).
 python_function('tests/conftest.py', '_cleanup_markpact_embedded_imports', 0, 1, 2).
 python_function('tests/pack_import_isolation.py', '_is_embedded_pack_module', 1, 3, 2).
 python_function('tests/pack_import_isolation.py', '_is_ephemeral_path', 1, 2, 1).
@@ -585,6 +770,11 @@ python_function('tests/test_markpact.py', 'test_markpact_compile_and_call', 1, 5
 python_function('tests/test_markpact.py', 'test_uri_controller_loads_markpact_directly', 1, 4, 4).
 python_function('tests/test_markpact.py', 'test_markpact_embedded_tests', 1, 3, 3).
 python_function('tests/test_markpact.py', 'test_build_route_shape', 0, 7, 2).
+python_function('tests/test_markpact_analyzer_rules.py', 'test_mp001_rule_isolated', 0, 3, 4).
+python_function('tests/test_markpact_analyzer_rules.py', 'test_mp002_rule_isolated', 0, 3, 4).
+python_function('tests/test_markpact_analyzer_rules.py', 'test_mp006_rule_isolated', 0, 3, 4).
+python_function('tests/test_markpact_analyzer_rules.py', 'test_mp009_rule_isolated', 0, 3, 5).
+python_function('tests/test_markpact_analyzer_rules.py', 'test_mp010_rule_isolated', 0, 4, 4).
 python_function('tests/test_markpact_contract_materialize.py', 'test_gen_contract_matches_manifest_no_drift', 0, 4, 6).
 python_function('tests/test_markpact_contract_materialize.py', 'test_contract_validates_but_does_not_compile', 0, 3, 6).
 python_function('tests/test_markpact_contract_materialize.py', 'test_thin_pack_materializes_to_markpact_tree', 2, 4, 6).
@@ -597,6 +787,7 @@ python_function('tests/test_markpact_pack_deps.py', 'test_extend_tellmesh_import
 python_function('tests/test_markpact_profile.py', 'test_declared_schemes_from_requires', 0, 3, 2).
 python_function('tests/test_markpact_profile.py', 'test_declared_schemes_legacy_flat_uses', 0, 2, 1).
 python_function('tests/test_markpact_profile.py', 'test_lint_rejects_query_kind_mismatch', 0, 3, 2).
+python_function('tests/test_markpact_profile.py', 'test_lint_emits_mp001_for_flat_operation', 0, 4, 2).
 python_function('tests/test_markpact_profile.py', 'test_machine_cycle_analyze_v1alpha_profile', 0, 6, 4).
 python_function('tests/test_markpact_profile.py', 'test_desktop_automation_analyze_has_expect_warnings_only', 0, 4, 6).
 python_function('tests/test_markpact_run.py', 'test_run_pack_mode', 2, 5, 6).
@@ -709,43 +900,22 @@ python_class('src/urisys/managers/event_manager.py', 'EventManager').
 python_method('EventManager', '__init__', 1, 1, 2).
 python_method('EventManager', 'list_events', 0, 1, 2).
 python_class('src/urisys/managers/markpact_manager.py', 'MarkpactManager').
-python_method('MarkpactManager', '__init__', 1, 1, 1).
-python_method('MarkpactManager', 'read_blocks', 1, 3, 8).
+python_method('MarkpactManager', '__init__', 1, 1, 2).
+python_method('MarkpactManager', 'read_blocks', 1, 1, 1).
 python_method('MarkpactManager', 'source_hash', 1, 1, 1).
-python_method('MarkpactManager', 'load_pack_block', 1, 4, 6).
-python_method('MarkpactManager', 'validate', 1, 12, 12).
-python_method('MarkpactManager', '_validate_pack', 3, 11, 16).
-python_method('MarkpactManager', '_yaml_blocks', 2, 4, 0).
-python_method('MarkpactManager', '_compile_context', 1, 2, 6).
-python_method('MarkpactManager', '_compile_from_cache', 2, 4, 6).
-python_method('MarkpactManager', '_write_manifest_flows', 3, 3, 7).
-python_method('MarkpactManager', '_write_compile_metadata', 1, 1, 4).
-python_method('MarkpactManager', 'compile', 1, 15, 23).
-python_method('MarkpactManager', '_write_modules', 2, 2, 5).
-python_method('MarkpactManager', '_flows_from_cache', 2, 3, 3).
-python_method('MarkpactManager', '_protos_from_cache', 2, 3, 3).
-python_method('MarkpactManager', '_modules_from_cache', 2, 4, 3).
-python_method('MarkpactManager', '_write_flows', 2, 3, 6).
-python_method('MarkpactManager', '_write_protos', 2, 3, 5).
-python_method('MarkpactManager', 'analyze', 1, 8, 16).
-python_method('MarkpactManager', '_write_handler_modules', 2, 5, 4).
+python_method('MarkpactManager', 'load_pack_block', 1, 1, 1).
+python_method('MarkpactManager', 'validate', 1, 1, 1).
+python_method('MarkpactManager', 'compile', 1, 1, 1).
+python_method('MarkpactManager', 'analyze', 1, 1, 1).
 python_method('MarkpactManager', 'manifest_path_for', 1, 1, 1).
-python_method('MarkpactManager', 'run_tests', 1, 12, 15).
-python_method('MarkpactManager', '_check_expectations', 2, 9, 4).
-python_method('MarkpactManager', '_build_route', 1, 16, 9).
-python_method('MarkpactManager', '_resolve_handler_ref', 5, 7, 4).
-python_method('MarkpactManager', '_compile_manifest', 1, 12, 5).
-python_method('MarkpactManager', '_package_id', 2, 5, 5).
-python_method('MarkpactManager', '_capabilities', 1, 6, 3).
-python_method('MarkpactManager', '_scheme', 2, 8, 5).
-python_method('MarkpactManager', '_handler_blocks', 1, 5, 2).
-python_method('MarkpactManager', '_load_yaml_blocks', 2, 6, 4).
-python_method('MarkpactManager', '_handler_id_from_ref', 1, 2, 2).
-python_method('MarkpactManager', '_ensure_importable', 1, 2, 3).
+python_method('MarkpactManager', 'run_tests', 1, 1, 1).
+python_method('MarkpactManager', '_build_route', 0, 1, 1).
+python_method('MarkpactManager', '_compile_manifest', 0, 1, 1).
 python_class('src/urisys/managers/markpact_models.py', 'MarkpactBlock').
 python_class('src/urisys/managers/markpact_models.py', 'CompiledMarkpact').
 python_method('CompiledMarkpact', 'to_dict', 0, 6, 2).
 python_class('src/urisys/managers/markpact_models.py', 'MarkpactError').
+python_class('src/urisys/managers/markpact_profile.py', 'LintIssue').
 python_class('src/urisys/managers/pack_manager.py', 'PackManager').
 python_method('PackManager', '__init__', 1, 1, 6).
 python_method('PackManager', '_split_specs', 1, 6, 4).
@@ -789,6 +959,45 @@ python_method('SourceManager', '_fetch_github_uri', 1, 4, 6).
 python_method('SourceManager', '_fetch_github_raw', 4, 5, 10).
 python_method('SourceManager', '_fetch_git', 1, 11, 18).
 python_method('SourceManager', '_fetch_zip', 1, 9, 16).
+python_class('src/urisys/markpact/analyzer/context.py', 'MarkpactLintContext').
+python_class('src/urisys/markpact/analyzer/rules/base.py', 'MarkpactRule').
+python_method('MarkpactRule', 'check', 1, 1, 0).
+python_class('src/urisys/markpact/analyzer/rules/capabilities.py', 'MP001NamespacedOperation').
+python_method('MP001NamespacedOperation', 'check', 1, 7, 6).
+python_class('src/urisys/markpact/analyzer/rules/capabilities.py', 'MP002QueryKind').
+python_method('MP002QueryKind', 'check', 1, 7, 6).
+python_class('src/urisys/markpact/analyzer/rules/capabilities.py', 'MP003CommandKind').
+python_method('MP003CommandKind', 'check', 1, 7, 6).
+python_class('src/urisys/markpact/analyzer/rules/capabilities.py', 'MP004CommandApproval').
+python_method('MP004CommandApproval', 'check', 1, 7, 6).
+python_class('src/urisys/markpact/analyzer/rules/capabilities.py', 'MP005ProcessHandler').
+python_method('MP005ProcessHandler', 'check', 1, 7, 6).
+python_class('src/urisys/markpact/analyzer/rules/flows.py', 'MP007ProcessExpect').
+python_method('MP007ProcessExpect', 'check', 1, 4, 3).
+python_class('src/urisys/markpact/analyzer/rules/flows.py', 'MP008ImplicitLatest').
+python_method('MP008ImplicitLatest', 'check', 1, 4, 3).
+python_class('src/urisys/markpact/analyzer/rules/pack.py', 'MP009ProcessRequiresSchemes').
+python_method('MP009ProcessRequiresSchemes', 'check', 1, 6, 2).
+python_class('src/urisys/markpact/analyzer/rules/pack.py', 'MP010RequiresCapabilitiesNamespaced').
+python_method('MP010RequiresCapabilitiesNamespaced', 'check', 1, 6, 5).
+python_class('src/urisys/markpact/analyzer/rules/schemes.py', 'MP006UndeclaredScheme').
+python_method('MP006UndeclaredScheme', 'check', 1, 2, 1).
+python_class('src/urisys/markpact/compiler.py', 'MarkpactCompiler').
+python_method('MarkpactCompiler', '__init__', 1, 1, 1).
+python_method('MarkpactCompiler', 'compile', 1, 7, 24).
+python_class('src/urisys/markpact/run/context.py', 'RunContext').
+python_class('src/urisys/markpact/run/modes/adapter.py', 'AdapterMode').
+python_method('AdapterMode', 'run', 1, 3, 3).
+python_class('src/urisys/markpact/run/modes/base.py', 'MarkpactRunMode').
+python_method('MarkpactRunMode', 'run', 1, 1, 0).
+python_class('src/urisys/markpact/run/modes/flow.py', 'FlowMode').
+python_method('FlowMode', 'run', 1, 9, 11).
+python_class('src/urisys/markpact/run/modes/interface.py', 'InterfaceMode').
+python_method('InterfaceMode', 'run', 1, 2, 1).
+python_class('src/urisys/markpact/run/modes/pack.py', 'PackMode').
+python_method('PackMode', 'run', 1, 1, 2).
+python_class('src/urisys/markpact/run/modes/service.py', 'ServiceMode').
+python_method('ServiceMode', 'run', 1, 6, 5).
 python_class('tests/test_python_compat.py', '_FakeVersionInfo').
 python_method('_FakeVersionInfo', '__init__', 3, 1, 0).
 python_method('_FakeVersionInfo', '__getitem__', 1, 1, 0).

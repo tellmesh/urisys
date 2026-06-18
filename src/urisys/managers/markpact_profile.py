@@ -3,10 +3,29 @@
 from __future__ import annotations
 
 import re
-from typing import Any
+from dataclasses import dataclass
+from typing import Any, Literal
 from urllib.parse import urlsplit
 
 from .markpact_flows import flow_uris
+
+IssueSeverity = Literal["error", "warning"]
+
+
+@dataclass(frozen=True)
+class LintIssue:
+    code: str
+    severity: IssueSeverity
+    message: str
+    location: str | None = None
+
+
+def _issue(code: str, severity: IssueSeverity, message: str, location: str | None = None) -> LintIssue:
+    return LintIssue(code=code, severity=severity, message=message, location=location)
+
+
+def _issue_message(issue: LintIssue) -> str:
+    return f"{issue.code}: {issue.message}"
 
 _FLOW_FEATURE_PATTERNS: dict[str, re.Pattern[str]] = {
     "linear": re.compile(r"."),  # any flow
@@ -62,31 +81,42 @@ def _cap_uri(cap: dict[str, Any]) -> str:
     return str(cap.get("uri") or cap.get("pattern") or "")
 
 
+def _step_features(steps: list[Any], features: set[str]) -> None:
+    for step in steps:
+        if not isinstance(step, dict):
+            continue
+        if step.get("id"):
+            features.add("step_id")
+        if step.get("after"):
+            features.add("after")
+        if step.get("save_as"):
+            features.add("save_as")
+        if step.get("if"):
+            features.add("if")
+
+
+def _flow_level_features(flow_data: dict[str, Any], features: set[str]) -> None:
+    if flow_data.get("expect"):
+        features.add("expect")
+    if flow_data.get("inputs"):
+        features.add("inputs")
+
+
+def _text_pattern_features(text: str, features: set[str]) -> None:
+    for pattern_name, pattern in _FLOW_FEATURE_PATTERNS.items():
+        if pattern_name not in features and pattern.search(text):
+            features.add(pattern_name)
+
+
 def _flow_features(flow_data: dict[str, Any], raw_yaml: str = "") -> set[str]:
     features: set[str] = set()
     text = raw_yaml or ""
     steps = flow_data.get("do") or []
     if steps:
         features.add("linear")
-    for step in steps:
-        if isinstance(step, dict):
-            if step.get("id"):
-                features.add("step_id")
-            if step.get("after"):
-                features.add("after")
-            if step.get("save_as"):
-                features.add("save_as")
-            if step.get("if"):
-                features.add("if")
-    if flow_data.get("expect"):
-        features.add("expect")
-    if flow_data.get("inputs"):
-        features.add("inputs")
-    for pattern_name, pattern in _FLOW_FEATURE_PATTERNS.items():
-        if pattern_name in features:
-            continue
-        if text and pattern.search(text):
-            features.add(pattern_name)
+    _step_features(steps, features)
+    _flow_level_features(flow_data, features)
+    _text_pattern_features(text, features)
     uris = " ".join(flow_uris(flow_data))
     if "${" in uris or "${" in text:
         features.add("ref")
@@ -101,55 +131,83 @@ def _required_features(flow_data: dict[str, Any]) -> set[str]:
     return set()
 
 
-def lint_markpact(
-    *,
-    pack: dict[str, Any],
-    scheme: str,
-    capabilities: list[dict[str, Any]],
-    flows: list[dict[str, Any]],
-    undeclared_schemes: list[str],
-) -> dict[str, Any]:
-    """Return ``{ok, errors, warnings, requires, uses_packs, flow_profiles}``."""
+def _validate_scheme_requirements(pack: dict[str, Any], scheme: str) -> tuple[list[str], list[str], set[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
-
     schemes_required = declared_schemes(pack)
     packs_default = declared_packs(pack)
+    return errors, warnings, schemes_required, packs_default
 
-    if scheme == "process" and not schemes_required and not pack.get("requires"):
-        warnings.append("process pack should declare requires.schemes explicitly (v1alpha)")
 
+def _validate_undeclared_schemes(errors: list[str], undeclared_schemes: list[str]) -> list[str]:
     if undeclared_schemes:
         for s in undeclared_schemes:
             errors.append(f"flow uses undeclared scheme {s!r} (add to requires.schemes)")
+    return errors
 
-    requires_caps = (pack.get("requires") or {}).get("capabilities") if isinstance(pack.get("requires"), dict) else None
-    if isinstance(requires_caps, list) and requires_caps:
-        for cap_name in requires_caps:
-            if "." not in str(cap_name):
-                warnings.append(f"requires.capabilities entry {cap_name!r} should be namespaced")
 
+def _validate_capability_operations(
+    capabilities: list[dict[str, Any]], warnings: list[str], issues: list[LintIssue]
+) -> list[str]:
     for cap in capabilities:
         op = str(cap.get("operation") or "").strip()
         if op and "." not in op:
-            warnings.append(f"operation {op!r} should be namespaced (e.g. stepper.status)")
+            issue = _issue(
+                "MP001",
+                "warning",
+                f"operation {op!r} should be namespaced (e.g. stepper.status)",
+                location=_cap_uri(cap) or op,
+            )
+            issues.append(issue)
+            warnings.append(_issue_message(issue))
+    return warnings
 
+
+def _validate_uri_kind(uri: str, kind: str, op: str, issues: list[LintIssue], errors: list[str]) -> None:
+    if "/query/" in uri and kind != "query":
+        msg = f"URI {uri!r} contains /query/ but kind is {kind!r}"
+        issues.append(_issue("MP002", "error", msg, location=uri))
+        errors.append(f"MP002: {msg}")
+    if "/command/" in uri and kind != "command":
+        msg = f"URI {uri!r} contains /command/ but kind is {kind!r}"
+        issues.append(_issue("MP003", "error", msg, location=uri))
+        errors.append(f"MP003: {msg}")
+
+
+def _validate_command_approval(kind: str, op: str, uri: str, cap: dict[str, Any], issues: list[LintIssue], errors: list[str]) -> None:
+    if kind == "command" and cap.get("side_effects") and str(cap.get("approval") or "") == "not_required":
+        msg = f"command {op or uri!r} has side_effects:true but approval:not_required"
+        issues.append(_issue("MP004", "error", msg, location=op or uri))
+        errors.append(f"MP004: {msg}")
+
+
+def _validate_process_handler(scheme: str, op: str, cap: dict[str, Any], issues: list[LintIssue], errors: list[str]) -> None:
+    if scheme != "process":
+        return
+    handler = str(cap.get("handler") or "")
+    if handler and not handler.startswith("urisys://flow/"):
+        msg = f"process capability {op!r} handler must be urisys://flow/<id>, got {handler!r}"
+        issues.append(_issue("MP005", "error", msg, location=op))
+        errors.append(f"MP005: {msg}")
+
+
+def _validate_capability_uris(
+    capabilities: list[dict[str, Any]], scheme: str, errors: list[str], issues: list[LintIssue]
+) -> list[str]:
+    for cap in capabilities:
         uri = _cap_uri(cap)
         kind = str(cap.get("kind") or "").strip()
+        op = str(cap.get("operation") or "").strip()
         if uri and kind:
-            if "/query/" in uri and kind != "query":
-                errors.append(f"URI {uri!r} contains /query/ but kind is {kind!r}")
-            if "/command/" in uri and kind != "command":
-                errors.append(f"URI {uri!r} contains /command/ but kind is {kind!r}")
+            _validate_uri_kind(uri, kind, op, issues, errors)
+        _validate_command_approval(kind, op, uri, cap, issues, errors)
+        _validate_process_handler(scheme, op, cap, issues, errors)
+    return errors
 
-        if kind == "command" and cap.get("side_effects") and str(cap.get("approval") or "") == "not_required":
-            errors.append(f"command {op or uri!r} has side_effects:true but approval:not_required")
 
-        if scheme == "process":
-            handler = str(cap.get("handler") or "")
-            if handler and not handler.startswith("urisys://flow/"):
-                errors.append(f"process capability {op!r} handler must be urisys://flow/<id>, got {handler!r}")
-
+def _build_flow_profiles(
+    flows: list[dict[str, Any]], scheme: str, warnings: list[str], issues: list[LintIssue]
+) -> list[dict[str, Any]]:
     flow_profiles: list[dict[str, Any]] = []
     for flow in flows:
         flow_id = flow["id"]
@@ -161,13 +219,6 @@ def lint_markpact(
         if missing_features:
             warnings.append(f"flow {flow_id!r} declares features {sorted(required)} but missing: {missing_features}")
 
-        if scheme == "process" and not data.get("expect"):
-            warnings.append(f"flow {flow_id!r} has no expect: block (v1alpha production processes)")
-
-        for uri in flow_uris(data):
-            if "/image/latest/" in uri:
-                warnings.append(f"flow {flow_id!r} uses implicit latest state in {uri!r}")
-
         flow_profiles.append(
             {
                 "id": flow_id,
@@ -176,28 +227,43 @@ def lint_markpact(
                 "requires_features": sorted(required),
             }
         )
+    return flow_profiles
 
-    # Cross-check requires.schemes vs flow usage
-    if schemes_required:
-        used: set[str] = set()
-        for flow in flows:
-            for uri in flow_uris(flow["data"]):
-                sch = urlsplit(uri).scheme
-                if sch and sch != scheme:
-                    used.add(sch)
-        extra = sorted(used - schemes_required - {"package"})
-        missing = sorted(schemes_required - used)
-        if extra:
-            warnings.append(f"requires.schemes omits flow schemes: {extra}")
-        if missing and scheme == "process":
-            warnings.append(f"requires.schemes lists unused schemes: {missing}")
 
-    return {
-        "ok": not errors,
-        "errors": errors,
-        "warnings": warnings,
-        "requires": {"schemes": sorted(schemes_required), "capabilities": requires_caps or []},
-        "uses_packs": packs_default,
-        "flow_profiles": flow_profiles,
-        "profile": "markpact-v1alpha",
-    }
+def _cross_check_schemes(
+    flows: list[dict[str, Any]], schemes_required: set[str], scheme: str, warnings: list[str]
+) -> list[str]:
+    if not schemes_required:
+        return warnings
+    used: set[str] = set()
+    for flow in flows:
+        for uri in flow_uris(flow["data"]):
+            sch = urlsplit(uri).scheme
+            if sch and sch != scheme:
+                used.add(sch)
+    extra = sorted(used - schemes_required - {"package"})
+    missing = sorted(schemes_required - used)
+    if extra:
+        warnings.append(f"requires.schemes omits flow schemes: {extra}")
+    if missing and scheme == "process":
+        warnings.append(f"requires.schemes lists unused schemes: {missing}")
+    return warnings
+
+
+def lint_markpact(
+    *,
+    pack: dict[str, Any],
+    scheme: str,
+    capabilities: list[dict[str, Any]],
+    flows: list[dict[str, Any]],
+    undeclared_schemes: list[str],
+) -> dict[str, Any]:
+    from ..markpact.analyzer.lint import run_lint
+
+    return run_lint(
+        pack=pack,
+        scheme=scheme,
+        capabilities=capabilities,
+        flows=flows,
+        undeclared_schemes=undeclared_schemes,
+    )

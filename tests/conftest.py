@@ -33,8 +33,10 @@ def _ensure_siblings() -> None:
     if root is None:
         return
     for module_name, rel in _SIBLING_ROOTS:
-        if importlib.util.find_spec(module_name) is not None:
-            continue  # already importable (e.g. installed into the active venv)
+        # Stale PyPI ``uri_control`` wheels may lack ``edge`` — prefer tellmesh sibling.
+        check = "uri_control.edge" if module_name == "uri_control" else module_name
+        if importlib.util.find_spec(check) is not None:
+            continue
         path = str((root / rel).resolve())
         if path not in sys.path:
             sys.path.insert(0, path)

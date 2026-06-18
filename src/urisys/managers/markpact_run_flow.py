@@ -11,6 +11,7 @@ from uri_control.edge.runtime import run_flow
 from ..defaults import DEFAULT_ENVIRONMENT
 from .markpact_flows import classify_flow, declared_uses, _provider_scheme
 from .markpact_pack_deps import ensure_flow_packs
+from ..markpact.pack import capabilities, load_pack_block, scheme_for_pack
 from .markpact_manager import MarkpactManager
 from .markpact_models import CompiledMarkpact, MarkpactError, safe_identifier
 
@@ -99,13 +100,13 @@ def run_markpact_flow(
         flow_id = inline_flow
     source_path = Path(path_text)
     compiled = mgr.compile(source_path, out_dir=out_dir, force=force)
-    pack = mgr.load_pack_block(source_path)
+    pack = load_pack_block(source_path)
     chosen = pick_flow_id(compiled, flow_id)
     flow_file = flow_path_for(compiled, chosen)
     if yaml is None:  # pragma: no cover
         raise MarkpactError("PyYAML is required to run markpact flows.")
     flow_data = yaml.safe_load(flow_file.read_text(encoding="utf-8")) or {}
-    pack_scheme = mgr._scheme(pack, mgr._capabilities(pack))
+    pack_scheme = scheme_for_pack(pack, capabilities(pack))
     uses, undeclared = packs_for_flow(pack, flow_data, pack_scheme=pack_scheme, extra=extra_packs)
     if undeclared:
         raise MarkpactError(

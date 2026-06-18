@@ -50,7 +50,7 @@ def materialize_markpact(
 
     platform_index = None
     if export_platforms and compiled.flow_ids:
-        from .platform_export import export_platform_artifacts
+        from ..markpact.platform_export import export_platform_artifacts
 
         platform_index = export_platform_artifacts(
             path,

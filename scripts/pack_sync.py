@@ -18,6 +18,7 @@ import shutil
 import sys
 import tomllib
 from pathlib import Path
+from typing import Any
 
 _SCRIPTS = Path(__file__).resolve().parent
 if str(_SCRIPTS) not in sys.path:
@@ -34,6 +35,8 @@ from pack_registry import (
 
 
 def repo_module_dir(spec: PackSpec) -> Path:
+    if spec.module_dir:
+        return spec.repo / spec.module_dir
     if spec.layout == "flat":
         return spec.repo
     return spec.repo / spec.name
@@ -253,6 +256,80 @@ def promote(spec: PackSpec, *, dry_run: bool = False) -> None:
     remove_vendored(spec, dry_run=dry_run)
 
 
+def _validate_packs(names: list[str], specs: dict[str, PackSpec]) -> bool:
+    for name in names:
+        if name not in specs:
+            print(f"unknown pack: {name}", file=sys.stderr)
+            return False
+    return True
+
+
+def _cmd_to_repo(names: list[str], specs: dict[str, PackSpec], args: argparse.Namespace) -> int:
+    for name in names:
+        if name not in specs:
+            print(f"unknown pack: {name}", file=sys.stderr)
+            return 2
+        changed = sync_to_repo(specs[name], dry_run=args.dry_run, tests=not args.no_tests)
+        if changed:
+            print(f"{name}: synced {len(changed)} file(s)")
+            for item in changed:
+                print(f"  - {item}")
+        else:
+            print(f"{name}: already up to date")
+    return 0
+
+
+def _cmd_promote(names: list[str], specs: dict[str, PackSpec], args: argparse.Namespace) -> int:
+    for name in names:
+        if name not in specs:
+            print(f"unknown pack: {name}", file=sys.stderr)
+            return 2
+        promote(specs[name], dry_run=args.dry_run)
+        print(f"{name}: promoted → {specs[name].repo}")
+    return 0
+
+
+def _cmd_check(names: list[str], specs: dict[str, PackSpec], args: argparse.Namespace) -> int:
+    drifts: list[str] = []
+    for name in names:
+        if name not in specs:
+            print(f"unknown pack: {name}", file=sys.stderr)
+            return 2
+        drifts.extend(check_drift(specs[name]))
+    if drifts:
+        print("DRIFT:")
+        for line in drifts:
+            print(f"  {line}")
+        return 1
+    print(f"OK: {len(names)} pack(s) in sync")
+    return 0
+
+
+def _cmd_init_repo(names: list[str], specs: dict[str, PackSpec], args: argparse.Namespace) -> int:
+    for name in names:
+        if name not in specs:
+            print(f"unknown pack: {name}", file=sys.stderr)
+            return 2
+        init_repo(specs[name], force=args.force)
+    return 0
+
+
+def _cmd_print_uv_sources(names: list[str], specs: dict[str, PackSpec], args: argparse.Namespace) -> int:
+    for name in names:
+        if name in SIBLING_ONLY or name in specs:
+            print(f'{name} = {{ path = "{sibling_uv_path(name)}", editable = true }}')
+    return 0
+
+
+_COMMAND_HANDLERS: dict[str, Any] = {
+    "to-repo": _cmd_to_repo,
+    "promote": _cmd_promote,
+    "check": _cmd_check,
+    "init-repo": _cmd_init_repo,
+    "print-uv-sources": _cmd_print_uv_sources,
+}
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Sync urisys packs ↔ tellmesh sibling repos")
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -284,63 +361,10 @@ def main(argv: list[str] | None = None) -> int:
     if not names and args.cmd not in ("init-repo",):
         parser.error("specify pack names or --all")
 
-    if args.cmd == "to-repo":
-        for name in names:
-            if name not in specs:
-                print(f"unknown pack: {name}", file=sys.stderr)
-                return 2
-            changed = sync_to_repo(
-                specs[name],
-                dry_run=args.dry_run,
-                tests=not args.no_tests,
-            )
-            if changed:
-                print(f"{name}: synced {len(changed)} file(s)")
-                for item in changed:
-                    print(f"  - {item}")
-            else:
-                print(f"{name}: already up to date")
-        return 0
-
-    if args.cmd == "promote":
-        for name in names:
-            if name not in specs:
-                print(f"unknown pack: {name}", file=sys.stderr)
-                return 2
-            promote(specs[name], dry_run=args.dry_run)
-            print(f"{name}: promoted → {specs[name].repo}")
-        return 0
-
-    if args.cmd == "check":
-        drifts: list[str] = []
-        for name in names:
-            if name not in specs:
-                print(f"unknown pack: {name}", file=sys.stderr)
-                return 2
-            drifts.extend(check_drift(specs[name]))
-        if drifts:
-            print("DRIFT:")
-            for line in drifts:
-                print(f"  {line}")
-            return 1
-        print(f"OK: {len(names)} pack(s) in sync")
-        return 0
-
-    if args.cmd == "init-repo":
-        for name in args.packs:
-            if name not in specs:
-                print(f"unknown pack: {name}", file=sys.stderr)
-                return 2
-            init_repo(specs[name], force=args.force)
-        return 0
-
-    if args.cmd == "print-uv-sources":
-        for name in names:
-            if name in SIBLING_ONLY or name in specs:
-                print(f'{name} = {{ path = "{sibling_uv_path(name)}", editable = true }}')
-        return 0
-
-    return 1
+    handler = _COMMAND_HANDLERS.get(args.cmd)
+    if handler is None:
+        return 1
+    return handler(names, specs, args)
 
 
 if __name__ == "__main__":

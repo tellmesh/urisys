@@ -22,32 +22,31 @@ def iter_step_results(steps: list[dict[str, Any]]):
                 yield stage["result"]
 
 
+def _response_to_outcome(resp_path: Path) -> FlowOutcome:
+    data = read_json(resp_path) or {}
+    steps = data.get("steps") or []
+    confidences = [
+        float(r.get("confidence") or 0.0)
+        for r in iter_step_results(steps)
+        if "action" in r and "confidence" in r and "model" in r
+    ]
+    expect_data = dict(data.get("expect") or {})
+    return FlowOutcome(
+        flow=str(data.get("flow") or resp_path.stem),
+        is_gui=any(str(s.get("uri") or "").startswith(GUI_SCHEMES) for s in steps),
+        duplicate_of=data.get("duplicate_of"),
+        vision_confidences=confidences,
+        has_contract=bool(expect_data),
+        expect=expect_data,
+        expect_failures=list(data.get("expect_failures") or []),
+    )
+
+
 def load_flow_outcomes(session_dir: Path) -> list[FlowOutcome]:
     responses_dir = session_dir / "responses"
     if not responses_dir.is_dir():
         return []
-    outcomes: list[FlowOutcome] = []
-    for resp_path in sorted(responses_dir.glob("*.json")):
-        data = read_json(resp_path) or {}
-        steps = data.get("steps") or []
-        confidences = [
-            float(r.get("confidence") or 0.0)
-            for r in iter_step_results(steps)
-            if "action" in r and "confidence" in r and "model" in r
-        ]
-        expect_data = dict(data.get("expect") or {})
-        outcomes.append(
-            FlowOutcome(
-                flow=str(data.get("flow") or resp_path.stem),
-                is_gui=any(str(s.get("uri") or "").startswith(GUI_SCHEMES) for s in steps),
-                duplicate_of=data.get("duplicate_of"),
-                vision_confidences=confidences,
-                has_contract=bool(expect_data),
-                expect=expect_data,
-                expect_failures=list(data.get("expect_failures") or []),
-            )
-        )
-    return outcomes
+    return [_response_to_outcome(p) for p in sorted(responses_dir.glob("*.json"))]
 
 
 def check_declared_expectations(outcomes: list[FlowOutcome]) -> list[Finding]:
