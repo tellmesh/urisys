@@ -61,11 +61,10 @@ find urisys -path '*/packages/python/*' -name handlers.py   # brak wyników
 | Składnik | Źródło |
 |----------|--------|
 | uricore | `https://github.com/tellmesh/uricore/releases/download/v0.1.8/...whl` |
-| urirouter | editable sibling / PyPI (plan) |
-| urisysedge | PyPI |
+| urirouter | `https://github.com/tellmesh/urirouter/releases/download/v0.1.0/urirouter-0.1.0-py3-none-any.whl` |
 | urisys-node | `https://github.com/tellmesh/urisys-node/releases/download/v0.1.3/urisys_node-0.1.3-py3-none-any.whl` |
 
-Override: `URISYS_NODE_WHEEL_URL`, `URISYS_URICORE_WHEEL_URL`.
+Override: `URISYS_NODE_WHEEL_URL`, `URISYS_URICORE_WHEEL_URL`, `URISYS_URIROUTER_WHEEL_URL`.
 
 Szczegóły: [`DISTRIBUTION.md`](DISTRIBUTION.md) · [`NODE-SETUP.md`](NODE-SETUP.md).
 

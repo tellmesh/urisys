@@ -23,7 +23,7 @@ flowchart TB
   end
 
   subgraph edge [Edge runtime]
-    UC[uricore / uri_control.edge]
+    EDGE[uri_control.edge]
     HOST[uritic-host / *-edge CLIs]
     FW[ESP32 firmware]
   end
@@ -41,8 +41,8 @@ flowchart TB
   UC --> UR
   UR -->|http mqtt| HOST
   UR -->|mqtt| FW
-  UC --> USE
-  USE --> HOST
+  EDGE --> HOST
+  US --> EDGE
   US --> P1
   US --> P2
   US --> P3
@@ -131,8 +131,7 @@ Pełna tabela layoutu: [`PACKAGES.md`](PACKAGES.md).
 tellmesh/
 ├── urisys/              ★ orchestrator (ten dokument)
 ├── urirouter/           ★ resolve + transport delegate
-├── uricore/             capability dispatch
-├── uricore/                capability dispatch + edge runtime
+├── uricore/             capability dispatch + uri_control.edge
 ├── urioperators/        LLM helpers
 ├── urisys-node/         slave
 ├── markpact-contracts/  shared contracts
@@ -206,6 +205,7 @@ Szczegóły: [`DISTRIBUTION.md`](DISTRIBUTION.md) · [`REPOS.md`](REPOS.md) · [
 | Etap | Status |
 |------|--------|
 | Wyodrębnienie `urirouter` z `uricore` | ✅ 0.1.0 |
+| Usunięcie legacy `urisysedge` | ✅ → `uri_control.edge` w uricore |
 | Shimy `uri_control.resolver/transport/envelope` | ✅ |
 | `urisys` zależność bezpośrednia | ✅ |
 | PyPI publish `urirouter` | 📋 |

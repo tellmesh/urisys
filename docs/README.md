@@ -1,6 +1,6 @@
 # Dokumentacja urisys
 
-Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-17, packi w sibling repos).
+Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-18, packi w sibling repos).
 
 ## Start
 
@@ -16,10 +16,11 @@ Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-17, packi w sibl
 
 | Dokument | Opis |
 |----------|------|
+| [`ECOSYSTEM.md`](ECOSYSTEM.md) | **Model warstw** — urisys / urirouter / uricore / packi (aktualny stan 2026-06) |
 | [`MESH.md`](MESH.md) | **Mapa TellMesh** — wszystkie paczki podlinkowane do urisys, diagramy |
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Warstwy: CLI → edge Docker → flows; porty obrazów |
 | [`PROCESS-ARCHITECTURE.md`](PROCESS-ARCHITECTURE.md) | Proces Markpact vs resolver vs marksync (Etapy 1–4 ✅) |
-| [`PACKAGES.md`](PACKAGES.md) | Layout monorepo, `urisysedge`, duplikaty, `urioperators` |
+| [`PACKAGES.md`](PACKAGES.md) | Layout monorepo, `uricore`, `urirouter`, `urioperators` |
 | [`REPOS.md`](REPOS.md) | Mapowanie tellmesh/* → GitHub (tellmesh vs semcod), brak duplikatów |
 | [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md) | Nowe schematy URI, hot-load, forward, `release_forwards` |
 | [`FLOWS.md`](FLOWS.md) | Format `*.uri.flow.yaml`, uri2flow / uri3 |
@@ -43,9 +44,9 @@ Kroki deduplikacji runtime — **zakończone**; zostawione jako referencja:
 
 | Dokument | Temat |
 |----------|-------|
-| [`MIGRATION-STEP1.md`](MIGRATION-STEP1.md) | `urisysedge` wyodrębniony z `urirdpedge` |
-| [`MIGRATION-STEP2.md`](MIGRATION-STEP2.md) | Shimy edge w obrazach Docker |
-| [`MIGRATION-STEP3.md`](MIGRATION-STEP3.md) | `JsonlEventStore` / `Runtime` → `urisysedge` |
+| [`MIGRATION-STEP1.md`](MIGRATION-STEP1.md) | Historyczne: wyodrębnienie edge z `urirdpedge` → później `uricore` |
+| [`MIGRATION-STEP2.md`](MIGRATION-STEP2.md) | Historyczne: shimy edge CLI |
+| [`MIGRATION-STEP3.md`](MIGRATION-STEP3.md) | Historyczne: konsolidacja `Runtime` → dziś `uri_control.edge` |
 
 ## Dokumentacja per obraz Docker
 

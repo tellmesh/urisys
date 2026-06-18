@@ -23,7 +23,7 @@ pip install urisys
 
 ### Dev (checkout tellmesh)
 
-Wymaga checkout **tellmesh workspace** — `urisys` obok sibling repos (`urisysedge/`, `urisys-node/`, `urikvm/`, …).
+Wymaga checkout **tellmesh workspace** — `urisys` obok sibling repos (`urirouter/`, `uricore/`, `urisys-node/`, `urikvm/`, …).
 
 ```bash
 cd tellmesh/urisys
@@ -61,7 +61,7 @@ uv sync --extra kvm
 ```
 
 Każdy capability pack ma własny `pyproject.toml` (samodzielnie publikowalny na PyPI;
-zależy od `urisysedge`). Po publikacji: `pip install urikvm urihim uriocr urillm`.
+zależy od `uricore`). Po publikacji: `pip install urikvm urihim uriocr urillm`.
 Na działającym node dogrywasz po połączeniu: `POST /uri/pack {"pack":"kvm"}` (wymaga
 `URISYS_NODE_ALLOW_PACK_LOAD=1`). Szczegóły: [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md).
 
@@ -99,6 +99,7 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 
 | Dokument | Temat |
 |----------|--------|
+| [`docs/ECOSYSTEM.md`](docs/ECOSYSTEM.md) | Model warstw TellMesh |
 | [`docs/MESH.md`](docs/MESH.md) | **Mapa TellMesh** — paczki → urisys, diagramy Mermaid |
 | [`docs/NODE-SETUP.md`](docs/NODE-SETUP.md) | **Slave** — `urisys init`, lazy install, hot-load, systemd |
 | [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md) | **PyPI · Markpact · GitHub OCI** — packi, kvm-release |
@@ -121,9 +122,9 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 
 ```text
 tellmesh/
-├── urisys/              pip package — CLI + managers + docker glue
-├── uricore/             control-plane engine (uri_control)
-├── urisysedge/          wspólny edge runtime (canonical)
+├── urisys/              pip package — CLI + managers + docker glue ★
+├── urirouter/           intent router (resolve + transport)
+├── uricore/             uri_control + uri_control.edge
 ├── urioperators/        wspólne helpery LLM
 ├── urisys-node/         urisysnode (bundled); uriscreen/urishell via pip
 ├── urikvm/ urihim/ uriocr/ urillm/ urirdp/ urishell/ urienv/ …
@@ -177,6 +178,22 @@ bash scripts/run-full-regression.sh
 code2llm ./ -f all -o ./project
 # → project/map.toon.yaml, calls.mmd, context.md
 ```
+
+## Ekosystem TellMesh
+
+Orchestrator: **[urisys](https://github.com/tellmesh/urisys)** · Mapa: **[MESH.md](https://github.com/tellmesh/urisys/blob/main/docs/MESH.md)** · Model: **[ECOSYSTEM.md](https://github.com/tellmesh/urisys/blob/main/../docs/ECOSYSTEM.md)**
+
+| Pole | Wartość |
+|------|---------|
+| **Warstwa** | Orchestrator (centrum mesh) |
+| **Moduł** | `urisys` |
+| **Zależności** | `uricore`, `urirouter` |
+| **Rola** | CLI, Markpact, flow runner, PackManager, `urisys init` |
+
+Runtime edge: **`uri_control.edge`** w pakiecie **`uricore`** (legacy `urisysedge` usunięty 2026-06).
+Router intencji: **`urirouter`** (`uri_router`) — resolve + HTTP/MQTT delegate.
+
+<!-- end-ecosystem -->
 
 ## License
 
