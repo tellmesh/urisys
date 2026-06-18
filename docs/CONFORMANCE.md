@@ -17,12 +17,12 @@
 |------------|----------------|--------------|----------|
 | stepper | ✅ `uristepper` | ✅ machine-cycle | Pololu hybrid YAML |
 | kvm/ocr/llm/him | ✅ matrix test | ✅ desktop flows | — |
-| shell/screen/env | ✅ matrix test | — | `policy.shell.allowlist` |
-| rdp/browser | ✅ matrix test | — | — |
+| shell/screen/env | ✅ matrix test | ✅ smoke flow dry-run | `policy.shell.allowlist` |
+| rdp/browser | ✅ matrix test | ✅ smoke flow / embedded tests | — |
 | package:// | — | — | `uri_aliases` required |
 
 CI:
-- `tests/test_capability_conformance.py` — analyze matrix (10 thin packs)
+- `tests/test_capability_conformance.py` — analyze matrix (10 thin packs) + dry-run smoke flows
 - `tests/test_process_conformance.py` — dry-run process flows
 - `tests/test_golden_analyze.py` — snapshot analyze reference processes
 

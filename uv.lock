@@ -3622,7 +3622,7 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "uricore"
-version = "0.1.11"
+version = "0.1.12"
 source = { editable = "../uricore" }
 dependencies = [
     { name = "pyyaml" },
@@ -3710,7 +3710,7 @@ provides-extras = ["real", "dev"]
 
 [[package]]
 name = "urillm"
-version = "0.1.0"
+version = "0.1.1"
 source = { editable = "../urillm" }
 dependencies = [
     { name = "pyyaml" },
@@ -3783,7 +3783,7 @@ source = { editable = "../urioperators" }
 
 [[package]]
 name = "urirouter"
-version = "0.1.2"
+version = "1.0.4"
 source = { editable = "../urirouter" }
 dependencies = [
     { name = "pyyaml" },
@@ -3844,7 +3844,7 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "urisys"
-version = "0.1.68"
+version = "0.1.69"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },

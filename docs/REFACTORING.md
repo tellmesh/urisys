@@ -32,6 +32,7 @@ Szerszy kontekst: [`ECOSYSTEM.md`](ECOSYSTEM.md), [`PROCESS-ARCHITECTURE.md`](PR
 | 10 | `urirouter` Sprint 10: http_endpoint, loader validate, SH007, contract matrix | ✅ |
 | 11 | `urirouter` SH004–SH006/SH008/SH010 + RR lint w `analyze_markpact` | ✅ |
 | 12 | `urisys markpact analyze --json` — stabilny kontrakt MP + RR | ✅ |
+| 13 | Capability dry-run conformance matrix (10 packs) | ✅ |
 
 ## urirouter (`tellmesh/urirouter`)
 
@@ -196,7 +197,7 @@ cd $TELLMESH_ROOT/urisys      && python -m pytest tests/test_golden_analyze.py t
 |-------|------------------|
 | urirouter | 64 passed (1 skipped) |
 | uricore | 53 passed |
-| markpact-ci | 92 passed |
+| markpact-ci | 109 passed |
 | golden analyze | 3 passed |
 | capability conformance | 10 passed |
 | urisys pełny | 147+ passed (1 znany flaky: `test_all_skips_uninstalled_packs` — PyPI wheel) |
@@ -209,6 +210,6 @@ cd $TELLMESH_ROOT/urisys      && python -m pytest tests/test_golden_analyze.py t
 
 ### urisys / uricore
 
-- Sprint 6 rozszerzenie: dry-run conformance dla wszystkich capability packs
+- Pełna implementacja websocket, nats, serial, usb w urirouter
 - `scripts/generate_pack_markpacts.py` — opcjonalnie przenieść do `urisys-dev`
 - `urisys markpact analyze --json` — użyj w CI zamiast pełnego raportu (format `urisys.markpact.analyze-v1`)
