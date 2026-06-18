@@ -752,6 +752,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Other
 - Update uv.lock
 
+## [0.1.86] - 2026-06-18
+
+### Docs
+- Update README.md
+- Update docs/CLI.md
+- Update docs/NODE-SETUP.md
+
+### Test
+- Update tests/test_no_github_only_deps.py
+- Update tests/test_node_host_trust.py
+
+### Other
+- Update uv.lock
+
 ## [0.1.85] - 2026-06-18
 
 ### Docs
