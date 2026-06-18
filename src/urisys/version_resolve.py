@@ -37,8 +37,20 @@ def parse_version(text: str | None) -> tuple[int, ...]:
 def _get_json(url: str, timeout: float) -> dict[str, Any] | None:
     if os.environ.get("URISYS_OFFLINE", "").strip():
         return None
+    headers = {"Accept": "application/json", "User-Agent": "urisys"}
+    # Authenticate GitHub API calls when a token is available: lifts the unauthenticated
+    # 60/hour rate limit (which makes github_latest 403 and silently fall back to a stale
+    # pinned version) up to 5000/hour. CI provides GITHUB_TOKEN; dev can export GH_TOKEN.
+    if "api.github.com" in url:
+        token = (
+            os.environ.get("URISYS_GITHUB_TOKEN")
+            or os.environ.get("GH_TOKEN")
+            or os.environ.get("GITHUB_TOKEN")
+        )
+        if token:
+            headers["Authorization"] = f"Bearer {token.strip()}"
     try:
-        req = urllib.request.Request(url, headers={"Accept": "application/json", "User-Agent": "urisys"})
+        req = urllib.request.Request(url, headers=headers)
         with urllib.request.urlopen(req, timeout=timeout) as resp:  # nosec - fixed registry hosts
             return json.loads(resp.read().decode("utf-8"))
     except Exception:

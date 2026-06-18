@@ -49,3 +49,45 @@ def test_offline_skips_network(monkeypatch):
     monkeypatch.setenv("URISYS_OFFLINE", "1")
     assert vr.github_latest("uriguard") is None
     assert vr.pypi_latest("uriguard") is None
+
+
+def test_github_api_uses_token_when_present(monkeypatch):
+    import urllib.request
+    from urisys import version_resolve as vr
+    captured = {}
+
+    class _Resp:
+        def __enter__(self): return self
+        def __exit__(self, *a): return False
+        def read(self): return b'{"tag_name": "v9.9.9"}'
+
+    def fake_urlopen(req, timeout=0):
+        captured["headers"] = {k.lower(): v for k, v in req.header_items()}
+        return _Resp()
+
+    monkeypatch.delenv("URISYS_OFFLINE", raising=False)
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setenv("GH_TOKEN", "secret123")
+    assert vr.github_latest("urisys-node") == "9.9.9"
+    assert captured["headers"].get("authorization") == "Bearer secret123"
+
+
+def test_no_auth_header_without_token(monkeypatch):
+    import urllib.request
+    from urisys import version_resolve as vr
+    captured = {}
+
+    class _Resp:
+        def __enter__(self): return self
+        def __exit__(self, *a): return False
+        def read(self): return b'{"tag_name": "v1.0.0"}'
+
+    def fake_urlopen(req, timeout=0):
+        captured["headers"] = {k.lower(): v for k, v in req.header_items()}
+        return _Resp()
+
+    for v in ("URISYS_GITHUB_TOKEN", "GH_TOKEN", "GITHUB_TOKEN", "URISYS_OFFLINE"):
+        monkeypatch.delenv(v, raising=False)
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    assert vr.github_latest("urisys-node") == "1.0.0"
+    assert "authorization" not in captured["headers"]
