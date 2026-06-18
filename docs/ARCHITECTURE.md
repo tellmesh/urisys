@@ -24,7 +24,7 @@ Szczegółowy podział **proces / resolver / marksync**: [`docs/PROCESS-ARCHITEC
 └───────────────────────────┬─────────────────────────────────┘
                             │ BridgeManager / HTTP
 ┌───────────────────────────▼─────────────────────────────────┐
-│  urirouter (uri_router)   resolve → transport delegate       │
+│  uriresolver (uri_resolver)   resolve → transport delegate       │
 │  uricontrol (uri_control) registry, policy, local handlers   │
 └───────────────────────────┬─────────────────────────────────┘
                             │
@@ -32,7 +32,7 @@ Szczegółowy podział **proces / resolver / marksync**: [`docs/PROCESS-ARCHITEC
 │  *-docker/            Edge runtime + handlery per domena     │
 │  urirdp / urikvm / uribrowser / urienv / uristepper / lab    │
 │  + resolver config (targets) — Etap 3 ✅                      │
-│    uri_router + URISYS_RESOLVER_CONFIG                        │
+│    uri_resolver + URISYS_RESOLVER_CONFIG                        │
 └───────────────────────────┬─────────────────────────────────┘
                             │ *.uri.flow.yaml
 ┌───────────────────────────▼─────────────────────────────────┐
@@ -74,7 +74,7 @@ Szczegóły CLI: [`docs/CLI.md`](CLI.md), Markpact: [`docs/MARKPACT.md`](MARKPAC
 Wspólne biblioteki:
 
 - **`tellmesh/uricontrol/`** — `uri_control.edge`: `Runtime`, JSONL events, env policy, `http.serve`
-- **`tellmesh/urirouter/`** — intent router: resolve, transport delegate, operation/shell policy
+- **`tellmesh/uriresolver/`** — intent router: resolve, transport delegate, operation/shell policy
 - **`tellmesh/urioperators/`** — helpery LLM dla `urillm`
 
 Edge CLIs (rejestrują standalone packi):

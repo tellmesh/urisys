@@ -1,8 +1,8 @@
-"""Tests for tellmesh uriguard install helper (legacy name: urirouter_install)."""
+"""Tests for tellmesh uriguard install helper."""
 
 from __future__ import annotations
 
-from urisys.urirouter_install import diagnose_urirouter, wheel_url
+from urisys.uriguard_install import diagnose_uriguard, wheel_url
 
 
 def test_wheel_url_default():
@@ -12,6 +12,6 @@ def test_wheel_url_default():
 
 
 def test_diagnose_includes_wheel_url():
-    diag = diagnose_urirouter()
+    diag = diagnose_uriguard()
     assert "wheel_url" in diag
     assert "uri_guard_importable" in diag

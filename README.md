@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.74-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$15.67-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-35.2h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.77-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$15.67-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-35.7h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $15.6701 (108 commits)
-- 👤 **Human dev:** ~$3518 (35.2h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $15.6735 (109 commits)
+- 👤 **Human dev:** ~$3566 (35.7h @ $100/h, 30min dedup)
 
 Generated on 2026-06-18 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -23,7 +23,7 @@ pip install urisys
 
 ### Dev (checkout tellmesh)
 
-Wymaga checkout **tellmesh workspace** — `urisys` obok sibling repos (`urirouter/`, `uricore/`, `urisys-node/`, `urikvm/`, …).
+Wymaga checkout **tellmesh workspace** — `urisys` obok sibling repos (`uriresolver/`, `uricore/`, `urisys-node/`, `urikvm/`, …).
 
 ```bash
 cd tellmesh/urisys
@@ -41,7 +41,7 @@ urisys --help
 which urisys   # → .venv/bin/urisys
 ```
 
-Zależności runtime: **`uricore`** (tellmesh wheel z GitHub), **`urirouter`** (resolve + transport delegate), paczki URI z **`uri-packs`** (dev group w `pyproject.toml`).
+Zależności runtime: **`uricore`** (tellmesh wheel z GitHub), **`uriresolver`** (resolve + transport delegate), paczki URI z **`uri-packs`** (dev group w `pyproject.toml`).
 
 **Mapa wszystkich paczek (diagramy, linki):** [`docs/MESH.md`](docs/MESH.md).
 
@@ -123,7 +123,7 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 ```text
 tellmesh/
 ├── urisys/              pip package — CLI + managers + docker glue ★
-├── urirouter/           intent router (resolve + transport)
+├── uriresolver/           intent router (resolve + transport)
 ├── uricore/             uri_control + uri_control.edge
 ├── urioperators/        wspólne helpery LLM
 ├── urisys-node/         urisysnode (bundled); uriscreen/urishell via pip
@@ -187,11 +187,11 @@ Orchestrator: **[urisys](https://github.com/tellmesh/urisys)** · Mapa: **[MESH.
 |------|---------|
 | **Warstwa** | Orchestrator (centrum mesh) |
 | **Moduł** | `urisys` |
-| **Zależności** | `uricontrol`, `urirouter` |
+| **Zależności** | `uricontrol`, `uriresolver` |
 | **Rola** | CLI, Markpact, flow runner, PackManager, `urisys init` |
 
 Runtime edge: **`uri_control.edge`** w pakiecie **`uricontrol`** (legacy PyPI `uricore` / `urisysedge` usunięty 2026-06).
-Router intencji: **`urirouter`** (`uri_router`) — resolve + HTTP/MQTT delegate.
+Resolver intencji: **`uriresolver`** (`uri_resolver`) + transport w **`uritransport`**; policy gate: **`uriguard`** (`uri_guard`).
 
 <!-- end-ecosystem -->
 

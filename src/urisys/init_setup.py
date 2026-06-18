@@ -11,12 +11,13 @@ from typing import Any, Literal
 from .doctor import run_doctor
 from .node_install import diagnose_urisys_node, install_urisys_node, pip_spec as node_pip_spec
 from .uricore_install import diagnose_uricore, is_wrong_uricore_installed, pip_spec, repair_uricore, wheel_url
-from .urirouter_install import diagnose_urirouter, pip_spec as urirouter_pip_spec
+from .uriguard_install import is_wrong_urirouter_installed, pip_spec as uriguard_pip_spec, uninstall_squatted_urirouter
+from .uriresolver_install import pip_spec as uriresolver_pip_spec
 
 Profile = Literal["slave", "dev"]
 
 from .defaults import DEFAULT_MIN_VERSION, NODE_SERVE_CMD
-DEFAULT_GITHUB_URICORE_VERSION = "0.1.12"
+DEFAULT_GITHUB_URICORE_VERSION = "0.1.14"
 
 SLAVE_ENV = {
     "URISYS_ALLOW_REAL": "1",
@@ -32,7 +33,8 @@ def default_pip_specs(*, profile: Profile = "slave") -> list[str]:
     del profile
     return [
         "pip",
-        urirouter_pip_spec(),
+        uriguard_pip_spec(),
+        uriresolver_pip_spec(),
         pip_spec(),
         f'urisys[real]>={DEFAULT_MIN_VERSION}',
     ]
@@ -95,6 +97,31 @@ def write_env_file(path: Path, env: dict[str, str], *, dry_run: bool = False) ->
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
     return {"ok": True, "path": str(path), "bytes": len(content)}
+
+
+def _pre_repair_urirouter(
+    install: bool, dry_run: bool, steps: list[dict[str, Any]], profile: str
+) -> dict[str, Any] | None:
+    """Remove squatted PyPI urirouter before install. Returns abort dict on failure."""
+    if not (install and not dry_run and is_wrong_urirouter_installed()):
+        return None
+    pre_repair = uninstall_squatted_urirouter()
+    steps.append(
+        {
+            "name": "pre_repair_urirouter",
+            "status": "pass" if pre_repair.get("ok") else "fail",
+            "detail": pre_repair,
+        }
+    )
+    if pre_repair.get("ok"):
+        return None
+    return {
+        "ok": False,
+        "profile": profile,
+        "steps": steps,
+        "error": "could not remove wrong PyPI urirouter before install",
+        "hint": "Run: pip uninstall -y urirouter && urisys init",
+    }
 
 
 def _pre_repair_uricore(
@@ -233,6 +260,9 @@ def run_init(
         specs.extend(extra_specs)
 
     pip_result: dict[str, Any] | None = None
+    abort = _pre_repair_urirouter(install, dry_run, steps, profile)
+    if abort is not None:
+        return abort
     abort = _pre_repair_uricore(install, dry_run, steps, profile)
     if abort is not None:
         return abort

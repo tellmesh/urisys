@@ -5,7 +5,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TELLMESH="${TELLMESH_ROOT:-$(cd "$ROOT/.." && pwd)}"
 
-export PYTHONPATH="${TELLMESH}/urisys/src:${TELLMESH}/urirouter/src:${TELLMESH}/uricore/core/python"
+export PYTHONPATH="${TELLMESH}/urisys/src:${TELLMESH}/uriresolver/src:${TELLMESH}/uriguard/src:${TELLMESH}/uricontrol/core/python"
 export TELLMESH_ROOT="${TELLMESH}"
 
 cd "${TELLMESH}"

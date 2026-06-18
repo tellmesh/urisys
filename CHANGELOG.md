@@ -74,6 +74,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
 - Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
 
+## [0.1.77] - 2026-06-18
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+- Update docs/ARCHITECTURE.md
+- Update docs/DISTRIBUTION.md
+- Update docs/ECOSYSTEM.md
+- Update docs/MESH.md
+- Update docs/NODE-SETUP.md
+- Update docs/PACKAGES.md
+- Update docs/PROCESS-ARCHITECTURE.md
+- ... and 6 more files
+
+### Test
+- Update tests/test_uriguard_install.py
+- Update tests/test_uriresolver_install.py
+
+### Other
+- Update VERSION
+- Update app.doql.less
+- Update scripts/pack_tests_conftest.py
+- Update scripts/remove_urirouter_refs.py
+- Update scripts/rename_uricontrol_docs.py
+- Update scripts/run-full-regression.sh
+- Update scripts/update-ecosystem-readmes.py
+- Update uv.lock
+
 ## [0.1.74] - 2026-06-18
 
 ### Docs
@@ -108,7 +137,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update tests/test_node_install.py
 - Update tests/test_session_core.py
 - Update tests/test_uricore_install.py
-- Update tests/test_urirouter_install.py
+- Update tests/test_uriguard_install.py
 
 ### Other
 - Update VERSION

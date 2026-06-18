@@ -18,21 +18,27 @@ PACKAGES: dict[str, list[str]] = {
     "urisys": [
         "| **Warstwa** | Orchestrator (centrum mesh) |",
         "| **Moduł** | `urisys` |",
-        "| **Zależności** | `uricontrol`, `urirouter` |",
+        "| **Zależności** | `uricontrol`, `uriresolver` |",
         "| **Rola** | CLI, Markpact, flow runner, PackManager, `urisys init` |",
     ],
     "uricontrol": [
         "| **Warstwa** | Control plane + edge runtime |",
         "| **Moduł** | `uri_control`, `uri_control.edge` |",
-        "| **Zależności** | `urirouter` |",
+        "| **Zależności** | `uriguard` |",
         "| **Rola** | CapabilityRegistry, policy, handlers, `Runtime`, `compose`, `http.serve` |",
         "| **Uwaga** | Zastępuje legacy PyPI `uricore` i `urisysedge` (usunięty 2026-06) |",
     ],
-    "urirouter": [
-        "| **Warstwa** | Intent router (GDZIE + JAK) |",
-        "| **Moduł** | `uri_router` |",
+    "uriguard": [
+        "| **Warstwa** | Policy gate |",
+        "| **Moduł** | `uri_guard` |",
         "| **Orchestrator** | [urisys](https://github.com/tellmesh/urisys) |",
-        "| **Rola** | Resolver YAML, HTTP/MQTT delegate, wire envelope |",
+        "| **Rola** | Shell allowlist, limits, risk gate (uricontrol dependency) |",
+    ],
+    "uriresolver": [
+        "| **Warstwa** | Intent resolver (GDZIE) |",
+        "| **Moduł** | `uri_resolver` |",
+        "| **Orchestrator** | [urisys](https://github.com/tellmesh/urisys) |",
+        "| **Rola** | Resolver YAML, uri_aliases, target selection |",
     ],
     "urisys-node": [
         "| **Warstwa** | Slave / edge node |",
@@ -57,7 +63,7 @@ PACKAGES: dict[str, list[str]] = {
         "| **Warstwa** | Device reference (Pololu Tic T249) |",
         "| **Scheme** | `stepper://` |",
         "| **Orchestrator** | [urisys](https://github.com/tellmesh/urisys) |",
-        "| **Router** | [urirouter](https://github.com/tellmesh/urirouter) + `profiles/urisys.runtime.*.yaml` |",
+        "| **Router** | [uriresolver](https://github.com/tellmesh/uriresolver) + `profiles/urisys.runtime.*.yaml` |",
         "| **Runtime** | `uritic-host` (Go), ESP32 firmware |",
     ],
     # capability packs
@@ -85,11 +91,11 @@ PACKAGES: dict[str, list[str]] = {
     "urikvmedge": ["| **Warstwa** | Edge CLI |", "| **CLI** | `urisys-kvm` |", "| **Runtime** | `uri_control.edge` (`uricontrol`) |", "| **Packi** | urikvm, urihim, uriocr, urillm |", "| **Port** | 8794 |"],
     "uristepperedge": ["| **Warstwa** | Edge CLI |", "| **Runtime** | `uri_control.edge` (`uricontrol`) |", "| **Pack** | uristepper |", "| **Port** | 8791 |"],
     # docker glue (in urisys tree or sibling)
-    "urikvm-docker": ["| **Warstwa** | Docker glue |", "| **Obraz** | kvm/him/ocr/llm bundle |", "| **Build** | `docker build -f urikvm-docker/Dockerfile tellmesh/` |", "| **Zależności** | urirouter, uricontrol, urikvmedge |"],
-    "urirdp-docker": ["| **Warstwa** | Docker glue |", "| **Obraz** | RDP desktop automation |", "| **Zależności** | urirouter, uricontrol, urirdpedge |"],
-    "uribrowser-docker": ["| **Warstwa** | Docker glue |", "| **Scheme** | `browser://` |", "| **Zależności** | urirouter, uricontrol |"],
+    "urikvm-docker": ["| **Warstwa** | Docker glue |", "| **Obraz** | kvm/him/ocr/llm bundle |", "| **Build** | `docker build -f urikvm-docker/Dockerfile tellmesh/` |", "| **Zależności** | uriresolver, uriguard, uricontrol, urikvmedge |"],
+    "urirdp-docker": ["| **Warstwa** | Docker glue |", "| **Obraz** | RDP desktop automation |", "| **Zależności** | uriresolver, uriguard, uricontrol, urirdpedge |"],
+    "uribrowser-docker": ["| **Warstwa** | Docker glue |", "| **Scheme** | `browser://` |", "| **Zależności** | uriresolver, uriguard, uricontrol |"],
     "urienv-docker": ["| **Warstwa** | Docker glue |", "| **Scheme** | `env://` |", "| **Zależność** | uricontrol (`uri_control`) |"],
-    "uristepper-docker": ["| **Warstwa** | Docker glue |", "| **Scheme** | `stepper://` |", "| **Zależności** | urirouter, uricontrol, uristepperedge |"],
+    "uristepper-docker": ["| **Warstwa** | Docker glue |", "| **Scheme** | `stepper://` |", "| **Zależności** | uriresolver, uriguard, uricontrol, uristepperedge |"],
     "urisys-automation-lab": ["| **Warstwa** | Lab / voice gateway |", "| **Port** | 8099 |", "| **Schemes** | stt, webrtc, message |", "| **Orchestrator** | urisys |"],
 }
 
@@ -106,7 +112,7 @@ def build_section(rows: list[str]) -> str:
         *rows,
         "",
         "Runtime edge: **`uri_control.edge`** w pakiecie **`uricontrol`** (legacy PyPI `uricore` / `urisysedge` usunięty 2026-06).",
-        "Router intencji: **`urirouter`** (`uri_router`) — resolve + HTTP/MQTT delegate.",
+        "Resolver intencji: **`uriresolver`** (`uri_resolver`) + transport w **`uritransport`**; policy gate: **`uriguard`** (`uri_guard`).",
         "",
         MARKER_END,
         "",

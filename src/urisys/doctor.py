@@ -262,6 +262,43 @@ def _check_uricore_dist() -> Check:
     )
 
 
+def _check_urirouter_squatter() -> Check | None:
+    from .uriguard_install import diagnose_uriguard, is_wrong_urirouter_installed
+
+    diag = diagnose_uriguard()
+    if not is_wrong_urirouter_installed():
+        return None
+    return Check(
+        id="urirouter_squatter",
+        status="fail",
+        message="Wrong PyPI package 'urirouter' installed (legacy name — unrelated 3rd-party)",
+        detail={
+            **diag,
+            "pip_hint": "pip uninstall -y urirouter",
+            "auto_fix": "urisys init",
+        },
+    )
+
+
+def _check_uriresolver_dist() -> Check | None:
+    from .uriresolver_install import diagnose_uriresolver, pip_spec
+
+    diag = diagnose_uriresolver()
+    if diag.get("uri_resolver_importable"):
+        return Check(
+            id="dist_uriresolver",
+            status="ok",
+            message="uri_resolver importable (uriresolver)",
+            detail=diag,
+        )
+    return Check(
+        id="dist_uriresolver",
+        status="warn",
+        message="uri_resolver not importable",
+        detail={**diag, "pip_hint": f"pip install -U {pip_spec()}"},
+    )
+
+
 def run_doctor(*, min_version: str | None = DEFAULT_MIN_VERSION) -> dict[str, Any]:
     from .uricore_install import wheel_url
 
@@ -273,6 +310,12 @@ def run_doctor(*, min_version: str | None = DEFAULT_MIN_VERSION) -> dict[str, An
     authentic = _check_uricore_authentic()
     if authentic:
         checks.append(authentic)
+    squatter = _check_urirouter_squatter()
+    if squatter:
+        checks.append(squatter)
+    resolver = _check_uriresolver_dist()
+    if resolver:
+        checks.append(resolver)
     checks.extend(
         [
             _check_import("uricore", "uri_control", pip_hint=f"pip install -U {wheel_url()}"),

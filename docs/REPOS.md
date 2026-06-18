@@ -1,6 +1,6 @@
 # Repozytoria tellmesh — mapowanie paczek
 
-Stan: 2026-06-18. Po migracji **kod packów** żyje w sibling repos obok `urisys/`; monorepo `urisys` trzyma tylko docker glue, testy i skrypty. **Centrum orchestracji:** `urisys`. **Router intencji:** `urirouter`.
+Stan: 2026-06-18. Po migracji **kod packów** żyje w sibling repos obok `urisys/`; monorepo `urisys` trzyma tylko docker glue, testy i skrypty. **Centrum orchestracji:** `urisys`. **Router intencji:** `uriresolver`.
 
 Organizacja GitHub: **[tellmesh](https://github.com/tellmesh)** (paczki urisys) · **[semcod](https://github.com/semcod)** (narzędzia dev: goal, code2logic, costs — **nie** duplikaty packów URI).
 
@@ -9,7 +9,7 @@ Organizacja GitHub: **[tellmesh](https://github.com/tellmesh)** (paczki urisys) 
 ```text
 /home/tom/github/tellmesh/
 ├── urisys/                 glue + CLI (git: tellmesh/urisys) ★
-├── urirouter/              URI intent router (resolve + transport)
+├── uriresolver/              URI intent router (resolve + transport)
 ├── uricore/                capability dispatch + uri_control.edge
 ├── urioperators/           LLM helpers
 ├── urisys-node/            urisysnode (bundled); uriscreen/urishell → pip
@@ -27,7 +27,7 @@ Organizacja GitHub: **[tellmesh](https://github.com/tellmesh)** (paczki urisys) 
 | Katalog tellmesh | Repo GitHub | Uwagi |
 |------------------|-------------|--------|
 | `urisys` | [tellmesh/urisys](https://github.com/tellmesh/urisys) | monorepo glue ★ orchestrator |
-| `urirouter` | [tellmesh/urirouter](https://github.com/tellmesh/urirouter) | resolve + transport delegate |
+| `uriresolver` | [tellmesh/uriresolver](https://github.com/tellmesh/uriresolver) | resolve + transport delegate |
 | `uricore` | [tellmesh/uricontrol](https://github.com/tellmesh/uricontrol) | control plane + edge (`uri_control.edge`) |
 | `urikvm` | [tellmesh/urikvm](https://github.com/tellmesh/urikvm) | PyPI ✅ |
 | `urihim` | [tellmesh/urihim](https://github.com/tellmesh/urihim) | GitHub Releases |
@@ -61,7 +61,7 @@ find urisys -path '*/packages/python/*' -name handlers.py   # brak wyników
 | Składnik | Źródło |
 |----------|--------|
 | uricore | `https://github.com/tellmesh/uricontrol/releases/download/v0.1.8/...whl` |
-| urirouter | `https://github.com/tellmesh/urirouter/releases/download/v0.1.0/urirouter-0.1.0-py3-none-any.whl` |
+| uriresolver | `https://github.com/tellmesh/uriresolver/releases/download/v0.1.0/uriresolver-0.1.0-py3-none-any.whl` |
 | urisys-node | `https://github.com/tellmesh/urisys-node/releases/download/v0.1.3/urisys_node-0.1.3-py3-none-any.whl` |
 
 Override: `URISYS_NODE_WHEEL_URL`, `URISYS_URICORE_WHEEL_URL`, `URISYS_URIROUTER_WHEEL_URL`.

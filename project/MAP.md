@@ -31,7 +31,7 @@ Grupy logiczne (wg prefiksów):
 |--------|--------|------|
 | `src/urisys/` | cli, managers, controllers | Centralny controller |
 | `../uricore/` | `uri_control.edge` | ★ Wspólny edge runtime |
-| `../urirouter/` | `uri_router` | ★ Intent router + policy |
+| `../uriresolver/` | `uri_resolver` | ★ Intent router + policy |
 | `urirdp-docker/` | urirdp_*, urirdpedge | RDP desktop automation |
 | `urikvm-docker/` | urikvm, uriocr, urillm | KVM stack |
 | `urisys-automation-lab/` | flows, server, lab packs | Lab 10 flows |
@@ -74,7 +74,7 @@ cd urisys
 code2llm ./ -f all -o ./project
 ```
 
-Po migracji edge runtime do `uricore` + `urirouter` uruchom ponownie, żeby zaktualizować `M[]`.
+Po migracji edge runtime do `uricore` + `uriresolver` uruchom ponownie, żeby zaktualizować `M[]`.
 
 ## Hotspoty do refactoru (2026-06-16)
 

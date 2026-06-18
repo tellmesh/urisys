@@ -14,7 +14,7 @@ def lint_process_resolver_stubs(
     *,
     platforms: tuple[str, ...] = _DEFAULT_PLATFORMS,
 ) -> dict[str, Any]:
-    """Validate platform-export resolver YAML stubs with uri_router RR rules."""
+    """Validate platform-export resolver YAML stubs with uri_resolver RR rules."""
     try:
         from uri_resolver.schema import validate_resolver_issues
     except ImportError:  # pragma: no cover

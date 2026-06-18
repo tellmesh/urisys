@@ -8,7 +8,7 @@
 ```text
 Markpact / kontrakt     → CO (capability, flow, policy)
 urisys                  → orchestracja, CLI, flow runner, approval
-urirouter (uri_router)  → GDZIE + JAK (resolver, HTTP/MQTT delegate)
+uriresolver (uri_resolver)  → GDZIE + JAK (resolver, HTTP/MQTT delegate)
 uricontrol (uri_control) → registry, policy, handlers, event store
 uri_control.edge        → edge Runtime, compose, http.serve (w uricontrol)
 *-edge / *-host         → fizyczny runtime (HTTP/MQTT /uri/call)
@@ -19,7 +19,7 @@ uri_control.edge        → edge Runtime, compose, http.serve (w uricontrol)
 | Pakiet | Repo | Moduł | Rola |
 |--------|------|-------|------|
 | urisys | tellmesh/urisys | `urisys` | Orchestrator — CLI, Markpact, PackManager |
-| urirouter | tellmesh/urirouter | `uri_router` | Intent router — targets, transport, envelope |
+| uriresolver | tellmesh/uriresolver | `uri_resolver` | Intent router — targets, transport, envelope |
 | uricontrol | tellmesh/uricontrol | `uri_control` | Control plane + `uri_control.edge` |
 | urisys-node | tellmesh/urisys-node | `urisysnode` | Slave node, lazy pack install |
 | urioperators | tellmesh/urioperators | `urioperators` | Wspólne helpery LLM |
@@ -30,8 +30,8 @@ uri_control.edge        → edge Runtime, compose, http.serve (w uricontrol)
 | Było | Jest |
 |------|------|
 | ``uri_control.edge`` (osobny PyPI) | **Usunięty** — kod w `uricore` → `uri_control.edge` |
-| Resolver w `uri_control.resolver` | **`urirouter`** (`uri_router`) + shimy w uricore |
-| `pip install `uri_control.edge`` | `pip install urirouter` + `uricore` (wheels z GitHub Releases) |
+| Resolver w `uri_control.resolver` | **`uriresolver`** (`uri_resolver`) + shimy w uricore |
+| `pip install `uri_control.edge`` | `pip install uriresolver` + `uricore` (wheels z GitHub Releases) |
 | Monolityczne `managers/markpact_*` | Pakiet `urisys.markpact` + cienkie fasady w `managers/` |
 
 Szczegóły layoutu po refaktoryzacji: [REFACTORING.md](REFACTORING.md).
@@ -58,14 +58,14 @@ Zależność: **`uricontrol>=0.1.8`**. Rejestrowany przez **urisys** (`urisys ro
 ```bash
 export TELLMESH_ROOT=~/github/tellmesh
 cd $TELLMESH_ROOT/urisys && uv sync
-pip install -e $TELLMESH_ROOT/urirouter -e $TELLMESH_ROOT/uricore
+pip install -e $TELLMESH_ROOT/uriresolver -e $TELLMESH_ROOT/uricore
 ```
 
 ## Instalacja slave
 
 ```bash
 pip install -U urisys
-urisys init   # urirouter → uricore → urisys wheels
+urisys init   # uriresolver → uricore → urisys wheels
 urisys node serve --host 0.0.0.0 --port 8790
 ```
 

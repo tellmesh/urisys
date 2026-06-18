@@ -66,9 +66,9 @@ export URISYS_RESOLVER_CONFIG=path/to/urisys.runtime.yaml
 urisys markpact run process.markpact.md --as flow --approve --dry-run
 ```
 
-Implementacja: `uri_router.resolver.load_resolver_into_runtime`.  
-Walidacja struktury: `uri_router.resolver.validate_resolver` (v1).  
-Strukturalne issue codes: `validate_resolver_issues()` → RR001–RR013 (patrz `urirouter/docs/REFACTORING.md`).
+Implementacja: `uri_resolver.resolver.load_resolver_into_runtime`.  
+Walidacja struktury: `uri_resolver.resolver.validate_resolver` (v1).  
+Strukturalne issue codes: `validate_resolver_issues()` → RR001–RR013 (patrz `uriresolver/docs/REFACTORING.md`).
 
 ## Generowanie
 

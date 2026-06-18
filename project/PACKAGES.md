@@ -8,7 +8,7 @@
 | ID | Pakiet | Pliki w mapie | Status |
 |----|--------|---------------|--------|
 | E1 | `uricore` → `uri_control.edge` | `runtime.py`, `env.py`, `flow_*.py` | ✅ **canonical** |
-| E1b | `urirouter` → `uri_router` | resolve, transport, policy | ✅ resolver |
+| E1b | `uriresolver` → `uri_resolver` | resolve, transport, policy | ✅ resolver |
 | E2 | `urirdpedge` | `urirdp-docker/.../urirdpedge/` | ✅ shim → E1 |
 | E3 | `labedge` | `urisys-automation-lab/.../labedge/` | ✅ shim → E1 |
 | E4 | `urikvmedge` | `urikvm-docker/.../urikvmedge/` | ✅ shim → E1 |
@@ -35,7 +35,7 @@
 | PackManager | `src/urisys/managers/pack_manager.py` | 97 |
 | FlowController | `src/urisys/controllers/flow_controller.py` | 33 |
 | uricore | `../uricore` (tellmesh) lub PyPI | external |
-| urirouter | `../urirouter` (tellmesh) lub PyPI | external |
+| uriresolver | `../uriresolver` (tellmesh) lub PyPI | external |
 
 ## Lab-only (M:214-220, M:227-229)
 

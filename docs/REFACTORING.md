@@ -1,12 +1,12 @@
 # Refaktoryzacja TellMesh URI (2026-06)
 
-Dokument opisuje **docelowy podział warstw** po refaktoryzacji urirouter / uricore / urisys oraz **stan lokalny** implementacji (bez wymogu push na GitHub).
+Dokument opisuje **docelowy podział warstw** po refaktoryzacji uriresolver / uricore / urisys oraz **stan lokalny** implementacji (bez wymogu push na GitHub).
 
 ## Model warstw
 
 ```text
 uricore      = mały kernel wykonawczy URI (registry, policy, local handlers, edge Runtime)
-uri_router   = resolver + transport + placement (HTTP/MQTT/SSH delegate)
+uri_resolver   = resolver + transport + placement (HTTP/MQTT/SSH delegate)
 urisys       = CLI, Markpact, materializacja, dev/lab/CI
 uri* packi   = capability + handlery + manifesty — bez routingu
 ```
@@ -18,7 +18,7 @@ Szerszy kontekst: [`ECOSYSTEM.md`](ECOSYSTEM.md), [`PROCESS-ARCHITECTURE.md`](PR
 | Sprint | Zakres | Status |
 |--------|--------|--------|
 | 0 | Golden snapshots `tests/golden/` | ✅ 3 kontrakty referencyjne |
-| 1 | `urirouter`: models, transports/, policy/, resolver/ | ✅ 24 testy |
+| 1 | `uriresolver`: models, transports/, policy/, resolver/ | ✅ 24 testy |
 | 2 | `uricore`: `edge/call/` (pipeline, resolver_hook), `edge/flow/` | ✅ 52 testy |
 | 3 | `urisys/markpact/`: compile, analyze, materialize | ✅ |
 | 3b | Analyzer rule engine MP001–MP010, run modes (strategy) | ✅ |
@@ -28,16 +28,16 @@ Szerszy kontekst: [`ECOSYSTEM.md`](ECOSYSTEM.md), [`PROCESS-ARCHITECTURE.md`](PR
 | 7 | `markpact/models`, `flows`, `profile` — wyniesienie z `managers/` | ✅ shims w `managers/` |
 | 8 | `urisys_lab/` → `urisys-automation-lab` | ✅ pakiet `urisys_lab` w `src/` |
 | 8b | `contract_gen`, `pack_gen` → `urisys-dev` | ✅ shims w `managers/` |
-| 9 | `urirouter` Sprint 0–5: schema rules, target selector, MQTT split, shell rules | ✅ patrz `urirouter/docs/REFACTORING.md` |
-| 10 | `urirouter` Sprint 10: http_endpoint, loader validate, SH007, contract matrix | ✅ |
-| 11 | `urirouter` SH004–SH006/SH008/SH010 + RR lint w `analyze_markpact` | ✅ |
+| 9 | `uriresolver` Sprint 0–5: schema rules, target selector, MQTT split, shell rules | ✅ patrz `uriresolver/docs/REFACTORING.md` |
+| 10 | `uriresolver` Sprint 10: http_endpoint, loader validate, SH007, contract matrix | ✅ |
+| 11 | `uriresolver` SH004–SH006/SH008/SH010 + RR lint w `analyze_markpact` | ✅ |
 | 12 | `urisys markpact analyze --json` — stabilny kontrakt MP + RR | ✅ |
 | 13 | Capability dry-run conformance matrix (10 packs) | ✅ |
 
-## urirouter (`tellmesh/urirouter`)
+## uriresolver (`tellmesh/uriresolver`)
 
 ```
-src/uri_router/
+src/uri_resolver/
 ├── models.py              # ResolvedTarget, TransportRequest/Response
 ├── router.py              # UriRouter facade
 ├── envelope.py
@@ -61,9 +61,9 @@ src/uri_router/
     ├── targets.py, target_selector.py
 ```
 
-**Testy:** `cd urirouter && python -m pytest tests/ -q` → **64 passed** (1 skipped)
+**Testy:** `cd uriresolver && python -m pytest tests/ -q` → **64 passed** (1 skipped)
 
-Szczegóły issue codes RR/SH: [`urirouter/docs/REFACTORING.md`](../../urirouter/docs/REFACTORING.md)
+Szczegóły issue codes RR/SH: [`uriresolver/docs/REFACTORING.md`](../../uriresolver/docs/REFACTORING.md)
 
 ## uricontrol (`tellmesh/uricontrol`)
 
@@ -81,7 +81,7 @@ uri_control/edge/
 └── http.py, compose.py, manifest.py, …
 ```
 
-**Uwaga:** `runtime.py` nadal importuje `uri_router.policy` (limity operacji, shell) — to zamierzone do czasu pełnego odcięcia policy od edge.
+**Uwaga:** `runtime.py` nadal importuje `uri_resolver.policy` (limity operacji, shell) — to zamierzone do czasu pełnego odcięcia policy od edge.
 
 **Testy:** `cd uricore && python -m pytest tests/ -q` → **52 passed**
 
@@ -185,9 +185,9 @@ Szczegóły semantyczne: [`MARKPACT-PROFILE.md`](MARKPACT-PROFILE.md).
 
 ```bash
 export TELLMESH_ROOT=~/github/tellmesh
-export PYTHONPATH=$TELLMESH_ROOT/uricore/core/python:$TELLMESH_ROOT/urirouter/src:$TELLMESH_ROOT/urisys/src
+export PYTHONPATH=$TELLMESH_ROOT/uricore/core/python:$TELLMESH_ROOT/uriresolver/src:$TELLMESH_ROOT/urisys/src
 
-cd $TELLMESH_ROOT/urirouter  && python -m pytest tests/ -q
+cd $TELLMESH_ROOT/uriresolver  && python -m pytest tests/ -q
 cd $TELLMESH_ROOT/uricore     && python -m pytest tests/ -q
 cd $TELLMESH_ROOT/urisys      && bash scripts/run-markpact-ci.sh
 cd $TELLMESH_ROOT/urisys      && python -m pytest tests/test_golden_analyze.py tests/test_markpact_analyzer_rules.py -q
@@ -195,7 +195,7 @@ cd $TELLMESH_ROOT/urisys      && python -m pytest tests/test_golden_analyze.py t
 
 | Suite | Oczekiwany wynik |
 |-------|------------------|
-| urirouter | 64 passed (1 skipped) |
+| uriresolver | 64 passed (1 skipped) |
 | uricore | 53 passed |
 | markpact-ci | 109 passed |
 | golden analyze | 3 passed |
@@ -204,12 +204,12 @@ cd $TELLMESH_ROOT/urisys      && python -m pytest tests/test_golden_analyze.py t
 
 ## Pozostałe (backlog)
 
-### uri_router (Sprint 13+)
+### uri_resolver (Sprint 13+)
 
 - Pełna implementacja websocket, nats, serial, usb (dziś: `transport_planned` stub)
 
 ### urisys / uricore
 
-- Pełna implementacja websocket, nats, serial, usb w urirouter
+- Pełna implementacja websocket, nats, serial, usb w uriresolver
 - `scripts/generate_pack_markpacts.py` — opcjonalnie przenieść do `urisys-dev`
 - `urisys markpact analyze --json` — użyj w CI zamiast pełnego raportu (format `urisys.markpact.analyze-v1`)

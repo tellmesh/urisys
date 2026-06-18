@@ -213,7 +213,7 @@
 - [ ] src/urisys/init_setup.py:13 - Relative import (level=1): '.uricore_install'
 - [ ] src/urisys/init_setup.py:88 - String concatenation can be converted to f-string
 - [ ] src/urisys/init_setup.py:5 - Unused import os
-- [ ] src/urisys/init_setup.py:14 - Unused diagnose_urirouter imported from urirouter_install
+- [ ] src/urisys/init_setup.py:14 - Unused diagnose_uriguard imported from uriguard_install
 
 ---
 

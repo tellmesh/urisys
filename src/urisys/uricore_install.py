@@ -9,7 +9,7 @@ import sys
 from typing import Any
 
 DEFAULT_GITHUB_OWNER = "tellmesh"
-DEFAULT_GITHUB_VERSION = "0.1.13"
+DEFAULT_GITHUB_VERSION = "0.1.14"
 DIST_NAME = "uricontrol"  # PyPI dist (module is uri_control); renamed from squatted 'uricore'
 GITHUB_REPO = "uricontrol"  # GitHub repo name
 SQUATTED_DIST = "uricore"  # unrelated PyPI project (module uricore/, not uri_control/)

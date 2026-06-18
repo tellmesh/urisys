@@ -18,7 +18,7 @@ flowchart TB
   end
 
   subgraph routing [Routing intencji]
-    UR[urirouter / uri_router]
+    UR[uriresolver / uri_resolver]
     UC[uricore / uri_control]
   end
 
@@ -54,14 +54,14 @@ flowchart TB
 ```text
 Markpact     → CO (capability, flow, policy declaration, risk)
 urisys       → wykonanie, approval, flow runner, events, CLI, analyze/lint
-urirouter    → GDZIE + JAK (resolve → transport → koperta wire → operation/shell policy)
+uriresolver    → GDZIE + JAK (resolve → transport → koperta wire → operation/shell policy)
 uricore      → registry, dispatch, handlers, approval/scheme policy, event store
 *-edge/host  → runtime fizyczny (HTTP/MQTT /uri/call)
 ```
 
 Dwa poziomy policy:
 - **uricore** (dispatch-gate): approval, allowed/denied schemes — per route.
-- **urirouter** (`uri_router.policy`): deklaratywne limity payloadu i shell allowlist
+- **uriresolver** (`uri_resolver.policy`): deklaratywne limity payloadu i shell allowlist
   z `policy:` w resolverze, egzekwowane w `uri_control.edge` **przed** handlerem
   (i dla dry-run), więc bezpieczeństwo nie zależy od implementacji handlera/firmware.
 
@@ -72,7 +72,7 @@ UriRouter **nie routuje pakietów** — routuje **intencje** (`operation` z URI)
 | Paczka | Repo | Moduł import | Rola względem urisys |
 |--------|------|--------------|----------------------|
 | **urisys** | [tellmesh/urisys](https://github.com/tellmesh/urisys) | `urisys` | CLI, PackManager, Markpact, FlowController, BridgeManager |
-| **urirouter** | [tellmesh/urirouter](https://github.com/tellmesh/urirouter) | `uri_router` | Resolver YAML, HTTP/MQTT delegate, envelope |
+| **uriresolver** | [tellmesh/uriresolver](https://github.com/tellmesh/uriresolver) | `uri_resolver` | Resolver YAML, HTTP/MQTT delegate, envelope |
 | **uricore** | [tellmesh/uricontrol](https://github.com/tellmesh/uricontrol) | `uri_control` + `uri_control.edge` | CapabilityRegistry, policy, handlers, edge Runtime |
 | **urioperators** | [tellmesh/urioperators](https://github.com/tellmesh/urioperators) | `urioperators` | Wspólne helpery LLM (chat, plan, decide) |
 | **urisys-node** | [tellmesh/urisys-node](https://github.com/tellmesh/urisys-node) | `urisys_node` | Slave node, lazy pack load, screen capture |
@@ -84,7 +84,7 @@ UriRouter **nie routuje pakietów** — routuje **intencje** (`operation` z URI)
 sequenceDiagram
   participant C as Client / flow
   participant U as urisys
-  participant R as urirouter
+  participant R as uriresolver
   participant H as uritic-host
   participant D as driver ticcmd/I²C
 
@@ -136,7 +136,7 @@ Pełna tabela layoutu: [`PACKAGES.md`](PACKAGES.md).
 ```text
 tellmesh/
 ├── urisys/              ★ orchestrator (ten dokument)
-├── urirouter/           ★ resolve + transport delegate
+├── uriresolver/           ★ resolve + transport delegate
 ├── uricore/             capability dispatch + uri_control.edge
 ├── urioperators/        LLM helpers
 ├── urisys-node/         slave
@@ -148,13 +148,13 @@ tellmesh/
 ```bash
 cd tellmesh/urisys
 uv sync
-pip install -e ../urirouter -e ../uricore
+pip install -e ../uriresolver -e ../uricore
 
 urisys routes --packs all
 urisys markpact validate markpact-contracts/packs/machine-cycle-process.markpact.md
 ```
 
-## Resolver config (urirouter)
+## Resolver config (uriresolver)
 
 ```yaml
 # profiles/urisys.runtime.hybrid.yaml (generated from markpact-pololu/targets.yaml)
@@ -178,14 +178,14 @@ urisys markpact run … --config profiles/edge.config.yaml
 API Python:
 
 ```python
-from uri_router import UriRouter
+from uri_resolver import UriRouter
 
 router = UriRouter()
 router.load("profiles/urisys.runtime.hybrid.yaml")
 router.delegate("stepper://tic-t249/axis/x/query/status", {}, {"dry_run": True})
 ```
 
-## Policy (urirouter `uri_router.policy`)
+## Policy (uriresolver `uri_resolver.policy`)
 
 Resolver może deklarować centralne reguły egzekwowane przez `uri_control.edge`
 przed handlerem — niezależne od implementacji urządzenia:
@@ -215,7 +215,7 @@ Przykład: [urisys.runtime.resolver.yaml](https://github.com/tellmesh/markpact-c
 |--------|------------------|
 | uricore | GitHub Release wheel (includes `uri_control.edge`) |
 | urisys-node | GitHub Release wheel |
-| urirouter | GitHub Release v0.1.0 / PyPI (plan) |
+| uriresolver | GitHub Release v0.1.0 / PyPI (plan) |
 
 Szczegóły: [`DISTRIBUTION.md`](DISTRIBUTION.md) · [`REPOS.md`](REPOS.md) · [`NODE-SETUP.md`](NODE-SETUP.md).
 
@@ -228,19 +228,19 @@ Szczegóły: [`DISTRIBUTION.md`](DISTRIBUTION.md) · [`REPOS.md`](REPOS.md) · [
 | [`PACKAGES.md`](PACKAGES.md) | Layout packów i docker glue |
 | [`REPOS.md`](REPOS.md) | Mapowanie GitHub |
 | [markpact-pololu/REFACTORING.md](https://github.com/tellmesh/markpact-pololu/blob/main/docs/REFACTORING.md) | Status refaktoryzacji UriRouter |
-| [urirouter/README.md](https://github.com/tellmesh/urirouter/blob/main/README.md) | API pakietu urirouter |
+| [uriresolver/README.md](https://github.com/tellmesh/uriresolver/blob/main/README.md) | API pakietu uriresolver |
 
 ## Roadmap
 
 | Etap | Status |
 |------|--------|
-| Wyodrębnienie `urirouter` z `uricore` | ✅ 0.1.0 |
+| Wyodrębnienie `uriresolver` z `uricore` | ✅ 0.1.0 |
 | Usunięcie legacy ``uri_control.edge`` | ✅ → `uri_control.edge` w uricore |
 | Shimy `uri_control.resolver/transport/envelope` | ✅ |
 | `urisys` zależność bezpośrednia | ✅ |
-| Centralna `policy.operations` (limity payloadu w runtime) | ✅ `uri_router.policy` |
-| `policy.shell` allowlist/deny dla `shell.run` | ✅ `uri_router.policy` |
+| Centralna `policy.operations` (limity payloadu w runtime) | ✅ `uri_resolver.policy` |
+| `policy.shell` allowlist/deny dla `shell.run` | ✅ `uri_resolver.policy` |
 | Markpact profil v1alpha (analyze/lint: requires.schemes vs uses.packs) | ✅ `markpact_profile` |
-| PyPI publish `urirouter` | 📋 |
-| `urirouter-embedded` / `uri_routes.h` (marksync) | 📋 |
+| PyPI publish `uriresolver` | 📋 |
+| `uriresolver-embedded` / `uri_routes.h` (marksync) | 📋 |
 | `analyze --json` jako stabilny kontrakt CI + risk preflight | 📋 |

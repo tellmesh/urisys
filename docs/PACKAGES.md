@@ -11,7 +11,7 @@ Indeks modułów (historyczny): [`project/map.toon.yaml`](../project/map.toon.ya
 |---------|-------|------|
 | **core** | `urisys/src/urisys/` | CLI, managers, bootstrap |
 | **control plane** | `tellmesh/uricontrol/` | `uri_control` — registry, policy, handlers, **edge runtime** |
-| **uri router** | `tellmesh/urirouter/` | `uri_router` — resolve, transport delegate |
+| **uri router** | `tellmesh/uriresolver/` | `uri_resolver` — resolve, transport delegate |
 | **capability packs** | `tellmesh/{urikvm,urihim,…}/` | handlery URI (`handlers.py`, `routes.py`) |
 | **LLM shared** | `tellmesh/urioperators/` | chat, plan, decide, JSON parse |
 | **docker glue** | `urisys/*-docker/` | Dockerfile, config, flow, testy integracyjne |
@@ -23,7 +23,7 @@ Indeks modułów (historyczny): [`project/map.toon.yaml`](../project/map.toon.ya
 ```text
 tellmesh/
 ├── urisys/                 # glue + CLI ★ orchestrator
-├── urirouter/              # resolve + transport
+├── uriresolver/              # resolve + transport
 ├── uricore/                # uri_control (+ edge runtime)
 ├── urioperators/           # LLM helpers
 ├── urisys-node/            # urisysnode (bundled); uriscreen/urishell → pip
@@ -55,7 +55,7 @@ Pełny opis: **[`docs/DISTRIBUTION.md`](DISTRIBUTION.md)**.
 | Pakiet | Canonical repo | Rola |
 |--------|----------------|------|
 | `urisys` | `tellmesh/urisys` | orchestrator |
-| `urirouter` | `tellmesh/urirouter` | intent router |
+| `uriresolver` | `tellmesh/uriresolver` | intent router |
 | `uricore` | `tellmesh/uricontrol` | control plane + edge |
 | `urisys-node` | `tellmesh/urisys-node` | slave node |
 | `urioperators` | `tellmesh/urioperators` | LLM helpers |
@@ -65,7 +65,7 @@ Pełny opis: **[`docs/DISTRIBUTION.md`](DISTRIBUTION.md)**.
 
 1. ✅ **`uri_control.edge`** w `uricore` (dawniej ``uri_control.edge``)
 2. ✅ **`urioperators` (LLM)** — wired w `urillm`
-3. ✅ **`urirouter`** — wyodrębniony resolver/transport
+3. ✅ **`uriresolver`** — wyodrębniony resolver/transport
 4. ✅ **PyPI layout** — osobne repo `tellmesh/{pack}/`
 5. 🔲 **`urioperators` (OCR/HIM)** — faza 2 dedup
 

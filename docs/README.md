@@ -16,7 +16,7 @@ Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-18, packi w sibl
 
 | Dokument | Opis |
 |----------|------|
-| [`ECOSYSTEM.md`](ECOSYSTEM.md) | **Model warstw** — urisys / urirouter / uricore / packi (aktualny stan 2026-06) |
+| [`ECOSYSTEM.md`](ECOSYSTEM.md) | **Model warstw** — urisys / uriresolver / uricore / packi (aktualny stan 2026-06) |
 | [`REFACTORING.md`](REFACTORING.md) | **Refaktoryzacja 2026-06** — sprinty, layout modułów, MP001–MP010, testy |
 | [`MESH.md`](MESH.md) | **Mapa TellMesh** — wszystkie paczki podlinkowane do urisys, diagramy |
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Warstwy: CLI → edge Docker → flows; porty obrazów |
@@ -25,7 +25,7 @@ Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-18, packi w sibl
 | [`RESOLVER-SCHEMA.md`](RESOLVER-SCHEMA.md) | Kontrakt `urisys.runtime.yaml` (UriRuntime Resolver v1) |
 | [`SECURITY.md`](SECURITY.md) | Risk, shell allowlist, sandbox, context envelope |
 | [`CONFORMANCE.md`](CONFORMANCE.md) | Macierz dry-run procesów referencyjnych |
-| [`PACKAGES.md`](PACKAGES.md) | Layout monorepo, `uricontrol`, `urirouter`, `urioperators` |
+| [`PACKAGES.md`](PACKAGES.md) | Layout monorepo, `uricontrol`, `uriresolver`, `urioperators` |
 | [`REPOS.md`](REPOS.md) | Mapowanie tellmesh/* → GitHub (tellmesh vs semcod), brak duplikatów |
 | [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md) | Nowe schematy URI, hot-load, forward, `release_forwards` |
 | [`FLOWS.md`](FLOWS.md) | Format `*.uri.flow.yaml`, uri2flow / uri3 |
