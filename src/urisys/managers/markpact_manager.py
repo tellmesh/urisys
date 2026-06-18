@@ -459,7 +459,7 @@ class MarkpactManager:
             "side_effects": bool(item.get("side_effects", kind == "command")),
             "approval": item.get("approval", "required" if kind == "command" else "not_required"),
         }
-        for key in ["command_type", "query_type", "result_type", "success_event_type", "description"]:
+        for key in ["command_type", "query_type", "result_type", "success_event_type", "description", "risk"]:
             if key in item:
                 route[key] = item[key]
         if handler_ref:

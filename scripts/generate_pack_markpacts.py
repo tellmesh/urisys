@@ -149,7 +149,7 @@ def _run_block(scheme: str, flow_id: str, uses: list[str], port: int) -> dict[st
         "scheme": scheme,
         "default": "flow",
         "modes": ["pack", "service", "flow", "interface", "adapter"],
-        "service": {"port": port, "path": "/uri/call"},
+        "service": {"port_hint": port, "path": "/uri/call"},
         "flow": {"ids": [flow_id]},
         "uses": uses,
         "adapter": {"call": "POST /uri/call", "events": "GET /events"},

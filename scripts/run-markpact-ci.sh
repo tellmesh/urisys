@@ -21,6 +21,10 @@ bash scripts/validate-all-markpacts.sh
 echo "== analyze-process-markpacts (strict v1alpha) =="
 bash scripts/analyze-process-markpacts.sh
 
+echo "== analyze-thin-markpacts (strict-operations) =="
+export TELLMESH_ROOT="${TELLMESH_ROOT:-$(cd "$ROOT/.." && pwd)}"
+bash scripts/analyze-thin-markpacts.sh
+
 echo "== markpact pytest =="
 python -m pytest \
   tests/test_markpact.py \

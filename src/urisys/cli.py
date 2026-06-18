@@ -151,6 +151,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Treat profile v1alpha warnings as errors (CI for UriProcess packs).",
     )
+    p_analyze.add_argument(
+        "--strict-operations",
+        action="store_true",
+        help="Treat non-namespaced operation warnings as errors.",
+    )
 
     p_run_flow = msub.add_parser(
         "run-flow",
@@ -353,7 +358,20 @@ def _cmd_markpact(args) -> int:
         return 0
     if args.markpact_command == "analyze":
         result = manager.analyze(local_path)
-        if getattr(args, "strict", False) and result.get("warnings"):
+        warnings = list(result.get("warnings") or [])
+        if getattr(args, "strict_operations", False):
+            op_warnings = [w for w in warnings if "should be namespaced" in w]
+            if op_warnings:
+                result = {
+                    **result,
+                    "ok": False,
+                    "strict_operations": True,
+                    "errors": list(result.get("errors") or [])
+                    + [f"warning: {w}" for w in op_warnings],
+                }
+                warnings = [w for w in warnings if w not in op_warnings]
+                result["warnings"] = warnings
+        if getattr(args, "strict", False) and warnings:
             result = {
                 **result,
                 "ok": False,
