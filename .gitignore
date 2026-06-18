@@ -3,6 +3,16 @@
 code2llm_output
 packages/project/
 packages/.code2llm_cache/
+
+# code2llm analysis output under project/ (keep hand-written MAP.md, PACKAGES.md, README.md)
+project/*.png
+project/*.mmd
+project/*.yaml
+project/index.html
+project/logic.pl
+project/mermaid.export
+project/prompt.txt
+project/context.md
 .idea/
 operator/
 workflows/
