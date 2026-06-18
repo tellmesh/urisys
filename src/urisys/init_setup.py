@@ -13,6 +13,7 @@ from .node_install import diagnose_urisys_node, install_urisys_node, pip_spec as
 from .uricore_install import diagnose_uricore, is_wrong_uricore_installed, pip_spec, repair_uricore, wheel_url
 from .uriguard_install import is_wrong_urirouter_installed, pip_spec as uriguard_pip_spec, uninstall_squatted_urirouter
 from .uriresolver_install import pip_spec as uriresolver_pip_spec
+from .urisys_install import pip_spec as urisys_pip_spec
 
 Profile = Literal["slave", "dev"]
 
@@ -36,7 +37,7 @@ def default_pip_specs(*, profile: Profile = "slave") -> list[str]:
         uriguard_pip_spec(),
         uriresolver_pip_spec(),
         pip_spec(),
-        f'urisys[real]>={DEFAULT_MIN_VERSION}',
+        urisys_pip_spec(),
     ]
 
 

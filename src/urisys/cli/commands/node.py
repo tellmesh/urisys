@@ -8,16 +8,16 @@ def _prepare_node_serve(*, auto_install: bool) -> int | None:
     """Install urisys-node + uriscreen/urishell before boot. Returns exit code on failure."""
     if not auto_install:
         return None
-    from urisys.node_install import CORE_NODE_PACK_SPECS, ensure_core_node_packs, install_urisys_node, is_importable
+    from urisys.node_install import CORE_NODE_PACK_SPECS, _node_version_ok, ensure_core_node_packs, install_urisys_node, is_importable
 
-    if not is_importable():
+    if not is_importable() or not _node_version_ok():
         result = install_urisys_node()
         if not result.get("ok"):
             print(
-                "error: urisys-node is not installed and auto-install failed",
+                "error: urisys-node is missing or too old and auto-install failed",
                 file=sys.stderr,
             )
-            print(f"hint: pip install -U {result.get('spec')}", file=sys.stderr)
+            print(f"hint: pip install -U {result.get('pip_hint') or result.get('spec')}", file=sys.stderr)
             return 1
     core = ensure_core_node_packs()
     if core.get("ok") or core.get("skipped"):

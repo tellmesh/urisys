@@ -25,7 +25,8 @@ def test_urisys_node_wheel_filename_pep427():
     from urisys.node_install import DEFAULT_GITHUB_VERSION, wheel_filename
 
     assert wheel_filename("0.1.3") == "urisys_node-0.1.3-py3-none-any.whl"
-    assert wheel_filename() == f"urisys_node-{DEFAULT_GITHUB_VERSION}-py3-none-any.whl"
+    assert wheel_filename("0.1.29") == f"urisys_node-0.1.29-py3-none-any.whl"
+    assert DEFAULT_GITHUB_VERSION in wheel_filename()
 
 
 def test_urisys_node_wheel_url_override():

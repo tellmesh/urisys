@@ -175,7 +175,7 @@ def _check_urisys_node_version() -> Check | None:
                 "current": current,
                 "required": MIN_URISYS_NODE_VERSION,
                 "pip_hint": NODE_PIP_UPGRADE_HINT,
-                "wheel_hint": f"pip install -U {node_pip_spec()}",
+                "wheel_hint": node_pip_spec(),
                 "auto_fix": "urisys init",
             },
         )

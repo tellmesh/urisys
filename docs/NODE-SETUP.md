@@ -265,11 +265,26 @@ urisys remote upgrade-node
 `restart` zabija listener na porcie (`fuser -k`) i uruchamia `urisys node serve` w tle na slave.
 Przerwanie połączenia HTTP po `restart` jest **oczekiwane** — sprawdź `urisys remote wait`.
 
-Stary `urisys-node 0.1.3` pada z `ModuleNotFoundError: urisysedge` — upgrade:
+### Lenovo: `pip install -U urisys-node` zostaje na 0.1.3
+
+PyPI ma starą wersję (z `urisysedge`). **`urisys init`** i **`urisys node serve`** (auto-install) wybierają **nowszą** wersję z GitHub Releases niż PyPI (`version_resolve`).
+
+Na slave (lenovo):
 
 ```bash
-pip install -U https://github.com/tellmesh/urisys-node/releases/download/v0.1.24/urisys_node-0.1.24-py3-none-any.whl
+source ~/venv/bin/activate
+pip uninstall -y urisysedge urisys-node
+urisys init
+# albo ręcznie:
+pip install -U "$(python -c 'from urisys.node_install import pip_spec; print(pip_spec())')"
+
+fuser -k 8790/tcp 2>/dev/null || true
+urisys node serve --host 0.0.0.0 --port 8790
 ```
+
+`urisys doctor` → **fail** na `urisys_node_version` dopóki nie ma ≥0.1.22.
+
+Stary `urisys-node 0.1.3` pada z `ModuleNotFoundError: urisysedge` — nie używaj go.
 
 **Usuń zepsutą instalację 3.14 (opcjonalnie):**
 
