@@ -3791,21 +3791,9 @@ version = "0.1.0"
 source = { editable = "../urioperators" }
 
 [[package]]
-name = "urirouter"
-version = "1.0.4"
-source = { editable = "../urirouter" }
-dependencies = [
-    { name = "pyyaml" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "paho-mqtt", marker = "extra == 'mqtt'", specifier = ">=1.6" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
-    { name = "pyyaml", specifier = ">=6.0" },
-    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.6.0" },
-]
-provides-extras = ["mqtt", "dev"]
+name = "uriresolver"
+version = "0.1.0"
+source = { editable = "../uriresolver" }
 
 [[package]]
 name = "uriscreen"
@@ -3858,7 +3846,7 @@ source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
     { name = "uricontrol" },
-    { name = "urirouter" },
+    { name = "uriresolver" },
 ]
 
 [package.optional-dependencies]
@@ -3926,7 +3914,7 @@ requires-dist = [
     { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm" },
     { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "../urillm" },
     { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "../uriocr" },
-    { name = "urirouter", specifier = ">=0.1.0" },
+    { name = "uriresolver", editable = "../uriresolver" },
     { name = "urisys-automation-lab", extras = ["sessions"], marker = "extra == 'lab'", editable = "../urisys-automation-lab" },
     { name = "zeroconf", marker = "extra == 'discovery'", specifier = ">=0.131.0" },
 ]
@@ -4005,7 +3993,6 @@ dependencies = [
     { name = "pygments" },
     { name = "pyyaml" },
     { name = "uricontrol" },
-    { name = "urirouter" },
     { name = "uriscreen" },
     { name = "urishell" },
 ]
@@ -4028,7 +4015,6 @@ requires-dist = [
     { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm" },
     { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "../urillm" },
     { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "../uriocr" },
-    { name = "urirouter", editable = "../urirouter" },
     { name = "uriscreen", editable = "../uriscreen" },
     { name = "urishell", editable = "../urishell" },
     { name = "uristt", marker = "extra == 'dev'", editable = "../uristt" },
