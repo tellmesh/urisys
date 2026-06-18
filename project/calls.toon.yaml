@@ -1,51 +1,67 @@
 # code2llm call graph | /home/tom/github/tellmesh/urisys
-# generated in 0.10s
-# nodes: 206 | edges: 295 | modules: 36
-# CC̄=4.7
+# generated in 0.38s
+# nodes: 322 | edges: 426 | modules: 51
+# CC̄=4.9
 
 HUBS[20]:
   src.urisys.cli.build_parser
-    CC=1  in:1  out:62  total:63
+    CC=1  in:1  out:108  total:109
+  scripts.analyze-thin-markpacts.print
+    CC=0  in:69  out:0  total:69
+  src.urisys.cli._cmd_markpact
+    CC=38  in:1  out:60  total:61
   scripts.run_test_sessions.session_urirdp_real_docker
     CC=25  in:0  out:59  total:59
-  scripts.run-nl-log-smoke.print
-    CC=0  in:56  out:0  total:56
   scripts.test_sessions.util.run_cmd
     CC=6  in:30  out:12  total:42
   scripts.pack_sync.main
     CC=28  in:0  out:39  total:39
   scripts.report.session.infer_steps
     CC=28  in:1  out:37  total:38
-  scripts.lenovo_remote_session._run_flows
-    CC=22  in:1  out:34  total:35
+  src.urisys.managers.platform_export.export_platform_artifacts
+    CC=7  in:2  out:35  total:37
+  scripts.lenovo_remote_session.run_flow
+    CC=14  in:3  out:33  total:36
   scripts.report.run_analysis.analyze_run
     CC=13  in:2  out:33  total:35
-  scripts.scan-browser-sessions.main
-    CC=23  in:0  out:34  total:34
+  scripts.lenovo_remote_session._run_flows
+    CC=22  in:1  out:34  total:35
+  src.urisys.managers.markpact_pack_gen.generate_pack_markpact
+    CC=10  in:1  out:33  total:34
   scripts.test_sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
-  scripts.lenovo_remote_session.run_flow
-    CC=14  in:1  out:33  total:34
+  src.urisys.managers.markpact_run._run_flow_mode
+    CC=17  in:1  out:33  total:34
+  scripts.scan-browser-sessions.main
+    CC=23  in:0  out:34  total:34
+  src.urisys.managers.contract_gen._diff_section
+    CC=8  in:1  out:32  total:33
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
-  scripts.run_test_sessions.session_automation_lab
-    CC=13  in:1  out:31  total:32
-  scripts.pack_registry.pack_specs
-    CC=17  in:2  out:30  total:32
-  src.urisys.init_setup.run_init
-    CC=31  in:2  out:30  total:32
-  src.urisys.http_server.create_server
-    CC=1  in:1  out:31  total:32
   scripts.run_test_sessions.main
     CC=13  in:0  out:32  total:32
-  scripts.session_core.now_iso
-    CC=1  in:29  out:2  total:31
-  scripts.run_test_sessions.session_urirdp_mock_docker
-    CC=5  in:0  out:31  total:31
-  scripts.report.session.generate_report
-    CC=9  in:2  out:27  total:29
+  scripts.run_test_sessions.session_automation_lab
+    CC=13  in:1  out:31  total:32
+  scripts.generate_pack_markpacts._render
+    CC=14  in:1  out:31  total:32
 
 MODULES:
+  scripts.analyze-thin-markpacts  [1 funcs]
+    print  CC=0  out:0
+  scripts.check_contract_drift  [2 funcs]
+    main  CC=15  out:19
+    manifest_path  CC=3  out:1
+  scripts.generate_pack_markpacts  [14 funcs]
+    _capabilities  CC=7  out:12
+    _extra_specs  CC=3  out:2
+    _file_stem  CC=4  out:4
+    _fill_pattern  CC=1  out:3
+    _render  CC=14  out:31
+    _run_block  CC=1  out:0
+    _scheme  CC=2  out:1
+    _split_by_scheme  CC=13  out:18
+    _tests  CC=5  out:4
+    _use_case_flow  CC=6  out:5
   scripts.lenovo_remote_session  [15 funcs]
     _md_lessons  CC=6  out:8
     _run_flows  CC=22  out:34
@@ -63,10 +79,11 @@ MODULES:
     main  CC=10  out:12
     parse_args  CC=1  out:8
     rules_tick  CC=3  out:8
-  scripts.pack_registry  [4 funcs]
+  scripts.pack_registry  [5 funcs]
+    _pack  CC=3  out:2
     _repo  CC=1  out:0
     all_promoted_packs  CC=1  out:3
-    pack_specs  CC=17  out:30
+    pack_specs  CC=7  out:20
     sibling_repo  CC=1  out:1
   scripts.pack_sync  [13 funcs]
     _check_promoted  CC=5  out:7
@@ -78,7 +95,9 @@ MODULES:
     promote  CC=1  out:2
     read_version  CC=3  out:8
     remove_vendored  CC=4  out:3
-    repo_module_dir  CC=2  out:0
+    repo_module_dir  CC=3  out:0
+  scripts.paths  [1 funcs]
+    tellmesh_root  CC=0  out:0
   scripts.report.cli  [1 funcs]
     main  CC=4  out:23
   scripts.report.events  [4 funcs]
@@ -111,8 +130,6 @@ MODULES:
   scripts.report.util  [2 funcs]
     read_json  CC=3  out:3
     tail  CC=2  out:0
-  scripts.run-nl-log-smoke  [1 funcs]
-    print  CC=0  out:0
   scripts.run-office-writer-e2e  [2 funcs]
     save_json  CC=0  out:0
     wait_health  CC=0  out:0
@@ -176,23 +193,28 @@ MODULES:
     read_meta  CC=3  out:3
     run_cmd  CC=6  out:12
     sleep_ports  CC=1  out:1
+  scripts.update-ecosystem-readmes  [4 funcs]
+    build_section  CC=1  out:1
+    fix_urisysedge_refs  CC=2  out:1
+    main  CC=4  out:11
+    strip_old_section  CC=2  out:3
   src.urisys.bootstrap  [5 funcs]
     _doctor_main  CC=3  out:7
     _init_main  CC=6  out:18
     _missing_uricore_payload  CC=1  out:1
     _print_json  CC=1  out:2
     main  CC=8  out:6
-  src.urisys.cli  [11 funcs]
+  src.urisys.cli  [13 funcs]
     _add_runtime_flags  CC=1  out:4
+    _cmd_contract  CC=6  out:14
     _cmd_init  CC=6  out:7
-    _cmd_markpact  CC=9  out:20
+    _cmd_markpact  CC=38  out:60
     _cmd_node  CC=6  out:8
+    _cmd_pack  CC=6  out:10
     _cmd_uri  CC=4  out:9
     _handle_cli_error  CC=8  out:13
     _json_arg  CC=3  out:5
-    build_parser  CC=1  out:62
-    main  CC=11  out:20
-    print_json  CC=1  out:2
+    build_parser  CC=1  out:108
   src.urisys.controllers.flow_controller  [1 funcs]
     run  CC=6  out:19
   src.urisys.controllers.server_controller  [2 funcs]
@@ -209,33 +231,107 @@ MODULES:
     _parse_version  CC=7  out:6
     _pkg_version  CC=2  out:1
     _version_lt  CC=2  out:2
-  src.urisys.edge_install  [6 funcs]
-    _dist_version  CC=2  out:1
-    verify_uri_control_edge  CC=5  out:8
-    is_broken_install  CC=2  out:2
-    is_importable  CC=1  out:1
-    pip_run  CC=4  out:2
-    repair_urisysedge  CC=7  out:10
   src.urisys.flow  [2 funcs]
     iter_steps  CC=7  out:8
     load_flow  CC=3  out:5
-  src.urisys.http_server  [3 funcs]
+  src.urisys.http_server  [2 funcs]
     _read_json  CC=3  out:5
-    _send  CC=1  out:12
-    create_server  CC=1  out:31
-  src.urisys.init_setup  [11 funcs]
-    _build_pip_result  CC=4  out:9
+    create_server  CC=1  out:13
+  src.urisys.init_setup  [16 funcs]
+    _build_pip_result  CC=5  out:11
+    _check_node_after_install  CC=6  out:4
     _pre_repair_uricore  CC=6  out:6
     _resolve_error_hint  CC=5  out:4
+    _run_doctor_check  CC=3  out:3
+    _run_pip_install  CC=2  out:2
+    _verify_after_install  CC=8  out:9
+    _write_profile_env  CC=4  out:3
     default_node_pip_spec  CC=1  out:1
-    default_pip_specs  CC=1  out:1
-    pip_install_specs  CC=4  out:2
-    profile_env  CC=2  out:1
-    render_env_shell  CC=2  out:5
-    run_init  CC=31  out:30
-    verify_uri_control  CC=2  out:3
-  src.urisys.managers.markpact_models  [1 funcs]
+    default_pip_specs  CC=1  out:2
+  src.urisys.managers.contract_gen  [9 funcs]
+    _by_pattern  CC=5  out:3
+    _diff_scheme_and_metadata  CC=5  out:11
+    _diff_section  CC=8  out:32
+    _diff_uses  CC=7  out:8
+    _routes  CC=5  out:4
+    diff_manifest_contract  CC=2  out:4
+    manifest_to_contract  CC=11  out:19
+    normalize_version  CC=6  out:8
+    render_contract_markpact  CC=2  out:4
+  src.urisys.managers.markpact_flows  [8 funcs]
+    _provider_scheme  CC=1  out:1
+    _scheme  CC=1  out:1
+    classify_flow  CC=11  out:10
+    declared_uses  CC=1  out:1
+    extract_flows  CC=11  out:9
+    extract_modules  CC=7  out:8
+    extract_protos  CC=7  out:6
+    flow_uris  CC=8  out:10
+  src.urisys.managers.markpact_manager  [7 funcs]
+    _flows_from_cache  CC=3  out:3
+    _modules_from_cache  CC=4  out:3
+    _protos_from_cache  CC=3  out:3
+    _write_flows  CC=3  out:6
+    _write_modules  CC=2  out:5
+    _write_protos  CC=3  out:6
+    analyze  CC=8  out:18
+  src.urisys.managers.markpact_materialize  [2 funcs]
+    default_materialize_root  CC=1  out:1
+    materialize_markpact  CC=8  out:22
+  src.urisys.managers.markpact_models  [2 funcs]
+    safe_identifier  CC=3  out:6
     scheme_from_uri  CC=2  out:2
+  src.urisys.managers.markpact_pack_deps  [11 funcs]
+    _discover_pack_modules  CC=12  out:14
+    _is_capability_pack_repo  CC=4  out:3
+    _is_flat_pack_repo  CC=3  out:3
+    _pack_resolver  CC=2  out:0
+    _register_sibling_packs  CC=17  out:20
+    _register_uricore_utils  CC=3  out:5
+    _register_urioperators  CC=6  out:7
+    ensure_flow_packs  CC=2  out:3
+    ensure_pack_importable  CC=5  out:7
+    extend_tellmesh_paths  CC=2  out:5
+  src.urisys.managers.markpact_pack_gen  [11 funcs]
+    _build_capability  CC=11  out:13
+    _embedded_flows  CC=9  out:10
+    _load_manifest  CC=3  out:4
+    _module_blocks  CC=3  out:7
+    _pack_block  CC=9  out:13
+    _proto_blocks  CC=3  out:7
+    _resolve_repo_root  CC=6  out:4
+    _run_block  CC=1  out:0
+    find_package_dir  CC=8  out:12
+    generate_pack_markpact  CC=10  out:33
+  src.urisys.managers.markpact_profile  [12 funcs]
+    _build_flow_profiles  CC=10  out:15
+    _cap_uri  CC=3  out:3
+    _cross_check_schemes  CC=9  out:8
+    _flow_features  CC=18  out:22
+    _required_features  CC=4  out:7
+    _validate_capability_operations  CC=5  out:4
+    _validate_capability_uris  CC=19  out:17
+    _validate_scheme_requirements  CC=10  out:11
+    _validate_undeclared_schemes  CC=3  out:1
+    declared_packs  CC=5  out:8
+  src.urisys.managers.markpact_run  [11 funcs]
+    _apply_resolver_config  CC=7  out:9
+    _build_runtime  CC=3  out:5
+    _load_run_config  CC=4  out:5
+    _routes_summary  CC=2  out:0
+    _run_adapter_mode  CC=3  out:5
+    _run_flow_mode  CC=17  out:33
+    _run_interface_mode  CC=2  out:1
+    _run_pack_mode  CC=1  out:2
+    _run_service_mode  CC=6  out:7
+    read_run_config  CC=7  out:4
+  src.urisys.managers.markpact_run_flow  [6 funcs]
+    _split_extra  CC=7  out:8
+    flow_path_for  CC=3  out:4
+    packs_for_flow  CC=4  out:8
+    pick_flow_id  CC=5  out:7
+    run_markpact_flow  CC=14  out:26
+    split_flow_ref  CC=3  out:2
   src.urisys.managers.markpact_validation  [6 funcs]
     _missing_bundle_imports  CC=6  out:6
     _validate_contract_routes  CC=11  out:15
@@ -243,6 +339,18 @@ MODULES:
     validate_bundle  CC=9  out:15
     validate_contract  CC=13  out:21
     validate_implementation  CC=14  out:22
+  src.urisys.managers.pack_manager  [5 funcs]
+    _handle_missing_manifest  CC=6  out:5
+    manifest_paths  CC=8  out:16
+    _manifest_is_loadable  CC=5  out:7
+    _repo_for_package  CC=2  out:0
+    _sibling_manifest_path  CC=8  out:7
+  src.urisys.managers.platform_export  [5 funcs]
+    _authorities_from_flow  CC=17  out:20
+    _target_stub  CC=11  out:1
+    build_resolver_yaml  CC=5  out:3
+    collect_process_uris  CC=6  out:21
+    export_platform_artifacts  CC=7  out:35
   src.urisys.node_install  [9 funcs]
     diagnose_urisys_node  CC=3  out:5
     github_owner  CC=1  out:2
@@ -264,6 +372,13 @@ MODULES:
     pip_run  CC=4  out:2
     pip_spec  CC=1  out:1
     repair_uricore  CC=6  out:10
+  src.urisys.urirouter_install  [6 funcs]
+    _module_exists  CC=1  out:1
+    diagnose_urirouter  CC=2  out:2
+    github_owner  CC=1  out:2
+    github_version  CC=1  out:3
+    pip_spec  CC=1  out:1
+    wheel_url  CC=3  out:5
 
 EDGES:
   src.urisys.uricore_install.wheel_url → src.urisys.uricore_install.github_owner
@@ -282,7 +397,7 @@ EDGES:
   src.urisys.uricore_install.repair_uricore → src.urisys.uricore_install._module_exists
   src.urisys.uricore_install.repair_uricore → src.urisys.uricore_install.wheel_url
   src.urisys.uricore_install.repair_uricore → src.urisys.uricore_install.diagnose_uricore
-  src.urisys.bootstrap._print_json → scripts.run-nl-log-smoke.print
+  src.urisys.bootstrap._print_json → scripts.analyze-thin-markpacts.print
   src.urisys.bootstrap._doctor_main → src.urisys.doctor.run_doctor
   src.urisys.bootstrap._doctor_main → src.urisys.bootstrap._print_json
   src.urisys.bootstrap._init_main → src.urisys.init_setup.run_init
@@ -291,14 +406,24 @@ EDGES:
   src.urisys.bootstrap.main → src.urisys.bootstrap._init_main
   src.urisys.bootstrap.main → src.urisys.bootstrap._print_json
   src.urisys.bootstrap.main → src.urisys.bootstrap._missing_uricore_payload
-  src.urisys.cli.print_json → scripts.run-nl-log-smoke.print
+  src.urisys.cli.print_json → scripts.analyze-thin-markpacts.print
   src.urisys.cli.build_parser → src.urisys.cli._add_runtime_flags
   src.urisys.cli._cmd_markpact → src.urisys.cli.resolve_markpact_source
   src.urisys.cli._cmd_markpact → src.urisys.cli.print_json
+  src.urisys.cli._cmd_markpact → src.urisys.cli._cmd_contract
+  src.urisys.cli._cmd_markpact → src.urisys.managers.markpact_run_flow.split_flow_ref
+  src.urisys.cli._cmd_markpact → src.urisys.managers.markpact_run_flow.run_markpact_flow
+  src.urisys.cli._cmd_pack → src.urisys.managers.markpact_pack_gen.generate_pack_markpact
+  src.urisys.cli._cmd_pack → src.urisys.cli.print_json
+  src.urisys.cli._cmd_pack → scripts.analyze-thin-markpacts.print
+  src.urisys.cli._cmd_pack → src.urisys.managers.markpact_pack_gen.find_package_dir
+  src.urisys.cli._cmd_contract → src.urisys.cli.resolve_markpact_source
+  src.urisys.cli._cmd_contract → src.urisys.cli.print_json
+  src.urisys.cli._cmd_contract → scripts.analyze-thin-markpacts.print
   src.urisys.cli._cmd_init → src.urisys.init_setup.run_init
   src.urisys.cli._cmd_init → src.urisys.cli.print_json
-  src.urisys.cli._cmd_init → scripts.run-nl-log-smoke.print
-  src.urisys.cli._cmd_node → scripts.run-nl-log-smoke.print
+  src.urisys.cli._cmd_init → scripts.analyze-thin-markpacts.print
+  src.urisys.cli._cmd_node → scripts.analyze-thin-markpacts.print
   src.urisys.cli._cmd_uri → src.urisys.cli.print_json
   src.urisys.cli._cmd_uri → src.urisys.cli._json_arg
   src.urisys.cli._handle_cli_error → src.urisys.cli.print_json
@@ -306,13 +431,3 @@ EDGES:
   src.urisys.cli.main → src.urisys.cli.build_parser
   src.urisys.cli.main → src.urisys.cli._cmd_markpact
   src.urisys.cli.main → src.urisys.doctor.run_doctor
-  src.urisys.cli.main → src.urisys.cli.print_json
-  src.urisys.cli.main → src.urisys.cli._cmd_init
-  src.urisys.cli.main → scripts.run-nl-log-smoke.print
-  src.urisys.cli.main → src.urisys.cli._cmd_node
-  src.urisys.doctor._version_lt → src.urisys.doctor._parse_version
-  src.urisys.doctor._check_import → src.urisys.doctor._pkg_version
-  src.urisys.doctor._check_min_version → src.urisys.doctor._pkg_version
-  src.urisys.doctor._check_min_version → src.urisys.doctor._version_lt
-  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.diagnose_uricore
-  src.urisys.doctor._check_uricore_authentic → src.urisys.uricore_install.is_wrong_uricore_installed

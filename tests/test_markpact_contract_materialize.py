@@ -1,4 +1,4 @@
-"""Contract → pack → ``.markpact/`` → uricore runtime (uri_control / urisysedge)."""
+"""Contract → pack → ``.markpact/`` → uricore runtime (``uri_control.edge``)."""
 
 from __future__ import annotations
 

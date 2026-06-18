@@ -71,7 +71,8 @@ Szczegóły CLI: [`docs/CLI.md`](CLI.md), Markpact: [`docs/MARKPACT.md`](MARKPAC
 
 Wspólne biblioteki:
 
-- **`tellmesh/urisysedge/`** — `Runtime`, JSONL events, env policy, `http.serve`
+- **`tellmesh/uricore/`** — `uri_control.edge`: `Runtime`, JSONL events, env policy, `http.serve`
+- **`tellmesh/urirouter/`** — intent router: resolve, transport delegate, operation/shell policy
 - **`tellmesh/urioperators/`** — helpery LLM dla `urillm`
 
 Edge CLIs (rejestrują standalone packi):

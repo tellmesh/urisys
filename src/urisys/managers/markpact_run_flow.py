@@ -1,4 +1,4 @@
-"""Compile a showcase Markpact and run an embedded ``markpact:flow`` on urisysedge."""
+"""Compile a showcase Markpact and run an embedded ``markpact:flow`` on uri_control.edge."""
 
 from __future__ import annotations
 
@@ -92,7 +92,7 @@ def run_markpact_flow(
     allow_real: bool = False,
     environment: str = DEFAULT_ENVIRONMENT,
 ) -> dict[str, Any]:
-    """Compile *path*, build urisysedge runtime (manifest + flow deps), run one flow."""
+    """Compile *path*, build edge runtime (manifest + flow deps), run one flow."""
     mgr = manager or MarkpactManager()
     path_text, inline_flow = split_flow_ref(str(path))
     if flow_id is None:

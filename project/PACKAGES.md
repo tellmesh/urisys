@@ -3,17 +3,18 @@
 > Odpowiednik human-readable dla sekcji `M[]` w [`map.toon.yaml`](map.toon.yaml).  
 > Pełna dokumentacja: [`../docs/PACKAGES.md`](../docs/PACKAGES.md).
 
-## Status konsolidacji (2026-06-16)
+## Status konsolidacji (2026-06-18)
 
 | ID | Pakiet | Pliki w mapie | Status |
 |----|--------|---------------|--------|
-| E1 | `packages/python/urisysedge` | `runtime.py`, `env.py` | ✅ **canonical** |
+| E1 | `uricore` → `uri_control.edge` | `runtime.py`, `env.py`, `flow_*.py` | ✅ **canonical** |
+| E1b | `urirouter` → `uri_router` | resolve, transport, policy | ✅ resolver |
 | E2 | `urirdpedge` | `urirdp-docker/.../urirdpedge/` | ✅ shim → E1 |
 | E3 | `labedge` | `urisys-automation-lab/.../labedge/` | ✅ shim → E1 |
 | E4 | `urikvmedge` | `urikvm-docker/.../urikvmedge/` | ✅ shim → E1 |
 | E5 | `uribrowseredge` | `uribrowser-docker/.../` | ✅ shim → E1 |
 | E6 | `urisysnode/runtime` | `urisys-node/.../` | 🔶 node variant |
-| E7 | `uristepper/urisysedge` | `uristepper-docker/.../` | 🔶 StepperRuntime |
+| ~~E0~~ | ~~`urisysedge`~~ | — | 🗄️ **archived** → E1 |
 
 ## Handlery — pary fork (urikvm ↔ urirdp)
 
@@ -34,6 +35,7 @@
 | PackManager | `src/urisys/managers/pack_manager.py` | 97 |
 | FlowController | `src/urisys/controllers/flow_controller.py` | 33 |
 | uricore | `../uricore` (tellmesh) lub PyPI | external |
+| urirouter | `../urirouter` (tellmesh) lub PyPI | external |
 
 ## Lab-only (M:214-220, M:227-229)
 
@@ -47,10 +49,8 @@
 
 ## Następne kroki (backlog)
 
-1. Shim `urikvmedge` → `urisysedge` (zachować `urikvmedge/cli.py`)
-2. Shim `uribrowseredge` → `urisysedge`
-3. Wspólny moduł `urioperators/` dla OCR/LLM/HIM shared logic
-4. Regeneracja `map.toon.yaml` po każdej konsolidacji
+1. Wspólny moduł `urioperators/` dla OCR/LLM/HIM shared logic
+2. Regeneracja `map.toon.yaml` po większych zmianach mesh
 
 ```bash
 code2llm ./ -f all -o ./project
