@@ -146,6 +146,11 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_analyze = msub.add_parser("analyze", help="Summarise a showcase Markpact: definitions, embedded flows (use_case/integration), protos.")
     p_analyze.add_argument("path")
+    p_analyze.add_argument(
+        "--strict",
+        action="store_true",
+        help="Treat profile v1alpha warnings as errors (CI for UriProcess packs).",
+    )
 
     p_run_flow = msub.add_parser(
         "run-flow",
@@ -348,6 +353,14 @@ def _cmd_markpact(args) -> int:
         return 0
     if args.markpact_command == "analyze":
         result = manager.analyze(local_path)
+        if getattr(args, "strict", False) and result.get("warnings"):
+            result = {
+                **result,
+                "ok": False,
+                "strict": True,
+                "errors": list(result.get("errors") or [])
+                + [f"warning: {w}" for w in result.get("warnings") or []],
+            }
         print_json(result)
         return 0 if result.get("ok") else 1
     return 1

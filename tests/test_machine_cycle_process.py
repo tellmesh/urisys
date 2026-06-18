@@ -25,7 +25,8 @@ def test_machine_cycle_process_validates_and_analyzes():
     analysis = mgr.analyze(PROCESS_MARKPACT)
     assert analysis["ok"] is True
     assert "machine-cycle" in analysis["integrations"]
-    assert analysis["declared_uses"] == ["screen", "shell", "stepper", "stt", "tts"]
+    assert analysis["declared_uses"] == ["screen", "stepper", "tts"]
+    assert analysis["profile"]["uses_packs"] == ["uristepper", "uriscreen", "uristt-tts"]
 
 
 @pytest.mark.skipif(not PROCESS_MARKPACT.is_file(), reason="machine-cycle process markpact missing")
@@ -60,7 +61,7 @@ def test_machine_cycle_embedded_markpact_test_policy_only(tmp_path):
         events_path=tmp_path / "test-events.jsonl",
     )
     assert result["ok"] is True
-    assert len(result["tests"]) == 1
+    assert len(result["tests"]) == 2
     assert result["tests"][0]["id"] == "machine_cycle.requires_approval"
 
 
@@ -79,3 +80,5 @@ def test_machine_cycle_flow_dry_run_with_tellmesh(tmp_path, monkeypatch):
     )
     assert result["ok"] is True
     assert result["flows"][0]["id"] == "machine-cycle"
+    passed = [r for r in result["flows"][0].get("results", []) if r.get("type") == "expect_passed"]
+    assert passed, "machine-cycle flow should pass expect block"

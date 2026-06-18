@@ -20,6 +20,10 @@ Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-18, packi w sibl
 | [`MESH.md`](MESH.md) | **Mapa TellMesh** — wszystkie paczki podlinkowane do urisys, diagramy |
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Warstwy: CLI → edge Docker → flows; porty obrazów |
 | [`PROCESS-ARCHITECTURE.md`](PROCESS-ARCHITECTURE.md) | Proces Markpact vs resolver vs marksync (Etapy 1–4 ✅) |
+| [`MARKPACT-PROFILE.md`](MARKPACT-PROFILE.md) | **Profil v1alpha** — requires/uses, analyze lint, UriFlow levels |
+| [`RESOLVER-SCHEMA.md`](RESOLVER-SCHEMA.md) | Kontrakt `urisys.runtime.yaml` (UriRuntime Resolver v1) |
+| [`SECURITY.md`](SECURITY.md) | Risk, shell allowlist, sandbox, context envelope |
+| [`CONFORMANCE.md`](CONFORMANCE.md) | Macierz dry-run procesów referencyjnych |
 | [`PACKAGES.md`](PACKAGES.md) | Layout monorepo, `uricore`, `urirouter`, `urioperators` |
 | [`REPOS.md`](REPOS.md) | Mapowanie tellmesh/* → GitHub (tellmesh vs semcod), brak duplikatów |
 | [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md) | Nowe schematy URI, hot-load, forward, `release_forwards` |
@@ -30,7 +34,7 @@ Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-18, packi w sibl
 | Dokument | Opis |
 |----------|------|
 | [`DISTRIBUTION.md`](DISTRIBUTION.md) | PyPI · Markpact · GitHub OCI — trzy ścieżki packów |
-| [`MARKPACT.md`](MARKPACT.md) | Format `*.markpact.md`, validate / compile / test |
+| [`MARKPACT.md`](MARKPACT.md) | Format `*.markpact.md`, validate / compile / test / analyze --strict |
 
 ## Automatyzacja biurowa
 

@@ -18,6 +18,9 @@ python3 scripts/check_contract_drift.py
 echo "== validate-all-markpacts =="
 bash scripts/validate-all-markpacts.sh
 
+echo "== analyze-process-markpacts (strict v1alpha) =="
+bash scripts/analyze-process-markpacts.sh
+
 echo "== markpact pytest =="
 python -m pytest \
   tests/test_markpact.py \
@@ -33,7 +36,10 @@ python -m pytest \
   tests/test_urisys_flow_handler.py \
   tests/test_machine_cycle_process.py \
   tests/test_desktop_automation_processes.py \
+  tests/test_markpact_profile.py \
   tests/test_platform_export.py \
+  tests/test_analyze_strict.py \
+  tests/test_process_conformance.py \
   tests/test_showcase.py \
   -q
 

@@ -316,13 +316,15 @@ class MarkpactManager:
 
     def analyze(self, path: str | Path) -> dict[str, Any]:
         """Compile + summarise a showcase Markpact: definitions, flows (classified
-        use_case/integration), protos, and integration dependency gaps."""
+        use_case/integration), protos, integration dependency gaps, and v1alpha lint."""
         from .markpact_flows import classify_flow, declared_uses, extract_flows, extract_protos
+        from .markpact_profile import lint_markpact
 
         source_path = Path(path)
         blocks = self.read_blocks(source_path)
         pack = self.load_pack_block(source_path)
-        scheme = self._scheme(pack, self._capabilities(pack))
+        capabilities = self._capabilities(pack)
+        scheme = self._scheme(pack, capabilities)
         uses = declared_uses(pack)
         flows = extract_flows(blocks)
 
@@ -333,17 +335,28 @@ class MarkpactManager:
             all_undeclared.update(info["undeclared_uses"])
             analyzed.append({"id": flow["id"], **info})
 
+        profile = lint_markpact(
+            pack=pack,
+            scheme=scheme,
+            capabilities=capabilities,
+            flows=flows,
+            undeclared_schemes=sorted(all_undeclared),
+        )
+
         return {
-            "ok": not all_undeclared,
+            "ok": not all_undeclared and profile["ok"],
             "package_id": self._package_id(pack, source_path),
             "scheme": scheme,
             "declared_uses": sorted(uses),
-            "capabilities": len(self._capabilities(pack)),
+            "capabilities": len(capabilities),
             "protos": [name for name, _ in extract_protos(blocks)],
             "flows": analyzed,
             "use_cases": [f["id"] for f in analyzed if f["kind"] == "use_case"],
             "integrations": [f["id"] for f in analyzed if f["kind"] == "integration"],
             "undeclared_uses": sorted(all_undeclared),
+            "profile": profile,
+            "errors": profile["errors"],
+            "warnings": profile["warnings"],
         }
 
     def _write_handler_modules(self, package_dir: Path, handler_blocks: dict[str, MarkpactBlock]) -> None:

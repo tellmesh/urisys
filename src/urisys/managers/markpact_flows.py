@@ -127,14 +127,7 @@ def classify_flow(flow_data: dict[str, Any], *, pack_scheme: str, declared_uses:
 
 
 def declared_uses(pack: dict[str, Any]) -> set[str]:
-    """Schemes a pack declares it integrates with (``uses``/``dependencies``)."""
-    raw: list[Any] = []
-    for key in ("uses", "dependencies"):
-        value = pack.get(key)
-        if isinstance(value, list):
-            raw.extend(value)
-    out: set[str] = set()
-    for item in raw:
-        text = str(item).strip()
-        out.add(text.split("://", 1)[0] if "://" in text else text)
-    return out
+    """Schemes a pack declares it integrates with (``requires.schemes`` or legacy ``uses``)."""
+    from .markpact_profile import declared_schemes
+
+    return declared_schemes(pack)

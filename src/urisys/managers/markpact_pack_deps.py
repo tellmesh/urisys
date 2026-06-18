@@ -115,6 +115,18 @@ def extend_tellmesh_paths(*, anchor: Path | None = None) -> list[str]:
         if path not in sys.path:
             sys.path.insert(0, path)
             added.append(path)
+    # urioperators — shared LLM helpers (no manifest.yaml; required by urillm handlers)
+    ops = root / "urioperators"
+    if ops.is_dir() and (ops / "__init__.py").is_file():
+        path = str(ops.resolve())
+        if path not in sys.path:
+            sys.path.insert(0, path)
+            added.append(path)
+        if "urioperators" not in sys.modules:
+            try:
+                importlib.import_module("urioperators")
+            except ModuleNotFoundError:
+                pass
     return added
 
 

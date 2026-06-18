@@ -44,6 +44,8 @@ analyze: requires.schemes per flow (auto)
 
 Plik typu [`machine-cycle-process.markpact.md`](../../markpact-contracts/packs/machine-cycle-process.markpact.md).
 
+**Profil v1alpha:** [`MARKPACT-PROFILE.md`](MARKPACT-PROFILE.md) — `requires.schemes` vs `uses.packs`, lint w `urisys markpact analyze`.
+
 Zawiera wyłącznie:
 
 | Blok | Rola |
