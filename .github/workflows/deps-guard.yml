@@ -1,0 +1,48 @@
+name: deps-guard
+
+# Fails if any tellmesh capability pack is declared in a [real]/[vision] backend extra.
+# Those packs are GitHub-only (not on PyPI) and break pip/uv resolution there
+# (regression: urikvm[real] -> uriscreen -> urisys[kvm] unsatisfiable). Scans all sibling
+# pyproject.toml files, so it catches the mistake in any tellmesh repo from one place.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+  pull_request:
+    paths:
+      - "pyproject.toml"
+      - "scripts/check_no_github_only_deps.py"
+      - "tests/test_no_github_only_deps.py"
+      - ".github/workflows/deps-guard.yml"
+  schedule:
+    - cron: "0 4 * * 1"  # weekly — catch drift introduced in sibling repos
+
+jobs:
+  deps-guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: urisys
+
+      - name: Checkout tellmesh sibling repos
+        env:
+          TELLMESH_ROOT: ${{ github.workspace }}
+          URISYS_ROOT: ${{ github.workspace }}/urisys
+        run: bash urisys/scripts/ci-checkout-siblings.sh
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Guard — no GitHub-only tellmesh packs in backend extras
+        working-directory: urisys
+        run: python scripts/check_no_github_only_deps.py "${{ github.workspace }}"
+
+      - name: Guard unit tests
+        working-directory: urisys
+        run: |
+          pip install -q pytest
+          python -m pytest tests/test_no_github_only_deps.py -q
