@@ -67,7 +67,9 @@ lab = [
 
 [tool.uv.sources]
 urioperators = { path = "../urioperators", editable = true }
-urirouter = { path = "../urirouter", editable = true }
+uriguard = { path = "../uriguard", editable = true }
+uriresolver = { path = "../uriresolver", editable = true }
+uritransport = { path = "../uritransport", editable = true }
 urisys-node = { path = "../urisys-node", editable = true }
 urikvm = { path = "../urikvm", editable = true }
 urihim = { path = "../urihim", editable = true }

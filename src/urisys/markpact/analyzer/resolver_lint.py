@@ -16,7 +16,7 @@ def lint_process_resolver_stubs(
 ) -> dict[str, Any]:
     """Validate platform-export resolver YAML stubs with uri_router RR rules."""
     try:
-        from uri_router.resolver.schema import validate_resolver_issues
+        from uri_resolver.schema import validate_resolver_issues
     except ImportError:  # pragma: no cover
         return {"ok": True, "skipped": True, "issues": [], "platforms": {}}
 
