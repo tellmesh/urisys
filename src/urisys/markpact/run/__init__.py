@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Any
 
 from ...managers.markpact_manager import MarkpactManager
-from ...managers.markpact_models import MarkpactError
+from ..models import MarkpactError
 from .config import load_run_config, read_run_config
 from .context import RunContext
 from .modes import RUN_MODES

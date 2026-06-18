@@ -1,0 +1,18 @@
+{
+  "capabilities": 4,
+  "error_count": 0,
+  "flow_count": 4,
+  "integrations": [
+    "gui-open-software-center",
+    "llm-guided-gui-click",
+    "rdp-kvm-smoke",
+    "install-update-verify-browser"
+  ],
+  "issue_codes": [],
+  "ok": true,
+  "package_id": "desktop-automation-processes",
+  "scheme": "process",
+  "undeclared_uses": [],
+  "use_cases": [],
+  "warning_count": 0
+}

@@ -32,6 +32,9 @@ uri_control.edge        → edge Runtime, compose, http.serve (w uricore)
 | `urisysedge` (osobny PyPI) | **Usunięty** — kod w `uricore` → `uri_control.edge` |
 | Resolver w `uri_control.resolver` | **`urirouter`** (`uri_router`) + shimy w uricore |
 | `pip install urisysedge` | `pip install urirouter` + `uricore` (wheels z GitHub Releases) |
+| Monolityczne `managers/markpact_*` | Pakiet `urisys.markpact` + cienkie fasady w `managers/` |
+
+Szczegóły layoutu po refaktoryzacji: [REFACTORING.md](REFACTORING.md).
 
 ## Capability packs
 

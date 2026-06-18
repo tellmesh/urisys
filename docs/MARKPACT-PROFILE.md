@@ -129,23 +129,32 @@ requires_features:              # jawna lista — tylko to analyze egzekwuje
 
 ## Analyze / CI rules (v1alpha)
 
-**ERROR**
+Implementacja: `src/urisys/markpact/analyzer/rules/` (orchestrator: `lint.run_lint`).  
+Pełna mapa refaktoryzacji: [`REFACTORING.md`](REFACTORING.md).
 
-- command + side_effects + approval:not_required
-- URI `/query/` z kind:command lub odwrotnie
-- process capability bez `urisys://flow/<id>`
-- flow używa scheme spoza `requires.schemes` (undeclared)
+| Kod | Severity | Reguła |
+|-----|----------|--------|
+| MP001 | WARNING | `operation` bez kropki (nie namespaced) |
+| MP002 | ERROR | URI `/query/` z `kind` ≠ query |
+| MP003 | ERROR | URI `/command/` z `kind` ≠ command |
+| MP004 | ERROR | command + `side_effects` + `approval: not_required` |
+| MP005 | ERROR | process capability — handler ≠ `urisys://flow/<id>` |
+| MP006 | ERROR | flow używa scheme spoza `requires.schemes` |
+| MP007 | WARNING | process flow bez bloku `expect:` |
+| MP008 | WARNING | `ocr://…/image/latest/…` (implicit state) |
+| MP009 | WARNING | `scheme: process` bez jawnego `requires.schemes` |
+| MP010 | WARNING | wpis `requires.capabilities` bez namespace (kropki) |
+
+**ERROR (pozostałe, bez osobnego kodu MP)**
+
 - handler `markpact://self` bez sandbox policy (plan)
 
-**WARNING**
+**WARNING (pozostałe, bez osobnego kodu MP)**
 
-- `operation` bez kropki (nie namespaced)
-- flow bez `expect:`
-- `ocr://…/image/latest/…` (implicit state)
 - test mutacji bez `dry_run: true` w context
 - command bez testu approval / dry_run
-- `requires.schemes` vs faktyczne scheme w flow — rozjazd
-- brak `requires` przy `scheme: process` (użyj jawnego profilu)
+- `requires.schemes` vs faktyczne scheme w flow — rozjazd (`_cross_check_schemes`)
+- `requires_features` vs brakujące feature w flow
 
 ## Service ports
 
@@ -169,8 +178,9 @@ service:
 
 ## Priorytety implementacji
 
-1. ✅ `requires.schemes` / `uses.packs` + analyze lint  
-2. 🔄 risk + context envelope w kontraktach referencyjnych  
-3. 🔄 expect w CI sesji (lab-10)  
-4. 📋 resolver schema jako osobny kontrakt (`uri-transport-binding`)  
-5. 📋 conformance tests per capability
+1. ✅ `requires.schemes` / `uses.packs` + analyze lint (MP001–MP010)  
+2. ✅ golden snapshots `tests/golden/*.analyze.json`  
+3. 🔄 risk + context envelope w kontraktach referencyjnych  
+4. 🔄 expect w CI sesji (lab-10)  
+5. 📋 resolver schema jako osobny kontrakt (`uri-transport-binding`)  
+6. 📋 conformance tests per capability

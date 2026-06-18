@@ -1,14 +1,12 @@
-# code2llm | 172f 16570L | python:111,shell:49,yaml:7,toml:1,json:1,yml:1,javascript:1 | 2026-06-18
-# generated in 0.04s
-# CC̅=4.3 | critical:1/615 | dups:0 | cycles:0
+# code2llm | 175f 16638L | python:114,shell:49,yaml:7,toml:1,json:1,yml:1,javascript:1 | 2026-06-18
+# generated in 0.03s
+# CC̅=4.2 | critical:0/619 | dups:0 | cycles:0
 
-HEALTH[1]:
-  🟡 CC    main CC=15 (limit:15)
+HEALTH[0]: ok
 
-REFACTOR[1]:
-  1. split 1 high-CC methods  (CC>15)
+REFACTOR[0]: none needed
 
-PIPELINES[151]:
+PIPELINES[153]:
   [1] Src [registry]: registry
       PURITY: 100% pure
   [2] Src [runtime]: runtime
@@ -41,83 +39,83 @@ PIPELINES[151]:
       PURITY: 100% pure
   [16] Src [cmd_node]: cmd_node → build_runtime → extend_tellmesh_paths → tellmesh_root
       PURITY: 100% pure
-  [17] Src [__init__]: __init__
+  [17] Src [cmd_markpact]: cmd_markpact → resolve_markpact_source
       PURITY: 100% pure
-  [18] Src [run]: run → load_flow
+  [18] Src [__init__]: __init__
       PURITY: 100% pure
-  [19] Src [close]: close
+  [19] Src [compile]: compile → compile_context → read_blocks → parse_meta
       PURITY: 100% pure
-  [20] Src [__init__]: __init__ → create_server → _read_json
+  [20] Src [run]: run → routes_summary
       PURITY: 100% pure
-  [21] Src [serve_forever]: serve_forever → print
+  [21] Src [run]: run → _resolve_flow_ids → pick_flow_id
       PURITY: 100% pure
-  [22] Src [__init__]: __init__
+  [22] Src [run]: run → build_runtime → extend_tellmesh_paths → tellmesh_root
       PURITY: 100% pure
-  [23] Src [call]: call
+  [23] Src [run]: run → build_runtime → extend_tellmesh_paths → tellmesh_root
       PURITY: 100% pure
-  [24] Src [explain]: explain
+  [24] Src [run]: run → build_runtime → extend_tellmesh_paths → tellmesh_root
       PURITY: 100% pure
-  [25] Src [routes]: routes
+  [25] Src [check]: check
       PURITY: 100% pure
-  [26] Src [close]: close
+  [26] Src [check]: check → flow_uris
       PURITY: 100% pure
-  [27] Src [to_dict]: to_dict
+  [27] Src [check]: check → cap_uri
       PURITY: 100% pure
-  [28] Src [__init__]: __init__
+  [28] Src [check]: check → cap_uri
       PURITY: 100% pure
-  [29] Src [list_events]: list_events
+  [29] Src [check]: check → cap_uri
       PURITY: 100% pure
-  [30] Src [build_context]: build_context
+  [30] Src [check]: check → cap_uri
       PURITY: 100% pure
-  [31] Src [explain]: explain
+  [31] Src [check]: check
       PURITY: 100% pure
-  [32] Src [__init__]: __init__
+  [32] Src [check]: check
       PURITY: 100% pure
-  [33] Src [create_runtime]: create_runtime
+  [33] Src [check]: check
       PURITY: 100% pure
-  [34] Src [close]: close
+  [34] Src [check]: check
       PURITY: 100% pure
-  [35] Src [__exit__]: __exit__
+  [35] Src [__init__]: __init__
       PURITY: 100% pure
-  [36] Src [__init__]: __init__
+  [36] Src [run]: run → load_flow
       PURITY: 100% pure
-  [37] Src [read_blocks]: read_blocks
+  [37] Src [close]: close
       PURITY: 100% pure
-  [38] Src [source_hash]: source_hash
+  [38] Src [__init__]: __init__ → create_server → _read_json
       PURITY: 100% pure
-  [39] Src [load_pack_block]: load_pack_block
+  [39] Src [serve_forever]: serve_forever → print
       PURITY: 100% pure
-  [40] Src [compile]: compile
+  [40] Src [__init__]: __init__
       PURITY: 100% pure
-  [41] Src [analyze]: analyze → analyze_markpact → read_blocks → parse_meta
+  [41] Src [call]: call
       PURITY: 100% pure
-  [42] Src [manifest_path_for]: manifest_path_for
+  [42] Src [explain]: explain
       PURITY: 100% pure
-  [43] Src [run_tests]: run_tests → run_tests_for_path → run_markpact_tests → check_expectations
+  [43] Src [routes]: routes
       PURITY: 100% pure
-  [44] Src [_build_route]: _build_route → build_route → _resolve_pattern
+  [44] Src [close]: close
       PURITY: 100% pure
-  [45] Src [_compile_manifest]: _compile_manifest → compile_manifest → capabilities
+  [45] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [46] Src [call_http]: call_http
+  [46] Src [__init__]: __init__
       PURITY: 100% pure
-  [47] Src [__init__]: __init__
+  [47] Src [list_events]: list_events
       PURITY: 100% pure
-  [48] Src [_split_specs]: _split_specs
+  [48] Src [build_context]: build_context
       PURITY: 100% pure
-  [49] Src [_is_all]: _is_all
+  [49] Src [explain]: explain
       PURITY: 100% pure
-  [50] Src [parse_packs]: parse_packs
+  [50] Src [__init__]: __init__
       PURITY: 100% pure
 
 LAYERS:
-  src/                            CC̄=4.4    ←in:0  →out:0
-  │ !! cli                        965L  0C   40m  CC=15     ←2
+  src/                            CC̄=4.3    ←in:0  →out:0
+  │ !! cli                        968L  0C   41m  CC=14     ←2
   │ !! runners                    665L  0C   22m  CC=13     ←1
   │ core                       313L  0C   23m  CC=8      ←8
   │ platform_export            303L  0C    8m  CC=11     ←2
   │ doctor                     293L  1C   11m  CC=11     ←3
-  │ markpact_profile           279L  1C   20m  CC=11     ←4
+  │ markpact_profile           269L  1C   20m  CC=11     ←4
   │ init_setup                 257L  0C   16m  CC=13     ←2
   │ markpact_pack_gen          242L  0C   12m  CC=11     ←1
   │ source_manager             218L  2C   12m  CC=11     ←0
@@ -132,8 +130,8 @@ LAYERS:
   │ markpact_flows             133L  0C    8m  CC=11     ←6
   │ uricore_install            130L  0C   11m  CC=6      ←2
   │ manifest                   127L  0C    7m  CC=12     ←2
-  │ cache                      118L  0C    5m  CC=4      ←1
   │ compiler                   118L  1C    5m  CC=7      ←0
+  │ cache                      118L  0C    5m  CC=4      ←1
   │ bootstrap                  116L  0C    5m  CC=8      ←0
   │ capabilities               107L  5C    5m  CC=10     ←0
   │ node_install               106L  0C    9m  CC=7      ←1
@@ -157,6 +155,7 @@ LAYERS:
   │ handlers                    51L  0C    3m  CC=7      ←3
   │ urirouter_install           46L  0C    6m  CC=3      ←0
   │ flows                       46L  2C    2m  CC=4      ←0
+  │ pack                        45L  2C    2m  CC=6      ←0
   │ defaults                    40L  0C    0m  CC=0.0    ←0
   │ node                        34L  0C    1m  CC=6      ←0
   │ flow_controller             33L  1C    3m  CC=6      ←0
@@ -167,26 +166,28 @@ LAYERS:
   │ helpers                     28L  0C    3m  CC=3      ←4
   │ adapter                     28L  1C    1m  CC=3      ←0
   │ interface                   28L  1C    1m  CC=2      ←0
+  │ __init__                    27L  0C    0m  CC=0.0    ←0
   │ flow                        25L  0C    2m  CC=7      ←1
   │ config                      25L  0C    2m  CC=7      ←1
   │ context                     25L  1C    0m  CC=0.0    ←0
   │ service                     24L  1C    1m  CC=6      ←0
   │ __init__                    24L  0C    0m  CC=0.0    ←0
-  │ __init__                    24L  0C    0m  CC=0.0    ←0
   │ route_manager               23L  1C    3m  CC=2      ←0
-  │ server_controller           19L  1C    2m  CC=1      ←0
+  │ __init__                    20L  0C    0m  CC=0.0    ←0
   │ schemes                     19L  1C    1m  CC=2      ←0
-  │ __init__                    19L  0C    0m  CC=0.0    ←0
-  │ policy_manager              18L  1C    1m  CC=2      ←0
+  │ server_controller           19L  1C    2m  CC=1      ←0
   │ pack                        18L  1C    1m  CC=1      ←0
+  │ policy_manager              18L  1C    1m  CC=2      ←0
   │ main                        17L  0C    1m  CC=3      ←0
   │ base                        17L  1C    2m  CC=3      ←2
   │ __init__                    17L  0C    0m  CC=0.0    ←0
   │ context                     15L  1C    0m  CC=0.0    ←0
   │ markpact_run                15L  0C    0m  CC=0.0    ←0
   │ bridge_manager              14L  1C    1m  CC=3      ←0
-  │ event_manager               13L  1C    2m  CC=1      ←0
   │ base                        13L  1C    1m  CC=1      ←0
+  │ event_manager               13L  1C    2m  CC=1      ←0
+  │ platform_export             13L  0C    0m  CC=0.0    ←0
+  │ protocol                    10L  1C    1m  CC=1      ←0
   │ __init__                    10L  0C    0m  CC=0.0    ←0
   │ paths                       10L  0C    0m  CC=0.0    ←0
   │ __init__                     5L  0C    0m  CC=0.0    ←0
@@ -228,8 +229,8 @@ LAYERS:
   │ validate-all-markpacts.sh    65L  0C    1m  CC=0.0    ←0
   │ validate-pypi-metadata.sh    62L  0C    2m  CC=0.0    ←0
   │ __init__                    61L  0C    0m  CC=0.0    ←0
+  │ run-markpact-ci.sh          61L  0C    0m  CC=0.0    ←0
   │ test-python-matrix.sh       58L  0C    1m  CC=0.0    ←0
-  │ run-markpact-ci.sh          58L  0C    0m  CC=0.0    ←0
   │ bootstrap-lenovo-local.sh    57L  0C    0m  CC=0.0    ←0
   │ ci-checkout-siblings.sh     56L  0C    1m  CC=0.0    ←0
   │ materialize-all-showcases.sh    53L  0C    1m  CC=0.0    ←0
@@ -310,9 +311,9 @@ COUPLING:
   CYCLES: none
   HUB: scripts/ (fan-in=27)
   HUB: src.urisys_lab/ (fan-in=38)
+  SMELL: src.urisys_lab/ fan-out=11 → split needed
   SMELL: scripts.report/ fan-out=14 → split needed
   SMELL: src.urisys/ fan-out=12 → split needed
-  SMELL: src.urisys_lab/ fan-out=11 → split needed
   SMELL: scripts.test_sessions/ fan-out=29 → split needed
 
 EXTERNAL:

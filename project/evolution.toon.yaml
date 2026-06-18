@@ -1,34 +1,30 @@
-# code2llm/evolution | 417 func | 66f | 2026-06-18
+# code2llm/evolution | 421 func | 68f | 2026-06-18
 # generated in 0.00s
 
-NEXT[4] (ranked by impact):
+NEXT[3] (ranked by impact):
   [1] !! SPLIT           src/urisys_lab/lenovo/cli.py
-      WHY: 965L, 0 classes, max CC=15
-      EFFORT: ~4h  IMPACT: 14475
+      WHY: 968L, 0 classes, max CC=14
+      EFFORT: ~4h  IMPACT: 13552
 
   [2] !! SPLIT           src/urisys_lab/sessions/runners.py
       WHY: 665L, 0 classes, max CC=13
       EFFORT: ~4h  IMPACT: 8645
 
-  [3] !  SPLIT-FUNC      main  CC=15  fan=37
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 555
-
-  [4] !! SPLIT           planfile.yaml
+  [3] !! SPLIT           planfile.yaml
       WHY: 1319L, 0 classes, max CC=0
       EFFORT: ~4h  IMPACT: 0
 
 
 RISKS[3]:
   ⚠ Splitting planfile.yaml may break 0 import paths
-  ⚠ Splitting src/urisys_lab/lenovo/cli.py may break 40 import paths
+  ⚠ Splitting src/urisys_lab/lenovo/cli.py may break 41 import paths
   ⚠ Splitting src/urisys_lab/sessions/runners.py may break 22 import paths
 
 METRICS-TARGET:
-  CC̄:          4.4 → ≤3.1
-  max-CC:      15 → ≤7
+  CC̄:          4.3 → ≤3.0
+  max-CC:      14 → ≤7
   god-modules: 4 → 0
-  high-CC(≥15): 1 → ≤0
+  high-CC(≥15): 0 → ≤0
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -56,4 +52,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=4.5 → now CC̄=4.4
+  prev CC̄=4.3 → now CC̄=4.3

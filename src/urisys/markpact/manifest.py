@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from ..managers.markpact_models import MarkpactError, scheme_from_uri
+from .models import MarkpactError, scheme_from_uri
 from .handlers import resolve_handler_ref
 from .pack import capabilities, scheme_for_pack
 

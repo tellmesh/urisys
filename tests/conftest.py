@@ -32,9 +32,12 @@ def _ensure_siblings() -> None:
     root = _tellmesh_root()
     if root is None:
         return
+    checks = {
+        "uri_router": "uri_router.policy",
+        "uri_control": "uri_control.edge",
+    }
     for module_name, rel in _SIBLING_ROOTS:
-        # Stale PyPI ``uri_control`` wheels may lack ``edge`` — prefer tellmesh sibling.
-        check = "uri_control.edge" if module_name == "uri_control" else module_name
+        check = checks.get(module_name, module_name)
         if importlib.util.find_spec(check) is not None:
             continue
         path = str((root / rel).resolve())

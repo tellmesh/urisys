@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 .code2llm_cache/
+code2llm_output
 packages/project/
 packages/.code2llm_cache/
 .idea/

@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+from ..protocol import CliCommand
 from .markpact import cmd_markpact
 from .node import cmd_node
 from .runtime import cmd_events, cmd_flow, cmd_serve, cmd_uri
 from .setup import cmd_doctor, cmd_init
 
-COMMAND_HANDLERS = {
+COMMAND_HANDLERS: dict[str, CliCommand] = {
     "markpact": cmd_markpact,
     "doctor": cmd_doctor,
     "init": cmd_init,

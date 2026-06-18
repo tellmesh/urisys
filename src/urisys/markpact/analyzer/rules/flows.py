@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from ....managers.markpact_flows import flow_uris
-from ....managers.markpact_profile import LintIssue
+from ...flows import flow_uris
+from ...profile import LintIssue
 from ..context import MarkpactLintContext
 
 

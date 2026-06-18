@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from ...managers.markpact_profile import (
+from ..profile import (
     LintIssue,
     _build_flow_profiles,
     _cross_check_schemes,

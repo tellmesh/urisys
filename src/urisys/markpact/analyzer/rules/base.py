@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Protocol
 
-from ....managers.markpact_profile import LintIssue
+from ...profile import LintIssue
 from ..context import MarkpactLintContext
 
 

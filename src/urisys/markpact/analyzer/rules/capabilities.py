@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from ....managers.markpact_profile import LintIssue
+from ...profile import LintIssue
 from ..context import MarkpactLintContext
 from .base import cap_uri
 

@@ -5,8 +5,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from ...managers.markpact_flows import classify_flow, declared_uses, extract_flows, extract_protos
-from ...managers.markpact_profile import lint_markpact
+from ..flows import classify_flow, declared_uses, extract_flows, extract_protos
+from ..profile import lint_markpact
 from ..blocks import read_blocks
 from ..pack import capabilities, load_pack_block, package_id, scheme_for_pack
 

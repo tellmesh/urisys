@@ -1,0 +1,13 @@
+{
+  "capabilities": 1,
+  "error_count": 0,
+  "flow_count": 1,
+  "integrations": ["machine-cycle"],
+  "issue_codes": [],
+  "ok": true,
+  "package_id": "machine-cycle-process",
+  "scheme": "process",
+  "undeclared_uses": [],
+  "use_cases": [],
+  "warning_count": 0
+}

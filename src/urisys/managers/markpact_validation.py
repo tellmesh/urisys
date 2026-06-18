@@ -10,7 +10,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .markpact_models import MarkpactError, scheme_from_uri
+from ..markpact.models import MarkpactError, scheme_from_uri
 
 
 def _validate_contract_routes(source_path: Path, data: dict[str, Any], scheme: str) -> list[dict[str, Any]]:

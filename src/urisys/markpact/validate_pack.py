@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from ..managers.markpact_models import MarkpactBlock, MarkpactError, source_hash
+from .models import MarkpactBlock, MarkpactError, source_hash
 from .blocks import handler_blocks, read_blocks, yaml_blocks
 from .handlers import handler_id_from_ref
 from .pack import capabilities, load_pack_block, package_id, scheme_for_pack

@@ -261,13 +261,13 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# urisys | 207f 17559L | python:156,shell:49,less:1,javascript:1 | 2026-06-18
-# stats: 653 func | 45 cls | 207 mod | CC̄=4.8 | critical:68 | cycles:0
-# alerts[5]: CC main=15; CC _render=14; CC check_drift=14; CC _repo_pyproject=14; CC summarize_event_records=14
-# hotspots[5]: main fan=35; analyze_run fan=23; session_lab_10_flows fan=22; session_lab_10_flows fan=22; session_urirdp_real_docker fan=22
+# urisys | 210f 17668L | python:159,shell:49,less:1,javascript:1 | 2026-06-18
+# stats: 657 func | 46 cls | 210 mod | CC̄=4.8 | critical:68 | cycles:0
+# alerts[5]: CC _render=14; CC check_drift=14; CC _repo_pyproject=14; CC summarize_event_records=14; CC load_event_records=14
+# hotspots[5]: main fan=33; analyze_run fan=23; session_lab_10_flows fan=22; session_lab_10_flows fan=22; session_urirdp_real_docker fan=22
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[207]:
+M[210]:
   app.doql.less,49
   examples/frontend/app.js,22
   examples/markpact/browser-call.sh,13
@@ -323,7 +323,7 @@ M[207]:
   scripts/run-lab-nightly.sh,17
   scripts/run-lab-unit-ci.sh,22
   scripts/run-lenovo-office-linkedin.sh,119
-  scripts/run-markpact-ci.sh,59
+  scripts/run-markpact-ci.sh,62
   scripts/run-nl-log-smoke.sh,44
   scripts/run-office-simulate-e2e.sh,131
   scripts/run-office-simulate-lenovo.sh,183
@@ -350,7 +350,7 @@ M[207]:
   src/urisys/bootstrap.py,117
   src/urisys/cli/__init__.py,11
   src/urisys/cli/__main__.py,5
-  src/urisys/cli/commands/__init__.py,20
+  src/urisys/cli/commands/__init__.py,21
   src/urisys/cli/commands/markpact.py,208
   src/urisys/cli/commands/node.py,35
   src/urisys/cli/commands/runtime.py,52
@@ -359,6 +359,7 @@ M[207]:
   src/urisys/cli/helpers.py,29
   src/urisys/cli/main.py,18
   src/urisys/cli/parser.py,214
+  src/urisys/cli/protocol.py,11
   src/urisys/controllers/__init__.py,1
   src/urisys/controllers/flow_controller.py,34
   src/urisys/controllers/server_controller.py,20
@@ -426,7 +427,7 @@ M[207]:
   src/urisys_lab/__init__.py,6
   src/urisys_lab/core.py,314
   src/urisys_lab/lenovo/__init__.py,6
-  src/urisys_lab/lenovo/cli.py,966
+  src/urisys_lab/lenovo/cli.py,969
   src/urisys_lab/paths.py,11
   src/urisys_lab/sessions/__init__.py,75
   src/urisys_lab/sessions/cli.py,107
@@ -439,10 +440,12 @@ M[207]:
   tests/pack_import_isolation.py,44
   tests/test_analyze_strict.py,41
   tests/test_bootstrap.py,61
+  tests/test_capability_conformance.py,40
   tests/test_contract_gen.py,74
   tests/test_desktop_automation_processes.py,76
   tests/test_doctor.py,29
   tests/test_doctor_uricore.py,27
+  tests/test_golden_analyze.py,51
   tests/test_http_server.py,69
   tests/test_init.py,61
   tests/test_kvm_pack_pyprojects.py,71
@@ -729,6 +732,9 @@ D:
     e: add_runtime_flags,build_parser
     add_runtime_flags(parser)
     build_parser()
+  src/urisys/cli/protocol.py:
+    e: CliCommand
+    CliCommand: __call__(1)  # CLI subcommand handler: ``(args) -> exit code``.
   src/urisys/controllers/__init__.py:
   src/urisys/controllers/flow_controller.py:
     e: FlowController
@@ -1116,7 +1122,7 @@ D:
     expand_step_wheels(step)
   src/urisys_lab/lenovo/__init__.py:
   src/urisys_lab/lenovo/cli.py:
-    e: load_yaml,http_get,_run_http_get_step,_run_host_sleep_step,_schedule_restart_safely,_poll_health_after_restart,_run_host_restart_and_wait_step,_run_host_schedule_restart_step,_run_host_wait_health_step,_run_uri_call_step,run_step,run_flow,append_log,build_wheels,start_wheel_server,_needs_node_upgrade,_run_upgrade_flow,_md_header,_md_flow_results,_md_step_detail,_md_lessons,write_session_md,resolve_flow_paths,resolve_route_map,load_manifest_session,_check_and_restore_health,_skip_node_down,_maybe_run_node_upgrade,_maybe_run_kvm_upgrade,_maybe_run_playwright_upgrade,_run_flows,_run_extract_images,_ensure_pyyaml,_init_session,_setup_wheels,_check_initial_health,_copy_flow_sources,_build_meta,_collect_step_summaries,main
+    e: load_yaml,http_get,_run_http_get_step,_run_host_sleep_step,_schedule_restart_safely,_poll_health_after_restart,_run_host_restart_and_wait_step,_run_host_schedule_restart_step,_run_host_wait_health_step,_run_uri_call_step,run_step,run_flow,append_log,build_wheels,start_wheel_server,_needs_node_upgrade,_run_upgrade_flow,_md_header,_md_flow_results,_md_step_detail,_md_lessons,write_session_md,resolve_flow_paths,resolve_route_map,load_manifest_session,_check_and_restore_health,_skip_node_down,_maybe_run_node_upgrade,_maybe_run_kvm_upgrade,_maybe_run_playwright_upgrade,_run_flows,_run_extract_images,_ensure_pyyaml,_init_session,_setup_wheels,_check_initial_health,_copy_flow_sources,_build_meta,_collect_step_summaries,_session_result,main
     load_yaml(path)
     http_get(endpoint;path)
     _run_http_get_step(step;out;endpoint)
@@ -1156,6 +1162,7 @@ D:
     _copy_flow_sources(flow_paths;manifest_path;session_dir)
     _build_meta(run_id;session_cfg;node_reachable;args;route_map;examples_root;manifest_path;flow_paths)
     _collect_step_summaries(meta;flow_records)
+    _session_result(node_reachable;flow_records;wheel_proc;log_path;session_dir;meta)
     main(argv)
   src/urisys_lab/paths.py:
   src/urisys_lab/sessions/__init__.py:
@@ -1252,6 +1259,9 @@ D:
     test_cli_import_does_not_require_uri_control()
     test_missing_uricore_payload()
     test_doctor_subcommand_via_bootstrap()
+  tests/test_capability_conformance.py:
+    e: test_capability_pack_analyze_conformance
+    test_capability_pack_analyze_conformance(markpact_file;expected_scheme;min_caps)
   tests/test_contract_gen.py:
     e: test_manifest_to_contract_maps_kinds_and_approval,test_generated_contract_validates,test_self_drift_is_clean,test_drift_detected,test_existing_repo_contract_has_no_core_drift
     test_manifest_to_contract_maps_kinds_and_approval()
@@ -1273,6 +1283,10 @@ D:
   tests/test_doctor_uricore.py:
     e: test_check_uricore_authentic_fails_on_squatter
     test_check_uricore_authentic_fails_on_squatter()
+  tests/test_golden_analyze.py:
+    e: _analyze_snapshot,test_analyze_golden_snapshot
+    _analyze_snapshot(path)
+    test_analyze_golden_snapshot(markpact_name;golden_name)
   tests/test_http_server.py:
     e: _start,_get,test_health_exact_shape_and_cors,test_routes_are_full_dicts_not_flattened,test_options_preflight_204,test_events_endpoint
     _start()
@@ -1526,7 +1540,7 @@ project_file('scripts/run-lab-e2e.sh', 15, 'shell').
 project_file('scripts/run-lab-nightly.sh', 17, 'shell').
 project_file('scripts/run-lab-unit-ci.sh', 22, 'shell').
 project_file('scripts/run-lenovo-office-linkedin.sh', 119, 'shell').
-project_file('scripts/run-markpact-ci.sh', 59, 'shell').
+project_file('scripts/run-markpact-ci.sh', 62, 'shell').
 project_file('scripts/run-nl-log-smoke.sh', 44, 'shell').
 project_file('scripts/run-office-simulate-e2e.sh', 131, 'shell').
 project_file('scripts/run-office-simulate-lenovo.sh', 183, 'shell').
@@ -1553,7 +1567,7 @@ project_file('src/urisys/__init__.py', 4, 'python').
 project_file('src/urisys/bootstrap.py', 117, 'python').
 project_file('src/urisys/cli/__init__.py', 11, 'python').
 project_file('src/urisys/cli/__main__.py', 5, 'python').
-project_file('src/urisys/cli/commands/__init__.py', 20, 'python').
+project_file('src/urisys/cli/commands/__init__.py', 21, 'python').
 project_file('src/urisys/cli/commands/markpact.py', 208, 'python').
 project_file('src/urisys/cli/commands/node.py', 35, 'python').
 project_file('src/urisys/cli/commands/runtime.py', 52, 'python').
@@ -1562,6 +1576,7 @@ project_file('src/urisys/cli/errors.py', 33, 'python').
 project_file('src/urisys/cli/helpers.py', 29, 'python').
 project_file('src/urisys/cli/main.py', 18, 'python').
 project_file('src/urisys/cli/parser.py', 214, 'python').
+project_file('src/urisys/cli/protocol.py', 11, 'python').
 project_file('src/urisys/controllers/__init__.py', 1, 'python').
 project_file('src/urisys/controllers/flow_controller.py', 34, 'python').
 project_file('src/urisys/controllers/server_controller.py', 20, 'python').
@@ -1629,7 +1644,7 @@ project_file('src/urisys/urirouter_install.py', 47, 'python').
 project_file('src/urisys_lab/__init__.py', 6, 'python').
 project_file('src/urisys_lab/core.py', 314, 'python').
 project_file('src/urisys_lab/lenovo/__init__.py', 6, 'python').
-project_file('src/urisys_lab/lenovo/cli.py', 966, 'python').
+project_file('src/urisys_lab/lenovo/cli.py', 969, 'python').
 project_file('src/urisys_lab/paths.py', 11, 'python').
 project_file('src/urisys_lab/sessions/__init__.py', 75, 'python').
 project_file('src/urisys_lab/sessions/cli.py', 107, 'python').
@@ -1642,10 +1657,12 @@ project_file('tests/conftest.py', 54, 'python').
 project_file('tests/pack_import_isolation.py', 44, 'python').
 project_file('tests/test_analyze_strict.py', 41, 'python').
 project_file('tests/test_bootstrap.py', 61, 'python').
+project_file('tests/test_capability_conformance.py', 40, 'python').
 project_file('tests/test_contract_gen.py', 74, 'python').
 project_file('tests/test_desktop_automation_processes.py', 76, 'python').
 project_file('tests/test_doctor.py', 29, 'python').
 project_file('tests/test_doctor_uricore.py', 27, 'python').
+project_file('tests/test_golden_analyze.py', 51, 'python').
 project_file('tests/test_http_server.py', 69, 'python').
 project_file('tests/test_init.py', 61, 'python').
 project_file('tests/test_kvm_pack_pyprojects.py', 71, 'python').
@@ -2120,7 +2137,8 @@ python_function('src/urisys_lab/lenovo/cli.py', '_check_initial_health', 1, 4, 7
 python_function('src/urisys_lab/lenovo/cli.py', '_copy_flow_sources', 3, 3, 3).
 python_function('src/urisys_lab/lenovo/cli.py', '_build_meta', 8, 4, 6).
 python_function('src/urisys_lab/lenovo/cli.py', '_collect_step_summaries', 2, 8, 2).
-python_function('src/urisys_lab/lenovo/cli.py', 'main', 1, 15, 35).
+python_function('src/urisys_lab/lenovo/cli.py', '_session_result', 6, 6, 7).
+python_function('src/urisys_lab/lenovo/cli.py', 'main', 1, 10, 33).
 python_function('src/urisys_lab/sessions/cli.py', 'main', 0, 13, 19).
 python_function('src/urisys_lab/sessions/expectations.py', 'flow_expectations', 1, 5, 5).
 python_function('src/urisys_lab/sessions/expectations.py', 'ocr_texts', 1, 11, 4).
@@ -2194,6 +2212,7 @@ python_function('tests/test_bootstrap.py', 'test_bootstrap_import_does_not_requi
 python_function('tests/test_bootstrap.py', 'test_cli_import_does_not_require_uri_control', 0, 3, 1).
 python_function('tests/test_bootstrap.py', 'test_missing_uricore_payload', 0, 4, 2).
 python_function('tests/test_bootstrap.py', 'test_doctor_subcommand_via_bootstrap', 0, 6, 4).
+python_function('tests/test_capability_conformance.py', 'test_capability_pack_analyze_conformance', 3, 6, 5).
 python_function('tests/test_contract_gen.py', 'test_manifest_to_contract_maps_kinds_and_approval', 0, 12, 2).
 python_function('tests/test_contract_gen.py', 'test_generated_contract_validates', 1, 4, 5).
 python_function('tests/test_contract_gen.py', 'test_self_drift_is_clean', 0, 2, 3).
@@ -2207,6 +2226,8 @@ python_function('tests/test_doctor.py', 'test_doctor_ok_in_dev_env', 0, 8, 1).
 python_function('tests/test_doctor.py', 'test_doctor_fails_high_min_version', 0, 3, 2).
 python_function('tests/test_doctor.py', 'test_doctor_hints_include_node_serve', 0, 2, 2).
 python_function('tests/test_doctor_uricore.py', 'test_check_uricore_authentic_fails_on_squatter', 0, 7, 4).
+python_function('tests/test_golden_analyze.py', '_analyze_snapshot', 1, 3, 3).
+python_function('tests/test_golden_analyze.py', 'test_analyze_golden_snapshot', 2, 3, 6).
 python_function('tests/test_http_server.py', '_start', 0, 1, 5).
 python_function('tests/test_http_server.py', '_get', 2, 1, 4).
 python_function('tests/test_http_server.py', 'test_health_exact_shape_and_cors', 0, 4, 4).
@@ -2346,6 +2367,8 @@ python_class('scripts/report/models.py', 'Finding').
 python_class('scripts/report/models.py', 'FlowOutcome').
 python_method('FlowOutcome', 'no_visible_effect', 0, 2, 0).
 python_method('FlowOutcome', 'vision_decided', 0, 2, 1).
+python_class('src/urisys/cli/protocol.py', 'CliCommand').
+python_method('CliCommand', '__call__', 1, 1, 0).
 python_class('src/urisys/controllers/flow_controller.py', 'FlowController').
 python_method('FlowController', '__init__', 1, 1, 1).
 python_method('FlowController', 'run', 1, 6, 8).
@@ -2512,7 +2535,7 @@ sumd_interface('cli', '').
 
 ## Call Graph
 
-*373 nodes · 500 edges · 63 modules · CC̄=4.3*
+*342 nodes · 500 edges · 62 modules · CC̄=4.2*
 
 ### Hubs (by degree)
 
@@ -2521,17 +2544,17 @@ sumd_interface('cli', '').
 | `build_parser` *(in src.urisys.cli.parser)* | 1 | 1 | 108 | **109** |
 | `print` *(in scripts.analyze-thin-markpacts)* | 0 | 70 | 0 | **70** |
 | `run_cmd` *(in src.urisys_lab.sessions.util)* | 6 | 30 | 12 | **42** |
-| `export_platform_artifacts` *(in src.urisys.managers.platform_export)* | 7 | 2 | 35 | **37** |
+| `export_platform_artifacts` *(in src.urisys.markpact.platform_export)* | 7 | 2 | 35 | **37** |
 | `run_flow` *(in src.urisys_lab.lenovo.cli)* | 14 ⚠ | 3 | 33 | **36** |
-| `analyze_run` *(in scripts.report.run_analysis)* | 13 ⚠ | 2 | 33 | **35** |
 | `generate_pack_markpact` *(in src.urisys.managers.markpact_pack_gen)* | 10 ⚠ | 1 | 33 | **34** |
 | `finalize_session` *(in src.urisys_lab.sessions.util)* | 5 | 21 | 13 | **34** |
+| `session_lab_10_flows` *(in scripts.test_sessions.lab_flows)* | 7 | 0 | 33 | **33** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
-# generated in 0.17s
-# nodes: 373 | edges: 500 | modules: 63
-# CC̄=4.3
+# generated in 0.28s
+# nodes: 342 | edges: 500 | modules: 62
+# CC̄=4.2
 
 HUBS[20]:
   src.urisys.cli.parser.build_parser
@@ -2540,117 +2563,46 @@ HUBS[20]:
     CC=0  in:70  out:0  total:70
   src.urisys_lab.sessions.util.run_cmd
     CC=6  in:30  out:12  total:42
-  src.urisys.managers.platform_export.export_platform_artifacts
+  src.urisys.markpact.platform_export.export_platform_artifacts
     CC=7  in:2  out:35  total:37
   src.urisys_lab.lenovo.cli.run_flow
     CC=14  in:3  out:33  total:36
-  scripts.report.run_analysis.analyze_run
-    CC=13  in:2  out:33  total:35
   src.urisys.managers.markpact_pack_gen.generate_pack_markpact
     CC=10  in:1  out:33  total:34
   src.urisys_lab.sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
-  src.urisys.managers.contract_gen._diff_section
-    CC=8  in:1  out:32  total:33
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
+  src.urisys.managers.contract_gen._diff_section
+    CC=8  in:1  out:32  total:33
   src.urisys_lab.sessions.runners.session_automation_lab
     CC=13  in:1  out:31  total:32
   src.urisys_lab.sessions.cli.main
     CC=13  in:0  out:32  total:32
-  scripts.generate_pack_markpacts._render
-    CC=14  in:1  out:31  total:32
   src.urisys_lab.core.now_iso
     CC=1  in:29  out:2  total:31
   src.urisys_lab.sessions.runners.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
-  scripts.report.session.generate_report
-    CC=9  in:2  out:27  total:29
   src.urisys.markpact.tests.run_markpact_tests
     CC=12  in:1  out:27  total:28
   src.urisys.cli.helpers.print_json
     CC=1  in:26  out:2  total:28
+  src.urisys.markpact.compiler.MarkpactCompiler.compile
+    CC=7  in:0  out:27  total:27
   src.urisys.managers.markpact_run_flow.run_markpact_flow
     CC=14  in:1  out:26  total:27
   src.urisys.doctor.run_doctor
     CC=11  in:3  out:22  total:25
+  src.urisys_lab.sessions.util.http_json
+    CC=9  in:7  out:18  total:25
+  src.urisys.markpact.validate_pack.validate_markpact_file
+    CC=12  in:1  out:24  total:25
 
 MODULES:
   scripts.analyze-thin-markpacts  [1 funcs]
     print  CC=0  out:0
-  scripts.generate_pack_markpacts  [15 funcs]
-    _capabilities  CC=7  out:12
-    _extra_specs  CC=3  out:2
-    _file_stem  CC=4  out:4
-    _fill_pattern  CC=1  out:3
-    _process_spec  CC=8  out:12
-    _render  CC=14  out:31
-    _run_block  CC=1  out:0
-    _scheme  CC=2  out:1
-    _split_by_scheme  CC=13  out:18
-    _tests  CC=5  out:4
-  scripts.office-simulate-loop  [5 funcs]
+  scripts.office-simulate-loop  [1 funcs]
     call_uri  CC=4  out:11
-    llm_tick  CC=7  out:18
-    main  CC=10  out:12
-    parse_args  CC=1  out:8
-    rules_tick  CC=3  out:8
-  scripts.pack_registry  [6 funcs]
-    _pack  CC=3  out:2
-    _repo  CC=1  out:0
-    all_promoted_packs  CC=1  out:3
-    pack_specs  CC=7  out:20
-    sibling_repo  CC=1  out:1
-    sibling_uv_path  CC=1  out:0
-  scripts.pack_sync  [19 funcs]
-    _check_promoted  CC=5  out:7
-    _cmd_check  CC=5  out:7
-    _cmd_init_repo  CC=3  out:2
-    _cmd_print_uv_sources  CC=4  out:2
-    _cmd_promote  CC=3  out:3
-    _cmd_to_repo  CC=5  out:6
-    _repo_pyproject  CC=14  out:12
-    _validate_packs  CC=3  out:1
-    check_drift  CC=14  out:19
-    file_hash  CC=1  out:3
-  scripts.report.cli  [1 funcs]
-    main  CC=4  out:23
-  scripts.report.events  [4 funcs]
-    load_event_records  CC=14  out:14
-    merge_event_summaries  CC=10  out:16
-    summarize_event_records  CC=14  out:15
-    summarize_events  CC=8  out:10
-  scripts.report.run_analysis  [2 funcs]
-    analyze_run  CC=13  out:33
-    write_run_analysis  CC=2  out:7
-  scripts.report.run_markdown  [1 funcs]
-    render_run_analysis_markdown  CC=7  out:16
-  scripts.report.session  [5 funcs]
-    _resolve_screenshot  CC=5  out:6
-    _response_to_step_result  CC=12  out:20
-    generate_report  CC=9  out:27
-    infer_steps  CC=7  out:8
-    session_duration  CC=5  out:14
-  scripts.report.session_io  [1 funcs]
-    write_session_report  CC=2  out:7
-  scripts.report.session_markdown  [4 funcs]
-    _environment_section  CC=5  out:7
-    _screenshots_section  CC=3  out:3
-    _steps_section  CC=7  out:4
-    render_session_markdown  CC=1  out:16
-  scripts.report.util  [2 funcs]
-    read_json  CC=3  out:3
-    tail  CC=2  out:0
-  scripts.scan-browser-sessions  [9 funcs]
-    _copy_query  CC=2  out:10
-    _output_json  CC=2  out:4
-    _output_text  CC=11  out:16
-    _scan_profiles  CC=12  out:11
-    chrome_profiles  CC=11  out:14
-    discover_browsers  CC=1  out:0
-    firefox_profiles  CC=8  out:15
-    main  CC=2  out:7
-    scan_chrome_cookies  CC=13  out:13
   scripts.test_sessions.expectations  [9 funcs]
     _min_vision_confidence  CC=4  out:3
     _ocr_contains  CC=5  out:6
@@ -2671,25 +2623,23 @@ MODULES:
     capture_rdp_screenshot  CC=5  out:6
     capture_rdp_screenshot_wait  CC=9  out:6
     prepare_ok_target  CC=1  out:2
-  scripts.test_sessions.util  [7 funcs]
-    compose_cmd  CC=4  out:4
-    docker_logs  CC=3  out:3
-    finalize_session  CC=5  out:13
-    http_json  CC=9  out:18
-    read_meta  CC=3  out:3
-    wait_health  CC=3  out:5
-    write_meta  CC=1  out:3
-  scripts.update-ecosystem-readmes  [4 funcs]
-    build_section  CC=1  out:1
-    fix_urisysedge_refs  CC=2  out:1
-    main  CC=4  out:11
-    strip_old_section  CC=2  out:3
   src.urisys.bootstrap  [5 funcs]
     _doctor_main  CC=3  out:7
     _init_main  CC=6  out:18
     _missing_uricore_payload  CC=1  out:1
     _print_json  CC=1  out:2
     main  CC=8  out:6
+  src.urisys.cli.commands.markpact  [15 funcs]
+    _apply_strict_operations  CC=8  out:2
+    _apply_strict_profile  CC=4  out:2
+    _run_path_command  CC=6  out:5
+    cmd_analyze  CC=5  out:9
+    cmd_compile  CC=1  out:3
+    cmd_contract  CC=6  out:14
+    cmd_export_platform  CC=3  out:8
+    cmd_markpact  CC=11  out:16
+    cmd_materialize  CC=3  out:8
+    cmd_pack  CC=6  out:10
   src.urisys.cli.commands.node  [1 funcs]
     cmd_node  CC=6  out:8
   src.urisys.cli.commands.runtime  [4 funcs]
@@ -2702,9 +2652,10 @@ MODULES:
     cmd_init  CC=6  out:7
   src.urisys.cli.errors  [1 funcs]
     handle_cli_error  CC=8  out:13
-  src.urisys.cli.helpers  [2 funcs]
+  src.urisys.cli.helpers  [3 funcs]
     json_arg  CC=3  out:5
     print_json  CC=1  out:2
+    resolve_markpact_source  CC=2  out:3
   src.urisys.cli.main  [1 funcs]
     main  CC=3  out:5
   src.urisys.cli.parser  [2 funcs]
@@ -2798,8 +2749,17 @@ MODULES:
     _run_block  CC=1  out:0
     find_package_dir  CC=8  out:12
     generate_pack_markpact  CC=10  out:33
-  src.urisys.managers.markpact_profile  [1 funcs]
-    declared_schemes  CC=11  out:17
+  src.urisys.managers.markpact_profile  [19 funcs]
+    _build_flow_profiles  CC=6  out:11
+    _cap_uri  CC=3  out:3
+    _cross_check_schemes  CC=9  out:8
+    _flow_features  CC=6  out:9
+    _flow_level_features  CC=3  out:4
+    _issue  CC=1  out:1
+    _issue_message  CC=1  out:0
+    _required_features  CC=4  out:7
+    _step_features  CC=7  out:9
+    _text_pattern_features  CC=4  out:3
   src.urisys.managers.markpact_run_flow  [6 funcs]
     _split_extra  CC=7  out:8
     flow_path_for  CC=3  out:4
@@ -2820,15 +2780,20 @@ MODULES:
     _manifest_is_loadable  CC=5  out:7
     _repo_for_package  CC=2  out:0
     _sibling_manifest_path  CC=8  out:7
-  src.urisys.managers.platform_export  [6 funcs]
-    _authorities_from_flow  CC=10  out:13
-    _resolve_authority  CC=9  out:7
-    _target_stub  CC=11  out:1
-    build_resolver_yaml  CC=5  out:3
-    collect_process_uris  CC=6  out:20
-    export_platform_artifacts  CC=7  out:35
+  src.urisys.markpact.analyzer.lint  [2 funcs]
+    _issue_message  CC=1  out:0
+    run_lint  CC=8  out:14
   src.urisys.markpact.analyzer.report  [1 funcs]
     analyze_markpact  CC=8  out:18
+  src.urisys.markpact.analyzer.rules.base  [1 funcs]
+    cap_uri  CC=3  out:3
+  src.urisys.markpact.analyzer.rules.capabilities  [4 funcs]
+    check  CC=6  out:6
+    check  CC=7  out:6
+    check  CC=7  out:6
+    check  CC=10  out:12
+  src.urisys.markpact.analyzer.rules.flows  [1 funcs]
+    check  CC=4  out:3
   src.urisys.markpact.artifacts  [6 funcs]
     flows_from_cache  CC=3  out:3
     modules_from_cache  CC=4  out:3
@@ -2836,8 +2801,9 @@ MODULES:
     write_flows  CC=3  out:6
     write_modules  CC=2  out:5
     write_protos  CC=3  out:6
-  src.urisys.markpact.blocks  [3 funcs]
+  src.urisys.markpact.blocks  [4 funcs]
     handler_blocks  CC=5  out:3
+    load_yaml_blocks  CC=6  out:4
     read_blocks  CC=3  out:11
     yaml_blocks  CC=4  out:0
   src.urisys.markpact.cache  [4 funcs]
@@ -2845,6 +2811,10 @@ MODULES:
     compiled_from_cache  CC=4  out:8
     ensure_importable  CC=2  out:3
     write_manifest_flows  CC=3  out:9
+  src.urisys.markpact.compiler  [3 funcs]
+    compile  CC=7  out:27
+    _write_docs_block  CC=4  out:3
+    _write_tests_block  CC=2  out:3
   src.urisys.markpact.handlers  [3 funcs]
     handler_id_from_ref  CC=2  out:2
     resolve_handler_ref  CC=7  out:8
@@ -2862,8 +2832,35 @@ MODULES:
     load_pack_block  CC=4  out:9
     package_id  CC=5  out:7
     scheme_for_pack  CC=8  out:10
-  src.urisys.markpact.run.runtime_build  [1 funcs]
+  src.urisys.markpact.platform_export  [6 funcs]
+    _authorities_from_flow  CC=10  out:13
+    _resolve_authority  CC=9  out:7
+    _target_stub  CC=11  out:1
+    build_resolver_yaml  CC=5  out:3
+    collect_process_uris  CC=6  out:20
+    export_platform_artifacts  CC=7  out:35
+  src.urisys.markpact.run  [1 funcs]
+    run_markpact  CC=6  out:16
+  src.urisys.markpact.run.config  [2 funcs]
+    load_run_config  CC=4  out:5
+    read_run_config  CC=7  out:4
+  src.urisys.markpact.run.modes.adapter  [1 funcs]
+    run  CC=3  out:5
+  src.urisys.markpact.run.modes.flow  [4 funcs]
+    run  CC=9  out:12
+    _build_flow_runtime  CC=2  out:8
+    _resolve_flow_ids  CC=5  out:6
+    _resolve_flow_uses  CC=5  out:11
+  src.urisys.markpact.run.modes.interface  [1 funcs]
+    run  CC=2  out:1
+  src.urisys.markpact.run.modes.pack  [1 funcs]
+    run  CC=1  out:2
+  src.urisys.markpact.run.modes.service  [1 funcs]
+    run  CC=6  out:7
+  src.urisys.markpact.run.runtime_build  [3 funcs]
+    apply_resolver_config  CC=7  out:9
     build_runtime  CC=3  out:5
+    routes_summary  CC=2  out:0
   src.urisys.markpact.tests  [2 funcs]
     run_markpact_tests  CC=12  out:27
     run_tests_for_path  CC=1  out:3
@@ -2909,17 +2906,17 @@ MODULES:
     extract_images_from_dict  CC=8  out:15
     extract_step_screenshots  CC=5  out:7
     find_wheel_file  CC=2  out:4
-  src.urisys_lab.lenovo.cli  [31 funcs]
-    _build_meta  CC=4  out:8
+  src.urisys_lab.lenovo.cli  [25 funcs]
     _check_and_restore_health  CC=4  out:5
-    _check_initial_health  CC=4  out:12
-    _ensure_pyyaml  CC=2  out:1
     _maybe_run_kvm_upgrade  CC=5  out:4
     _maybe_run_node_upgrade  CC=6  out:5
     _maybe_run_playwright_upgrade  CC=5  out:4
     _md_lessons  CC=6  out:8
     _needs_node_upgrade  CC=4  out:2
     _poll_health_after_restart  CC=9  out:14
+    _run_extract_images  CC=2  out:8
+    _run_flows  CC=7  out:12
+    _run_host_restart_and_wait_step  CC=11  out:17
   src.urisys_lab.sessions.cli  [1 funcs]
     main  CC=13  out:32
   src.urisys_lab.sessions.runners  [22 funcs]

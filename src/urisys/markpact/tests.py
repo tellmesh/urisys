@@ -8,7 +8,7 @@ from typing import Any
 import yaml
 
 from ..defaults import DEFAULT_ENVIRONMENT
-from ..managers.markpact_models import CompiledMarkpact
+from .models import CompiledMarkpact
 from .compiler import MarkpactCompiler
 
 

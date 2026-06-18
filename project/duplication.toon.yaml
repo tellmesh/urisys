@@ -1,12 +1,12 @@
-# redup/duplication | 7 groups | 108f 11349L | 2026-06-18
+# redup/duplication | 7 groups | 111f 11414L | 2026-06-18
 
 SUMMARY:
-  files_scanned: 108
-  total_lines:   11349
+  files_scanned: 111
+  total_lines:   11414
   dup_groups:    7
   dup_fragments: 15
   saved_lines:   162
-  scan_ms:       2846
+  scan_ms:       3986
 
 HOTSPOTS[7] (files with most duplication):
   src/urisys_lab/sessions/runners.py  dup=138L  groups=1  frags=3  (1.2%)

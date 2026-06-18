@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from ..managers.markpact_models import MarkpactBlock, MarkpactError, safe_identifier
+from .models import MarkpactBlock, MarkpactError, safe_identifier
 
 
 def handler_id_from_ref(ref: str) -> str:

@@ -12,8 +12,8 @@ import yaml
 
 from .blocks import read_blocks
 from .pack import load_pack_block, package_id
-from ..managers.markpact_flows import extract_flows, flow_uris
-from ..managers.markpact_profile import declared_schemes
+from .flows import extract_flows, flow_uris
+from .profile import declared_schemes
 
 _AUTHORITY_RE = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9._-]*$")
 

@@ -9,11 +9,11 @@ from uri_control.edge.compose import build_runtime
 from uri_control.edge.runtime import run_flow
 
 from ..defaults import DEFAULT_ENVIRONMENT
-from .markpact_flows import classify_flow, declared_uses, _provider_scheme
+from ..markpact.flows import _provider_scheme, classify_flow, declared_uses
+from ..markpact.models import CompiledMarkpact, MarkpactError, safe_identifier
 from .markpact_pack_deps import ensure_flow_packs
 from ..markpact.pack import capabilities, load_pack_block, scheme_for_pack
 from .markpact_manager import MarkpactManager
-from .markpact_models import CompiledMarkpact, MarkpactError, safe_identifier
 
 try:
     import yaml

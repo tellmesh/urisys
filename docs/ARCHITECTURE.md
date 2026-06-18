@@ -41,16 +41,18 @@ Szczegółowy podział **proces / resolver / marksync**: [`docs/PROCESS-ARCHITEC
 └─────────────────────────────────────────────────────────────┘
 
 marksync (osobne repo) — sync Markpactów + plugin `urisys` → generated/{platform}/… (Etap 4 ✅)
-urisys platform_export — materialize / export-platform → urisys.runtime.yaml, uri_routes.h
+urisys `markpact.platform_export` — materialize / export-platform → urisys.runtime.yaml, uri_routes.h
 ```
+
+Szczegóły refaktoryzacji modułów: [`docs/REFACTORING.md`](REFACTORING.md).
 
 ## Centralny runtime (`src/urisys/`)
 
 | Komponent | Rola |
 |-----------|------|
 | `PackManager` | Ładuje paczki `uri*` z PyPI/path, `manifest.yaml`, Markpact |
-| `MarkpactManager` | Walidacja/kompilacja/test jednoplikowych `*.markpact.md` |
-| `platform_export` | `export_platform_artifacts` → `generated/{linux,server,esp32}/` (Etap 4) |
+| `MarkpactManager` | Walidacja/kompilacja/test jednoplikowych `*.markpact.md` (fasada → `urisys.markpact`) |
+| `markpact/` | Compile, analyze (`analyzer/`), run modes (`run/`), `platform_export` |
 | `RuntimeManager` | Buduje `uri_control.UriControlRuntime` (uricore) |
 | `UriController` | `call`, `explain`, `routes` |
 | `FlowController` | Sekwencyjne wykonanie `do:` z pliku flow (bez `after`) |
@@ -141,6 +143,7 @@ python3 scripts/run_test_sessions.py --sessions lab-10-flows
 python3 scripts/session_report.py analyze output/test-sessions/<run-id> --write-md
 bash scripts/validate-all-markpacts.sh
 bash scripts/run-markpact-ci.sh              # drift + validate + markpact tests
+python -m pytest tests/test_golden_analyze.py tests/test_markpact_analyzer_rules.py -q
 ```
 
 Artefakty sesji: `responses/*.json`, `screenshots/`, `report.json`, `events-*.jsonl`.

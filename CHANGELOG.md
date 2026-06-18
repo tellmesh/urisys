@@ -74,6 +74,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
 - Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
 
+## [0.1.67] - 2026-06-18
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update docs/ARCHITECTURE.md
+- Update docs/CONFORMANCE.md
+- Update docs/ECOSYSTEM.md
+- Update docs/MARKPACT-PROFILE.md
+- Update docs/README.md
+- Update docs/REFACTORING.md
+- ... and 3 more files
+
+### Test
+- Update tests/conftest.py
+- Update tests/golden/desktop-automation-processes.analyze.json
+- Update tests/golden/machine-cycle-process.analyze.json
+- Update tests/golden/uristepper.analyze.json
+- Update tests/test_capability_conformance.py
+- Update tests/test_golden_analyze.py
+
+### Other
+- Update .gitignore
+- Update project/analysis.toon.yaml
+- Update project/analysis.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/compact_flow.mmd
+- Update project/compact_flow.png
+- Update project/duplication.toon.yaml
+- ... and 12 more files
+
 ## [0.1.66] - 2026-06-17
 
 ### Docs

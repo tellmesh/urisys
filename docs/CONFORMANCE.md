@@ -11,14 +11,20 @@
 | `desktop-automation-processes` | `rdp-kvm-smoke` | — | `ocr_contains` |
 | `desktop-automation-processes` | `install-update-verify-browser` | `urisys.runtime.resolver.yaml` | `opened_url_contains` |
 
-## Runtime matrix (plan)
+## Runtime matrix (analyze + dry-run)
 
-| Capability | mock | TELLMESH_ROOT | resolver + package alias |
-|------------|------|---------------|----------------------------|
-| stepper | ✅ | ✅ | Pololu hybrid YAML |
-| kvm/ocr/llm | ✅ | ✅ | — |
-| shell | ✅ | ✅ | `policy.shell.allowlist` |
+| Capability | analyze strict | dry-run flow | resolver |
+|------------|----------------|--------------|----------|
+| stepper | ✅ `uristepper` | ✅ machine-cycle | Pololu hybrid YAML |
+| kvm/ocr/llm/him | ✅ matrix test | ✅ desktop flows | — |
+| shell/screen/env | ✅ matrix test | — | `policy.shell.allowlist` |
+| rdp/browser | ✅ matrix test | — | — |
 | package:// | — | — | `uri_aliases` required |
+
+CI:
+- `tests/test_capability_conformance.py` — analyze matrix (10 thin packs)
+- `tests/test_process_conformance.py` — dry-run process flows
+- `tests/test_golden_analyze.py` — snapshot analyze reference processes
 
 ## Commands
 

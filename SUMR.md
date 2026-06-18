@@ -104,7 +104,7 @@ costs>=0.1.20
 
 ## Call Graph
 
-*373 nodes · 500 edges · 63 modules · CC̄=4.3*
+*342 nodes · 500 edges · 62 modules · CC̄=4.2*
 
 ### Hubs (by degree)
 
@@ -113,17 +113,17 @@ costs>=0.1.20
 | `build_parser` *(in src.urisys.cli.parser)* | 1 | 1 | 108 | **109** |
 | `print` *(in scripts.analyze-thin-markpacts)* | 0 | 70 | 0 | **70** |
 | `run_cmd` *(in src.urisys_lab.sessions.util)* | 6 | 30 | 12 | **42** |
-| `export_platform_artifacts` *(in src.urisys.managers.platform_export)* | 7 | 2 | 35 | **37** |
+| `export_platform_artifacts` *(in src.urisys.markpact.platform_export)* | 7 | 2 | 35 | **37** |
 | `run_flow` *(in src.urisys_lab.lenovo.cli)* | 14 ⚠ | 3 | 33 | **36** |
-| `analyze_run` *(in scripts.report.run_analysis)* | 13 ⚠ | 2 | 33 | **35** |
 | `generate_pack_markpact` *(in src.urisys.managers.markpact_pack_gen)* | 10 ⚠ | 1 | 33 | **34** |
 | `finalize_session` *(in src.urisys_lab.sessions.util)* | 5 | 21 | 13 | **34** |
+| `session_lab_10_flows` *(in scripts.test_sessions.lab_flows)* | 7 | 0 | 33 | **33** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
-# generated in 0.17s
-# nodes: 373 | edges: 500 | modules: 63
-# CC̄=4.3
+# generated in 0.28s
+# nodes: 342 | edges: 500 | modules: 62
+# CC̄=4.2
 
 HUBS[20]:
   src.urisys.cli.parser.build_parser
@@ -132,117 +132,46 @@ HUBS[20]:
     CC=0  in:70  out:0  total:70
   src.urisys_lab.sessions.util.run_cmd
     CC=6  in:30  out:12  total:42
-  src.urisys.managers.platform_export.export_platform_artifacts
+  src.urisys.markpact.platform_export.export_platform_artifacts
     CC=7  in:2  out:35  total:37
   src.urisys_lab.lenovo.cli.run_flow
     CC=14  in:3  out:33  total:36
-  scripts.report.run_analysis.analyze_run
-    CC=13  in:2  out:33  total:35
   src.urisys.managers.markpact_pack_gen.generate_pack_markpact
     CC=10  in:1  out:33  total:34
   src.urisys_lab.sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
-  src.urisys.managers.contract_gen._diff_section
-    CC=8  in:1  out:32  total:33
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
+  src.urisys.managers.contract_gen._diff_section
+    CC=8  in:1  out:32  total:33
   src.urisys_lab.sessions.runners.session_automation_lab
     CC=13  in:1  out:31  total:32
   src.urisys_lab.sessions.cli.main
     CC=13  in:0  out:32  total:32
-  scripts.generate_pack_markpacts._render
-    CC=14  in:1  out:31  total:32
   src.urisys_lab.core.now_iso
     CC=1  in:29  out:2  total:31
   src.urisys_lab.sessions.runners.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
-  scripts.report.session.generate_report
-    CC=9  in:2  out:27  total:29
   src.urisys.markpact.tests.run_markpact_tests
     CC=12  in:1  out:27  total:28
   src.urisys.cli.helpers.print_json
     CC=1  in:26  out:2  total:28
+  src.urisys.markpact.compiler.MarkpactCompiler.compile
+    CC=7  in:0  out:27  total:27
   src.urisys.managers.markpact_run_flow.run_markpact_flow
     CC=14  in:1  out:26  total:27
   src.urisys.doctor.run_doctor
     CC=11  in:3  out:22  total:25
+  src.urisys_lab.sessions.util.http_json
+    CC=9  in:7  out:18  total:25
+  src.urisys.markpact.validate_pack.validate_markpact_file
+    CC=12  in:1  out:24  total:25
 
 MODULES:
   scripts.analyze-thin-markpacts  [1 funcs]
     print  CC=0  out:0
-  scripts.generate_pack_markpacts  [15 funcs]
-    _capabilities  CC=7  out:12
-    _extra_specs  CC=3  out:2
-    _file_stem  CC=4  out:4
-    _fill_pattern  CC=1  out:3
-    _process_spec  CC=8  out:12
-    _render  CC=14  out:31
-    _run_block  CC=1  out:0
-    _scheme  CC=2  out:1
-    _split_by_scheme  CC=13  out:18
-    _tests  CC=5  out:4
-  scripts.office-simulate-loop  [5 funcs]
+  scripts.office-simulate-loop  [1 funcs]
     call_uri  CC=4  out:11
-    llm_tick  CC=7  out:18
-    main  CC=10  out:12
-    parse_args  CC=1  out:8
-    rules_tick  CC=3  out:8
-  scripts.pack_registry  [6 funcs]
-    _pack  CC=3  out:2
-    _repo  CC=1  out:0
-    all_promoted_packs  CC=1  out:3
-    pack_specs  CC=7  out:20
-    sibling_repo  CC=1  out:1
-    sibling_uv_path  CC=1  out:0
-  scripts.pack_sync  [19 funcs]
-    _check_promoted  CC=5  out:7
-    _cmd_check  CC=5  out:7
-    _cmd_init_repo  CC=3  out:2
-    _cmd_print_uv_sources  CC=4  out:2
-    _cmd_promote  CC=3  out:3
-    _cmd_to_repo  CC=5  out:6
-    _repo_pyproject  CC=14  out:12
-    _validate_packs  CC=3  out:1
-    check_drift  CC=14  out:19
-    file_hash  CC=1  out:3
-  scripts.report.cli  [1 funcs]
-    main  CC=4  out:23
-  scripts.report.events  [4 funcs]
-    load_event_records  CC=14  out:14
-    merge_event_summaries  CC=10  out:16
-    summarize_event_records  CC=14  out:15
-    summarize_events  CC=8  out:10
-  scripts.report.run_analysis  [2 funcs]
-    analyze_run  CC=13  out:33
-    write_run_analysis  CC=2  out:7
-  scripts.report.run_markdown  [1 funcs]
-    render_run_analysis_markdown  CC=7  out:16
-  scripts.report.session  [5 funcs]
-    _resolve_screenshot  CC=5  out:6
-    _response_to_step_result  CC=12  out:20
-    generate_report  CC=9  out:27
-    infer_steps  CC=7  out:8
-    session_duration  CC=5  out:14
-  scripts.report.session_io  [1 funcs]
-    write_session_report  CC=2  out:7
-  scripts.report.session_markdown  [4 funcs]
-    _environment_section  CC=5  out:7
-    _screenshots_section  CC=3  out:3
-    _steps_section  CC=7  out:4
-    render_session_markdown  CC=1  out:16
-  scripts.report.util  [2 funcs]
-    read_json  CC=3  out:3
-    tail  CC=2  out:0
-  scripts.scan-browser-sessions  [9 funcs]
-    _copy_query  CC=2  out:10
-    _output_json  CC=2  out:4
-    _output_text  CC=11  out:16
-    _scan_profiles  CC=12  out:11
-    chrome_profiles  CC=11  out:14
-    discover_browsers  CC=1  out:0
-    firefox_profiles  CC=8  out:15
-    main  CC=2  out:7
-    scan_chrome_cookies  CC=13  out:13
   scripts.test_sessions.expectations  [9 funcs]
     _min_vision_confidence  CC=4  out:3
     _ocr_contains  CC=5  out:6
@@ -263,25 +192,23 @@ MODULES:
     capture_rdp_screenshot  CC=5  out:6
     capture_rdp_screenshot_wait  CC=9  out:6
     prepare_ok_target  CC=1  out:2
-  scripts.test_sessions.util  [7 funcs]
-    compose_cmd  CC=4  out:4
-    docker_logs  CC=3  out:3
-    finalize_session  CC=5  out:13
-    http_json  CC=9  out:18
-    read_meta  CC=3  out:3
-    wait_health  CC=3  out:5
-    write_meta  CC=1  out:3
-  scripts.update-ecosystem-readmes  [4 funcs]
-    build_section  CC=1  out:1
-    fix_urisysedge_refs  CC=2  out:1
-    main  CC=4  out:11
-    strip_old_section  CC=2  out:3
   src.urisys.bootstrap  [5 funcs]
     _doctor_main  CC=3  out:7
     _init_main  CC=6  out:18
     _missing_uricore_payload  CC=1  out:1
     _print_json  CC=1  out:2
     main  CC=8  out:6
+  src.urisys.cli.commands.markpact  [15 funcs]
+    _apply_strict_operations  CC=8  out:2
+    _apply_strict_profile  CC=4  out:2
+    _run_path_command  CC=6  out:5
+    cmd_analyze  CC=5  out:9
+    cmd_compile  CC=1  out:3
+    cmd_contract  CC=6  out:14
+    cmd_export_platform  CC=3  out:8
+    cmd_markpact  CC=11  out:16
+    cmd_materialize  CC=3  out:8
+    cmd_pack  CC=6  out:10
   src.urisys.cli.commands.node  [1 funcs]
     cmd_node  CC=6  out:8
   src.urisys.cli.commands.runtime  [4 funcs]
@@ -294,9 +221,10 @@ MODULES:
     cmd_init  CC=6  out:7
   src.urisys.cli.errors  [1 funcs]
     handle_cli_error  CC=8  out:13
-  src.urisys.cli.helpers  [2 funcs]
+  src.urisys.cli.helpers  [3 funcs]
     json_arg  CC=3  out:5
     print_json  CC=1  out:2
+    resolve_markpact_source  CC=2  out:3
   src.urisys.cli.main  [1 funcs]
     main  CC=3  out:5
   src.urisys.cli.parser  [2 funcs]
@@ -390,8 +318,17 @@ MODULES:
     _run_block  CC=1  out:0
     find_package_dir  CC=8  out:12
     generate_pack_markpact  CC=10  out:33
-  src.urisys.managers.markpact_profile  [1 funcs]
-    declared_schemes  CC=11  out:17
+  src.urisys.managers.markpact_profile  [19 funcs]
+    _build_flow_profiles  CC=6  out:11
+    _cap_uri  CC=3  out:3
+    _cross_check_schemes  CC=9  out:8
+    _flow_features  CC=6  out:9
+    _flow_level_features  CC=3  out:4
+    _issue  CC=1  out:1
+    _issue_message  CC=1  out:0
+    _required_features  CC=4  out:7
+    _step_features  CC=7  out:9
+    _text_pattern_features  CC=4  out:3
   src.urisys.managers.markpact_run_flow  [6 funcs]
     _split_extra  CC=7  out:8
     flow_path_for  CC=3  out:4
@@ -412,15 +349,20 @@ MODULES:
     _manifest_is_loadable  CC=5  out:7
     _repo_for_package  CC=2  out:0
     _sibling_manifest_path  CC=8  out:7
-  src.urisys.managers.platform_export  [6 funcs]
-    _authorities_from_flow  CC=10  out:13
-    _resolve_authority  CC=9  out:7
-    _target_stub  CC=11  out:1
-    build_resolver_yaml  CC=5  out:3
-    collect_process_uris  CC=6  out:20
-    export_platform_artifacts  CC=7  out:35
+  src.urisys.markpact.analyzer.lint  [2 funcs]
+    _issue_message  CC=1  out:0
+    run_lint  CC=8  out:14
   src.urisys.markpact.analyzer.report  [1 funcs]
     analyze_markpact  CC=8  out:18
+  src.urisys.markpact.analyzer.rules.base  [1 funcs]
+    cap_uri  CC=3  out:3
+  src.urisys.markpact.analyzer.rules.capabilities  [4 funcs]
+    check  CC=6  out:6
+    check  CC=7  out:6
+    check  CC=7  out:6
+    check  CC=10  out:12
+  src.urisys.markpact.analyzer.rules.flows  [1 funcs]
+    check  CC=4  out:3
   src.urisys.markpact.artifacts  [6 funcs]
     flows_from_cache  CC=3  out:3
     modules_from_cache  CC=4  out:3
@@ -428,8 +370,9 @@ MODULES:
     write_flows  CC=3  out:6
     write_modules  CC=2  out:5
     write_protos  CC=3  out:6
-  src.urisys.markpact.blocks  [3 funcs]
+  src.urisys.markpact.blocks  [4 funcs]
     handler_blocks  CC=5  out:3
+    load_yaml_blocks  CC=6  out:4
     read_blocks  CC=3  out:11
     yaml_blocks  CC=4  out:0
   src.urisys.markpact.cache  [4 funcs]
@@ -437,6 +380,10 @@ MODULES:
     compiled_from_cache  CC=4  out:8
     ensure_importable  CC=2  out:3
     write_manifest_flows  CC=3  out:9
+  src.urisys.markpact.compiler  [3 funcs]
+    compile  CC=7  out:27
+    _write_docs_block  CC=4  out:3
+    _write_tests_block  CC=2  out:3
   src.urisys.markpact.handlers  [3 funcs]
     handler_id_from_ref  CC=2  out:2
     resolve_handler_ref  CC=7  out:8
@@ -454,8 +401,35 @@ MODULES:
     load_pack_block  CC=4  out:9
     package_id  CC=5  out:7
     scheme_for_pack  CC=8  out:10
-  src.urisys.markpact.run.runtime_build  [1 funcs]
+  src.urisys.markpact.platform_export  [6 funcs]
+    _authorities_from_flow  CC=10  out:13
+    _resolve_authority  CC=9  out:7
+    _target_stub  CC=11  out:1
+    build_resolver_yaml  CC=5  out:3
+    collect_process_uris  CC=6  out:20
+    export_platform_artifacts  CC=7  out:35
+  src.urisys.markpact.run  [1 funcs]
+    run_markpact  CC=6  out:16
+  src.urisys.markpact.run.config  [2 funcs]
+    load_run_config  CC=4  out:5
+    read_run_config  CC=7  out:4
+  src.urisys.markpact.run.modes.adapter  [1 funcs]
+    run  CC=3  out:5
+  src.urisys.markpact.run.modes.flow  [4 funcs]
+    run  CC=9  out:12
+    _build_flow_runtime  CC=2  out:8
+    _resolve_flow_ids  CC=5  out:6
+    _resolve_flow_uses  CC=5  out:11
+  src.urisys.markpact.run.modes.interface  [1 funcs]
+    run  CC=2  out:1
+  src.urisys.markpact.run.modes.pack  [1 funcs]
+    run  CC=1  out:2
+  src.urisys.markpact.run.modes.service  [1 funcs]
+    run  CC=6  out:7
+  src.urisys.markpact.run.runtime_build  [3 funcs]
+    apply_resolver_config  CC=7  out:9
     build_runtime  CC=3  out:5
+    routes_summary  CC=2  out:0
   src.urisys.markpact.tests  [2 funcs]
     run_markpact_tests  CC=12  out:27
     run_tests_for_path  CC=1  out:3
@@ -501,17 +475,17 @@ MODULES:
     extract_images_from_dict  CC=8  out:15
     extract_step_screenshots  CC=5  out:7
     find_wheel_file  CC=2  out:4
-  src.urisys_lab.lenovo.cli  [31 funcs]
-    _build_meta  CC=4  out:8
+  src.urisys_lab.lenovo.cli  [25 funcs]
     _check_and_restore_health  CC=4  out:5
-    _check_initial_health  CC=4  out:12
-    _ensure_pyyaml  CC=2  out:1
     _maybe_run_kvm_upgrade  CC=5  out:4
     _maybe_run_node_upgrade  CC=6  out:5
     _maybe_run_playwright_upgrade  CC=5  out:4
     _md_lessons  CC=6  out:8
     _needs_node_upgrade  CC=4  out:2
     _poll_health_after_restart  CC=9  out:14
+    _run_extract_images  CC=2  out:8
+    _run_flows  CC=7  out:12
+    _run_host_restart_and_wait_step  CC=11  out:17
   src.urisys_lab.sessions.cli  [1 funcs]
     main  CC=13  out:32
   src.urisys_lab.sessions.runners  [22 funcs]
@@ -617,9 +591,9 @@ EDGES:
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/tellmesh/urisys
-# generated in 0.17s
-# nodes: 373 | edges: 500 | modules: 63
-# CC̄=4.3
+# generated in 0.28s
+# nodes: 342 | edges: 500 | modules: 62
+# CC̄=4.2
 
 HUBS[20]:
   src.urisys.cli.parser.build_parser
@@ -628,117 +602,46 @@ HUBS[20]:
     CC=0  in:70  out:0  total:70
   src.urisys_lab.sessions.util.run_cmd
     CC=6  in:30  out:12  total:42
-  src.urisys.managers.platform_export.export_platform_artifacts
+  src.urisys.markpact.platform_export.export_platform_artifacts
     CC=7  in:2  out:35  total:37
   src.urisys_lab.lenovo.cli.run_flow
     CC=14  in:3  out:33  total:36
-  scripts.report.run_analysis.analyze_run
-    CC=13  in:2  out:33  total:35
   src.urisys.managers.markpact_pack_gen.generate_pack_markpact
     CC=10  in:1  out:33  total:34
   src.urisys_lab.sessions.util.finalize_session
     CC=5  in:21  out:13  total:34
-  src.urisys.managers.contract_gen._diff_section
-    CC=8  in:1  out:32  total:33
   scripts.test_sessions.lab_flows.session_lab_10_flows
     CC=7  in:0  out:33  total:33
+  src.urisys.managers.contract_gen._diff_section
+    CC=8  in:1  out:32  total:33
   src.urisys_lab.sessions.runners.session_automation_lab
     CC=13  in:1  out:31  total:32
   src.urisys_lab.sessions.cli.main
     CC=13  in:0  out:32  total:32
-  scripts.generate_pack_markpacts._render
-    CC=14  in:1  out:31  total:32
   src.urisys_lab.core.now_iso
     CC=1  in:29  out:2  total:31
   src.urisys_lab.sessions.runners.session_urirdp_mock_docker
     CC=5  in:0  out:31  total:31
-  scripts.report.session.generate_report
-    CC=9  in:2  out:27  total:29
   src.urisys.markpact.tests.run_markpact_tests
     CC=12  in:1  out:27  total:28
   src.urisys.cli.helpers.print_json
     CC=1  in:26  out:2  total:28
+  src.urisys.markpact.compiler.MarkpactCompiler.compile
+    CC=7  in:0  out:27  total:27
   src.urisys.managers.markpact_run_flow.run_markpact_flow
     CC=14  in:1  out:26  total:27
   src.urisys.doctor.run_doctor
     CC=11  in:3  out:22  total:25
+  src.urisys_lab.sessions.util.http_json
+    CC=9  in:7  out:18  total:25
+  src.urisys.markpact.validate_pack.validate_markpact_file
+    CC=12  in:1  out:24  total:25
 
 MODULES:
   scripts.analyze-thin-markpacts  [1 funcs]
     print  CC=0  out:0
-  scripts.generate_pack_markpacts  [15 funcs]
-    _capabilities  CC=7  out:12
-    _extra_specs  CC=3  out:2
-    _file_stem  CC=4  out:4
-    _fill_pattern  CC=1  out:3
-    _process_spec  CC=8  out:12
-    _render  CC=14  out:31
-    _run_block  CC=1  out:0
-    _scheme  CC=2  out:1
-    _split_by_scheme  CC=13  out:18
-    _tests  CC=5  out:4
-  scripts.office-simulate-loop  [5 funcs]
+  scripts.office-simulate-loop  [1 funcs]
     call_uri  CC=4  out:11
-    llm_tick  CC=7  out:18
-    main  CC=10  out:12
-    parse_args  CC=1  out:8
-    rules_tick  CC=3  out:8
-  scripts.pack_registry  [6 funcs]
-    _pack  CC=3  out:2
-    _repo  CC=1  out:0
-    all_promoted_packs  CC=1  out:3
-    pack_specs  CC=7  out:20
-    sibling_repo  CC=1  out:1
-    sibling_uv_path  CC=1  out:0
-  scripts.pack_sync  [19 funcs]
-    _check_promoted  CC=5  out:7
-    _cmd_check  CC=5  out:7
-    _cmd_init_repo  CC=3  out:2
-    _cmd_print_uv_sources  CC=4  out:2
-    _cmd_promote  CC=3  out:3
-    _cmd_to_repo  CC=5  out:6
-    _repo_pyproject  CC=14  out:12
-    _validate_packs  CC=3  out:1
-    check_drift  CC=14  out:19
-    file_hash  CC=1  out:3
-  scripts.report.cli  [1 funcs]
-    main  CC=4  out:23
-  scripts.report.events  [4 funcs]
-    load_event_records  CC=14  out:14
-    merge_event_summaries  CC=10  out:16
-    summarize_event_records  CC=14  out:15
-    summarize_events  CC=8  out:10
-  scripts.report.run_analysis  [2 funcs]
-    analyze_run  CC=13  out:33
-    write_run_analysis  CC=2  out:7
-  scripts.report.run_markdown  [1 funcs]
-    render_run_analysis_markdown  CC=7  out:16
-  scripts.report.session  [5 funcs]
-    _resolve_screenshot  CC=5  out:6
-    _response_to_step_result  CC=12  out:20
-    generate_report  CC=9  out:27
-    infer_steps  CC=7  out:8
-    session_duration  CC=5  out:14
-  scripts.report.session_io  [1 funcs]
-    write_session_report  CC=2  out:7
-  scripts.report.session_markdown  [4 funcs]
-    _environment_section  CC=5  out:7
-    _screenshots_section  CC=3  out:3
-    _steps_section  CC=7  out:4
-    render_session_markdown  CC=1  out:16
-  scripts.report.util  [2 funcs]
-    read_json  CC=3  out:3
-    tail  CC=2  out:0
-  scripts.scan-browser-sessions  [9 funcs]
-    _copy_query  CC=2  out:10
-    _output_json  CC=2  out:4
-    _output_text  CC=11  out:16
-    _scan_profiles  CC=12  out:11
-    chrome_profiles  CC=11  out:14
-    discover_browsers  CC=1  out:0
-    firefox_profiles  CC=8  out:15
-    main  CC=2  out:7
-    scan_chrome_cookies  CC=13  out:13
   scripts.test_sessions.expectations  [9 funcs]
     _min_vision_confidence  CC=4  out:3
     _ocr_contains  CC=5  out:6
@@ -759,25 +662,23 @@ MODULES:
     capture_rdp_screenshot  CC=5  out:6
     capture_rdp_screenshot_wait  CC=9  out:6
     prepare_ok_target  CC=1  out:2
-  scripts.test_sessions.util  [7 funcs]
-    compose_cmd  CC=4  out:4
-    docker_logs  CC=3  out:3
-    finalize_session  CC=5  out:13
-    http_json  CC=9  out:18
-    read_meta  CC=3  out:3
-    wait_health  CC=3  out:5
-    write_meta  CC=1  out:3
-  scripts.update-ecosystem-readmes  [4 funcs]
-    build_section  CC=1  out:1
-    fix_urisysedge_refs  CC=2  out:1
-    main  CC=4  out:11
-    strip_old_section  CC=2  out:3
   src.urisys.bootstrap  [5 funcs]
     _doctor_main  CC=3  out:7
     _init_main  CC=6  out:18
     _missing_uricore_payload  CC=1  out:1
     _print_json  CC=1  out:2
     main  CC=8  out:6
+  src.urisys.cli.commands.markpact  [15 funcs]
+    _apply_strict_operations  CC=8  out:2
+    _apply_strict_profile  CC=4  out:2
+    _run_path_command  CC=6  out:5
+    cmd_analyze  CC=5  out:9
+    cmd_compile  CC=1  out:3
+    cmd_contract  CC=6  out:14
+    cmd_export_platform  CC=3  out:8
+    cmd_markpact  CC=11  out:16
+    cmd_materialize  CC=3  out:8
+    cmd_pack  CC=6  out:10
   src.urisys.cli.commands.node  [1 funcs]
     cmd_node  CC=6  out:8
   src.urisys.cli.commands.runtime  [4 funcs]
@@ -790,9 +691,10 @@ MODULES:
     cmd_init  CC=6  out:7
   src.urisys.cli.errors  [1 funcs]
     handle_cli_error  CC=8  out:13
-  src.urisys.cli.helpers  [2 funcs]
+  src.urisys.cli.helpers  [3 funcs]
     json_arg  CC=3  out:5
     print_json  CC=1  out:2
+    resolve_markpact_source  CC=2  out:3
   src.urisys.cli.main  [1 funcs]
     main  CC=3  out:5
   src.urisys.cli.parser  [2 funcs]
@@ -886,8 +788,17 @@ MODULES:
     _run_block  CC=1  out:0
     find_package_dir  CC=8  out:12
     generate_pack_markpact  CC=10  out:33
-  src.urisys.managers.markpact_profile  [1 funcs]
-    declared_schemes  CC=11  out:17
+  src.urisys.managers.markpact_profile  [19 funcs]
+    _build_flow_profiles  CC=6  out:11
+    _cap_uri  CC=3  out:3
+    _cross_check_schemes  CC=9  out:8
+    _flow_features  CC=6  out:9
+    _flow_level_features  CC=3  out:4
+    _issue  CC=1  out:1
+    _issue_message  CC=1  out:0
+    _required_features  CC=4  out:7
+    _step_features  CC=7  out:9
+    _text_pattern_features  CC=4  out:3
   src.urisys.managers.markpact_run_flow  [6 funcs]
     _split_extra  CC=7  out:8
     flow_path_for  CC=3  out:4
@@ -908,15 +819,20 @@ MODULES:
     _manifest_is_loadable  CC=5  out:7
     _repo_for_package  CC=2  out:0
     _sibling_manifest_path  CC=8  out:7
-  src.urisys.managers.platform_export  [6 funcs]
-    _authorities_from_flow  CC=10  out:13
-    _resolve_authority  CC=9  out:7
-    _target_stub  CC=11  out:1
-    build_resolver_yaml  CC=5  out:3
-    collect_process_uris  CC=6  out:20
-    export_platform_artifacts  CC=7  out:35
+  src.urisys.markpact.analyzer.lint  [2 funcs]
+    _issue_message  CC=1  out:0
+    run_lint  CC=8  out:14
   src.urisys.markpact.analyzer.report  [1 funcs]
     analyze_markpact  CC=8  out:18
+  src.urisys.markpact.analyzer.rules.base  [1 funcs]
+    cap_uri  CC=3  out:3
+  src.urisys.markpact.analyzer.rules.capabilities  [4 funcs]
+    check  CC=6  out:6
+    check  CC=7  out:6
+    check  CC=7  out:6
+    check  CC=10  out:12
+  src.urisys.markpact.analyzer.rules.flows  [1 funcs]
+    check  CC=4  out:3
   src.urisys.markpact.artifacts  [6 funcs]
     flows_from_cache  CC=3  out:3
     modules_from_cache  CC=4  out:3
@@ -924,8 +840,9 @@ MODULES:
     write_flows  CC=3  out:6
     write_modules  CC=2  out:5
     write_protos  CC=3  out:6
-  src.urisys.markpact.blocks  [3 funcs]
+  src.urisys.markpact.blocks  [4 funcs]
     handler_blocks  CC=5  out:3
+    load_yaml_blocks  CC=6  out:4
     read_blocks  CC=3  out:11
     yaml_blocks  CC=4  out:0
   src.urisys.markpact.cache  [4 funcs]
@@ -933,6 +850,10 @@ MODULES:
     compiled_from_cache  CC=4  out:8
     ensure_importable  CC=2  out:3
     write_manifest_flows  CC=3  out:9
+  src.urisys.markpact.compiler  [3 funcs]
+    compile  CC=7  out:27
+    _write_docs_block  CC=4  out:3
+    _write_tests_block  CC=2  out:3
   src.urisys.markpact.handlers  [3 funcs]
     handler_id_from_ref  CC=2  out:2
     resolve_handler_ref  CC=7  out:8
@@ -950,8 +871,35 @@ MODULES:
     load_pack_block  CC=4  out:9
     package_id  CC=5  out:7
     scheme_for_pack  CC=8  out:10
-  src.urisys.markpact.run.runtime_build  [1 funcs]
+  src.urisys.markpact.platform_export  [6 funcs]
+    _authorities_from_flow  CC=10  out:13
+    _resolve_authority  CC=9  out:7
+    _target_stub  CC=11  out:1
+    build_resolver_yaml  CC=5  out:3
+    collect_process_uris  CC=6  out:20
+    export_platform_artifacts  CC=7  out:35
+  src.urisys.markpact.run  [1 funcs]
+    run_markpact  CC=6  out:16
+  src.urisys.markpact.run.config  [2 funcs]
+    load_run_config  CC=4  out:5
+    read_run_config  CC=7  out:4
+  src.urisys.markpact.run.modes.adapter  [1 funcs]
+    run  CC=3  out:5
+  src.urisys.markpact.run.modes.flow  [4 funcs]
+    run  CC=9  out:12
+    _build_flow_runtime  CC=2  out:8
+    _resolve_flow_ids  CC=5  out:6
+    _resolve_flow_uses  CC=5  out:11
+  src.urisys.markpact.run.modes.interface  [1 funcs]
+    run  CC=2  out:1
+  src.urisys.markpact.run.modes.pack  [1 funcs]
+    run  CC=1  out:2
+  src.urisys.markpact.run.modes.service  [1 funcs]
+    run  CC=6  out:7
+  src.urisys.markpact.run.runtime_build  [3 funcs]
+    apply_resolver_config  CC=7  out:9
     build_runtime  CC=3  out:5
+    routes_summary  CC=2  out:0
   src.urisys.markpact.tests  [2 funcs]
     run_markpact_tests  CC=12  out:27
     run_tests_for_path  CC=1  out:3
@@ -997,17 +945,17 @@ MODULES:
     extract_images_from_dict  CC=8  out:15
     extract_step_screenshots  CC=5  out:7
     find_wheel_file  CC=2  out:4
-  src.urisys_lab.lenovo.cli  [31 funcs]
-    _build_meta  CC=4  out:8
+  src.urisys_lab.lenovo.cli  [25 funcs]
     _check_and_restore_health  CC=4  out:5
-    _check_initial_health  CC=4  out:12
-    _ensure_pyyaml  CC=2  out:1
     _maybe_run_kvm_upgrade  CC=5  out:4
     _maybe_run_node_upgrade  CC=6  out:5
     _maybe_run_playwright_upgrade  CC=5  out:4
     _md_lessons  CC=6  out:8
     _needs_node_upgrade  CC=4  out:2
     _poll_health_after_restart  CC=9  out:14
+    _run_extract_images  CC=2  out:8
+    _run_flows  CC=7  out:12
+    _run_host_restart_and_wait_step  CC=11  out:17
   src.urisys_lab.sessions.cli  [1 funcs]
     main  CC=13  out:32
   src.urisys_lab.sessions.runners  [22 funcs]
@@ -1089,17 +1037,15 @@ EDGES:
 ### Code Analysis (`project/analysis.toon.yaml`)
 
 ```toon markpact:analysis path=project/analysis.toon.yaml
-# code2llm | 172f 16570L | python:111,shell:49,yaml:7,toml:1,json:1,yml:1,javascript:1 | 2026-06-18
-# generated in 0.04s
-# CC̅=4.3 | critical:1/615 | dups:0 | cycles:0
+# code2llm | 175f 16638L | python:114,shell:49,yaml:7,toml:1,json:1,yml:1,javascript:1 | 2026-06-18
+# generated in 0.03s
+# CC̅=4.2 | critical:0/619 | dups:0 | cycles:0
 
-HEALTH[1]:
-  🟡 CC    main CC=15 (limit:15)
+HEALTH[0]: ok
 
-REFACTOR[1]:
-  1. split 1 high-CC methods  (CC>15)
+REFACTOR[0]: none needed
 
-PIPELINES[151]:
+PIPELINES[153]:
   [1] Src [registry]: registry
       PURITY: 100% pure
   [2] Src [runtime]: runtime
@@ -1132,83 +1078,83 @@ PIPELINES[151]:
       PURITY: 100% pure
   [16] Src [cmd_node]: cmd_node → build_runtime → extend_tellmesh_paths → tellmesh_root
       PURITY: 100% pure
-  [17] Src [__init__]: __init__
+  [17] Src [cmd_markpact]: cmd_markpact → resolve_markpact_source
       PURITY: 100% pure
-  [18] Src [run]: run → load_flow
+  [18] Src [__init__]: __init__
       PURITY: 100% pure
-  [19] Src [close]: close
+  [19] Src [compile]: compile → compile_context → read_blocks → parse_meta
       PURITY: 100% pure
-  [20] Src [__init__]: __init__ → create_server → _read_json
+  [20] Src [run]: run → routes_summary
       PURITY: 100% pure
-  [21] Src [serve_forever]: serve_forever → print
+  [21] Src [run]: run → _resolve_flow_ids → pick_flow_id
       PURITY: 100% pure
-  [22] Src [__init__]: __init__
+  [22] Src [run]: run → build_runtime → extend_tellmesh_paths → tellmesh_root
       PURITY: 100% pure
-  [23] Src [call]: call
+  [23] Src [run]: run → build_runtime → extend_tellmesh_paths → tellmesh_root
       PURITY: 100% pure
-  [24] Src [explain]: explain
+  [24] Src [run]: run → build_runtime → extend_tellmesh_paths → tellmesh_root
       PURITY: 100% pure
-  [25] Src [routes]: routes
+  [25] Src [check]: check
       PURITY: 100% pure
-  [26] Src [close]: close
+  [26] Src [check]: check → flow_uris
       PURITY: 100% pure
-  [27] Src [to_dict]: to_dict
+  [27] Src [check]: check → cap_uri
       PURITY: 100% pure
-  [28] Src [__init__]: __init__
+  [28] Src [check]: check → cap_uri
       PURITY: 100% pure
-  [29] Src [list_events]: list_events
+  [29] Src [check]: check → cap_uri
       PURITY: 100% pure
-  [30] Src [build_context]: build_context
+  [30] Src [check]: check → cap_uri
       PURITY: 100% pure
-  [31] Src [explain]: explain
+  [31] Src [check]: check
       PURITY: 100% pure
-  [32] Src [__init__]: __init__
+  [32] Src [check]: check
       PURITY: 100% pure
-  [33] Src [create_runtime]: create_runtime
+  [33] Src [check]: check
       PURITY: 100% pure
-  [34] Src [close]: close
+  [34] Src [check]: check
       PURITY: 100% pure
-  [35] Src [__exit__]: __exit__
+  [35] Src [__init__]: __init__
       PURITY: 100% pure
-  [36] Src [__init__]: __init__
+  [36] Src [run]: run → load_flow
       PURITY: 100% pure
-  [37] Src [read_blocks]: read_blocks
+  [37] Src [close]: close
       PURITY: 100% pure
-  [38] Src [source_hash]: source_hash
+  [38] Src [__init__]: __init__ → create_server → _read_json
       PURITY: 100% pure
-  [39] Src [load_pack_block]: load_pack_block
+  [39] Src [serve_forever]: serve_forever → print
       PURITY: 100% pure
-  [40] Src [compile]: compile
+  [40] Src [__init__]: __init__
       PURITY: 100% pure
-  [41] Src [analyze]: analyze → analyze_markpact → read_blocks → parse_meta
+  [41] Src [call]: call
       PURITY: 100% pure
-  [42] Src [manifest_path_for]: manifest_path_for
+  [42] Src [explain]: explain
       PURITY: 100% pure
-  [43] Src [run_tests]: run_tests → run_tests_for_path → run_markpact_tests → check_expectations
+  [43] Src [routes]: routes
       PURITY: 100% pure
-  [44] Src [_build_route]: _build_route → build_route → _resolve_pattern
+  [44] Src [close]: close
       PURITY: 100% pure
-  [45] Src [_compile_manifest]: _compile_manifest → compile_manifest → capabilities
+  [45] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [46] Src [call_http]: call_http
+  [46] Src [__init__]: __init__
       PURITY: 100% pure
-  [47] Src [__init__]: __init__
+  [47] Src [list_events]: list_events
       PURITY: 100% pure
-  [48] Src [_split_specs]: _split_specs
+  [48] Src [build_context]: build_context
       PURITY: 100% pure
-  [49] Src [_is_all]: _is_all
+  [49] Src [explain]: explain
       PURITY: 100% pure
-  [50] Src [parse_packs]: parse_packs
+  [50] Src [__init__]: __init__
       PURITY: 100% pure
 
 LAYERS:
-  src/                            CC̄=4.4    ←in:0  →out:0
-  │ !! cli                        965L  0C   40m  CC=15     ←2
+  src/                            CC̄=4.3    ←in:0  →out:0
+  │ !! cli                        968L  0C   41m  CC=14     ←2
   │ !! runners                    665L  0C   22m  CC=13     ←1
   │ core                       313L  0C   23m  CC=8      ←8
   │ platform_export            303L  0C    8m  CC=11     ←2
   │ doctor                     293L  1C   11m  CC=11     ←3
-  │ markpact_profile           279L  1C   20m  CC=11     ←4
+  │ markpact_profile           269L  1C   20m  CC=11     ←4
   │ init_setup                 257L  0C   16m  CC=13     ←2
   │ markpact_pack_gen          242L  0C   12m  CC=11     ←1
   │ source_manager             218L  2C   12m  CC=11     ←0
@@ -1223,8 +1169,8 @@ LAYERS:
   │ markpact_flows             133L  0C    8m  CC=11     ←6
   │ uricore_install            130L  0C   11m  CC=6      ←2
   │ manifest                   127L  0C    7m  CC=12     ←2
-  │ cache                      118L  0C    5m  CC=4      ←1
   │ compiler                   118L  1C    5m  CC=7      ←0
+  │ cache                      118L  0C    5m  CC=4      ←1
   │ bootstrap                  116L  0C    5m  CC=8      ←0
   │ capabilities               107L  5C    5m  CC=10     ←0
   │ node_install               106L  0C    9m  CC=7      ←1
@@ -1248,6 +1194,7 @@ LAYERS:
   │ handlers                    51L  0C    3m  CC=7      ←3
   │ urirouter_install           46L  0C    6m  CC=3      ←0
   │ flows                       46L  2C    2m  CC=4      ←0
+  │ pack                        45L  2C    2m  CC=6      ←0
   │ defaults                    40L  0C    0m  CC=0.0    ←0
   │ node                        34L  0C    1m  CC=6      ←0
   │ flow_controller             33L  1C    3m  CC=6      ←0
@@ -1258,26 +1205,28 @@ LAYERS:
   │ helpers                     28L  0C    3m  CC=3      ←4
   │ adapter                     28L  1C    1m  CC=3      ←0
   │ interface                   28L  1C    1m  CC=2      ←0
+  │ __init__                    27L  0C    0m  CC=0.0    ←0
   │ flow                        25L  0C    2m  CC=7      ←1
   │ config                      25L  0C    2m  CC=7      ←1
   │ context                     25L  1C    0m  CC=0.0    ←0
   │ service                     24L  1C    1m  CC=6      ←0
   │ __init__                    24L  0C    0m  CC=0.0    ←0
-  │ __init__                    24L  0C    0m  CC=0.0    ←0
   │ route_manager               23L  1C    3m  CC=2      ←0
-  │ server_controller           19L  1C    2m  CC=1      ←0
+  │ __init__                    20L  0C    0m  CC=0.0    ←0
   │ schemes                     19L  1C    1m  CC=2      ←0
-  │ __init__                    19L  0C    0m  CC=0.0    ←0
-  │ policy_manager              18L  1C    1m  CC=2      ←0
+  │ server_controller           19L  1C    2m  CC=1      ←0
   │ pack                        18L  1C    1m  CC=1      ←0
+  │ policy_manager              18L  1C    1m  CC=2      ←0
   │ main                        17L  0C    1m  CC=3      ←0
   │ base                        17L  1C    2m  CC=3      ←2
   │ __init__                    17L  0C    0m  CC=0.0    ←0
   │ context                     15L  1C    0m  CC=0.0    ←0
   │ markpact_run                15L  0C    0m  CC=0.0    ←0
   │ bridge_manager              14L  1C    1m  CC=3      ←0
-  │ event_manager               13L  1C    2m  CC=1      ←0
   │ base                        13L  1C    1m  CC=1      ←0
+  │ event_manager               13L  1C    2m  CC=1      ←0
+  │ platform_export             13L  0C    0m  CC=0.0    ←0
+  │ protocol                    10L  1C    1m  CC=1      ←0
   │ __init__                    10L  0C    0m  CC=0.0    ←0
   │ paths                       10L  0C    0m  CC=0.0    ←0
   │ __init__                     5L  0C    0m  CC=0.0    ←0
@@ -1319,8 +1268,8 @@ LAYERS:
   │ validate-all-markpacts.sh    65L  0C    1m  CC=0.0    ←0
   │ validate-pypi-metadata.sh    62L  0C    2m  CC=0.0    ←0
   │ __init__                    61L  0C    0m  CC=0.0    ←0
+  │ run-markpact-ci.sh          61L  0C    0m  CC=0.0    ←0
   │ test-python-matrix.sh       58L  0C    1m  CC=0.0    ←0
-  │ run-markpact-ci.sh          58L  0C    0m  CC=0.0    ←0
   │ bootstrap-lenovo-local.sh    57L  0C    0m  CC=0.0    ←0
   │ ci-checkout-siblings.sh     56L  0C    1m  CC=0.0    ←0
   │ materialize-all-showcases.sh    53L  0C    1m  CC=0.0    ←0
@@ -1401,9 +1350,9 @@ COUPLING:
   CYCLES: none
   HUB: scripts/ (fan-in=27)
   HUB: src.urisys_lab/ (fan-in=38)
+  SMELL: src.urisys_lab/ fan-out=11 → split needed
   SMELL: scripts.report/ fan-out=14 → split needed
   SMELL: src.urisys/ fan-out=12 → split needed
-  SMELL: src.urisys_lab/ fan-out=11 → split needed
   SMELL: scripts.test_sessions/ fan-out=29 → split needed
 
 EXTERNAL:
@@ -1414,15 +1363,15 @@ EXTERNAL:
 ### Duplication (`project/duplication.toon.yaml`)
 
 ```toon markpact:analysis path=project/duplication.toon.yaml
-# redup/duplication | 7 groups | 108f 11349L | 2026-06-18
+# redup/duplication | 7 groups | 111f 11414L | 2026-06-18
 
 SUMMARY:
-  files_scanned: 108
-  total_lines:   11349
+  files_scanned: 111
+  total_lines:   11414
   dup_groups:    7
   dup_fragments: 15
   saved_lines:   162
-  scan_ms:       2846
+  scan_ms:       3986
 
 HOTSPOTS[7] (files with most duplication):
   src/urisys_lab/sessions/runners.py  dup=138L  groups=1  frags=3  (1.2%)
@@ -1513,37 +1462,33 @@ METRICS-TARGET:
 ### Evolution / Churn (`project/evolution.toon.yaml`)
 
 ```toon markpact:analysis path=project/evolution.toon.yaml
-# code2llm/evolution | 417 func | 66f | 2026-06-18
+# code2llm/evolution | 421 func | 68f | 2026-06-18
 # generated in 0.00s
 
-NEXT[4] (ranked by impact):
+NEXT[3] (ranked by impact):
   [1] !! SPLIT           src/urisys_lab/lenovo/cli.py
-      WHY: 965L, 0 classes, max CC=15
-      EFFORT: ~4h  IMPACT: 14475
+      WHY: 968L, 0 classes, max CC=14
+      EFFORT: ~4h  IMPACT: 13552
 
   [2] !! SPLIT           src/urisys_lab/sessions/runners.py
       WHY: 665L, 0 classes, max CC=13
       EFFORT: ~4h  IMPACT: 8645
 
-  [3] !  SPLIT-FUNC      main  CC=15  fan=37
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 555
-
-  [4] !! SPLIT           planfile.yaml
+  [3] !! SPLIT           planfile.yaml
       WHY: 1319L, 0 classes, max CC=0
       EFFORT: ~4h  IMPACT: 0
 
 
 RISKS[3]:
   ⚠ Splitting planfile.yaml may break 0 import paths
-  ⚠ Splitting src/urisys_lab/lenovo/cli.py may break 40 import paths
+  ⚠ Splitting src/urisys_lab/lenovo/cli.py may break 41 import paths
   ⚠ Splitting src/urisys_lab/sessions/runners.py may break 22 import paths
 
 METRICS-TARGET:
-  CC̄:          4.4 → ≤3.1
-  max-CC:      15 → ≤7
+  CC̄:          4.3 → ≤3.0
+  max-CC:      14 → ≤7
   god-modules: 4 → 0
-  high-CC(≥15): 1 → ≤0
+  high-CC(≥15): 0 → ≤0
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -1571,7 +1516,7 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=4.5 → now CC̄=4.4
+  prev CC̄=4.3 → now CC̄=4.3
 ```
 
 ## Intent

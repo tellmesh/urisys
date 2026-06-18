@@ -1,10 +1,10 @@
-# urisys | 207f 17559L | python:156,shell:49,less:1,javascript:1 | 2026-06-18
-# stats: 653 func | 45 cls | 207 mod | CC̄=4.8 | critical:68 | cycles:0
-# alerts[5]: CC main=15; CC _render=14; CC check_drift=14; CC _repo_pyproject=14; CC summarize_event_records=14
-# hotspots[5]: main fan=35; analyze_run fan=23; session_lab_10_flows fan=22; session_lab_10_flows fan=22; session_urirdp_real_docker fan=22
+# urisys | 210f 17668L | python:159,shell:49,less:1,javascript:1 | 2026-06-18
+# stats: 657 func | 46 cls | 210 mod | CC̄=4.8 | critical:68 | cycles:0
+# alerts[5]: CC _render=14; CC check_drift=14; CC _repo_pyproject=14; CC summarize_event_records=14; CC load_event_records=14
+# hotspots[5]: main fan=33; analyze_run fan=23; session_lab_10_flows fan=22; session_lab_10_flows fan=22; session_urirdp_real_docker fan=22
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[207]:
+M[210]:
   app.doql.less,49
   examples/frontend/app.js,22
   examples/markpact/browser-call.sh,13
@@ -60,7 +60,7 @@ M[207]:
   scripts/run-lab-nightly.sh,17
   scripts/run-lab-unit-ci.sh,22
   scripts/run-lenovo-office-linkedin.sh,119
-  scripts/run-markpact-ci.sh,59
+  scripts/run-markpact-ci.sh,62
   scripts/run-nl-log-smoke.sh,44
   scripts/run-office-simulate-e2e.sh,131
   scripts/run-office-simulate-lenovo.sh,183
@@ -87,7 +87,7 @@ M[207]:
   src/urisys/bootstrap.py,117
   src/urisys/cli/__init__.py,11
   src/urisys/cli/__main__.py,5
-  src/urisys/cli/commands/__init__.py,20
+  src/urisys/cli/commands/__init__.py,21
   src/urisys/cli/commands/markpact.py,208
   src/urisys/cli/commands/node.py,35
   src/urisys/cli/commands/runtime.py,52
@@ -96,6 +96,7 @@ M[207]:
   src/urisys/cli/helpers.py,29
   src/urisys/cli/main.py,18
   src/urisys/cli/parser.py,214
+  src/urisys/cli/protocol.py,11
   src/urisys/controllers/__init__.py,1
   src/urisys/controllers/flow_controller.py,34
   src/urisys/controllers/server_controller.py,20
@@ -163,7 +164,7 @@ M[207]:
   src/urisys_lab/__init__.py,6
   src/urisys_lab/core.py,314
   src/urisys_lab/lenovo/__init__.py,6
-  src/urisys_lab/lenovo/cli.py,966
+  src/urisys_lab/lenovo/cli.py,969
   src/urisys_lab/paths.py,11
   src/urisys_lab/sessions/__init__.py,75
   src/urisys_lab/sessions/cli.py,107
@@ -176,10 +177,12 @@ M[207]:
   tests/pack_import_isolation.py,44
   tests/test_analyze_strict.py,41
   tests/test_bootstrap.py,61
+  tests/test_capability_conformance.py,40
   tests/test_contract_gen.py,74
   tests/test_desktop_automation_processes.py,76
   tests/test_doctor.py,29
   tests/test_doctor_uricore.py,27
+  tests/test_golden_analyze.py,51
   tests/test_http_server.py,69
   tests/test_init.py,61
   tests/test_kvm_pack_pyprojects.py,71
@@ -466,6 +469,9 @@ D:
     e: add_runtime_flags,build_parser
     add_runtime_flags(parser)
     build_parser()
+  src/urisys/cli/protocol.py:
+    e: CliCommand
+    CliCommand: __call__(1)  # CLI subcommand handler: ``(args) -> exit code``.
   src/urisys/controllers/__init__.py:
   src/urisys/controllers/flow_controller.py:
     e: FlowController
@@ -853,7 +859,7 @@ D:
     expand_step_wheels(step)
   src/urisys_lab/lenovo/__init__.py:
   src/urisys_lab/lenovo/cli.py:
-    e: load_yaml,http_get,_run_http_get_step,_run_host_sleep_step,_schedule_restart_safely,_poll_health_after_restart,_run_host_restart_and_wait_step,_run_host_schedule_restart_step,_run_host_wait_health_step,_run_uri_call_step,run_step,run_flow,append_log,build_wheels,start_wheel_server,_needs_node_upgrade,_run_upgrade_flow,_md_header,_md_flow_results,_md_step_detail,_md_lessons,write_session_md,resolve_flow_paths,resolve_route_map,load_manifest_session,_check_and_restore_health,_skip_node_down,_maybe_run_node_upgrade,_maybe_run_kvm_upgrade,_maybe_run_playwright_upgrade,_run_flows,_run_extract_images,_ensure_pyyaml,_init_session,_setup_wheels,_check_initial_health,_copy_flow_sources,_build_meta,_collect_step_summaries,main
+    e: load_yaml,http_get,_run_http_get_step,_run_host_sleep_step,_schedule_restart_safely,_poll_health_after_restart,_run_host_restart_and_wait_step,_run_host_schedule_restart_step,_run_host_wait_health_step,_run_uri_call_step,run_step,run_flow,append_log,build_wheels,start_wheel_server,_needs_node_upgrade,_run_upgrade_flow,_md_header,_md_flow_results,_md_step_detail,_md_lessons,write_session_md,resolve_flow_paths,resolve_route_map,load_manifest_session,_check_and_restore_health,_skip_node_down,_maybe_run_node_upgrade,_maybe_run_kvm_upgrade,_maybe_run_playwright_upgrade,_run_flows,_run_extract_images,_ensure_pyyaml,_init_session,_setup_wheels,_check_initial_health,_copy_flow_sources,_build_meta,_collect_step_summaries,_session_result,main
     load_yaml(path)
     http_get(endpoint;path)
     _run_http_get_step(step;out;endpoint)
@@ -893,6 +899,7 @@ D:
     _copy_flow_sources(flow_paths;manifest_path;session_dir)
     _build_meta(run_id;session_cfg;node_reachable;args;route_map;examples_root;manifest_path;flow_paths)
     _collect_step_summaries(meta;flow_records)
+    _session_result(node_reachable;flow_records;wheel_proc;log_path;session_dir;meta)
     main(argv)
   src/urisys_lab/paths.py:
   src/urisys_lab/sessions/__init__.py:
@@ -989,6 +996,9 @@ D:
     test_cli_import_does_not_require_uri_control()
     test_missing_uricore_payload()
     test_doctor_subcommand_via_bootstrap()
+  tests/test_capability_conformance.py:
+    e: test_capability_pack_analyze_conformance
+    test_capability_pack_analyze_conformance(markpact_file;expected_scheme;min_caps)
   tests/test_contract_gen.py:
     e: test_manifest_to_contract_maps_kinds_and_approval,test_generated_contract_validates,test_self_drift_is_clean,test_drift_detected,test_existing_repo_contract_has_no_core_drift
     test_manifest_to_contract_maps_kinds_and_approval()
@@ -1010,6 +1020,10 @@ D:
   tests/test_doctor_uricore.py:
     e: test_check_uricore_authentic_fails_on_squatter
     test_check_uricore_authentic_fails_on_squatter()
+  tests/test_golden_analyze.py:
+    e: _analyze_snapshot,test_analyze_golden_snapshot
+    _analyze_snapshot(path)
+    test_analyze_golden_snapshot(markpact_name;golden_name)
   tests/test_http_server.py:
     e: _start,_get,test_health_exact_shape_and_cors,test_routes_are_full_dicts_not_flattened,test_options_preflight_204,test_events_endpoint
     _start()

@@ -17,6 +17,7 @@ Indeks dokumentacji monorepo **tellmesh/urisys** (stan: 2026-06-18, packi w sibl
 | Dokument | Opis |
 |----------|------|
 | [`ECOSYSTEM.md`](ECOSYSTEM.md) | **Model warstw** — urisys / urirouter / uricore / packi (aktualny stan 2026-06) |
+| [`REFACTORING.md`](REFACTORING.md) | **Refaktoryzacja 2026-06** — sprinty, layout modułów, MP001–MP010, testy |
 | [`MESH.md`](MESH.md) | **Mapa TellMesh** — wszystkie paczki podlinkowane do urisys, diagramy |
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Warstwy: CLI → edge Docker → flows; porty obrazów |
 | [`PROCESS-ARCHITECTURE.md`](PROCESS-ARCHITECTURE.md) | Proces Markpact vs resolver vs marksync (Etapy 1–4 ✅) |

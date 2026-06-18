@@ -53,7 +53,7 @@ runtime:
 | Pole | Opis |
 |------|------|
 | `platform` | `esp32`, `edge-linux`, `desktop-linux`, `server-linux`, `pc-linux` |
-| `transport` | `local`, `http`, `mqtt`, `ssh` |
+| `transport` | `local`, `http`, `mqtt`, `ssh`, `websocket`, `nats`, `serial`, `usb` |
 | `endpoint` | URL lub topic dla delegate |
 | `adapter` | moduł packa (`uriscreen`, `uristepper`, `external`) |
 | `uri_host` | zamiana hosta w URI przed delegate |
@@ -66,7 +66,9 @@ export URISYS_RESOLVER_CONFIG=path/to/urisys.runtime.yaml
 urisys markpact run process.markpact.md --as flow --approve --dry-run
 ```
 
-Implementacja: `uri_router.resolver.load_resolver_into_runtime`.
+Implementacja: `uri_router.resolver.load_resolver_into_runtime`.  
+Walidacja struktury: `uri_router.resolver.validate_resolver` (v1).  
+Strukturalne issue codes: `validate_resolver_issues()` → RR001–RR013 (patrz `urirouter/docs/REFACTORING.md`).
 
 ## Generowanie
 

@@ -7,7 +7,7 @@ from typing import Any
 
 import yaml
 
-from ..managers.markpact_models import (
+from .models import (
     FENCE_RE,
     MarkpactBlock,
     MarkpactError,

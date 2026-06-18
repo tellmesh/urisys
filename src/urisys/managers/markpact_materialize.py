@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from .markpact_manager import MarkpactManager
-from .markpact_models import CompiledMarkpact, safe_identifier
+from ..markpact.models import CompiledMarkpact, safe_identifier
 
 
 def default_materialize_root() -> Path:

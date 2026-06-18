@@ -7,7 +7,7 @@ from typing import Any
 
 import yaml
 
-from ..managers.markpact_models import MarkpactError, scheme_from_uri
+from .models import MarkpactError, scheme_from_uri
 from .blocks import read_blocks, yaml_blocks
 
 

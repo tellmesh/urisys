@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import yaml
 
-from ....managers.markpact_models import MarkpactError, safe_identifier
+from ...models import MarkpactError, safe_identifier
 from ....managers.markpact_run_flow import packs_for_flow, pick_flow_id
 from ...pack import capabilities, load_pack_block, scheme_for_pack
 from ..context import RunContext

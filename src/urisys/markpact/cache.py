@@ -9,7 +9,7 @@ from typing import Any
 
 import yaml
 
-from ..managers.markpact_models import CompiledMarkpact, MarkpactBlock, safe_identifier, source_hash
+from .models import CompiledMarkpact, MarkpactBlock, safe_identifier, source_hash
 from .artifacts import flows_from_cache, modules_from_cache, protos_from_cache
 from .blocks import read_blocks
 from .pack import load_pack_block, package_id

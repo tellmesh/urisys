@@ -7,7 +7,7 @@ from typing import Any, Callable
 
 import yaml
 
-from ..managers.markpact_models import CompiledMarkpact, MarkpactError
+from .models import CompiledMarkpact, MarkpactError
 from .artifacts import write_flows, write_modules, write_protos
 from .blocks import handler_blocks, load_yaml_blocks
 from .cache import (

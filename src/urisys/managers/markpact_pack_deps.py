@@ -11,7 +11,7 @@ from typing import Any
 
 from uri_control.edge.compose import resolve_pack_module
 
-from .markpact_models import MarkpactError
+from ..markpact.models import MarkpactError
 
 
 def tellmesh_root(*, anchor: Path | None = None) -> Path | None:

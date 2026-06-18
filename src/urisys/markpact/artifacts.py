@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from ..managers.markpact_models import MarkpactBlock, safe_identifier
-from ..managers.markpact_flows import extract_flows, extract_modules, extract_protos
+from .flows import extract_flows, extract_modules, extract_protos
+from .models import MarkpactBlock, safe_identifier
 
 
 def write_modules(cache_dir: Path, blocks: list[MarkpactBlock]) -> tuple[str, ...]:

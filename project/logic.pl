@@ -57,7 +57,7 @@ project_file('scripts/run-lab-e2e.sh', 15, 'shell').
 project_file('scripts/run-lab-nightly.sh', 17, 'shell').
 project_file('scripts/run-lab-unit-ci.sh', 22, 'shell').
 project_file('scripts/run-lenovo-office-linkedin.sh', 119, 'shell').
-project_file('scripts/run-markpact-ci.sh', 59, 'shell').
+project_file('scripts/run-markpact-ci.sh', 62, 'shell').
 project_file('scripts/run-nl-log-smoke.sh', 44, 'shell').
 project_file('scripts/run-office-simulate-e2e.sh', 131, 'shell').
 project_file('scripts/run-office-simulate-lenovo.sh', 183, 'shell').
@@ -84,7 +84,7 @@ project_file('src/urisys/__init__.py', 4, 'python').
 project_file('src/urisys/bootstrap.py', 117, 'python').
 project_file('src/urisys/cli/__init__.py', 11, 'python').
 project_file('src/urisys/cli/__main__.py', 5, 'python').
-project_file('src/urisys/cli/commands/__init__.py', 20, 'python').
+project_file('src/urisys/cli/commands/__init__.py', 21, 'python').
 project_file('src/urisys/cli/commands/markpact.py', 208, 'python').
 project_file('src/urisys/cli/commands/node.py', 35, 'python').
 project_file('src/urisys/cli/commands/runtime.py', 52, 'python').
@@ -93,6 +93,7 @@ project_file('src/urisys/cli/errors.py', 33, 'python').
 project_file('src/urisys/cli/helpers.py', 29, 'python').
 project_file('src/urisys/cli/main.py', 18, 'python').
 project_file('src/urisys/cli/parser.py', 214, 'python').
+project_file('src/urisys/cli/protocol.py', 11, 'python').
 project_file('src/urisys/controllers/__init__.py', 1, 'python').
 project_file('src/urisys/controllers/flow_controller.py', 34, 'python').
 project_file('src/urisys/controllers/server_controller.py', 20, 'python').
@@ -160,7 +161,7 @@ project_file('src/urisys/urirouter_install.py', 47, 'python').
 project_file('src/urisys_lab/__init__.py', 6, 'python').
 project_file('src/urisys_lab/core.py', 314, 'python').
 project_file('src/urisys_lab/lenovo/__init__.py', 6, 'python').
-project_file('src/urisys_lab/lenovo/cli.py', 966, 'python').
+project_file('src/urisys_lab/lenovo/cli.py', 969, 'python').
 project_file('src/urisys_lab/paths.py', 11, 'python').
 project_file('src/urisys_lab/sessions/__init__.py', 75, 'python').
 project_file('src/urisys_lab/sessions/cli.py', 107, 'python').
@@ -173,10 +174,12 @@ project_file('tests/conftest.py', 54, 'python').
 project_file('tests/pack_import_isolation.py', 44, 'python').
 project_file('tests/test_analyze_strict.py', 41, 'python').
 project_file('tests/test_bootstrap.py', 61, 'python').
+project_file('tests/test_capability_conformance.py', 40, 'python').
 project_file('tests/test_contract_gen.py', 74, 'python').
 project_file('tests/test_desktop_automation_processes.py', 76, 'python').
 project_file('tests/test_doctor.py', 29, 'python').
 project_file('tests/test_doctor_uricore.py', 27, 'python').
+project_file('tests/test_golden_analyze.py', 51, 'python').
 project_file('tests/test_http_server.py', 69, 'python').
 project_file('tests/test_init.py', 61, 'python').
 project_file('tests/test_kvm_pack_pyprojects.py', 71, 'python').
@@ -651,7 +654,8 @@ python_function('src/urisys_lab/lenovo/cli.py', '_check_initial_health', 1, 4, 7
 python_function('src/urisys_lab/lenovo/cli.py', '_copy_flow_sources', 3, 3, 3).
 python_function('src/urisys_lab/lenovo/cli.py', '_build_meta', 8, 4, 6).
 python_function('src/urisys_lab/lenovo/cli.py', '_collect_step_summaries', 2, 8, 2).
-python_function('src/urisys_lab/lenovo/cli.py', 'main', 1, 15, 35).
+python_function('src/urisys_lab/lenovo/cli.py', '_session_result', 6, 6, 7).
+python_function('src/urisys_lab/lenovo/cli.py', 'main', 1, 10, 33).
 python_function('src/urisys_lab/sessions/cli.py', 'main', 0, 13, 19).
 python_function('src/urisys_lab/sessions/expectations.py', 'flow_expectations', 1, 5, 5).
 python_function('src/urisys_lab/sessions/expectations.py', 'ocr_texts', 1, 11, 4).
@@ -725,6 +729,7 @@ python_function('tests/test_bootstrap.py', 'test_bootstrap_import_does_not_requi
 python_function('tests/test_bootstrap.py', 'test_cli_import_does_not_require_uri_control', 0, 3, 1).
 python_function('tests/test_bootstrap.py', 'test_missing_uricore_payload', 0, 4, 2).
 python_function('tests/test_bootstrap.py', 'test_doctor_subcommand_via_bootstrap', 0, 6, 4).
+python_function('tests/test_capability_conformance.py', 'test_capability_pack_analyze_conformance', 3, 6, 5).
 python_function('tests/test_contract_gen.py', 'test_manifest_to_contract_maps_kinds_and_approval', 0, 12, 2).
 python_function('tests/test_contract_gen.py', 'test_generated_contract_validates', 1, 4, 5).
 python_function('tests/test_contract_gen.py', 'test_self_drift_is_clean', 0, 2, 3).
@@ -738,6 +743,8 @@ python_function('tests/test_doctor.py', 'test_doctor_ok_in_dev_env', 0, 8, 1).
 python_function('tests/test_doctor.py', 'test_doctor_fails_high_min_version', 0, 3, 2).
 python_function('tests/test_doctor.py', 'test_doctor_hints_include_node_serve', 0, 2, 2).
 python_function('tests/test_doctor_uricore.py', 'test_check_uricore_authentic_fails_on_squatter', 0, 7, 4).
+python_function('tests/test_golden_analyze.py', '_analyze_snapshot', 1, 3, 3).
+python_function('tests/test_golden_analyze.py', 'test_analyze_golden_snapshot', 2, 3, 6).
 python_function('tests/test_http_server.py', '_start', 0, 1, 5).
 python_function('tests/test_http_server.py', '_get', 2, 1, 4).
 python_function('tests/test_http_server.py', 'test_health_exact_shape_and_cors', 0, 4, 4).
@@ -877,6 +884,8 @@ python_class('scripts/report/models.py', 'Finding').
 python_class('scripts/report/models.py', 'FlowOutcome').
 python_method('FlowOutcome', 'no_visible_effect', 0, 2, 0).
 python_method('FlowOutcome', 'vision_decided', 0, 2, 1).
+python_class('src/urisys/cli/protocol.py', 'CliCommand').
+python_method('CliCommand', '__call__', 1, 1, 0).
 python_class('src/urisys/controllers/flow_controller.py', 'FlowController').
 python_method('FlowController', '__init__', 1, 1, 1).
 python_method('FlowController', 'run', 1, 6, 8).

@@ -119,6 +119,16 @@ flowchart TD
         scripts__report__run_analysis___run_recommendations("_run_recommendations CC=10")
         scripts__report__run_analysis__analyze_run("analyze_run CC=13")
         scripts__report__run_analysis__write_run_analysis["write_run_analysis"]
+        scripts__report__lab_checks__iter_step_results("iter_step_results CC=9")
+        scripts__report__lab_checks___response_to_outcome("_response_to_outcome CC=13")
+        scripts__report__lab_checks__load_flow_outcomes["load_flow_outcomes"]
+        scripts__report__lab_checks__check_declared_expectations["check_declared_expectations"]
+        scripts__report__lab_checks__check_gui_no_effect["check_gui_no_effect"]
+        scripts__report__lab_checks__check_vision_never_decides("check_vision_never_decides CC=8")
+        scripts__report__lab_checks___duplicate_recommendation["_duplicate_recommendation"]
+        scripts__report__lab_checks__check_duplicate_screenshots["check_duplicate_screenshots"]
+        scripts__report__lab_checks__check_shell_baseline_duplicate["check_shell_baseline_duplicate"]
+        scripts__report__lab_checks__analyze_lab_flows["analyze_lab_flows"]
         scripts__report__session___extract_metrics["_extract_metrics"]
         scripts__report__session___resolve_screenshot["_resolve_screenshot"]
         scripts__report__session___response_to_step_result("_response_to_step_result CC=12")
@@ -139,16 +149,6 @@ flowchart TD
         scripts__report__session_io__write_session_report["write_session_report"]
         scripts__report__util__read_json["read_json"]
         scripts__report__util__tail["tail"]
-        scripts__report__lab_checks__iter_step_results("iter_step_results CC=9")
-        scripts__report__lab_checks___response_to_outcome("_response_to_outcome CC=13")
-        scripts__report__lab_checks__load_flow_outcomes["load_flow_outcomes"]
-        scripts__report__lab_checks__check_declared_expectations["check_declared_expectations"]
-        scripts__report__lab_checks__check_gui_no_effect["check_gui_no_effect"]
-        scripts__report__lab_checks__check_vision_never_decides("check_vision_never_decides CC=8")
-        scripts__report__lab_checks___duplicate_recommendation["_duplicate_recommendation"]
-        scripts__report__lab_checks__check_duplicate_screenshots["check_duplicate_screenshots"]
-        scripts__report__lab_checks__check_shell_baseline_duplicate["check_shell_baseline_duplicate"]
-        scripts__report__lab_checks__analyze_lab_flows["analyze_lab_flows"]
     end
     subgraph scripts__run_email_mailpit_e2e
         scripts__run_email_mailpit_e2e__cleanup["cleanup"]
@@ -486,6 +486,50 @@ flowchart TD
     src__urisys__cli__commands__setup__cmd_init --> scripts__analyze_thin_markpacts__print
     src__urisys__cli__commands__node__cmd_node --> src__urisys__markpact__run__runtime_build__build_runtime
     src__urisys__cli__commands__node__cmd_node --> scripts__analyze_thin_markpacts__print
+    src__urisys__cli__commands__markpact__cmd_run_flow --> src__urisys__managers__markpact_run_flow__split_flow_ref
+    src__urisys__cli__commands__markpact__cmd_run_flow --> src__urisys__cli__helpers__resolve_markpact_source
+    src__urisys__cli__commands__markpact__cmd_run_flow --> src__urisys__managers__markpact_run_flow__run_markpact_flow
+    src__urisys__cli__commands__markpact__cmd_run_flow --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_materialize --> src__urisys__managers__markpact_run_flow__split_flow_ref
+    src__urisys__cli__commands__markpact__cmd_materialize --> src__urisys__cli__helpers__resolve_markpact_source
+    src__urisys__cli__commands__markpact__cmd_materialize --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_materialize --> src__urisys__managers__markpact_materialize__materialize_markpact
+    src__urisys__cli__commands__markpact__cmd_export_platform --> src__urisys__managers__markpact_run_flow__split_flow_ref
+    src__urisys__cli__commands__markpact__cmd_export_platform --> src__urisys__cli__helpers__resolve_markpact_source
+    src__urisys__cli__commands__markpact__cmd_export_platform --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_export_platform --> src__urisys__markpact__platform_export__export_platform_artifacts
+    src__urisys__cli__commands__markpact__cmd_run_markpact --> src__urisys__managers__markpact_run_flow__split_flow_ref
+    src__urisys__cli__commands__markpact__cmd_run_markpact --> src__urisys__cli__helpers__resolve_markpact_source
+    src__urisys__cli__commands__markpact__cmd_run_markpact --> src__urisys__markpact__run__run_markpact
+    src__urisys__cli__commands__markpact__cmd_run_markpact --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_validate --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_compile --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_routes --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_test --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_analyze --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_analyze --> src__urisys__cli__commands__markpact___apply_strict_operations
+    src__urisys__cli__commands__markpact__cmd_analyze --> src__urisys__cli__commands__markpact___apply_strict_profile
+    src__urisys__cli__commands__markpact__cmd_pack --> src__urisys__managers__markpact_pack_gen__generate_pack_markpact
+    src__urisys__cli__commands__markpact__cmd_pack --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_pack --> scripts__analyze_thin_markpacts__print
+    src__urisys__cli__commands__markpact__cmd_pack --> src__urisys__managers__markpact_pack_gen__find_package_dir
+    src__urisys__cli__commands__markpact__cmd_contract --> src__urisys__cli__helpers__resolve_markpact_source
+    src__urisys__cli__commands__markpact__cmd_contract --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_contract --> scripts__analyze_thin_markpacts__print
+    src__urisys__cli__commands__markpact___run_path_command --> src__urisys__cli__commands__markpact__cmd_validate
+    src__urisys__cli__commands__markpact___run_path_command --> src__urisys__cli__commands__markpact__cmd_compile
+    src__urisys__cli__commands__markpact___run_path_command --> src__urisys__cli__commands__markpact__cmd_routes
+    src__urisys__cli__commands__markpact___run_path_command --> src__urisys__cli__commands__markpact__cmd_test
+    src__urisys__cli__commands__markpact___run_path_command --> src__urisys__cli__commands__markpact__cmd_analyze
+    src__urisys__cli__commands__markpact__cmd_markpact --> src__urisys__cli__helpers__resolve_markpact_source
+    src__urisys__cli__commands__markpact__cmd_markpact --> src__urisys__cli__commands__markpact___run_path_command
+    src__urisys__cli__commands__markpact__cmd_markpact --> src__urisys__cli__helpers__print_json
+    src__urisys__cli__commands__markpact__cmd_markpact --> src__urisys__cli__commands__markpact__cmd_contract
+    src__urisys__cli__commands__markpact__cmd_markpact --> src__urisys__cli__commands__markpact__cmd_run_flow
+    src__urisys__cli__commands__markpact__cmd_markpact --> src__urisys__cli__commands__markpact__cmd_materialize
+    src__urisys__cli__commands__markpact__cmd_markpact --> src__urisys__cli__commands__markpact__cmd_export_platform
+    src__urisys__cli__commands__markpact__cmd_markpact --> src__urisys__cli__commands__markpact__cmd_run_markpact
+    src__urisys__cli__commands__markpact__cmd_markpact --> src__urisys__cli__commands__markpact__cmd_pack
     src__urisys__markpact__artifacts__write_modules --> src__urisys__managers__markpact_flows__extract_modules
     src__urisys__markpact__artifacts__flows_from_cache --> src__urisys__managers__markpact_flows__extract_flows
     src__urisys__markpact__artifacts__protos_from_cache --> src__urisys__managers__markpact_flows__extract_protos
@@ -520,9 +564,32 @@ flowchart TD
     src__urisys__markpact__handlers__resolve_handler_ref --> src__urisys__markpact__handlers__handler_id_from_ref
     src__urisys__markpact__handlers__resolve_handler_ref --> src__urisys__managers__markpact_models__safe_identifier
     src__urisys__markpact__handlers__write_handler_modules --> src__urisys__managers__markpact_models__safe_identifier
+    src__urisys__markpact__compiler___write_tests_block --> src__urisys__markpact__blocks__load_yaml_blocks
+    src__urisys__markpact__compiler__MarkpactCompiler__compile --> src__urisys__markpact__cache__compile_context
+    src__urisys__markpact__compiler__MarkpactCompiler__compile --> src__urisys__managers__markpact_manager__MarkpactManager__validate
+    src__urisys__markpact__compiler__MarkpactCompiler__compile --> src__urisys__markpact__handlers__write_handler_modules
+    src__urisys__markpact__compiler__MarkpactCompiler__compile --> src__urisys__markpact__manifest__compile_manifest
+    src__urisys__markpact__compiler__MarkpactCompiler__compile --> src__urisys__markpact__compiler___write_tests_block
+    src__urisys__markpact__compiler__MarkpactCompiler__compile --> src__urisys__markpact__compiler___write_docs_block
+    src__urisys__markpact__compiler__MarkpactCompiler__compile --> src__urisys__markpact__artifacts__write_flows
+    src__urisys__markpact__compiler__MarkpactCompiler__compile --> src__urisys__markpact__artifacts__write_protos
+    src__urisys__markpact__compiler__MarkpactCompiler__compile --> src__urisys__markpact__artifacts__write_modules
+    src__urisys__markpact__compiler__MarkpactCompiler__compile --> src__urisys__markpact__cache__write_compile_metadata
+    src__urisys__markpact__compiler__MarkpactCompiler__compile --> src__urisys__markpact__cache__ensure_importable
     src__urisys__markpact__pack__load_pack_block --> src__urisys__markpact__blocks__yaml_blocks
     src__urisys__markpact__pack__load_pack_block --> src__urisys__markpact__blocks__read_blocks
     src__urisys__markpact__pack__scheme_for_pack --> src__urisys__managers__markpact_models__scheme_from_uri
+    src__urisys__markpact__platform_export___authorities_from_flow --> src__urisys__managers__markpact_flows__flow_uris
+    src__urisys__markpact__platform_export___authorities_from_flow --> src__urisys__markpact__platform_export___resolve_authority
+    src__urisys__markpact__platform_export__collect_process_uris --> src__urisys__markpact__blocks__read_blocks
+    src__urisys__markpact__platform_export__collect_process_uris --> src__urisys__markpact__pack__load_pack_block
+    src__urisys__markpact__platform_export__collect_process_uris --> src__urisys__managers__markpact_flows__extract_flows
+    src__urisys__markpact__platform_export__collect_process_uris --> src__urisys__markpact__platform_export___authorities_from_flow
+    src__urisys__markpact__platform_export__collect_process_uris --> src__urisys__managers__markpact_flows__flow_uris
+    src__urisys__markpact__platform_export__collect_process_uris --> src__urisys__markpact__pack__package_id
+    src__urisys__markpact__platform_export__build_resolver_yaml --> src__urisys__markpact__platform_export___target_stub
+    src__urisys__markpact__platform_export__export_platform_artifacts --> src__urisys__markpact__platform_export__collect_process_uris
+    src__urisys__markpact__platform_export__export_platform_artifacts --> src__urisys__markpact__platform_export__build_resolver_yaml
     src__urisys__markpact__cache__compile_context --> src__urisys__markpact__blocks__read_blocks
     src__urisys__markpact__cache__compile_context --> src__urisys__markpact__pack__load_pack_block
     src__urisys__markpact__cache__compile_context --> src__urisys__managers__markpact_models__source_hash
@@ -533,6 +600,48 @@ flowchart TD
     src__urisys__markpact__cache__compiled_from_cache --> src__urisys__markpact__artifacts__protos_from_cache
     src__urisys__markpact__cache__compiled_from_cache --> src__urisys__markpact__artifacts__modules_from_cache
     src__urisys__markpact__cache__write_manifest_flows --> src__urisys__managers__markpact_models__safe_identifier
+    src__urisys__markpact__run__runtime_build__build_runtime --> src__urisys__managers__markpact_pack_deps__extend_tellmesh_paths
+    src__urisys__markpact__run__runtime_build__build_runtime --> src__urisys__markpact__run__runtime_build__apply_resolver_config
+    src__urisys__markpact__run__run_markpact --> src__urisys__markpact__run__config__read_run_config
+    src__urisys__markpact__run__run_markpact --> src__urisys__markpact__run__config__load_run_config
+    src__urisys__markpact__run__modes__adapter__AdapterMode__run --> src__urisys__markpact__run__runtime_build__routes_summary
+    src__urisys__markpact__run__modes__adapter__AdapterMode__run --> src__urisys__markpact__run__runtime_build__build_runtime
+    src__urisys__markpact__run__modes__flow___resolve_flow_ids --> src__urisys__managers__markpact_run_flow__pick_flow_id
+    src__urisys__markpact__run__modes__flow___resolve_flow_uses --> src__urisys__markpact__pack__load_pack_block
+    src__urisys__markpact__run__modes__flow___resolve_flow_uses --> src__urisys__markpact__pack__scheme_for_pack
+    src__urisys__markpact__run__modes__flow___resolve_flow_uses --> src__urisys__markpact__pack__capabilities
+    src__urisys__markpact__run__modes__flow___resolve_flow_uses --> src__urisys__managers__markpact_run_flow__packs_for_flow
+    src__urisys__markpact__run__modes__flow___resolve_flow_uses --> src__urisys__managers__markpact_models__safe_identifier
+    src__urisys__markpact__run__modes__flow___build_flow_runtime --> src__urisys__markpact__run__runtime_build__build_runtime
+    src__urisys__markpact__run__modes__flow___build_flow_runtime --> src__urisys__managers__markpact_pack_deps__ensure_flow_packs
+    src__urisys__markpact__run__modes__flow___build_flow_runtime --> src__urisys__markpact__run__runtime_build__apply_resolver_config
+    src__urisys__markpact__run__modes__flow__FlowMode__run --> src__urisys__markpact__run__modes__flow___resolve_flow_ids
+    src__urisys__markpact__run__modes__flow__FlowMode__run --> src__urisys__markpact__run__modes__flow___resolve_flow_uses
+    src__urisys__markpact__run__modes__flow__FlowMode__run --> src__urisys__markpact__run__modes__flow___build_flow_runtime
+    src__urisys__markpact__run__modes__flow__FlowMode__run --> src__urisys_lab__lenovo__cli__run_flow
+    src__urisys__markpact__run__modes__flow__FlowMode__run --> src__urisys__managers__markpact_models__safe_identifier
+    src__urisys__markpact__run__modes__pack__PackMode__run --> src__urisys__markpact__run__runtime_build__build_runtime
+    src__urisys__markpact__run__modes__pack__PackMode__run --> src__urisys__markpact__run__runtime_build__routes_summary
+    src__urisys__markpact__run__modes__interface__InterfaceMode__run --> src__urisys__markpact__run__runtime_build__build_runtime
+    src__urisys__markpact__run__modes__service__ServiceMode__run --> src__urisys__markpact__run__runtime_build__build_runtime
+    src__urisys__markpact__analyzer__lint__run_lint --> src__urisys__managers__markpact_profile___validate_scheme_requirements
+    src__urisys__markpact__analyzer__lint__run_lint --> src__urisys__managers__markpact_profile___build_flow_profiles
+    src__urisys__markpact__analyzer__lint__run_lint --> src__urisys__managers__markpact_profile___cross_check_schemes
+    src__urisys__markpact__analyzer__lint__run_lint --> src__urisys__markpact__analyzer__lint___issue_message
+    src__urisys__markpact__analyzer__report__analyze_markpact --> src__urisys__markpact__blocks__read_blocks
+    src__urisys__markpact__analyzer__report__analyze_markpact --> src__urisys__markpact__pack__load_pack_block
+    src__urisys__markpact__analyzer__report__analyze_markpact --> src__urisys__markpact__pack__capabilities
+    src__urisys__markpact__analyzer__report__analyze_markpact --> src__urisys__markpact__pack__scheme_for_pack
+    src__urisys__markpact__analyzer__report__analyze_markpact --> src__urisys__managers__markpact_flows__declared_uses
+    src__urisys__markpact__analyzer__report__analyze_markpact --> src__urisys__managers__markpact_flows__extract_flows
+    src__urisys__markpact__analyzer__report__analyze_markpact --> src__urisys__managers__markpact_profile__lint_markpact
+    src__urisys__markpact__analyzer__report__analyze_markpact --> src__urisys__managers__markpact_flows__classify_flow
+    src__urisys__markpact__analyzer__report__analyze_markpact --> src__urisys__markpact__pack__package_id
+    src__urisys__markpact__analyzer__rules__flows__MP008ImplicitLatest__check --> src__urisys__managers__markpact_flows__flow_uris
+    src__urisys__markpact__analyzer__rules__capabilities__MP001NamespacedOperation__check --> src__urisys__markpact__analyzer__rules__base__cap_uri
+    src__urisys__markpact__analyzer__rules__capabilities__MP002QueryKind__check --> src__urisys__markpact__analyzer__rules__base__cap_uri
+    src__urisys__markpact__analyzer__rules__capabilities__MP003CommandKind__check --> src__urisys__markpact__analyzer__rules__base__cap_uri
+    src__urisys__markpact__analyzer__rules__capabilities__MP004CommandApproval__check --> src__urisys__markpact__analyzer__rules__base__cap_uri
     src__urisys__controllers__flow_controller__FlowController__run --> src__urisys__flow__load_flow
     src__urisys__controllers__flow_controller__FlowController__run --> src__urisys__flow__iter_steps
     src__urisys__controllers__server_controller__ServerController____init__ --> src__urisys__http_server__create_server
@@ -602,17 +711,26 @@ flowchart TD
     src__urisys__managers__markpact_run_flow__run_markpact_flow --> src__urisys__managers__markpact_run_flow__packs_for_flow
     src__urisys__managers__markpact_run_flow__run_markpact_flow --> src__urisys_lab__lenovo__cli__run_flow
     src__urisys__managers__markpact_run_flow__run_markpact_flow --> src__urisys__markpact__pack__capabilities
-    src__urisys__managers__platform_export___authorities_from_flow --> src__urisys__managers__markpact_flows__flow_uris
-    src__urisys__managers__platform_export___authorities_from_flow --> src__urisys__managers__platform_export___resolve_authority
-    src__urisys__managers__platform_export__collect_process_uris --> src__urisys__markpact__blocks__read_blocks
-    src__urisys__managers__platform_export__collect_process_uris --> src__urisys__markpact__pack__load_pack_block
-    src__urisys__managers__platform_export__collect_process_uris --> src__urisys__managers__markpact_flows__extract_flows
-    src__urisys__managers__platform_export__collect_process_uris --> src__urisys__managers__platform_export___authorities_from_flow
-    src__urisys__managers__platform_export__collect_process_uris --> src__urisys__managers__markpact_flows__flow_uris
-    src__urisys__managers__platform_export__collect_process_uris --> src__urisys__markpact__pack__package_id
-    src__urisys__managers__platform_export__build_resolver_yaml --> src__urisys__managers__platform_export___target_stub
-    src__urisys__managers__platform_export__export_platform_artifacts --> src__urisys__managers__platform_export__collect_process_uris
-    src__urisys__managers__platform_export__export_platform_artifacts --> src__urisys__managers__platform_export__build_resolver_yaml
+    src__urisys__managers__markpact_profile___flow_features --> src__urisys__managers__markpact_profile___step_features
+    src__urisys__managers__markpact_profile___flow_features --> src__urisys__managers__markpact_profile___flow_level_features
+    src__urisys__managers__markpact_profile___flow_features --> src__urisys__managers__markpact_profile___text_pattern_features
+    src__urisys__managers__markpact_profile___flow_features --> src__urisys__managers__markpact_flows__flow_uris
+    src__urisys__managers__markpact_profile___validate_scheme_requirements --> src__urisys__managers__markpact_profile__declared_schemes
+    src__urisys__managers__markpact_profile___validate_scheme_requirements --> src__urisys__managers__markpact_profile__declared_packs
+    src__urisys__managers__markpact_profile___validate_capability_operations --> src__urisys__managers__markpact_profile___issue
+    src__urisys__managers__markpact_profile___validate_capability_operations --> src__urisys__managers__markpact_profile___issue_message
+    src__urisys__managers__markpact_profile___validate_capability_operations --> src__urisys__managers__markpact_profile___cap_uri
+    src__urisys__managers__markpact_profile___validate_uri_kind --> src__urisys__managers__markpact_profile___issue
+    src__urisys__managers__markpact_profile___validate_command_approval --> src__urisys__managers__markpact_profile___issue
+    src__urisys__managers__markpact_profile___validate_process_handler --> src__urisys__managers__markpact_profile___issue
+    src__urisys__managers__markpact_profile___validate_capability_uris --> src__urisys__managers__markpact_profile___cap_uri
+    src__urisys__managers__markpact_profile___validate_capability_uris --> src__urisys__managers__markpact_profile___validate_command_approval
+    src__urisys__managers__markpact_profile___validate_capability_uris --> src__urisys__managers__markpact_profile___validate_process_handler
+    src__urisys__managers__markpact_profile___validate_capability_uris --> src__urisys__managers__markpact_profile___validate_uri_kind
+    src__urisys__managers__markpact_profile___build_flow_profiles --> src__urisys__managers__markpact_profile___flow_features
+    src__urisys__managers__markpact_profile___build_flow_profiles --> src__urisys__managers__markpact_profile___required_features
+    src__urisys__managers__markpact_profile___cross_check_schemes --> src__urisys__managers__markpact_flows__flow_uris
+    src__urisys__managers__markpact_profile__lint_markpact --> src__urisys__markpact__analyzer__lint__run_lint
     src__urisys__managers__markpact_flows__extract_protos --> src__urisys__managers__markpact_models__safe_identifier
     src__urisys__managers__markpact_flows__classify_flow --> src__urisys__managers__markpact_flows__flow_uris
     src__urisys__managers__markpact_flows__classify_flow --> src__urisys__managers__markpact_flows___scheme
@@ -827,6 +945,8 @@ flowchart TD
     src__urisys_lab__lenovo__cli___check_initial_health --> src__urisys_lab__sessions__util__wait_health
     src__urisys_lab__lenovo__cli___check_initial_health --> src__urisys_lab__core__now_iso
     src__urisys_lab__lenovo__cli___build_meta --> src__urisys_lab__core__now_iso
+    src__urisys_lab__lenovo__cli___session_result --> src__urisys_lab__lenovo__cli__append_log
+    src__urisys_lab__lenovo__cli___session_result --> scripts__analyze_thin_markpacts__print
     src__urisys_lab__lenovo__cli__main --> src__urisys_lab__lenovo__cli___init_session
     scripts__generate_pack_markpacts___extra_specs --> scripts__pack_registry___pack
     scripts__generate_pack_markpacts___tests --> scripts__generate_pack_markpacts___fill_pattern
@@ -858,130 +978,9 @@ flowchart TD
     scripts__office_simulate_loop__main --> scripts__analyze_thin_markpacts__print
     scripts__office_simulate_loop__main --> scripts__office_simulate_loop__rules_tick
     scripts__office_simulate_loop__main --> scripts__office_simulate_loop__llm_tick
-    scripts__scan_browser_sessions__scan_chrome_cookies --> scripts__scan_browser_sessions___copy_query
-    scripts__scan_browser_sessions___scan_profiles --> scripts__scan_browser_sessions__discover_browsers
-    scripts__scan_browser_sessions___scan_profiles --> scripts__scan_browser_sessions__firefox_profiles
-    scripts__scan_browser_sessions___scan_profiles --> scripts__scan_browser_sessions__chrome_profiles
-    scripts__scan_browser_sessions___scan_profiles --> scripts__scan_browser_sessions__scan_chrome_cookies
-    scripts__scan_browser_sessions___output_json --> scripts__analyze_thin_markpacts__print
-    scripts__scan_browser_sessions___output_text --> scripts__analyze_thin_markpacts__print
-    scripts__scan_browser_sessions__main --> scripts__scan_browser_sessions___scan_profiles
-    scripts__scan_browser_sessions__main --> scripts__scan_browser_sessions___output_json
-    scripts__scan_browser_sessions__main --> scripts__scan_browser_sessions___output_text
-    scripts__update_ecosystem_readmes__main --> scripts__analyze_thin_markpacts__print
-    scripts__update_ecosystem_readmes__main --> scripts__update_ecosystem_readmes__fix_urisysedge_refs
-    scripts__update_ecosystem_readmes__main --> scripts__update_ecosystem_readmes__strip_old_section
-    scripts__update_ecosystem_readmes__main --> scripts__update_ecosystem_readmes__build_section
-    scripts__pack_sync__sync_file --> scripts__pack_sync__file_hash
-    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__vendored_module_dir
-    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__repo_module_dir
-    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__read_version
-    scripts__pack_sync__sync_to_repo --> scripts__pack_sync__sync_file
-    scripts__pack_sync__check_drift --> scripts__pack_sync__vendored_module_dir
-    scripts__pack_sync__check_drift --> scripts__pack_sync__repo_module_dir
-    scripts__pack_sync__check_drift --> scripts__pack_sync___check_promoted
-    scripts__pack_sync__check_drift --> scripts__pack_sync__read_version
-    scripts__pack_sync__check_drift --> scripts__pack_sync__file_hash
-    scripts__pack_sync___check_promoted --> scripts__pack_sync__repo_module_dir
-    scripts__pack_sync__remove_vendored --> scripts__analyze_thin_markpacts__print
-    scripts__pack_sync___repo_pyproject --> scripts__pack_sync__read_version
-    scripts__pack_sync___repo_pyproject --> scripts__pack_sync__repo_module_dir
-    scripts__pack_sync__init_repo --> scripts__pack_sync__sync_to_repo
-    scripts__pack_sync__init_repo --> scripts__analyze_thin_markpacts__print
-    scripts__pack_sync__promote --> scripts__pack_sync__sync_to_repo
-    scripts__pack_sync__promote --> scripts__pack_sync__remove_vendored
-    scripts__pack_sync___validate_packs --> scripts__analyze_thin_markpacts__print
-    scripts__pack_sync___cmd_to_repo --> scripts__pack_sync__sync_to_repo
-    scripts__pack_sync___cmd_to_repo --> scripts__analyze_thin_markpacts__print
-    scripts__pack_sync___cmd_promote --> scripts__pack_sync__promote
-    scripts__pack_sync___cmd_promote --> scripts__analyze_thin_markpacts__print
-    scripts__pack_sync___cmd_check --> scripts__analyze_thin_markpacts__print
-    scripts__pack_sync___cmd_check --> scripts__pack_sync__check_drift
-    scripts__pack_sync___cmd_init_repo --> scripts__pack_sync__init_repo
-    scripts__pack_sync___cmd_init_repo --> scripts__analyze_thin_markpacts__print
-    scripts__pack_sync___cmd_print_uv_sources --> scripts__analyze_thin_markpacts__print
-    scripts__pack_sync___cmd_print_uv_sources --> scripts__pack_registry__sibling_uv_path
-    scripts__pack_sync__main --> scripts__pack_registry__pack_specs
-    scripts__pack_registry__sibling_repo --> scripts__pack_registry___repo
-    scripts__pack_registry___pack --> scripts__pack_registry___repo
-    scripts__pack_registry__pack_specs --> scripts__pack_registry___pack
-    scripts__pack_registry__all_promoted_packs --> scripts__pack_registry__pack_specs
-    scripts__report__cli__main --> scripts__report__run_analysis__analyze_run
-    scripts__report__cli__main --> scripts__report__run_analysis__write_run_analysis
-    scripts__report__cli__main --> scripts__analyze_thin_markpacts__print
-    scripts__report__cli__main --> scripts__report__session__generate_report
-    scripts__report__cli__main --> scripts__report__session_io__write_session_report
-    scripts__report__events__summarize_events --> scripts__report__events__load_event_records
-    scripts__report__events__summarize_events --> scripts__report__events__summarize_event_records
-    scripts__report__events__merge_event_summaries --> scripts__report__events__summarize_events
-    scripts__report__run_analysis__analyze_run --> scripts__report__util__read_json
-    scripts__report__run_analysis__analyze_run --> scripts__report__lab_checks__analyze_lab_flows
-    scripts__report__run_analysis__analyze_run --> scripts__report__run_analysis___run_recommendations
-    scripts__report__run_analysis__write_run_analysis --> scripts__report__run_analysis__analyze_run
-    scripts__report__run_analysis__write_run_analysis --> scripts__report__run_markdown__render_run_analysis_markdown
-    scripts__report__session___response_to_step_result --> scripts__report__session___resolve_screenshot
-    scripts__report__session___response_to_step_result --> scripts__report__util__read_json
-    scripts__report__session___response_to_step_result --> scripts__report__session___extract_metrics
-    scripts__report__session__infer_steps --> scripts__report__session___response_to_step_result
-    scripts__report__session__session_duration --> src__urisys_lab__core__now_iso
-    scripts__report__session__generate_report --> scripts__report__session__infer_steps
-    scripts__report__session__generate_report --> scripts__report__util__read_json
-    scripts__report__session__generate_report --> scripts__report__util__tail
-    scripts__report__session__generate_report --> src__urisys_lab__core__now_iso
-    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___environment_section
-    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___steps_section
-    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___screenshots_section
-    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___events_section
-    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___log_errors_section
-    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___duplicate_screenshots_section
-    scripts__report__session_markdown__render_session_markdown --> scripts__report__session_markdown___log_tail_section
-    scripts__report__session_io__write_session_report --> scripts__report__session__generate_report
-    scripts__report__session_io__write_session_report --> scripts__report__session_markdown__render_session_markdown
-    scripts__test_sessions__util__wait_health --> scripts__test_sessions__util__http_json
-    scripts__test_sessions__util__write_meta --> scripts__test_sessions__util__read_meta
-    scripts__test_sessions__util__write_meta --> src__urisys_lab__core__save_json
-    scripts__test_sessions__util__finalize_session --> src__urisys_lab__core__now_iso
-    scripts__test_sessions__util__finalize_session --> scripts__test_sessions__util__write_meta
-    scripts__test_sessions__util__docker_logs --> scripts__test_sessions__util__compose_cmd
-    scripts__test_sessions__util__docker_logs --> scripts__test_sessions__util__run_cmd
-    src__urisys__cli__commands__markpact__cmd_run_flow --> src__urisys__managers__markpact_run_flow__split_flow_ref
-    src__urisys__cli__commands__markpact__cmd_run_flow --> src__urisys__cli__helpers__resolve_markpact_source
-    src__urisys__cli__commands__markpact__cmd_run_flow --> src__urisys__managers__markpact_run_flow__run_markpact_flow
-    src__urisys__cli__commands__markpact__cmd_run_flow --> src__urisys__cli__helpers__print_json
-    src__urisys__cli__commands__markpact__cmd_materialize --> src__urisys__managers__markpact_run_flow__split_flow_ref
-    src__urisys__cli__commands__markpact__cmd_materialize --> src__urisys__cli__helpers__resolve_markpact_source
-    src__urisys__cli__commands__markpact__cmd_materialize --> src__urisys__cli__helpers__print_json
-    src__urisys__cli__commands__markpact__cmd_materialize --> src__urisys__managers__markpact_materialize__materialize_markpact
-    src__urisys__cli__commands__markpact__cmd_export_platform --> src__urisys__managers__markpact_run_flow__split_flow_ref
-    src__urisys__cli__commands__markpact__cmd_export_platform --> src__urisys__cli__helpers__resolve_markpact_source
-    src__urisys__cli__commands__markpact__cmd_export_platform --> src__urisys__cli__helpers__print_json
-    src__urisys__cli__commands__markpact__cmd_export_platform --> src__urisys__managers__platform_export__export_platform_artifacts
-    src__urisys__cli__commands__markpact__cmd_run_markpact --> src__urisys__managers__markpact_run_flow__split_flow_ref
-    src__urisys__cli__commands__markpact__cmd_run_markpact --> src__urisys__cli__helpers__resolve_markpact_source
-    src__urisys__cli__commands__markpact__cmd_run_markpact --> src__urisys__markpact__run__run_markpact
-    src__urisys__cli__commands__markpact__cmd_run_markpact --> src__urisys__cli__helpers__print_json
-    src__urisys__cli__commands__markpact__cmd_validate --> src__urisys__cli__helpers__print_json
-    src__urisys__cli__commands__markpact__cmd_compile --> src__urisys__cli__helpers__print_json
-    src__urisys__cli__commands__markpact__cmd_routes --> src__urisys__cli__helpers__print_json
-    src__urisys__cli__commands__markpact__cmd_test --> src__urisys__cli__helpers__print_json
-    src__urisys__cli__commands__markpact__cmd_analyze --> src__urisys__cli__helpers__print_json
-    src__urisys__cli__commands__markpact__cmd_analyze --> src__urisys__cli__commands__markpact___apply_strict_operations
-    src__urisys__cli__commands__markpact__cmd_analyze --> src__urisys__cli__commands__markpact___apply_strict_profile
-    src__urisys__cli__commands__markpact__cmd_pack --> src__urisys__managers__markpact_pack_gen__generate_pack_markpact
-    src__urisys__cli__commands__markpact__cmd_pack --> src__urisys__cli__helpers__print_json
-    src__urisys__cli__commands__markpact__cmd_pack --> scripts__analyze_thin_markpacts__print
-    src__urisys__cli__commands__markpact__cmd_pack --> src__urisys__managers__markpact_pack_gen__find_package_dir
-    src__urisys__cli__commands__markpact__cmd_contract --> src__urisys__cli__helpers__resolve_markpact_source
-    src__urisys__cli__commands__markpact__cmd_contract --> src__urisys__cli__helpers__print_json
-    src__urisys__cli__commands__markpact__cmd_contract --> scripts__analyze_thin_markpacts__print
-    src__urisys__cli__commands__markpact___run_path_command --> src__urisys__cli__commands__markpact__cmd_validate
-    src__urisys__cli__commands__markpact___run_path_command --> src__urisys__cli__commands__markpact__cmd_compile
-    src__urisys__cli__commands__markpact___run_path_command --> src__urisys__cli__commands__markpact__cmd_routes
-    src__urisys__cli__commands__markpact___run_path_command --> src__urisys__cli__commands__markpact__cmd_test
-    src__urisys__cli__commands__markpact___run_path_command --> src__urisys__cli__commands__markpact__cmd_analyze
-    src__urisys__cli__commands__markpact__cmd_markpact --> src__urisys__cli__helpers__resolve_markpact_source
+    scripts__check_contract_drift___check_spec --> scripts__check_contract_drift__manifest_path
+    scripts__check_contract_drift___check_spec --> scripts__check_contract_drift__contract_paths
 
     classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
     classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
-    class src__urisys_lab__lenovo__cli__main highCC
-    class src__urisys__bootstrap__main,src__urisys__doctor__run_doctor,src__urisys__init_setup___verify_after_install,src__urisys__init_setup__run_init,src__urisys__cli__errors__handle_cli_error,src__urisys__markpact__validate_pack__validate_pack,src__urisys__markpact__validate_pack__validate_markpact_file,src__urisys__markpact__tests__check_expectations,src__urisys__markpact__tests__run_markpact_tests,src__urisys__markpact__manifest__compile_manifest,src__urisys__markpact__pack__scheme_for_pack,src__urisys__managers__markpact_validation___validate_contract_routes,src__urisys__managers__markpact_validation__validate_contract,src__urisys__managers__markpact_validation__validate_bundle,src__urisys__managers__markpact_validation__validate_implementation,src__urisys__managers__markpact_pack_deps___discover_pack_modules,src__urisys__managers__markpact_pack_deps___register_sibling_packs,src__urisys__managers__pack_manager___sibling_manifest_path,src__urisys__managers__pack_manager__PackManager__parse_packs,src__urisys__managers__pack_manager__PackManager__manifest_paths,src__urisys__managers__markpact_materialize__materialize_markpact,src__urisys__managers__markpact_pack_gen__find_package_dir,src__urisys__managers__markpact_pack_gen__package_schemes,src__urisys__managers__markpact_pack_gen___build_capability,src__urisys__managers__markpact_pack_gen___pack_block,src__urisys__managers__markpact_pack_gen___embedded_flows,src__urisys__managers__markpact_pack_gen__generate_pack_markpact,src__urisys__managers__contract_gen___entry,src__urisys__managers__contract_gen__manifest_to_contract,src__urisys__managers__contract_gen___diff_section medCC
+    class src__urisys__bootstrap__main,src__urisys__doctor__run_doctor,src__urisys__init_setup___verify_after_install,src__urisys__init_setup__run_init,src__urisys__cli__errors__handle_cli_error,src__urisys__cli__commands__markpact___apply_strict_operations,src__urisys__cli__commands__markpact__cmd_markpact,src__urisys__markpact__validate_pack__validate_pack,src__urisys__markpact__validate_pack__validate_markpact_file,src__urisys__markpact__tests__check_expectations,src__urisys__markpact__tests__run_markpact_tests,src__urisys__markpact__manifest__compile_manifest,src__urisys__markpact__pack__scheme_for_pack,src__urisys__markpact__platform_export___resolve_authority,src__urisys__markpact__platform_export___authorities_from_flow,src__urisys__markpact__platform_export___target_stub,src__urisys__markpact__run__modes__flow__FlowMode__run,src__urisys__markpact__analyzer__lint__run_lint,src__urisys__markpact__analyzer__report__analyze_markpact,src__urisys__markpact__analyzer__rules__capabilities__MP004CommandApproval__check,src__urisys__managers__markpact_validation___validate_contract_routes,src__urisys__managers__markpact_validation__validate_contract,src__urisys__managers__markpact_validation__validate_bundle,src__urisys__managers__markpact_validation__validate_implementation,src__urisys__managers__markpact_pack_deps___discover_pack_modules,src__urisys__managers__markpact_pack_deps___register_sibling_packs,src__urisys__managers__pack_manager___sibling_manifest_path,src__urisys__managers__pack_manager__PackManager__parse_packs,src__urisys__managers__pack_manager__PackManager__manifest_paths,src__urisys__managers__markpact_materialize__materialize_markpact medCC
