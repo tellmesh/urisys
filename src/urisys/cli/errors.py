@@ -26,7 +26,7 @@ def handle_cli_error(exc: Exception) -> int:
             "ok": False,
             "error": str(exc),
             "type": "module_not_found",
-            "hint": 'pip install -U urirouter uricore "urisys[real]" — then run: urisys doctor',
+            "hint": 'run: urisys init  (installs uricontrol + uriguard from GitHub — the PyPI names "uricore"/"urirouter" are unrelated 3rd-party packages), then: urisys doctor',
         })
         return 2
     raise exc

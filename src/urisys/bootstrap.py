@@ -61,7 +61,7 @@ def _init_main(argv: list[str]) -> int:
 
     parser = argparse.ArgumentParser(
         prog="urisys init",
-        description="Install urirouter/uricore/urisys[real], run doctor, write slave env file.",
+        description="Install uricontrol/uriguard + urisys[real], run doctor, write slave env file.",
     )
     parser.add_argument(
         "--profile",

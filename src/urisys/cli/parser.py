@@ -50,7 +50,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = sub.add_parser(
         "init",
-        help="Install urirouter/uricore/urisys[real], doctor, write slave env (~/.config/urisys/node.env).",
+        help="Install uricontrol/uriguard + urisys[real], doctor, write slave env (~/.config/urisys/node.env).",
     )
     p.add_argument("--profile", choices=("slave", "dev"), default=os.environ.get("URISYS_INIT_PROFILE", "slave"))
     p.add_argument("--min-version", default=os.environ.get(MIN_VERSION_ENV, DEFAULT_MIN_VERSION))
