@@ -9,8 +9,28 @@ echo "== generate_pack_markpacts --check =="
 python3 scripts/generate_pack_markpacts.py --check
 
 echo "== analyze thin markpacts (--strict-operations) =="
-mapfile -t FILES < <(find "$TELLMESH_ROOT" -path '*/markpacts/*.markpact.md' \
-  ! -path '*/legacy/*' ! -name '*.contract.markpact.md' ! -name '*.pack.markpact.md' 2>/dev/null | sort)
+mapfile -t FILES < <(python3 - <<'PY'
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path("scripts").resolve()))
+from generate_pack_markpacts import EXTRA_PACK_DIRS, SKIP_PACKS, generate_for_spec, _extra_specs
+from pack_registry import pack_specs
+
+specs = {**pack_specs(), **_extra_specs()}
+paths: list[Path] = []
+for name, spec in sorted(specs.items()):
+    if name in SKIP_PACKS:
+        continue
+    try:
+        paths.extend(out for out, _ in generate_for_spec(spec))
+    except Exception as exc:
+        print(f"SKIP {name}: {exc}", file=sys.stderr)
+for p in sorted(paths):
+    if p.is_file():
+        print(p)
+PY
+)
 
 pass=0
 fail=0
