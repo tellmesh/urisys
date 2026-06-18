@@ -9,7 +9,10 @@ import sys
 from typing import Any
 
 DEFAULT_GITHUB_OWNER = "tellmesh"
-DEFAULT_GITHUB_VERSION = "0.1.11"
+DEFAULT_GITHUB_VERSION = "0.1.12"
+DIST_NAME = "uricontrol"  # PyPI dist (module is uri_control); renamed from squatted 'uricore'
+GITHUB_REPO = "uricore"  # GitHub repo name (different from dist name after rename)
+SQUATTED_DIST = "uricore"  # unrelated PyPI project (module uricore/, not uri_control/)
 
 
 def github_owner() -> str:
@@ -21,17 +24,23 @@ def github_version() -> str:
 
 
 def wheel_url(version: str | None = None) -> str:
+    """GitHub release wheel for uricontrol — the parallel channel, reused when PyPI is
+    unavailable (force it via URISYS_URICORE_WHEEL_URL)."""
     ver = (version or github_version()).lstrip("v")
     override = os.environ.get("URISYS_URICORE_WHEEL_URL", "").strip()
     if override:
         return override
     return (
-        f"https://github.com/{github_owner()}/uricore/releases/download/v{ver}/"
-        f"uricore-{ver}-py3-none-any.whl"
+        f"https://github.com/{github_owner()}/{GITHUB_REPO}/releases/download/v{ver}/"
+        f"{DIST_NAME}-{ver}-py3-none-any.whl"
     )
 
 
 def pip_spec() -> str:
+    """Install from GitHub release by default (PyPI publish is blocked by 429 limit).
+    Set URISYS_URICORE_PYPI=1 to use PyPI spec instead."""
+    if os.environ.get("URISYS_URICORE_PYPI", "").strip():
+        return f"{DIST_NAME}>={github_version()}"
     return wheel_url()
 
 
@@ -65,21 +74,15 @@ def _dist_top_levels(dist_name: str) -> set[str]:
 
 
 def is_wrong_uricore_installed() -> bool:
-    """True when ``uricore`` dist is installed but ``uri_control`` is not available."""
+    """True when the squatted PyPI ``uricore`` dist shadows our control-plane (``uri_control``
+    not importable). Our package is now ``uricontrol``, so a plain ``uricore`` is always wrong."""
     if _module_exists("uri_control"):
         return False
-    if not _pkg_version("uricore"):
-        return False
-    tops = _dist_top_levels("uricore")
-    if "uri_control" in tops:
-        return True  # broken tellmesh install
-    if "uricore" in tops:
-        return True  # PyPI squatter package
-    return True
+    return bool(_pkg_version(SQUATTED_DIST))
 
 
 def diagnose_uricore() -> dict[str, Any]:
-    installed = _pkg_version("uricore")
+    installed = _pkg_version(DIST_NAME)
     uri_control_ok = _module_exists("uri_control")
     wrong = is_wrong_uricore_installed()
     return {
@@ -88,9 +91,9 @@ def diagnose_uricore() -> dict[str, Any]:
         "wrong_pypi_package": wrong,
         "wheel_url": pip_spec(),
         "note": (
-            "PyPI package 'uricore' is a different project (module uricore/, not uri_control/). "
-            "Install tellmesh uricore from GitHub wheel."
-            if wrong or (installed and not uri_control_ok)
+            "PyPI package 'uricore' is an unrelated project (module uricore/, not uri_control/). "
+            "Install 'uricontrol' (module uri_control) from PyPI."
+            if wrong or (not uri_control_ok)
             else None
         ),
     }
@@ -110,16 +113,17 @@ def pip_run(args: list[str], *, python: str | None = None, timeout: float = 600.
 
 
 def repair_uricore(*, python: str | None = None, version: str | None = None) -> dict[str, Any]:
-    """Uninstall squatted PyPI uricore and install tellmesh wheel."""
+    """Uninstall the squatted PyPI ``uricore`` and install tellmesh ``uricontrol``."""
     steps: list[dict[str, Any]] = []
-    if is_wrong_uricore_installed() or _pkg_version("uricore"):
-        uninstall = pip_run(["uninstall", "-y", "uricore"], python=python)
-        steps.append({"name": "pip_uninstall_uricore", **uninstall})
+    if _pkg_version(SQUATTED_DIST):
+        uninstall = pip_run(["uninstall", "-y", SQUATTED_DIST], python=python)
+        steps.append({"name": "pip_uninstall_squatted_uricore", **uninstall})
         if not uninstall["ok"]:
             return {"ok": False, "steps": steps, "error": "pip uninstall uricore failed"}
 
-    install = pip_run(["install", "-U", wheel_url(version)], python=python)
-    steps.append({"name": "pip_install_tellmesh_uricore", **install})
+    spec = wheel_url(version) if version else pip_spec()
+    install = pip_run(["install", "-U", spec], python=python)
+    steps.append({"name": "pip_install_uricontrol", **install})
     ok = install["ok"] and _module_exists("uri_control")
     return {
         "ok": ok,

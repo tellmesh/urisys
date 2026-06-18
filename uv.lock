@@ -3599,31 +3599,31 @@ name = "uribrowser"
 version = "0.1.0"
 source = { editable = "../uri-packs/packages/python/uribrowser" }
 dependencies = [
-    { name = "uricore" },
+    { name = "uricontrol" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "uricore", specifier = ">=0.1.0" }]
+requires-dist = [{ name = "uricontrol", specifier = ">=0.1.0" }]
 
 [[package]]
 name = "urichat"
 version = "0.1.0"
 source = { editable = "../urichat" }
 dependencies = [
-    { name = "uricore" },
+    { name = "uricontrol" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
-    { name = "uricore", specifier = ">=0.1.8" },
+    { name = "uricontrol", specifier = ">=0.1.8" },
 ]
 provides-extras = ["dev"]
 
 [[package]]
-name = "uricore"
+name = "uricontrol"
 version = "0.1.12"
-source = { editable = "../uricore" }
+source = { editable = "../uricontrol" }
 dependencies = [
     { name = "pyyaml" },
     { name = "urirouter" },
@@ -3647,18 +3647,18 @@ name = "uridocker"
 version = "0.1.0"
 source = { editable = "../uri-packs/packages/python/uridocker" }
 dependencies = [
-    { name = "uricore" },
+    { name = "uricontrol" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "uricore", specifier = ">=0.1.0" }]
+requires-dist = [{ name = "uricontrol", specifier = ">=0.1.0" }]
 
 [[package]]
 name = "urihim"
 version = "0.1.5"
 source = { editable = "../urihim" }
 dependencies = [
-    { name = "uricore" },
+    { name = "uricontrol" },
 ]
 
 [package.optional-dependencies]
@@ -3673,8 +3673,8 @@ requires-dist = [
     { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
     { name = "pyautogui", marker = "extra == 'real'", specifier = ">=0.9.54" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
-    { name = "uricore", editable = "../uricore" },
-    { name = "uricore", marker = "extra == 'dev'", editable = "../uricore" },
+    { name = "uricontrol", editable = "../uricontrol" },
+    { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
 ]
 provides-extras = ["real", "dev"]
 
@@ -3683,7 +3683,7 @@ name = "urikvm"
 version = "0.1.1"
 source = { editable = "../urikvm" }
 dependencies = [
-    { name = "uricore" },
+    { name = "uricontrol" },
 ]
 
 [package.optional-dependencies]
@@ -3700,8 +3700,8 @@ requires-dist = [
     { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
     { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
-    { name = "uricore", editable = "../uricore" },
-    { name = "uricore", marker = "extra == 'dev'", editable = "../uricore" },
+    { name = "uricontrol", editable = "../uricontrol" },
+    { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
     { name = "urihim", marker = "extra == 'dev'", editable = "../urihim" },
     { name = "urillm", marker = "extra == 'dev'", editable = "../urillm" },
     { name = "uriocr", marker = "extra == 'dev'", editable = "../uriocr" },
@@ -3714,7 +3714,7 @@ version = "0.1.1"
 source = { editable = "../urillm" }
 dependencies = [
     { name = "pyyaml" },
-    { name = "uricore" },
+    { name = "uricontrol" },
     { name = "urioperators" },
 ]
 
@@ -3729,8 +3729,8 @@ requires-dist = [
     { name = "litellm", marker = "extra == 'vision'", specifier = ">=1.40" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
     { name = "pyyaml", specifier = ">=6.0" },
-    { name = "uricore", editable = "../uricore" },
-    { name = "uricore", marker = "extra == 'dev'", editable = "../uricore" },
+    { name = "uricontrol", editable = "../uricontrol" },
+    { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
     { name = "urioperators", editable = "../urioperators" },
 ]
 provides-extras = ["vision", "dev"]
@@ -3740,14 +3740,14 @@ name = "urimessage"
 version = "0.1.0"
 source = { editable = "../urimessage" }
 dependencies = [
-    { name = "uricore" },
+    { name = "uricontrol" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
-    { name = "uricore", editable = "../uricore" },
-    { name = "uricore", marker = "extra == 'dev'", editable = "../uricore" },
+    { name = "uricontrol", editable = "../uricontrol" },
+    { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
 ]
 provides-extras = ["dev"]
 
@@ -3756,7 +3756,7 @@ name = "uriocr"
 version = "0.1.0"
 source = { editable = "../uriocr" }
 dependencies = [
-    { name = "uricore" },
+    { name = "uricontrol" },
 ]
 
 [package.optional-dependencies]
@@ -3771,8 +3771,8 @@ requires-dist = [
     { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
     { name = "pytesseract", marker = "extra == 'real'", specifier = ">=0.3.10" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
-    { name = "uricore", editable = "../uricore" },
-    { name = "uricore", marker = "extra == 'dev'", editable = "../uricore" },
+    { name = "uricontrol", editable = "../uricontrol" },
+    { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
 ]
 provides-extras = ["real", "dev"]
 
@@ -3803,7 +3803,7 @@ name = "uriscreen"
 version = "0.1.0"
 source = { editable = "../uriscreen" }
 dependencies = [
-    { name = "uricore" },
+    { name = "uricontrol" },
 ]
 
 [package.metadata]
@@ -3811,7 +3811,7 @@ requires-dist = [
     { name = "mss", marker = "extra == 'real'", specifier = ">=9.0" },
     { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
-    { name = "uricore", specifier = ">=0.1.8" },
+    { name = "uricontrol", specifier = ">=0.1.8" },
 ]
 provides-extras = ["real", "dev"]
 
@@ -3820,25 +3820,25 @@ name = "urishell"
 version = "0.1.0"
 source = { editable = "../urishell" }
 dependencies = [
-    { name = "uricore" },
+    { name = "uricontrol" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "uricore", specifier = ">=0.1.8" }]
+requires-dist = [{ name = "uricontrol", specifier = ">=0.1.8" }]
 
 [[package]]
 name = "uristt"
 version = "0.1.0"
 source = { editable = "../uristt" }
 dependencies = [
-    { name = "uricore" },
+    { name = "uricontrol" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
-    { name = "uricore", editable = "../uricore" },
-    { name = "uricore", marker = "extra == 'dev'", editable = "../uricore" },
+    { name = "uricontrol", editable = "../uricontrol" },
+    { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
 ]
 provides-extras = ["dev"]
 
@@ -3848,7 +3848,7 @@ version = "0.1.69"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
-    { name = "uricore" },
+    { name = "uricontrol" },
     { name = "urirouter" },
 ]
 
@@ -3858,7 +3858,7 @@ dev = [
     { name = "goal" },
     { name = "pytest" },
     { name = "uribrowser" },
-    { name = "uricore" },
+    { name = "uricontrol" },
     { name = "uridocker" },
 ]
 discovery = [
@@ -3886,7 +3886,7 @@ real = [
 dev = [
     { name = "pytest" },
     { name = "uribrowser" },
-    { name = "uricore" },
+    { name = "uricontrol" },
     { name = "uridocker" },
     { name = "urisys-automation-lab", extra = ["sessions"] },
     { name = "urisys-dev" },
@@ -3910,8 +3910,8 @@ requires-dist = [
     { name = "pyyaml", specifier = ">=6.0" },
     { name = "uri2flow", marker = "extra == 'lab'", editable = "../uri2flow" },
     { name = "uribrowser", marker = "extra == 'dev'", editable = "../uri-packs/packages/python/uribrowser" },
-    { name = "uricore", editable = "../uricore" },
-    { name = "uricore", marker = "extra == 'dev'", editable = "../uricore" },
+    { name = "uricontrol", editable = "../uricontrol" },
+    { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
     { name = "uridocker", marker = "extra == 'dev'", editable = "../uri-packs/packages/python/uridocker" },
     { name = "urihim", extras = ["real"], marker = "extra == 'kvm'", editable = "../urihim" },
     { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm" },
@@ -3927,7 +3927,7 @@ provides-extras = ["dev", "lab", "real", "kvm", "discovery"]
 dev = [
     { name = "pytest", specifier = ">=8.0" },
     { name = "uribrowser", editable = "../uri-packs/packages/python/uribrowser" },
-    { name = "uricore", editable = "../uricore" },
+    { name = "uricontrol", editable = "../uricontrol" },
     { name = "uridocker", editable = "../uri-packs/packages/python/uridocker" },
     { name = "urisys-automation-lab", extras = ["sessions"], editable = "../urisys-automation-lab" },
     { name = "urisys-dev", editable = "../urisys-dev" },
@@ -3945,7 +3945,7 @@ source = { editable = "../urisys-automation-lab" }
 dependencies = [
     { name = "pyyaml" },
     { name = "urichat" },
-    { name = "uricore" },
+    { name = "uricontrol" },
     { name = "urimessage" },
     { name = "uristt" },
     { name = "uriwebrtc" },
@@ -3962,8 +3962,8 @@ requires-dist = [
     { name = "pyyaml", specifier = ">=6.0" },
     { name = "uri2flow", marker = "extra == 'sessions'", editable = "../uri2flow" },
     { name = "urichat", editable = "../urichat" },
-    { name = "uricore", editable = "../uricore" },
-    { name = "uricore", marker = "extra == 'dev'", editable = "../uricore" },
+    { name = "uricontrol", editable = "../uricontrol" },
+    { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
     { name = "urillm", marker = "extra == 'dev'", editable = "../urillm" },
     { name = "urimessage", editable = "../urimessage" },
     { name = "urirdpedge", marker = "extra == 'dev'", editable = "../urirdpedge" },
@@ -3995,7 +3995,7 @@ source = { editable = "../urisys-node" }
 dependencies = [
     { name = "pygments" },
     { name = "pyyaml" },
-    { name = "uricore" },
+    { name = "uricontrol" },
     { name = "urirouter" },
     { name = "uriscreen" },
     { name = "urishell" },
@@ -4014,7 +4014,7 @@ requires-dist = [
     { name = "pytesseract", marker = "extra == 'real'", specifier = ">=0.3.10" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
     { name = "pyyaml", specifier = ">=6.0" },
-    { name = "uricore", editable = "../uricore" },
+    { name = "uricontrol", editable = "../uricontrol" },
     { name = "urihim", extras = ["real"], marker = "extra == 'kvm'", editable = "../urihim" },
     { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm" },
     { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "../urillm" },
@@ -4043,14 +4043,14 @@ name = "uriwebrtc"
 version = "0.1.0"
 source = { editable = "../uriwebrtc" }
 dependencies = [
-    { name = "uricore" },
+    { name = "uricontrol" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
-    { name = "uricore", editable = "../uricore" },
-    { name = "uricore", marker = "extra == 'dev'", editable = "../uricore" },
+    { name = "uricontrol", editable = "../uricontrol" },
+    { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
 ]
 provides-extras = ["dev"]
 

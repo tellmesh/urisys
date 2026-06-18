@@ -14,7 +14,7 @@ authors = [
 ]
 dependencies = [
   "PyYAML>=6.0",
-  "uricore>=0.1.11",
+  "uricontrol>=0.1.11",
   "urirouter>=0.1.0",
 ]
 keywords = ["uri", "control-plane", "controllers", "managers", "devices", "services"]
@@ -30,7 +30,7 @@ classifiers = [
 [project.optional-dependencies]
 dev = [
   "pytest>=8.0",
-  "uricore",
+  "uricontrol",
   "uribrowser",
   "uridocker",
   "goal>=2.1.0",
@@ -53,7 +53,7 @@ discovery = ["zeroconf>=0.131.0"]
 [dependency-groups]
 dev = [
   "pytest>=8.0",
-  "uricore",
+  "uricontrol",
   "uribrowser",
   "uridocker",
   "urisys-node",
@@ -76,7 +76,7 @@ urillm = { path = "../urillm", editable = true }
 urimail = { path = "../urimail", editable = true }
 urioffice = { path = "../urioffice", editable = true }
 urivql = { path = "../urivql", editable = true }
-uricore = { path = "../uricore", editable = true }
+uricontrol = { path = "../uricontrol", editable = true }
 uribrowser = { path = "../uri-packs/packages/python/uribrowser", editable = true }
 uridocker = { path = "../uri-packs/packages/python/uridocker", editable = true }
 uri2flow = { path = "../uri2flow", editable = true }

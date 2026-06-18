@@ -1,6 +1,6 @@
 """Pytest hooks for markpact test isolation.
 
-Also puts sibling tellmesh packages on ``sys.path`` (urirouter, uricore).
+Also puts sibling tellmesh packages on ``sys.path`` (urirouter, uricontrol).
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ import pytest
 
 _SIBLING_ROOTS: tuple[tuple[str, str], ...] = (
     ("uri_router", "urirouter/src"),
-    ("uri_control", "uricore/core/python"),
+    ("uri_control", "uricontrol/core/python"),
 )
 
 
@@ -23,7 +23,7 @@ def _tellmesh_root() -> Path | None:
     if env and Path(env).is_dir():
         return Path(env)
     for candidate in Path(__file__).resolve().parents:
-        if (candidate / "urisys").is_dir() and (candidate / "uricore").is_dir():
+        if (candidate / "urisys").is_dir() and (candidate / "uricontrol").is_dir():
             return candidate
     return None
 

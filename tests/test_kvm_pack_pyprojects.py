@@ -19,10 +19,10 @@ def _deps(path: Path) -> list[str]:
     return tomllib.loads(path.read_text(encoding="utf-8"))["project"]["dependencies"]
 
 
-def test_uricore_sibling_pyproject():
-    path = TELLMESH / "uricore" / "pyproject.toml"
+def test_uricontrol_sibling_pyproject():
+    path = TELLMESH / "uricontrol" / "pyproject.toml"
     assert path.is_file()
-    assert _name(path) == "uricore"
+    assert _name(path) == "uricontrol"
 
 
 def test_each_kvm_pack_has_sibling_pyproject():
@@ -32,10 +32,10 @@ def test_each_kvm_pack_has_sibling_pyproject():
         assert _name(path) == pkg
 
 
-def test_sibling_pack_pyprojects_depend_on_uricore():
+def test_sibling_pack_pyprojects_depend_on_uricontrol():
     for pkg in PACKS:
         deps = _deps(TELLMESH / pkg / "pyproject.toml")
-        assert any(d.startswith("uricore>=") for d in deps), pkg
+        assert any(d.startswith("uricontrol>=") for d in deps), pkg
 
 
 def test_urillm_imports_uri_control_env_not_urikvmedge():
@@ -50,7 +50,7 @@ def test_urillm_imports_uri_control_env_not_urikvmedge():
 def test_urisys_root_uv_sources_point_to_siblings():
     data = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
     sources = data["tool"]["uv"]["sources"]
-    for pkg in ("uricore", "urirouter", "urioperators", *PACKS):
+    for pkg in ("uricontrol", "urirouter", "urioperators", *PACKS):
         rel = sources[pkg]["path"]
         assert rel.startswith("../"), f"{pkg} should use sibling path, got {rel}"
         assert (TELLMESH / pkg).is_dir(), f"missing sibling repo {pkg}"

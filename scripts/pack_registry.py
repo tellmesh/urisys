@@ -76,8 +76,8 @@ def _pack(
 def pack_specs() -> dict[str, PackSpec]:
     specs: dict[str, PackSpec] = {}
 
-    specs["uricore"] = _pack(
-        "uricore",
+    specs["uricontrol"] = _pack(
+        "uricontrol",
         module_dir="core/python/uri_control/edge",
         module_files=("__init__.py", "runtime.py", "env.py"),
         repo_readme="Shared URI edge runtime for urisys capability packs.",
@@ -217,7 +217,7 @@ def pack_specs() -> dict[str, PackSpec]:
 # Packs with standalone tellmesh repos (canonical, no vendored copy in urisys)
 SIBLING_ONLY = frozenset(
     {
-        "uricore",
+        "uricontrol",
         "urioperators",
         "urikvm",
         "urihim",

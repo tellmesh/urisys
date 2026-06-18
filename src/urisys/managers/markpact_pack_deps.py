@@ -22,7 +22,7 @@ def tellmesh_root(*, anchor: Path | None = None) -> Path | None:
             return root
     start = (anchor or Path.cwd()).resolve()
     for candidate in (start, *start.parents):
-        if (candidate / "urisys").is_dir() and (candidate / "uricore").is_dir():
+        if (candidate / "urisys").is_dir() and (candidate / "uricontrol").is_dir():
             return candidate
     return None
 
@@ -110,7 +110,7 @@ def _register_sibling_packs(root: Path, added: list[str], seen_paths: set[str]) 
 
 
 def _register_uricore_utils(root: Path, added: list[str]) -> None:
-    uricore = root / "uricore" / "core" / "python"
+    uricore = root / "uricontrol" / "core" / "python"
     if uricore.is_dir():
         path = str(uricore.resolve())
         if path not in sys.path:

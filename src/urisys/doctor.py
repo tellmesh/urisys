@@ -205,34 +205,34 @@ def _check_uricore_authentic() -> Check | None:
 def _check_uricore_dist() -> Check:
     """urisys declares uricore dependency; a missing dist usually means broken user install."""
     urisys_ver = _pkg_version("urisys")
-    uricore_ver = _pkg_version("uricore")
+    uricore_ver = _pkg_version("uricontrol")
     if uricore_ver:
         return Check(
             id="dist_uricore",
             status="ok",
-            message=f"uricore {uricore_ver} installed",
-            detail={"urisys": urisys_ver, "uricore": uricore_ver},
+            message=f"uricontrol {uricore_ver} installed",
+            detail={"urisys": urisys_ver, "uricontrol": uricore_ver},
         )
     if urisys_ver:
-        from .uricore_install import wheel_url
+        from .uricore_install import pip_spec
 
         return Check(
             id="dist_uricore",
             status="fail",
-            message="urisys is installed but tellmesh uricore is missing",
+            message="urisys is installed but uricontrol is missing",
             detail={
                 "urisys": urisys_ver,
-                "pip_hint": f"pip install -U {wheel_url()}",
-                "note": "Do not pip install PyPI uricore — wrong package. Use tellmesh GitHub wheel.",
+                "pip_hint": f"pip install -U {pip_spec()}",
+                "note": "Install 'uricontrol' (module uri_control) — PyPI 'uricore' is a different project.",
             },
         )
-    from .uricore_install import wheel_url
+    from .uricore_install import pip_spec
 
     return Check(
         id="dist_uricore",
         status="warn",
-        message="uricore not found in site-packages (editable/dev install?)",
-        detail={"pip_hint": f"pip install -U {wheel_url()}"},
+        message="uricontrol not found in site-packages (editable/dev install?)",
+        detail={"pip_hint": f"pip install -U {pip_spec()}"},
     )
 
 
