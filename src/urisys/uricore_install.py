@@ -37,11 +37,20 @@ def wheel_url(version: str | None = None) -> str:
 
 
 def pip_spec() -> str:
-    """Install from GitHub release by default (PyPI publish is blocked by 429 limit).
-    Set URISYS_URICORE_PYPI=1 to use PyPI spec instead."""
+    """Newest of (GitHub release, PyPI). URISYS_URICORE_WHEEL_URL pins a wheel;
+    URISYS_URICORE_PYPI=1 forces the PyPI spec. (PyPI uploads are 429-limited, so the
+    GitHub release is usually newest.)"""
+    if os.environ.get("URISYS_URICORE_WHEEL_URL", "").strip():
+        return wheel_url()
     if os.environ.get("URISYS_URICORE_PYPI", "").strip():
         return f"{DIST_NAME}>={github_version()}"
-    return wheel_url()
+    from .version_resolve import resolve_install_spec
+
+    spec, _ = resolve_install_spec(
+        dist=DIST_NAME, repo=DIST_NAME, wheel_url_builder=wheel_url,
+        fallback_version=DEFAULT_GITHUB_VERSION, owner=github_owner(),
+    )
+    return spec
 
 
 def _pkg_version(dist_name: str) -> str | None:

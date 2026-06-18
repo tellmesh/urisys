@@ -27,3 +27,19 @@ def test_doctor_hints_include_node_serve():
     joined = " ".join(report["hints"])
     assert "node serve" in joined
     assert "remote health" in joined
+
+
+def test_doctor_fails_old_urisys_node(monkeypatch):
+    monkeypatch.setattr("urisys.node_install.is_importable", lambda: True)
+
+    def fake_version(dist_name: str):
+        if dist_name == "urisys-node":
+            return "0.1.3"
+        return "99.0.0"
+
+    monkeypatch.setattr("urisys.doctor._pkg_version", fake_version)
+    report = run_doctor(min_version=None)
+    check = next(c for c in report["checks"] if c["id"] == "urisys_node_version")
+    assert check["status"] == "fail"
+    assert report["ok"] is False
+    assert 'urisys-node>=0.1.22' in check["detail"]["pip_hint"]

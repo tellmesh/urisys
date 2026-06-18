@@ -3813,7 +3813,7 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "urisys"
-version = "0.1.80"
+version = "0.1.81"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
@@ -3963,7 +3963,7 @@ requires-dist = [
 
 [[package]]
 name = "urisys-node"
-version = "0.1.24"
+version = "0.1.25"
 source = { editable = "../urisys-node" }
 dependencies = [
     { name = "pygments" },
@@ -3990,7 +3990,9 @@ requires-dist = [
     { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "../urillm" },
     { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "../uriocr" },
     { name = "uriscreen", marker = "extra == 'boot'", editable = "../uriscreen" },
+    { name = "uriscreen", marker = "extra == 'dev'", editable = "../uriscreen" },
     { name = "urishell", marker = "extra == 'boot'", editable = "../urishell" },
+    { name = "urishell", marker = "extra == 'dev'", editable = "../urishell" },
     { name = "uristt", marker = "extra == 'dev'", editable = "../uristt" },
     { name = "uriwebrtc", marker = "extra == 'dev'", editable = "../uriwebrtc" },
     { name = "zeroconf", marker = "extra == 'discovery'", specifier = ">=0.131.0" },
@@ -4003,6 +4005,8 @@ dev = [
     { name = "goal", specifier = ">=2.1.0" },
     { name = "pfix", specifier = ">=0.1.60" },
     { name = "pytest", specifier = ">=8.0" },
+    { name = "uriscreen", editable = "../uriscreen" },
+    { name = "urishell", editable = "../urishell" },
     { name = "uristt", editable = "../uristt" },
     { name = "uriwebrtc", editable = "../uriwebrtc" },
 ]

@@ -5,7 +5,13 @@ import shutil
 import sys
 from dataclasses import asdict, dataclass
 from typing import Any, Literal
-from .defaults import DEFAULT_MIN_VERSION, MIN_URISYS_NODE_VERSION, NODE_REMOTE_HEALTH_CMD, NODE_SERVE_CMD
+from .defaults import (
+    DEFAULT_MIN_VERSION,
+    MIN_URISYS_NODE_VERSION,
+    NODE_PIP_UPGRADE_HINT,
+    NODE_REMOTE_HEALTH_CMD,
+    NODE_SERVE_CMD,
+)
 
 from .node_install import pip_spec as node_pip_spec
 
@@ -160,15 +166,17 @@ def _check_urisys_node_version() -> Check | None:
     if _version_lt(current, MIN_URISYS_NODE_VERSION):
         return Check(
             id="urisys_node_version",
-            status="warn",
+            status="fail",
             message=(
                 f"urisys-node {current or '?'} is older than {MIN_URISYS_NODE_VERSION} "
-                "(no port takeover; may fail with ModuleNotFoundError: urisysedge)"
+                "(no port takeover / urisys remote; may import missing urisysedge)"
             ),
             detail={
                 "current": current,
                 "required": MIN_URISYS_NODE_VERSION,
-                "pip_hint": f"pip install -U {node_pip_spec()}",
+                "pip_hint": NODE_PIP_UPGRADE_HINT,
+                "wheel_hint": f"pip install -U {node_pip_spec()}",
+                "auto_fix": "urisys init",
             },
         )
     takeover = False
@@ -182,9 +190,14 @@ def _check_urisys_node_version() -> Check | None:
     if not takeover:
         return Check(
             id="urisys_node_version",
-            status="warn",
-            message="urisys-node serve() lacks takeover= — upgrade for atomic restart",
-            detail={"current": current, "pip_hint": f"pip install -U {node_pip_spec()}"},
+            status="fail",
+            message="urisys-node serve() lacks takeover= — upgrade for atomic restart and urisys remote",
+            detail={
+                "current": current,
+                "required": MIN_URISYS_NODE_VERSION,
+                "pip_hint": NODE_PIP_UPGRADE_HINT,
+                "wheel_hint": f"pip install -U {node_pip_spec()}",
+            },
         )
     return Check(
         id="urisys_node_version",

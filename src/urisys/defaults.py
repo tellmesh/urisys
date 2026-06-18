@@ -41,5 +41,6 @@ NODE_SERVE_CMD = "urisys node serve --host 0.0.0.0 --port 8790"
 NODE_REMOTE_HEALTH_CMD = "urisys remote health --endpoint http://192.168.188.201:8790"
 NODE_REMOTE_RESTART_CMD = "urisys remote restart --endpoint http://192.168.188.201:8790"
 
-# urisys-node below this lacks port takeover and `urisys remote` delegation targets.
-MIN_URISYS_NODE_VERSION = "0.1.10"
+# urisys-node below this lacks port takeover, urisys remote, and uricontrol (no urisysedge).
+MIN_URISYS_NODE_VERSION = "0.1.22"
+NODE_PIP_UPGRADE_HINT = f'pip install -U "urisys-node>={MIN_URISYS_NODE_VERSION}"'

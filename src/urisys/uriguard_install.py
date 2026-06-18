@@ -38,10 +38,19 @@ def wheel_url(version: str | None = None) -> str:
 
 
 def pip_spec() -> str:
-    """Install uriguard from the GitHub release wheel (set URISYS_URIGUARD_PYPI=1 for PyPI)."""
+    """Newest of (GitHub release, PyPI). URISYS_URIGUARD_WHEEL_URL pins a wheel;
+    URISYS_URIGUARD_PYPI=1 forces the PyPI spec."""
+    if os.environ.get("URISYS_URIGUARD_WHEEL_URL", "").strip():
+        return wheel_url()
     if os.environ.get("URISYS_URIGUARD_PYPI", "").strip():
         return f"{DIST_NAME}>={github_version()}"
-    return wheel_url()
+    from .version_resolve import resolve_install_spec
+
+    spec, _ = resolve_install_spec(
+        dist=DIST_NAME, repo=DIST_NAME, wheel_url_builder=wheel_url,
+        fallback_version=DEFAULT_GITHUB_VERSION, owner=github_owner(),
+    )
+    return spec
 
 
 def _pkg_version(dist_name: str) -> str | None:
