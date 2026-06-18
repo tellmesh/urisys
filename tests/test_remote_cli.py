@@ -14,6 +14,16 @@ def test_parser_has_remote_subcommand():
     assert args.remote_argv == ["health", "--endpoint", "http://127.0.0.1:8790"]
 
 
+def test_parser_node_remote_alias():
+    from urisys.cli.parser import build_parser
+
+    parser = build_parser()
+    args = parser.parse_args(["node", "remote", "restart", "--endpoint", "http://127.0.0.1:8790"])
+    assert args.command == "node"
+    assert args.node_command == "remote"
+    assert args.remote_argv == ["restart", "--endpoint", "http://127.0.0.1:8790"]
+
+
 def test_cmd_remote_delegates():
     from urisys.cli.commands.remote import cmd_remote
 

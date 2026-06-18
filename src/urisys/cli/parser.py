@@ -83,6 +83,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="Disable URISYS_NODE_AUTO_INSTALL (no pip on first kvm/him/… URI).",
     )
 
+    nr = node_sub.add_parser(
+        "remote",
+        help="Remote node ops (alias for `urisys remote`; dev host → lenovo).",
+    )
+    nr.add_argument(
+        "remote_argv",
+        nargs=argparse.REMAINDER,
+        help="e.g. health | restart | call URI",
+    )
+
     rem = sub.add_parser(
         "remote",
         help="Remote node ops via URI (health, restart, call, workers; same as urisys-node remote).",

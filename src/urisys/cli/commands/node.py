@@ -32,6 +32,10 @@ def _prepare_node_serve(*, auto_install: bool) -> int | None:
 
 
 def cmd_node(args) -> int:
+    if args.node_command == "remote":
+        from .remote import cmd_remote
+
+        return cmd_remote(args)
     if args.node_command == "serve":
         auto_install = not args.no_auto_install
         if args.no_auto_install:
