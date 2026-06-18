@@ -204,6 +204,17 @@ def _check_node_after_install(dry_run: bool, install: bool, pip_result: dict[str
     if not node_diag.get("urisysnode_importable"):
         node_detail = (pip_result or {}).get("node_install") if pip_result else None
         steps.append({"name": "verify_urisysnode", "status": "warn", "detail": {**node_diag, "pip": node_detail}})
+        return
+    if node_diag.get("missing_core_packs"):
+        steps.append(
+            {
+                "name": "verify_node_core_packs",
+                "status": "fail",
+                "detail": node_diag,
+            }
+        )
+    else:
+        steps.append({"name": "verify_node_core_packs", "status": "pass", "detail": node_diag})
 
 
 def run_init(

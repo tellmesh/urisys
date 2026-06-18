@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+# DEPRECATED — use package CLI instead:
+#   urisys-node remote health
+#   urisys-node remote call "node://lenovo/query/packs"
+#   urisys-node remote install-pack him --spec <wheel-url> ...
+#   urisys-lenovo-session --flows lenovo-remote/01-health-probe.uri.flow.yaml
+# See: urisys-examples/lenovo-remote/README.md
+#
 # Probe lenovo and install him/ocr/llm from GitHub Releases — saves session under output/test-sessions/.
 #
 # Usage:
@@ -8,6 +15,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BASE="${LENOVO_BASE:-http://192.168.188.201:8790}"
+URICONTROL_WHL="${URISYS_URICORE_WHEEL_URL:-https://github.com/tellmesh/uricontrol/releases/download/v0.1.13/uricontrol-0.1.13-py3-none-any.whl}"
 RUN_ID="${LENOVO_RUN_ID:-lenovo-$(date +%Y%m%d-%H%M%S)}"
 SESSION_DIR="$ROOT/output/test-sessions/$RUN_ID/lenovo-probe"
 
@@ -35,7 +43,7 @@ print(json.dumps({
     "payload": {
         "pack": "${pack}",
         "install": True,
-        "specs": ["uricore>=0.1.0", "${wheel}"],
+        "specs": ["${URICONTROL_WHL}", "${wheel}"],
     },
     "context": {"approved": True},
 }))

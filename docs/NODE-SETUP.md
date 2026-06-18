@@ -37,7 +37,7 @@ Ręczna naprawa (gdy init niedostępny):
 
 ```bash
 pip uninstall -y uricore
-pip install -U https://github.com/tellmesh/uricore/releases/download/v0.1.8/uricore-0.1.8-py3-none-any.whl
+pip install -U https://github.com/tellmesh/uricontrol/releases/download/v0.1.8/uricore-0.1.8-py3-none-any.whl
 python -c "import uri_control; print('OK')"
 ```
 
@@ -183,7 +183,7 @@ Pierwsze `screen://…/capture` z `allow_real: true` doinstaluje `mss` i `Pillow
 
 | Pack | PyPI | GitHub Releases |
 |------|------|-----------------|
-| urirouter, uricore, urikvm | ✅ | opcjonalnie |
+| urirouter, uricontrol, urikvm | ✅ | opcjonalnie |
 | urihim | 🔲 | ✅ [v0.1.2](https://github.com/tellmesh/urihim/releases/tag/v0.1.2) |
 | uriocr | 🔲 | ✅ [v0.1.0](https://github.com/tellmesh/uriocr/releases/tag/v0.1.0) |
 | urillm | 🔲 | ✅ [v0.1.0](https://github.com/tellmesh/urillm/releases/tag/v0.1.0) |

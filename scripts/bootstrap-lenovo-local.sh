@@ -11,7 +11,7 @@ PYTHON="${URISYS_PYTHON:-python3.12}"
 VENV="${URISYS_VENV:-$HOME/venv312}"
 URISYS_MIN="${URISYS_MIN_VERSION:-0.1.25}"
 NODE_VER="${URISYS_NODE_VERSION:-0.1.3}"
-URICORE_VER="${URISYS_URICORE_VERSION:-0.1.8}"
+URICORE_VER="${URISYS_URICORE_VERSION:-0.1.13}"
 
 log() { echo "[bootstrap-lenovo] $*"; }
 
@@ -26,11 +26,11 @@ log "venv=$VENV python=$($PYTHON --version 2>&1)"
 source "$VENV/bin/activate"
 python -m pip install -U pip
 
-URICORE_WHL="${URISYS_URICORE_WHEEL_URL:-https://github.com/tellmesh/uricore/releases/download/v${URICORE_VER}/uricore-${URICORE_VER}-py3-none-any.whl}"
+URICORE_WHL="${URISYS_URICORE_WHEEL_URL:-https://github.com/tellmesh/uricontrol/releases/download/v${URICORE_VER}/uricontrol-${URICORE_VER}-py3-none-any.whl}"
 NODE_WHL="${URISYS_NODE_WHEEL_URL:-https://github.com/tellmesh/urisys-node/releases/download/v${NODE_VER}/urisys_node-${NODE_VER}-py3-none-any.whl}"
 
-log "install uricore + uricore + urisys[real]"
-python -m pip install -U "$URICORE_WHL" "uricore>=0.1.0" "urisys[real]>=${URISYS_MIN}"
+log "install uricontrol + urisys[real]"
+python -m pip install -U "$URICORE_WHL" "uricontrol>=0.1.8" "urisys[real]>=${URISYS_MIN}"
 
 log "install urisys-node wheel"
 if ! python -m pip install -U "$NODE_WHL"; then

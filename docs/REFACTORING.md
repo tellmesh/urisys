@@ -65,7 +65,7 @@ src/uri_router/
 
 Szczegóły issue codes RR/SH: [`urirouter/docs/REFACTORING.md`](../../urirouter/docs/REFACTORING.md)
 
-## uricore (`tellmesh/uricore`)
+## uricontrol (`tellmesh/uricontrol`)
 
 ```
 uri_control/edge/

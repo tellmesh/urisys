@@ -59,24 +59,30 @@ URISYS_VER="$(pkg_version "$ROOT")"
 URIHIM_VER="$(pkg_version "$TELLMESH/urihim")"
 URILLM_VER="$(pkg_version "$TELLMESH/urillm")"
 URIBROWSER_VER="$(pkg_version "$TELLMESH/uribrowser")"
+URISHELL_VER="$(pkg_version "$TELLMESH/urishell")"
+URISCREEN_VER="$(pkg_version "$TELLMESH/uriscreen")"
 NODE_VER="$(pkg_version "$TELLMESH/urisys-node")"
 
 echo ""
-echo "== build wheels (urisys ${URISYS_VER}, urisys-node ${NODE_VER}, urihim ${URIHIM_VER}, urillm ${URILLM_VER}, uribrowser ${URIBROWSER_VER}) =="
+echo "== build wheels (urisys ${URISYS_VER}, urisys-node ${NODE_VER}, urishell, uriscreen, urihim, urillm, uribrowser) =="
 mkdir -p "$DEPLOY_DIR"
 build_wheel "$ROOT"
 build_wheel "$TELLMESH/urisys-node"
+build_wheel "$TELLMESH/urishell"
+build_wheel "$TELLMESH/uriscreen"
 build_wheel "$TELLMESH/urihim"
 build_wheel "$TELLMESH/urillm"
 build_wheel "$TELLMESH/uribrowser"
 
 URISYS_WHL="$(wheel_name urisys "$URISYS_VER")"
 NODE_WHL="$(wheel_name urisys-node "$NODE_VER")"
+URISHELL_WHL="$(wheel_name urishell "$URISHELL_VER")"
+URISCREEN_WHL="$(wheel_name uriscreen "$URISCREEN_VER")"
 URIHIM_WHL="$(wheel_name urihim "$URIHIM_VER")"
 URILLM_WHL="$(wheel_name urillm "$URILLM_VER")"
 URIBROWSER_WHL="$(wheel_name uribrowser "$URIBROWSER_VER")"
 
-for whl in "$URISYS_WHL" "$NODE_WHL" "$URIHIM_WHL" "$URILLM_WHL" "$URIBROWSER_WHL"; do
+for whl in "$URISYS_WHL" "$NODE_WHL" "$URISHELL_WHL" "$URISCREEN_WHL" "$URIHIM_WHL" "$URILLM_WHL" "$URIBROWSER_WHL"; do
   test -f "${DEPLOY_DIR}/${whl}" || { echo "missing ${DEPLOY_DIR}/${whl}" >&2; exit 1; }
 done
 
@@ -91,8 +97,10 @@ if ! pgrep -f "http.server ${DEV_PORT}.*${DEV_HOST}" >/dev/null 2>&1; then
 fi
 
 echo ""
-echo "== pip install urisys + urisys-node on lenovo =="
-call shell://pip "{\"args\":[\"install\",\"-U\",\"uricore>=0.1.0\",\"$DEV/$URISYS_WHL\",\"$DEV/$NODE_WHL\"]}" | python3 -m json.tool
+echo "== pip install urisys-node deps + wheels on lenovo =="
+call shell://pip "{\"args\":[\"install\",\"-U\",\"--no-deps\",\"$DEV/$URISHELL_WHL\",\"$DEV/$URISCREEN_WHL\"]}" | python3 -m json.tool
+call shell://pip "{\"args\":[\"install\",\"-U\",\"--no-deps\",\"$DEV/$NODE_WHL\"]}" | python3 -m json.tool
+call shell://pip "{\"args\":[\"install\",\"-U\",\"uricontrol>=0.1.8\",\"$DEV/$URISYS_WHL\"]}" | python3 -m json.tool
 
 echo ""
 echo "== schedule urisys node restart (venv; delayed so this URI returns first) =="
@@ -110,15 +118,15 @@ health | python3 -m json.tool
 
 echo ""
 echo "== install-pack urihim ${URIHIM_VER} =="
-call node://local/command/install-pack "{\"pack\":\"him\",\"install\":true,\"force\":true,\"specs\":[\"uricore>=0.1.0\",\"$DEV/$URIHIM_WHL\"]}" | python3 -m json.tool
+call node://local/command/install-pack "{\"pack\":\"him\",\"install\":true,\"force\":true,\"specs\":[\"uricontrol>=0.1.8\",\"$DEV/$URIHIM_WHL\"]}" | python3 -m json.tool
 
 echo ""
 echo "== install-pack urillm ${URILLM_VER} =="
-call node://local/command/install-pack "{\"pack\":\"llm\",\"install\":true,\"force\":true,\"specs\":[\"uricore>=0.1.0\",\"$DEV/$URILLM_WHL\"]}" | python3 -m json.tool
+call node://local/command/install-pack "{\"pack\":\"llm\",\"install\":true,\"force\":true,\"specs\":[\"uricontrol>=0.1.8\",\"$DEV/$URILLM_WHL\"]}" | python3 -m json.tool
 
 echo ""
 echo "== install-pack uribrowser ${URIBROWSER_VER} =="
-call node://local/command/install-pack "{\"pack\":\"browser\",\"install\":true,\"force\":true,\"specs\":[\"uricore>=0.1.0\",\"$DEV/$URIBROWSER_WHL\"]}" | python3 -m json.tool
+call node://local/command/install-pack "{\"pack\":\"browser\",\"install\":true,\"force\":true,\"specs\":[\"uricontrol>=0.1.8\",\"$DEV/$URIBROWSER_WHL\"]}" | python3 -m json.tool
 
 echo ""
 echo "== probe him driver + routes =="

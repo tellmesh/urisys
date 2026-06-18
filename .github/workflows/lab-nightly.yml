@@ -22,7 +22,7 @@ jobs:
         continue-on-error: true
         with:
           repository: ${{ github.repository_owner }}/uricore
-          path: tellmesh/uricore
+          path: tellmesh/uricontrol
 
       - name: Checkout uri3 (lab image build)
         uses: actions/checkout@v4

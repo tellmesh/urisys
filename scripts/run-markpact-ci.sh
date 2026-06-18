@@ -15,6 +15,9 @@ python3 scripts/generate_pack_markpacts.py --check
 echo "== check_contract_drift =="
 python3 scripts/check_contract_drift.py
 
+echo "== check_flow_uri_patterns (lenovo-remote) =="
+python3 scripts/check_flow_uri_patterns.py
+
 echo "== validate-all-markpacts =="
 bash scripts/validate-all-markpacts.sh
 

@@ -114,4 +114,4 @@ Reguły ERROR (v1alpha): patrz [`MARKPACT-PROFILE.md`](MARKPACT-PROFILE.md).
 
 - Wheels z GitHub Releases — weryfikuj hash / tag.
 - `urisys init` — tylko publiczne URLe wheeli (bez `git+https` na slave).
-- Legacy `urisysedge` usunięty — edge runtime: `uricore` → `uri_control.edge`.
+- Legacy ``uri_control.edge`` usunięty — edge runtime: `uricore` → `uri_control.edge`.

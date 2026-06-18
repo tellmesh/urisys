@@ -44,7 +44,7 @@ jobs:
 
       - name: Install urisys
         run: |
-          pip install "uricore>=0.1.2"
+          pip install "uricontrol>=0.1.2"
           pip install -e .
 
       - name: Validate Markpact

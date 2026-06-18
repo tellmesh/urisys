@@ -1,6 +1,6 @@
 """Pytest hooks for markpact test isolation.
 
-Also puts sibling tellmesh packages on ``sys.path`` (urirouter, uricontrol).
+Also puts sibling tellmesh packages on ``sys.path`` (uriresolver, uricontrol).
 """
 
 from __future__ import annotations
@@ -12,8 +12,9 @@ from pathlib import Path
 
 import pytest
 
+# tellmesh monorepo: module import name → path under TELLMESH_ROOT
 _SIBLING_ROOTS: tuple[tuple[str, str], ...] = (
-    ("uri_router", "urirouter/src"),
+    ("uri_resolver", "uriresolver/src"),
     ("uri_control", "uricontrol/core/python"),
 )
 
@@ -28,19 +29,24 @@ def _tellmesh_root() -> Path | None:
     return None
 
 
+def _module_available(module: str) -> bool:
+    try:
+        return importlib.util.find_spec(module) is not None
+    except (ModuleNotFoundError, ValueError, ImportError):
+        return False
+
+
 def _ensure_siblings() -> None:
     root = _tellmesh_root()
     if root is None:
         return
-    checks = {
-        "uri_router": "uri_router.policy",
-        "uri_control": "uri_control.edge",
-    }
     for module_name, rel in _SIBLING_ROOTS:
-        check = checks.get(module_name, module_name)
-        if importlib.util.find_spec(check) is not None:
+        sibling = root / rel
+        if not sibling.is_dir():
             continue
-        path = str((root / rel).resolve())
+        if _module_available(module_name):
+            continue
+        path = str(sibling.resolve())
         if path not in sys.path:
             sys.path.insert(0, path)
 

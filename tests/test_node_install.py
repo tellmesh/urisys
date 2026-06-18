@@ -25,7 +25,7 @@ def test_urisys_node_wheel_filename_pep427():
     from urisys.node_install import wheel_filename
 
     assert wheel_filename("0.1.3") == "urisys_node-0.1.3-py3-none-any.whl"
-    assert wheel_filename() == "urisys_node-0.1.3-py3-none-any.whl"
+    assert wheel_filename() == "urisys_node-0.1.22-py3-none-any.whl"
 
 
 def test_urisys_node_wheel_url_override():

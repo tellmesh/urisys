@@ -9,6 +9,7 @@ from pathlib import Path
 import urisys_lab.core as sc
 
 _PNG_B64 = base64.b64encode(b"\x89PNG\r\n" + b"x" * 200).decode("ascii")
+_JPG_B64 = base64.b64encode(b"\xff\xd8\xff" + b"y" * 200).decode("ascii")
 
 
 def test_step_ok_variants():
@@ -49,10 +50,10 @@ def test_extract_step_screenshots_strips_base64(tmp_path):
 def test_extract_handles_nested_shots(tmp_path):
     step = {"id": "multi", "response": {"result": {"shots": [
         {"mime": "image/png", "base64": _PNG_B64},
-        {"mime": "image/jpeg", "base64": _PNG_B64},
+        {"mime": "image/jpeg", "base64": _JPG_B64},
     ]}}}
     saved = sc.extract_step_screenshots(step, session_dir=tmp_path, flow_id="f")
-    assert saved == ["screenshots/f__multi_shot0.png", "screenshots/f__multi_shot1.jpg"]
+    assert saved == ["screenshots/f__multi.png", "screenshots/f__multi_1.jpg"]
 
 
 def test_extract_ignores_non_image_response(tmp_path):

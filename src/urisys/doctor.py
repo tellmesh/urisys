@@ -151,6 +151,32 @@ def _check_min_version(min_version: str | None) -> Check | None:
     )
 
 
+def _check_node_core_packs() -> Check | None:
+    from .node_install import CORE_NODE_PACK_SPECS, _missing_core_node_modules, _module_for_boot_spec, is_importable
+
+    if not is_importable():
+        return None
+    missing = _missing_core_node_modules()
+    if not missing:
+        return Check(
+            id="node_core_packs",
+            status="ok",
+            message="uriscreen and urishell available for urisys node serve",
+            detail={"modules": ["uriscreen", "urishell"]},
+        )
+    mods = [_module_for_boot_spec(s) for s in missing]
+    return Check(
+        id="node_core_packs",
+        status="fail",
+        message=f"missing node boot packs: {', '.join(mods)} (urisys node serve will fail)",
+        detail={
+            "missing": mods,
+            "pip_hint": f"pip install --no-deps {' '.join(CORE_NODE_PACK_SPECS)}",
+            "auto_fix": "urisys init",
+        },
+    )
+
+
 def _check_wayland_him() -> Check | None:
     if not os.environ.get("WAYLAND_DISPLAY"):
         return None
@@ -266,6 +292,9 @@ def run_doctor(*, min_version: str | None = DEFAULT_MIN_VERSION) -> dict[str, An
     extra = _check_min_version(min_version)
     if extra:
         checks.append(extra)
+    core = _check_node_core_packs()
+    if core:
+        checks.append(core)
     wayland = _check_wayland_him()
     if wayland:
         checks.append(wayland)

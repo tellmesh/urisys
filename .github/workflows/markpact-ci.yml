@@ -9,6 +9,7 @@ on:
       - "scripts/pack_registry.py"
       - "scripts/validate-all-markpacts.sh"
       - "scripts/check_contract_drift.py"
+      - "scripts/check_flow_uri_patterns.py"
       - "scripts/run-markpact-ci.sh"
       - "scripts/paths.sh"
       - "src/urisys/managers/pack_manager.py"

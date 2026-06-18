@@ -18,7 +18,7 @@ tellmesh_root() {
     echo "$TELLMESH_ROOT"
     return 0
   fi
-  if [ -d "$root/../uricore" ] && [ -d "$root/../uricore" ]; then
+  if [ -d "$root/../uricontrol" ]; then
     cd "$root/.." && pwd
     return 0
   fi
@@ -40,20 +40,20 @@ markpact_contracts_packs() {
   return 1
 }
 
-# tellmesh/uricore when present; empty if missing (use pip install uricore)
-uricore_root() {
+# tellmesh/uricontrol when present; empty if missing (use pip install uricontrol)
+uricontrol_root() {
   local root
   root="$(_urisys_root)"
-  if [ -d "$root/../uricore/core/python" ]; then
-    echo "$root/../uricore"
+  if [ -d "$root/../uricontrol/core/python" ]; then
+    echo "$root/../uricontrol"
     return 0
   fi
   return 1
 }
 
-uricore_pythonpath() {
+uricontrol_pythonpath() {
   local root
-  root="$(uricore_root)" || return 1
+  root="$(uricontrol_root)" || return 1
   echo "$root/core/python"
 }
 

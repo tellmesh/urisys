@@ -20,12 +20,12 @@ Szczegółowy podział **proces / resolver / marksync**: [`docs/PROCESS-ARCHITEC
 ```text
 ┌─────────────────────────────────────────────────────────────┐
 │  src/urisys/          CLI, managers, Markpact, FlowController│
-│  (PackManager → uri_control.UriControlRuntime z uricore)     │
+│  (PackManager → uri_control.UriControlRuntime z uricontrol)   │
 └───────────────────────────┬─────────────────────────────────┘
                             │ BridgeManager / HTTP
 ┌───────────────────────────▼─────────────────────────────────┐
 │  urirouter (uri_router)   resolve → transport delegate       │
-│  uricore (uri_control)    registry, policy, local handlers   │
+│  uricontrol (uri_control) registry, policy, local handlers   │
 └───────────────────────────┬─────────────────────────────────┘
                             │
 ┌───────────────────────────▼─────────────────────────────────┐
@@ -53,7 +53,7 @@ Szczegóły refaktoryzacji modułów: [`docs/REFACTORING.md`](REFACTORING.md).
 | `PackManager` | Ładuje paczki `uri*` z PyPI/path, `manifest.yaml`, Markpact |
 | `MarkpactManager` | Walidacja/kompilacja/test jednoplikowych `*.markpact.md` (fasada → `urisys.markpact`) |
 | `markpact/` | Compile, analyze (`analyzer/`), run modes (`run/`), `platform_export` |
-| `RuntimeManager` | Buduje `uri_control.UriControlRuntime` (uricore) |
+| `RuntimeManager` | Buduje `uri_control.UriControlRuntime` (uricontrol) |
 | `UriController` | `call`, `explain`, `routes` |
 | `FlowController` | Sekwencyjne wykonanie `do:` z pliku flow (bez `after`) |
 | `ServerController` | HTTP `/uri/call`, `/uri/explain` |
@@ -73,7 +73,7 @@ Szczegóły CLI: [`docs/CLI.md`](CLI.md), Markpact: [`docs/MARKPACT.md`](MARKPAC
 
 Wspólne biblioteki:
 
-- **`tellmesh/uricore/`** — `uri_control.edge`: `Runtime`, JSONL events, env policy, `http.serve`
+- **`tellmesh/uricontrol/`** — `uri_control.edge`: `Runtime`, JSONL events, env policy, `http.serve`
 - **`tellmesh/urirouter/`** — intent router: resolve, transport delegate, operation/shell policy
 - **`tellmesh/urioperators/`** — helpery LLM dla `urillm`
 
@@ -160,7 +160,7 @@ cd local-lab && bash scripts/run-all.sh
 
 | Repo | Rola |
 |------|------|
-| `uricore` | `UriControlRuntime`, registry, policy, events |
+| `uricontrol` | `UriControlRuntime`, registry, policy, events |
 | `uri-packs` | Produkcyjne paczki browser/docker/systemd/… |
 | `uri2flow` | Compact flow → workflow_graph |
 | `uri3` | Executor grafu |

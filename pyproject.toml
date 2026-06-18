@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "urisys"
-version = "0.1.70"
+version = "0.1.72"
 description = "URI control system managers/controllers over separate uri* capability packs."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -49,6 +49,7 @@ kvm = [
   "urillm[vision]>=0.1.0",
 ]
 discovery = ["zeroconf>=0.131.0"]
+node = ["urisys-node>=0.1.22"]
 
 [dependency-groups]
 dev = [

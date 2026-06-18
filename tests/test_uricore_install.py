@@ -1,4 +1,4 @@
-"""Tests for tellmesh uricore install/repair (PyPI name collision)."""
+"""Tests for tellmesh uricontrol install/repair (was uricore, PyPI name collision)."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from urisys.uricore_install import diagnose_uricore, is_wrong_uricore_installed,
 
 def test_wheel_url_default():
     url = wheel_url()
-    assert url.startswith("https://github.com/tellmesh/uricore/releases/download/v")
+    assert url.startswith("https://github.com/tellmesh/uricontrol/releases/download/v")
     assert url.endswith("-py3-none-any.whl")
 
 

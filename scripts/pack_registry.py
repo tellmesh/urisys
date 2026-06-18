@@ -147,6 +147,7 @@ def pack_specs() -> dict[str, PackSpec]:
             "router.py",
             "client.py",
             "display_bootstrap.py",
+            "manifest.yaml",
         ),
         repo_readme="urisys-node slave URI server runtime.",
     )

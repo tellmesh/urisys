@@ -30,14 +30,13 @@ from pack_registry import TELLMESH, PackSpec, pack_specs
 AGGREGATE_DIR = TELLMESH / "markpact-contracts" / "packs"
 SKIP_PACKS = frozenset(
     {
-        "uricore",
+        "uricontrol",
         "urioperators",
         "urikvmedge",
         "urirdpedge",
         "uristepperedge",
         "uribrowseredge",
         "labedge",
-        "urisysnode",
     }
 )
 EXTRA_PACK_DIRS = ("uriimg2nl",)

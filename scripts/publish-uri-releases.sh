@@ -35,12 +35,22 @@ pypi_upload() {
   return 1
 }
 
+github_repo_for() {
+  local name="$1"
+  case "$name" in
+    uricontrol) echo "uricontrol" ;;
+    nl2uricontrol) echo "nl2uricontrol" ;;
+    *) echo "$name" ;;
+  esac
+}
+
 github_release() {
   local dir="$1" name="$2" ver="$3"
   if [ "${PYPI_ONLY:-0}" = "1" ]; then
     return 0
   fi
-  local repo="$name"  # GitHub repos renamed to match dist (uricore->uricontrol, nl2uricore->nl2uricontrol)
+  local repo
+  repo="$(github_repo_for "$name")"
   local tag="v${ver}"
   if ! command -v gh >/dev/null 2>&1; then
     echo "SKIP GitHub release (gh CLI missing) for $name"

@@ -9,8 +9,8 @@
 Markpact / kontrakt     → CO (capability, flow, policy)
 urisys                  → orchestracja, CLI, flow runner, approval
 urirouter (uri_router)  → GDZIE + JAK (resolver, HTTP/MQTT delegate)
-uricore (uri_control)   → registry, policy, handlers, event store
-uri_control.edge        → edge Runtime, compose, http.serve (w uricore)
+uricontrol (uri_control) → registry, policy, handlers, event store
+uri_control.edge        → edge Runtime, compose, http.serve (w uricontrol)
 *-edge / *-host         → fizyczny runtime (HTTP/MQTT /uri/call)
 ```
 
@@ -20,7 +20,7 @@ uri_control.edge        → edge Runtime, compose, http.serve (w uricore)
 |--------|------|-------|------|
 | urisys | tellmesh/urisys | `urisys` | Orchestrator — CLI, Markpact, PackManager |
 | urirouter | tellmesh/urirouter | `uri_router` | Intent router — targets, transport, envelope |
-| uricore | tellmesh/uricore | `uri_control` | Control plane + `uri_control.edge` |
+| uricontrol | tellmesh/uricontrol | `uri_control` | Control plane + `uri_control.edge` |
 | urisys-node | tellmesh/urisys-node | `urisysnode` | Slave node, lazy pack install |
 | urioperators | tellmesh/urioperators | `urioperators` | Wspólne helpery LLM |
 | markpact-contracts | tellmesh/markpact-contracts | — | Kontrakty, przykłady resolverów |
@@ -29,9 +29,9 @@ uri_control.edge        → edge Runtime, compose, http.serve (w uricore)
 
 | Było | Jest |
 |------|------|
-| `urisysedge` (osobny PyPI) | **Usunięty** — kod w `uricore` → `uri_control.edge` |
+| ``uri_control.edge`` (osobny PyPI) | **Usunięty** — kod w `uricore` → `uri_control.edge` |
 | Resolver w `uri_control.resolver` | **`urirouter`** (`uri_router`) + shimy w uricore |
-| `pip install urisysedge` | `pip install urirouter` + `uricore` (wheels z GitHub Releases) |
+| `pip install `uri_control.edge`` | `pip install urirouter` + `uricore` (wheels z GitHub Releases) |
 | Monolityczne `managers/markpact_*` | Pakiet `urisys.markpact` + cienkie fasady w `managers/` |
 
 Szczegóły layoutu po refaktoryzacji: [REFACTORING.md](REFACTORING.md).
@@ -40,7 +40,7 @@ Szczegóły layoutu po refaktoryzacji: [REFACTORING.md](REFACTORING.md).
 
 Każdy pack: `manifest.yaml` + `handlers.py` + `routes.py` (rejestracja przez `uri_control.edge.manifest`).
 
-Zależność: **`uricore>=0.1.8`**. Rejestrowany przez **urisys** (`urisys routes`, `urisys call`, Docker edge).
+Zależność: **`uricontrol>=0.1.8`**. Rejestrowany przez **urisys** (`urisys routes`, `urisys call`, Docker edge).
 
 | Scheme | Repo | Edge / glue |
 |--------|------|-------------|

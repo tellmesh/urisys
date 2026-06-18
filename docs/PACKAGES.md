@@ -10,13 +10,13 @@ Indeks modułów (historyczny): [`project/map.toon.yaml`](../project/map.toon.ya
 | Warstwa | Gdzie | Rola |
 |---------|-------|------|
 | **core** | `urisys/src/urisys/` | CLI, managers, bootstrap |
-| **control plane** | `tellmesh/uricore/` | `uri_control` — registry, policy, handlers, **edge runtime** |
+| **control plane** | `tellmesh/uricontrol/` | `uri_control` — registry, policy, handlers, **edge runtime** |
 | **uri router** | `tellmesh/urirouter/` | `uri_router` — resolve, transport delegate |
 | **capability packs** | `tellmesh/{urikvm,urihim,…}/` | handlery URI (`handlers.py`, `routes.py`) |
 | **LLM shared** | `tellmesh/urioperators/` | chat, plan, decide, JSON parse |
 | **docker glue** | `urisys/*-docker/` | Dockerfile, config, flow, testy integracyjne |
 
-> **Legacy `urisysedge` usunięty.** Edge runtime (`Runtime`, `JsonlEventStore`, `http.serve`, `compose`) żyje w **`uricore`** → `uri_control.edge.*`.
+> **Legacy ``uri_control.edge`` usunięty.** Edge runtime (`Runtime`, `JsonlEventStore`, `http.serve`, `compose`) żyje w **`uricore`** → `uri_control.edge.*`.
 
 ## Workspace tellmesh (dev)
 
@@ -56,14 +56,14 @@ Pełny opis: **[`docs/DISTRIBUTION.md`](DISTRIBUTION.md)**.
 |--------|----------------|------|
 | `urisys` | `tellmesh/urisys` | orchestrator |
 | `urirouter` | `tellmesh/urirouter` | intent router |
-| `uricore` | `tellmesh/uricore` | control plane + edge |
+| `uricore` | `tellmesh/uricontrol` | control plane + edge |
 | `urisys-node` | `tellmesh/urisys-node` | slave node |
 | `urioperators` | `tellmesh/urioperators` | LLM helpers |
 | `urikvm` … `urivql` | `tellmesh/{pack}/` | capability packs |
 
 ## Plan konsolidacji
 
-1. ✅ **`uri_control.edge`** w `uricore` (dawniej `urisysedge`)
+1. ✅ **`uri_control.edge`** w `uricore` (dawniej ``uri_control.edge``)
 2. ✅ **`urioperators` (LLM)** — wired w `urillm`
 3. ✅ **`urirouter`** — wyodrębniony resolver/transport
 4. ✅ **PyPI layout** — osobne repo `tellmesh/{pack}/`

@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.69-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$12.35-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-29.6h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.72-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$15.69-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-33.5h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $12.3463 (99 commits)
-- 👤 **Human dev:** ~$2962 (29.6h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $15.6865 (107 commits)
+- 👤 **Human dev:** ~$3351 (33.5h @ $100/h, 30min dedup)
 
 Generated on 2026-06-18 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -181,16 +181,16 @@ code2llm ./ -f all -o ./project
 
 ## Ekosystem TellMesh
 
-Orchestrator: **[urisys](https://github.com/tellmesh/urisys)** · Mapa: **[MESH.md](https://github.com/tellmesh/urisys/blob/main/docs/MESH.md)** · Model: **[ECOSYSTEM.md](https://github.com/tellmesh/urisys/blob/main/../docs/ECOSYSTEM.md)**
+Orchestrator: **[urisys](https://github.com/tellmesh/urisys)** · Mapa: **[MESH.md](https://github.com/tellmesh/urisys/blob/main/docs/MESH.md)** · Model: **[ECOSYSTEM.md](https://github.com/tellmesh/urisys/blob/main/docs/ECOSYSTEM.md)**
 
 | Pole | Wartość |
 |------|---------|
 | **Warstwa** | Orchestrator (centrum mesh) |
 | **Moduł** | `urisys` |
-| **Zależności** | `uricore`, `urirouter` |
+| **Zależności** | `uricontrol`, `urirouter` |
 | **Rola** | CLI, Markpact, flow runner, PackManager, `urisys init` |
 
-Runtime edge: **`uri_control.edge`** w pakiecie **`uricore`** (legacy `urisysedge` usunięty 2026-06).
+Runtime edge: **`uri_control.edge`** w pakiecie **`uricontrol`** (legacy PyPI `uricore` / `urisysedge` usunięty 2026-06).
 Router intencji: **`urirouter`** (`uri_router`) — resolve + HTTP/MQTT delegate.
 
 <!-- end-ecosystem -->

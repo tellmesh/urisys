@@ -176,7 +176,7 @@ def _repo_pyproject(spec: PackSpec) -> str:
     package_data = ""
     if (repo_module_dir(spec) / "manifest.yaml").is_file() or (spec.vendored and (spec.vendored / "manifest.yaml").is_file()):
         package_data = f'\n[tool.setuptools.package-data]\n{spec.name} = ["manifest.yaml"]\n'
-    deps = ['"uricore>=0.1.0"'] + [f'"{d}"' for d in spec.extra_deps]
+    deps = ['"uricontrol>=0.1.8"'] + [f'"{d}"' for d in spec.extra_deps]
     deps_str = ", ".join(deps)
     if spec.layout == "flat":
         setuptools = f"""

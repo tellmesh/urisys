@@ -74,6 +74,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
 - Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
 
+## [0.1.72] - 2026-06-18
+
+### Docs
+- Update README.md
+- Update docs/ARCHITECTURE.md
+- Update docs/DISTRIBUTION.md
+- Update docs/ECOSYSTEM.md
+- Update docs/EXAMPLES.md
+- Update docs/MESH.md
+- Update docs/NODE-SETUP.md
+- Update docs/PACKAGES.md
+- Update docs/README.md
+- Update docs/REFACTORING.md
+- ... and 2 more files
+
+### Test
+- Update tests/conftest.py
+- Update tests/test_kvm_pack_pyprojects.py
+- Update tests/test_node_core_packs.py
+- Update tests/test_node_install.py
+- Update tests/test_session_core.py
+- Update tests/test_uricore_install.py
+- Update tests/test_urirouter_install.py
+
+### Other
+- Update VERSION
+- Update examples/frontend/app.js
+- Update scripts/bootstrap-lenovo-local.sh
+- Update scripts/check_contract_drift.py
+- Update scripts/check_flow_uri_patterns.py
+- Update scripts/ci-checkout-siblings.sh
+- Update scripts/ci-install-siblings.sh
+- Update scripts/deploy-lenovo-node.sh
+- Update scripts/generate_pack_markpacts.py
+- Update scripts/lenovo-node-session.sh
+- ... and 11 more files
+
 ## [0.1.69] - 2026-06-18
 
 ### Docs

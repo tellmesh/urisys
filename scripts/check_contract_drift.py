@@ -43,9 +43,14 @@ def contract_paths(spec) -> list[Path]:
     return sorted(markpacts.glob("*.contract.markpact.md"))
 
 
+_TRANSPORT_CONTRACT_IDS = frozenset({"urisys-node.service"})
+
+
 def check_pair(manifest: Path, contract: Path) -> list[str]:
-    m = contract_gen.load_manifest(manifest)
     c = contract_gen.load_contract_block(contract)
+    if str((c.get("metadata") or {}).get("id", "")) in _TRANSPORT_CONTRACT_IDS:
+        return []
+    m = contract_gen.load_manifest(manifest)
     return contract_gen.diff_manifest_contract(m, c)
 
 

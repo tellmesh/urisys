@@ -73,7 +73,7 @@ UriRouter **nie routuje pakietów** — routuje **intencje** (`operation` z URI)
 |--------|------|--------------|----------------------|
 | **urisys** | [tellmesh/urisys](https://github.com/tellmesh/urisys) | `urisys` | CLI, PackManager, Markpact, FlowController, BridgeManager |
 | **urirouter** | [tellmesh/urirouter](https://github.com/tellmesh/urirouter) | `uri_router` | Resolver YAML, HTTP/MQTT delegate, envelope |
-| **uricore** | [tellmesh/uricore](https://github.com/tellmesh/uricore) | `uri_control` + `uri_control.edge` | CapabilityRegistry, policy, handlers, edge Runtime |
+| **uricore** | [tellmesh/uricontrol](https://github.com/tellmesh/uricontrol) | `uri_control` + `uri_control.edge` | CapabilityRegistry, policy, handlers, edge Runtime |
 | **urioperators** | [tellmesh/urioperators](https://github.com/tellmesh/urioperators) | `urioperators` | Wspólne helpery LLM (chat, plan, decide) |
 | **urisys-node** | [tellmesh/urisys-node](https://github.com/tellmesh/urisys-node) | `urisys_node` | Slave node, lazy pack load, screen capture |
 | **markpact-contracts** | [tellmesh/markpact-contracts](https://github.com/tellmesh/markpact-contracts) | — | Przykłady resolverów, transport binding, procesy |
@@ -235,7 +235,7 @@ Szczegóły: [`DISTRIBUTION.md`](DISTRIBUTION.md) · [`REPOS.md`](REPOS.md) · [
 | Etap | Status |
 |------|--------|
 | Wyodrębnienie `urirouter` z `uricore` | ✅ 0.1.0 |
-| Usunięcie legacy `urisysedge` | ✅ → `uri_control.edge` w uricore |
+| Usunięcie legacy ``uri_control.edge`` | ✅ → `uri_control.edge` w uricore |
 | Shimy `uri_control.resolver/transport/envelope` | ✅ |
 | `urisys` zależność bezpośrednia | ✅ |
 | Centralna `policy.operations` (limity payloadu w runtime) | ✅ `uri_router.policy` |

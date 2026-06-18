@@ -35,7 +35,7 @@ Powiązane: [`README.md`](README.md) · [`PACKAGES.md`](PACKAGES.md) · [`PACK-E
 Po migracji (2026-06-17) kod packów **nie jest vendored** w `urisys/` — każdy pack ma repo:
 
 ```text
-tellmesh/uricore/     tellmesh/urirouter/   tellmesh/urioperators/
+tellmesh/uricontrol/     tellmesh/urirouter/   tellmesh/urioperators/
 tellmesh/urikvm/      tellmesh/urihim/      tellmesh/uriocr/      tellmesh/urillm/
 tellmesh/urimail/     tellmesh/urioffice/   tellmesh/urivql/
 tellmesh/urikvmedge/  tellmesh/urirdp/      tellmesh/urisys-node/
@@ -80,9 +80,9 @@ pip install -e .
 |--------|------|-----------------|-----------|
 | `urisys` | 🔲 0.1.35 | — | `tellmesh/urisys` |
 | `urisys-node` | 🔲 | — | `tellmesh/urisys-node` |
-| `uricore` | 🔲 0.1.9 | ✅ v0.1.8+ | `tellmesh/uricore` (`uri_control.edge`) |
+| `uricore` | 🔲 0.1.9 | ✅ v0.1.8+ | `tellmesh/uricontrol` (`uri_control.edge`) |
 | `urirouter` | 🔲 0.1.0 | ✅ v0.1.0 | `tellmesh/urirouter` |
-| `urisysedge` | ✅ 0.1.1 (archived) | ✅ | **archived** → `uricore` |
+| ``uri_control.edge`` | ✅ 0.1.1 (archived) | ✅ | **archived** → `uricore` |
 | `urioperators` | 🔲 0.1.0 | 🔲 | `tellmesh/urioperators` |
 | `urikvm` | ✅ 0.1.1 | ✅ | `tellmesh/urikvm` |
 | `urihim`, `uriocr`, `urillm` | 🔲 | ✅ | `tellmesh/{pack}/` |
@@ -177,7 +177,7 @@ curl -X POST http://127.0.0.1:8790/uri/pack \
 
 | Plik | Rola |
 |------|------|
-| `tellmesh/uricore/` | canonical edge runtime (`uri_control.edge`) |
+| `tellmesh/uricontrol/` | canonical edge runtime (`uri_control.edge`) |
 | `tellmesh/urirouter/` | intent router + resolver policy |
 | `tellmesh/urioperators/` | wspólne helpery LLM |
 | `tellmesh/urisys-node/urisysnode/` | ArtifactResolver, hot-load, forward |

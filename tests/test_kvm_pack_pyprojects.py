@@ -50,7 +50,7 @@ def test_urillm_imports_uri_control_env_not_urikvmedge():
 def test_urisys_root_uv_sources_point_to_siblings():
     data = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
     sources = data["tool"]["uv"]["sources"]
-    for pkg in ("uricontrol", "urirouter", "urioperators", *PACKS):
+    for pkg in ("uricontrol", "uriresolver", "urioperators", *PACKS):
         rel = sources[pkg]["path"]
         assert rel.startswith("../"), f"{pkg} should use sibling path, got {rel}"
         assert (TELLMESH / pkg).is_dir(), f"missing sibling repo {pkg}"

@@ -864,7 +864,7 @@ wheels = [
 
 [[package]]
 name = "goal"
-version = "2.1.253"
+version = "2.1.254"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
@@ -874,9 +874,9 @@ dependencies = [
     { name = "tomlkit" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/24/2d/7b62c85405267f792760ab50d3d071a414a66761edce33e88bde4694e080/goal-2.1.253.tar.gz", hash = "sha256:8278f899391836923d6e5332a15fb18510ff1dfd09ac30a92b43c5e12a12adcc", size = 288721, upload-time = "2026-06-18T09:40:49.89Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/52/e5/853e16bf9a4e70fc8018b89eda65955e71641cd4bddb595bf9498a71f2b3/goal-2.1.254.tar.gz", hash = "sha256:b3c75a5594c643cc64b43b0c5ad52ee63647d36329ea3c8edd378483f86701c7", size = 295292, upload-time = "2026-06-18T14:01:43.833Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c2/e8/5d67af327751bc0a23c99d646ef1998228a1138c60b490230e5162522180/goal-2.1.253-py3-none-any.whl", hash = "sha256:2eb7dac021bd3d7f417381a1d417e195e0b153506459db8b30f1b316bc1e6e1b", size = 281020, upload-time = "2026-06-18T09:40:47.703Z" },
+    { url = "https://files.pythonhosted.org/packages/43/80/7af5a62451c4a9585e7e73deee231b2010c12b7bf4622778b626a64be73e/goal-2.1.254-py3-none-any.whl", hash = "sha256:3f95829c14932aca6cfb28e2b501e9b34d97a16df05cdf975943159cc4ceba48", size = 285419, upload-time = "2026-06-18T14:01:41.508Z" },
 ]
 
 [[package]]
@@ -3796,34 +3796,6 @@ version = "0.1.0"
 source = { editable = "../uriresolver" }
 
 [[package]]
-name = "uriscreen"
-version = "0.1.0"
-source = { editable = "../uriscreen" }
-dependencies = [
-    { name = "uricontrol" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "mss", marker = "extra == 'real'", specifier = ">=9.0" },
-    { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
-    { name = "uricontrol", specifier = ">=0.1.8" },
-]
-provides-extras = ["real", "dev"]
-
-[[package]]
-name = "urishell"
-version = "0.1.0"
-source = { editable = "../urishell" }
-dependencies = [
-    { name = "uricontrol" },
-]
-
-[package.metadata]
-requires-dist = [{ name = "uricontrol", specifier = ">=0.1.8" }]
-
-[[package]]
 name = "uristt"
 version = "0.1.0"
 source = { editable = "../uristt" }
@@ -3841,7 +3813,7 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "urisys"
-version = "0.1.69"
+version = "0.1.72"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
@@ -3870,6 +3842,9 @@ kvm = [
 lab = [
     { name = "uri2flow" },
     { name = "urisys-automation-lab", extra = ["sessions"] },
+]
+node = [
+    { name = "urisys-node" },
 ]
 real = [
     { name = "litellm" },
@@ -3916,9 +3891,10 @@ requires-dist = [
     { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "../uriocr" },
     { name = "uriresolver", editable = "../uriresolver" },
     { name = "urisys-automation-lab", extras = ["sessions"], marker = "extra == 'lab'", editable = "../urisys-automation-lab" },
+    { name = "urisys-node", marker = "extra == 'node'", editable = "../urisys-node" },
     { name = "zeroconf", marker = "extra == 'discovery'", specifier = ">=0.131.0" },
 ]
-provides-extras = ["dev", "lab", "real", "kvm", "discovery"]
+provides-extras = ["dev", "lab", "real", "kvm", "discovery", "node"]
 
 [package.metadata.requires-dev]
 dev = [
@@ -3987,14 +3963,12 @@ requires-dist = [
 
 [[package]]
 name = "urisys-node"
-version = "0.1.18"
+version = "0.1.22"
 source = { editable = "../urisys-node" }
 dependencies = [
     { name = "pygments" },
     { name = "pyyaml" },
     { name = "uricontrol" },
-    { name = "uriscreen" },
-    { name = "urishell" },
 ]
 
 [package.metadata]
@@ -4015,13 +3989,13 @@ requires-dist = [
     { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm" },
     { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "../urillm" },
     { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "../uriocr" },
-    { name = "uriscreen", editable = "../uriscreen" },
-    { name = "urishell", editable = "../urishell" },
+    { name = "uriscreen", marker = "extra == 'boot'", editable = "../uriscreen" },
+    { name = "urishell", marker = "extra == 'boot'", editable = "../urishell" },
     { name = "uristt", marker = "extra == 'dev'", editable = "../uristt" },
     { name = "uriwebrtc", marker = "extra == 'dev'", editable = "../uriwebrtc" },
     { name = "zeroconf", marker = "extra == 'discovery'", specifier = ">=0.131.0" },
 ]
-provides-extras = ["real", "kvm", "discovery", "dev"]
+provides-extras = ["boot", "real", "kvm", "discovery", "dev"]
 
 [package.metadata.requires-dev]
 dev = [

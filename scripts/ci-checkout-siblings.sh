@@ -3,7 +3,7 @@
 #
 # Layout after run:
 #   ${TELLMESH_ROOT}/urisys/
-#   ${TELLMESH_ROOT}/uricore/
+#   ${TELLMESH_ROOT}/uricontrol/
 #   ${TELLMESH_ROOT}/urikvm/
 #   ...
 #
@@ -19,8 +19,7 @@ BRANCH="${TELLMESH_BRANCH:-main}"
 
 # Minimal set for urisys pip install + drift guard
 CORE_REPOS=(
-  uricore
-  uricore
+  uricontrol
   urioperators
   urisys-node
 )

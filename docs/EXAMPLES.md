@@ -44,9 +44,9 @@ urisys --packs none \
 
 Markpact kompiluje się do manifestu w locie (`MarkpactManager`).
 
-## `examples/frontend/` — JavaScript (uricore-js)
+## `examples/frontend/` — JavaScript (uricontrol-js)
 
-`app.js` — klient HTTP do URI runtime (importy wskazują na sibling repos `uri-packs`, `uricore-js`).
+`app.js` — klient HTTP do URI runtime (importy wskazują na sibling repos `uri-packs`, `uricontrol-js`).
 
 Uruchomienie wymaga lokalnego serwera statycznego i działającego backendu URI.
 
@@ -74,13 +74,13 @@ urisys --packs all flow flows/device-maintenance.uri.flow.yaml --approve --dry-r
 | `urisys-automation-lab` | `scripts/docker-smoke.sh` | STT + chat dry-run |
 | `local-lab` | `scripts/04-smoke.sh` | Registry + node resolve |
 
-## uricore examples
+## uricontrol examples
 
 Mock pack examples ship with the `uricore` package:
 
 ```bash
 pip install -e ../uricore
-python ../uricore/examples/call_browser_mock.py
+python ../uricontrol/examples/call_browser_mock.py
 ```
 
 To referencja dla handlerów `python://module:func` w manifestach.

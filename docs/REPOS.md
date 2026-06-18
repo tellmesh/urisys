@@ -28,7 +28,7 @@ Organizacja GitHub: **[tellmesh](https://github.com/tellmesh)** (paczki urisys) 
 |------------------|-------------|--------|
 | `urisys` | [tellmesh/urisys](https://github.com/tellmesh/urisys) | monorepo glue ★ orchestrator |
 | `urirouter` | [tellmesh/urirouter](https://github.com/tellmesh/urirouter) | resolve + transport delegate |
-| `uricore` | [tellmesh/uricore](https://github.com/tellmesh/uricore) | control plane + edge (`uri_control.edge`) |
+| `uricore` | [tellmesh/uricontrol](https://github.com/tellmesh/uricontrol) | control plane + edge (`uri_control.edge`) |
 | `urikvm` | [tellmesh/urikvm](https://github.com/tellmesh/urikvm) | PyPI ✅ |
 | `urihim` | [tellmesh/urihim](https://github.com/tellmesh/urihim) | GitHub Releases |
 | `uriocr` | [tellmesh/uriocr](https://github.com/tellmesh/uriocr) | GitHub Releases |
@@ -60,7 +60,7 @@ find urisys -path '*/packages/python/*' -name handlers.py   # brak wyników
 
 | Składnik | Źródło |
 |----------|--------|
-| uricore | `https://github.com/tellmesh/uricore/releases/download/v0.1.8/...whl` |
+| uricore | `https://github.com/tellmesh/uricontrol/releases/download/v0.1.8/...whl` |
 | urirouter | `https://github.com/tellmesh/urirouter/releases/download/v0.1.0/urirouter-0.1.0-py3-none-any.whl` |
 | urisys-node | `https://github.com/tellmesh/urisys-node/releases/download/v0.1.3/urisys_node-0.1.3-py3-none-any.whl` |
 

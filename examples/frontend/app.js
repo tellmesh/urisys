@@ -1,7 +1,7 @@
-import { CapabilityRegistry, UriControlRuntime, MemoryEventStore } from '../../../uricore-js/src/index.js';
+import { CapabilityRegistry, UriControlRuntime, MemoryEventStore } from '../../../uricontrol-js/src/index.js';
 import { register as registerDom } from '../../../uri-packs/packages/js/uridom-js/src/index.js';
 import { register as registerPage } from '../../../uri-packs/packages/js/uripage-js/src/index.js';
-import { HttpUriClient } from '../../../uricore-js/src/transports/http-client.js';
+import { HttpUriClient } from '../../../uricontrol-js/src/transports/http-client.js';
 
 const registry = new CapabilityRegistry();
 registerDom(registry);

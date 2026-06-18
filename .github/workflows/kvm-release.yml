@@ -48,7 +48,7 @@ jobs:
       - name: Install urisys
         working-directory: urisys
         run: |
-          pip install "uricore @ git+https://github.com/tellmesh/uricore.git@v0.1.7"
+          pip install "uricore @ git+https://github.com/tellmesh/uricontrol.git@v0.1.7"
           bash scripts/ci-install-siblings.sh
           pip install -e .
 
