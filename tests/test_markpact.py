@@ -85,15 +85,20 @@ def test_build_route_shape():
     """Guards the extracted _build_route: a markpact:// handler becomes a python://
     ref registered in handlers, and command kind defaults approval to required."""
     manager = MarkpactManager()
-    handlers: dict[str, str] = {}
+    handlers_python: dict[str, str] = {}
+    handlers_urisys: dict[str, str] = {}
     route = manager._build_route(
         {"pattern": "browser://{s}/page/open", "operation": "open_page",
          "handler": "markpact://open_page", "kind": "command"},
-        package_id="uribrowser", scheme="browser", module_name="mod", handlers=handlers,
+        package_id="uribrowser",
+        scheme="browser",
+        module_name="mod",
+        handlers_python=handlers_python,
+        handlers_urisys=handlers_urisys,
     )
     assert route["pattern"] == "browser://{s}/page/open"
     assert route["kind"] == "command"
     assert route["approval"] == "required"
     assert route["side_effects"] is True
     assert route["handler"] == "python://mod.open_page:handle"
-    assert handlers["open_page"] == "python://mod.open_page:handle"
+    assert handlers_python["open_page"] == "python://mod.open_page:handle"

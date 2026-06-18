@@ -380,13 +380,13 @@ D:
     _check_uricore_dist()
     run_doctor()
   src/urisys/edge_install.py:
-    e: is_importable,_dist_version,is_broken_install,pip_run,repair_urisysedge,ensure_urisysedge
+    e: is_importable,_dist_version,is_broken_install,pip_run,repair_urisysedge,verify_uri_control_edge
     is_importable()
     _dist_version()
     is_broken_install()
     pip_run(args)
     repair_urisysedge()
-    ensure_urisysedge()
+    verify_uri_control_edge()
   src/urisys/flow.py:
     e: load_flow,iter_steps
     load_flow(path)

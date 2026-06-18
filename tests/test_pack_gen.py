@@ -6,6 +6,8 @@ from urisys.managers.markpact_manager import MarkpactManager
 from urisys.managers.markpact_pack_gen import generate_pack_markpact, package_schemes
 from urisys.managers.markpact_run import run_markpact
 
+from pack_import_isolation import reset_embedded_pack_imports
+
 ROOT = Path(__file__).resolve().parents[1]
 TELLMESH = ROOT.parent
 STEPPER_PKG = TELLMESH / "uristepper" / "uristepper"
@@ -50,8 +52,8 @@ def test_unpack_and_execute_embedded_handler(tmp_path):
         del sys.modules[name]
     sys.path.insert(0, str(compiled.cache_dir))
 
-    from urisysedge.manifest import register_manifest_file
-    from urisysedge.runtime import Runtime
+    from uri_control.edge.manifest import register_manifest_file
+    from uri_control.edge.runtime import Runtime
 
     rt = Runtime(events_path=str(tmp_path / "ev.jsonl"),
                  config={"device_profile": {"axes": {"x": {"steps_per_rev": 200}}, "safety": {"x": {}}}})
@@ -59,6 +61,7 @@ def test_unpack_and_execute_embedded_handler(tmp_path):
     res = rt.call("stepper://m1/axis/x/query/status", {}, {})
     assert res["ok"] is True
     assert res["result"]["driver"] == "mock"
+    reset_embedded_pack_imports()
 
 
 def test_multi_scheme_requires_scheme_selection():

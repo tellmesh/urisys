@@ -43,8 +43,8 @@ def test_machine_cycle_compiles_urisys_flow_handler(tmp_path):
 def test_machine_cycle_requires_approval_without_deps(tmp_path):
     compiled = MarkpactManager(cache_root=tmp_path / ".markpact").compile(PROCESS_MARKPACT, force=True)
 
-    from urisysedge.manifest import register_manifest_file
-    from urisysedge.runtime import Runtime
+    from uri_control.edge.manifest import register_manifest_file
+    from uri_control.edge.runtime import Runtime
 
     rt = Runtime(events_path=str(tmp_path / "events.jsonl"), config={})
     register_manifest_file(rt, compiled.manifest_path)

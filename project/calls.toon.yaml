@@ -211,7 +211,7 @@ MODULES:
     _version_lt  CC=2  out:2
   src.urisys.edge_install  [6 funcs]
     _dist_version  CC=2  out:1
-    ensure_urisysedge  CC=5  out:8
+    verify_uri_control_edge  CC=5  out:8
     is_broken_install  CC=2  out:2
     is_importable  CC=1  out:1
     pip_run  CC=4  out:2

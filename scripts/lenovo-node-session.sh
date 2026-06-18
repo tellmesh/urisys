@@ -35,7 +35,7 @@ print(json.dumps({
     "payload": {
         "pack": "${pack}",
         "install": True,
-        "specs": ["urisysedge>=0.1.0", "${wheel}"],
+        "specs": ["uricore>=0.1.0", "${wheel}"],
     },
     "context": {"approved": True},
 }))

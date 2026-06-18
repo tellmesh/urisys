@@ -10,8 +10,7 @@ Organizacja GitHub: **[tellmesh](https://github.com/tellmesh)** (paczki urisys) 
 /home/tom/github/tellmesh/
 ├── urisys/                 glue + CLI (git: tellmesh/urisys) ★
 ├── urirouter/              URI intent router (resolve + transport)
-├── uricore/                capability dispatch (uri_control)
-├── urisysedge/             edge runtime
+├── uricore/                capability dispatch + uri_control.edge
 ├── urioperators/           LLM helpers
 ├── urisys-node/            urisysnode (bundled); uriscreen/urishell → pip
 ├── uriscreen/ urishell/ urichat/ uristt/ uriwebrtc/ urimessage/
@@ -29,9 +28,7 @@ Organizacja GitHub: **[tellmesh](https://github.com/tellmesh)** (paczki urisys) 
 |------------------|-------------|--------|
 | `urisys` | [tellmesh/urisys](https://github.com/tellmesh/urisys) | monorepo glue ★ orchestrator |
 | `urirouter` | [tellmesh/urirouter](https://github.com/tellmesh/urirouter) | resolve + transport delegate |
-| `urisysedge` | [tellmesh/urisysedge](https://github.com/tellmesh/urisysedge) | PyPI ✅ |
-| `urioperators` | *(brak `.git` lokalnie)* | utwórz `tellmesh/urioperators` |
-| `uricore` | [tellmesh/uricore](https://github.com/tellmesh/uricore) | wheel z Releases, nie PyPI squatter |
+| `uricore` | [tellmesh/uricore](https://github.com/tellmesh/uricore) | control plane + edge (`uri_control.edge`) |
 | `urikvm` | [tellmesh/urikvm](https://github.com/tellmesh/urikvm) | PyPI ✅ |
 | `urihim` | [tellmesh/urihim](https://github.com/tellmesh/urihim) | GitHub Releases |
 | `uriocr` | [tellmesh/uriocr](https://github.com/tellmesh/uriocr) | GitHub Releases |

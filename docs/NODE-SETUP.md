@@ -174,7 +174,7 @@ curl -sS -X POST http://127.0.0.1:8790/uri/call \
 Pierwsze `kvm://…` (z `approved`) uruchomi w tle:
 
 ```text
-pip install -U urisysedge urikvm
+pip install -U uricore urikvm
 ```
 
 Pierwsze `screen://…/capture` z `allow_real: true` doinstaluje `mss` i `Pillow`.

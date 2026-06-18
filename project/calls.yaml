@@ -747,8 +747,8 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 3
     calls_in: 1
-  src.urisys.edge_install.ensure_urisysedge:
-    name: ensure_urisysedge
+  src.urisys.edge_install.verify_uri_control_edge:
+    name: verify_uri_control_edge
     module: src.urisys.edge_install
     line: 65
     cyclomatic_complexity: 5
@@ -1653,7 +1653,7 @@ edges:
   callee: src.urisys.init_setup.pip_install_specs
   call_type: resolved
 - caller: src.urisys.init_setup._build_pip_result
-  callee: src.urisys.edge_install.ensure_urisysedge
+  callee: src.urisys.edge_install.verify_uri_control_edge
   call_type: resolved
 - caller: src.urisys.init_setup._build_pip_result
   callee: src.urisys.node_install.install_urisys_node
@@ -1697,19 +1697,19 @@ edges:
 - caller: src.urisys.edge_install.repair_urisysedge
   callee: src.urisys.edge_install._dist_version
   call_type: resolved
-- caller: src.urisys.edge_install.ensure_urisysedge
+- caller: src.urisys.edge_install.verify_uri_control_edge
   callee: src.urisys.edge_install.is_importable
   call_type: resolved
-- caller: src.urisys.edge_install.ensure_urisysedge
+- caller: src.urisys.edge_install.verify_uri_control_edge
   callee: src.urisys.edge_install.is_broken_install
   call_type: resolved
-- caller: src.urisys.edge_install.ensure_urisysedge
+- caller: src.urisys.edge_install.verify_uri_control_edge
   callee: src.urisys.edge_install.pip_run
   call_type: resolved
-- caller: src.urisys.edge_install.ensure_urisysedge
+- caller: src.urisys.edge_install.verify_uri_control_edge
   callee: src.urisys.edge_install.repair_urisysedge
   call_type: resolved
-- caller: src.urisys.edge_install.ensure_urisysedge
+- caller: src.urisys.edge_install.verify_uri_control_edge
   callee: src.urisys.edge_install._dist_version
   call_type: resolved
 - caller: src.urisys.node_install.wheel_filename
@@ -2521,7 +2521,7 @@ modules:
   - src.urisys.doctor.run_doctor
   src.urisys.edge_install:
   - src.urisys.edge_install._dist_version
-  - src.urisys.edge_install.ensure_urisysedge
+  - src.urisys.edge_install.verify_uri_control_edge
   - src.urisys.edge_install.is_broken_install
   - src.urisys.edge_install.is_importable
   - src.urisys.edge_install.pip_run

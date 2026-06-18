@@ -4,6 +4,8 @@ from pathlib import Path
 
 from urisys.managers.markpact_run import run_markpact
 
+from pack_import_isolation import reset_embedded_pack_imports
+
 TELLMESH = Path(__file__).resolve().parents[2]
 URISHELL = TELLMESH / "urishell" / "markpacts" / "urishell.markpact.md"
 SHOWCASE = TELLMESH / "markpact-contracts" / "packs" / "uribrowser.showcase.markpact.md"
@@ -68,6 +70,7 @@ def test_run_integration_flow_local_siblings(tmp_path, monkeypatch):
         import pytest
 
         pytest.skip("uribrowser showcase missing")
+    reset_embedded_pack_imports()
     from urisys.managers.markpact_pack_deps import extend_tellmesh_paths
 
     try:

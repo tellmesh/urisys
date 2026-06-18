@@ -1,7 +1,7 @@
 """Generate a UriContract Markpact from a runtime ``manifest.yaml`` and detect
 drift between the two.
 
-``manifest.yaml`` (read by ``urisysedge.manifest.register_manifest_file``) is the
+``manifest.yaml`` (read by ``uri_control.edge.manifest.register_manifest_file``) is the
 single source of truth a pack ships for runtime registration. The UriContract
 Markpact is the *spec* surface of the same capabilities. Keeping both hand-written
 guarantees drift; this module derives the contract from the manifest and compares

@@ -31,7 +31,29 @@ urisys markpact run markpacts/urikvm.markpact.md --as pack
 |------|------|
 | `tellmesh/markpact-contracts/packs/*.markpact.md` | Aggregated thin copies (optional) |
 | `markpact-contracts/packs/uribrowser.showcase.markpact.md` | Manual integration demo (`run-flow`) |
+| `markpact-contracts/packs/machine-cycle-process.markpact.md` | UriProcess — cross-pack flow via `urisys://flow/` |
+| `markpact-contracts/packs/desktop-automation-processes.markpact.md` | URI Flow Contract — example 39 (GUI/RDP/browser) |
+| `markpact-contracts/packs/examples/urisys.runtime.resolver.yaml` | Przykład resolvera (ręczny / referencyjny) |
+| `.markpact/{id}/generated/{linux,server,esp32}/` | Wygenerowany resolver + esp32 routes (Etap 4) |
 | `markpact-contracts/packs/legacy/*.showcase.markpact.md` | Archived thick drafts — do not use |
+
+## UriProcess pipeline
+
+```bash
+export TELLMESH_ROOT=~/github/tellmesh
+cd tellmesh/urisys
+
+# materialize + platform export
+bash scripts/marksync-materialize.sh \
+  ../markpact-contracts/packs/desktop-automation-processes.markpact.md
+
+# run z resolverem
+export URISYS_RESOLVER_CONFIG=../.markpact/desktop_automation_processes/generated/linux/urisys.runtime.yaml
+urisys markpact run ../markpact-contracts/packs/desktop-automation-processes.markpact.md \
+  --as flow --approve --dry-run
+```
+
+Architektura: [`docs/PROCESS-ARCHITECTURE.md`](../docs/PROCESS-ARCHITECTURE.md).
 
 When `urisys` lives in `tellmesh/urisys`, `scripts/paths.sh` resolves `markpact-contracts/packs` automatically.
 

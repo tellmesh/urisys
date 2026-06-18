@@ -1,7 +1,7 @@
 """urisys control-plane HTTP server.
 
 The transport plumbing (JSON I/O, CORS, OPTIONS, threading, ``/uri/call``) is the
-shared ``urisysedge.http`` implementation. urisys-specific views that return a
+shared ``uri_control.edge.http`` implementation. urisys-specific views that return a
 richer shape than the edge contract (full route dicts, explain, events) are
 supplied as endpoint overrides, so nothing is duplicated and the wire contract
 is preserved exactly.
@@ -12,7 +12,7 @@ from __future__ import annotations
 import json
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-from urisysedge.http import make_uri_handler
+from uri_control.edge.http import make_uri_handler
 
 from .controllers.uri_controller import UriController
 from .defaults import DEFAULT_ENVIRONMENT, DEFAULT_EVENTS_PATH

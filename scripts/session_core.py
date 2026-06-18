@@ -255,7 +255,7 @@ def expand_step_wheels(
         if whl:
             specs = list(payload.get("specs") or [])
             if not specs:
-                specs = ["urisysedge>=0.1.0", wheel_url(wheel_server, whl)]
+                specs = ["uricore>=0.1.0", wheel_url(wheel_server, whl)]
             payload["specs"] = specs
             step["payload"] = payload
 

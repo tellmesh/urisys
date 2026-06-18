@@ -1,5 +1,5 @@
 """Characterization tests for the urisys HTTP server after it was migrated onto
-the shared ``urisysedge.http`` transport. Locks the wire contract that browser
+the shared ``uri_control.edge.http`` transport. Locks the wire contract that browser
 and CLI clients rely on (CORS, exact /health shape, full route dicts)."""
 
 import json

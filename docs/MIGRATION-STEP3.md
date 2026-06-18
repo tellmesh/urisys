@@ -11,9 +11,9 @@ Usunięcie 2 zduplikowanych klas wskazanych w `project/analysis.toon.yaml`:
 
 | Było | Jest |
 |------|------|
-| `urisys-node/.../runtime.py` (~165 L fork) | shim → `urisysedge.runtime` |
-| `urisys-node/.../env.py` (lokalny loader `.env`) | shim → `urisysedge.env` |
-| `uristepper-docker/.../JsonlEventStore` | import z `urisysedge.runtime` |
+| `urisys-node/.../runtime.py` (~165 L fork) | shim → `uri_control.edge.runtime` |
+| `urisys-node/.../env.py` (lokalny loader `.env`) | shim → `uri_control.edge.env` |
+| `uristepper-docker/.../JsonlEventStore` | import z `uri_control.edge.runtime` |
 | `urisysedge.JsonlEventStore` bez `tail()` | `tail()` + domyślne metadane eventów w `append()` |
 
 ### Canonical (`packages/python/urisysedge/runtime.py`)

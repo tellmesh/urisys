@@ -198,6 +198,18 @@ class MarkpactManager:
             docs_path = None  # type: ignore[assignment]
 
         flows_dir, flow_ids = self._write_flows(cache_dir, blocks)
+        if flows_dir and flow_ids:
+            manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8")) or {}
+            manifest["urisys"] = {
+                "flows_dir": str(flows_dir.resolve()),
+                "flows": {
+                    fid: str((flows_dir / f"{_safe_identifier(fid, fallback='flow')}.uri.flow.yaml").resolve())
+                    for fid in flow_ids
+                },
+            }
+            manifest_path.write_text(
+                yaml.safe_dump(manifest, sort_keys=False, allow_unicode=True), encoding="utf-8"
+            )
         proto_dir, proto_files = self._write_protos(cache_dir, blocks)
         module_files = self._write_modules(cache_dir, blocks)
 
@@ -402,10 +414,11 @@ class MarkpactManager:
         package_id: str,
         scheme: str,
         module_name: str,
-        handlers: dict[str, str],
+        handlers_python: dict[str, str],
+        handlers_urisys: dict[str, str],
     ) -> dict[str, Any]:
         """Compile one capability entry into a manifest route, registering its
-        generated python handler in ``handlers`` when the source is a markpact://
+        generated python handler in ``handlers_python`` when the source is a markpact://
         or python:// reference."""
         pattern = str(item.get("pattern") or item.get("uri") or "")
         if not pattern:
@@ -415,11 +428,17 @@ class MarkpactManager:
             raise MarkpactError(
                 f"UriPack Markpact currently supports one scheme per file. Expected {scheme!r}, got {item_scheme!r}."
             )
-        operation = str(item.get("operation") or item.get("id") or "").split(".")[-1].replace("-", "_")
+        if item.get("operation") is not None and str(item.get("operation")).strip():
+            operation = str(item["operation"]).replace("-", "_")
+        else:
+            raw_id = str(item.get("id") or "")
+            operation = raw_id.split(".")[-1].replace("-", "_") if raw_id else ""
         if not operation:
             raise MarkpactError(f"Capability has no operation/id: {item!r}")
         kind = str(item.get("kind") or ("command" if "/command/" in pattern else "query"))
-        handler_ref = self._resolve_handler_ref(item.get("handler"), operation, module_name, handlers)
+        handler_ref = self._resolve_handler_ref(
+            item.get("handler"), operation, module_name, handlers_python, handlers_urisys
+        )
         route = {
             "pattern": pattern,
             "kind": kind,
@@ -435,32 +454,49 @@ class MarkpactManager:
         return route
 
     def _resolve_handler_ref(
-        self, handler_ref: Any, operation: str, module_name: str, handlers: dict[str, str]
+        self,
+        handler_ref: Any,
+        operation: str,
+        module_name: str,
+        handlers_python: dict[str, str],
+        handlers_urisys: dict[str, str],
     ) -> Any:
-        """Resolve a capability handler reference, registering the generated
-        python handler in ``handlers`` for markpact:// and python:// sources."""
+        """Resolve a capability handler reference, registering generated handlers."""
         if isinstance(handler_ref, str) and handler_ref.startswith("markpact://"):
             handler_id = self._handler_id_from_ref(handler_ref)
             resolved = f"python://{module_name}.{_safe_identifier(handler_id)}:handle"
-            handlers[operation] = resolved
+            handlers_python[operation] = resolved
             return resolved
         if isinstance(handler_ref, str) and handler_ref.startswith("python://"):
-            handlers[operation] = handler_ref
+            handlers_python[operation] = handler_ref
+            return handler_ref
+        if isinstance(handler_ref, str) and handler_ref.startswith("urisys://"):
+            handlers_urisys[operation] = handler_ref
+            return handler_ref
         return handler_ref
 
     def _compile_manifest(self, pack: dict[str, Any], *, package_id: str, module_name: str, source_hash: str) -> dict[str, Any]:
         capabilities = self._capabilities(pack)
         scheme = self._scheme(pack, capabilities)
         version = pack.get("version") or (pack.get("metadata") or {}).get("version") or 1
-        handlers: dict[str, str] = {}
+        handlers_python: dict[str, str] = {}
+        handlers_urisys: dict[str, str] = {}
         uri_patterns = [
             self._build_route(
-                item, package_id=package_id, scheme=scheme, module_name=module_name, handlers=handlers
+                item,
+                package_id=package_id,
+                scheme=scheme,
+                module_name=module_name,
+                handlers_python=handlers_python,
+                handlers_urisys=handlers_urisys,
             )
             for item in capabilities
         ]
 
         metadata = pack.get("metadata") or {}
+        handlers: dict[str, Any] = {"python": handlers_python}
+        if handlers_urisys:
+            handlers["urisys"] = handlers_urisys
         manifest = {
             "id": package_id,
             "version": version,
@@ -469,7 +505,7 @@ class MarkpactManager:
             "generated_from": str(pack.get("generated_from") or "markpact"),
             "source_hash": source_hash,
             "uri_patterns": uri_patterns,
-            "handlers": {"python": handlers},
+            "handlers": handlers,
         }
         for optional_key in ["policy", "runtime", "environment", "dependencies"]:
             if optional_key in pack:

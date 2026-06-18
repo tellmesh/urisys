@@ -59,8 +59,8 @@ def test_process_capability_runs_embedded_flow_via_urisys_handler(tmp_path):
     assert manifest["handlers"]["urisys"]["run"] == "urisys://flow/machine-cycle"
     assert "machine-cycle" in manifest["urisys"]["flows"]
 
-    from urisysedge.manifest import register_manifest_file
-    from urisysedge.runtime import Runtime
+    from uri_control.edge.manifest import register_manifest_file
+    from uri_control.edge.runtime import Runtime
 
     rt = Runtime(events_path=str(tmp_path / "events.jsonl"), config={})
     register_manifest_file(rt, compiled.manifest_path)

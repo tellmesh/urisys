@@ -73,8 +73,8 @@ def _pack(
 def pack_specs() -> dict[str, PackSpec]:
     specs: dict[str, PackSpec] = {}
 
-    specs["urisysedge"] = _pack(
-        "urisysedge",
+    specs["uricore"] = _pack(
+        "uricore",
         module_files=("__init__.py", "runtime.py", "env.py"),
         repo_readme="Shared URI edge runtime for urisys capability packs.",
     )
@@ -213,7 +213,7 @@ def pack_specs() -> dict[str, PackSpec]:
 # Packs with standalone tellmesh repos (canonical, no vendored copy in urisys)
 SIBLING_ONLY = frozenset(
     {
-        "urisysedge",
+        "uricore",
         "urioperators",
         "urikvm",
         "urihim",

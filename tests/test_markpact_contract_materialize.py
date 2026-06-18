@@ -55,8 +55,8 @@ def test_thin_pack_materializes_to_markpact_tree(tmp_path, monkeypatch):
 def test_thin_pack_routes_via_tellmesh_and_uricore(tmp_path, monkeypatch):
     monkeypatch.setenv("TELLMESH_ROOT", str(TELLMESH))
     from urisys.managers.markpact_pack_deps import extend_tellmesh_paths
-    from urisysedge.manifest import register_manifest_file
-    from urisysedge.runtime import Runtime
+    from uri_control.edge.manifest import register_manifest_file
+    from uri_control.edge.runtime import Runtime
 
     try:
         extend_tellmesh_paths(anchor=URIKVM_THIN)
@@ -94,8 +94,8 @@ def test_full_pack_embedded_source_runs_without_tellmesh(tmp_path):
         del sys.modules[name]
     sys.path.insert(0, str(compiled.cache_dir))
 
-    from urisysedge.manifest import register_manifest_file
-    from urisysedge.runtime import Runtime
+    from uri_control.edge.manifest import register_manifest_file
+    from uri_control.edge.runtime import Runtime
 
     rt = Runtime(events_path=str(tmp_path / "ev.jsonl"), config={})
     register_manifest_file(rt, compiled.manifest_path)

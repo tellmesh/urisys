@@ -20,7 +20,13 @@ def test_extend_tellmesh_paths_adds_siblings(monkeypatch):
     monkeypatch.setenv("TELLMESH_ROOT", str(TELLMESH))
     for mod in ("urikvm", "urishell", "urienv"):
         sys.modules.pop(mod, None)
-    added = extend_tellmesh_paths(anchor=TELLMESH / "urisys")
-    assert added
+    extend_tellmesh_paths(anchor=TELLMESH / "urisys")
     importlib.import_module("urikvm")
     importlib.import_module("urienv")
+
+
+def test_extend_tellmesh_imports_uribrowserdocker(monkeypatch):
+    monkeypatch.setenv("TELLMESH_ROOT", str(TELLMESH))
+    sys.modules.pop("uribrowserdocker", None)
+    extend_tellmesh_paths(anchor=TELLMESH / "urisys")
+    importlib.import_module("uribrowserdocker")

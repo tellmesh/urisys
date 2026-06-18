@@ -5,12 +5,15 @@
 Najważniejsza zasada:
 
 ```text
-Markpact = format autorski i dystrybucyjny
-cache runtime = wygenerowany manifest + wyciągnięte handlery
-urisys = kontrolery, managery, routing, policy, eventy, flow
+Markpact procesu  = CO (sekwencja URI, policy, uses)
+Runtime resolver  = GDZIE i JAK (targets, transport, adapter)
+marksync          = sync źródeł + generowanie plików per środowisko
+urisys            = compile, wykonanie, urisys://flow/, policy, eventy
 ```
 
-Nie należy traktować Markdowna jako bezpośredniego formatu produkcyjnego. `urisys` czyta tylko formalne bloki `markpact:*`, waliduje je i materializuje do cache.
+Pełny opis trzech warstw: [`docs/PROCESS-ARCHITECTURE.md`](PROCESS-ARCHITECTURE.md).
+
+Nie należy traktować Markdowna procesu jako bezpośredniego formatu produkcyjnego na urządzeniu. `urisys` czyta bloki `markpact:*`, waliduje i materializuje do cache; marksync synchronizuje źródła i generuje artefakty resolvera / deploymentu.
 
 ## Minimalny plik
 
@@ -55,6 +58,70 @@ W prawdziwym pliku nie zagnieżdżaj bloków ``` w środku innych bloków Markdo
 | `markdown markpact:docs` | Dokumentacja użytkowa wyciągana do cache. |
 | `js markpact:handler id=<id>` | Źródło JS dla przyszłego `urisys-js`; Python runtime go nie wykonuje. |
 
+## Handler `urisys://flow/<flow-id>`
+
+Proces może być opisany jako `markpact:flow`, a jednocześnie wystawiony jako zwykła capability URI — bez osobnej paczki Python/JS na każdy proces.
+
+```yaml
+capabilities:
+  - uri: process://machine-cycle/command/run
+    kind: command
+    operation: run
+    handler: urisys://flow/machine-cycle
+```
+
+To **nie** jest handler użytkownika. To wbudowany kontroler urisys: przy wywołaniu capability ładuje skompilowany `flows/<id>.uri.flow.yaml` i wykonuje kroki przez platformowy resolver URI (`runtime.call`).
+
+Ścieżka w runtime:
+
+```text
+process://…/command/run  →  urisys://flow/<id>  →  kroki flow  →  resolver platformowy
+```
+
+Przy compile markpact zapisuje mapowanie w `manifest.yaml`:
+
+```yaml
+urisys:
+  flows_dir: …/flows
+  flows:
+    machine-cycle: …/flows/machine_cycle.uri.flow.yaml
+handlers:
+  urisys:
+    machine_cycle.run: urisys://flow/machine-cycle
+```
+
+### UriProcess (proces produkcyjny)
+
+Przykład: [`machine-cycle-process.markpact.md`](../../markpact-contracts/packs/machine-cycle-process.markpact.md) (produkcja) i [`desktop-automation-processes.markpact.md`](../../markpact-contracts/packs/desktop-automation-processes.markpact.md) (automation example 39).
+
+### URI Flow Contract
+
+Proces = graf wywołań URI (`do:` sekwencja lub `{id, uri, after}`). Flow **nie** wskazuje handlerów ani transportu.
+
+```bash
+urisys markpact analyze markpact-contracts/packs/desktop-automation-processes.markpact.md
+# → requires.schemes per flow (kvm, ocr, shell, …)
+```
+
+Reguły profilu: [`docs/PROCESS-ARCHITECTURE.md`](PROCESS-ARCHITECTURE.md).
+
+| Warstwa | Plik / narzędzie | Odpowiedzialność |
+|---------|------------------|------------------|
+| Proces | `*.markpact.md` (process) | **Co** — flow, capability `process://…`, `urisys://flow/` |
+| Resolver | `generated/*/urisys.runtime.yaml` | **Gdzie/jak** — `targets`, transport, adapter ([przykład](../../markpact-contracts/packs/examples/urisys.runtime.resolver.yaml)) |
+| Sync | [marksync](https://github.com/markpact/marksync) | CRDT sync Markpactów + generowanie artefaktów per env |
+
+- **Etap 1** — `markpact:flow` opisuje proces (nie tylko smoke): `machine-cycle`, … ✅
+- **Etap 2** — `urisys://flow/<id>` + `process://…/command/run` ✅
+- **Etap 3** — resolver `targets:` poza procesem — loader + `resolve_uri` w `Runtime.call` ✅ → [`PROCESS-ARCHITECTURE.md`](PROCESS-ARCHITECTURE.md)
+- **Etap 4** — marksync → `generated/{linux,server,esp32}/` ✅ → `export-platform`, plugin `urisys`
+
+Paczki URI (`uristepper`, `uriscreen`, …) bez zmian — proces to klej:
+
+```text
+URI packi = klocki  |  flow = proces  |  resolver = platforma  |  marksync = sync+generate  |  urisys = wykonanie
+```
+
 ## Komendy
 
 ```bash
@@ -67,6 +134,8 @@ urisys markpact routes "$PACK"
 urisys markpact test "$PACK"
 urisys markpact analyze "$PACK"
 urisys markpact materialize "$PACK"
+urisys markpact materialize "$PACK" --platforms linux,server,esp32
+urisys markpact export-platform markpact-contracts/packs/machine-cycle-process.markpact.md
 urisys markpact run "$PACK" --as flow --approve --dry-run
 urisys markpact run "$PACK#shell-smoke" --as flow --approve --dry-run   # jeden flow z fragmentu
 urisys markpact run "$PACK" --as service --port 8789
@@ -84,6 +153,23 @@ urisys markpact run "$PACK" --as service --port 8789
 
 Domyślny tryb z bloku `markpact:run`; nadpisanie: `--as`.
 
+### Resolver i export platform (UriProcess)
+
+Proces **nie** zawiera `targets:` — resolver ładuje się osobno:
+
+```bash
+export URISYS_RESOLVER_CONFIG=markpact-contracts/packs/examples/urisys.runtime.resolver.yaml
+# lub po materialize:
+export URISYS_RESOLVER_CONFIG=.markpact/desktop_automation_processes/generated/linux/urisys.runtime.yaml
+
+urisys markpact run markpact-contracts/packs/desktop-automation-processes.markpact.md \
+  --as flow --approve --dry-run
+
+bash scripts/marksync-materialize.sh markpact-contracts/packs/desktop-automation-processes.markpact.md
+```
+
+Szczegóły: [`docs/PROCESS-ARCHITECTURE.md`](PROCESS-ARCHITECTURE.md).
+
 Unpack: `.markpact/{id}/{hash}/` w cwd (`--out`).
 
 Generator (thin, w paczce):
@@ -95,11 +181,26 @@ python3 scripts/generate_pack_markpacts.py --check
 
 Każdy pack: `tellmesh/{pack}/markpacts/{pack}.markpact.md` — bez duplikacji `handlers.py`.
 
+UriContract (spec) vs UriPack (runtime):
+
+```bash
+# spec z manifest.yaml (waliduje się, nie compile'uje do runtime)
+urisys markpact gen-contract urikvm/urikvm/manifest.yaml --out markpacts/urikvm.contract.markpact.md
+urisys markpact check-drift urikvm/urikvm/manifest.yaml markpacts/urikvm.contract.markpact.md
+
+# runtime → .markpact/ (thin: python:// z repo; full: osadzony kod + proto z uricore)
+urisys markpact materialize markpacts/urikvm.markpact.md --root .markpact
+urisys markpact pack urikvm --out urikvm.full.markpact.md   # self-contained, bez pip install
+urisys markpact run markpacts/urikvm.markpact.md --as pack
+```
+
 CI (drift + walidacja):
 
 ```bash
 python3 scripts/generate_pack_markpacts.py --check
+python3 scripts/check_contract_drift.py
 bash scripts/validate-all-markpacts.sh
+bash scripts/run-markpact-ci.sh
 ```
 
 Showcase (mock, ręczny):

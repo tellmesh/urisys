@@ -1586,11 +1586,11 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:src/urisys/http_server.py:32:God Function:
     create_server'
 - signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: ensure_urisysedge'
-  description: 'code2llm reports `God Function: ensure_urisysedge` in `src/urisys/edge_install.py:65`.
+  title: 'Address code smell: God Function: verify_uri_control_edge'
+  description: 'code2llm reports `God Function: verify_uri_control_edge` in `src/urisys/edge_install.py:65`.
 
 
-    Function ''ensure_urisysedge'' is oversized: CC=5, fan-out=6, mutations=7.
+    Function ''verify_uri_control_edge'' is oversized: CC=5, fan-out=6, mutations=7.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -1603,7 +1603,7 @@ tickets:
   files:
   - src/urisys/edge_install.py
   dedupe_key: 'code2llm:smell:god_function:src/urisys/edge_install.py:65:God Function:
-    ensure_urisysedge'
+    verify_uri_control_edge'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: extract_images_from_dict'
   description: 'code2llm reports `God Function: extract_images_from_dict` in `scripts/session_core.py:118`.

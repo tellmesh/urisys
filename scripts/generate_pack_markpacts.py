@@ -30,7 +30,7 @@ from pack_registry import TELLMESH, PackSpec, pack_specs
 AGGREGATE_DIR = TELLMESH / "markpact-contracts" / "packs"
 SKIP_PACKS = frozenset(
     {
-        "urisysedge",
+        "uricore",
         "urioperators",
         "urikvmedge",
         "urirdpedge",

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 DEFAULT_PACKAGES = {
-    "browser": "uribrowser",
+    "browser": "uribrowserdocker",
     "desktop": "uridesktop",
     "android": "uriandroid",
     "docker": "uridocker",
@@ -26,7 +26,6 @@ DEFAULT_PACKAGES = {
     "him": "urihim",
     "ocr": "uriocr",
     "webrtc": "uriwebrtc",
-    "kv": "urikv",
 }
 
 DEFAULT_EVENTS_PATH = "output/urisys-events.jsonl"

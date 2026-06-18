@@ -67,8 +67,8 @@ def _build_runtime(
     source_anchor: Path | None = None,
     config_anchor: Path | None = None,
 ):
-    from urisysedge.manifest import register_manifest_file
-    from urisysedge.runtime import Runtime
+    from uri_control.edge.manifest import register_manifest_file
+    from uri_control.edge.runtime import Runtime
 
     from .markpact_pack_deps import extend_tellmesh_paths
 
@@ -141,7 +141,7 @@ def run_markpact(
         }
 
     if mode == "flow":
-        from urisysedge.runtime import run_flow
+        from uri_control.edge.runtime import run_flow
 
         from .markpact_models import safe_identifier
         from .markpact_run_flow import packs_for_flow, pick_flow_id
@@ -172,7 +172,7 @@ def run_markpact(
             flow_uses.update(uses)
 
         if flow_uses:
-            from urisysedge.compose import build_runtime
+            from uri_control.edge.compose import build_runtime
 
             from .markpact_pack_deps import ensure_flow_packs
 
@@ -229,7 +229,7 @@ def run_markpact(
     if mode == "service":
         serve = serve_fn
         if serve is None:
-            from urisysedge.http import serve as serve  # noqa: PLW0127
+            from uri_control.edge.http import serve as serve  # noqa: PLW0127
         eff_port = port or (run_cfg.get("service") or {}).get("port") or 8790
         serve(rt, host, int(eff_port), service=str(scheme or compiled.package_id))
         return {**base, "served": True, "host": host, "port": int(eff_port)}

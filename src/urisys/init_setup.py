@@ -9,7 +9,6 @@ from pathlib import Path
 from typing import Any, Literal
 
 from .doctor import run_doctor
-from .edge_install import ensure_urisysedge
 from .node_install import diagnose_urisys_node, install_urisys_node, pip_spec as node_pip_spec
 from .uricore_install import diagnose_uricore, is_wrong_uricore_installed, pip_spec, repair_uricore, wheel_url
 from .urirouter_install import diagnose_urirouter, pip_spec as urirouter_pip_spec
@@ -35,7 +34,6 @@ def default_pip_specs(*, profile: Profile = "slave") -> list[str]:
         "pip",
         urirouter_pip_spec(),
         pip_spec(),
-        "urisysedge>=0.1.0",
         f'urisys[real]>={DEFAULT_MIN_VERSION}',
     ]
 
@@ -136,16 +134,16 @@ def _build_pip_result(specs: list[str], *, dry_run: bool) -> dict[str, Any]:
             "node_spec": default_node_pip_spec(),
         }
     pip_result = pip_install_specs(specs)
-    edge_result = ensure_urisysedge()
     node_result = install_urisys_node()
+    verify = verify_uri_control()
     pip_result = {
         **pip_result,
-        "urisysedge_install": edge_result,
+        "uri_control_verify": verify,
         "node_spec": default_node_pip_spec(),
         "node_install": node_result,
     }
-    if not edge_result.get("ok"):
-        pip_result["edge_warning"] = "urisysedge missing after pip — retry: pip install -U urisysedge"
+    if not verify.get("ok"):
+        pip_result["edge_warning"] = verify.get("pip_hint") or f"pip install -U {wheel_url()}"
     if not node_result.get("ok"):
         pip_result["node_warning"] = (
             "urisys-node install failed — publish GitHub Release "

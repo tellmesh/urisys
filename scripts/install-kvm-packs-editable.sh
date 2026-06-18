@@ -5,7 +5,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TELLMESH="$(dirname "$ROOT")"
 
-pip install -e "${TELLMESH}/urisysedge"
+pip install -e "${TELLMESH}/uricore"
 for pkg in urikvm urihim uriocr urillm urimail urioffice urivql; do
   pip install -e "${TELLMESH}/${pkg}[real]" 2>/dev/null || pip install -e "${TELLMESH}/${pkg}"
 done

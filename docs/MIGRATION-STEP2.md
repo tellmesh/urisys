@@ -28,9 +28,9 @@ API `POST /uri/flow` — bez zmian (ten sam kształt odpowiedzi: `ok`, `graph`, 
 
 | Pakiet | Było | Jest |
 |--------|------|------|
-| `urikvmedge/runtime.py` | ~228 L fork | re-export z `urisysedge.runtime` |
-| `urikvmedge/env.py` | ~116 L fork | re-export z `urisysedge.env` |
-| `uribrowseredge/runtime.py` | ~222 L fork | re-export z `urisysedge.runtime` |
+| `urikvmedge/runtime.py` | ~228 L fork | re-export z `uri_control.edge.runtime` |
+| `urikvmedge/env.py` | ~116 L fork | re-export z `uri_control.edge.env` |
+| `uribrowseredge/runtime.py` | ~222 L fork | re-export z `uri_control.edge.runtime` |
 
 Docker build context = katalog `urisys/` (jak `urirdp-docker`):
 

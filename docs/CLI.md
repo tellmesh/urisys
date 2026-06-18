@@ -1,18 +1,37 @@
 # `urisys` CLI
 
-## Ładowanie zwykłych paczek
+## Ładowanie paczek
 
 ```bash
-urisys --packs browser,docker routes
-urisys --packs browser call browser://default/page/open --payload '{"url":"https://example.com"}' --approve
+export TELLMESH_ROOT=~/github/tellmesh   # opcjonalnie: manifesty z sibling checkout
+
+urisys --packs shell,kvm routes
+urisys --packs urikvm routes             # alias → pakiet urikvm
 ```
 
-`--packs all` ładuje domyślne paczki: browser, desktop, android, docker, systemd, printer, camera, display, mail, llm, agent.
+Z `TELLMESH_ROOT` (lub auto-wykrycia workspace tellmesh) `PackManager` ładuje `manifest.yaml`
+z repozytoriów sibling bez `pip install`. Multi-scheme bundle (np. `urikv` z `schemes: [kv, log]`)
+jest pomijany — użyj thin markpactów `urikv-kv` / `urikv-log` albo `--markpact`.
 
-`--packs none` nie ładuje żadnej domyślnej paczki. To jest przydatne przy Markpact:
+Mock browser (URI `browser://default/page/open`) — Markpact, nie docker pack:
 
 ```bash
 source scripts/paths.sh
+urisys --packs none \
+  --markpact "$(markpact_contracts_packs)/uribrowser.markpact.md" \
+  call browser://default/page/open \
+  --payload '{"url":"https://example.com"}' \
+  --approve --dry-run
+```
+
+Produkcyjny pack `browser` → moduł `uribrowserdocker` (`browser://{session}/page/command/open`).
+
+`--packs all` ładuje aliasy z `DEFAULT_PACKAGES` (browser, shell, kvm, env, rdp, screen, …).
+Brakujące pakiety są pomijane z ostrzeżeniem.
+
+`--packs none` nie ładuje domyślnych paczek — przydatne z `--markpact`:
+
+```bash
 urisys --packs none --markpact "$(markpact_contracts_packs)/uribrowser.markpact.md" routes
 ```
 
@@ -21,9 +40,37 @@ urisys --packs none --markpact "$(markpact_contracts_packs)/uribrowser.markpact.
 ```bash
 urisys markpact validate PATH.markpact.md
 urisys markpact compile PATH.markpact.md
-urisys markpact routes PATH.markpact.md
-urisys markpact test PATH.markpact.md
+urisys markpact materialize PATH.markpact.md --root .markpact
+urisys markpact materialize PATH.markpact.md --platforms linux,server,esp32
+urisys markpact materialize PATH.markpact.md --no-platform-export
+urisys markpact export-platform PATH.markpact.md --out generated
+urisys markpact run PATH.markpact.md --as flow --approve --dry-run
+urisys markpact run PATH.markpact.md#flow-id --as flow --approve --dry-run
+urisys markpact gen-contract path/to/manifest.yaml --out markpacts/pack.contract.markpact.md
+urisys markpact check-drift path/to/manifest.yaml markpacts/pack.contract.markpact.md
+bash scripts/run-markpact-ci.sh
+bash scripts/marksync-materialize.sh markpact-contracts/packs/desktop-automation-processes.markpact.md
+MARKSYNC_DEPLOY=1 DEPLOY_DIR=/tmp/edge-process bash scripts/marksync-materialize.sh …
+bash scripts/marksync-deploy.sh markpact-contracts/packs/machine-cycle-process.markpact.md
 ```
+
+### UriProcess — resolver runtime
+
+Resolver YAML **nie** jest w pliku procesu. Ładuj przed `run` / edge serve:
+
+```bash
+export TELLMESH_ROOT=~/github/tellmesh
+export URISYS_RESOLVER_CONFIG=.markpact/desktop_automation_processes/generated/linux/urisys.runtime.yaml
+
+urisys markpact run markpact-contracts/packs/desktop-automation-processes.markpact.md \
+  --as flow --approve --dry-run
+
+# lub --config z polem resolver_path:
+urisys markpact run … --config edge.config.yaml
+```
+
+Przykład konwencji: `markpact-contracts/packs/examples/urisys.runtime.resolver.yaml`.  
+Architektura: [`PROCESS-ARCHITECTURE.md`](PROCESS-ARCHITECTURE.md).
 
 ## Server
 

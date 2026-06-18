@@ -23,7 +23,7 @@ flowchart TB
   end
 
   subgraph edge [Edge runtime]
-    USE[urisysedge]
+    UC[uricore / uri_control.edge]
     HOST[uritic-host / *-edge CLIs]
     FW[ESP32 firmware]
   end
@@ -67,8 +67,7 @@ UriRouter **nie routuje pakietów** — routuje **intencje** (`operation` z URI)
 |--------|------|--------------|----------------------|
 | **urisys** | [tellmesh/urisys](https://github.com/tellmesh/urisys) | `urisys` | CLI, PackManager, Markpact, FlowController, BridgeManager |
 | **urirouter** | [tellmesh/urirouter](https://github.com/tellmesh/urirouter) | `uri_router` | Resolver YAML, HTTP/MQTT delegate, envelope |
-| **uricore** | [tellmesh/uricore](https://github.com/tellmesh/uricore) | `uri_control` | CapabilityRegistry, policy, handlers, UriControlRuntime |
-| **urisysedge** | [tellmesh/urisysedge](https://github.com/tellmesh/urisysedge) | `urisysedge` | Edge Runtime, JsonlEventStore, env policy, HTTP serve |
+| **uricore** | [tellmesh/uricore](https://github.com/tellmesh/uricore) | `uri_control` + `uri_control.edge` | CapabilityRegistry, policy, handlers, edge Runtime |
 | **urioperators** | [tellmesh/urioperators](https://github.com/tellmesh/urioperators) | `urioperators` | Wspólne helpery LLM (chat, plan, decide) |
 | **urisys-node** | [tellmesh/urisys-node](https://github.com/tellmesh/urisys-node) | `urisys_node` | Slave node, lazy pack load, screen capture |
 | **markpact-contracts** | [tellmesh/markpact-contracts](https://github.com/tellmesh/markpact-contracts) | — | Przykłady resolverów, transport binding, procesy |
@@ -133,7 +132,7 @@ tellmesh/
 ├── urisys/              ★ orchestrator (ten dokument)
 ├── urirouter/           ★ resolve + transport delegate
 ├── uricore/             capability dispatch
-├── urisysedge/          edge runtime shared
+├── uricore/                capability dispatch + edge runtime
 ├── urioperators/        LLM helpers
 ├── urisys-node/         slave
 ├── markpact-contracts/  shared contracts
@@ -185,10 +184,9 @@ router.delegate("stepper://tic-t249/axis/x/query/status", {}, {"dry_run": True})
 
 | Paczka | Instalacja slave |
 |--------|------------------|
-| uricore | GitHub Release wheel |
-| urisysedge | PyPI |
+| uricore | GitHub Release wheel (includes `uri_control.edge`) |
 | urisys-node | GitHub Release wheel |
-| urirouter | PyPI (plan) / editable sibling |
+| urirouter | GitHub Release v0.1.0 / PyPI (plan) |
 
 Szczegóły: [`DISTRIBUTION.md`](DISTRIBUTION.md) · [`REPOS.md`](REPOS.md) · [`NODE-SETUP.md`](NODE-SETUP.md).
 
