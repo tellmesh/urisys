@@ -10,7 +10,7 @@ source "$ROOT/scripts/paths.sh"
 _prune_markpact_find() {
   find "$1" \
     \( -path '*/.urisys/*' -o -path '*/.markpact/*' -o -path '*/legacy/*' \) -prune \
-    -o -name '*.markpact.md' -print 2>/dev/null || true
+    -o -name '*.markpact.md' ! -name '*.contract.markpact.md' -print 2>/dev/null || true
 }
 
 mapfile -t FILES < <(
@@ -28,7 +28,7 @@ mapfile -t FILES < <(
         _prune_markpact_find "$repo/markpacts"
       done
     fi
-    find . -path './.urisys/*' -prune -o -path './.markpact/*' -prune -o -path './markpacts/packs/*' -prune -o -name '*.markpact.md' -print
+    find . -path './.urisys/*' -prune -o -path './.markpact/*' -prune -o -path './markpacts/packs/*' -prune -o -name '*.markpact.md' ! -name '*.contract.markpact.md' -print
   } | sort -u
 )
 
