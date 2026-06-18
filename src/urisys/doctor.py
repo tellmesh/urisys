@@ -5,7 +5,7 @@ import shutil
 import sys
 from dataclasses import asdict, dataclass
 from typing import Any, Literal
-from .defaults import DEFAULT_MIN_VERSION, NODE_SERVE_CMD
+from .defaults import DEFAULT_MIN_VERSION, MIN_URISYS_NODE_VERSION, NODE_REMOTE_HEALTH_CMD, NODE_SERVE_CMD
 
 from .node_install import pip_spec as node_pip_spec
 
@@ -148,6 +148,49 @@ def _check_min_version(min_version: str | None) -> Check | None:
         status="ok",
         message=f"urisys {current} meets minimum {min_version}",
         detail={"current": current, "required": min_version},
+    )
+
+
+def _check_urisys_node_version() -> Check | None:
+    from .node_install import is_importable
+
+    if not is_importable():
+        return None
+    current = _pkg_version("urisys-node")
+    if _version_lt(current, MIN_URISYS_NODE_VERSION):
+        return Check(
+            id="urisys_node_version",
+            status="warn",
+            message=(
+                f"urisys-node {current or '?'} is older than {MIN_URISYS_NODE_VERSION} "
+                "(no port takeover; may fail with ModuleNotFoundError: urisysedge)"
+            ),
+            detail={
+                "current": current,
+                "required": MIN_URISYS_NODE_VERSION,
+                "pip_hint": f"pip install -U {node_pip_spec()}",
+            },
+        )
+    takeover = False
+    try:
+        import inspect
+        from urisysnode.serve import serve as node_serve
+
+        takeover = "takeover" in inspect.signature(node_serve).parameters
+    except Exception:
+        pass
+    if not takeover:
+        return Check(
+            id="urisys_node_version",
+            status="warn",
+            message="urisys-node serve() lacks takeover= — upgrade for atomic restart",
+            detail={"current": current, "pip_hint": f"pip install -U {node_pip_spec()}"},
+        )
+    return Check(
+        id="urisys_node_version",
+        status="ok",
+        message=f"urisys-node {current} supports port takeover and urisys remote",
+        detail={"current": current, "required": MIN_URISYS_NODE_VERSION},
     )
 
 
@@ -338,6 +381,9 @@ def run_doctor(*, min_version: str | None = DEFAULT_MIN_VERSION) -> dict[str, An
     core = _check_node_core_packs()
     if core:
         checks.append(core)
+    node_ver = _check_urisys_node_version()
+    if node_ver:
+        checks.append(node_ver)
     wayland = _check_wayland_him()
     if wayland:
         checks.append(wayland)
