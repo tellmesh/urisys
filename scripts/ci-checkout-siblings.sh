@@ -45,11 +45,18 @@ clone_repo() {
     return 0
   fi
   echo "clone ${ORG}/${name} → ${dest}"
-  git clone --depth 1 --branch "${BRANCH}" "https://github.com/${ORG}/${name}.git" "${dest}"
+  # Tolerant: a missing/private/renamed sibling (e.g. urioperators) must not abort the whole
+  # checkout — callers run on whatever cloned. ``git clone`` failures are warned, not fatal.
+  if ! git clone --depth 1 --branch "${BRANCH}" "https://github.com/${ORG}/${name}.git" "${dest}" 2>&1; then
+    echo "::warning::skip ${ORG}/${name}: clone failed (missing/private/renamed) — continuing"
+    return 0
+  fi
 }
 
+missing=0
 for repo in "${REPOS[@]}"; do
-  clone_repo "${repo}"
+  clone_repo "${repo}" || missing=$((missing + 1))
 done
+echo "sibling checkout done (${missing} unavailable)"
 
 echo "tellmesh workspace ready at ${TELLMESH_ROOT}"
