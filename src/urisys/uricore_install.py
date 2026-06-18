@@ -9,7 +9,7 @@ import sys
 from typing import Any
 
 DEFAULT_GITHUB_OWNER = "tellmesh"
-DEFAULT_GITHUB_VERSION = "0.1.8"
+DEFAULT_GITHUB_VERSION = "0.1.11"
 
 
 def github_owner() -> str:

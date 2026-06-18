@@ -176,6 +176,25 @@ service:
 | `FLOWS.md` | UriFlow levels, save_as, expect |
 | `SECURITY.md` | sandbox, allowlist shell (plan) |
 
+## `analyze --json` (CI contract)
+
+```bash
+urisys markpact analyze path/to/pack.markpact.md --json
+urisys markpact analyze path/to/process.markpact.md --strict --json
+```
+
+Format: `urisys.markpact.analyze-v1`. Pola:
+
+| Pole | Opis |
+|------|------|
+| `format` | Stały identyfikator kontraktu |
+| `ok` | Brak błędów (profile + resolver + undeclared uses) |
+| `issue_codes` | Posortowane kody MP* i RR* |
+| `issues` | Jednolita lista `{source, code, severity, message, location}` |
+| `resolver_ok` | Tylko `scheme: process` — walidacja stubów resolvera |
+
+Źródła issue: `source: markpact` (MP001–MP010), `source: resolver` (RR001–RR013).
+
 ## Priorytety implementacji
 
 1. ✅ `requires.schemes` / `uses.packs` + analyze lint (MP001–MP010)  

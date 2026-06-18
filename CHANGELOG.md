@@ -74,6 +74,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
 - Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
 
+## [0.1.68] - 2026-06-18
+
+### Docs
+- Update README.md
+- Update docs/MARKPACT-PROFILE.md
+- Update docs/REFACTORING.md
+
+### Test
+- Update tests/golden/desktop-automation-processes.analyze.json
+- Update tests/golden/machine-cycle-process.analyze.json
+- Update tests/golden/uristepper.analyze.json
+- Update tests/test_analyze_json.py
+- Update tests/test_golden_analyze.py
+- Update tests/test_resolver_lint.py
+
+### Other
+- Update scripts/run-markpact-ci.sh
+- Update uv.lock
+
 ## [0.1.67] - 2026-06-18
 
 ### Docs

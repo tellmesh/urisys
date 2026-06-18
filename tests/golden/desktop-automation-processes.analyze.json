@@ -2,6 +2,7 @@
   "capabilities": 4,
   "error_count": 0,
   "flow_count": 4,
+  "format": "urisys.markpact.analyze-v1",
   "integrations": [
     "gui-open-software-center",
     "llm-guided-gui-click",
@@ -9,8 +10,10 @@
     "install-update-verify-browser"
   ],
   "issue_codes": [],
+  "issues": [],
   "ok": true,
   "package_id": "desktop-automation-processes",
+  "resolver_ok": true,
   "scheme": "process",
   "undeclared_uses": [],
   "use_cases": [],

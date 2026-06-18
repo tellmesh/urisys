@@ -128,6 +128,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Treat non-namespaced operation warnings as errors.",
     )
+    p_analyze.add_argument(
+        "--json",
+        action="store_true",
+        help="Emit stable CI contract (MP + RR issue codes in one report).",
+    )
 
     p_run_flow = msub.add_parser(
         "run-flow",

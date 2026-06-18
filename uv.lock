@@ -3844,7 +3844,7 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "urisys"
-version = "0.1.67"
+version = "0.1.68"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
@@ -3993,8 +3993,10 @@ name = "urisys-node"
 version = "0.1.18"
 source = { editable = "../urisys-node" }
 dependencies = [
+    { name = "pygments" },
     { name = "pyyaml" },
     { name = "uricore" },
+    { name = "urirouter" },
     { name = "uriscreen" },
     { name = "urishell" },
 ]
@@ -4008,14 +4010,16 @@ requires-dist = [
     { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
     { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
     { name = "pyautogui", marker = "extra == 'real'", specifier = ">=0.9.54" },
+    { name = "pygments", specifier = ">=2.20.0" },
     { name = "pytesseract", marker = "extra == 'real'", specifier = ">=0.3.10" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
     { name = "pyyaml", specifier = ">=6.0" },
-    { name = "uricore", specifier = ">=0.1.8" },
+    { name = "uricore", editable = "../uricore" },
     { name = "urihim", extras = ["real"], marker = "extra == 'kvm'", editable = "../urihim" },
     { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm" },
     { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "../urillm" },
     { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "../uriocr" },
+    { name = "urirouter", editable = "../urirouter" },
     { name = "uriscreen", editable = "../uriscreen" },
     { name = "urishell", editable = "../urishell" },
     { name = "uristt", marker = "extra == 'dev'", editable = "../uristt" },
@@ -4023,6 +4027,16 @@ requires-dist = [
     { name = "zeroconf", marker = "extra == 'discovery'", specifier = ">=0.131.0" },
 ]
 provides-extras = ["real", "kvm", "discovery", "dev"]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "costs", specifier = ">=0.1.20" },
+    { name = "goal", specifier = ">=2.1.0" },
+    { name = "pfix", specifier = ">=0.1.60" },
+    { name = "pytest", specifier = ">=8.0" },
+    { name = "uristt", editable = "../uristt" },
+    { name = "uriwebrtc", editable = "../uriwebrtc" },
+]
 
 [[package]]
 name = "uriwebrtc"

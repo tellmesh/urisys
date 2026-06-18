@@ -46,6 +46,8 @@ python -m pytest \
   tests/test_markpact_profile.py \
   tests/test_markpact_analyzer_rules.py \
   tests/test_golden_analyze.py \
+  tests/test_analyze_json.py \
+  tests/test_resolver_lint.py \
   tests/test_platform_export.py \
   tests/test_analyze_strict.py \
   tests/test_process_conformance.py \

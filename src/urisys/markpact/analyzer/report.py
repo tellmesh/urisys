@@ -7,6 +7,7 @@ from typing import Any
 
 from ..flows import classify_flow, declared_uses, extract_flows, extract_protos
 from ..profile import lint_markpact
+from .resolver_lint import lint_process_resolver_stubs
 from ..blocks import read_blocks
 from ..pack import capabilities, load_pack_block, package_id, scheme_for_pack
 
@@ -35,8 +36,11 @@ def analyze_markpact(path: str | Path) -> dict[str, Any]:
         undeclared_schemes=sorted(all_undeclared),
     )
 
+    resolver = lint_process_resolver_stubs(str(source_path.resolve())) if scheme == "process" and flows else None
+    ok = not all_undeclared and profile["ok"] and (resolver is None or resolver.get("ok", True))
+
     return {
-        "ok": not all_undeclared and profile["ok"],
+        "ok": ok,
         "package_id": package_id(pack, source_path),
         "scheme": scheme,
         "declared_uses": sorted(uses),
@@ -47,6 +51,7 @@ def analyze_markpact(path: str | Path) -> dict[str, Any]:
         "integrations": [f["id"] for f in analyzed if f["kind"] == "integration"],
         "undeclared_uses": sorted(all_undeclared),
         "profile": profile,
+        "resolver": resolver,
         "errors": profile["errors"],
         "warnings": profile["warnings"],
     }

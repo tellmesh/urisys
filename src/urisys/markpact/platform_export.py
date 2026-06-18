@@ -115,7 +115,11 @@ def _target_stub(authority: str, platform: str, schemes: set[str]) -> dict[str, 
             "platform": "esp32",
             "transport": "mqtt",
             "endpoint": f"urisys/{authority}/call",
-            "options": {"qos": 1, "timeout_ms": 5000},
+            "options": {
+                "qos": 1,
+                "timeout_ms": 5000,
+                "broker": "tcp://mqtt-broker.local:1883",
+            },
         }
 
     if platform == "server":
@@ -145,7 +149,11 @@ def _target_stub(authority: str, platform: str, schemes: set[str]) -> dict[str, 
             "platform": "esp32",
             "transport": "mqtt",
             "endpoint": f"urisys/{authority}/call",
-            "options": {"qos": 1, "timeout_ms": 5000},
+            "options": {
+                "qos": 1,
+                "timeout_ms": 5000,
+                "broker": "tcp://mqtt-broker.local:1883",
+            },
         }
     return {"platform": "edge-linux", "transport": "local", "adapter": "mock"}
 

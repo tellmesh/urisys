@@ -102,12 +102,16 @@ def _apply_strict_profile(result: dict[str, Any], warnings: list[str]) -> dict[s
 
 
 def cmd_analyze(manager, local_path, args) -> int:
+    from ...markpact.analyzer import analyze_json_report
+
     result = manager.analyze(local_path)
     warnings = list(result.get("warnings") or [])
     if getattr(args, "strict_operations", False):
         result, warnings = _apply_strict_operations(result, warnings)
     if getattr(args, "strict", False):
         result = _apply_strict_profile(result, warnings)
+    if getattr(args, "json", False):
+        result = analyze_json_report(result)
     print_json(result)
     return 0 if result.get("ok") else 1
 

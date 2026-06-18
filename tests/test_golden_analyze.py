@@ -8,7 +8,7 @@ from typing import Any
 
 import pytest
 
-from urisys.markpact.analyzer import analyze_markpact
+from urisys.markpact.analyzer import analyze_json_report, analyze_markpact
 
 TELLMESH = Path(__file__).resolve().parents[2]
 PACKS = TELLMESH / "markpact-contracts" / "packs"
@@ -22,22 +22,7 @@ _GOLDEN_CASES = (
 
 
 def _analyze_snapshot(path: Path) -> dict[str, Any]:
-    result = analyze_markpact(path)
-    snapshot: dict[str, Any] = {
-        "package_id": result["package_id"],
-        "scheme": result["scheme"],
-        "ok": result["ok"],
-        "capabilities": result["capabilities"],
-        "flow_count": len(result["flows"]),
-        "issue_codes": sorted({i["code"] for i in result["profile"]["issues"]}),
-        "error_count": len(result["errors"]),
-        "warning_count": len(result["warnings"]),
-    }
-    if result["scheme"] == "process":
-        snapshot["use_cases"] = result["use_cases"]
-        snapshot["integrations"] = result["integrations"]
-        snapshot["undeclared_uses"] = result["undeclared_uses"]
-    return snapshot
+    return analyze_json_report(analyze_markpact(path))
 
 
 @pytest.mark.parametrize("markpact_name,golden_name", _GOLDEN_CASES)

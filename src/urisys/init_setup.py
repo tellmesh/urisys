@@ -16,7 +16,7 @@ from .urirouter_install import diagnose_urirouter, pip_spec as urirouter_pip_spe
 Profile = Literal["slave", "dev"]
 
 from .defaults import DEFAULT_MIN_VERSION, NODE_SERVE_CMD
-DEFAULT_GITHUB_URICORE_VERSION = "0.1.8"
+DEFAULT_GITHUB_URICORE_VERSION = "0.1.11"
 
 SLAVE_ENV = {
     "URISYS_ALLOW_REAL": "1",

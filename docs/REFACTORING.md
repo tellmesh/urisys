@@ -29,6 +29,9 @@ Szerszy kontekst: [`ECOSYSTEM.md`](ECOSYSTEM.md), [`PROCESS-ARCHITECTURE.md`](PR
 | 8 | `urisys_lab/` → `urisys-automation-lab` | ✅ pakiet `urisys_lab` w `src/` |
 | 8b | `contract_gen`, `pack_gen` → `urisys-dev` | ✅ shims w `managers/` |
 | 9 | `urirouter` Sprint 0–5: schema rules, target selector, MQTT split, shell rules | ✅ patrz `urirouter/docs/REFACTORING.md` |
+| 10 | `urirouter` Sprint 10: http_endpoint, loader validate, SH007, contract matrix | ✅ |
+| 11 | `urirouter` SH004–SH006/SH008/SH010 + RR lint w `analyze_markpact` | ✅ |
+| 12 | `urisys markpact analyze --json` — stabilny kontrakt MP + RR | ✅ |
 
 ## urirouter (`tellmesh/urirouter`)
 
@@ -41,6 +44,7 @@ src/uri_router/
 ├── transports/
 │   ├── registry.py, base.py
 │   ├── http.py, ssh.py, unsupported.py, planned.py
+│   ├── http_endpoint.py     # normalize_base_url, join_uri_call_path
 │   ├── mqtt.py            # MqttAdapter facade
 │   ├── mqtt_client.py, mqtt_request_reply.py, mqtt_topics.py
 ├── policy/
@@ -56,7 +60,7 @@ src/uri_router/
     ├── targets.py, target_selector.py
 ```
 
-**Testy:** `cd urirouter && python -m pytest tests/ -q` → **42 passed** (1 skipped)
+**Testy:** `cd urirouter && python -m pytest tests/ -q` → **64 passed** (1 skipped)
 
 Szczegóły issue codes RR/SH: [`urirouter/docs/REFACTORING.md`](../../urirouter/docs/REFACTORING.md)
 
@@ -190,7 +194,7 @@ cd $TELLMESH_ROOT/urisys      && python -m pytest tests/test_golden_analyze.py t
 
 | Suite | Oczekiwany wynik |
 |-------|------------------|
-| urirouter | 42 passed (1 skipped) |
+| urirouter | 64 passed (1 skipped) |
 | uricore | 53 passed |
 | markpact-ci | 92 passed |
 | golden analyze | 3 passed |
@@ -199,16 +203,12 @@ cd $TELLMESH_ROOT/urisys      && python -m pytest tests/test_golden_analyze.py t
 
 ## Pozostałe (backlog)
 
-### uri_router (Sprint 10+)
+### uri_router (Sprint 13+)
 
-- HTTP: `http_endpoint.py` split dla `normalize_http_endpoint`
-- Więcej reguł SH004–SH010 (cwd, env, timeout)
-- Contract matrix HTTP/MQTT/local w `tests/contract/`
-- Integracja `validate_resolver` w `load_resolver_file()`
 - Pełna implementacja websocket, nats, serial, usb (dziś: `transport_planned` stub)
 
 ### urisys / uricore
 
 - Sprint 6 rozszerzenie: dry-run conformance dla wszystkich capability packs
 - `scripts/generate_pack_markpacts.py` — opcjonalnie przenieść do `urisys-dev`
-- `urisys markpact analyze --json` — stabilne issue codes MP + RR w jednym raporcie CI
+- `urisys markpact analyze --json` — użyj w CI zamiast pełnego raportu (format `urisys.markpact.analyze-v1`)
