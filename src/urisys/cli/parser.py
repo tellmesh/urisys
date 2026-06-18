@@ -83,6 +83,23 @@ def build_parser() -> argparse.ArgumentParser:
         help="Disable URISYS_NODE_AUTO_INSTALL (no pip on first kvm/him/… URI).",
     )
 
+    nht = node_sub.add_parser(
+        "host-trust",
+        help="Full-trust desktop slave: node.env + profile + systemd user unit (re-runnable).",
+    )
+    nht.add_argument("--venv", default=os.environ.get("URISYS_VENV", str(Path.home() / "venv")), help="Venv with bin/urisys-node.")
+    nht.add_argument("--node-id", default=None, help="Node id (default: hostname or URISYS_NODE_ID).")
+    nht.add_argument("--port", type=int, default=int(os.environ.get("URISYS_NODE_PORT", "8790")))
+    nht.add_argument("--host", default=os.environ.get("URISYS_NODE_HOST", "0.0.0.0"))
+    nht.add_argument("--pull", action="store_true", help="git pull --ff-only in urisys-node checkout before setup.")
+    nht.add_argument("--no-pull", action="store_true", help="Skip git pull (default when not passed --pull).")
+    nht.add_argument("--dry-run", action="store_true")
+    nht.add_argument(
+        "--python-only",
+        action="store_true",
+        help="Use built-in Python setup (skip scripts/enable-host-trust.sh).",
+    )
+
     nr = node_sub.add_parser(
         "remote",
         help="Remote node ops (alias for `urisys remote`; dev host → lenovo).",

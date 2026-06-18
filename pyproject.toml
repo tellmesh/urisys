@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "urisys"
-version = "0.1.85"
+version = "0.1.86"
 description = "URI control system managers/controllers over separate uri* capability packs."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -76,6 +76,12 @@ urikvm = { path = "../urikvm", editable = true }
 urihim = { path = "../urihim", editable = true }
 uriocr = { path = "../uriocr", editable = true }
 urillm = { path = "../urillm", editable = true }
+uriscreen = { path = "../uriscreen", editable = true }
+urishell = { path = "../urishell", editable = true }
+uristt = { path = "../uristt", editable = true }
+uriwebrtc = { path = "../uriwebrtc", editable = true }
+urimessage = { path = "../urimessage", editable = true }
+urichat = { path = "../urichat", editable = true }
 urimail = { path = "../urimail", editable = true }
 urioffice = { path = "../urioffice", editable = true }
 urivql = { path = "../urivql", editable = true }
@@ -90,6 +96,8 @@ urisys-dev = { path = "../urisys-dev", editable = true }
 
 [tool.uv]
 default-groups = ["dev"]
+# Monorepo path sources above override PyPI/GitHub wheels for tellmesh packs during `uv sync --upgrade`.
+# Without them, kvm extras can resolve stale registry urikvm (e.g. 0.1.2 → uriscreen) and fail.
 
 [project.scripts]
 urisys = "urisys.bootstrap:main"
@@ -102,7 +110,7 @@ where = ["src"]
 include = ["urisys", "urisys.*"]
 
 [tool.pytest.ini_options]
-pythonpath = ["src", "../urisys-automation-lab/src", "../urisys-dev/src"]
+pythonpath = ["src", "../urisys-automation-lab/src", "../urisys-dev/src", "scripts"]
 testpaths = ["tests"]
 
 [tool.costs]

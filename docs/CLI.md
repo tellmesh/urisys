@@ -94,7 +94,8 @@ Minimalna instalacja na maszynie zdalnej (lenovo):
 
 ```bash
 pip install urisys
-urisys node serve --host 0.0.0.0 --port 8790
+urisys node host-trust --venv ~/venv --node-id lenovo   # full-trust + systemd (slave)
+urisys node serve --host 0.0.0.0 --port 8790             # foreground / debug
 ```
 
 Packi **kvm/him/ocr/llm** i backendy **`[real]`** doinstalowują się przy pierwszym URI (domyślnie `URISYS_NODE_AUTO_INSTALL=1`). Wyłączenie:
@@ -111,6 +112,7 @@ Z hosta developerskiego (wymaga `urisys-node` w tym samym venv co `urisys`):
 
 ```bash
 urisys remote health --endpoint http://192.168.188.201:8790
+urisys remote host-trust --endpoint http://192.168.188.201:8790
 urisys remote restart --endpoint http://192.168.188.201:8790
 urisys remote wait --timeout 60
 urisys remote call "screen://lenovo/monitor/primary/query/frame"

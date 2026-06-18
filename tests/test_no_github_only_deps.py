@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from scripts.check_no_github_only_deps import dep_name, find_violations
+from check_no_github_only_deps import dep_name, find_violations
 
 _ROOT = Path(__file__).resolve().parents[2]  # tellmesh workspace root
 

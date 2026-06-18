@@ -403,6 +403,8 @@ def run_doctor(*, min_version: str | None = DEFAULT_MIN_VERSION) -> dict[str, An
 
     hints = [
         f"Desktop slave (lenovo): {NODE_SERVE_CMD}",
+        "Full-trust + systemd on slave: urisys node host-trust --venv ~/venv --node-id lenovo",
+        "Remote host-trust from dev: urisys remote host-trust --endpoint http://192.168.188.201:8790",
         f"Remote ops from dev host: {NODE_REMOTE_HEALTH_CMD}",
         "Dev pack server (not slave): urisys serve --port 8789",
         f"Broken uri_control? Run: urisys init  (installs {wheel_url()})",

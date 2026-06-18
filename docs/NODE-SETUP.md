@@ -76,6 +76,27 @@ export URISYS_HIM_DRIVER=ydotool
 
 Na Wayland z zainstalowanym `ydotool` driver wybiera się **automatycznie** (`WAYLAND_DISPLAY`).
 
+## Full-trust desktop slave (host-trust)
+
+Na **Lenovo** (lokalnie na maszynie slave), po `urisys init`:
+
+```bash
+cd ~/github/tellmesh/urisys-node && git pull   # opcjonalnie
+urisys node host-trust --venv ~/venv --node-id lenovo
+```
+
+To samo co `scripts/enable-host-trust.sh`: zapisuje `~/.config/urisys/node.env` (pełne prawa, packi `node,screen,shell,browser,kv`), profil **full-trust** (`require_approval_for: []`), instaluje **systemd user unit** i restartuje usługę.
+
+Z **dev hosta** (przez `shell://` na slave):
+
+```bash
+urisys remote host-trust --endpoint http://192.168.188.201:8790
+```
+
+Opcje: `--pull` / `--no-pull`, `--dry-run`, `--python-only` (bez skryptu bash).
+
+---
+
 ## Autostart po restarcie komputera
 
 Wheels z `pip install` **zostają** w venv. Proces node **nie** — uruchom ponownie lub użyj systemd.

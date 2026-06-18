@@ -223,7 +223,7 @@ git:
     format: '{prefix}{version}'
 strategies:
   python:
-    test: uv sync --group dev && uv run pytest tests/ -q
+    test: env -u VIRTUAL_ENV uv sync --group dev && env -u VIRTUAL_ENV uv run pytest tests/ -q
     build: python -m build && bash scripts/validate-pypi-metadata.sh
     publish: bash scripts/validate-pypi-metadata.sh && twine upload dist/urisys-{version}* && bash scripts/publish-github-release.sh
     publish_enabled: true

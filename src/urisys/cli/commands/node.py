@@ -3,6 +3,29 @@ from __future__ import annotations
 import os
 import sys
 
+from ..helpers import print_json
+
+
+def cmd_node_host_trust(args) -> int:
+    from ...node_host_trust import run_host_trust
+
+    pull = bool(args.pull) and not bool(getattr(args, "no_pull", False))
+    report = run_host_trust(
+        venv=args.venv,
+        node_id=args.node_id,
+        port=args.port,
+        host=args.host,
+        pull=pull,
+        dry_run=args.dry_run,
+        prefer_script=not args.python_only,
+    )
+    print_json(report)
+    if report.get("stdout"):
+        print(report["stdout"], file=sys.stderr, end="")
+    if report.get("stderr"):
+        print(report["stderr"], file=sys.stderr, end="")
+    return 0 if report.get("ok") else 1
+
 
 def _prepare_node_serve(*, auto_install: bool) -> int | None:
     """Install urisys-node + uriscreen/urishell before boot. Returns exit code on failure."""
@@ -36,6 +59,8 @@ def cmd_node(args) -> int:
         from .remote import cmd_remote
 
         return cmd_remote(args)
+    if args.node_command == "host-trust":
+        return cmd_node_host_trust(args)
     if args.node_command == "serve":
         auto_install = not args.no_auto_install
         if args.no_auto_install:
