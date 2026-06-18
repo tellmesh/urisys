@@ -3813,7 +3813,7 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "urisys"
-version = "0.1.79"
+version = "0.1.80"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
@@ -3963,7 +3963,7 @@ requires-dist = [
 
 [[package]]
 name = "urisys-node"
-version = "0.1.23"
+version = "0.1.24"
 source = { editable = "../urisys-node" }
 dependencies = [
     { name = "pygments" },

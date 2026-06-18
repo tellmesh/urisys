@@ -268,7 +268,7 @@ Przerwanie połączenia HTTP po `restart` jest **oczekiwane** — sprawdź `uris
 Stary `urisys-node 0.1.3` pada z `ModuleNotFoundError: urisysedge` — upgrade:
 
 ```bash
-pip install -U https://github.com/tellmesh/urisys-node/releases/download/v0.1.23/urisys_node-0.1.23-py3-none-any.whl
+pip install -U https://github.com/tellmesh/urisys-node/releases/download/v0.1.24/urisys_node-0.1.24-py3-none-any.whl
 ```
 
 **Usuń zepsutą instalację 3.14 (opcjonalnie):**
