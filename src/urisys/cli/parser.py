@@ -59,6 +59,14 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--no-write-env", action="store_true")
     p.add_argument("--env-file", default=str(Path.home() / ".config" / "urisys" / "node.env"))
 
+    p = sub.add_parser(
+        "update",
+        help="Update urisys + tellmesh packages to the newest version across PyPI and GitHub "
+        "releases (works around PyPI publish blocks; uses GH_TOKEN/GITHUB_TOKEN if set).",
+    )
+    p.add_argument("packages", nargs="*", help="Specific packages (default: urisys + control-plane core).")
+    p.add_argument("--check", action="store_true", help="Only report what would update; do not install.")
+
     p = sub.add_parser("serve", help="Run HTTP URI server (dev packs; for desktop slave use: urisys node serve).")
     p.add_argument("--host", default="127.0.0.1")
     p.add_argument("--port", type=int, default=8789)

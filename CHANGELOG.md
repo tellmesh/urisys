@@ -738,6 +738,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `test_uriscreen_auto`/`test_ocr_llm` skip gracefully when Pillow/tesseract absent
 - Host→Docker desktop and host→LAN node (`192.168.188.201:8790`) control verified live (capture + OCR)
 
+## [0.1.89] - 2026-06-18
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/test_update_command.py
+
+### Other
+- Update uv.lock
+
 ## [0.1.88] - 2026-06-18
 
 ### Docs

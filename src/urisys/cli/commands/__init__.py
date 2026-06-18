@@ -6,11 +6,13 @@ from .node import cmd_node
 from .remote import cmd_remote
 from .runtime import cmd_events, cmd_flow, cmd_serve, cmd_uri
 from .setup import cmd_doctor, cmd_init
+from .update import cmd_update
 
 COMMAND_HANDLERS: dict[str, CliCommand] = {
     "markpact": cmd_markpact,
     "doctor": cmd_doctor,
     "init": cmd_init,
+    "update": cmd_update,
     "serve": cmd_serve,
     "node": cmd_node,
     "remote": cmd_remote,
