@@ -390,6 +390,7 @@ def run_doctor(*, min_version: str | None = DEFAULT_MIN_VERSION) -> dict[str, An
 
     hints = [
         f"Desktop slave (lenovo): {NODE_SERVE_CMD}",
+        f"Remote ops from dev host: {NODE_REMOTE_HEALTH_CMD}",
         "Dev pack server (not slave): urisys serve --port 8789",
         f"Broken uri_control? Run: urisys init  (installs {wheel_url()})",
         "Recommended: python3.12 -m venv ~/venv && source ~/venv/bin/activate && urisys init",

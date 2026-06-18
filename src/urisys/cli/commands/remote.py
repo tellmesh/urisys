@@ -27,4 +27,7 @@ def cmd_remote(args) -> int:
             return remote_main(["--help"])
         except SystemExit as exc:
             return int(exc.code or 0)
-    return remote_main(remote_argv)
+    try:
+        return remote_main(remote_argv)
+    except SystemExit as exc:
+        return int(exc.code or 0)

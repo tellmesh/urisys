@@ -105,6 +105,22 @@ urisys node serve --no-auto-install
 
 Szczegóły: [`NODE-SETUP.md`](NODE-SETUP.md) · [`PACK-EXTENSIBILITY.md`](PACK-EXTENSIBILITY.md) · [`DISTRIBUTION.md`](DISTRIBUTION.md).
 
+### Remote (dev → lenovo)
+
+Z hosta developerskiego (wymaga `urisys-node` w tym samym venv co `urisys`):
+
+```bash
+urisys remote health --endpoint http://192.168.188.201:8790
+urisys remote restart --endpoint http://192.168.188.201:8790
+urisys remote wait --timeout 60
+urisys remote call "screen://lenovo/monitor/primary/query/frame"
+urisys remote workers
+urisys remote upgrade-node
+```
+
+To alias do `urisys-node remote …` (route-map domyślnie: `urisys-node/config/route-map.lenovo.yaml`).
+Bez `urisys-node`: `pip install -U urisys-node` lub `urisys init`.
+
 ## Flow
 
 ```bash

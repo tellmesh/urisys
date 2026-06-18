@@ -26,3 +26,4 @@ def test_doctor_hints_include_node_serve():
     report = run_doctor(min_version=None)
     joined = " ".join(report["hints"])
     assert "node serve" in joined
+    assert "remote health" in joined

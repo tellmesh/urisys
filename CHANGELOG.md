@@ -41,50 +41,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix ai-boilerplate issues (ticket-4a5c6d48)
 - Fix string-concat issues (ticket-903bad0d)
 
-## [Unreleased]
-
-### Added
-- `docs/DATA-MODEL.md` — model danych node: config (`~/.config/urisys`) vs runtime (`~/.local/share/urisys`, XDG) vs sesje; linkowany z `docs/README.md` + `NODE-SETUP.md`. Dokumentuje fix domyślnej ścieżki danych (koniec CWD-relative `data/`) w sibling `urisys-node`
-- `docs/FLOWS.md` — tabela „który sposób kiedy" (4 ścieżki wykonania flow) + sekcja „Zdalna sesja (master→slave)" dla `lenovo_remote_session.py` — dotąd nieudokumentowana, najczęstsza dla człowieka sterującego zdalnym node'em
-- `scripts/session_core.py` — wspólny rdzeń runnerów sesji (now_iso, save_json, step_ok, ekstrakcja screenshotów base64); pierwszy krok unifikacji dwóch równoległych frameworków sesji (`run_test_sessions.py` + `lenovo_remote_session.py`). 7 testów charakteryzacyjnych (`tests/test_session_core.py`)
-- `docs/REPOS.md` — mapowanie paczek tellmesh → GitHub (tellmesh vs [semcod](https://github.com/semcod)); brak duplikatów vendored
-- `src/urisys/node_install.py` — instalacja `urisys-node` z GitHub Release wheel (bez `git+https`, bez promptu hasła)
-- `scripts/validate-pypi-metadata.sh` — guard przed direct URL w metadanych PyPI
-- `scripts/ci-checkout-siblings.sh` — CI clone sibling repos obok urisys
-
-### Changed
-- `scripts/lenovo_remote_session.py` — używa `scripts/session_core.py` zamiast lokalnych kopii (−121L, 560→439); zweryfikowane: `--help` + `--extract-images` na realnej sesji rc=0, `tests/` 69 passed
-- `scripts/test_sessions/util.py` + `scripts/report/util.py` — wspólne helpery z `session_core`: `now_iso` (3 kopie → 1, format ujednolicony do `…Z`; bezpieczne — `report/session.py` normalizuje `Z`→`+00:00`), `save_json`, `host_id` (byte-identyczny w obu); usunięte martwe importy `datetime`/`timezone`/`socket`/`platform`; `DEFAULT_WHEEL_SERVER` (3× literał → 1 stała). 73 passed
-- `src/urisys/cli.py` — spłaszczenie god-funkcji `main` (CC 23→10): per-komenda handlery `_cmd_markpact`/`_cmd_init`/`_cmd_node`/`_cmd_uri` + `_handle_cli_error(exc)` (mapowanie wyjątków → JSON/exit-code); `main` jest teraz cienkim dispatcherem; byte-identyczne (`tests/` 62 passed, smoke doctor/init/validate rc=0)
-- `src/urisys/managers/markpact_manager.py` — obniżona złożoność trzech najcięższych metod: `run_tests` (CC 19→11, wydzielone `_check_expectations`), `compile` (CC 14→10, wydzielone `_write_handler_modules`), `_build_route` (CC 16→12, wydzielone `_resolve_handler_ref`); byte-identyczne (`urisys markpact test`/`routes` ok, `tests/` 62 passed)
-- `src/urisys/init_setup.py` — rozbicie god-funkcji `run_init` (CC 29→19, 141→95L): wydzielone `_pre_repair_uricore`, `_build_pip_result`, `_resolve_error_hint`; byte-identyczne (`urisys init --dry-run` ok, `tests/` 62 passed)
-- `src/urisys/managers/markpact_validation.py` — wydzielone pętle walidacji z trzech walidatorów: `_validate_contract_routes` (contract CC 22→12), `_missing_bundle_imports` (bundle CC 14→9), `_validate_implementation_capabilities` (implementation CC 18→14); byte-identyczne (`tests/test_markpact` + 62 passed)
-- `src/urisys/managers/pack_manager.py` — usunięty 3× zduplikowany split string/iterable → jeden `_split_specs`; `parse_packs` CC 12→7, `parse_markpacts` → 1-liner; byte-identyczne, +4 testy charakteryzacyjne (`tests/test_pack_manager_parse.py`, 73 passed)
-- `src/urisys/managers/source_manager.py` — wydzielony `_http_download` (3× zduplikowany blok `urlopen`/`URLError`→`SourceError` z `_fetch_http`/`_fetch_github_raw`/`_fetch_zip`); identyczne komunikaty błędów, `tests/test_source_manager` + 73 passed
-- `src/urisys/defaults.py` — scentralizowane hardkodowane wartości: `DEFAULT_MIN_VERSION` (było 8× `"0.1.25"`), `MIN_VERSION_ENV`, `NODE_SERVE_CMD` (5×); użyto `DEFAULT_EVENTS_PATH` w cli/http_server/server_controller (4× literał). `bootstrap.py` świadomie mirroruje literały (ładowany standalone — komentarz-guard). Byte-identyczne, 73 passed
-- Migracja 32 packów z `urisys/**/packages/python/*` → `tellmesh/{repo}/` (canonical source)
-- `urisys init` — uricore + urisys-node tylko jako publiczne wheels; core pip bez git credentials
-- Skrypty lenovo/deploy i `publish-pypi-packs.sh` — ścieżki sibling zamiast vendored
-- Dokumentacja: `PACKAGES.md`, `DISTRIBUTION.md`, `NODE-SETUP.md`, `docs/README.md`
-
-### Fixed
-- `urisys init` — wheel URL `urisys_node-*.whl` (PEP 427); pip odrzucał `urisys-node-*.whl`
-- `urisys init` — fallback PyPI `urisys-node` gdy brak GitHub Release; retry `urisysedge` po pip
-- `urisys doctor` — `NameError: node_pip_spec` przy sprawdzaniu importu urisysnode
-- PyPI upload HTTP 400 — usunięty `uricore @ https://…` z runtime deps wheela
-- Przywrócone brakujące pliki po promote: `urienv/handlers.py`, `uriscreen/portal_capture.py`, `urirdp_kvm/display.py`
-
 ## [0.1.78] - 2026-06-18
 
-### Docs
-- Update README.md
+### Added
+- **`urisys remote`** — delegacja do `urisys-node remote` (health, restart, call, workers, upgrade-node)
+- `urisys doctor` — check `urisys_node_version` (takeover, brak legacy `urisysedge`)
+- `tests/test_remote_cli.py` — parser + delegacja + help smoke
+- `docs/DATA-MODEL.md` — model danych node: config (`~/.config/urisys`) vs runtime (`~/.local/share/urisys`, XDG) vs sesje
+- `docs/FLOWS.md` — tabela ścieżek wykonania flow + zdalna sesja `lenovo_remote_session.py`
+- `scripts/session_core.py` — wspólny rdzeń runnerów sesji
+- `docs/REPOS.md` — mapowanie paczek tellmesh → GitHub
+- `src/urisys/node_install.py` — instalacja `urisys-node` z GitHub Release wheel
+- `scripts/validate-pypi-metadata.sh`, `scripts/ci-checkout-siblings.sh`
 
-### Test
-- Update tests/test_remote_cli.py
+### Changed
+- `urisys doctor` hints — `urisys remote health` dla operacji dev→lenovo
+- Docs: `CLI.md`, `NODE-SETUP.md`, `README.md`, `urisys-examples/lenovo-remote/README.md`
+- `scripts/lenovo_remote_session.py` — używa `scripts/session_core.py`
+- `urisys init` — uricore + urisys-node tylko jako publiczne wheels
+- Dokumentacja: `PACKAGES.md`, `DISTRIBUTION.md`, `NODE-SETUP.md`
 
-### Other
-- Update scripts/publish-github-release.sh
-- Update uv.lock
+### Fixed
+- `urisys-node remote restart` — `--endpoint` / `--route-map` / `--port`; connection drop po `fuser -k` = sukces
+- `urisys init` — wheel URL `urisys_node-*.whl`; fallback PyPI `urisys-node`
+- `urisys doctor` — `NameError: node_pip_spec`
+- PyPI upload HTTP 400 — usunięty direct URL z runtime deps wheela
 
 ## [0.1.77] - 2026-06-18
 
@@ -756,6 +737,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Vendored `urisysedge` drift guard (AST-compare vs canonical), node pack hot-load + forward, vision/decide dispatch — new CI lanes `node-unit`, `pack-handlers-unit`
 - `test_uriscreen_auto`/`test_ocr_llm` skip gracefully when Pillow/tesseract absent
 - Host→Docker desktop and host→LAN node (`192.168.188.201:8790`) control verified live (capture + OCR)
+
+## [0.1.79] - 2026-06-18
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update docs/CLI.md
+- Update docs/NODE-SETUP.md
+
+### Test
+- Update tests/test_doctor.py
+- Update tests/test_node_install.py
+
+### Other
+- Update uv.lock
 
 ## [0.1.39] - 2026-06-17
 

@@ -245,6 +245,32 @@ urisys node serve --host 0.0.0.0 --port 8790
 
 **Upgrade z dev (LAN, gdy node już działa):** [`scripts/deploy-lenovo-node.sh`](../scripts/deploy-lenovo-node.sh)
 
+### Zdalne operacje z hosta dev (`urisys remote`)
+
+Wymaga **`urisys-node>=0.1.10`** w tym samym venv (port takeover + brak legacy `urisysedge`):
+
+```bash
+pip install -U urisys urisys-node   # lub: urisys init
+urisys doctor                       # check urisys_node_version
+
+urisys remote health --endpoint http://192.168.188.201:8790
+urisys remote restart --endpoint http://192.168.188.201:8790
+urisys remote wait --timeout 60
+urisys remote call "node://lenovo/query/workers"
+urisys remote restart-worker browser
+urisys remote upgrade-node
+```
+
+`urisys remote` deleguje do `urisys-node remote` (ten sam route-map: `urisys-node/config/route-map.lenovo.yaml`).
+`restart` zabija listener na porcie (`fuser -k`) i uruchamia `urisys node serve` w tle na slave.
+Przerwanie połączenia HTTP po `restart` jest **oczekiwane** — sprawdź `urisys remote wait`.
+
+Stary `urisys-node 0.1.3` pada z `ModuleNotFoundError: urisysedge` — upgrade:
+
+```bash
+pip install -U https://github.com/tellmesh/urisys-node/releases/download/v0.1.23/urisys_node-0.1.23-py3-none-any.whl
+```
+
 **Usuń zepsutą instalację 3.14 (opcjonalnie):**
 
 ```bash
@@ -261,9 +287,10 @@ python3 -m pytest tests/test_python_compat.py tests/test_bootstrap.py -q
 
 CI: `.github/workflows/python-compat.yml` (macierz 3.10–3.13 + unit bootstrap/doctor).
 
-### `urisys serve` vs `urisys node serve`
+### `urisys serve` vs `urisys node serve` vs `urisys remote`
 
 | Komenda | Cel |
 |---------|-----|
 | `urisys node serve` | **Slave desktop** — screen, him, lazy packi (:8790) |
+| `urisys remote …` | **Dev → slave** — health, restart, call URI, workers (wymaga `urisys-node`) |
 | `urisys serve` | Prosty HTTP server packów (dev); na lenovo zwykle **nie** to |

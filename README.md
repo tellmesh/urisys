@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.78-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$15.70-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-35.9h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.79-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$15.70-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-36.3h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $15.6960 (110 commits)
-- 👤 **Human dev:** ~$3593 (35.9h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $15.6984 (111 commits)
+- 👤 **Human dev:** ~$3628 (36.3h @ $100/h, 30min dedup)
 
 Generated on 2026-06-18 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -52,6 +52,10 @@ Capability packi **kvm/him/ocr/llm** doinstalowują się **lazy przy pierwszym U
 pip install -U urisys
 urisys init
 urisys node serve --host 0.0.0.0 --port 8790
+
+# dev host → zdalny lenovo
+urisys remote health --endpoint http://192.168.188.201:8790
+urisys remote restart --endpoint http://192.168.188.201:8790
 ```
 
 Dev monorepo (wszystkie packi od razu):
