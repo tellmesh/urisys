@@ -87,7 +87,9 @@ pip install -e .
 | `urimail`, `urioffice`, `urivql` | 🔲 | ✅ | `tellmesh/{pack}/` |
 | `urikvmedge`, `urirdp` | 🔲 | 🔲 | bundle CLI repos |
 
-> **Uricore:** PyPI `uricore` to **inny projekt**. Wheel `urisys` nie może mieć `uricore @ https://…` w metadanych (PyPI → HTTP 400). Po `pip install urisys` uruchom **`urisys init`** — instaluje tellmesh uricore + urisys-node z GitHub.
+> **Uricore:** PyPI `uricore` to **inny projekt**. Wheel `urisys` nie może mieć `uricore @ https://…` w metadanych (PyPI → HTTP 400). Po `pip install urisys` uruchom **`urisys init`** — instaluje tellmesh **urirouter** + **uricore** + urisys-node z GitHub Releases.
+
+> **Urirouter:** [`tellmesh/urirouter`](https://github.com/tellmesh/urirouter) — wheel `v0.1.0` na GitHub Releases. Override: `URISYS_URIROUTER_WHEEL_URL`. Wymagany przed uricore (zależność resolvera).
 
 **Build + walidacja przed upload:**
 

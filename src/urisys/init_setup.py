@@ -12,6 +12,7 @@ from .doctor import run_doctor
 from .edge_install import ensure_urisysedge
 from .node_install import diagnose_urisys_node, install_urisys_node, pip_spec as node_pip_spec
 from .uricore_install import diagnose_uricore, is_wrong_uricore_installed, pip_spec, repair_uricore, wheel_url
+from .urirouter_install import diagnose_urirouter, pip_spec as urirouter_pip_spec
 
 Profile = Literal["slave", "dev"]
 
@@ -32,6 +33,7 @@ def default_pip_specs(*, profile: Profile = "slave") -> list[str]:
     del profile
     return [
         "pip",
+        urirouter_pip_spec(),
         pip_spec(),
         "urisysedge>=0.1.0",
         f'urisys[real]>={DEFAULT_MIN_VERSION}',
