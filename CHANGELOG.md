@@ -758,6 +758,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `test_uriscreen_auto`/`test_ocr_llm` skip gracefully when Pillow/tesseract absent
 - Host→Docker desktop and host→LAN node (`192.168.188.201:8790`) control verified live (capture + OCR)
 
+## [0.1.99] - 2026-06-19
+
+### Docs
+- Update README.md
+- Update docs/EXAMPLES.md
+- Update examples/07-mqtt-firmware-backend-frontend/README.md
+
+### Other
+- Update examples/07-mqtt-firmware-backend-frontend/backend.py
+- Update examples/07-mqtt-firmware-backend-frontend/firmware.py
+- Update examples/07-mqtt-firmware-backend-frontend/frontend/app.js
+- Update examples/07-mqtt-firmware-backend-frontend/frontend/index.html
+- Update examples/07-mqtt-firmware-backend-frontend/frontend/uri-contract.js
+- Update examples/07-mqtt-firmware-backend-frontend/run.sh
+- Update examples/07-mqtt-firmware-backend-frontend/uri_contract.py
+- Update uv.lock
+
 ## [0.1.98] - 2026-06-19
 
 ### Docs

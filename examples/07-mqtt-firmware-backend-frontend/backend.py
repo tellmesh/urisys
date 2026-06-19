@@ -10,6 +10,7 @@ from threading import Lock
 from urllib.parse import urlparse
 
 from mqtt_codec import MqttClient
+from uri_contract import DEVICE_ID, command_topic_for_uri, device_uris, mqtt_topics, query_kind_for_uri
 
 
 class DeviceSnapshot:
@@ -46,18 +47,34 @@ class AppState:
     def __init__(self, mqtt: MqttClient, device_id: str, snapshot: DeviceSnapshot, static_root: Path) -> None:
         self.mqtt = mqtt
         self.device_id = device_id
-        self.base_topic = f"urisys/example/{device_id}"
         self.snapshot = snapshot
         self.static_root = static_root
 
+    def uris(self) -> dict:
+        return device_uris(self.device_id)
+
     def topics(self) -> dict:
-        return {
-            "command_led": f"{self.base_topic}/command/led",
-            "command_ping": f"{self.base_topic}/command/ping",
-            "event": f"{self.base_topic}/event",
-            "state": f"{self.base_topic}/state",
-            "telemetry": f"{self.base_topic}/telemetry",
-        }
+        return mqtt_topics(self.device_id)
+
+    def call_uri(self, uri: str, payload: dict | None = None) -> dict:
+        payload = payload or {}
+        topic = command_topic_for_uri(uri, self.device_id)
+        if topic:
+            envelope = {"payload": payload, "source": "backend", "ts": time.time(), "uri": uri}
+            self.mqtt.publish(topic, json.dumps(envelope))
+            return {"kind": "command", "published": {"payload": envelope, "topic": topic}}
+
+        kind = query_kind_for_uri(uri, self.device_id)
+        snapshot = self.snapshot.to_dict()
+        if kind == "state":
+            return {"kind": "query", "result": {**snapshot, "topics": self.topics(), "uris": self.uris()}}
+        if kind == "telemetry":
+            return {"kind": "query", "result": {"telemetry": snapshot["telemetry"]}}
+        if kind == "events":
+            return {"kind": "query", "result": {"events": snapshot["events"]}}
+        if kind == "topics":
+            return {"kind": "query", "result": {"topics": self.topics(), "uris": self.uris()}}
+        raise KeyError(f"unknown URI: {uri}")
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -72,10 +89,12 @@ class Handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         if path == "/health":
             self._json(200, {"ok": True, "service": "mqtt-demo-backend"})
+        elif path == "/api/uris":
+            self._json(200, {"ok": True, "uris": self.app.uris()})
         elif path == "/api/mqtt/topics":
-            self._json(200, {"ok": True, "topics": self.app.topics()})
+            self._json(200, {"ok": True, "topics": self.app.topics(), "uris": self.app.uris()})
         elif path == "/api/device/state":
-            self._json(200, {"ok": True, **self.app.snapshot.to_dict(), "topics": self.app.topics()})
+            self._json(200, {"ok": True, **self.app.snapshot.to_dict(), "topics": self.app.topics(), "uris": self.app.uris()})
         elif path == "/api/device/telemetry":
             self._json(200, {"ok": True, "telemetry": self.app.snapshot.to_dict()["telemetry"]})
         elif path == "/api/device/events":
@@ -87,15 +106,13 @@ class Handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         body = self._read_json()
         if path == "/api/device/led":
-            payload = {"on": bool(body.get("on")), "source": "frontend", "ts": time.time()}
-            topic = self.app.topics()["command_led"]
-            self.app.mqtt.publish(topic, json.dumps(payload))
-            self._json(200, {"ok": True, "published": {"topic": topic, "payload": payload}})
+            self._call_uri(self.app.uris()["led_set"], {"on": bool(body.get("on"))})
         elif path == "/api/device/ping":
-            payload = {"source": body.get("source") or "frontend", "ts": time.time()}
-            topic = self.app.topics()["command_ping"]
-            self.app.mqtt.publish(topic, json.dumps(payload))
-            self._json(200, {"ok": True, "published": {"topic": topic, "payload": payload}})
+            self._call_uri(self.app.uris()["ping_send"], {"source": body.get("source") or "frontend"})
+        elif path == "/api/uri/call":
+            uri = str(body.get("uri") or "")
+            payload = body.get("payload") or {}
+            self._call_uri(uri, payload)
         elif path == "/api/mqtt/publish":
             topic = str(body.get("topic") or "")
             payload = body.get("payload", {})
@@ -130,6 +147,17 @@ class Handler(BaseHTTPRequestHandler):
             return {}
         return json.loads(self.rfile.read(length).decode("utf-8"))
 
+    def _call_uri(self, uri: str, payload: dict) -> None:
+        if not uri:
+            self._json(400, {"ok": False, "error": "uri is required"})
+            return
+        try:
+            result = self.app.call_uri(uri, payload)
+        except KeyError as exc:
+            self._json(404, {"ok": False, "error": str(exc), "uri": uri})
+            return
+        self._json(200, {"ok": True, "uri": uri, **result})
+
     def _static(self, path: str) -> None:
         if path in ("", "/"):
             path = "/index.html"
@@ -157,7 +185,7 @@ def main() -> int:
     parser.add_argument("--mqtt-port", type=int, default=18883)
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8097)
-    parser.add_argument("--device-id", default="device-01")
+    parser.add_argument("--device-id", default=DEVICE_ID)
     parser.add_argument("--static", default=str(Path(__file__).with_name("frontend")))
     args = parser.parse_args()
 
@@ -165,10 +193,10 @@ def main() -> int:
     client = MqttClient(args.mqtt_host, args.mqtt_port, client_id="backend-http-bridge")
     client.connect()
     client.start()
-    base = f"urisys/example/{args.device_id}"
-    client.subscribe(f"{base}/state", lambda _topic, payload: snapshot.update("state", payload))
-    client.subscribe(f"{base}/telemetry", lambda _topic, payload: snapshot.update("telemetry", payload))
-    client.subscribe(f"{base}/event", lambda _topic, payload: snapshot.update("event", payload))
+    topics = mqtt_topics(args.device_id)
+    client.subscribe(topics["state"], lambda _topic, payload: snapshot.update("state", payload))
+    client.subscribe(topics["telemetry"], lambda _topic, payload: snapshot.update("telemetry", payload))
+    client.subscribe(topics["event"], lambda _topic, payload: snapshot.update("event", payload))
 
     app = AppState(client, args.device_id, snapshot, Path(args.static))
     server = build_server(args.host, args.port, app)

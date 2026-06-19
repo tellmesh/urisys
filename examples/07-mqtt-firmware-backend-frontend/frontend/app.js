@@ -1,5 +1,8 @@
+import { API, Command, Query, URI } from './uri-contract.js';
+
 const state = {
   topics: {},
+  uris: URI,
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -13,6 +16,13 @@ async function api(path, options = {}) {
     throw new Error(`${response.status} ${response.statusText}`);
   }
   return response.json();
+}
+
+async function callUri(uri, payload = {}) {
+  return api(API.uriCall, {
+    method: 'POST',
+    body: JSON.stringify(typeof uri === 'string' ? { uri, payload } : uri),
+  });
 }
 
 function ms(value) {
@@ -31,29 +41,26 @@ function render(data) {
   $('#led-state').textContent = device.led === true ? 'on' : device.led === false ? 'off' : '-';
   $('#uptime').textContent = ms(telemetry.uptime_ms || device.uptime_ms);
   $('#temperature').textContent = typeof telemetry.temperature_c === 'number' ? `${telemetry.temperature_c} C` : '-';
+  $('#uris').textContent = JSON.stringify(data.uris || state.uris, null, 2);
   $('#topics').textContent = JSON.stringify(data.topics || state.topics, null, 2);
   $('#events').textContent = JSON.stringify(data.events || [], null, 2);
 }
 
 async function refresh() {
-  const data = await api('/api/device/state');
-  state.topics = data.topics || state.topics;
-  render(data);
+  const data = await callUri(Query.stateCurrent());
+  const result = data.result || {};
+  state.topics = result.topics || state.topics;
+  state.uris = result.uris || state.uris;
+  render(result);
 }
 
 async function setLed(on) {
-  await api('/api/device/led', {
-    method: 'POST',
-    body: JSON.stringify({ on }),
-  });
+  await callUri(Command.setLed(on));
   setTimeout(refresh, 150);
 }
 
 async function ping() {
-  await api('/api/device/ping', {
-    method: 'POST',
-    body: JSON.stringify({ source: 'frontend' }),
-  });
+  await callUri(Command.ping('frontend'));
   setTimeout(refresh, 150);
 }
 

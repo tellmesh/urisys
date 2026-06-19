@@ -88,8 +88,10 @@ Przycisk HTTP wymaga działającego backendu URI na `127.0.0.1:8789`.
 Samowystarczalny przykład MQTT na trzech poziomach:
 
 - firmware simulator publikuje `state`, `telemetry`, `event` i subskrybuje komendy,
-- backend subskrybuje MQTT i wystawia HTTP API dla strony,
-- frontend w JS woła endpointy `/api/device/...`, które publikują komendy MQTT.
+- `uri_contract.py` i `frontend/uri-contract.js` definiują jawne URI komend/zapytań,
+- backend wystawia `/api/uri/call` i mapuje `uri -> MQTT topic`,
+- firmware używa tych samych stałych URI/topików przy subskrypcji i publikacji,
+- frontend w JS woła `/api/uri/call` ze stałymi URI.
 
 ```bash
 bash examples/07-mqtt-firmware-backend-frontend/run.sh

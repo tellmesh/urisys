@@ -120,24 +120,35 @@ def request(method, path, payload=None):
     with urllib.request.urlopen(req, timeout=3) as res:
         return json.loads(res.read().decode("utf-8"))
 
-request("POST", "/api/device/led", {"on": True})
+uris = request("GET", "/api/uris")["uris"]
+deadline = time.time() + 5
+while time.time() < deadline:
+    state = request("POST", "/api/uri/call", {"uri": uris["state_current"], "payload": {}})
+    if state.get("result", {}).get("state", {}).get("online") is True:
+        break
+    time.sleep(0.2)
+else:
+    raise SystemExit(f"Firmware state did not appear: {state}")
+
+request("POST", "/api/uri/call", {"uri": uris["led_set"], "payload": {"on": True}})
 deadline = time.time() + 5
 state = {}
 while time.time() < deadline:
-    state = request("GET", "/api/device/state")
-    if state.get("state", {}).get("led") is True:
+    state = request("POST", "/api/uri/call", {"uri": uris["state_current"], "payload": {}})
+    state_result = state.get("result", {})
+    if state_result.get("state", {}).get("led") is True:
         break
     time.sleep(0.2)
 else:
     raise SystemExit(f"LED state did not update: {state}")
 
-request("POST", "/api/device/ping", {"source": "smoke"})
-telemetry = request("GET", "/api/device/telemetry")
-if "uptime_ms" not in telemetry.get("telemetry", {}):
+request("POST", "/api/uri/call", {"uri": uris["ping_send"], "payload": {"source": "smoke"}})
+telemetry = request("POST", "/api/uri/call", {"uri": uris["telemetry_latest"], "payload": {}})
+if "uptime_ms" not in telemetry.get("result", {}).get("telemetry", {}):
     raise SystemExit(f"Telemetry missing uptime_ms: {telemetry}")
 
-topics = request("GET", "/api/mqtt/topics")
-if not topics.get("topics", {}).get("command_led"):
+topics = request("POST", "/api/uri/call", {"uri": uris["topics_list"], "payload": {}})
+if not topics.get("result", {}).get("topics", {}).get("command_led"):
     raise SystemExit(f"Topics endpoint broken: {topics}")
 
 with urllib.request.urlopen(base + "/", timeout=3) as res:
@@ -145,7 +156,7 @@ with urllib.request.urlopen(base + "/", timeout=3) as res:
     if "MQTT device bridge" not in html:
         raise SystemExit("Frontend HTML did not render expected title")
 
-print(json.dumps({"ok": True, "state": state["state"], "telemetry": telemetry["telemetry"]}, indent=2, sort_keys=True))
+print(json.dumps({"ok": True, "state": state_result["state"], "telemetry": telemetry["result"]["telemetry"], "uris": uris}, indent=2, sort_keys=True))
 PY
   exit 0
 fi
