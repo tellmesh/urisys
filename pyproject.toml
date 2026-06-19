@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "urisys"
-version = "0.1.91"
+version = "0.1.95"
 description = "URI control system managers/controllers over separate uri* capability packs."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -14,8 +14,6 @@ authors = [
 ]
 dependencies = [
   "PyYAML>=6.0",
-  "uricontrol>=0.1.11",
-  "uriresolver>=0.1.0",
 ]
 keywords = ["uri", "control-plane", "controllers", "managers", "devices", "services"]
 classifiers = [
@@ -55,6 +53,7 @@ node = ["urisys-node>=0.1.22"]
 dev = [
   "pytest>=8.0",
   "uricontrol",
+  "uriresolver",
   "uribrowser",
   "uridocker",
   "urisys-node",

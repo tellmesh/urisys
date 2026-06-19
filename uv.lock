@@ -3813,12 +3813,10 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "urisys"
-version = "0.1.91"
+version = "0.1.94"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
-    { name = "uricontrol" },
-    { name = "uriresolver" },
 ]
 
 [package.optional-dependencies]
@@ -3860,6 +3858,7 @@ dev = [
     { name = "uribrowser" },
     { name = "uricontrol" },
     { name = "uridocker" },
+    { name = "uriresolver" },
     { name = "urisys-automation-lab", extra = ["sessions"] },
     { name = "urisys-dev" },
     { name = "urisys-node" },
@@ -3882,14 +3881,12 @@ requires-dist = [
     { name = "pyyaml", specifier = ">=6.0" },
     { name = "uri2flow", marker = "extra == 'lab'", editable = "../uri2flow" },
     { name = "uribrowser", marker = "extra == 'dev'", editable = "../uri-packs/packages/python/uribrowser" },
-    { name = "uricontrol", editable = "../uricontrol" },
     { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
     { name = "uridocker", marker = "extra == 'dev'", editable = "../uri-packs/packages/python/uridocker" },
     { name = "urihim", extras = ["real"], marker = "extra == 'kvm'", editable = "../urihim" },
     { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm" },
     { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "../urillm" },
     { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "../uriocr" },
-    { name = "uriresolver", editable = "../uriresolver" },
     { name = "urisys-automation-lab", extras = ["sessions"], marker = "extra == 'lab'", editable = "../urisys-automation-lab" },
     { name = "urisys-node", marker = "extra == 'node'", editable = "../urisys-node" },
     { name = "zeroconf", marker = "extra == 'discovery'", specifier = ">=0.131.0" },
@@ -3902,6 +3899,7 @@ dev = [
     { name = "uribrowser", editable = "../uri-packs/packages/python/uribrowser" },
     { name = "uricontrol", editable = "../uricontrol" },
     { name = "uridocker", editable = "../uri-packs/packages/python/uridocker" },
+    { name = "uriresolver", editable = "../uriresolver" },
     { name = "urisys-automation-lab", extras = ["sessions"], editable = "../urisys-automation-lab" },
     { name = "urisys-dev", editable = "../urisys-dev" },
     { name = "urisys-node", editable = "../urisys-node" },
@@ -3963,7 +3961,7 @@ requires-dist = [
 
 [[package]]
 name = "urisys-node"
-version = "0.1.37"
+version = "0.1.39"
 source = { editable = "../urisys-node" }
 dependencies = [
     { name = "pygments" },

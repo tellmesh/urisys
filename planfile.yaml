@@ -381,32 +381,6 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
-  - id: ticket-2cfefb7a
-    name: Fix smart-return-type issues
-    description: Resolve 3 smart-return-type issues in tests/test_source_manager.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - tests/test_source_manager.py
-    rule_id: smart-return-type
-    count: 3
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-1ae2965a
-    name: Fix unused-imports issues
-    description: Resolve 2 unused-imports issues in tests/test_source_manager.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - tests/test_source_manager.py
-    rule_id: unused-imports
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
   - id: ticket-1375e09a
     name: Fix smart-return-type issues
     description: Resolve 4 smart-return-type issues in tests/test_markpact.py
@@ -430,32 +404,6 @@ sprints:
     - tests/test_markpact.py
     rule_id: unused-imports
     count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-44406fec
-    name: Fix smart-return-type issues
-    description: Resolve 2 smart-return-type issues in tests/test_urisys.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - tests/test_urisys.py
-    rule_id: smart-return-type
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-63daebec
-    name: Fix unused-imports issues
-    description: Resolve 6 unused-imports issues in tests/test_urisys.py
-    task_type: prefactor
-    priority: high
-    estimate: 2d
-    files:
-    - tests/test_urisys.py
-    rule_id: unused-imports
-    count: 6
     model_hints:
       planning: balanced
       implementation: balanced
@@ -495,32 +443,6 @@ sprints:
     - scripts/session_report.py
     rule_id: ai-boilerplate
     count: 1
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-0ffc369f
-    name: Fix smart-return-type issues
-    description: Resolve 3 smart-return-type issues in tests/test_run_expectations.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - tests/test_run_expectations.py
-    rule_id: smart-return-type
-    count: 3
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-eaf7d426
-    name: Fix unused-imports issues
-    description: Resolve 2 unused-imports issues in tests/test_run_expectations.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - tests/test_run_expectations.py
-    rule_id: unused-imports
-    count: 2
     model_hints:
       planning: balanced
       implementation: balanced
@@ -1313,6 +1235,84 @@ sprints:
     files:
     - scripts/scan-browser-sessions.py
     rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-84c7d2c2
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in scripts/check_flow_uri_patterns.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/check_flow_uri_patterns.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b8f37cbe
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in scripts/check_flow_uri_patterns.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/check_flow_uri_patterns.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2f3fe700
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in scripts/check_flow_uri_patterns.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/check_flow_uri_patterns.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0a1f18d8
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in scripts/check_no_github_only_deps.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/check_no_github_only_deps.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-7fcb21a8
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in scripts/check_no_github_only_deps.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/check_no_github_only_deps.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-baacb519
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in scripts/pack_tests_conftest.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - scripts/pack_tests_conftest.py
+    rule_id: unused-imports
     count: 2
     model_hints:
       planning: balanced

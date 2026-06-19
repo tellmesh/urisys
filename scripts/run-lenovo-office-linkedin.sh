@@ -53,7 +53,7 @@ PY
     wheel="/tmp/urisys-deploy/${pkg}-${ver}-py3-none-any.whl"
     if [ ! -f "$wheel" ]; then
       log "building ${pkg} ${ver}"
-      (cd "${ROOT}/../${pkg}" && python3 -m pip wheel -w /tmp/urisys-deploy . -q)
+      (cd "${ROOT}/../${pkg}" && python3 -m build -w -o /tmp/urisys-deploy)
     fi
   done
   if ! pgrep -f "http.server ${DEV_PORT}.*${DEV_IP}" >/dev/null 2>&1; then
@@ -77,7 +77,7 @@ PY
 import json
 print(json.dumps({
     "uri": "node://local/command/install-pack",
-    "payload": {"pack": "${pack}", "install": True, "force": True, "specs": ["uricontrol>=0.1.8", "${wheel}"]},
+    "payload": {"pack": "${pack}", "install": True, "force": False, "specs": ["${wheel}"]},
     "context": {"approved": True, "allow_real": True},
 }))
 PY
@@ -97,7 +97,7 @@ ROUTES="$(curl -fsS "${LENOVO}/uri/routes")"
 echo "$ROUTES" | grep -q 'browser://' || fail "browser routes missing"
 echo "$ROUTES" | grep -q 'social/command/publish-post' || fail "browser publish-post route missing"
 
-DOC="$(uri_call "urioffice://lenovo/document/command/create" "{\"title\":\"LinkedIn source\",\"body\":\"${POST_TEXT}\"}" '{"approved":true,"dry_run":false,"allow_real":true}')"
+DOC="$(uri_call "urioffice://lenovo/document/command/open" "{\"title\":\"LinkedIn source\",\"content\":\"${POST_TEXT}\"}" '{"approved":true,"dry_run":false,"allow_real":true}')"
 echo "$DOC" | grep -q '"ok": true' || fail "office create: $DOC"
 log "office doc: $(echo "$DOC" | python3 -c 'import json,sys; r=json.load(sys.stdin).get("result",{}); print(r.get("path") or r)' 2>/dev/null || echo ok)"
 

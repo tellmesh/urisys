@@ -100,7 +100,7 @@ echo ""
 echo "== pip install urisys-node deps + wheels on lenovo =="
 call shell://pip "{\"args\":[\"install\",\"-U\",\"--no-deps\",\"$DEV/$URISHELL_WHL\",\"$DEV/$URISCREEN_WHL\"]}" | python3 -m json.tool
 call shell://pip "{\"args\":[\"install\",\"-U\",\"--no-deps\",\"$DEV/$NODE_WHL\"]}" | python3 -m json.tool
-call shell://pip "{\"args\":[\"install\",\"-U\",\"uricontrol>=0.1.8\",\"$DEV/$URISYS_WHL\"]}" | python3 -m json.tool
+call shell://pip "{\"args\":[\"install\",\"-U\",\"$DEV/$URISYS_WHL\"]}" | python3 -m json.tool
 
 echo ""
 echo "== schedule urisys node restart (venv; delayed so this URI returns first) =="
@@ -118,15 +118,15 @@ health | python3 -m json.tool
 
 echo ""
 echo "== install-pack urihim ${URIHIM_VER} =="
-call node://local/command/install-pack "{\"pack\":\"him\",\"install\":true,\"force\":true,\"specs\":[\"uricontrol>=0.1.8\",\"$DEV/$URIHIM_WHL\"]}" | python3 -m json.tool
+call node://local/command/install-pack "{\"pack\":\"him\",\"install\":true,\"force\":true,\"specs\":[\"$DEV/$URIHIM_WHL\"]}" | python3 -m json.tool
 
 echo ""
 echo "== install-pack urillm ${URILLM_VER} =="
-call node://local/command/install-pack "{\"pack\":\"llm\",\"install\":true,\"force\":true,\"specs\":[\"uricontrol>=0.1.8\",\"$DEV/$URILLM_WHL\"]}" | python3 -m json.tool
+call node://local/command/install-pack "{\"pack\":\"llm\",\"install\":true,\"force\":true,\"specs\":[\"$DEV/$URILLM_WHL\"]}" | python3 -m json.tool
 
 echo ""
 echo "== install-pack uribrowser ${URIBROWSER_VER} =="
-call node://local/command/install-pack "{\"pack\":\"browser\",\"install\":true,\"force\":true,\"specs\":[\"uricontrol>=0.1.8\",\"$DEV/$URIBROWSER_WHL\"]}" | python3 -m json.tool
+call node://local/command/install-pack "{\"pack\":\"browser\",\"install\":true,\"force\":true,\"specs\":[\"$DEV/$URIBROWSER_WHL\"]}" | python3 -m json.tool
 
 echo ""
 echo "== probe him driver + routes =="

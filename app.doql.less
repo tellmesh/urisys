@@ -2,16 +2,17 @@
 
 app {
   name: urisys;
-  version: 0.1.66;
+  version: 0.1.93;
 }
 
 dependencies {
-  runtime: "PyYAML>=6.0, uricore>=0.1.8, uriresolver>=0.1.0";
-  dev: "pytest>=8.0, uricore, uribrowser, uridocker, goal>=2.1.0, costs>=0.1.20";
-  lab: uri2flow>=0.1.2;
+  runtime: "PyYAML>=6.0, uricontrol>=0.1.11, uriresolver>=0.1.0";
+  dev: "pytest>=8.0, uricontrol, uribrowser, uridocker, goal>=2.1.0, costs>=0.1.20";
+  lab: "urisys-automation-lab[sessions]>=0.1.3, uri2flow>=0.1.2";
   real: "mss>=9.0, Pillow>=10.0, pyautogui>=0.9.54, pytesseract>=0.3.10, litellm>=1.40";
   kvm: "urikvm[real]>=0.1.0, urihim[real]>=0.1.0, uriocr[real]>=0.1.0, urillm[vision]>=0.1.0";
   discovery: zeroconf>=0.131.0;
+  node: urisys-node>=0.1.22;
 }
 
 interface[type="cli"] {
@@ -25,12 +26,87 @@ integration[name="github"] {
   type: scm;
 }
 
+workflow[name="install"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m pip install -e .;
+}
+
+workflow[name="test"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m pytest -q;
+}
+
+workflow[name="test-all"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m pytest -v;
+}
+
+workflow[name="test-integration"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m pytest tests/integration/ -v;
+}
+
+workflow[name="test-coverage"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m pytest --cov=urisysnode --cov-report=term-missing -v;
+}
+
+workflow[name="test-watch"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m ptw tests/ --pattern "test_*.py" --ignore "tests/integration/";
+}
+
+workflow[name="serve"] {
+  trigger: manual;
+  step-1: run cmd=URISYS_NODE_SKIP_PAIRING=1 urisys-node serve --host 0.0.0.0 --port $(PORT);
+}
+
+workflow[name="health"] {
+  trigger: manual;
+  step-1: run cmd=curl -fsS "http://127.0.0.1:$(PORT)/health" | $(PYTHON) -m json.tool | head -15;
+}
+
+workflow[name="app-chat-smoke"] {
+  trigger: manual;
+  step-1: run cmd=curl -fsS -X POST "http://127.0.0.1:$(PORT)/app/chat/messages" \;
+  step-2: run cmd=-H 'Content-Type: application/json' \;
+  step-3: run cmd=-d '{"channel_id":"smoke","role":"user","text":"ping"}' | $(PYTHON) -m json.tool;
+  step-4: run cmd=curl -fsS "http://127.0.0.1:$(PORT)/app/chat/messages?channel_id=smoke" | $(PYTHON) -m json.tool;
+}
+
+workflow[name="publish"] {
+  trigger: manual;
+  step-1: run cmd=echo "📦 Publishing to PyPI...";
+  step-2: run cmd=command -v .venv/bin/twine > /dev/null 2>&1 || (.venv/bin/pip install --upgrade twine build);
+  step-3: run cmd=rm -rf dist/ build/ *.egg-info/;
+  step-4: run cmd=.venv/bin/python -m build;
+  step-5: run cmd=.venv/bin/twine check dist/*;
+  step-6: run cmd=echo "🚀 Uploading to PyPI...";
+  step-7: run cmd=.venv/bin/twine upload dist/*;
+}
+
+workflow[name="publish-test"] {
+  trigger: manual;
+  step-1: run cmd=echo "📦 Publishing to TestPyPI...";
+  step-2: run cmd=command -v .venv/bin/twine > /dev/null 2>&1 || (.venv/bin/pip install --upgrade twine build);
+  step-3: run cmd=rm -rf dist/ build/ *.egg-info/;
+  step-4: run cmd=.venv/bin/python -m build;
+  step-5: run cmd=.venv/bin/twine upload --repository testpypi dist/*;
+}
+
+workflow[name="version"] {
+  trigger: manual;
+  step-1: run cmd=echo "📦 Version information...";
+  step-2: run cmd=cat VERSION;
+  step-3: run cmd=.venv/bin/python -c "from importlib.metadata import version; print(f'Installed version: {version(\"sumd\")}')";
+}
+
 tests {
   import: testql-scenarios/**/*.testql.toon.yaml;
 }
 
 env_vars {
-  keys: OPENROUTER_API_KEY, LLM_MODEL, LLM_URI_MODEL, LLM_URI_BASE_URL, LLM_BASE_URL, LLM_TEMPERATURE, LLM_MAX_TOKENS, PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_MAX_RETRIES, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_CREATE_BACKUPS, PIP_DISABLE_PIP_VERSION_CHECK, URISYS_URICORE_GITHUB_OWNER, URISYS_URICORE_VERSION, URISYS_URICORE_WHEEL_URL, URISYS_MIN_VERSION, URISYS_INIT_PROFILE, WAYLAND_DISPLAY, URISYS_URIROUTER_GITHUB_OWNER, URISYS_URIROUTER_VERSION, URISYS_URIROUTER_WHEEL_URL, URISYS_NODE_GITHUB_OWNER, URISYS_NODE_VERSION, URISYS_NODE_WHEEL_URL, URISYS_NODE_PIP_SPEC, URISYS_EXAMPLES_ROOT, URISYS_NODE_HOST_PORT, LENOVO, URISYS_LENOVO_ENDPOINT, URISYS_ROUTE_MAP, URISYS_NODE_HOST, URISYS_NODE_PORT, URISYS_NODE_CONFIG, TELLMESH_ROOT, URISYS_RESOLVER_CONFIG;
+  keys: OPENROUTER_API_KEY, LLM_MODEL, LLM_URI_MODEL, LLM_URI_BASE_URL, LLM_BASE_URL, LLM_TEMPERATURE, LLM_MAX_TOKENS, PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_MAX_RETRIES, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_CREATE_BACKUPS, PIP_DISABLE_PIP_VERSION_CHECK, URISYS_GITHUB_OWNER, URISYS_VERSION, URISYS_WHEEL_URL, URISYS_PYPI, URISYS_URICORE_GITHUB_OWNER, URISYS_URICORE_VERSION, URISYS_URICORE_WHEEL_URL, URISYS_URICORE_PYPI, URISYS_URIGUARD_GITHUB_OWNER, URISYS_URIGUARD_VERSION, URISYS_URIGUARD_WHEEL_URL, URISYS_URIGUARD_PYPI, URISYS_OFFLINE, URISYS_GITHUB_TOKEN, GH_TOKEN, GITHUB_TOKEN, URISYS_MIN_VERSION, URISYS_INIT_PROFILE, WAYLAND_DISPLAY, URISYS_URIRESOLVER_GITHUB_OWNER, URISYS_URIRESOLVER_VERSION, URISYS_URIRESOLVER_WHEEL_URL, URISYS_URIRESOLVER_PYPI, URISYS_NODE_ID, URISYS_NODE_ROOT, USER, URISYS_HOST_TRUST_SCRIPT_URL, URISYS_NODE_GITHUB_OWNER, URISYS_NODE_VERSION, URISYS_NODE_WHEEL_URL, URISYS_NODE_PIP_SPEC, URISYS_NODE_HOST, URISYS_NODE_PORT, URISYS_NODE_CONFIG, URISYS_VENV, TELLMESH_ROOT, URISYS_RESOLVER_CONFIG;
 }
 
 deploy {
