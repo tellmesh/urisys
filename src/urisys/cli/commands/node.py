@@ -68,6 +68,15 @@ def cmd_node(args) -> int:
         else:
             os.environ.setdefault("URISYS_NODE_AUTO_INSTALL", "1")
         os.environ.setdefault("URISYS_NODE_ALLOW_PACK_LOAD", "1")
+        # Process isolation + registry-independent pack source (flags override env;
+        # both default-on so a desktop slave is crash-isolated and build-first
+        # without extra setup).
+        if getattr(args, "isolation", None):
+            os.environ["URISYS_NODE_ISOLATION"] = args.isolation
+        if getattr(args, "pack_source", None):
+            os.environ["URISYS_PACK_SOURCE"] = args.pack_source
+        if getattr(args, "wheelhouse", None):
+            os.environ["URISYS_WHEELHOUSE"] = args.wheelhouse
         prep = _prepare_node_serve(auto_install=auto_install)
         if prep is not None:
             return prep

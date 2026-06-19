@@ -90,6 +90,26 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Disable URISYS_NODE_AUTO_INSTALL (no pip on first kvm/him/… URI).",
     )
+    ns.add_argument(
+        "--isolation",
+        choices=["persistent", "ephemeral", "off"],
+        default=os.environ.get("URISYS_NODE_ISOLATION"),
+        help="Process isolation for execution packs (default persistent): "
+        "persistent=one worker/pack, ephemeral=one worker/call, off=in-process. "
+        "Only the control plane (node) ever runs in the router.",
+    )
+    ns.add_argument(
+        "--pack-source",
+        choices=["auto", "local", "github", "pypi"],
+        default=os.environ.get("URISYS_PACK_SOURCE"),
+        help="Where packs install from (default auto: local wheelhouse → GitHub → PyPI).",
+    )
+    ns.add_argument(
+        "--wheelhouse",
+        default=os.environ.get("URISYS_WHEELHOUSE"),
+        help="Local wheelhouse dir of built wheels, preferred over any registry "
+        "(default ~/.urisys/wheelhouse).",
+    )
 
     nht = node_sub.add_parser(
         "host-trust",

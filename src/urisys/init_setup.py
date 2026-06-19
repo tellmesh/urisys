@@ -23,6 +23,12 @@ DEFAULT_GITHUB_URICORE_VERSION = "0.1.14"
 SLAVE_ENV = {
     "URISYS_ALLOW_REAL": "1",
     "URISYS_NODE_AUTO_INSTALL": "1",
+    # Crash isolation on by default: only the control plane runs in the router;
+    # execution packs run in worker processes (an execution crash can't kill comms).
+    "URISYS_NODE_ISOLATION": "persistent",
+    # Registry-independent, build-first: local wheelhouse → GitHub → PyPI.
+    "URISYS_PACK_SOURCE": "auto",
+    "URISYS_WHEELHOUSE": "~/.urisys/wheelhouse",
 }
 
 DEV_ENV: dict[str, str] = {}
@@ -46,6 +52,22 @@ def default_node_pip_spec() -> str:
     return node_pip_spec()
 
 
+def wheelhouse_dir() -> str | None:
+    """Local wheelhouse of built tellmesh wheels, preferred over any registry.
+
+    Default ``~/.urisys/wheelhouse`` (override ``URISYS_WHEELHOUSE``). When present,
+    ``urisys init`` installs with ``--find-links`` so a freshly *built* wheel wins
+    and pip never enumerates PyPI versions — which is what makes plain
+    ``pip install -U urisys`` backtrack for minutes. Build it with
+    ``urisys-node/scripts/build-wheelhouse.sh``. May also be an ``http(s)://`` wheel
+    server URL (pulled with ``--find-links``)."""
+    wh = os.environ.get("URISYS_WHEELHOUSE", "~/.urisys/wheelhouse")
+    if wh.startswith(("http://", "https://")):
+        return wh
+    d = os.path.expanduser(wh)
+    return d if os.path.isdir(d) else None
+
+
 def pip_install_specs(
     specs: list[str],
     *,
@@ -53,7 +75,13 @@ def pip_install_specs(
     timeout: float = 600.0,
 ) -> dict[str, Any]:
     exe = python or sys.executable
-    cmd = [exe, "-m", "pip", "install", "-U", *specs]
+    cmd = [exe, "-m", "pip", "install", "-U"]
+    wh = wheelhouse_dir()
+    if wh:
+        cmd += ["--find-links", wh]
+        if os.environ.get("URISYS_WHEELHOUSE_OFFLINE", "").strip() not in ("", "0", "false", "no"):
+            cmd.append("--no-index")
+    cmd += [*specs]
     proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
     return {
         "ok": proc.returncode == 0,
