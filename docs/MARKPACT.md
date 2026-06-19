@@ -214,7 +214,7 @@ urisys markpact run-flow "$SHOWCASE#install-and-verify" --approve --dry-run
 # urisys markpact run-flow "$SHOWCASE#install-and-verify" --approve --dry-run --auto-install
 ```
 
-Skrypt smoke: ``examples/markpact/showcase-run-flow.sh`` (ustawia ``TELLMESH_ROOT``).
+Skrypt smoke: ``examples/05-markpact-showcase-run-flow/run.sh`` (ustawia ``TELLMESH_ROOT``).
 
 Wywołanie URI bez instalowania paczki:
 

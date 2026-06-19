@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-# shellcheck source=../scripts/paths.sh
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+# shellcheck source=../../scripts/paths.sh
 source "$ROOT/scripts/paths.sh"
 PACK="$(markpact_contracts_packs)/uribrowser.markpact.md"
 urisys --packs none \

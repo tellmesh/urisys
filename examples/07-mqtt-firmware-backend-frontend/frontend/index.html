@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MQTT device bridge</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <section class="panel status-panel">
+      <div>
+        <p class="label">Firmware</p>
+        <h1>MQTT device bridge</h1>
+      </div>
+      <div class="status">
+        <span id="online-dot" class="dot"></span>
+        <span id="online-text">connecting</span>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <p class="label">Controls</p>
+        <div class="buttons">
+          <button id="led-on">LED on</button>
+          <button id="led-off">LED off</button>
+          <button id="ping">Ping firmware</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <p class="label">State</p>
+        <dl class="facts">
+          <div><dt>Device</dt><dd id="device-id">-</dd></div>
+          <div><dt>LED</dt><dd id="led-state">-</dd></div>
+          <div><dt>Uptime</dt><dd id="uptime">-</dd></div>
+          <div><dt>Temp</dt><dd id="temperature">-</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="panel">
+      <p class="label">MQTT topics</p>
+      <pre id="topics">{}</pre>
+    </section>
+
+    <section class="panel">
+      <p class="label">Recent events</p>
+      <pre id="events">[]</pre>
+    </section>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

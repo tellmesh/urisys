@@ -3,7 +3,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-# shellcheck source=../scripts/paths.sh
+# shellcheck source=../../scripts/paths.sh
 source "$ROOT/scripts/paths.sh"
 
 export TELLMESH_ROOT="${TELLMESH_ROOT:-$(cd "$ROOT/.." && pwd)}"

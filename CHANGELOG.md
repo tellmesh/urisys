@@ -758,6 +758,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `test_uriscreen_auto`/`test_ocr_llm` skip gracefully when Pillow/tesseract absent
 - Host→Docker desktop and host→LAN node (`192.168.188.201:8790`) control verified live (capture + OCR)
 
+## [0.1.98] - 2026-06-19
+
+### Docs
+- Update README.md
+- Update docs/EXAMPLES.md
+- Update docs/MARKPACT.md
+- Update docs/MIGRATION-STEP1.md
+- Update examples/01-call-uri/README.md
+- Update examples/02-server-curl/README.md
+- Update examples/03-threaded-uri-runtime/README.md
+- Update examples/04-markpact-browser-call/README.md
+- Update examples/05-markpact-showcase-run-flow/README.md
+- Update examples/06-frontend/README.md
+- ... and 2 more files
+
+### Other
+- Update VERSION
+- Update examples/01-call-uri/run.sh
+- Update examples/02-server-curl/run.sh
+- Update examples/03-threaded-uri-runtime/run.sh
+- Update examples/03-threaded-uri-runtime/threaded-uri-runtime.py
+- Update examples/04-markpact-browser-call/run.sh
+- Update examples/05-markpact-showcase-run-flow/run.sh
+- Update examples/06-frontend/app.js
+- Update examples/06-frontend/index.html
+- Update examples/06-frontend/run.sh
+- ... and 11 more files
+
 ## [0.1.96] - 2026-06-19
 
 ### Docs

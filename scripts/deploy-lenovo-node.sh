@@ -38,10 +38,33 @@ build_wheel() {
 }
 
 call() {
-  local uri="$1" payload="${2:-{}}"
-  curl -sS -X POST "$LENOVO/uri/call" \
-    -H 'Content-Type: application/json' \
-    -d "{\"uri\":\"$uri\",\"payload\":$payload,\"context\":{\"approved\":true,\"allow_real\":true}}"
+  local uri="$1" payload="${2:-}"
+  python3 -c '
+import sys, urllib.request, json
+uri, payload_str, lenovo = sys.argv[1:]
+data = {
+    "uri": uri,
+    "payload": json.loads(payload_str or "{}"),
+    "context": {"approved": True, "allow_real": True}
+}
+req = urllib.request.Request(
+    f"{lenovo}/uri/call",
+    data=json.dumps(data).encode("utf-8"),
+    headers={"Content-Type": "application/json"}
+)
+try:
+    with urllib.request.urlopen(req) as res:
+        print(res.read().decode("utf-8"))
+except Exception as e:
+    if "pkill" in payload_str or "pgrep" in payload_str:
+        print("{\"ok\": true, \"message\": \"Connection closed (expected during restart)\"}")
+        sys.exit(0)
+    if hasattr(e, "read"):
+        print(e.read().decode("utf-8"), file=sys.stderr)
+    else:
+        print(f"Error: {e}", file=sys.stderr)
+    sys.exit(1)
+' "$uri" "$payload" "$LENOVO"
 }
 
 health() {
@@ -104,7 +127,7 @@ call shell://pip "{\"args\":[\"install\",\"-U\",\"$DEV/$URISYS_WHL\"]}" | python
 
 echo ""
 echo "== schedule urisys node restart (venv; delayed so this URI returns first) =="
-call shell://bash '{"args":["-lc","( sleep 1; pkill -f \"urisys node serve\" || pkill -f \"urisys-node serve\" || true; sleep 2; source ~/venv/bin/activate && nohup urisys node serve --host 0.0.0.0 --port 8790 >> /tmp/urisys-node.log 2>&1 & ) & echo scheduled"]}' | python3 -m json.tool
+call shell://bash '{"args":["-lc","cat << '\''EOF'\'' > /tmp/restart-urisys.sh\n#!/bin/bash\nsleep 1\npids=$(pgrep -f \"urisys.*serve\")\nfor p in $pids; do\n  if [ \"$p\" != \"$$\" ] && [ \"$p\" != \"$BASHPID\" ] && [ \"$p\" != \"$PPID\" ]; then\n    kill -9 $p || true\n  fi\ndone\nsleep 2\nsource ~/venv/bin/activate\nnohup urisys node serve --host 0.0.0.0 --port 8790 >> /tmp/urisys-node.log 2>&1 &\nEOF\nchmod +x /tmp/restart-urisys.sh\nsetsid /tmp/restart-urisys.sh >/dev/null 2>&1 &\necho scheduled"]}' | python3 -m json.tool
 
 echo ""
 echo "== wait for node health =="

@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.96-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$14.03-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-39.9h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.98-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$13.45-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-40.5h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $14.0283 (131 commits)
-- 👤 **Human dev:** ~$3988 (39.9h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $13.4541 (133 commits)
+- 👤 **Human dev:** ~$4051 (40.5h @ $100/h, 30min dedup)
 
 Generated on 2026-06-19 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -161,7 +161,7 @@ export TELLMESH_ROOT=~/github/tellmesh
 urisys markpact run markpacts/urishell.markpact.md --as flow --approve --dry-run
 
 bash scripts/validate-all-markpacts.sh
-bash examples/markpact/02-showcase-run-flow.sh       # uribrowser integration demo
+bash examples/05-markpact-showcase-run-flow/run.sh   # uribrowser integration demo
 
 # UriProcess: materialize + resolver per platform
 export TELLMESH_ROOT=~/github/tellmesh

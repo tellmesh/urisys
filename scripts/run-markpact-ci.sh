@@ -60,7 +60,7 @@ python -m pytest \
 
 if [ "${MARKPACT_SMOKE:-}" = "1" ]; then
   echo "== showcase run-flow smoke =="
-  bash examples/markpact/showcase-run-flow.sh
+  bash examples/05-markpact-showcase-run-flow/run.sh
 fi
 
 echo "PASS markpact-ci"

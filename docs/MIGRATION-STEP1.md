@@ -45,7 +45,7 @@ bash urienv-docker/scripts/local-test.sh
 - `markpacts/README.md` — dokumentacja źródeł
 - `scripts/paths.sh` — `markpact_contracts_packs()`
 - `scripts/validate-all-markpacts.sh` — skanuje contracts + markpacts w podprojektach
-- `examples/markpact/browser-call.sh`, `docs/CLI.md`, `docs/MARKPACT.md`, `docs/EXAMPLES.md`
+- `examples/04-markpact-browser-call/run.sh`, `docs/CLI.md`, `docs/MARKPACT.md`, `docs/EXAMPLES.md`
 
 ### Weryfikacja
 
