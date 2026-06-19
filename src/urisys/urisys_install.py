@@ -6,7 +6,7 @@ import os
 from typing import Any
 
 DEFAULT_GITHUB_OWNER = "tellmesh"
-DEFAULT_GITHUB_VERSION = "0.1.83"
+DEFAULT_GITHUB_VERSION = "0.1.91"
 DIST_NAME = "urisys"
 GITHUB_REPO = "urisys"
 

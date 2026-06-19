@@ -9,7 +9,7 @@ import sys
 from typing import Any
 
 DEFAULT_GITHUB_OWNER = "tellmesh"
-DEFAULT_GITHUB_VERSION = "0.1.29"
+DEFAULT_GITHUB_VERSION = "0.1.39"
 
 CORE_NODE_PACK_SPECS = (
     "https://github.com/tellmesh/uriscreen/releases/download/v0.1.0/uriscreen-0.1.0-py3-none-any.whl",
