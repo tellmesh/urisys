@@ -19,7 +19,6 @@ DEFAULT_PACKAGES = {
     "env": "urienv",
     "rdp": "urirdp",
     "screen": "uriscreen",
-    "chat": "urichat",
     "stt": "uristt",
     "message": "urimessage",
     "stepper": "uristepper",

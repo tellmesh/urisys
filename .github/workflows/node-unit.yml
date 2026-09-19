@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
+      - "scripts/ci-*-siblings.sh"
+      - "tests/test_ci_siblings.py"
       - "urisys-node/**"
       - "tests/test_vendored_sync.py"
       - "scripts/pack_sync.py"

@@ -206,7 +206,7 @@ def pack_specs() -> dict[str, PackSpec]:
             repo_readme="urisys automation lab MVP packs.",
         )
 
-    for name in ("urimessage", "uristt", "uriwebrtc", "urichat"):
+    for name in ("urimessage", "uristt", "uriwebrtc"):
         specs[name] = _pack(
             name,
             repo_readme=f"{name}:// URI capability pack for automation lab.",
@@ -238,7 +238,6 @@ SIBLING_ONLY = frozenset(
         "urimessage",
         "uristt",
         "uriwebrtc",
-        "urichat",
     }
 )
 

@@ -58,3 +58,16 @@ def test_pip_install_failure():
         report = run_init(install=True, write_env=False)
     assert report["ok"] is False
     assert report["error"] == "pip install failed"
+
+
+def test_dry_run_never_launches_installer_or_writes_env(tmp_path):
+    from urisys.init_setup import run_init
+
+    env_file = tmp_path / "node.env"
+    with patch("urisys.init_setup.default_pip_specs", return_value=["example-package"]), patch(
+        "subprocess.run", side_effect=AssertionError("dry-run launched a process")
+    ):
+        result = run_init(dry_run=True, install=True, write_env=True, env_file=env_file)
+    assert result["ok"] is True
+    assert result["pip"]["dry_run"] is True
+    assert not env_file.exists()

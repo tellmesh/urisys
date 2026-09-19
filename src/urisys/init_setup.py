@@ -297,7 +297,7 @@ def run_init(
         return abort
 
     if install:
-        pip_result = _run_pip_install(specs, dry_run=False)
+        pip_result = _run_pip_install(specs, dry_run=dry_run)
         steps.append({"name": "pip_install", "status": "pass" if pip_result.get("ok") else "fail", "detail": pip_result})
         if not pip_result.get("ok"):
             return {"ok": False, "profile": profile, "steps": steps, "error": "pip install failed", "pip": pip_result, "hint": "Fix pip/network, then rerun: urisys init"}

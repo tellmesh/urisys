@@ -27,7 +27,7 @@ tellmesh/
 ├── uricore/                # uri_control (+ edge runtime)
 ├── urioperators/           # LLM helpers
 ├── urisys-node/            # urisysnode (bundled); uriscreen/urishell → pip
-├── urichat/ uristt/ uriwebrtc/ urimessage/
+├── uristt/ uriwebrtc/ urimessage/
 └── urisys-automation-lab/  # lab server + voice pack glue
 ```
 
