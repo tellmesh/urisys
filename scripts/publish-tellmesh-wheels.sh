@@ -13,7 +13,7 @@ TELLMESH_ROOT="${TELLMESH_ROOT:-$(dirname "$URISYS_ROOT")}"
 ORG="${URISYS_PACK_GITHUB_OWNER:-tellmesh}"
 
 DEFAULT_PACKS=(
-  urirdp urirdpedge urishell urichat uristt uriwebrtc urimessage
+  urirdp urirdpedge urishell uristt uriwebrtc urimessage
   urikvmedge urienv urikvm urihim uriocr urillm
 )
 

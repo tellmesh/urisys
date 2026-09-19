@@ -13,10 +13,10 @@ Organizacja GitHub: **[tellmesh](https://github.com/tellmesh)** (paczki urisys) 
 ├── uricore/                capability dispatch + uri_control.edge
 ├── urioperators/           LLM helpers
 ├── urisys-node/            urisysnode (bundled); uriscreen/urishell → pip
-├── uriscreen/ urishell/ urichat/ uristt/ uriwebrtc/ urimessage/
+├── uriscreen/ urishell/ uristt/ uriwebrtc/ urimessage/
 ├── urimail/ urioffice/ urivql/
 ├── urikvmedge/             CLI urisys-kvm
-├── urirdp/ urirdpedge/ urishell/ urichat/     ← RDP + shell + deprecated chat
+├── urirdp/ urirdpedge/ urishell/     ← RDP + shell
 ├── uristt/ uriwebrtc/ urimessage/
 ├── uribrowser/ urienv/ uristepper/
 └── urisys-automation-lab/  labedge, stt, chat, …

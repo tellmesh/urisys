@@ -44,7 +44,6 @@ Mapowanie w `urisysnode/pack_resolver.py`:
 | `rdp` | `rdp://` | `urirdp` | GitHub (auto) |
 | `rdpedge` | rdp+kvm+him+… bundle | `urirdpedge` | GitHub (auto) — full desktop stack |
 | `env` | `env://` | `urienv` | GitHub (auto) |
-| `chat` | `chat://` (deprecated) | `urichat` | GitHub (auto) |
 
 ## Kontrakt packa in-process
 
@@ -194,3 +193,13 @@ Capture zostaje w **`uriscreen`** — imgl/vql analizują PNG z `latest_screen`,
 ## Roadmap (entry points)
 
 Docelowo: discovery packów przez `[project.entry-points."urisys.pack"]` w wheelu — bez edycji `pack_resolver.py`. Do tego czasu: wpis w resolverze lub forward worker.
+
+## Retired chat pack
+
+The `urichat` repository has been removed. Default pack discovery, sibling
+checkout and wheel publication no longer include it. Explicit `chat` or
+`urichat` package requests fail with migration guidance, even when a local
+backup remains available. Use `llm://local/text/query/plan`, validate its result,
+and call the target URI with approval and dry-run context. For the former
+message echo use `message://local/alert/command/send` with `channel: main`.
+Historical Markpact files and custom manifests must be migrated explicitly.

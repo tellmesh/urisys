@@ -80,7 +80,6 @@ urishell = { path = "../urishell", editable = true }
 uristt = { path = "../uristt", editable = true }
 uriwebrtc = { path = "../uriwebrtc", editable = true }
 urimessage = { path = "../urimessage", editable = true }
-urichat = { path = "../urichat", editable = true }
 urimail = { path = "../urimail", editable = true }
 urioffice = { path = "../urioffice", editable = true }
 urivql = { path = "../urivql", editable = true }

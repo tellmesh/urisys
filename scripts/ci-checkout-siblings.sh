@@ -32,7 +32,7 @@ KVM_REPOS=(
 
 # Markpact capability packs (thin generated copies + legacy showcase archive)
 MARKPACT_REPOS=(
-  urichat urishell uriscreen urimessage uriwebrtc uristt urikv uriimg2nl
+  urishell uriscreen urimessage uriwebrtc uristt urikv uriimg2nl
 )
 
 REPOS=("${CORE_REPOS[@]}" "${KVM_REPOS[@]}" "${MARKPACT_REPOS[@]}")

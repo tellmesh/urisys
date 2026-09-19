@@ -42,7 +42,6 @@
 | Pakiet | Rola |
 |--------|------|
 | `uristt` | STT mock MVP |
-| `urichat` | NL → URI execute |
 | `uriwebrtc` | WebRTC data channel |
 | `flow_runner` | Compact flow executor |
 | `automation_lab_server` | Gateway :8099 |

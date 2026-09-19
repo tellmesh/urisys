@@ -79,7 +79,6 @@ PACKAGES: dict[str, list[str]] = {
     "urishell": ["| **Warstwa** | Capability pack |", "| **Scheme** | `shell://` |", "| **Zależność** | `uricontrol>=0.1.8` |", "| **Edge** | urisys-node, urirdpedge |"],
     "uribrowser": ["| **Warstwa** | Capability pack |", "| **Scheme** | `browser://` |", "| **Zależność** | `uricontrol>=0.1.8` |", "| **Edge** | uribrowser-docker |", "| **Port** | 8797 |"],
     "urienv": ["| **Warstwa** | Capability pack |", "| **Scheme** | `env://` |", "| **Zależność** | `uricontrol>=0.1.8` |", "| **Edge** | urienv-docker |"],
-    "urichat": ["| **Warstwa** | Capability pack (deprecated) |", "| **Scheme** | `chat://` |", "| **Zależność** | `uricontrol>=0.1.8` |"],
     "urimessage": ["| **Warstwa** | Capability pack |", "| **Scheme** | `message://` |", "| **Zależność** | `uricontrol>=0.1.8` |", "| **Edge** | urisys-automation-lab |"],
     "uriwebrtc": ["| **Warstwa** | Capability pack |", "| **Scheme** | `webrtc://` |", "| **Zależność** | `uricontrol>=0.1.8` |"],
     "uristt": ["| **Warstwa** | Capability pack |", "| **Scheme** | `stt://` / `tts://` |", "| **Zależność** | `uricontrol>=0.1.8` |", "| **Edge** | urisys-automation-lab |"],

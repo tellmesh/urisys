@@ -97,6 +97,11 @@ class PackManager:
         return PackManager._split_specs(markpacts)
 
     def resolve_package_name(self, spec: str) -> str:
+        if spec in {"chat", "urichat"}:
+            raise ModuleNotFoundError(
+                "urichat is retired; use llm planning and the target URI, "
+                "or message for notifications"
+            )
         return DEFAULT_PACKAGES.get(spec, spec)
 
     def _is_markpact_path(self, spec: str) -> bool:
