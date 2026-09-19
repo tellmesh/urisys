@@ -237,7 +237,7 @@ def _render(
             "",
             "```bash",
             f"cd {rel_repo}",
-            f"export TELLMESH_ROOT={TELLMESH}",
+            'export TELLMESH_ROOT="$(cd .. && pwd)"',
             f"PACK=markpacts/{file_stem}.markpact.md",
             "urisys markpact run \"$PACK\" --as flow --approve --dry-run",
             "urisys markpact run \"$PACK\" --as pack",
@@ -309,6 +309,19 @@ def generate_for_spec(spec: PackSpec) -> list[tuple[Path, str]]:
     return outputs
 
 
+def portable_workspace_docs(content: str) -> str:
+    """Migrate only the old absolute workspace export in the generated shell example.
+
+    Capability definitions and every other byte remain subject to the drift check.
+    This accepts already published examples produced before portable rendering.
+    """
+    return re.sub(
+        r'(```bash\ncd [^\n]+\n)export TELLMESH_ROOT=/[^\n]*\n(?=PACK=markpacts/)',
+        lambda match: match.group(1) + 'export TELLMESH_ROOT="$(cd .. && pwd)"\n',
+        content,
+    )
+
+
 def _process_spec(
     spec: PackSpec,
     *,
@@ -320,7 +333,7 @@ def _process_spec(
     for out_path, content in generate_for_spec(spec):
         out_path.parent.mkdir(parents=True, exist_ok=True)
         label = out_path.relative_to(TELLMESH) if out_path.is_relative_to(TELLMESH) else out_path
-        if out_path.is_file() and out_path.read_text(encoding="utf-8") == content:
+        if out_path.is_file() and portable_workspace_docs(out_path.read_text(encoding="utf-8")) == content:
             print(f"OK  {label}")
         elif check:
             print(f"DRIFT {label}")

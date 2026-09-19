@@ -41,6 +41,7 @@ python -m pytest \
   tests/test_markpact_contract_materialize.py \
   tests/test_markpact_session_isolation.py \
   tests/test_pack_gen.py \
+  tests/test_generated_pack_portability.py \
   tests/test_contract_gen.py \
   tests/test_pack_manager_sibling.py \
   tests/test_urisys_flow_handler.py \
