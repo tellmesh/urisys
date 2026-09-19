@@ -56,8 +56,12 @@ jobs:
           bash scripts/ci-install-siblings.sh
           pip install -q -e ".[real]"
 
+      # Display-info queries still read X11 during dry-run; only mutations are mocked.
+      - name: Install virtual display dependencies
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq xvfb xauth x11-utils
+
       - name: Markpact CI (drift + validate + tests)
         working-directory: urisys
         env:
           TELLMESH_ROOT: ${{ github.workspace }}
-        run: bash scripts/run-markpact-ci.sh
+        run: xvfb-run -a bash scripts/run-markpact-ci.sh
