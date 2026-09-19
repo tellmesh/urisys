@@ -31,7 +31,7 @@ CORE_REPOS=(
 KVM_REPOS=(
   urikvm urihim uriocr urillm urimail urioffice urivql urikvmedge
   urirdp urirdpedge urienv uribrowser uristepper uristepperedge urisys-automation-lab
-  urikvm-docker urirdp-docker
+  urikvm-docker urirdp-docker urienv-docker
 )
 
 # Markpact capability packs (thin generated copies + legacy showcase archive)
