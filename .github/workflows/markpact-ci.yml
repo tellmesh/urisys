@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
+      - "scripts/ci-*-siblings.sh"
+      - "tests/test_ci_siblings.py"
       - "scripts/generate_pack_markpacts.py"
       - "scripts/generate_showcase_markpacts.py"
       - "scripts/pack_registry.py"

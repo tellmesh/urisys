@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
+      - "scripts/ci-*-siblings.sh"
+      - "tests/test_ci_siblings.py"
       - "src/urisys/**"
       - "pyproject.toml"
       - "tests/test_bootstrap.py"
@@ -38,7 +40,7 @@ jobs:
 
       - name: Bootstrap + doctor + compat tests
         working-directory: urisys
-        run: python -m pytest tests/test_bootstrap.py tests/test_python_compat.py tests/test_doctor.py -q
+        run: python -m pytest tests/test_bootstrap.py tests/test_python_compat.py tests/test_doctor.py tests/test_retired_chat.py tests/test_init.py tests/test_ci_siblings.py -q
 
   matrix:
     runs-on: ubuntu-latest

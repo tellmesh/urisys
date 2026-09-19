@@ -1,28 +1,19 @@
 #!/usr/bin/env bash
-# pip install -e tellmesh sibling packs required for urisys dev/CI tests.
+# Resolve sibling dependencies together, including the local urisys candidate.
 set -euo pipefail
-
 URISYS_ROOT="${URISYS_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 TELLMESH_ROOT="${TELLMESH_ROOT:-$(dirname "$URISYS_ROOT")}"
 
-install_editable() {
-  local name="$1"
-  local path="${TELLMESH_ROOT}/${name}"
-  if [ -f "${path}/pyproject.toml" ]; then
-    pip install -q -e "${path}"
-  else
-    echo "warn: missing ${path}/pyproject.toml — run ci-checkout-siblings.sh first" >&2
+args=(-e "${URISYS_ROOT}")
+for repo in uriguard uriresolver uritransport uricontrol urioperators urisys-node urisys-dev \
+  urikvm urihim uriocr urillm urikvmedge urirdp urishell uriscreen urimessage uristepper; do
+  path="${TELLMESH_ROOT}/${repo}"
+  if [ ! -f "${path}/pyproject.toml" ]; then
+    echo "error: missing ${path}/pyproject.toml — run ci-checkout-siblings.sh first" >&2
+    exit 1
   fi
-}
-
-# Core stack for urisys + node tests
-for repo in uricontrol urioperators urisys-node; do
-  install_editable "${repo}"
+  args+=(-e "${path}")
 done
-
-# Optional extras (kvm handler tests)
-for repo in urikvm urihim uriocr urillm urikvmedge urirdp; do
-  install_editable "${repo}" || true
-done
-
+# A single resolver transaction prevents PyPI fallback for local dependencies.
+python -m pip install -q pytest "${args[@]}"
 echo "sibling packs installed from ${TELLMESH_ROOT}"
